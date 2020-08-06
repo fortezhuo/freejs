@@ -1,0 +1,20 @@
+{
+  "name": "@free/server",
+  "version": "1.0.0",
+  "description": "Free Server",
+  "prettier": {
+    "semi": false
+  },
+  "private": true,
+  "scripts": {
+    "start": "nodemon src/index.ts",
+    "build": "NODE_ENV=production tsc"
+  },
+  "dependencies": {
+    "@free/config": "*",
+    "@loadable/server": "^5.13.1"
+  },
+  "devDependencies": {
+    "@types/loadable__server": "^5.12.2"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "name": "@free/ldapmock",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "ts-node src/index.ts"
+  },
+  "prettier": {
+    "semi": false
+  }
+}

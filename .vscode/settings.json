@@ -1,0 +1,8 @@
+{
+  "workbench.colorTheme": "Material Theme Palenight",
+  "editor.tabSize": 2,
+  "editor.fontFamily": "'FiraCode-Retina'",
+  "editor.fontLigatures": true,
+  "editor.fontWeight": "500", // Medium
+  "editor.formatOnSave": true
+}

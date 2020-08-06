@@ -1,0 +1,9 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "../../build",
+    "typeRoots": ["../../@types", "../../node_modules/@types"]
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules"]
+}
