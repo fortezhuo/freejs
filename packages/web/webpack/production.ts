@@ -20,7 +20,7 @@ const webpackProdClient = {
   devtool: "source-map",
   output: {
     path: distClient,
-    filename: `web-[name]-${stamp}-[chunkhash].js`,
+    filename: `web.${stamp}.js`,
     publicPath: `/static/web/`,
   },
   module: {
@@ -45,7 +45,7 @@ const webpackProdServer = {
   ],
   output: {
     path: distServer,
-    filename: `node-[name]-${stamp}-[chunkhash].js`,
+    filename: `node.${stamp}.js`,
     publicPath: `/static/node/`,
     libraryTarget: "commonjs2",
   },

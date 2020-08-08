@@ -84,5 +84,11 @@ export const getDefaultConfig = (isWebOptimized: boolean) => {
       },
       extensions: [".web.js", ".js", ".tsx", ".ts", ".web.tsx", ".web.jsx"],
     },
+    stats: {
+      all: false,
+      assets: true,
+      errors: true,
+      warnings: true,
+    },
   }
 }
