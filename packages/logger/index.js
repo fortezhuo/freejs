@@ -6,16 +6,12 @@ var nl = "\n"
 var isProd = process.env.NODE_ENV === "production"
 
 var emojiLog = {
-  warn: "⚠️ WARNING",
-  info: "✨ INFO",
-  error: "🚨 ERROR",
-  debug: "🐛 DEBUG",
-  fatal: "💀 FATAL",
-  trace: "🔍TRACE",
-}
-
-function isWideEmoji(character) {
-  return character !== "⚠️ WARNING"
+  warn: "⚠️ WARN |",
+  info: "✅ INFO |",
+  error: "⛔️ERROR |",
+  debug: "🐛DEBUG |",
+  fatal: "💀FATAL |",
+  trace: "🔍TRACE |",
 }
 
 function isObject(input) {
@@ -71,9 +67,7 @@ function FreeLogger() {
   }
 
   function formatLevel(level) {
-    const emoji = emojiLog[level]
-    const padding = isWideEmoji(emoji) ? "" : " "
-    return emoji + padding
+    return emojiLog[level]
   }
 
   function formatNs(name) {

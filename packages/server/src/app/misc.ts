@@ -14,8 +14,8 @@ const infoDevServer: string = `
 💥 💥 💥 💥 =        D E V E L O P M E N T       = 💥 💥 💥 💥
 
 ==============================================================
- Next Dev UI  Server : http://0.0.0.0
- Restful API  Server : http://0.0.0.0:8000
+ Webpack Dev Server : http://0.0.0.0
+ Restful API Server : http://0.0.0.0:8000
 ==============================================================
 `
 

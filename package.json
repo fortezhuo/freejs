@@ -8,7 +8,7 @@
     "build:server": "yarn workspace @free/server build",
     "build:web": "yarn workspace @free/web build",
     "build:tw": "yarn workspace @free/tailwind build",
-    "dev": "run-p dev:ldap dev:server",
+    "dev": "run-p dev:ldap dev:web dev:server",
     "dev:ldap": "yarn workspace @free/ldapmock start",
     "dev:web": "yarn workspace @free/web start",
     "dev:server": "yarn workspace @free/server start",
