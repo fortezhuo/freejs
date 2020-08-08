@@ -6,14 +6,14 @@ import { configApp, configServer } from "@free/config"
 
 export const boot: Boot = async () => {
   const isProd = process.env.NODE_ENV === "production"
-  const options = getOptions(false /*isProd*/)
+  const options = getOptions()
   const app: FastifyInstance<Server, IncomingMessage, ServerResponse> = fastify(
     options
   )
   app.register(all)
 
   try {
-    if (isProd) loadBanner()
+    loadBanner(isProd)
     app.log.info(
       `Starting 🔥 ${
         isProd

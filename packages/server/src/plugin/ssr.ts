@@ -19,23 +19,28 @@ export const ssr = fp(async (instance) => {
   })
   instance.get("/*", async (req, reply) => {
     const nodeExtractor = new ChunkExtractor({ statsFile: nodeStats })
-    const { default: App } = nodeExtractor.requireEntrypoint()
+    const { default: NodeApp } = nodeExtractor.requireEntrypoint()
     const webExtractor = new ChunkExtractor({ statsFile: webStats })
-    const jsx = webExtractor.collectChunks(React.createElement(App, null))
+    const jsx = webExtractor.collectChunks(
+      React.createElement(NodeApp as React.ComponentType<App>, {
+        location: req.raw.url,
+        context: {},
+      })
+    )
     const html = renderToString(jsx)
     reply.type("text/html")
     reply.send(`<!DOCTYPE html>
 <html>
-  <head>
-  <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
-  <meta content="utf-8" http-equiv="encoding">
-  ${webExtractor.getLinkTags()}
-  ${webExtractor.getStyleTags()}
-  </head>
-  <body>
-    <div id="root">${html}</div>
-    ${webExtractor.getScriptTags()}
-  </body>
+<head>
+<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+<meta content="utf-8" http-equiv="encoding">
+${webExtractor.getLinkTags()}
+${webExtractor.getStyleTags()}
+</head>
+<body>
+<div id="root">${html}</div>
+${webExtractor.getScriptTags()}
+</body>
 </html>`)
   })
 })

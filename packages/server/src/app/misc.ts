@@ -1,4 +1,3 @@
-import dayjs from "dayjs"
 import { configServer } from "@free/config"
 
 const logoBanner: string = `  
@@ -37,26 +36,9 @@ export const loadBanner: LoadBanner = (isProd = true) => {
 }
 
 export const getOptions: GetFSOptions = (isProd = true) => {
-  const stamp = dayjs().format("YYYYMMDD_HHmmss")
   return {
     disableRequestLogging: true,
     pluginTimeout: 99999,
-    logger: isProd
-      ? {
-          timestamp: () => `, "time":"${Date()}"`,
-          file: `log/log_${stamp}.log`,
-          formatters: {
-            level(label: string) {
-              return { level: label }
-            },
-          },
-        }
-      : {
-          prettyPrint: {
-            colorize: true,
-            translateTime: "SYS:yyyy-mm-dd HH:MM:ss",
-            ignore: "reqId,res",
-          },
-        },
+    logger: true,
   }
 }

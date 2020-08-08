@@ -81,12 +81,6 @@ export const getDefaultConfig = (isWebOptimized: boolean) => {
     resolve: {
       alias: {
         "react-native": "react-native-web",
-        /*
-        react: pathReact,
-        "react-router": pathRR,
-        "react-router-dom": pathRRD,
-                history: pathHistory,
-                */
       },
       extensions: [".web.js", ".js", ".tsx", ".ts", ".web.tsx", ".web.jsx"],
     },
