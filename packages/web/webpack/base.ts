@@ -50,7 +50,15 @@ export const getWebpackRules = (isWeb: boolean) => [
   },
   {
     test: /\.(jpg|png|woff|woff2|eot|ttf|svg)$/,
-    loader: "url-loader?limit=100000",
+    use: [
+      {
+        loader: "url-loader",
+        options: {
+          limit: 30000,
+          name: "[name].[ext]",
+        },
+      },
+    ],
   },
 ]
 

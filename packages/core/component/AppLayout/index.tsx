@@ -11,6 +11,7 @@ import {
 } from "react-native"
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context"
 import { tw } from "@free/tailwind"
+import imgWallpaper from "../../img/wallpaper.jpg"
 
 const noop = () => {}
 
@@ -20,10 +21,7 @@ interface Background extends ViewProps {
 
 const Background: FC<Background> = ({ wallpaper, children }) => {
   return wallpaper ? (
-    <ImageBackground
-      style={styles.rootBackground}
-      source={require("@free/config/img/wallpaper.jpg")}
-    >
+    <ImageBackground source={imgWallpaper} style={styles.rootBackground}>
       {children}
     </ImageBackground>
   ) : (
@@ -33,6 +31,7 @@ const Background: FC<Background> = ({ wallpaper, children }) => {
 
 const AppLayout: FC<any> = ({ children }) => {
   const { width } = useWindowDimensions()
+  const isMobileScreen = width < 1200
 
   return (
     <SafeAreaProvider>
@@ -53,7 +52,7 @@ const AppLayout: FC<any> = ({ children }) => {
 export default AppLayout
 
 const styles = StyleSheet.create({
-  rootSafe: tw(`flex-1 bg-white`),
+  rootSafe: tw(`flex-1`),
   rootApp: tw("flex-1"),
   rootBackground: tw("flex-1 mt-1"),
 })

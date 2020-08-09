@@ -3,7 +3,7 @@ import { View, Text } from "react-native"
 
 const SView = () => (
   <View>
-    <Text>Free VIewwwwwws</Text>
+    <Text>Free Views</Text>
   </View>
 )
 

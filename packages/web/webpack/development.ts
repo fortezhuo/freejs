@@ -1,12 +1,19 @@
-import { getDefaultConfig, getWebpackRules, getWebpackPlugins } from "./base"
+import {
+  getDefaultConfig,
+  getWebpackRules,
+  getWebpackPlugins,
+  resolvePath,
+} from "./base"
 
-const hot = !!process.env.WATCH_MODE
+const distClient = resolvePath("build/static/web")
+const entryClient = ["react-hot-loader/patch", resolvePath("src")]
 
 const webpackDevConfig = {
   ...getDefaultConfig(true),
   mode: "development",
   devtool: "source-map",
-  watch: hot,
+  watch: true,
+  entry: entryClient,
   module: {
     rules: getWebpackRules(true),
   },
