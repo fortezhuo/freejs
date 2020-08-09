@@ -19,7 +19,7 @@ const babelLoaderInclude = [
 ]
 const babelLoaderExclude = /node_modules\/(?!(react-native-vector-icons)\/).*/
 
-export const getWebpackRules = (isWeb: boolean) => [
+export const getWebpackRules = (isWeb: boolean): webpack.Rule[] => [
   {
     test: /\.(tsx|ts|js|jsx)$/,
     include: babelLoaderInclude,
@@ -48,21 +48,18 @@ export const getWebpackRules = (isWeb: boolean) => [
       "css-loader",
     ],
   },
+
   {
     test: /\.(jpg|png|woff|woff2|eot|ttf|svg)$/,
     use: [
       {
         loader: "url-loader",
-        options: {
-          limit: 30000,
-          name: "[name].[ext]",
-        },
       },
     ],
   },
 ]
 
-export const getWebpackPlugins = (isWeb: boolean) =>
+export const getWebpackPlugins = (isWeb: boolean): webpack.Plugin[] =>
   (isWeb
     ? [
         new HtmlWebPackPlugin({
@@ -82,7 +79,7 @@ export const getWebpackPlugins = (isWeb: boolean) =>
     )
     .concat([new LoadablePlugin(), new MiniCssExtractPlugin()])
 
-export const getDefaultConfig = (isWeb: boolean) => {
+export const getDefaultConfig = (isWeb: boolean): webpack.Configuration => {
   return {
     optimization:
       isWeb && !isDev

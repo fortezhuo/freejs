@@ -5,6 +5,7 @@ import {
   getWebpackPlugins,
   resolvePath,
 } from "./base"
+import webpack from "webpack"
 import dayjs from "dayjs"
 
 const distClient = resolvePath("../../build/static/web")
@@ -29,7 +30,7 @@ const webpackProdClient = {
   plugins: getWebpackPlugins(true),
 }
 
-const webpackProdServer = {
+const webpackProdServer: webpack.Configuration = {
   ...getDefaultConfig(false),
   target: "node",
   name: "node",
