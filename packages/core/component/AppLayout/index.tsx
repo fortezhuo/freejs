@@ -31,9 +31,8 @@ const Background: FC<Background> = ({ wallpaper, children }) => {
   )
 }
 
-export const AppLayout: FC<any> = ({ children }) => {
+const AppLayout: FC<any> = ({ children }) => {
   const { width } = useWindowDimensions()
-  const isMobileScreen = width < 1200
 
   return (
     <SafeAreaProvider>
@@ -50,6 +49,8 @@ export const AppLayout: FC<any> = ({ children }) => {
     </SafeAreaProvider>
   )
 }
+
+export default AppLayout
 
 const styles = StyleSheet.create({
   rootSafe: tw(`flex-1 bg-white`),

@@ -3,9 +3,9 @@ import { getDefaultConfig, getWebpackRules, getWebpackPlugins } from "./base"
 const hot = !!process.env.WATCH_MODE
 
 const webpackDevConfig = {
-  ...getDefaultConfig(false),
+  ...getDefaultConfig(true),
   mode: "development",
-  devtool: "eval",
+  devtool: "source-map",
   watch: hot,
   module: {
     rules: getWebpackRules(true),

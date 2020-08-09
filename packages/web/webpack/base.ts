@@ -5,6 +5,9 @@ import LoadablePlugin from "@loadable/webpack-plugin"
 import MiniCssExtractPlugin from "mini-css-extract-plugin"
 import CompressionPlugin from "compression-webpack-plugin"
 import TerserPlugin from "terser-webpack-plugin"
+import webpack from "webpack"
+
+const isDev = process.env.NODE_ENV !== "production"
 
 export const resolvePath = (path: string) => resolve(appDirectory, path)
 
@@ -51,36 +54,47 @@ export const getWebpackRules = (isWeb: boolean) => [
   },
 ]
 
-export const getWebpackPlugins = (isDev: boolean) =>
-  (isDev
+export const getWebpackPlugins = (isWeb: boolean) =>
+  (isWeb
     ? [
         new HtmlWebPackPlugin({
           template: "src/assets/index.html",
           filename: "./index.html",
         }),
+        new webpack.DefinePlugin({
+          __NODE_ENV__: JSON.stringify(isDev ? "development" : "production"),
+        }),
       ]
-    : [new CompressionPlugin()]
-  ).concat([new LoadablePlugin(), new MiniCssExtractPlugin()])
+    : []
+  )
+    .concat(
+      isDev
+        ? [new webpack.HotModuleReplacementPlugin()]
+        : [new CompressionPlugin()]
+    )
+    .concat([new LoadablePlugin(), new MiniCssExtractPlugin()])
 
-export const getDefaultConfig = (isWebOptimized: boolean) => {
+export const getDefaultConfig = (isWeb: boolean) => {
   return {
-    optimization: isWebOptimized
-      ? {
-          minimize: true,
-          minimizer: [
-            new TerserPlugin({
-              terserOptions: {
-                output: {
-                  comments: false,
+    optimization:
+      isWeb && !isDev
+        ? {
+            minimize: true,
+            minimizer: [
+              new TerserPlugin({
+                terserOptions: {
+                  output: {
+                    comments: false,
+                  },
                 },
-              },
-            }),
-          ],
-        }
-      : undefined,
+              }),
+            ],
+          }
+        : undefined,
     resolve: {
       alias: {
         "react-native": "react-native-web",
+        "react-dom": isWeb && isDev ? "@hot-loader/react-dom" : "react-dom",
       },
       extensions: [".web.js", ".js", ".tsx", ".ts", ".web.tsx", ".web.jsx"],
     },

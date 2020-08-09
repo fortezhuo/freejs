@@ -26,7 +26,7 @@ const webpackProdClient = {
   module: {
     rules: getWebpackRules(true),
   },
-  plugins: getWebpackPlugins(false),
+  plugins: getWebpackPlugins(true),
 }
 
 const webpackProdServer = {

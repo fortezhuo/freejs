@@ -1,15 +1,25 @@
 import React from "react"
 import { loadableReady } from "@loadable/component"
-import { hydrate } from "react-dom"
+import { AppRegistry } from "react-native"
 import { BrowserRouter } from "react-router-dom"
+import "./assets/index.css"
 import App from "./App"
 
-loadableReady(() => {
-  const root = document.getElementById("root")
-  hydrate(
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>,
-    root
-  )
-})
+const isDev = __NODE_ENV__ !== "production"
+
+AppRegistry.registerComponent("Web", () => () => (
+  <BrowserRouter>
+    <App />
+  </BrowserRouter>
+))
+
+const renderClient = () =>
+  AppRegistry.runApplication("Web", {
+    rootTag: document.getElementById("root"),
+  })
+
+isDev
+  ? renderClient()
+  : loadableReady(() => {
+      renderClient()
+    })
