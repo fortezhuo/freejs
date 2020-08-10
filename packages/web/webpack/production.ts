@@ -25,7 +25,7 @@ const webpackProdClient = {
     publicPath: `/static/web/`,
   },
   module: {
-    rules: getWebpackRules(true),
+    rules: getWebpackRules(),
   },
   plugins: getWebpackPlugins(true),
 }
@@ -51,7 +51,7 @@ const webpackProdServer: webpack.Configuration = {
     libraryTarget: "commonjs2",
   },
   module: {
-    rules: getWebpackRules(false),
+    rules: getWebpackRules(),
   },
   plugins: getWebpackPlugins(false),
 }

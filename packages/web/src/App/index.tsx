@@ -7,10 +7,6 @@ const Home = loadable(() => import("@free/core/screen/Home"), {
   ssr: true,
   fallback: <span>Loading ...</span>,
 })
-const Views = loadable(() => import("@free/core/screen/View"), {
-  ssr: true,
-  fallback: <span>Loading ...</span>,
-})
 
 const AppLayout = loadable(() => import("@free/core/component/AppLayout"), {
   ssr: true,

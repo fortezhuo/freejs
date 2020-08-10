@@ -5,7 +5,6 @@ import {
   resolvePath,
 } from "./base"
 
-const distClient = resolvePath("build/static/web")
 const entryClient = ["react-hot-loader/patch", resolvePath("src")]
 
 const webpackDevConfig = {
@@ -15,7 +14,7 @@ const webpackDevConfig = {
   watch: true,
   entry: entryClient,
   module: {
-    rules: getWebpackRules(true),
+    rules: getWebpackRules(),
   },
   plugins: getWebpackPlugins(true),
   devServer: {

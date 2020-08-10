@@ -17,17 +17,52 @@ const babelLoaderInclude = [
   resolvePath("../core"),
   resolvePath("../tailwind"),
 ]
-const babelLoaderExclude = /node_modules/
 
-export const getWebpackRules = (isWeb: boolean): webpack.Rule[] => [
+const babelLoaderExclude = /node_modules[/\\](?!react-native-vector-icons|react-native-safe-area-view)/
+
+export const getWebpackRules = (): webpack.Rule[] => [
   {
-    test: /\.(tsx|ts|js|jsx)$/,
+    test: /\.(tsx|ts)$/,
     include: babelLoaderInclude,
+    use: {
+      loader: "babel-loader",
+      options: {
+        babelrc: false,
+        configFile: false,
+        presets: [
+          "@babel/preset-env",
+          "@babel/preset-react",
+          "@babel/preset-typescript",
+        ],
+        plugins: [
+          "react-hot-loader/babel",
+          "@babel/plugin-syntax-dynamic-import",
+          "@babel/plugin-proposal-class-properties",
+          "@babel/plugin-proposal-object-rest-spread",
+          "@babel/plugin-transform-runtime",
+          "@loadable/babel-plugin",
+          "react-native-web",
+        ],
+      },
+    },
+  },
+  {
+    test: /\.js$/,
     exclude: babelLoaderExclude,
     use: {
       loader: "babel-loader",
       options: {
-        caller: { target: isWeb ? "web" : "node" },
+        babelrc: false,
+        configFile: false,
+        presets: [
+          "@babel/preset-env",
+          "@babel/preset-react",
+          "@babel/preset-typescript",
+        ],
+        plugins: [
+          "@babel/plugin-proposal-class-properties",
+          "@babel/plugin-proposal-object-rest-spread",
+        ],
       },
     },
   },
