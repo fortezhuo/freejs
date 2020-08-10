@@ -17,7 +17,7 @@ const babelLoaderInclude = [
   resolvePath("../core"),
   resolvePath("../tailwind"),
 ]
-const babelLoaderExclude = /node_modules\/(?!(react-native-vector-icons)\/).*/
+const babelLoaderExclude = /node_modules/
 
 export const getWebpackRules = (isWeb: boolean): webpack.Rule[] => [
   {
