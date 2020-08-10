@@ -1,12 +1,14 @@
 import React, { FC } from "react"
-import { View, StyleSheet } from "react-native"
+import { View, StyleSheet, ScrollView, ViewProps } from "react-native"
 import { tw } from "@free/tailwind"
-import { observer } from "mobx-react-lite"
+import { useSpring, animated } from "react-spring/native"
 import { Accordion, AccordionItem } from "../Accordion"
 
-export const Sidebar: FC<any> = observer(({ toggle }) => {
+const AnimatedView = animated<React.ElementType<ViewProps>>(View)
+
+const Content: FC = () => {
   return (
-    <View style={styles.rootSidebar}>
+    <View style={styles.rootContent}>
       <Accordion label="1" icon="home">
         <AccordionItem icon="home">11</AccordionItem>
         <AccordionItem icon="home">12</AccordionItem>
@@ -50,8 +52,26 @@ export const Sidebar: FC<any> = observer(({ toggle }) => {
       </AccordionItem>
     </View>
   )
-})
+}
+
+export const Sidebar: FC<Sidebar> = ({ isOpen }) => {
+  const style = useSpring({
+    from: { width: 0 },
+    to: {
+      width: isOpen ? tw("w-64").width : 0,
+    },
+  })
+
+  return (
+    <AnimatedView style={StyleSheet.flatten([styles.rootSidebar, style])}>
+      <ScrollView>
+        <Content />
+      </ScrollView>
+    </AnimatedView>
+  )
+}
 
 const styles = StyleSheet.create({
-  rootSidebar: tw("flex-no-wrap w-64"),
+  rootSidebar: tw(`shadow-2xl flex-col`),
+  rootContent: tw("flex-no-wrap w-64"),
 })

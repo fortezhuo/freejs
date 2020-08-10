@@ -1,38 +1,16 @@
 import React, { FC } from "react"
 import { tw } from "@free/tailwind"
-import {
-  View,
-  StyleSheet,
-  TouchableWithoutFeedback,
-  ScrollView,
-} from "react-native"
-import { useSpring, animated } from "react-spring/native"
+import { View, StyleSheet, TouchableWithoutFeedback } from "react-native"
+import { Sidebar } from "./Sidebar"
 import { observer } from "mobx-react-lite"
 import { useStore } from "../../store"
 
-const AnimatedView: any = animated(View)
-
-const Sidebar: FC<any> = ({ isOpen, children }) => {
-  const style: any = useSpring({
-    from: { width: 0 },
-    to: {
-      width: isOpen ? tw("w-64").width : 0,
-    },
-  })
-
-  return (
-    <AnimatedView style={StyleSheet.flatten([styles.panelSidebar, style])}>
-      <ScrollView>{children}</ScrollView>
-    </AnimatedView>
-  )
-}
-
-export const Drawer: FC<any> = observer(({ sidebar, children }) => {
+export const Drawer: FC = observer(({ children }) => {
   const state = useStore("ui")
 
   return (
     <View style={styles.rootDrawer}>
-      <Sidebar isOpen={state.isDrawerOpen || state.isMobile}>{sidebar}</Sidebar>
+      <Sidebar isOpen={state.isDrawerOpen || state.isMobile} />
       <View style={styles.panelContent}>
         {state.isDrawerOpen && (
           <TouchableWithoutFeedback onPress={state.toggleDrawer}>

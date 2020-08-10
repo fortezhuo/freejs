@@ -1,10 +1,9 @@
-import React, { FC, useEffect } from "react"
+import React, { FC } from "react"
 import { configRoute as route } from "@free/config"
 import {
   View,
   StyleSheet,
   ImageBackground,
-  useWindowDimensions,
   KeyboardAvoidingView,
   Platform,
   ViewProps,
@@ -12,7 +11,6 @@ import {
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context"
 import { tw } from "@free/tailwind"
 import imgWallpaper from "../../img/wallpaper.jpg"
-import { Sidebar } from "../Sidebar"
 import { Drawer } from "../Drawer"
 import { useLayout } from "./hook"
 import { observer } from "mobx-react-lite"
@@ -43,7 +41,7 @@ const AppLayout: FC = observer(({ children }) => {
         <SafeAreaView style={styles.rootSafe}>
           <View style={styles.rootApp}>
             <Background wallpaper>
-              <Drawer sidebar={<Sidebar />}>{children}</Drawer>
+              <Drawer>{children}</Drawer>
             </Background>
           </View>
         </SafeAreaView>

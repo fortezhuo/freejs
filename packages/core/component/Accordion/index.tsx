@@ -5,6 +5,7 @@ import { useSpring, animated } from "react-spring/native"
 import { IconLabel, Icon } from "../Icon"
 import { tw, adjust, border } from "@free/tailwind"
 import { observer, useLocalStore } from "mobx-react-lite"
+import { useStore } from "../../store"
 
 const AnimatedView = animated<React.ElementType<ViewProps>>(View)
 const { color } = tw("text-gray-600")
@@ -55,7 +56,12 @@ export const Accordion: FC<Accordion> = observer(
 )
 
 export const AccordionItem: FC<AccordionItem> = observer(
-  ({ icon, header = false, children, onPress = noop, onClose = noop }) => {
+  ({ icon, header = false, children, onPress = noop }) => {
+    const state = useStore("ui")
+    const onClose = () => {
+      if (state.isMobile) state.setDrawerOpen(false)
+    }
+
     return (
       <TouchableOpacity
         onPress={() => {

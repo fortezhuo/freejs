@@ -35,3 +35,7 @@ interface AccordionItem {
   onPress?: VoidFunction
   onClose?: VoidFunction
 }
+
+interface Sidebar extends ViewProps {
+  isOpen: boolean
+}
