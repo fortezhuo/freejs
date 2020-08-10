@@ -54,6 +54,10 @@ export const getWebpackRules = (isWeb: boolean): webpack.Rule[] => [
     use: [
       {
         loader: "url-loader",
+        options: {
+          limit: false,
+          name: `[name].[ext]`,
+        },
       },
     ],
   },

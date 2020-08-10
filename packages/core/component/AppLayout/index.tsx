@@ -12,6 +12,9 @@ import {
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context"
 import { tw } from "@free/tailwind"
 import imgWallpaper from "../../img/wallpaper.jpg"
+import { Sidebar } from "../Sidebar"
+import { Button } from "../Button"
+import { useDrawer } from "../Drawer"
 
 const noop = () => {}
 
@@ -31,6 +34,7 @@ const Background: FC<Background> = ({ wallpaper, children }) => {
 
 const AppLayout: FC<any> = ({ children }) => {
   const { width } = useWindowDimensions()
+  const { Drawer, state } = useDrawer()
   const isMobileScreen = width < 1200
 
   return (
@@ -41,7 +45,17 @@ const AppLayout: FC<any> = ({ children }) => {
       >
         <SafeAreaView style={styles.rootSafe}>
           <View style={styles.rootApp}>
-            <Background wallpaper>{children}</Background>
+            <Background wallpaper>
+              <Drawer
+                isMobile={isMobileScreen}
+                sidebar={
+                  <Sidebar toggle={isMobileScreen ? state.toggle : noop} />
+                }
+              >
+                <Button onPress={state.toggle} />
+                {children}
+              </Drawer>
+            </Background>
           </View>
         </SafeAreaView>
       </KeyboardAvoidingView>
