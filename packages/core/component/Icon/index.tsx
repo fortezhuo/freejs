@@ -1,5 +1,7 @@
 import React, { FC } from "react"
-import FeatherIcon from "react-native-vector-icons/Feather"
+//import FeatherIcon from "react-native-vector-icons/Feather"
+//return <FeatherIcon name={name} size={size} color={color} />
+
 import { TouchableOpacity, View, Text } from "react-native"
 import { configTheme as theme } from "@free/config"
 import { color } from "@free/tailwind"
@@ -9,7 +11,7 @@ const disabledColor = color("bg-gray-600")
 
 export const Icon: FC<Icon> = observer(
   ({ name, size = 24, color = "white" }) => {
-    return <FeatherIcon name={name} size={size} color={color} />
+    return <Text>{name}</Text>
   }
 )
 
