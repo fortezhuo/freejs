@@ -14,8 +14,8 @@ import { tw } from "@free/tailwind"
 import imgWallpaper from "../../img/wallpaper.jpg"
 import { Sidebar } from "../Sidebar"
 import { Drawer } from "../Drawer"
+import { useLayout } from "./hook"
 import { observer } from "mobx-react-lite"
-import { useStore } from "../../store"
 
 interface Background extends ViewProps {
   wallpaper: boolean
@@ -32,11 +32,7 @@ const Background: FC<Background> = ({ wallpaper, children }) => {
 }
 
 const AppLayout: FC = observer(({ children }) => {
-  const { width } = useWindowDimensions()
-  const state = useStore("ui")
-  useEffect(() => {
-    state.setMobile(!(width < 1200))
-  }, [width])
+  useLayout()
 
   return (
     <SafeAreaProvider>
