@@ -1,5 +1,5 @@
+import "mobx-react-lite/batchingForReactDom"
 import React from "react"
-import { View, Text, Image } from "react-native"
 import loadable from "@loadable/component"
 import { Switch, Route } from "react-router-dom"
 

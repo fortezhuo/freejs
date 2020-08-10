@@ -36,8 +36,9 @@ export const getWebpackRules = (): webpack.Rule[] => [
         ],
         plugins: [
           "react-hot-loader/babel",
+          ["@babel/plugin-proposal-decorators", { legacy: true }],
+          ["@babel/plugin-proposal-class-properties", { loose: true }],
           "@babel/plugin-syntax-dynamic-import",
-          "@babel/plugin-proposal-class-properties",
           "@babel/plugin-proposal-object-rest-spread",
           "@babel/plugin-transform-runtime",
           "@loadable/babel-plugin",

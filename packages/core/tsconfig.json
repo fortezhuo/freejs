@@ -2,6 +2,7 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "jsx": "react",
+    "experimentalDecorators": true,
     "typeRoots": ["../../@types", "../../node_modules/@types"]
   },
   "include": ["**/*"]

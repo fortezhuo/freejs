@@ -7,50 +7,43 @@ import {
   ScrollView,
 } from "react-native"
 import { useSpring, animated } from "react-spring/native"
-import { observer, useLocalStore } from "mobx-react-lite"
+import { observer } from "mobx-react-lite"
+import { useStore } from "../../store"
 
-const { width } = tw("w-64")
+const AnimatedView: any = animated(View)
 
-export const useDrawer = () => {
-  const state = useLocalStore(() => ({
-    isOpen: false,
-    toggle() {
-      state.isOpen = !state.isOpen
+const Sidebar: FC<any> = ({ isOpen, children }) => {
+  const style: any = useSpring({
+    from: { width: 0 },
+    to: {
+      width: isOpen ? tw("w-64").width : 0,
     },
-  }))
-
-  const Drawer: FC<any> = observer(({ sidebar, children, isMobile }) => {
-    const Sidebar: any = isMobile ? animated(View) : View
-    const style: any = isMobile
-      ? useSpring({
-          width: state.isOpen ? width : 0,
-        })
-      : {}
-
-    return (
-      <View style={styles.rootDrawer}>
-        {true && (
-          <Sidebar style={StyleSheet.flatten([styles.panelSidebar, style])}>
-            <ScrollView>{sidebar}</ScrollView>
-          </Sidebar>
-        )}
-        <View style={styles.panelContent}>
-          {state.isOpen && (
-            <TouchableWithoutFeedback onPress={state.toggle}>
-              <View style={styles.panelOverlay}></View>
-            </TouchableWithoutFeedback>
-          )}
-          <View style={styles.panelContent}>{children}</View>
-        </View>
-      </View>
-    )
   })
 
-  return {
-    Drawer,
-    state,
-  }
+  return (
+    <AnimatedView style={StyleSheet.flatten([styles.panelSidebar, style])}>
+      <ScrollView>{children}</ScrollView>
+    </AnimatedView>
+  )
 }
+
+export const Drawer: FC<any> = observer(({ sidebar, children }) => {
+  const state = useStore("ui")
+
+  return (
+    <View style={styles.rootDrawer}>
+      <Sidebar isOpen={state.isDrawerOpen}>{sidebar}</Sidebar>
+      <View style={styles.panelContent}>
+        {state.isDrawerOpen && (
+          <TouchableWithoutFeedback onPress={state.toggleDrawer}>
+            <View style={styles.panelOverlay}></View>
+          </TouchableWithoutFeedback>
+        )}
+        <View style={styles.panelContent}>{children}</View>
+      </View>
+    </View>
+  )
+})
 
 const styles = StyleSheet.create({
   rootDrawer: tw("flex-row flex-1"),

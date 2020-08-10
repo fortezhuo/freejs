@@ -1,3 +1,9 @@
+type ListStore =
+  | {
+      [key: string]: any
+    }
+  | undefined
+
 interface Icon {
   name: string
   size?: number
