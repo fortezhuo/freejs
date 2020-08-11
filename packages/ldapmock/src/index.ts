@@ -1,4 +1,4 @@
-import { configLDAP } from "@free/config"
+import { configLDAP } from "@free/setup"
 import { database } from "./database"
 import * as ldap from "ldapjs"
 

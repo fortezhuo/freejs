@@ -15,7 +15,8 @@
     "dev:server": "yarn workspace @free/server start",
     "clean:build": "rm -rf ./build",
     "clean:repo": "rm -rf ./node_modules ./packages/**/node_modules ./repo/mobile/ios/Podfile.lock ./repo/mobile/ios/Pods  ./yarn.lock",
-    "start": "NODE_ENV=production node --trace-warnings ./build | NODE_ENV=production logger"
+    "start": "NODE_ENV=production node --trace-warnings ./build | NODE_ENV=production logger",
+    "start:ldap": "run-p dev:ldap start"
   },
   "repository": {
     "type": "git",

@@ -1,6 +1,6 @@
 import React, { FC, Children } from "react"
 import { View, TouchableOpacity, StyleSheet, ViewProps } from "react-native"
-import { configTheme as theme } from "@free/config"
+import { theme } from "../../config/theme"
 import { useSpring, animated } from "react-spring/native"
 import { IconLabel, Icon } from "../Icon"
 import { tw, adjust, border } from "@free/tailwind"

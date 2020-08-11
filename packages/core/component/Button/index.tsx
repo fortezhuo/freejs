@@ -2,7 +2,7 @@ import React, { FC } from "react"
 import { IconButton } from "../Icon"
 import { StyleSheet } from "react-native"
 import { observer } from "mobx-react-lite"
-import { configTheme as theme } from "@free/config"
+import { theme } from "../../config/theme"
 import { tw } from "@free/tailwind"
 
 export const Button: FC<any> = observer((props) => {

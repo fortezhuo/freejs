@@ -11,5 +11,3 @@ type ConfigServer = {
 export const configLDAP: Config
 export const configServer: ConfigServer
 export const configApp: Config
-export const configTheme: Config
-export const configRoute: Config

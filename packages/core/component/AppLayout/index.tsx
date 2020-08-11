@@ -1,5 +1,5 @@
 import React, { FC } from "react"
-import { configRoute as route } from "@free/config"
+import { route } from "../../config/route"
 import {
   View,
   StyleSheet,

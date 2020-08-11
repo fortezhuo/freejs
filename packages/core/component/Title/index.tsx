@@ -1,5 +1,5 @@
 import React, { FC } from "react"
-import { configApp } from "@free/config"
+import { configApp } from "@free/setup"
 import { TouchableOpacity, View, Text, Image, StyleSheet } from "react-native"
 import { tw } from "@free/tailwind"
 import { useHistory } from "../Router"

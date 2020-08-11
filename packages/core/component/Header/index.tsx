@@ -1,13 +1,11 @@
 import React, { FC } from "react"
-import { configTheme as theme } from "@free/config"
+import { theme } from "../../config/theme"
 import { StyleSheet, View } from "react-native"
 import { Title } from "../Title"
 import { IconButton } from "../Icon"
 import { tw } from "@free/tailwind"
 import { observer } from "mobx-react-lite"
 import { useStore } from "../../store"
-
-const noop = () => {}
 
 export const Header: FC = observer(() => {
   const { ui } = useStore()
@@ -17,8 +15,8 @@ export const Header: FC = observer(() => {
     <View style={styles.rootHeader}>
       <IconButton
         name={ui.isMobile && "menu"}
-        styleContainer={styles.actionLeft}
-        onPress={ui.isMobile ? ui.toggleDrawer : noop}
+        style={styles.actionLeft}
+        onPress={ui.isMobile && ui.toggleDrawer}
       />
       <Title>{subTitle}</Title>
       <View style={styles.boxGrow}></View>

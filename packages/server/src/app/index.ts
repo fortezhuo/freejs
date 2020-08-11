@@ -2,7 +2,7 @@ import fastify, { FastifyInstance } from "fastify"
 import { Server, IncomingMessage, ServerResponse } from "http"
 import { getOptions, loadBanner } from "./misc"
 import { all } from "../plugin"
-import { configApp, configServer } from "@free/config"
+import { configApp, configServer } from "@free/setup"
 
 export const boot: Boot = async () => {
   const isProd = process.env.NODE_ENV === "production"

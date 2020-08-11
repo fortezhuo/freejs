@@ -4,6 +4,10 @@ type ListStore =
     }
   | undefined
 
+type Config = {
+  [key: string]: any
+}
+
 interface Icon {
   name: string
   size?: number

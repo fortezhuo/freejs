@@ -1,8 +1,7 @@
 import React, { FC } from "react"
 import FeatherIcon from "react-native-vector-icons/Feather"
-
 import { TouchableOpacity, View, Text } from "react-native"
-import { configTheme as theme } from "@free/config"
+import { theme } from "../../config/theme"
 import { color } from "@free/tailwind"
 import { observer } from "mobx-react-lite"
 
