@@ -11,6 +11,7 @@ interface Icon {
 }
 
 interface IconLabel extends Icon {
+  name?: string | undefined
   style?: any
   styleContainer?: any
   styleText?: any

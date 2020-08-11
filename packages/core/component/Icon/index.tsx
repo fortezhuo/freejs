@@ -19,7 +19,7 @@ export const IconLabel: FC<IconLabel> = observer(
     return (
       <View style={styleContainer}>
         <View style={style}>
-          <Icon size={size} color={color} name={name} />
+          {name && <Icon size={size} color={color} name={name} />}
         </View>
         {children && <Text style={styleText}>{children}</Text>}
       </View>

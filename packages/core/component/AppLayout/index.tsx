@@ -11,6 +11,7 @@ import {
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context"
 import { tw } from "@free/tailwind"
 import imgWallpaper from "../../img/wallpaper.jpg"
+import { Header } from "../Header"
 import { Drawer } from "../Drawer"
 import { useLayout } from "./hook"
 import { observer } from "mobx-react-lite"
@@ -40,6 +41,7 @@ const AppLayout: FC = observer(({ children }) => {
       >
         <SafeAreaView style={styles.rootSafe}>
           <View style={styles.rootApp}>
+            <Header />
             <Background wallpaper>
               <Drawer>{children}</Drawer>
             </Background>

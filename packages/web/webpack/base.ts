@@ -5,9 +5,11 @@ import LoadablePlugin from "@loadable/webpack-plugin"
 import MiniCssExtractPlugin from "mini-css-extract-plugin"
 import CompressionPlugin from "compression-webpack-plugin"
 import TerserPlugin from "terser-webpack-plugin"
+import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer"
 import webpack from "webpack"
 
 const isDev = process.env.NODE_ENV !== "production"
+const isAnalyzer = process.env.ANALYZER === "true"
 
 export const resolvePath = (path: string) => resolve(appDirectory, path)
 
@@ -30,7 +32,7 @@ export const getWebpackRules = (): webpack.Rule[] => [
         babelrc: false,
         configFile: false,
         presets: [
-          "@babel/preset-env",
+          ["@babel/preset-env", { modules: false }],
           "@babel/preset-react",
           "@babel/preset-typescript",
         ],
@@ -117,6 +119,7 @@ export const getWebpackPlugins = (isWeb: boolean): webpack.Plugin[] =>
         ? [new webpack.HotModuleReplacementPlugin()]
         : [new CompressionPlugin()]
     )
+    .concat(isAnalyzer ? [new BundleAnalyzerPlugin()] : [])
     .concat([new LoadablePlugin(), new MiniCssExtractPlugin()])
 
 export const getDefaultConfig = (isWeb: boolean): webpack.Configuration => {
@@ -134,6 +137,10 @@ export const getDefaultConfig = (isWeb: boolean): webpack.Configuration => {
                 },
               }),
             ],
+            splitChunks: {
+              minSize: 10000,
+              maxSize: 250000,
+            },
           }
         : undefined,
     resolve: {

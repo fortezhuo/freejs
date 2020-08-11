@@ -13,6 +13,7 @@ const distServer = resolvePath("../../build/static/node")
 const entryServer = resolvePath("src/index.node.tsx")
 const stamp = dayjs().format("YYMMDDHHmm")
 
+const isAnalyzer = process.env.ANALYZER === "true"
 const webpackProdClient = {
   ...getDefaultConfig(true),
   target: "web",
@@ -56,4 +57,6 @@ const webpackProdServer: webpack.Configuration = {
   plugins: getWebpackPlugins(false),
 }
 
-export default [webpackProdClient, webpackProdServer]
+export default isAnalyzer
+  ? webpackProdClient
+  : [webpackProdClient, webpackProdServer]

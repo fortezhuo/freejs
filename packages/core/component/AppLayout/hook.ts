@@ -7,7 +7,7 @@ export const useLayout = () => {
   const ui = useStore("ui")
 
   useEffect(() => {
-    ui.setMobile(!(width < 1200))
+    ui.setMobile(width < 1200)
   }, [width])
 
   return ui

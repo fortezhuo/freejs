@@ -5,7 +5,7 @@ const StoreContext = React.createContext({
   ui: new UIStore(),
 })
 
-export const useStore = (name: string) => {
+export const useStore = (name?: string) => {
   const context: ListStore = React.useContext(StoreContext)
-  return context[name]
+  return name ? context[name] : context
 }

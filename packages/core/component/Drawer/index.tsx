@@ -1,7 +1,7 @@
 import React, { FC } from "react"
 import { tw } from "@free/tailwind"
 import { View, StyleSheet, TouchableWithoutFeedback } from "react-native"
-import { Sidebar } from "./Sidebar"
+import { Sidebar } from "../Sidebar"
 import { observer } from "mobx-react-lite"
 import { useStore } from "../../store"
 
@@ -10,7 +10,7 @@ export const Drawer: FC = observer(({ children }) => {
 
   return (
     <View style={styles.rootDrawer}>
-      <Sidebar isOpen={state.isDrawerOpen || state.isMobile} />
+      <Sidebar isOpen={state.isDrawerOpen || !state.isMobile} />
       <View style={styles.panelContent}>
         {state.isDrawerOpen && (
           <TouchableWithoutFeedback onPress={state.toggleDrawer}>
