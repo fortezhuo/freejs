@@ -11,7 +11,7 @@
     "build": "NODE_ENV=production tsc"
   },
   "dependencies": {
-    "@free/setup": "*",
+    "@free/env": "*",
     "@loadable/server": "^5.13.1"
   },
   "devDependencies": {

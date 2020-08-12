@@ -1,4 +1,4 @@
-import { configServer } from "@free/setup"
+import { configServer } from "@free/env"
 
 const logoBanner: string = `  
     ███████╗██████╗ ███████╗███████╗         ██╗███████╗

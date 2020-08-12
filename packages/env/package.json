@@ -1,6 +1,6 @@
 {
-  "name": "@free/setup",
-  "description": "Free Setup",
+  "name": "@free/env",
+  "description": "Free Setup Environment",
   "private": true,
   "version": "1.0.0",
   "main": "index.js",
