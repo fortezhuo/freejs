@@ -1,23 +1,26 @@
-import { observable, action } from "mobx"
+import { observable, action, decorate } from "mobx"
 
 class UIStore {
-  @observable
-  isMobile = false
-  @action
-  setMobile = (isMobile: boolean) => {
-    this.isMobile = isMobile
+  dimension = {}
+  setDimension = (dimension: any) => {
+    this.dimension = dimension
   }
 
-  @observable
   isDrawerOpen = false
-  @action
   toggleDrawer = () => {
     this.isDrawerOpen = !this.isDrawerOpen
   }
-  @action
   setDrawerOpen = (isOpen: boolean) => {
     this.isDrawerOpen = isOpen
   }
 }
+
+decorate(UIStore, {
+  dimension: observable,
+  setDimension: action,
+  isDrawerOpen: observable,
+  toggleDrawer: action,
+  setDrawerOpen: action,
+})
 
 export default UIStore

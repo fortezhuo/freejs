@@ -1,5 +1,4 @@
 import React, { FC } from "react"
-import { route } from "../../config/route"
 import {
   View,
   StyleSheet,
@@ -13,7 +12,8 @@ import { tw } from "@free/tailwind"
 import imgWallpaper from "../../img/wallpaper.jpg"
 import { Header } from "../Header"
 import { Drawer } from "../Drawer"
-import { useLayout } from "./hook"
+import { Footer } from "../Footer"
+import { useResponsiveLayout } from "./hook"
 import { observer } from "mobx-react-lite"
 
 interface Background extends ViewProps {
@@ -21,6 +21,7 @@ interface Background extends ViewProps {
 }
 
 const Background: FC<Background> = ({ wallpaper, children }) => {
+  useResponsiveLayout()
   return wallpaper ? (
     <ImageBackground source={imgWallpaper} style={styles.rootBackground}>
       {children}
@@ -30,9 +31,7 @@ const Background: FC<Background> = ({ wallpaper, children }) => {
   )
 }
 
-const AppLayout: FC = observer(({ children }) => {
-  useLayout()
-
+export const AppLayout: FC = observer(({ children }) => {
   return (
     <SafeAreaProvider>
       <KeyboardAvoidingView
@@ -44,6 +43,7 @@ const AppLayout: FC = observer(({ children }) => {
             <Header />
             <Background wallpaper>
               <Drawer>{children}</Drawer>
+              <Footer />
             </Background>
           </View>
         </SafeAreaView>

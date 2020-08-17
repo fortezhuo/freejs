@@ -16,9 +16,9 @@ interface Icon {
 
 interface IconLabel extends Icon {
   name?: string | undefined
-  style?: any
-  styleContainer?: any
-  styleText?: any
+  style?: ViewStyle
+  styleContainer?: ViewStyle
+  styleText?: TextStyle
   children?: string
 }
 
@@ -30,7 +30,7 @@ interface IconButton extends IconLabel {
 interface Accordion {
   icon: string
   label: string
-  children: JSX.Element | JSX.Element[]
+  children: ReactNode
 }
 
 interface AccordionItem {
@@ -44,3 +44,22 @@ interface AccordionItem {
 interface Sidebar extends ViewProps {
   isOpen: boolean
 }
+
+type Footer = {
+  info?: string
+}
+
+type Modal = {
+  visible: boolean
+  transparent?: boolean = false
+  onRequestClose?: VoidFunction
+  onBackdropPress?: VoidFunction | undefined
+  children: ReactNode
+}
+
+type Menu = {
+  anchor: ReactNode
+  style?: ViewStyle
+  children: ReactNode
+}
+interface MenuItem extends IconButton {}

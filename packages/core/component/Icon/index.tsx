@@ -27,11 +27,22 @@ export const IconLabel: FC<IconLabel> = observer(
 )
 
 export const IconButton: FC<IconButton> = observer(
-  ({ name, color, size, style, styleText, children, disabled, onPress }) => {
+  ({
+    name,
+    color,
+    size,
+    style,
+    styleContainer,
+    styleText,
+    children,
+    disabled,
+    onPress,
+  }) => {
     return (
       <TouchableOpacity disabled={disabled} onPress={onPress}>
         <IconLabel
           style={style}
+          styleContainer={styleContainer}
           styleText={styleText}
           name={name}
           size={size}

@@ -59,7 +59,7 @@ export const AccordionItem: FC<AccordionItem> = observer(
   ({ icon, header = false, children, onPress = noop }) => {
     const state = useStore("ui")
     const onClose = () => {
-      if (state.isMobile) state.setDrawerOpen(false)
+      if (state.dimension.isMobile) state.setDrawerOpen(false)
     }
 
     return (

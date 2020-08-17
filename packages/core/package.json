@@ -22,6 +22,8 @@
     "mobx-react-lite": "^2.0.7",
     "react": "^16.13.1",
     "react-native-safe-area-context": "^3.1.1",
+    "react-native-file-viewer": "^2.1.1",
+    "react-native-fs": "^2.16.6",
     "react-native-vector-icons": "fortezhuo/react-native-vector-icons",
     "react-router": "^5.2.0",
     "react-spring": "^8.0.27"

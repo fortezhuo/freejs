@@ -3,6 +3,7 @@ import { theme } from "../../config/theme"
 import { StyleSheet, View } from "react-native"
 import { Title } from "../Title"
 import { IconButton } from "../Icon"
+import { MenuUser } from "./MenuUser"
 import { tw } from "@free/tailwind"
 import { observer } from "mobx-react-lite"
 import { useStore } from "../../store"
@@ -14,12 +15,13 @@ export const Header: FC = observer(() => {
   return (
     <View style={styles.rootHeader}>
       <IconButton
-        name={ui.isMobile && "menu"}
+        name={ui.dimension.isMobile && "menu"}
         style={styles.actionLeft}
-        onPress={ui.isMobile && ui.toggleDrawer}
+        onPress={ui.dimension.isMobile && ui.toggleDrawer}
       />
       <Title>{subTitle}</Title>
       <View style={styles.boxGrow}></View>
+      <MenuUser />
     </View>
   )
 })

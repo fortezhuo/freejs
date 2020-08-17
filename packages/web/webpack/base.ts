@@ -146,9 +146,10 @@ export const getDefaultConfig = (isWeb: boolean): webpack.Configuration => {
     resolve: {
       alias: {
         "react-native": "react-native-web",
+        //        "react-native-web/dist/exports/Modal": "modal-react-native-web",
         "react-dom": isWeb && isDev ? "@hot-loader/react-dom" : "react-dom",
       },
-      extensions: [".web.js", ".js", ".tsx", ".ts", ".web.tsx", ".web.jsx"],
+      extensions: [".web.js", ".js", ".web.tsx", ".web.jsx", ".tsx", ".ts"],
     },
     stats: {
       all: false,

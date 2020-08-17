@@ -16,7 +16,9 @@
     "clean:build": "rm -rf ./build",
     "clean:repo": "rm -rf ./node_modules ./packages/**/node_modules ./repo/mobile/ios/Podfile.lock ./repo/mobile/ios/Pods  ./yarn.lock",
     "start": "NODE_ENV=production node --trace-warnings ./build | NODE_ENV=production logger",
-    "start:ldap": "run-p dev:ldap start"
+    "start:ldap": "run-p dev:ldap start",
+    "android": "yarn workspace @free/mobile android",
+    "ios": "yarn workspace @free/mobile ios"
   },
   "repository": {
     "type": "git",

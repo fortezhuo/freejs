@@ -10,7 +10,7 @@ export const Drawer: FC = observer(({ children }) => {
 
   return (
     <View style={styles.rootDrawer}>
-      <Sidebar isOpen={state.isDrawerOpen || !state.isMobile} />
+      <Sidebar isOpen={state.isDrawerOpen || !state.dimension.isMobile} />
       <View style={styles.panelContent}>
         {state.isDrawerOpen && (
           <TouchableWithoutFeedback onPress={state.toggleDrawer}>

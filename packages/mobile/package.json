@@ -1,0 +1,30 @@
+{
+  "name": "@free/mobile",
+  "version": "1.0.0",
+  "prettier": {
+    "semi": false
+  },
+  "private": true,
+  "dependencies": {
+    "@free/core": "*",
+    "react-native": "0.63.1",
+    "react-router-native": "^5.2.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.8.4",
+    "@babel/runtime": "^7.8.4",
+    "@types/react-router-native": "^5.1.0",
+    "@types/react-test-renderer": "^16.9.2",
+    "metro-react-native-babel-preset": "^0.59.0",
+    "react-test-renderer": "16.13.1"
+  },
+  "scripts": {
+    "android": "react-native run-android",
+    "ios": "react-native run-ios",
+    "link-ios": "cd ios && pod install",
+    "clean-ios": "cd ios && rimraf ./Pods ./Podfile.lock",
+    "clean-android": "cd android && ./gradlew clean",
+    "clean-metro": "react-native start --reset-cache"
+  },
+  "license": "MIT"
+}
