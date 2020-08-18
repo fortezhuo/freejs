@@ -2,8 +2,9 @@ import React, { FC, memo } from "react"
 import { View, StyleSheet, TouchableWithoutFeedback } from "react-native"
 import { RNModal } from "./RNModal"
 import { tw } from "@free/tailwind"
+import { ModalProps } from "@free/core"
 
-export const Modal: FC<Modal> = memo(
+export const Modal: FC<ModalProps> = memo(
   ({
     visible,
     transparent = false,

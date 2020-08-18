@@ -6,12 +6,13 @@ import { IconLabel, Icon } from "../Icon"
 import { tw, adjust, border } from "@free/tailwind"
 import { observer, useLocalStore } from "mobx-react-lite"
 import { useStore } from "../../store"
+import { AccordionProps, AccordionItemProps } from "@free/core"
 
 const AnimatedView = animated<React.ElementType<ViewProps>>(View)
 const { color } = tw("text-gray-600")
 const noop = () => {}
 
-export const Accordion: FC<Accordion> = observer(
+export const Accordion: FC<AccordionProps> = observer(
   ({ icon, label, children }) => {
     const state = useLocalStore(() => ({
       isExpand: false,
@@ -56,7 +57,7 @@ export const Accordion: FC<Accordion> = observer(
   }
 )
 
-export const AccordionItem: FC<AccordionItem> = observer(
+export const AccordionItem: FC<AccordionItemProps> = observer(
   ({ icon, header = false, children, onPress = noop }) => {
     const state = useStore("ui")
     const onClose = () => {

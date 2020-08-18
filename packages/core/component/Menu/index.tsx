@@ -5,6 +5,7 @@ import { IconButton } from "../Icon"
 import { observer, useLocalStore } from "mobx-react-lite"
 import { tw } from "@free/tailwind"
 import { useStore } from "../../store"
+import { MenuProps, MenuItemProps } from "@free/core"
 
 const { color: iconColor } = tw("text-gray-700")
 const SCREEN_INDENT = 2
@@ -60,7 +61,7 @@ export const useMenu = () => {
   }
   const hide = () => state.setOpen(false)
 
-  const Menu: FC<Menu> = observer(({ anchor, style, children }) => {
+  const Menu: FC<MenuProps> = observer(({ anchor, style, children }) => {
     const ui = useStore("ui")
     const { menuWidth, menuHeight, anchorHeight } = state.measure
     let { left, top } = state.measure
@@ -106,7 +107,7 @@ export const useMenu = () => {
     )
   })
 
-  const MenuItem: FC<MenuItem> = observer(
+  const MenuItem: FC<MenuItemProps> = observer(
     ({
       name,
       color = iconColor,

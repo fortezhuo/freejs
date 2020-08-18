@@ -15,12 +15,9 @@ import { Drawer } from "../Drawer"
 import { Footer } from "../Footer"
 import { useResponsiveLayout } from "./hook"
 import { observer } from "mobx-react-lite"
+import { BackgroundProps } from "@free/core"
 
-interface Background extends ViewProps {
-  wallpaper: boolean
-}
-
-const Background: FC<Background> = ({ wallpaper, children }) => {
+const Background: FC<BackgroundProps> = ({ wallpaper, children }) => {
   useResponsiveLayout()
   return wallpaper ? (
     <ImageBackground source={imgWallpaper} style={styles.rootBackground}>

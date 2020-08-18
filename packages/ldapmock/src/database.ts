@@ -1,3 +1,5 @@
+import { LDAPData } from "@free/ldapmock"
+
 export const database: Array<LDAPData> = [
   {
     dn: "cn=forte,dc=ROCKMAN,dc=COM",

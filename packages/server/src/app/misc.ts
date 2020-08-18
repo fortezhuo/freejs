@@ -1,4 +1,5 @@
 import { configServer } from "@free/env"
+import { LoadBanner, GetFSOptions } from "@free/server"
 
 const logoBanner: string = `  
     ███████╗██████╗ ███████╗███████╗         ██╗███████╗
@@ -42,3 +43,5 @@ export const getOptions: GetFSOptions = (isProd = true) => {
     logger: true,
   }
 }
+
+const Icon: Config = {}

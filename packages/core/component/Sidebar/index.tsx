@@ -1,9 +1,9 @@
 import React, { FC } from "react"
 import { View, StyleSheet, ScrollView, ViewProps, Platform } from "react-native"
 import { tw } from "@free/tailwind"
-import { useStore } from "../../store"
 import { useSpring, animated } from "react-spring/native"
 import { Accordion, AccordionItem } from "../Accordion"
+import { SidebarProps } from "@free/core"
 
 const AnimatedView = animated<React.ElementType<ViewProps>>(View)
 
@@ -55,7 +55,7 @@ const Content: FC = () => {
   )
 }
 
-export const Sidebar: FC<Sidebar> = ({ isOpen }) => {
+export const Sidebar: FC<SidebarProps> = ({ isOpen }) => {
   const animatedStyle = useSpring({
     config: { duration: 100 },
     from: { width: 0 },

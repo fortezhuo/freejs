@@ -4,16 +4,21 @@ import { TouchableOpacity, View, Text } from "react-native"
 import { theme } from "../../config/theme"
 import { color } from "@free/tailwind"
 import { observer } from "mobx-react-lite"
+import { IconProps, IconLabelProps, IconButtonProps } from "@free/core"
 
 const disabledColor = color("bg-gray-600")
 
-export const Icon: FC<Icon> = observer(
+export const Icon: FC<IconProps> = observer(
   ({ name, size = 24, color = "white" }) => {
-    return <FeatherIcon name={name} size={size} color={color} />
+    return name ? (
+      <FeatherIcon name={name} size={size} color={color} />
+    ) : (
+      <View />
+    )
   }
 )
 
-export const IconLabel: FC<IconLabel> = observer(
+export const IconLabel: FC<IconLabelProps> = observer(
   ({ name, size, color, style, styleContainer, styleText, children }) => {
     return (
       <View style={styleContainer}>
@@ -26,7 +31,7 @@ export const IconLabel: FC<IconLabel> = observer(
   }
 )
 
-export const IconButton: FC<IconButton> = observer(
+export const IconButton: FC<IconButtonProps> = observer(
   ({
     name,
     color,
@@ -55,6 +60,6 @@ export const IconButton: FC<IconButton> = observer(
   }
 )
 
-export const IconLink: FC<IconButton> = observer(() => {
+export const IconLink: FC<IconButtonProps> = observer(() => {
   return <IconButton size={20} name="link" color={color(theme.primary)} />
 })

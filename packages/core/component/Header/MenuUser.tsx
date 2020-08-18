@@ -5,7 +5,7 @@ import { useMenu } from "../Menu"
 import { tw, color } from "@free/tailwind"
 import { observer } from "mobx-react-lite"
 
-export const MenuUser: FC<any> = observer(() => {
+export const MenuUser: FC = observer(() => {
   const { show, Menu, MenuItem } = useMenu()
   return (
     true && (

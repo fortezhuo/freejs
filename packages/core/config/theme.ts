@@ -1,3 +1,5 @@
+import { Config } from "@free/core"
+
 export const theme: Config = {
   primary: "bg-blue-500",
   warning: "bg-yellow-500",

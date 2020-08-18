@@ -2,8 +2,9 @@ import React, { FC } from "react"
 import { View, Text, StyleSheet } from "react-native"
 import { theme } from "../../config/theme"
 import { tw } from "@free/tailwind"
+import { FooterProps } from "@free/core"
 
-export const Footer: FC<Footer> = ({ info = "" }) => {
+export const Footer: FC<FooterProps> = ({ info = "" }) => {
   return (
     <View style={styles.rootFooter}>
       <Text style={styles.textLeft}>© 2020, Forte Framework</Text>
