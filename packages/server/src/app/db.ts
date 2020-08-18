@@ -13,6 +13,10 @@ export const load = async () => {
         .then(() => {
           return {
             type: "info",
+            database: {
+              app,
+              trash,
+            },
             message: `Database ${configDatabase.app} connected at ${configDatabase.url}`,
           }
         })

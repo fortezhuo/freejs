@@ -7,6 +7,7 @@ export const database = fp(async (instance) => {
   if (result.type === "error") {
     throw new Error(result.message)
   } else {
+    instance.decorateRequest("db", result.database)
     instance.log.info(result.message)
   }
 })
