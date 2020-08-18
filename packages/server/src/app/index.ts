@@ -10,7 +10,6 @@ export const boot: Boot = async () => {
   const app: FastifyInstance<Server, IncomingMessage, ServerResponse> = fastify(
     options
   )
-  app.register(all)
 
   try {
     loadBanner(isProd)
@@ -21,7 +20,8 @@ export const boot: Boot = async () => {
           : "API Server"
       } 🔥 ...`
     )
-    //    app.log.info(await forteMongo.load())
+    app.register(all)
+
     await app.listen(
       isProd ? configServer.port : 8000,
       isProd ? configServer.host : "0.0.0.0"

@@ -56,13 +56,6 @@ const Content: FC = () => {
 }
 
 export const Sidebar: FC<Sidebar> = ({ isOpen }) => {
-  const ui = useStore("ui")
-  const style =
-    Platform.OS === "web"
-      ? {
-          height: ui.dimension.height - 48,
-        }
-      : {}
   const animatedStyle = useSpring({
     config: { duration: 100 },
     from: { width: 0 },
@@ -73,7 +66,8 @@ export const Sidebar: FC<Sidebar> = ({ isOpen }) => {
 
   return (
     <AnimatedView
-      style={StyleSheet.flatten([styles.rootSidebar, style, animatedStyle])}
+      testID="Sidebar"
+      style={StyleSheet.flatten([styles.rootSidebar, animatedStyle])}
     >
       <ScrollView>
         <Content />

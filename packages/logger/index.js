@@ -6,12 +6,12 @@ var nl = "\n"
 var isProd = process.env.NODE_ENV === "production"
 
 var emojiLog = {
-  warn: "⚠️ WARN |",
-  info: "✅ INFO |",
-  error: "⛔️ERROR |",
-  debug: "🐛DEBUG |",
-  fatal: "💀FATAL |",
-  trace: "🔍TRACE |",
+  warn: "⚠️ WARN  |",
+  info: "✅ INFO  |",
+  error: "⛔️ ERROR |",
+  debug: "🐛DEBUG  |",
+  fatal: "💀 FATAL |",
+  trace: "🔍TRACE  |",
 }
 
 function isObject(input) {

@@ -4,6 +4,7 @@ import { loadableReady } from "@loadable/component"
 import { AppRegistry } from "react-native"
 import { BrowserRouter } from "react-router-dom"
 import "./assets/index.css"
+import "./assets/helper.js"
 import App from "./App"
 
 const isDev = __NODE_ENV__ !== "production"
