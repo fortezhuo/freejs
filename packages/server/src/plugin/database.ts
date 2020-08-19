@@ -1,13 +1,13 @@
-import { load } from "../app/db"
-import fp from "fastify-plugin"
+import { load } from "../app/database"
+import { FastifyInstance } from "fastify"
 
-export const database = fp(async (instance) => {
+export const database = async (instance: FastifyInstance) => {
   instance.log.info("Starting database connection ...")
   const result = await load()
   if (result.type === "error") {
     throw new Error(result.message)
   } else {
-    instance.decorateRequest("db", result.database)
+    instance.decorateRequest("database", result.database)
     instance.log.info(result.message)
   }
-})
+}

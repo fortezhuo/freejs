@@ -1,14 +1,18 @@
 import fastify, { FastifyInstance } from "fastify"
 import { Server, IncomingMessage, ServerResponse } from "http"
-import { getOptions, loadBanner } from "./misc"
+import { loadBanner } from "./misc"
 import { all } from "../plugin"
 import { configApp, configServer } from "@free/env"
+import { Boot } from "@free/server"
 
 export const boot: Boot = async () => {
   const isProd = process.env.NODE_ENV === "production"
-  const options = getOptions()
   const app: FastifyInstance<Server, IncomingMessage, ServerResponse> = fastify(
-    options
+    {
+      disableRequestLogging: true,
+      pluginTimeout: 0,
+      logger: true,
+    }
   )
 
   try {

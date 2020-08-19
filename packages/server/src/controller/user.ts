@@ -1,11 +1,8 @@
 import { FastifyInstance } from "fastify"
-import { Request, Reply } from "@free/server"
-
-const userFind = async function (req: Request, reply: Reply) {
-  const user = req.db.app.get("user")
-  reply.send(await user.find({}))
-}
+import * as db from "../database"
 
 export const userController = async (instance: FastifyInstance) => {
-  instance.get("/user", userFind)
+  instance.get("/user", db.findAll("user"))
+  instance.get("/user/:q", db.findOne("user"))
+  instance.post("/user", db.insert("user"))
 }

@@ -13,7 +13,6 @@ declare module "@free/core" {
   }
 
   //Accordion
-
   interface AccordionProps {
     icon: string
     label: string
@@ -29,19 +28,16 @@ declare module "@free/core" {
   }
 
   // AppLayout / Background
-
   interface BackgroundProps extends ViewProps {
     wallpaper: boolean
   }
 
   // Footer
-
   interface FooterProps {
     info?: string
   }
 
   // Icon
-
   interface IconProps {
     name?: string
     size?: number
@@ -62,7 +58,6 @@ declare module "@free/core" {
   }
 
   // Menu
-
   interface MenuProps {
     anchor: ReactNode
     style?: ViewStyle
@@ -72,7 +67,6 @@ declare module "@free/core" {
   interface MenuItemProps extends IconButtonProps {}
 
   // Modal
-
   interface ModalProps {
     visible: boolean
     transparent?: boolean = false
@@ -82,7 +76,6 @@ declare module "@free/core" {
   }
 
   // Sidebar
-
   interface SidebarProps extends ViewProps {
     isOpen: boolean
   }

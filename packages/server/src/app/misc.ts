@@ -1,5 +1,5 @@
 import { configServer } from "@free/env"
-import { LoadBanner, GetFSOptions } from "@free/server"
+import { Banner } from "@free/server"
 
 const logoBanner: string = `  
     ███████╗██████╗ ███████╗███████╗         ██╗███████╗
@@ -25,7 +25,7 @@ const infoFirstTime: string = `
 
 === PLEASE DISABLE "APP_FIRST_TIME" AFTER CREATE FIRST USER ===`
 
-export const loadBanner: LoadBanner = (isProd = true) => {
+export const loadBanner: Banner = (isProd = true) => {
   const isFirstTime = configServer.firstTime === "Yes" && isProd
   const color = isProd ? "" : "\x1b[31m"
   console.log(color, logoBanner)
@@ -35,13 +35,3 @@ export const loadBanner: LoadBanner = (isProd = true) => {
   }
   console.log("\x1b[0m", "")
 }
-
-export const getOptions: GetFSOptions = (isProd = true) => {
-  return {
-    disableRequestLogging: true,
-    pluginTimeout: 99999,
-    logger: true,
-  }
-}
-
-const Icon: Config = {}
