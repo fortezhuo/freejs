@@ -9,30 +9,27 @@ export const insert = (name: string, dbName = "app") => async (
   reply.statusCode = 201
   let result: ReplyJSON = {}
   const { validate } = Schema[name]
-  try {
-    const { body } = req
-    const isValid = validate(body)
-    if (isValid) {
-      console.log("isValid", isValid)
-      const data = {}
-      result = {
-        success: true,
-        data,
-      }
-    } else {
-      throw new Schema.Error(
-        `Validate Error for ${name.toUpperCase()}`,
-        validate.errors
-      )
+
+  const body = {
+    ...(req.body as object),
+    created_at: new Date(),
+    updated_at: new Date(),
+  }
+  const isValid = validate(body)
+  if (isValid) {
+    const collection = req.database[dbName].get(name)
+    const data = await collection.insert(body)
+    result = {
+      success: true,
+      data,
     }
-  } catch (e) {
+  } else {
     reply.statusCode = 400
     result = {
       success: false,
-      message: e.message,
-      stack: e,
+      message: `Validation Error for ${name.toUpperCase()}`,
+      stack: validate.errors,
     }
   }
-
   reply.send(result)
 }
