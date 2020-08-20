@@ -4,9 +4,9 @@ import { Exception, handleError } from "../util"
 import { Request, Reply } from "@free/server"
 
 export const login = () => async (req: Request, reply: Reply) => {
-  reply.statusCode = 200
-  const data = authenticate(req)
   try {
+    reply.statusCode = 200
+    const data = await authenticate(req)
     req.session.logged = data
     reply.send({
       success: true,
@@ -27,6 +27,7 @@ const authenticate = async (req: Request) => {
     throw new Exception(401, "Invalid Username / Password")
 
   const auth = await ldapAuth(username, password, domain)
+
   const total = await collection.count(
     {},
     {
@@ -83,7 +84,7 @@ const ldapAuth = async (username: string, password: string, domain: string) => {
     password: password,
   })
   const filter = `(${config.filterKey}=${username})`
-  const attributes = ["mail", "cn", config.filterKey]
+  const attributes = ["mail", "cn", "displayName", config.filterKey]
   const users = await ldap.search(filter, attributes)
   ldap.destroy()
   if (users.length != 0) {

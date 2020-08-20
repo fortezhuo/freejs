@@ -1,6 +1,7 @@
 import { FastifyInstance } from "fastify"
-import { login } from "../auth"
+import { login, check } from "../auth"
 
-export const userController = async (instance: FastifyInstance) => {
+export const authController = async (instance: FastifyInstance) => {
+  instance.get("/auth", check())
   instance.post("/auth", login())
 }

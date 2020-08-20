@@ -6,8 +6,8 @@ export const handleRequest = (req: Request) => {
   const { params, query, body: rawBody, session } = req as {
     [key: string]: any
   }
-  const loggedname = session.username || ""
-  const { _id, ...body } = rawBody
+  const loggedname = session?.username
+  const { _id, ...body } = rawBody || { _id: null }
   let projection: { [key: string]: number } = {}
   let q = query.q ? query.q : params.q
   let { option = "{}", sort = "{}", fields = "", limit = 30, page = 1 } = query
@@ -46,7 +46,6 @@ export const handleRequest = (req: Request) => {
 
 export const handleError = (reply: Reply, err: any) => {
   if (err instanceof Exception) {
-    reply.statusCode = err.code
     reply.send({
       success: false,
       errors: err.errors,
@@ -54,6 +53,6 @@ export const handleError = (reply: Reply, err: any) => {
       stack: err.stack,
     })
   } else {
-    throw err
+    throw new Exception(500, err.message, err)
   }
 }

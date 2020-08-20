@@ -1,9 +1,11 @@
 export class Exception extends Error {
-  public code: number
+  public statusCode: number
   public errors: any
-  constructor(code: number, message: string, errors?: any) {
+  constructor(statusCode: number, message: string, errors?: any) {
     super(message)
-    this.code = code
+    const isProd = process.env.NODE_ENV === "production"
+    this.statusCode = statusCode
     this.errors = errors
+    //    if (code !== 500 && isProd) this.stack = undefined
   }
 }

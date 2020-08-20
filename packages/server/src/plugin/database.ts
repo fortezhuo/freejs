@@ -1,6 +1,6 @@
+import fp from "fastify-plugin"
 import { load } from "../util/database"
 import { FastifyInstance } from "fastify"
-import fp from "fastify-plugin"
 
 export const database = fp(async (instance: FastifyInstance) => {
   instance.log.info("Starting database connection ...")
