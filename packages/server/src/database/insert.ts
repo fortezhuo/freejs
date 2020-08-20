@@ -1,7 +1,6 @@
 import * as RawSchema from "../schema"
 import { Request, Reply, ReplyJSON, ValidationSchema } from "@free/server"
 import { ValidationError } from "./error"
-import { ValidateError } from "../schema/schema"
 
 const Schema: ValidationSchema = RawSchema
 export const insert = (name: string, dbName = "app") => async (
@@ -36,6 +35,8 @@ export const insert = (name: string, dbName = "app") => async (
         message: err.message,
         stack: err.stack,
       }
+    } else {
+      throw err
     }
   } finally {
     reply.send(result)
