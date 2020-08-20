@@ -1,6 +1,6 @@
+import fp from "fastify-plugin"
 import fastifyCookie from "fastify-cookie"
 import fastifySession from "fastify-session"
-import fp from "fastify-plugin"
 import { configSession } from "@free/env"
 import { FastifyInstance, FastifyPlugin } from "fastify"
 

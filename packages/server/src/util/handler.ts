@@ -53,6 +53,11 @@ export const handleError = (reply: Reply, err: any) => {
       stack: err.stack,
     })
   } else {
-    throw new Exception(500, err.message, err)
+    reply.send({
+      success: false,
+      message: err.message,
+      stack: err.stack,
+    })
+    throw err
   }
 }
