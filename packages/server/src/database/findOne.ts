@@ -1,5 +1,5 @@
 import { Request, Reply, ReplyJSON } from "@free/server"
-import { DatabaseError } from "./error"
+import { Exception } from "./exception"
 
 export const findOne = (name: string, dbName = "app") => async (
   req: Request,
@@ -15,7 +15,7 @@ export const findOne = (name: string, dbName = "app") => async (
     let { q } = params as any
     let projection: { [key: string]: number } = {}
 
-    if (!q) throw new DatabaseError("Parameter not found")
+    if (!q) throw new Exception(400, "Parameter not found")
 
     q =
       q.indexOf("{") >= 0 && q.indexOf("}") >= 0
@@ -37,12 +37,13 @@ export const findOne = (name: string, dbName = "app") => async (
       data,
     }
   } catch (err) {
-    if (err instanceof DatabaseError) {
-      reply.statusCode = 400
+    if (err instanceof Exception) {
+      reply.statusCode = err.code
       result = {
         success: false,
         message: err.message,
         stack: err.stack,
+        errors: err.errors,
       }
     } else {
       throw err

@@ -18,3 +18,5 @@ declare module "@free/server" {
     [key: string]: any
   }
 }
+
+declare module "simple-ldap-search" {}

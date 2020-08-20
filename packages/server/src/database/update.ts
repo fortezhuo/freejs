@@ -1,6 +1,6 @@
 import * as RawSchema from "../schema"
 import { Request, Reply, ReplyJSON, ValidationSchema } from "@free/server"
-import { DatabaseError, ValidationError } from "./error"
+import { Exception } from "./exception"
 
 const Schema: ValidationSchema = RawSchema
 export const update = (name: string, dbName = "app") => async (
@@ -17,7 +17,7 @@ export const update = (name: string, dbName = "app") => async (
     let { option = "{}" } = query as any
     option = JSON.parse(option)
 
-    if (!q) throw new DatabaseError("Parameter not found")
+    if (!q) throw new Exception(400, "Parameter not found")
 
     q =
       q.indexOf("{") >= 0 && q.indexOf("}") >= 0
@@ -30,7 +30,7 @@ export const update = (name: string, dbName = "app") => async (
       updated_at: new Date(),
     }
     if (!validate(body))
-      throw new ValidationError(name.toUpperCase(), validate.errors)
+      throw new Exception(400, name.toUpperCase(), validate.errors)
 
     const collection = req.database[dbName].get(name)
     const data = await collection.update(q, { $set: values }, option)
@@ -39,20 +39,13 @@ export const update = (name: string, dbName = "app") => async (
       data,
     }
   } catch (err) {
-    if (err instanceof DatabaseError) {
-      reply.statusCode = 400
+    if (err instanceof Exception) {
+      reply.statusCode = err.code
       result = {
         success: false,
         message: err.message,
         stack: err.stack,
-      }
-    } else if (err instanceof ValidationError) {
-      reply.statusCode = 400
-      result = {
-        success: false,
         errors: err.errors,
-        message: err.message,
-        stack: err.stack,
       }
     } else {
       throw err

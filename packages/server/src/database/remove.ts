@@ -1,5 +1,5 @@
 import { Request, Reply, ReplyJSON } from "@free/server"
-import { DatabaseError } from "./error"
+import { Exception } from "./exception"
 
 export const remove = (name: string, dbName = "app") => async (
   req: Request,
@@ -14,7 +14,7 @@ export const remove = (name: string, dbName = "app") => async (
     let { option = "{}" } = query as any
     option = JSON.parse(option)
 
-    if (!q) throw new DatabaseError("Parameter not found")
+    if (!q) throw new Exception(400, "Parameter not found")
 
     q =
       q.indexOf("{") >= 0 && q.indexOf("}") >= 0
@@ -28,7 +28,7 @@ export const remove = (name: string, dbName = "app") => async (
       data,
     }
   } catch (err) {
-    if (err instanceof DatabaseError) {
+    if (err instanceof Exception) {
       reply.statusCode = 400
       result = {
         success: false,
