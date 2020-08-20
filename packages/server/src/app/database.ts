@@ -1,5 +1,5 @@
 import { configDatabase } from "@free/env"
-import monk from "monk"
+import monk, { id } from "monk"
 
 let app: any, trash: any
 
@@ -16,6 +16,7 @@ export const load = async () => {
             database: {
               app,
               trash,
+              id,
             },
             message: `Database ${configDatabase.app} connected at ${configDatabase.url}`,
           }

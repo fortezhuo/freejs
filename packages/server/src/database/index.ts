@@ -1,3 +1,5 @@
 export { findAll } from "./findAll"
 export { findOne } from "./findOne"
 export { insert } from "./insert"
+export { remove } from "./remove"
+export { update } from "./update"

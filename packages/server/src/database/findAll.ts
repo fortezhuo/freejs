@@ -5,8 +5,11 @@ export const findAll = (name: string, dbName = "app") => async (
   reply: Reply
 ) => {
   reply.statusCode = 200
-  let result: ReplyJSON = {}
+  const collection = req.database[dbName].get(name)
   const { query } = req
+
+  let result: ReplyJSON = {}
+  let projection: { [key: string]: number } = {}
   let {
     q = "{}",
     sort = "{}",
@@ -17,12 +20,14 @@ export const findAll = (name: string, dbName = "app") => async (
   q = JSON.parse(q)
   sort = JSON.parse(sort)
   limit = +`${limit}`
-  let projection: ReplyJSON = {}
-  fields.split(",").forEach((field: string) => {
-    projection[field] = 1
-  })
+
+  if (fields !== "") {
+    fields.split(",").forEach((field: string) => {
+      projection[field] = 1
+    })
+  }
+
   const skip = (page - 1) * limit
-  const collection = req.database[dbName].get(name)
   const data = await collection.find(q, {
     projection,
     sort,
@@ -41,5 +46,6 @@ export const findAll = (name: string, dbName = "app") => async (
     total,
     max,
   }
+
   reply.send(result)
 }

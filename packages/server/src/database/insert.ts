@@ -1,5 +1,7 @@
 import * as RawSchema from "../schema"
 import { Request, Reply, ReplyJSON, ValidationSchema } from "@free/server"
+import { ValidationError } from "./error"
+import { ValidateError } from "../schema/schema"
 
 const Schema: ValidationSchema = RawSchema
 export const insert = (name: string, dbName = "app") => async (
@@ -7,29 +9,35 @@ export const insert = (name: string, dbName = "app") => async (
   reply: Reply
 ) => {
   reply.statusCode = 201
-  let result: ReplyJSON = {}
   const { validate } = Schema[name]
+  let result: ReplyJSON = {}
+  try {
+    const body = {
+      ...(req.body as object),
+      created_at: new Date(),
+      updated_at: new Date(),
+    }
 
-  const body = {
-    ...(req.body as object),
-    created_at: new Date(),
-    updated_at: new Date(),
-  }
-  const isValid = validate(body)
-  if (isValid) {
+    if (!validate(body))
+      throw new ValidationError(name.toUpperCase(), validate.errors)
+
     const collection = req.database[dbName].get(name)
     const data = await collection.insert(body)
     result = {
       success: true,
       data,
     }
-  } else {
-    reply.statusCode = 400
-    result = {
-      success: false,
-      message: `Validation Error for ${name.toUpperCase()}`,
-      stack: validate.errors,
+  } catch (err) {
+    if (err instanceof ValidationError) {
+      reply.statusCode = 400
+      result = {
+        success: false,
+        errors: err.errors,
+        message: err.message,
+        stack: err.stack,
+      }
     }
+  } finally {
+    reply.send(result)
   }
-  reply.send(result)
 }
