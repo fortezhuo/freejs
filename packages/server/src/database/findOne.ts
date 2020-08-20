@@ -20,7 +20,7 @@ export const findOne = (name: string, dbName = "app") => async (
     q =
       q.indexOf("{") >= 0 && q.indexOf("}") >= 0
         ? JSON.parse(q)
-        : { id: req.database.id(q) }
+        : { _id: req.database.id(q) }
 
     if (fields !== "") {
       fields.split(",").forEach((field: string) => {

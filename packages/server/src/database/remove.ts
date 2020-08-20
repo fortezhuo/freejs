@@ -9,18 +9,20 @@ export const remove = (name: string, dbName = "app") => async (
   let result: ReplyJSON = {}
 
   try {
-    const { params } = req
+    const { params, query } = req
     let { q } = params as any
+    let { option = "{}" } = query as any
+    option = JSON.parse(option)
 
     if (!q) throw new DatabaseError("Parameter not found")
 
     q =
       q.indexOf("{") >= 0 && q.indexOf("}") >= 0
         ? JSON.parse(q)
-        : { id: req.database.id(q) }
+        : { _id: req.database.id(q) }
 
     const collection = req.database[dbName].get(name)
-    const data = await collection.remove(q)
+    const data = await collection.remove(q, option)
     result = {
       success: true,
       data,

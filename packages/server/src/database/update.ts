@@ -12,26 +12,28 @@ export const update = (name: string, dbName = "app") => async (
   const { validate } = Schema[name]
 
   try {
-    const { params } = req
+    const { params, query } = req
     let { q } = params as any
+    let { option = "{}" } = query as any
+    option = JSON.parse(option)
 
     if (!q) throw new DatabaseError("Parameter not found")
 
     q =
       q.indexOf("{") >= 0 && q.indexOf("}") >= 0
         ? JSON.parse(q)
-        : { id: req.database.id(q) }
+        : { _id: req.database.id(q) }
 
-    const body = {
-      ...(req.body as object),
-      created_at: new Date(),
+    const { _id, ...body } = req.body as any
+    const values = {
+      ...body,
       updated_at: new Date(),
     }
     if (!validate(body))
       throw new ValidationError(name.toUpperCase(), validate.errors)
 
     const collection = req.database[dbName].get(name)
-    const data = await collection.update(q, body)
+    const data = await collection.update(q, { $set: values }, option)
     result = {
       success: true,
       data,
