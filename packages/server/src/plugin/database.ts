@@ -1,4 +1,4 @@
-import { load } from "../app/database"
+import { load } from "../util/database"
 import { FastifyInstance } from "fastify"
 import fp from "fastify-plugin"
 

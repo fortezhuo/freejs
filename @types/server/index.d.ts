@@ -11,9 +11,6 @@ declare module "@free/server" {
   }
   interface Reply extends FastifyReply {}
 
-  type ReplyJSON = {
-    [key: string | undefined]: any
-  }
   type ValidationSchema = {
     [key: string]: any
   }

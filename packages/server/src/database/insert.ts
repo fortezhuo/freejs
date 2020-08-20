@@ -1,6 +1,7 @@
 import * as RawSchema from "../schema"
-import { Request, Reply, ReplyJSON, ValidationSchema } from "@free/server"
-import { Exception } from "./exception"
+import { Request, Reply, ValidationSchema } from "@free/server"
+import { Exception } from "../util/exception"
+import { handleRequest, handleError } from "../util"
 
 const Schema: ValidationSchema = RawSchema
 export const insert = (name: string, dbName = "app") => async (
@@ -9,36 +10,24 @@ export const insert = (name: string, dbName = "app") => async (
 ) => {
   reply.statusCode = 201
   const { validate } = Schema[name]
-  let result: ReplyJSON = {}
   try {
-    const values = {
-      ...(req.body as object),
-      created_at: new Date(),
-      updated_at: new Date(),
-    }
-
-    if (!validate(values))
+    const { body, loggedname } = handleRequest(req)
+    if (!validate(body))
       throw new Exception(400, name.toUpperCase(), validate.errors)
 
     const collection = req.database[dbName].get(name)
-    const data = await collection.insert(values)
-    result = {
+    const data = await collection.insert({
+      ...body,
+      created_at: new Date(),
+      created_by: loggedname,
+      updated_at: new Date(),
+      updated_by: loggedname,
+    })
+    reply.send({
       success: true,
       data,
-    }
+    })
   } catch (err) {
-    if (err instanceof Exception) {
-      reply.statusCode = 400
-      result = {
-        success: false,
-        errors: err.errors,
-        message: err.message,
-        stack: err.stack,
-      }
-    } else {
-      throw err
-    }
-  } finally {
-    reply.send(result)
+    handleError(reply, err)
   }
 }

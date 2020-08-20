@@ -1,4 +1,5 @@
-import { Request, Reply, ReplyJSON } from "@free/server"
+import { Request, Reply } from "@free/server"
+import { handleRequest } from "../util/handler"
 
 export const findAll = (name: string, dbName = "app") => async (
   req: Request,
@@ -6,28 +7,8 @@ export const findAll = (name: string, dbName = "app") => async (
 ) => {
   reply.statusCode = 200
   const collection = req.database[dbName].get(name)
-  const { query } = req
+  const { q, projection, limit, sort, page, skip } = handleRequest(req)
 
-  let result: ReplyJSON = {}
-  let projection: { [key: string]: number } = {}
-  let {
-    q = "{}",
-    sort = "{}",
-    fields = "",
-    limit = 30,
-    page = 1,
-  } = query as any
-  q = JSON.parse(q)
-  sort = JSON.parse(sort)
-  limit = +`${limit}`
-
-  if (fields !== "") {
-    fields.split(",").forEach((field: string) => {
-      projection[field] = 1
-    })
-  }
-
-  const skip = (page - 1) * limit
   const data = await collection.find(q, {
     projection,
     sort,
@@ -39,13 +20,13 @@ export const findAll = (name: string, dbName = "app") => async (
     estimate: true,
   })
   const max = Math.ceil(total / limit)
-  result = {
+
+  reply.send({
     success: true,
     data,
     limit,
+    page,
     total,
     max,
-  }
-
-  reply.send(result)
+  })
 }

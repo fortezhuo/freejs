@@ -1,44 +1,23 @@
-import { Request, Reply, ReplyJSON } from "@free/server"
-import { Exception } from "./exception"
+import { Request, Reply } from "@free/server"
+import { Exception } from "../util/exception"
+import { handleRequest, handleError } from "../util"
 
 export const remove = (name: string, dbName = "app") => async (
   req: Request,
   reply: Reply
 ) => {
   reply.statusCode = 200
-  let result: ReplyJSON = {}
 
   try {
-    const { params, query } = req
-    let { q } = params as any
-    let { option = "{}" } = query as any
-    option = JSON.parse(option)
-
+    const { q, option } = handleRequest(req)
     if (!q) throw new Exception(400, "Parameter not found")
-
-    q =
-      q.indexOf("{") >= 0 && q.indexOf("}") >= 0
-        ? JSON.parse(q)
-        : { _id: req.database.id(q) }
-
     const collection = req.database[dbName].get(name)
     const data = await collection.remove(q, option)
-    result = {
+    reply.send({
       success: true,
       data,
-    }
+    })
   } catch (err) {
-    if (err instanceof Exception) {
-      reply.statusCode = 400
-      result = {
-        success: false,
-        message: err.message,
-        stack: err.stack,
-      }
-    } else {
-      throw err
-    }
-  } finally {
-    reply.send(result)
+    handleError(reply, err)
   }
 }
