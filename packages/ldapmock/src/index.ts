@@ -1,9 +1,10 @@
-import { configLDAP } from "@free/env"
+import { configLDAP as config } from "@free/env"
 import { database } from "./database"
 import * as ldap from "ldapjs"
 
 const server: ldap.Server = ldap.createServer()
 const userCredential: string = "123"
+const configLDAP = config[0]
 const userDN: string = `cn=admin,${configLDAP.base}`
 const infoServer: string = `
 ==============================================================
