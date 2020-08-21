@@ -4,8 +4,6 @@ import { session } from "./session"
 import { database } from "./database"
 import { router } from "./router"
 
-const isProd = process.env.NODE_ENV === "production"
-
 export const all = fp(async (instance) => {
   instance.register(session).after(() => {
     instance.register(database).after(() => {

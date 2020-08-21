@@ -1,38 +1,36 @@
 import { configDatabase } from "@free/env"
 import monk from "monk"
 
-let app: any, trash: any
+const connect = (uri: string) => {
+  const db: any = monk(uri)
+  db.then = null
 
-export const load = async () => {
-  app = monk(`${configDatabase.url}/${configDatabase.app}`)
-  trash = monk(`${configDatabase.url}/${configDatabase.trash}`)
-
-  return app
-    .then(() => {
-      return trash
-        .then(() => {
-          return {
-            type: "info",
-            database: {
-              app,
-              trash,
-            },
-            message: `Database ${configDatabase.app} connected at ${configDatabase.url}`,
-          }
-        })
-        .catch(() => {
-          return {
-            type: "error",
-            message: `Database ${configDatabase.trash} failed to connect`,
-          }
-        })
-    })
-    .catch(() => {
-      return {
-        type: "error",
-        message: `Database ${configDatabase.app} failed to connect`,
-      }
-    })
+  return new Promise((accept, reject) => {
+    db.once("open", () => accept(db))
+    db.once("error-opening", reject)
+  })
 }
 
-export { app, trash }
+export const load = async () => {
+  let app, trash
+  try {
+    app = await connect(`${configDatabase.url}/${configDatabase.app}`)
+  } catch (err) {
+    throw new Error(
+      `Failed to connect ${configDatabase.app} at ${configDatabase.url}`
+    )
+  }
+
+  try {
+    trash = await connect(`${configDatabase.url}/${configDatabase.trash}`)
+  } catch (err) {
+    throw new Error(
+      `Failed to connect ${configDatabase.trash} at ${configDatabase.url}`
+    )
+  }
+
+  return {
+    database: { app, trash },
+    message: `Database ${configDatabase.app} connected at ${configDatabase.url}`,
+  }
+}

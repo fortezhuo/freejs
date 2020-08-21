@@ -25,14 +25,12 @@ export const boot: Boot = async () => {
       } 🔥 ...`
     )
     app.register(all)
-
     await app.listen(
       isProd ? configServer.port : 8000,
       isProd ? configServer.host : "0.0.0.0"
     )
   } catch (err) {
-    console.log(err)
-    app.log.error(err)
+    app.log.fatal(err)
     process.exit(1)
   }
 }
