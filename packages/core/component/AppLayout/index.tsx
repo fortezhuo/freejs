@@ -13,12 +13,12 @@ import { Header } from "../Header"
 import { Drawer } from "../Drawer"
 import { Footer } from "../Footer"
 import { StoreProvider } from "../Store"
-import { useResponsiveLayout } from "./hook"
+import { useLayout } from "./hook"
 import { observer } from "mobx-react-lite"
-import { BackgroundProps } from "@free/core"
+import { LayoutProps } from "@free/core"
 
-const Background: FC<BackgroundProps> = ({ wallpaper, children }) => {
-  useResponsiveLayout()
+const Layout: FC<LayoutProps> = ({ wallpaper, children }) => {
+  useLayout()
   return wallpaper ? (
     <ImageBackground source={imgWallpaper} style={styles.rootBackground}>
       {children}
@@ -39,10 +39,10 @@ export const AppLayout: FC = observer(({ children }) => {
           <SafeAreaView style={styles.rootSafe}>
             <View style={styles.rootApp}>
               <Header />
-              <Background wallpaper>
+              <Layout wallpaper>
                 <Drawer>{children}</Drawer>
                 <Footer />
-              </Background>
+              </Layout>
             </View>
           </SafeAreaView>
         </StoreProvider>

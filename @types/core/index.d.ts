@@ -9,6 +9,11 @@ declare module "@free/core" {
     [key: string]: any
   }
 
+  type History = {
+    pathname: string
+    push: (path: string) => void
+  }
+
   //Accordion
   interface AccordionProps {
     icon: string
@@ -24,8 +29,8 @@ declare module "@free/core" {
     onClose?: VoidFunction
   }
 
-  // AppLayout / Background
-  interface BackgroundProps extends ViewProps {
+  // AppLayout / Layout
+  interface LayoutProps extends ViewProps {
     wallpaper: boolean
   }
 

@@ -23,7 +23,7 @@ export const findAll = (name: string, dbName = "app") => async (
 
   reply.send({
     success: true,
-    data,
+    result: data,
     limit,
     page,
     total,

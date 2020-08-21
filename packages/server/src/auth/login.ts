@@ -10,7 +10,7 @@ export const login = () => async (req: Request, reply: Reply) => {
     req.session.logged = data
     reply.send({
       success: true,
-      data,
+      result: data,
     })
   } catch (err) {
     handleError(reply, err)

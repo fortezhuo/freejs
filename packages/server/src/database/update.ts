@@ -24,7 +24,7 @@ export const update = (name: string, dbName = "app") => async (
     )
     reply.send({
       success: true,
-      data,
+      result: data,
     })
   } catch (err) {
     handleError(reply, err)

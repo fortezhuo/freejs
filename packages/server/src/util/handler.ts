@@ -46,6 +46,7 @@ export const handleRequest = (req: Request) => {
 
 export const handleError = (reply: Reply, err: any) => {
   if (err instanceof Exception) {
+    reply.statusCode = err.statusCode
     reply.send({
       success: false,
       errors: err.errors,

@@ -15,7 +15,7 @@ export const remove = (name: string, dbName = "app") => async (
     const data = await collection.remove(q, option)
     reply.send({
       success: true,
-      data,
+      result: data,
     })
   } catch (err) {
     handleError(reply, err)

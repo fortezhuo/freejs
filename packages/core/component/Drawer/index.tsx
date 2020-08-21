@@ -6,11 +6,13 @@ import { observer } from "mobx-react-lite"
 import { useStore } from "../Store"
 
 export const Drawer: FC = observer(({ children }) => {
-  const { ui } = useStore()
+  const { ui, app } = useStore()
 
   return (
     <View style={styles.rootDrawer}>
-      <Sidebar isOpen={ui.isDrawerOpen || !ui.dimension.isMobile} />
+      {app.logged && (
+        <Sidebar isOpen={ui.isDrawerOpen || !ui.dimension.isMobile} />
+      )}
       <View style={styles.panelContent}>
         {ui.isDrawerOpen && (
           <TouchableWithoutFeedback onPress={ui.toggleDrawer}>

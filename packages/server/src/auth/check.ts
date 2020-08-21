@@ -7,7 +7,7 @@ export const check = () => async (req: Request, reply: Reply) => {
     if (!data) throw new Exception(401, "Authentication Failed")
     reply.send({
       success: true,
-      data,
+      result: data,
     })
   } catch (err) {
     handleError(reply, err)

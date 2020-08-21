@@ -10,7 +10,7 @@ export const boot: Boot = async () => {
   const app: FastifyInstance<Server, IncomingMessage, ServerResponse> = fastify(
     {
       disableRequestLogging: true,
-      pluginTimeout: 0,
+      pluginTimeout: 999999,
       logger: true,
     }
   )

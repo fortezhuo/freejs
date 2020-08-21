@@ -1,10 +1,18 @@
-import { observable, decorate } from "mobx"
+import { observable, decorate, action } from "mobx"
+import { AppStore } from "./appStore"
+import { History } from "@free/core"
 
 class BaseStore {
-  history = null
+  history: History | undefined = undefined
+  app: AppStore | undefined = undefined
   data = new Map()
   temp = new Map()
   isUpdating = false
+
+  constructor(app: AppStore, history: History) {
+    this.app = app
+    this.history = history
+  }
 
   getData(...args: string[]) {
     return args.map((v) => this.data.get(v))
@@ -33,4 +41,4 @@ decorate(BaseStore, {
   isUpdating: observable,
 })
 
-export { BaseStore }
+export { BaseStore, decorate, observable, action }

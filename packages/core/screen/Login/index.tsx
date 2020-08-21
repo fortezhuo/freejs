@@ -7,7 +7,7 @@ import { IconLabel } from "../../component/Icon"
 import { useLogin } from "./hook"
 
 const Login: FC = () => {
-  const { login } = useLogin()
+  const { store } = useLogin()
 
   return (
     <View style={styles.rootLogin}>
@@ -16,20 +16,29 @@ const Login: FC = () => {
           <IconLabel style={styles.iconLogo} name={"user"} size={60} />
           <Input.Text
             data-name="username"
-            store={login}
+            store={store}
             name="username"
             placeholder="Username"
             autoCapitalize="none"
           />
           <Input.Text
-            store={login}
+            store={store}
             data-name="password"
             name="password"
             secureTextEntry
             placeholder="Password"
             autoCapitalize="none"
           />
-          <Button type="primary">Login</Button>
+          <Input.Text
+            store={store}
+            data-name="domain"
+            name="domain"
+            placeholder="Domain"
+            autoCapitalize="none"
+          />
+          <Button type="primary" onPress={store.login}>
+            Login
+          </Button>
         </View>
       </ScrollView>
     </View>

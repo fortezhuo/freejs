@@ -12,6 +12,7 @@ export const session = fp(async (instance: FastifyInstance) => {
       secret: configSession.secret,
       cookie: {
         secure: false,
+        sameSite: true,
         maxAge: configSession.cookieAge,
         domain:
           configSession.cookieDomain !== "" ? configSession.cookieDomain : null,
