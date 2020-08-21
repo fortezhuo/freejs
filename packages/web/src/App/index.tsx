@@ -8,6 +8,11 @@ const Home = loadable(() => import("@free/core/screen/Home"), {
   fallback: <span>Loading ...</span>,
 })
 
+const Login = loadable(() => import("@free/core/screen/Login"), {
+  ssr: true,
+  fallback: <span>Loading ...</span>,
+})
+
 const AppLayout = loadable(() => import("@free/core/component/AppLayout"), {
   ssr: true,
   fallback: <span>Loading ...</span>,
@@ -16,7 +21,10 @@ const AppLayout = loadable(() => import("@free/core/component/AppLayout"), {
 const App = () => {
   return (
     <AppLayout>
-      <Home />
+      <Switch>
+        <Route exact path="/" component={Home} />
+        <Route path="/login" component={Login} />
+      </Switch>
     </AppLayout>
   )
 }

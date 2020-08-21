@@ -6,7 +6,7 @@ import { IconButton } from "../Icon"
 import { MenuUser } from "./MenuUser"
 import { tw } from "@free/tailwind"
 import { observer } from "mobx-react-lite"
-import { useStore } from "../../store"
+import { useStore } from "../Store"
 
 export const Header: FC = observer(() => {
   const { ui } = useStore()

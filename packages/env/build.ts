@@ -1,0 +1,30 @@
+import fs from "fs"
+import { configPlatform as platform } from "./"
+
+const freeEnv = process.env.FREE_ENV || "default"
+const createPlatform = (os: string) => {
+  const template = `export const platform = {
+  baseURL:"${os === "web" ? "" : platform[os].baseURL}"
+}`
+  return template
+}
+const writePlatformFile = (os: string) => {
+  fs.writeFile(
+    `../core/config/platform${os === "web" ? "" : `.${os}`}.ts`,
+    createPlatform(os),
+    (err) => {
+      if (err) {
+        console.log(
+          `Failed to create file platform : ${os} for : ${freeEnv}`,
+          err
+        )
+      } else {
+        console.log(`File platform : ${os} for : ${freeEnv} created`)
+      }
+    }
+  )
+}
+
+writePlatformFile("web")
+writePlatformFile("ios")
+writePlatformFile("android")

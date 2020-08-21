@@ -1,18 +1,19 @@
 import fs from "fs"
-import { resolve } from "path"
-import HtmlWebPackPlugin from "html-webpack-plugin"
-import LoadablePlugin from "@loadable/webpack-plugin"
-import MiniCssExtractPlugin from "mini-css-extract-plugin"
-import CompressionPlugin from "compression-webpack-plugin"
-import TerserPlugin from "terser-webpack-plugin"
-import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer"
+import dayjs from "dayjs"
 import webpack from "webpack"
+import TerserPlugin from "terser-webpack-plugin"
+import LoadablePlugin from "@loadable/webpack-plugin"
+import HtmlWebPackPlugin from "html-webpack-plugin"
+import CompressionPlugin from "compression-webpack-plugin"
+import MiniCssExtractPlugin from "mini-css-extract-plugin"
+import { resolve } from "path"
+import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer"
+
+export const stamp = dayjs().format("YYMMDDHHmm")
+export const resolvePath = (path: string) => resolve(appDirectory, path)
 
 const isDev = process.env.NODE_ENV !== "production"
 const isAnalyzer = process.env.ANALYZER === "true"
-
-export const resolvePath = (path: string) => resolve(appDirectory, path)
-
 const appDirectory = fs.realpathSync(process.cwd())
 const babelLoaderInclude = [
   resolvePath("src"),
@@ -49,7 +50,7 @@ export const getWebpackRules = (): webpack.Rule[] => [
     },
   },
   {
-    test: /\.js$/,
+    test: /\.(jsx|js)$/,
     exclude: babelLoaderExclude,
     use: {
       loader: "babel-loader",
@@ -108,7 +109,8 @@ export const getWebpackPlugins = (isWeb: boolean): webpack.Plugin[] =>
           filename: "./index.html",
         }),
         new webpack.DefinePlugin({
-          __NODE_ENV__: JSON.stringify(isDev ? "development" : "production"),
+          FREE_STAMP: JSON.stringify(stamp),
+          FREE_NODE_ENV: JSON.stringify(isDev ? "development" : "production"),
         }),
       ]
     : []
@@ -145,10 +147,18 @@ export const getDefaultConfig = (isWeb: boolean): webpack.Configuration => {
     resolve: {
       alias: {
         "react-native": "react-native-web",
-        //        "react-native-web/dist/exports/Modal": "modal-react-native-web",
         "react-dom": isWeb && isDev ? "@hot-loader/react-dom" : "react-dom",
       },
-      extensions: [".web.js", ".js", ".web.tsx", ".web.jsx", ".tsx", ".ts"],
+      extensions: [
+        ".web.js",
+        ".web.jsx",
+        ".web.tsx",
+        ".web.ts",
+        ".js",
+        ".jsx",
+        ".tsx",
+        ".ts",
+      ],
     },
     stats: {
       all: false,

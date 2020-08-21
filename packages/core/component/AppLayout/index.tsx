@@ -5,7 +5,6 @@ import {
   ImageBackground,
   KeyboardAvoidingView,
   Platform,
-  ViewProps,
 } from "react-native"
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context"
 import { tw } from "@free/tailwind"
@@ -13,6 +12,7 @@ import imgWallpaper from "../../img/wallpaper.jpg"
 import { Header } from "../Header"
 import { Drawer } from "../Drawer"
 import { Footer } from "../Footer"
+import { StoreProvider } from "../Store"
 import { useResponsiveLayout } from "./hook"
 import { observer } from "mobx-react-lite"
 import { BackgroundProps } from "@free/core"
@@ -35,15 +35,17 @@ export const AppLayout: FC = observer(({ children }) => {
         style={styles.rootApp}
         behavior={Platform.OS === "ios" ? "padding" : undefined}
       >
-        <SafeAreaView style={styles.rootSafe}>
-          <View style={styles.rootApp}>
-            <Header />
-            <Background wallpaper>
-              <Drawer>{children}</Drawer>
-              <Footer />
-            </Background>
-          </View>
-        </SafeAreaView>
+        <StoreProvider>
+          <SafeAreaView style={styles.rootSafe}>
+            <View style={styles.rootApp}>
+              <Header />
+              <Background wallpaper>
+                <Drawer>{children}</Drawer>
+                <Footer />
+              </Background>
+            </View>
+          </SafeAreaView>
+        </StoreProvider>
       </KeyboardAvoidingView>
     </SafeAreaProvider>
   )
@@ -54,5 +56,5 @@ export default AppLayout
 const styles = StyleSheet.create({
   rootSafe: tw(`flex-1`),
   rootApp: tw("flex-1"),
-  rootBackground: tw("flex-1 mt-1"),
+  rootBackground: tw("flex-1"),
 })

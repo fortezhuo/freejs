@@ -5,7 +5,7 @@ import { useSpring, animated } from "react-spring/native"
 import { IconLabel, Icon } from "../Icon"
 import { tw, adjust, border } from "@free/tailwind"
 import { observer, useLocalStore } from "mobx-react-lite"
-import { useStore } from "../../store"
+import { useStore } from "../Store"
 import { AccordionProps, AccordionItemProps } from "@free/core"
 
 const AnimatedView = animated<React.ElementType<ViewProps>>(View)
@@ -59,9 +59,9 @@ export const Accordion: FC<AccordionProps> = observer(
 
 export const AccordionItem: FC<AccordionItemProps> = observer(
   ({ icon, header = false, children, onPress = noop }) => {
-    const state = useStore("ui")
+    const { ui } = useStore()
     const onClose = () => {
-      if (state.dimension.isMobile) state.setDrawerOpen(false)
+      if (ui.dimension.isMobile) ui.setDrawerOpen(false)
     }
 
     return (

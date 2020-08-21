@@ -7,5 +7,8 @@
   "types": "index.d.ts",
   "prettier": {
     "semi": false
+  },
+  "scripts": {
+    "build": "ts-node ./build.ts"
   }
 }

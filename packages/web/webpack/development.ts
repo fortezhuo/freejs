@@ -4,6 +4,7 @@ import {
   getWebpackPlugins,
   resolvePath,
 } from "./base"
+import { configProxy } from "@free/env"
 
 const entryClient = ["react-hot-loader/patch", resolvePath("src")]
 
@@ -29,6 +30,13 @@ const webpackDevConfig = {
       ignored: ["node_modules"],
       aggregateTimeout: 300,
       poll: 1000,
+    },
+    proxy: {
+      "/api": {
+        target: configProxy,
+        secure: false,
+        changeOrigin: true,
+      },
     },
   },
 }

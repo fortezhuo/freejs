@@ -4,14 +4,13 @@ import {
   getWebpackRules,
   getWebpackPlugins,
   resolvePath,
+  stamp,
 } from "./base"
 import webpack from "webpack"
-import dayjs from "dayjs"
 
 const distClient = resolvePath("../../build/static/web")
 const distServer = resolvePath("../../build/static/node")
 const entryServer = resolvePath("src/index.node.tsx")
-const stamp = dayjs().format("YYMMDDHHmm")
 
 const isAnalyzer = process.env.ANALYZER === "true"
 const webpackProdClient = {

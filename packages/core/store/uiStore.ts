@@ -23,4 +23,4 @@ decorate(UIStore, {
   setDrawerOpen: action,
 })
 
-export default UIStore
+export { UIStore }

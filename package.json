@@ -4,9 +4,10 @@
   "private": "true",
   "description": "FreeJS Stack for NodeJS ",
   "scripts": {
-    "build": "yarn clean:build && yarn build:web && yarn build:server",
+    "build": "yarn clean:build && yarn build:env && yarn build:web && yarn build:server",
     "build:server": "yarn workspace @free/server build",
     "build:web": "yarn workspace @free/web build",
+    "build:env": "yarn workspace @free/env build",
     "analyze": "yarn workspace @free/web analyze",
     "build:tw": "yarn workspace @free/tailwind build",
     "dev": "run-p dev:ldap dev:web dev:server",

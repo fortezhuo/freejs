@@ -1,12 +1,9 @@
 declare module "@free/core" {
-  import { TextStyle, ViewStyle } from "react-native"
-  import { ViewStyle, TextStyle } from "react-native"
+  import { TextStyle, ViewStyle, TextInputProps } from "react-native"
 
-  type ListStore =
-    | {
-        [key: string]: any
-      }
-    | undefined
+  type ListStore = {
+    [key: string]: any
+  } | null
 
   type Config = {
     [key: string]: any
@@ -55,6 +52,15 @@ declare module "@free/core" {
   interface IconButtonProps extends IconLabelProps {
     disabled?: boolean
     onPress?: VoidFunction
+  }
+
+  // Input
+  interface InputTextProps extends TextInputProps {
+    store: any
+    model?: string
+    name: string
+    disabled?: boolean
+    onChange?: VoidFunction
   }
 
   // Menu

@@ -8,12 +8,14 @@ type ConfigServer = {
   firstTime: string
 }
 
-type ConfigLDAP = {
+type ConfigAny = {
   [key: string]: any
 }
 
-export const configLDAP: ConfigLDAP
+export const configLDAP: ConfigAny
+export const configPlatform: ConfigAny
 export const configServer: ConfigServer
 export const configApp: Config
 export const configSession: Config
 export const configDatabase: Config
+export const configProxy: string

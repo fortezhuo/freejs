@@ -4,7 +4,7 @@ import { Modal } from "../Modal"
 import { IconButton } from "../Icon"
 import { observer, useLocalStore } from "mobx-react-lite"
 import { tw } from "@free/tailwind"
-import { useStore } from "../../store"
+import { useStore } from "../Store"
 import { MenuProps, MenuItemProps } from "@free/core"
 
 const { color: iconColor } = tw("text-gray-700")
@@ -62,7 +62,7 @@ export const useMenu = () => {
   const hide = () => state.setOpen(false)
 
   const Menu: FC<MenuProps> = observer(({ anchor, style, children }) => {
-    const ui = useStore("ui")
+    const { ui } = useStore()
     const { menuWidth, menuHeight, anchorHeight } = state.measure
     let { left, top } = state.measure
 

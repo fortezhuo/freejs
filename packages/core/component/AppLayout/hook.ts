@@ -1,12 +1,12 @@
 import { useEffect } from "react"
-import { useStore } from "../../store"
+import { useStore } from "../Store"
 import { useSafeAreaInsets } from "react-native-safe-area-context"
 import { useWindowDimensions } from "react-native"
 
 export const useResponsiveLayout = () => {
   const { width, height } = useWindowDimensions()
   const insets = useSafeAreaInsets()
-  const ui = useStore("ui")
+  const { ui } = useStore()
 
   useEffect(() => {
     ui.setDimension({
