@@ -1,9 +1,6 @@
 import Axios from "axios"
 import { platform } from "../config/platform"
 
-const CancelToken = Axios.CancelToken
-const source = CancelToken.source()
-
 const axios = Axios.create({
   baseURL: platform.baseURL,
   withCredentials: false,
@@ -27,7 +24,7 @@ export const get = async function (url: string, param?: any) {
     url,
     method: "GET",
     withCredentials: true,
-    params: { cancelToken: source.token, ...param },
+    params: { ...param },
   })
 }
 
@@ -37,6 +34,6 @@ export const post = async function (url: string, data: any, param?: any) {
     data,
     method: "POST",
     withCredentials: true,
-    params: { cancelToken: source.token, ...param },
+    params: { ...param },
   })
 }
