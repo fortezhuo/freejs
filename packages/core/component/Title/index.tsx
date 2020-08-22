@@ -2,7 +2,7 @@ import React, { FC } from "react"
 import { configApp } from "@free/env"
 import { TouchableOpacity, View, Text, Image, StyleSheet } from "react-native"
 import { tw } from "@free/tailwind"
-import { useHistory } from "../Router"
+import { useStore } from "../Store"
 import logo from "../../img/logo.png"
 import { observer } from "mobx-react-lite"
 
@@ -12,9 +12,9 @@ const Logo: FC = () => {
 
 export const Title: FC = observer(({ children }) => {
   const disabled = false
-  const { push } = useHistory()
+  const { ui } = useStore()
   return (
-    <TouchableOpacity disabled={disabled} onPress={() => push("/")}>
+    <TouchableOpacity disabled={disabled} onPress={() => ui.history.push("/")}>
       <View style={styles.rootTitle}>
         <Logo />
         <View style={styles.groupTitle}>
