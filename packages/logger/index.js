@@ -6,7 +6,7 @@ var nl = "\n"
 var isProd = process.env.NODE_ENV === "production"
 
 var emojiLog = {
-  warn: "⚠️  WARN  |",
+  warn: `⚠️ ${isProd ? "" : " "}WARN  |`,
   info: "✅ INFO  |",
   error: "⛔️ ERROR |",
   debug: "🐛 DEBUG |",
