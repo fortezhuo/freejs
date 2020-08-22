@@ -1,10 +1,13 @@
-import { FastifyInstance } from "fastify"
-import * as db from "../database"
+import { Instance } from "@free/server"
+import { DatabaseService } from "../service/database"
 
-export const userController = async (instance: FastifyInstance) => {
-  instance.get("/user", db.findAll("user"))
-  instance.get("/user/:q", db.findOne("user"))
-  instance.post("/user", db.insert("user"))
-  instance.patch("/user/:q", db.update("user"))
-  instance.delete("/user/:q", db.remove("user"))
+const user = new DatabaseService("user")
+
+export const userController = async (instance: Instance) => {
+  user.register(instance)
+  instance.get("/user", user.findAll())
+  instance.get("/user/:q", user.findOne())
+  instance.post("/user", user.insert())
+  instance.patch("/user/:q", user.update())
+  instance.delete("/user/:q", user.remove())
 }

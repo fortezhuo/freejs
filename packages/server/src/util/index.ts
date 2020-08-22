@@ -1,2 +1,2 @@
-export { handleRequest, handleError } from "./handler"
+export { handleRequest } from "./handler"
 export { Exception } from "./exception"

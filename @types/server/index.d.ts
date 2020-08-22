@@ -1,15 +1,16 @@
 declare module "@free/server" {
-  import { FastifyRequest, FastifyReply } from "fastify"
+  import { FastifyRequest, FastifyReply, FastifyInstance } from "fastify"
 
   // app
   type Banner = (isProd?: boolean) => void
   type Boot = () => Promise<void>
 
   // controller
+  type Instance = FastifyInstance
+  type Reply = FastifyReply
   interface Request extends FastifyRequest {
     database?: any
   }
-  interface Reply extends FastifyReply {}
 
   type ValidationSchema = {
     [key: string]: any

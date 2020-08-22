@@ -1,5 +1,5 @@
 import { id as monkID } from "monk"
-import { Request, Reply } from "@free/server"
+import { Request, Reply, Instance } from "@free/server"
 import { Exception } from "./exception"
 
 export const handleRequest = (req: Request) => {
@@ -41,24 +41,5 @@ export const handleRequest = (req: Request) => {
     page,
     skip,
     loggedname,
-  }
-}
-
-export const handleError = (reply: Reply, err: any) => {
-  if (err instanceof Exception) {
-    reply.statusCode = err.statusCode
-    reply.send({
-      success: false,
-      errors: err.errors,
-      message: err.message,
-      stack: err.stack,
-    })
-  } else {
-    reply.send({
-      success: false,
-      message: err.message,
-      stack: err.stack,
-    })
-    throw err
   }
 }
