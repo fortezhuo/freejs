@@ -1,4 +1,3 @@
-import "mobx-react-lite/batchingForReactDom"
 import React from "react"
 import loadable from "@loadable/component"
 import { Switch, Route } from "react-router-dom"

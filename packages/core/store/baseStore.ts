@@ -3,14 +3,12 @@ import { AppStore } from "./appStore"
 
 class BaseStore {
   app: AppStore | undefined = undefined
-  history: any = undefined
   data = new Map()
   temp = new Map()
   isUpdating = false
 
-  constructor(app: AppStore, history: any) {
+  constructor(app: AppStore) {
     this.app = app
-    this.history = history
   }
 
   getData(...args: string[]) {

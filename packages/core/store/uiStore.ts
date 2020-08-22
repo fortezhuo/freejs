@@ -2,12 +2,10 @@ import { observable, action, decorate } from "mobx"
 import { AppStore } from "./appStore"
 
 class UIStore {
-  history: any = undefined
   app: AppStore | undefined = undefined
 
-  constructor(app: AppStore, history: any) {
+  constructor(app: AppStore) {
     this.app = app
-    this.history = history
   }
 
   dimension = {}

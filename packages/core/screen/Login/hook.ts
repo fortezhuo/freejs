@@ -11,7 +11,7 @@ export const useLogin = () => {
 
   useEffect(() => {
     if (store.app.auth) {
-      store.history.push("/")
+      store.app.history.push("/")
     }
   }, [store.app.auth])
 

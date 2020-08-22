@@ -2,19 +2,19 @@ import React from "react"
 import { hot } from "react-hot-loader/root"
 import { loadableReady } from "@loadable/component"
 import { AppRegistry } from "react-native"
-import { Router } from "react-router-dom"
+import { BrowserRouter } from "react-router-dom"
+import App from "./App"
+
 import "./assets/index.css"
 import "./assets/helper.js"
-import { history } from "@free/core/store/history"
-import App from "./App"
 
 const isDev = FREE_NODE_ENV !== "production"
 
 AppRegistry.registerComponent("Web", () =>
   hot(() => (
-    <Router history={history}>
+    <BrowserRouter>
       <App />
-    </Router>
+    </BrowserRouter>
   ))
 )
 

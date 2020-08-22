@@ -2,11 +2,17 @@ import { useEffect } from "react"
 import { useStore } from "../Store"
 import { useSafeAreaInsets } from "react-native-safe-area-context"
 import { useWindowDimensions } from "react-native"
+import { useHistory } from "react-router"
 
 export const useLayout = () => {
+  const history = useHistory()
   const { width, height } = useWindowDimensions()
   const insets = useSafeAreaInsets()
   const { ui } = useStore()
+
+  useEffect(() => {
+    ui.app.history = history
+  }, [])
 
   useEffect(() => {
     ui.setDimension({
@@ -21,7 +27,7 @@ export const useLayout = () => {
       try {
         await ui.app.checkAuth()
       } catch (e) {
-        ui.history.push("/login")
+        ui.app.history.push("/login")
       }
     })()
   }, [ui.app.auth])

@@ -2,6 +2,7 @@ import { observable, action, decorate } from "mobx"
 import * as req from "../request"
 
 class AppStore {
+  history: any = null
   auth = null
   isUpdating = false
   checkAuth = async () => {

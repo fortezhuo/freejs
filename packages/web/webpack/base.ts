@@ -108,10 +108,6 @@ export const getWebpackPlugins = (isWeb: boolean): webpack.Plugin[] =>
           template: "src/assets/index.html",
           filename: "./index.html",
         }),
-        new webpack.DefinePlugin({
-          FREE_STAMP: JSON.stringify(stamp),
-          FREE_NODE_ENV: JSON.stringify(isDev ? "development" : "production"),
-        }),
       ]
     : []
   )
@@ -121,7 +117,14 @@ export const getWebpackPlugins = (isWeb: boolean): webpack.Plugin[] =>
         : [new CompressionPlugin()]
     )
     .concat(isAnalyzer ? [new BundleAnalyzerPlugin()] : [])
-    .concat([new LoadablePlugin(), new MiniCssExtractPlugin()])
+    .concat([
+      new LoadablePlugin(),
+      new MiniCssExtractPlugin(),
+      new webpack.DefinePlugin({
+        FREE_STAMP: JSON.stringify(stamp),
+        FREE_NODE_ENV: JSON.stringify(isDev ? "development" : "production"),
+      }),
+    ])
 
 export const getDefaultConfig = (isWeb: boolean): webpack.Configuration => {
   return {
