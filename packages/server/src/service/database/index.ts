@@ -6,6 +6,7 @@ import { findOne } from "./findOne"
 import { insert } from "./insert"
 import { remove } from "./remove"
 import { update } from "./update"
+import { Exception } from "../../util/exception"
 
 export class DatabaseService extends BaseService {
   public name: string
@@ -32,7 +33,10 @@ export class DatabaseService extends BaseService {
     const { params, query, body: rawBody, session } = req as {
       [key: string]: any
     }
-    const loggedname = session?.username
+    const authname = session?.auth?.username || "Anonymous"
+
+    if (authname === "Anonymous") throw new Exception(401, "Anonymous detected")
+
     const { _id, ...body } = rawBody || { _id: null }
     let projection: { [key: string]: number } = {}
     let q = query.q ? query.q : params.q
@@ -72,27 +76,7 @@ export class DatabaseService extends BaseService {
       option,
       page,
       skip,
-      loggedname,
+      authname,
     }
   }
-
-  /*
-  protected name: string
-  protected dbName: string
-  protected instance: Instance | undefined
-  protected findAll: VoidFunction
-  constructor(name: string, dbName?: string) {
-    this.name = name
-    this.dbName = dbName ? dbName : "app"
-    this.instance = undefined
-    this.findAll = findAll.bind(this)
-    this.register = this.register.bind(this)
-  }
-  register(instance: Instance) {
-    this.instance = instance
-  }
-  handleError(reply, err) {
-    return handleError(this.instance, reply, err)
-  }
-  */
 }

@@ -10,7 +10,7 @@ export const insert = function (this: DatabaseService) {
     reply.statusCode = 201
     const { validate } = Schema[this.name]
     try {
-      const { body, loggedname } = this.handleRequest(req)
+      const { body, authname } = this.handleRequest(req)
       if (!validate(body))
         throw new Exception(400, this.name.toUpperCase(), validate.errors)
 
@@ -18,9 +18,9 @@ export const insert = function (this: DatabaseService) {
       const data = await collection.insert({
         ...body,
         created_at: new Date(),
-        created_by: loggedname,
+        created_by: authname,
         updated_at: new Date(),
-        updated_by: loggedname,
+        updated_by: authname,
       })
       reply.send({
         success: true,

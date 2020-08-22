@@ -7,4 +7,5 @@ export const authController = async (instance: FastifyInstance) => {
 
   instance.get("/auth", auth.check())
   instance.post("/auth", auth.login())
+  instance.get("/auth/logout", auth.logout())
 }

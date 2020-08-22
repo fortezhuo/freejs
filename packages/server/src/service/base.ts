@@ -17,7 +17,7 @@ export class BaseService {
     }
     if (this.instance) {
       const code = reply.statusCode
-      const username = req?.session?.logged?.username || "Anonymous"
+      const username = req?.session?.auth?.username || "Anonymous"
       const method = req?.method
       const url = req.raw.url
       const message = `${username} ${method} ${url} ${err.message}`

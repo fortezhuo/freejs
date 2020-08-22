@@ -9,7 +9,7 @@ export const login = function (this: BaseService) {
     try {
       reply.statusCode = 200
       const data = await authenticate(req)
-      req.session.logged = data
+      req.session.auth = data
       reply.send({
         success: true,
         result: data,

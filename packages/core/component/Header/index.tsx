@@ -14,11 +14,13 @@ export const Header: FC = observer(() => {
 
   return (
     <View style={styles.rootHeader}>
-      <IconButton
-        name={ui.dimension.isMobile && "menu"}
-        style={styles.actionLeft}
-        onPress={ui.dimension.isMobile && ui.toggleDrawer}
-      />
+      {ui.app.auth && (
+        <IconButton
+          name={ui.dimension.isMobile && "menu"}
+          style={styles.actionLeft}
+          onPress={ui.dimension.isMobile && ui.toggleDrawer}
+        />
+      )}
       <Title>{subTitle}</Title>
       <View style={styles.boxGrow}></View>
       <MenuUser />

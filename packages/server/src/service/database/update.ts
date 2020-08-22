@@ -10,7 +10,7 @@ export const update = function (this: DatabaseService) {
     const { validate } = Schema[this.name]
 
     try {
-      const { option, q, body, loggedname } = this.handleRequest(req)
+      const { option, q, body, authname } = this.handleRequest(req)
       if (!q) throw new Exception(400, "Parameter not found")
       if (!validate(body))
         throw new Exception(400, this.name.toUpperCase(), validate.errors)
@@ -18,7 +18,7 @@ export const update = function (this: DatabaseService) {
       const collection = req.database[this.dbName].get(this.name)
       const data = await collection.update(
         q,
-        { $set: { ...body, updated_by: loggedname, updated_at: new Date() } },
+        { $set: { ...body, updated_by: authname, updated_at: new Date() } },
         option
       )
       reply.send({

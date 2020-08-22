@@ -23,8 +23,8 @@ export const MenuUser: FC = observer(() => {
       >
         <View style={styles.triangle} />
         <View style={styles.rootMenuUser}>
-          <View style={styles.boxLogged}>
-            <Text style={styles.textLogged}>{ui?.app?.auth?.fullname}</Text>
+          <View style={styles.boxAuth}>
+            <Text style={styles.textAuth}>{ui?.app?.auth?.fullname}</Text>
           </View>
           <MenuItem name="log-out">Logout</MenuItem>
         </View>
@@ -36,8 +36,8 @@ export const MenuUser: FC = observer(() => {
 const styles = StyleSheet.create({
   rootMenuUser: tw("bg-white shadow-md rounded"),
   iconMenuUser: tw("rounded-full border-2 border-solid border-white"),
-  boxLogged: tw("bg-gray-400 p-2 items-center"),
-  textLogged: tw("text-gray-600 font-bold text-xs"),
+  boxAuth: tw("bg-gray-400 p-2 items-center"),
+  textAuth: tw("text-gray-600 font-bold text-xs"),
   triangle: {
     alignSelf: "flex-end",
     marginRight: 20,
