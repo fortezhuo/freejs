@@ -3,8 +3,6 @@ import { AppStore } from "./appStore"
 import { UIStore } from "./uiStore"
 import { LoginStore } from "./loginStore"
 
-const app = new AppStore()
-const ui = new UIStore(app, history)
-const login = new LoginStore(app, history)
-
-export { app, ui, login }
+export const app = new AppStore()
+export const ui = new UIStore(app, history)
+export const login = new LoginStore(app, history)
