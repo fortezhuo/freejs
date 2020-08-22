@@ -2,13 +2,15 @@ import React, { FC } from "react"
 import { StyleSheet, View, Text } from "react-native"
 import { IconButton } from "../Icon"
 import { useMenu } from "../Menu"
+import { useStore } from "../Store"
 import { tw, color } from "@free/tailwind"
 import { observer } from "mobx-react-lite"
 
 export const MenuUser: FC = observer(() => {
   const { show, Menu, MenuItem } = useMenu()
+  const { ui } = useStore()
   return (
-    true && (
+    ui.app.auth && (
       <Menu
         anchor={
           <IconButton
@@ -22,7 +24,7 @@ export const MenuUser: FC = observer(() => {
         <View style={styles.triangle} />
         <View style={styles.rootMenuUser}>
           <View style={styles.boxLogged}>
-            <Text style={styles.textLogged}>{"Full Name"}</Text>
+            <Text style={styles.textLogged}>{ui?.app?.auth?.fullname}</Text>
           </View>
           <MenuItem name="log-out">Logout</MenuItem>
         </View>

@@ -1,11 +1,10 @@
 import React, { FC } from "react"
-import { View, StyleSheet, ScrollView, ViewProps, Platform } from "react-native"
+import { View, StyleSheet, ScrollView, ViewProps, Text } from "react-native"
 import { tw } from "@free/tailwind"
 import { useSpring, animated } from "react-spring/native"
 import { Accordion, AccordionItem } from "../Accordion"
 import { SidebarProps } from "@free/core"
-
-const AnimatedView = animated<React.ElementType<ViewProps>>(View)
+import { observer } from "mobx-react-lite"
 
 const Content: FC = () => {
   return (
@@ -55,10 +54,11 @@ const Content: FC = () => {
   )
 }
 
-export const Sidebar: FC<SidebarProps> = ({ isOpen }) => {
+const AnimatedView = animated<React.ElementType<ViewProps>>(View)
+export const Sidebar: FC<SidebarProps> = observer(({ isOpen }) => {
   const animatedStyle = useSpring({
     config: { duration: 100 },
-    from: { width: 0 },
+    from: { width: tw("w-64").width },
     to: {
       width: isOpen ? tw("w-64").width : 0,
     },
@@ -74,7 +74,7 @@ export const Sidebar: FC<SidebarProps> = ({ isOpen }) => {
       </ScrollView>
     </AnimatedView>
   )
-}
+})
 
 const styles = StyleSheet.create({
   rootSidebar: tw(`shadow-2xl flex-col`),

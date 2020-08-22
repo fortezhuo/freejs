@@ -7,7 +7,6 @@ import { useStore } from "../Store"
 
 export const Drawer: FC = observer(({ children }) => {
   const { ui } = useStore()
-
   return (
     <View style={styles.rootDrawer}>
       {ui.app.auth && (

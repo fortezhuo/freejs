@@ -9,5 +9,11 @@ export const useLogin = () => {
     store.data.set("domain", ldap[0].domain)
   }, [])
 
+  useEffect(() => {
+    if (store.app.auth) {
+      store.history.push("/")
+    }
+  }, [store.app.auth])
+
   return store
 }
