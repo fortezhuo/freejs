@@ -1,17 +1,13 @@
 import { useEffect } from "react"
-import { useHistory } from "../../component/Router"
 import { useStore } from "../../component/Store"
 import { configLDAP as ldap } from "@free/env"
 
-const ldapDomain = ldap.map((l: { domain?: string }) => l.domain)
-
 export const useLogin = () => {
-  const { push } = useHistory()
-  const { login: store, app } = useStore()
+  const { login: store } = useStore()
 
   useEffect(() => {
-    store.data.set("domain", ldapDomain)
+    store.data.set("domain", ldap[0].domain)
   }, [])
 
-  return { store, app }
+  return store
 }

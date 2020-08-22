@@ -11,8 +11,8 @@ class LoginStore extends BaseStore {
         "domain"
       )
       const res = await req.post("api/auth", { username, password, domain })
-      this.app?.setLogged(res.data.result)
-      //      this.history?.push("/")
+      this.app?.setAuth(res.data.result)
+      this.history?.push("/")
     } finally {
       this.isUpdating = false
     }

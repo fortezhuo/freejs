@@ -2,27 +2,27 @@ import { observable, action, decorate } from "mobx"
 import * as req from "../request"
 
 class AppStore {
-  logged = null
+  auth = null
   isUpdating = false
   checkAuth = async () => {
     try {
       this.isUpdating = true
-      //      const res = await req.get("api/auth")
-      //      this.logged = res.data
+      const res = await req.get("api/auth")
+      this.auth = res.data.result
     } finally {
       this.isUpdating = false
     }
   }
-  setLogged = (logged: any) => {
-    this.logged = logged
+  setAuth = (auth: any) => {
+    this.auth = auth
   }
 }
 
 decorate(AppStore, {
-  logged: observable,
+  auth: observable,
   isUpdating: observable,
   checkAuth: action,
-  setLogged: action,
+  setAuth: action,
 })
 
 export { AppStore }

@@ -1,15 +1,14 @@
 import { observable, decorate, action } from "mobx"
 import { AppStore } from "./appStore"
-import { History } from "@free/core"
 
 class BaseStore {
-  history: History | undefined = undefined
   app: AppStore | undefined = undefined
+  history: any = undefined
   data = new Map()
   temp = new Map()
   isUpdating = false
 
-  constructor(app: AppStore, history: History) {
+  constructor(app: AppStore, history: any) {
     this.app = app
     this.history = history
   }

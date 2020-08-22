@@ -1,14 +1,12 @@
 import { useEffect } from "react"
 import { useStore } from "../Store"
-import { useHistory } from "../Router"
 import { useSafeAreaInsets } from "react-native-safe-area-context"
 import { useWindowDimensions } from "react-native"
 
 export const useLayout = () => {
   const { width, height } = useWindowDimensions()
   const insets = useSafeAreaInsets()
-  const { push } = useHistory()
-  const { ui, app } = useStore()
+  const { ui } = useStore()
 
   useEffect(() => {
     ui.setDimension({
@@ -21,13 +19,12 @@ export const useLayout = () => {
   useEffect(() => {
     ;(async function () {
       try {
-        await app.checkAuth()
+        await ui.app.checkAuth()
       } catch (e) {
-        console.log(e)
-        push("/login")
+        ui.history.push("/login")
       }
     })()
-  }, [app.logged])
+  }, [ui.app.auth])
 
   return ui
 }

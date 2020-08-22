@@ -1,13 +1,14 @@
-import React, { FC } from "react"
-import { View, StyleSheet, ScrollView } from "react-native"
+import React, { FC, useEffect } from "react"
+import { View, StyleSheet, ScrollView, Text } from "react-native"
 import { tw } from "@free/tailwind"
 import * as Input from "../../component/Input"
 import { Button } from "../../component/Button"
 import { IconLabel } from "../../component/Icon"
+import { observer } from "mobx-react-lite"
 import { useLogin } from "./hook"
 
-const Login: FC = () => {
-  const { store } = useLogin()
+const Login: FC = observer(() => {
+  const store = useLogin()
 
   return (
     <View style={styles.rootLogin}>
@@ -43,7 +44,7 @@ const Login: FC = () => {
       </ScrollView>
     </View>
   )
-}
+})
 
 const styles = StyleSheet.create({
   rootLogin: tw("flex-1 flex-col"),

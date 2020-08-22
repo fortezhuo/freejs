@@ -2,10 +2,10 @@ import { observable, action, decorate } from "mobx"
 import { AppStore } from "./appStore"
 
 class UIStore {
-  history: History | undefined = undefined
+  history: any = undefined
   app: AppStore | undefined = undefined
 
-  constructor(app: AppStore, history: History) {
+  constructor(app: AppStore, history: any) {
     this.app = app
     this.history = history
   }

@@ -1,8 +1,9 @@
-import React, { FC } from "react"
+import React, { FC, memo } from "react"
 import { devtools } from "../../util/devtools"
 import { ListStore } from "@free/core"
-import { useMerge } from "./hook"
+import * as store from "../../store"
 
+devtools(store)
 const StoreContext = React.createContext<ListStore>(null)
 
 export const useStore = () => {
@@ -13,8 +14,6 @@ export const useStore = () => {
   return store
 }
 
-export const StoreProvider: FC = ({ children }) => {
-  const store = useMerge()
-  devtools(store)
+export const StoreProvider: FC = memo(({ children }) => {
   return <StoreContext.Provider value={store}>{children}</StoreContext.Provider>
-}
+})

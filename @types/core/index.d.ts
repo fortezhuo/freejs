@@ -9,11 +9,6 @@ declare module "@free/core" {
     [key: string]: any
   }
 
-  type History = {
-    pathname: string
-    push: (path: string) => void
-  }
-
   //Accordion
   interface AccordionProps {
     icon: string
