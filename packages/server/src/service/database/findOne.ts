@@ -1,6 +1,6 @@
 import { Request, Reply } from "@free/server"
 import { DatabaseService } from "./"
-import { Exception } from "../../util"
+import { Exception } from "../../util/exception"
 
 export const findOne = function (this: DatabaseService) {
   return async (req: Request, reply: Reply) => {

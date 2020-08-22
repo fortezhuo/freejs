@@ -1,6 +1,6 @@
 import * as RawSchema from "../../schema"
 import { Request, Reply, ValidationSchema } from "@free/server"
-import { Exception, handleRequest } from "../../util"
+import { Exception } from "../../util/exception"
 import { DatabaseService } from "."
 
 const Schema: ValidationSchema = RawSchema
@@ -10,7 +10,7 @@ export const update = function (this: DatabaseService) {
     const { validate } = Schema[this.name]
 
     try {
-      const { option, q, body, loggedname } = handleRequest(req)
+      const { option, q, body, loggedname } = this.handleRequest(req)
       if (!q) throw new Exception(400, "Parameter not found")
       if (!validate(body))
         throw new Exception(400, this.name.toUpperCase(), validate.errors)

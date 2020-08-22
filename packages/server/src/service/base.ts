@@ -1,5 +1,5 @@
 import { Instance, Request, Reply } from "@free/server"
-import { Exception } from "../util"
+import { Exception } from "../util/exception"
 
 export class BaseService {
   protected instance: Instance | undefined

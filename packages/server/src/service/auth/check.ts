@@ -1,5 +1,5 @@
 import { Request, Reply } from "@free/server"
-import { Exception } from "../../util"
+import { Exception } from "../../util/exception"
 import { BaseService } from "../base"
 export const check = function (this: BaseService) {
   return async (req: Request, reply: Reply) => {

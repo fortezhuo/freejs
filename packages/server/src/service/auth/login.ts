@@ -1,6 +1,6 @@
 import LDAP from "simple-ldap-search"
 import { configLDAP } from "@free/env"
-import { Exception } from "../../util"
+import { Exception } from "../../util/exception"
 import { Request, Reply } from "@free/server"
 import { BaseService } from "../base"
 
