@@ -11,7 +11,8 @@ export const useLayout = () => {
   const { ui } = useStore()
 
   useEffect(() => {
-    ui.app.history = history
+    ui.app._history = history
+    ui.app.push()
   }, [])
 
   useEffect(() => {
@@ -27,7 +28,7 @@ export const useLayout = () => {
       try {
         await ui.app.checkAuth()
       } catch (e) {
-        ui.app.history.push("/login")
+        ui.app.push("/login")
       }
     })()
   }, [ui.app.auth])

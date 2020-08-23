@@ -11,12 +11,14 @@ declare module "@free/core" {
 
   //Accordion
   interface AccordionProps {
+    active?: boolean
     icon: string
     label: string
     children: ReactNode
   }
 
   interface AccordionItemProps {
+    active?: boolean
     icon: string
     header?: boolean
     children: string

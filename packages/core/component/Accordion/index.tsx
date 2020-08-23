@@ -3,7 +3,7 @@ import { View, TouchableOpacity, StyleSheet, ViewProps } from "react-native"
 import { theme } from "../../config/theme"
 import { useSpring, animated } from "react-spring/native"
 import { IconLabel, Icon } from "../Icon"
-import { tw, adjust, border } from "@free/tailwind"
+import { tw, adjust, border, text } from "@free/tailwind"
 import { observer, useLocalStore } from "mobx-react-lite"
 import { useStore } from "../Store"
 import { AccordionProps, AccordionItemProps } from "@free/core"
@@ -13,9 +13,9 @@ const { color } = tw("text-gray-600")
 const noop = () => {}
 
 export const Accordion: FC<AccordionProps> = observer(
-  ({ icon, label, children }) => {
+  ({ icon, label, active = false, children }) => {
     const state = useLocalStore(() => ({
-      isExpand: false,
+      isExpand: active,
       toggle() {
         state.isExpand = !state.isExpand
       },
@@ -58,7 +58,7 @@ export const Accordion: FC<AccordionProps> = observer(
 )
 
 export const AccordionItem: FC<AccordionItemProps> = observer(
-  ({ icon, header = false, children, onPress = noop }) => {
+  ({ icon, header = false, active, children, onPress = noop }) => {
     const { ui } = useStore()
     const onClose = () => {
       if (ui.dimension.isMobile) ui.setDrawerOpen(false)
@@ -90,9 +90,15 @@ export const AccordionItem: FC<AccordionItemProps> = observer(
           <IconLabel
             name={icon}
             size={20}
-            color={color}
-            styleContainer={styles.rootItem}
-            styleText={styles.textItem}
+            color={active ? "#fff" : color}
+            styleContainer={StyleSheet.flatten([
+              styles.rootItem,
+              active ? styles.rootItemActive : {},
+            ])}
+            styleText={StyleSheet.flatten([
+              styles.textItem,
+              active ? styles.textActive : {},
+            ])}
           >
             {children}
           </IconLabel>
@@ -109,6 +115,7 @@ const styles = StyleSheet.create({
       adjust(theme.default, -2)
     )} px-4 py-3 items-center`
   ),
+  rootItemActive: tw(`${adjust(theme.primary, -1)}`),
   groupAccordion: tw(
     `flex-row z-10 ${theme.primary} border-b ${border(
       adjust(theme.primary, -2)
@@ -118,5 +125,6 @@ const styles = StyleSheet.create({
   groupItem: tw("flex-col flex-shrink z-0"),
   textAccordion: tw("px-2 text-white"),
   textItem: tw("px-2 text-gray-600"),
+  textActive: tw(`text-white`),
   iconChevron: tw("mr-2"),
 })

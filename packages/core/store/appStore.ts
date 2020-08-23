@@ -3,7 +3,8 @@ import * as req from "../request"
 import { acl } from "../util/acl"
 
 class AppStore {
-  history: any = null
+  _history: any = null
+  location: string | undefined = undefined
   auth: any = null
   isUpdating = false
   checkAuth = async () => {
@@ -23,14 +24,22 @@ class AppStore {
     const { granted }: any = acl.can(roles).execute(action).sync().on(resource)
     return granted
   }
+  push = (path: string | undefined) => {
+    if (path) {
+      this?._history.push(path)
+    }
+    this.location = this?._history?.location.pathname
+  }
 }
 
 decorate(AppStore, {
+  location: observable,
   auth: observable,
   isUpdating: observable,
   checkAuth: action,
   setAuth: action,
   can: action,
+  push: action,
 })
 
 export { AppStore }

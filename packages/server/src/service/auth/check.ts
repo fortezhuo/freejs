@@ -12,7 +12,7 @@ export const check = function (this: BaseService) {
         result: data,
       })
     } catch (err) {
-      this.handleError(req, reply, err)
+      this.handleError(req, reply, err, false)
     }
   }
 }

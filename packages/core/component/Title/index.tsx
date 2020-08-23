@@ -14,10 +14,7 @@ export const Title: FC = observer(({ children }) => {
   const disabled = false
   const { ui } = useStore()
   return (
-    <TouchableOpacity
-      disabled={disabled}
-      onPress={() => ui.app.history.push("/")}
-    >
+    <TouchableOpacity disabled={disabled} onPress={() => ui.app.push("/")}>
       <View style={styles.rootTitle}>
         <Logo />
         <View style={styles.groupTitle}>

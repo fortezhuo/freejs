@@ -9,7 +9,12 @@ export class BaseService {
   register(instance: Instance) {
     this.instance = instance
   }
-  handleError = (req: Request, reply: Reply, err: any) => {
+  handleError = (
+    req: Request,
+    reply: Reply,
+    err: any,
+    logging: boolean = true
+  ) => {
     if (err instanceof Exception) {
       reply.statusCode = err.statusCode
     } else {
@@ -22,8 +27,10 @@ export class BaseService {
       const url = req.raw.url
       const message = `${username} ${method} ${url} ${err.message}`
 
-      this.instance.log.warn(message)
-      if (code === 500) this.instance.log.error(err)
+      if (logging) {
+        this.instance.log.warn(message)
+        if (code === 500) this.instance.log.error(err)
+      }
     }
     reply.send({
       success: false,
