@@ -14,6 +14,9 @@ const webpackDevConfig = {
   devtool: "source-map",
   watch: true,
   entry: entryClient,
+  output: {
+    publicPath: `/`,
+  },
   module: {
     rules: getWebpackRules(),
   },

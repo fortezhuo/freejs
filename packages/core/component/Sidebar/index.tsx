@@ -25,15 +25,11 @@ const Content: FC = observer(() => {
             icon={menu.icon}
           >
             {menu.children.map((sub: any) => {
-              const active = sub.path === pathname
               return (
                 <AccordionItem
-                  active={active}
+                  pathname={sub.path}
                   key={`sub_${random()}`}
                   icon={sub.icon}
-                  onPress={() => {
-                    ui.app.push(sub.path)
-                  }}
                 >
                   {sub.label}
                 </AccordionItem>

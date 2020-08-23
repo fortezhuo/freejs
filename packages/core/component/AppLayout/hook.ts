@@ -12,7 +12,7 @@ export const useLayout = () => {
 
   useEffect(() => {
     ui.app._history = history
-    ui.app.push()
+    ui.app.goto()
   }, [])
 
   useEffect(() => {
@@ -28,7 +28,7 @@ export const useLayout = () => {
       try {
         await ui.app.checkAuth()
       } catch (e) {
-        ui.app.push("/login")
+        ui.app.goto("/login")
       }
     })()
   }, [ui.app.auth])

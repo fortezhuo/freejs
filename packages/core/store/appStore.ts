@@ -4,9 +4,15 @@ import { acl } from "../util/acl"
 
 class AppStore {
   _history: any = null
-  location: string | undefined = undefined
-  auth: any = null
   isUpdating = false
+
+  can = (action: string, resource: string) => {
+    const roles = this?.auth?.roles
+    const { granted }: any = acl.can(roles).execute(action).sync().on(resource)
+    return granted
+  }
+
+  auth: any = null
   checkAuth = async () => {
     try {
       this.isUpdating = true
@@ -19,12 +25,9 @@ class AppStore {
   setAuth = (auth: any) => {
     this.auth = auth
   }
-  can = (action: string, resource: string) => {
-    const roles = this?.auth?.roles
-    const { granted }: any = acl.can(roles).execute(action).sync().on(resource)
-    return granted
-  }
-  push = (path: string | undefined) => {
+
+  location: string | undefined = undefined
+  goto = (path: string | undefined) => {
     if (path) {
       this?._history.push(path)
     }
@@ -39,7 +42,7 @@ decorate(AppStore, {
   checkAuth: action,
   setAuth: action,
   can: action,
-  push: action,
+  goto: action,
 })
 
 export { AppStore }

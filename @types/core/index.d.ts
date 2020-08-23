@@ -18,7 +18,7 @@ declare module "@free/core" {
   }
 
   interface AccordionItemProps {
-    active?: boolean
+    pathname?: string
     icon: string
     header?: boolean
     children: string

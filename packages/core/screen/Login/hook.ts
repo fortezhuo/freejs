@@ -11,7 +11,7 @@ export const useLogin = () => {
 
   useEffect(() => {
     if (store.app.auth) {
-      store.app.history.push("/")
+      store.app.goto("/")
     }
   }, [store.app.auth])
 
