@@ -24,27 +24,27 @@ export const menu = [
       {
         label: "View 2",
         icon: "list",
-        path: "/view/2",
+        path: "/view2/2",
       },
       {
         label: "View 3",
         icon: "list",
-        path: "/view/3",
+        path: "/view3/3",
       },
       {
         label: "View 4",
         icon: "list",
-        path: "/view/4",
+        path: "/view4/4",
       },
       {
         label: "View 5",
         icon: "list",
-        path: "/view/5",
+        path: "/view5/5",
       },
       {
         label: "View 6",
         icon: "list",
-        path: "/view/6",
+        path: "/view6/6",
       },
     ],
   },

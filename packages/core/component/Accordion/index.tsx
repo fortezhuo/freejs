@@ -24,7 +24,7 @@ export const Accordion: FC<AccordionProps> = observer(
     const height = Children.count(children) * 47
     const accordionProps = useSpring({
       config: { duration: 120 },
-      from: { opacity: 0, height: 0 },
+      from: active ? { opacity: 1, height } : { opacity: 0, height: 0 },
       to: {
         opacity: state.isExpand ? 1 : 0,
         height: state.isExpand ? height : 0,

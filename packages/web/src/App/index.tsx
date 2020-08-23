@@ -22,6 +22,11 @@ const AppLayout = loadable(() => import("@free/core/component/AppLayout"), {
   fallback: <span>Loading ...</span>,
 })
 
+const NotFound = loadable(() => import("@free/core/screen/NotFound"), {
+  ssr: true,
+  fallback: <span>Loading ...</span>,
+})
+
 const App = () => {
   return (
     <AppLayout>
@@ -29,6 +34,7 @@ const App = () => {
         <Route exact path="/" component={Home} />
         <Route path="/login" component={Login} />
         <Route path="/view" component={FreeView} />
+        <Route path="*" component={NotFound} />
       </Switch>
     </AppLayout>
   )
