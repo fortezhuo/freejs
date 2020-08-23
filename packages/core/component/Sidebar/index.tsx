@@ -5,8 +5,9 @@ import { useSpring, animated } from "react-spring/native"
 import { Accordion, AccordionItem } from "../Accordion"
 import { SidebarProps } from "@free/core"
 import { observer } from "mobx-react-lite"
-
+import { useStore } from "../Store"
 const Content: FC = () => {
+  const { ui } = useStore()
   return (
     <View style={styles.rootContent}>
       <Accordion label="1" icon="home">
@@ -37,16 +38,18 @@ const Content: FC = () => {
         <AccordionItem icon="home">44</AccordionItem>
         <AccordionItem icon="home">45</AccordionItem>
       </Accordion>
-      <Accordion label="Profile" icon="sliders">
-        <AccordionItem icon="home">51</AccordionItem>
-        <AccordionItem icon="home">52</AccordionItem>
-        <AccordionItem icon="home">53</AccordionItem>
-        <AccordionItem icon="home">54</AccordionItem>
-        <AccordionItem icon="home">55</AccordionItem>
-        <AccordionItem icon="home">56</AccordionItem>
-        <AccordionItem icon="home">57</AccordionItem>
-        <AccordionItem icon="home">58</AccordionItem>
-      </Accordion>
+      {ui.app.can("read", "log") && (
+        <Accordion label="Profile" icon="sliders">
+          <AccordionItem icon="home">51</AccordionItem>
+          <AccordionItem icon="home">52</AccordionItem>
+          <AccordionItem icon="home">53</AccordionItem>
+          <AccordionItem icon="home">54</AccordionItem>
+          <AccordionItem icon="home">55</AccordionItem>
+          <AccordionItem icon="home">56</AccordionItem>
+          <AccordionItem icon="home">57</AccordionItem>
+          <AccordionItem icon="home">58</AccordionItem>
+        </Accordion>
+      )}
       <AccordionItem header icon="help-circle">
         About Application
       </AccordionItem>

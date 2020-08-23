@@ -46,7 +46,7 @@ const authenticate = async (req: Request) => {
       username: auth.user.sAMAccountName,
       fullname: auth.user.displayName,
       email: auth.user.mail,
-      role: ["Admin"],
+      roles: ["Admin"],
       created_by: auth.user.sAMAccountName,
       updated_by: auth.user.sAMAccountName,
       created_at: new Date(),

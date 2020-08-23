@@ -9,6 +9,7 @@
     "semi": false
   },
   "scripts": {
-    "build": "ts-node ./build.ts"
+    "build": "ts-node ./build.ts",
+    "test-role": "ts-node ./testRole.ts"
   }
 }

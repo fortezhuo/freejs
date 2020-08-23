@@ -4,7 +4,7 @@ const schema = S.object()
   .prop("username", S.string().required())
   .prop("fullname", S.string().required())
   .prop("email", S.string().format("email").required())
-  .prop("role", S.array())
+  .prop("roles", S.array())
   .extend(baseSchema)
   .valueOf()
 

@@ -1,9 +1,10 @@
 import { observable, action, decorate } from "mobx"
 import * as req from "../request"
+import { acl } from "../util/acl"
 
 class AppStore {
   history: any = null
-  auth = null
+  auth: any = null
   isUpdating = false
   checkAuth = async () => {
     try {
@@ -17,6 +18,11 @@ class AppStore {
   setAuth = (auth: any) => {
     this.auth = auth
   }
+  can = (action: string, resource: string) => {
+    const roles = this?.auth?.roles
+    const { granted }: any = acl.can(roles).execute(action).sync().on(resource)
+    return granted
+  }
 }
 
 decorate(AppStore, {
@@ -24,6 +30,7 @@ decorate(AppStore, {
   isUpdating: observable,
   checkAuth: action,
   setAuth: action,
+  can: action,
 })
 
 export { AppStore }
