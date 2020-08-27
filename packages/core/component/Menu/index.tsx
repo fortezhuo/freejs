@@ -3,9 +3,10 @@ import { View, StyleSheet } from "react-native"
 import { Modal } from "../Modal"
 import { IconButton } from "../Icon"
 import { observer, useLocalStore } from "mobx-react-lite"
-import { tw } from "@free/tailwind"
+import { tw, adjust } from "@free/tailwind"
 import { useStore } from "../Store"
 import { MenuProps, MenuItemProps } from "@free/core"
+import { theme } from "../../config/theme"
 
 const { color: iconColor } = tw("text-gray-700")
 const SCREEN_INDENT = 2
@@ -34,7 +35,7 @@ export const useMenu = () => {
   const onMenuLayout = (e: any) => {
     const { width, height } = e.nativeEvent.layout
     state.setMeasure({
-      menuWidth: Math.max(tw("w-48").width, width),
+      menuWidth: Math.max(tw("w-48").width, width, state.measure.anchorWidth),
       menuHeight: height,
     })
   }
@@ -61,51 +62,54 @@ export const useMenu = () => {
   }
   const hide = () => state.setOpen(false)
 
-  const Menu: FC<MenuProps> = observer(({ anchor, style, children }) => {
-    const { ui } = useStore()
-    const { menuWidth, menuHeight, anchorHeight } = state.measure
-    let { left, top } = state.measure
+  const Menu: FC<MenuProps> = observer(
+    ({ anchor, style, children, onShow }) => {
+      const { ui } = useStore()
+      const { menuWidth, menuHeight, anchorHeight } = state.measure
+      let { left, top } = state.measure
 
-    if (left > ui.dimension.width - menuWidth - SCREEN_INDENT) {
-      left = ui.dimension.width - SCREEN_INDENT - menuWidth
-    } else if (left < SCREEN_INDENT) {
-      left = SCREEN_INDENT
-    }
+      if (left > ui.dimension.width - menuWidth - SCREEN_INDENT) {
+        left = ui.dimension.width - SCREEN_INDENT - menuWidth
+      } else if (left < SCREEN_INDENT) {
+        left = SCREEN_INDENT
+      }
 
-    if (top > ui.dimension.height - menuHeight - SCREEN_INDENT) {
-      top = ui.dimension.height - SCREEN_INDENT
-      top = Math.min(ui.dimension.height - SCREEN_INDENT, top + anchorHeight)
-    } else if (top < SCREEN_INDENT) {
-      top = SCREEN_INDENT
-    } else {
-      top += anchorHeight
-    }
+      if (top > ui.dimension.height - menuHeight - SCREEN_INDENT) {
+        top = ui.dimension.height - SCREEN_INDENT
+        top = Math.min(ui.dimension.height - SCREEN_INDENT, top + anchorHeight)
+      } else if (top < SCREEN_INDENT) {
+        top = SCREEN_INDENT
+      } else {
+        top += anchorHeight
+      }
 
-    const menuStyle = {
-      width: menuWidth,
-      left,
-      top,
-    }
+      const menuStyle = {
+        width: menuWidth,
+        left,
+        top,
+      }
 
-    return (
-      <View ref={refContainer} collapsable={false}>
-        {anchor}
-        <Modal
-          visible={state.isOpen}
-          onRequestClose={hide}
-          onBackdropPress={hide}
-          transparent
-        >
-          <View
-            style={StyleSheet.flatten([styles.rootMenu, menuStyle, style])}
-            onLayout={onMenuLayout}
+      return (
+        <View ref={refContainer} collapsable={false}>
+          {anchor}
+          <Modal
+            visible={state.isOpen}
+            onShow={onShow}
+            onRequestClose={hide}
+            onBackdropPress={hide}
+            transparent
           >
-            {children}
-          </View>
-        </Modal>
-      </View>
-    )
-  })
+            <View
+              style={StyleSheet.flatten([styles.rootMenu, menuStyle, style])}
+              onLayout={onMenuLayout}
+            >
+              {children}
+            </View>
+          </Modal>
+        </View>
+      )
+    }
+  )
 
   const MenuItem: FC<MenuItemProps> = observer(
     ({
@@ -142,8 +146,40 @@ export const useMenu = () => {
   }
 }
 
+export const MenuItem: FC<MenuItemProps> = observer(
+  ({
+    active,
+    name,
+    color = iconColor,
+    children,
+    onPress = noop,
+    styleText,
+    style,
+  }) => {
+    return (
+      <IconButton
+        onPress={() => {
+          onPress()
+        }}
+        styleContainer={StyleSheet.flatten([
+          styles.rootMenuItem,
+          active ? styles.rootMenuActive : {},
+          style,
+        ])}
+        name={name}
+        color={color}
+        size={18}
+        styleText={StyleSheet.flatten([styles.textMenuItem, styleText])}
+      >
+        {children}
+      </IconButton>
+    )
+  }
+)
+
 const styles: any = StyleSheet.create({
   rootMenu: tw("absolute bg-transparent"),
-  rootMenuItem: tw("flex-1 flex-row p-3 border-solid border-t border-gray-400"),
+  rootMenuItem: tw("flex-1 flex-row p-2 border-solid border-t border-gray-400"),
+  rootMenuActive: tw(adjust(theme.primary, -3)),
   textMenuItem: tw("text-gray-700 leading-5 mx-2"),
 })

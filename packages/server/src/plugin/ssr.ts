@@ -2,6 +2,7 @@ import fs from "fs"
 import fp from "fastify-plugin"
 import React from "react"
 import fastifyStatic from "fastify-static"
+import fastifyFavicon from "fastify-favicon"
 import fastifyCompress from "fastify-compress"
 import { resolve } from "path"
 import { renderToString } from "react-dom/server"
@@ -11,6 +12,7 @@ import { Request, Reply } from "@free/server"
 const isProd = process.env.NODE_ENV === "production"
 
 export const ssr = fp(async (instance) => {
+  instance.register(fastifyFavicon, { path: "./packages/env/img" })
   if (isProd) {
     const publicDir = resolve(fs.realpathSync(process.cwd()), "build/static")
     const nodeStats = resolve(publicDir, "node/loadable-stats.json")
@@ -38,6 +40,7 @@ export const ssr = fp(async (instance) => {
             reply.send(`<!DOCTYPE html>
     <html>
     <head>
+    <link rel='shortcut icon' href='/favicon.ico' />
     <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
     <meta content="utf-8" http-equiv="encoding">
     ${webExtractor.getLinkTags()}

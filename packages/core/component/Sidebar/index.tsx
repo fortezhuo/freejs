@@ -6,17 +6,20 @@ import { Accordion, AccordionItem } from "../Accordion"
 import { SidebarProps } from "@free/core"
 import { observer } from "mobx-react-lite"
 import { useStore } from "../Store"
-import { menu as config } from "../../config/menu"
+import { getMenu } from "../../config/menu"
 import { random } from "../../util/random"
 
 const Content: FC = observer(() => {
   const { ui } = useStore()
   const pathname = ui.app.location
+  const allowedMenu = getMenu().filter((menu) => menu.visible)
+
   return (
     <View style={styles.rootContent}>
-      {config.map((menu) => {
-        const active =
-          menu.children.filter((sub) => sub.path === pathname).length !== 0
+      {allowedMenu.map((menu) => {
+        const active = menu.children
+          ? menu.children.filter((sub) => sub.path === pathname).length !== 0
+          : false
         return (
           <Accordion
             active={active}
@@ -24,17 +27,20 @@ const Content: FC = observer(() => {
             label={menu.label}
             icon={menu.icon}
           >
-            {menu.children.map((sub: any) => {
-              return (
-                <AccordionItem
-                  pathname={sub.path}
-                  key={`sub_${random()}`}
-                  icon={sub.icon}
-                >
-                  {sub.label}
-                </AccordionItem>
-              )
-            })}
+            {menu.children &&
+              menu.children
+                .filter((sub) => sub.visible)
+                .map((sub) => {
+                  return (
+                    <AccordionItem
+                      pathname={sub.path}
+                      key={`sub_${random()}`}
+                      icon={sub.icon}
+                    >
+                      {sub.label}
+                    </AccordionItem>
+                  )
+                })}
           </Accordion>
         )
       })}

@@ -26,7 +26,9 @@ export const MenuUser: FC = observer(() => {
           <View style={styles.boxAuth}>
             <Text style={styles.textAuth}>{ui?.app?.auth?.fullname}</Text>
           </View>
-          <MenuItem name="log-out">Logout</MenuItem>
+          <MenuItem name="log-out" onPress={() => ui.app.logout()}>
+            Logout
+          </MenuItem>
         </View>
       </Menu>
     )

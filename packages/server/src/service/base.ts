@@ -9,7 +9,18 @@ export class BaseService {
   register(instance: Instance) {
     this.instance = instance
   }
-  handleError = (
+
+  _handleRequest = (req: Request) => {
+    const { session } = req as {
+      [key: string]: any
+    }
+    const authname = session?.auth?.username || "Anonymous"
+
+    if (authname === "Anonymous") throw new Exception(401, "Anonymous detected")
+  }
+  handleRequest = (req: Request) => this._handleRequest(req)
+
+  _handleError = (
     req: Request,
     reply: Reply,
     err: any,
@@ -39,4 +50,10 @@ export class BaseService {
       stack: reply.statusCode === 500 ? err.stack : undefined,
     })
   }
+  handleError = (
+    req: Request,
+    reply: Reply,
+    err: any,
+    logging: boolean = true
+  ) => this._handleError(req, reply, err, logging)
 }

@@ -1,67 +1,87 @@
-import React, { FC, useEffect } from "react"
+import React, { FC, useRef } from "react"
 import { useMenu } from "../../Menu"
-import { useSelection } from "./Selection"
+import { Search } from "./Search"
+import { Options } from "./Options"
 import { Anchor } from "./Anchor"
-import { Platform } from "react-native"
-import { view } from "@risingstack/react-easy-state"
+import { StyleSheet, View, TextInput, ScrollView } from "react-native"
+import { observer, useLocalStore } from "mobx-react-lite"
+import { tw } from "@free/tailwind"
 
-const helperProps = (props) => {
-  const {
-    state,
-    name,
-    model = "data",
-    multi = false,
-    creatable = false,
-    placeholder = "Select ...",
-    onChange,
-    disabled,
-    ...rest
-  } = props
-  const _onChange = async (value) => {
-    const parentValue = state[model][name]
-    state[model][name] = multi
-      ? parentValue.indexOf(value) < 0
-        ? parentValue.concat([value])
-        : parentValue
-      : value
-    if (onChange) await onChange()
-  }
-
-  const onClear = (value?: string | null) =>
-    value ? props.value.filter((p) => p !== value) : (props.value = value)
-
-  return {
-    state,
-    model,
-    name,
-    onClear,
-    onChange: _onChange,
-    placeholder,
-    creatable,
-    disabled: disabled || state.isUpdating,
-    ...rest,
-  }
-}
-
-export const InputSelect: FC<any> = view((_props) => {
-  const props = helperProps(_props)
-  const { state, model, name } = props
-  const value = state ? (state[model] ? state[model][name] : "") : ""
-  const { open, close, onSelfMeasure, Menu } = useMenu()
-  const { Selection, onInputFocus } = useSelection()
-
-  useEffect(() => {
-    onInputFocus()
-  }, [value])
+export const InputSelect: FC<any> = observer((props) => {
+  const { Menu, show, hide } = useMenu()
+  const refSearch = useRef<TextInput>(null)
+  const refScroll = useRef<ScrollView>(null)
+  const state = useLocalStore(
+    (source) => ({
+      get _options() {
+        return source.options
+      },
+      search: "",
+      setSearch(search: string) {
+        state.search = search
+      },
+      index: 0,
+      setIndex(index: number) {
+        state.index = index
+        refScroll.current?.scrollTo({ y: index * 30 })
+      },
+      options: [],
+      setOptions(options: any) {
+        state.options = options
+      },
+      async onChange(options: any) {
+        const model = source.model || "data"
+        if (options) {
+          source.store[model].set(
+            source.name,
+            source.multi ? options.map((opt: any) => opt.id) : options.id
+          )
+          source.store[model].set(`${source.name}_data`, options)
+        } else {
+          source.store[model].set(source.name, undefined)
+          source.store[model].set(`${source.name}_data`, undefined)
+        }
+        if (source.onChange) await source.onChange()
+      },
+      get value() {
+        const model = source.model || "data"
+        return source.store[model].get(source.name)
+      },
+      get multi() {
+        return source.multi
+      },
+      get model() {
+        return source.model || "data"
+      },
+      get name() {
+        return source.name
+      },
+      get placeholder() {
+        return source.placeholder || "Select ..."
+      },
+      get disabled() {
+        return source.disabled || source.store.isUpdating
+      },
+    }),
+    props
+  )
 
   return (
     <Menu
-      extraHeight={Platform.OS == "ios" ? 400 : 300}
-      scrollOnFocus={true}
-      onShow={onInputFocus}
-      anchor={<Anchor parent={props} onLayout={onSelfMeasure} open={open} />}
+      onShow={() => refSearch.current?.focus()}
+      anchor={<Anchor state={state} menu={{ show }} />}
     >
-      <Selection parent={props} onDismiss={close} />
+      <View style={styles.rootMenu}>
+        <Search refSearch={refSearch} state={state} menu={{ hide }} />
+        <Options refScroll={refScroll} state={state} menu={{ show, hide }} />
+      </View>
     </Menu>
   )
+})
+
+const styles = StyleSheet.create({
+  rootMenu: {
+    maxHeight: 181,
+    ...tw("bg-white border border-t-0 border-gray-300 rounded"),
+  },
 })

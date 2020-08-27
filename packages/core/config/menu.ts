@@ -1,88 +1,122 @@
-export const menu = [
-  {
-    label: "Create",
-    icon: "file-plus",
-    visible: true,
-    children: [
-      {
-        label: "Request",
-        icon: "feather",
-        path: "/request/new",
-      },
-    ],
-  },
-  {
-    label: "View",
-    icon: "grid",
-    visible: true,
-    children: [
-      {
-        label: "View 1",
-        icon: "list",
-        path: "/view",
-      },
-      {
-        label: "View 2",
-        icon: "list",
-        path: "/view2/2",
-      },
-      {
-        label: "View 3",
-        icon: "list",
-        path: "/view3/3",
-      },
-      {
-        label: "View 4",
-        icon: "list",
-        path: "/view4/4",
-      },
-      {
-        label: "View 5",
-        icon: "list",
-        path: "/view5/5",
-      },
-      {
-        label: "View 6",
-        icon: "list",
-        path: "/view6/6",
-      },
-    ],
-  },
-  {
-    label: "Profile",
-    icon: "grid",
-    visible: ["read", "profile"],
-    children: [
-      {
-        label: "Profile 1",
-        icon: "list",
-        path: "/view/1",
-      },
-      {
-        label: "Profile 2",
-        icon: "list",
-        path: "/view/2",
-      },
-      {
-        label: "Profile 3",
-        icon: "list",
-        path: "/view/3",
-      },
-      {
-        label: "Profile 4",
-        icon: "list",
-        path: "/view/4",
-      },
-      {
-        label: "Profile 5",
-        icon: "list",
-        path: "/view/5",
-      },
-      {
-        label: "Profile 6",
-        icon: "list",
-        path: "/view/6",
-      },
-    ],
-  },
-]
+import { Menu } from "@free/core"
+import { app } from "../store"
+
+export const getMenu: () => Menu[] = () => {
+  const canProfile = app.can("read", "profile")
+  const canSetting = app.can("read", "setting")
+  return [
+    {
+      label: "Create",
+      icon: "file-plus",
+      visible: true,
+      children: [
+        {
+          label: "Request",
+          icon: "feather",
+          path: "/request/new",
+          visible: true,
+        },
+      ],
+    },
+    {
+      label: "View",
+      icon: "grid",
+      visible: true,
+      children: [
+        {
+          label: "View 1",
+          icon: "list",
+          path: "/view",
+          visible: true,
+        },
+        {
+          label: "View 2",
+          icon: "list",
+          path: "/view2/2",
+          visible: true,
+        },
+        {
+          label: "View 3",
+          icon: "list",
+          path: "/view3/3",
+          visible: true,
+        },
+        {
+          label: "View 4",
+          icon: "list",
+          path: "/view4/4",
+          visible: true,
+        },
+        {
+          label: "View 5",
+          icon: "list",
+          path: "/view5/5",
+          visible: true,
+        },
+        {
+          label: "View 6",
+          icon: "list",
+          path: "/view6/6",
+          visible: true,
+        },
+      ],
+    },
+    {
+      label: "Profile",
+      icon: "grid",
+      visible: canProfile,
+      children: [
+        {
+          label: "Profile 1",
+          icon: "list",
+          path: "/view/1",
+          visible: true,
+        },
+        {
+          label: "Profile 2",
+          icon: "list",
+          path: "/view/2",
+          visible: true,
+        },
+        {
+          label: "Profile 3",
+          icon: "list",
+          path: "/view/3",
+          visible: true,
+        },
+        {
+          label: "Profile 4",
+          icon: "list",
+          path: "/view/4",
+          visible: true,
+        },
+        {
+          label: "Profile 5",
+          icon: "list",
+          path: "/view/5",
+          visible: true,
+        },
+        {
+          label: "Profile 6",
+          icon: "list",
+          path: "/view/6",
+          visible: true,
+        },
+      ],
+    },
+  ].concat([
+    {
+      label: "Setting",
+      icon: "file-plus",
+      visible: canSetting,
+      children: [
+        {
+          label: "Log",
+          icon: "feather",
+          path: "/request/new",
+          visible: true,
+        },
+      ],
+    },
+  ])
+}

@@ -2,6 +2,7 @@ import { observable, decorate, action } from "mobx"
 import { AppStore } from "./appStore"
 
 class BaseStore {
+  title?: string | undefined
   app: AppStore | undefined = undefined
   data = new Map()
   temp = new Map()

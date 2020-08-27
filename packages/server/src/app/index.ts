@@ -7,6 +7,7 @@ import { Boot } from "@free/server"
 
 export const boot: Boot = async () => {
   const isProd = process.env.NODE_ENV === "production"
+  const isDevMobile = process.env.MOBILE === "development"
   const app: FastifyInstance<Server, IncomingMessage, ServerResponse> = fastify(
     {
       disableRequestLogging: true,
@@ -26,7 +27,7 @@ export const boot: Boot = async () => {
     )
     app.register(all)
     await app.listen(
-      isProd ? configServer.port : 8000,
+      isProd ? configServer.port : isDevMobile ? 80 : 8000,
       isProd ? configServer.host : "0.0.0.0"
     )
   } catch (err) {

@@ -7,6 +7,10 @@ export const useLogin = () => {
 
   useEffect(() => {
     store.data.set("domain", ldap[0].domain)
+    store.temp.set(
+      "domain",
+      ldap.map((l: any) => ({ id: l.domain, label: l.domain }))
+    )
   }, [])
 
   useEffect(() => {

@@ -6,7 +6,6 @@ import { findOne } from "./findOne"
 import { insert } from "./insert"
 import { remove } from "./remove"
 import { update } from "./update"
-import { Exception } from "../../util/exception"
 
 export class DatabaseService extends BaseService {
   public name: string
@@ -30,12 +29,12 @@ export class DatabaseService extends BaseService {
   }
 
   handleRequest = (req: Request) => {
+    this._handleRequest(req)
+
     const { params, query, body: rawBody, session } = req as {
       [key: string]: any
     }
     const authname = session?.auth?.username || "Anonymous"
-
-    if (authname === "Anonymous") throw new Exception(401, "Anonymous detected")
 
     const { _id, ...body } = rawBody || { _id: null }
     let projection: { [key: string]: number } = {}

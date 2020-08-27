@@ -10,7 +10,6 @@ import { useStore } from "../Store"
 
 export const Header: FC = observer(() => {
   const { ui } = useStore()
-  const subTitle = undefined
 
   return (
     <View style={styles.rootHeader}>
@@ -21,7 +20,7 @@ export const Header: FC = observer(() => {
           onPress={ui.dimension.isMobile && ui.toggleDrawer}
         />
       )}
-      <Title>{subTitle}</Title>
+      <Title>{ui.app.subTitle}</Title>
       <View style={styles.boxGrow}></View>
       <MenuUser />
     </View>

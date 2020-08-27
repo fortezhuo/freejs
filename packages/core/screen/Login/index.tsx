@@ -1,48 +1,49 @@
-import React, { FC, useEffect } from "react"
-import { View, StyleSheet, ScrollView, Text } from "react-native"
+import React, { FC } from "react"
+import { View, StyleSheet, ScrollView } from "react-native"
 import { tw } from "@free/tailwind"
 import * as Input from "../../component/Input"
 import { Button } from "../../component/Button"
 import { IconLabel } from "../../component/Icon"
+import { Layout } from "../../component/Layout"
 import { observer } from "mobx-react-lite"
 import { useLogin } from "./hook"
-
 const Login: FC = observer(() => {
   const store = useLogin()
-
   return (
-    <View style={styles.rootLogin}>
-      <ScrollView>
-        <View style={styles.boxLogin}>
-          <IconLabel style={styles.iconLogo} name={"user"} size={60} />
-          <Input.Text
-            data-name="username"
-            store={store}
-            name="username"
-            placeholder="Username"
-            autoCapitalize="none"
-          />
-          <Input.Text
-            store={store}
-            data-name="password"
-            name="password"
-            secureTextEntry
-            placeholder="Password"
-            autoCapitalize="none"
-          />
-          <Input.Text
-            store={store}
-            data-name="domain"
-            name="domain"
-            placeholder="Domain"
-            autoCapitalize="none"
-          />
-          <Button type="primary" onPress={store.login}>
-            Login
-          </Button>
-        </View>
-      </ScrollView>
-    </View>
+    <Layout store={store}>
+      <View style={styles.rootLogin}>
+        <ScrollView>
+          <View style={styles.boxLogin}>
+            <IconLabel style={styles.iconLogo} name={"user"} size={60} />
+            <Input.Text
+              data-name="username"
+              store={store}
+              name="username"
+              placeholder="Username"
+              autoCapitalize="none"
+            />
+            <Input.Text
+              store={store}
+              data-name="password"
+              name="password"
+              secureTextEntry
+              placeholder="Password"
+              autoCapitalize="none"
+            />
+            <Input.Select
+              store={store}
+              data-name="domain"
+              name="domain"
+              placeholder="Domain"
+              options={store.temp.get("domain") || []}
+            />
+            <Button type="primary" onPress={store.login}>
+              Login
+            </Button>
+          </View>
+        </ScrollView>
+      </View>
+    </Layout>
   )
 })
 

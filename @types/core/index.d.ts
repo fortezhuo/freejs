@@ -9,6 +9,21 @@ declare module "@free/core" {
     [key: string]: any
   }
 
+  type SubMenu = {
+    label: string
+    icon: string
+    path?: string
+    visible: boolean
+    onPress?: any
+  }
+
+  type Menu = {
+    label: string
+    icon: string
+    visible: boolean
+    children?: SubMenu[]
+  }
+
   //Accordion
   interface AccordionProps {
     active?: boolean
@@ -26,9 +41,9 @@ declare module "@free/core" {
     onClose?: VoidFunction
   }
 
-  // AppLayout / Layout
-  interface LayoutProps extends ViewProps {
-    wallpaper: boolean
+  // AppLayout / MainLayout
+  interface MainLayoutProps extends ViewProps {
+    wallpaper?: boolean
   }
 
   // Footer
@@ -65,19 +80,27 @@ declare module "@free/core" {
     onChange?: VoidFunction
   }
 
+  interface LayoutProps extends ViewProps {
+    store?: any
+  }
+
   // Menu
   interface MenuProps {
+    onShow?: VoidFunction
     anchor: ReactNode
     style?: ViewStyle
     children: ReactNode
   }
 
-  interface MenuItemProps extends IconButtonProps {}
+  interface MenuItemProps extends IconButtonProps {
+    active?: boolean
+  }
 
   // Modal
   interface ModalProps {
     visible: boolean
     transparent?: boolean = false
+    onShow?: VoidFunction
     onRequestClose?: VoidFunction
     onBackdropPress?: VoidFunction | undefined
     children: ReactNode
@@ -86,5 +109,10 @@ declare module "@free/core" {
   // Sidebar
   interface SidebarProps extends ViewProps {
     isOpen: boolean
+  }
+
+  // StateComponent
+  interface StateComponent {
+    state?: any
   }
 }

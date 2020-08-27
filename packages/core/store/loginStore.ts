@@ -2,6 +2,7 @@ import { BaseStore, decorate, action } from "./baseStore"
 import * as req from "../request"
 
 class LoginStore extends BaseStore {
+  title = "Login Page"
   login = async () => {
     try {
       this.isUpdating = true
@@ -10,7 +11,7 @@ class LoginStore extends BaseStore {
         "password",
         "domain"
       )
-      const res = await req.post("api/auth", { username, password, domain })
+      const res = await req.post("/api/auth", { username, password, domain })
       this.app?.setAuth(res.data.result)
       this.app?.goto("/")
     } finally {

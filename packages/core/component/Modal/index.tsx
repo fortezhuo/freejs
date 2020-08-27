@@ -8,6 +8,7 @@ export const Modal: FC<ModalProps> = memo(
   ({
     visible,
     transparent = false,
+    onShow = undefined,
     onRequestClose = undefined,
     onBackdropPress = undefined,
     children,
@@ -17,6 +18,7 @@ export const Modal: FC<ModalProps> = memo(
         animationType="none"
         transparent={true}
         visible={visible}
+        onShow={onShow}
         onRequestClose={onRequestClose}
       >
         {onBackdropPress && (
