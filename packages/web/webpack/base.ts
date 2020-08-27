@@ -106,6 +106,7 @@ export const getWebpackPlugins = (isWeb: boolean): webpack.Plugin[] =>
     ? [
         new HtmlWebPackPlugin({
           template: "src/assets/index.html",
+          favicon: "./src/assets/favicon.ico",
           filename: "./index.html",
         }),
       ]
