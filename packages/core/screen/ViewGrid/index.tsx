@@ -28,7 +28,7 @@ const ViewGrid: FC = observer(() => {
                 return (
                   <Cell
                     {...column.getHeaderProps()}
-                    style={{ width: column.width, maxWidth: column.maxWidth }}
+                    style={(column as any).style || {}}
                   >
                     {column.render("Header")}
                   </Cell>
@@ -48,10 +48,7 @@ const ViewGrid: FC = observer(() => {
                       return (
                         <Cell
                           {...cell.getCellProps()}
-                          style={{
-                            width: cell.column.width,
-                            maxWidth: cell.column.maxWidth,
-                          }}
+                          style={(cell.column as any).style || {}}
                         >
                           {cell.render("Cell")}
                         </Cell>

@@ -1,5 +1,6 @@
 import React, { useMemo, useEffect } from "react"
 import { IconButton } from "../../component/Icon"
+import { CellLink } from "../../component/Table"
 import { useLocalStore } from "mobx-react-lite"
 import { Platform } from "react-native"
 import { download } from "./helper"
@@ -33,12 +34,7 @@ export const useColumns = () =>
               Header: "",
               accessor: "name",
               Cell: (cell: any) => (
-                <IconButton
-                  name="link"
-                  size={16}
-                  color="#000"
-                  onPress={() => download(cell.value)}
-                />
+                <CellLink onPress={() => download(cell.value)} />
               ),
               maxWidth: 30,
               width: 30,

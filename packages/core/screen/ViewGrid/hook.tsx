@@ -1,5 +1,5 @@
 import React, { useEffect } from "react"
-import { IconButton } from "../../component/Icon"
+import { CellLink, CellCheckbox, Cell } from "../../component/Table"
 import { useStore } from "../../component/Store"
 import { get } from "../../request"
 import * as config from "./config"
@@ -23,9 +23,33 @@ export const useViewGrid = () => {
       id: col.type ? `${col.name}_${col.type}` : col.name,
       Header: col.label,
       accessor: col.name,
-      style: col.style,
+      style: getStyle(col),
+      Cell: getCell(col.type),
     }))
     view.data.set("column", column)
+  }
+
+  const getStyle = (col: any) => {
+    return col.type == "link" || col.type == "checkbox"
+      ? { width: 30, maxWidth: 30 }
+      : col.style
+  }
+
+  const getCell = (type: string) => (cell: any) => {
+    switch (type) {
+      case "link":
+        return (
+          <CellLink
+            onPress={() => {
+              view.app.goto(`${name}/${cell.value}`)
+            }}
+          />
+        )
+      case "checkbox":
+        return <CellCheckbox />
+      default:
+        return cell.value
+    }
   }
 
   return view

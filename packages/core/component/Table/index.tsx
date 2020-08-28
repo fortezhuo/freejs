@@ -1,9 +1,11 @@
 import React, { FC, cloneElement } from "react"
 import { StyleSheet, View, Text, ScrollView } from "react-native"
 import { IconButton } from "../Icon"
+import { InputCheckbox } from "../Input/InputCheckbox"
 import { random } from "../../util/random"
-import { tw } from "@free/tailwind"
+import { tw, color } from "@free/tailwind"
 import { observer } from "mobx-react-lite"
+import { theme } from "../../config/theme"
 import {
   TableProps,
   IconButtonProps,
@@ -11,6 +13,8 @@ import {
   CellProps,
   BodyProps,
 } from "@free/core"
+
+const primary = color(theme.primary)
 
 export const Table: FC<TableProps> = observer(
   ({ children, style, scroll, testID = "Table" }) => {
@@ -110,12 +114,16 @@ export const CellLink: FC<IconButtonProps> = observer(
         testID={testID}
         name="link"
         size={16}
-        color="#000"
+        color={primary}
         onPress={onPress}
       />
     )
   }
 )
+
+export const CellCheckbox: FC<any> = observer(() => {
+  return <InputCheckbox style={{ padding: 0, marginTop: -2 }} />
+})
 
 const styles = StyleSheet.create({
   rootTable: tw(

@@ -8,11 +8,11 @@ import { observer } from "mobx-react-lite"
 const primary = color(theme.primary)
 
 export const InputCheckbox: FC<any> = observer(
-  ({ disabled, children, color, checked, onChange }) => {
+  ({ disabled, children, color, checked, onChange, style }) => {
     return (
       <IconButton
         disabled={disabled}
-        style={styles.rootCheckbox}
+        style={StyleSheet.flatten([styles.rootCheckbox, style])}
         name={checked ? "check-square" : "square"}
         color={color || primary}
         size={20}
