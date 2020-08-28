@@ -7,6 +7,7 @@ import { tw } from "@free/tailwind"
 
 export const Button: FC<any> = observer((props) => {
   const {
+    testID = "Button",
     type = "default",
     disabled,
     outline,
@@ -27,6 +28,7 @@ export const Button: FC<any> = observer((props) => {
 
   return (
     <IconButton
+      testID={testID}
       disabled={disabled}
       styleContainer={StyleSheet.flatten([
         styles.rootButton,

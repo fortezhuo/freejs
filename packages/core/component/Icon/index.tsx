@@ -19,9 +19,18 @@ export const Icon: FC<IconProps> = observer(
 )
 
 export const IconLabel: FC<IconLabelProps> = observer(
-  ({ name, size, color, style, styleContainer, styleText, children }) => {
+  ({
+    testID = "IconLabel",
+    name,
+    size,
+    color,
+    style,
+    styleContainer,
+    styleText,
+    children,
+  }) => {
     return (
-      <View style={styleContainer}>
+      <View style={styleContainer} testID={testID}>
         <View style={style}>
           {name && <Icon size={size} color={color} name={name} />}
         </View>
@@ -33,6 +42,7 @@ export const IconLabel: FC<IconLabelProps> = observer(
 
 export const IconButton: FC<IconButtonProps> = observer(
   ({
+    testID = "IconButton",
     name,
     color,
     size,
@@ -44,7 +54,7 @@ export const IconButton: FC<IconButtonProps> = observer(
     onPress,
   }) => {
     return (
-      <TouchableOpacity disabled={disabled} onPress={onPress}>
+      <TouchableOpacity testID={testID} disabled={disabled} onPress={onPress}>
         <IconLabel
           style={style}
           styleContainer={styleContainer}

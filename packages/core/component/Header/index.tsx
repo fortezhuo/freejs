@@ -7,12 +7,13 @@ import { MenuUser } from "./MenuUser"
 import { tw } from "@free/tailwind"
 import { observer } from "mobx-react-lite"
 import { useStore } from "../Store"
+import { HeaderProps } from "@free/core"
 
-export const Header: FC = observer(() => {
+export const Header: FC<HeaderProps> = observer(({ testID = "Header" }) => {
   const { ui } = useStore()
 
   return (
-    <View style={styles.rootHeader}>
+    <View style={styles.rootHeader} testID={testID}>
       {ui.app.auth && (
         <IconButton
           name={ui.dimension.isMobile && "menu"}

@@ -107,13 +107,25 @@ export const getMenu: () => Menu[] = () => {
   ].concat([
     {
       label: "Setting",
-      icon: "file-plus",
+      icon: "settings",
       visible: canSetting,
       children: [
         {
+          label: "Trash",
+          icon: "trash-2",
+          path: "/trash",
+          visible: true,
+        },
+        {
           label: "Log",
-          icon: "feather",
-          path: "/request/new",
+          icon: "archive",
+          path: "/log",
+          visible: true,
+        },
+        {
+          label: "User",
+          icon: "user",
+          path: "/user",
           visible: true,
         },
       ],

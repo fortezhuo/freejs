@@ -4,7 +4,7 @@ import { MenuItem } from "../../Menu"
 import { random } from "../../../util/random"
 import { observer } from "mobx-react-lite"
 
-export const Options: FC<any> = observer(({ refScroll, menu, state }) => {
+export const Options: FC<Options> = observer(({ refScroll, menu, state }) => {
   useEffect(() => {
     state.setOptions(state._options)
   }, [])
@@ -31,3 +31,9 @@ export const Options: FC<any> = observer(({ refScroll, menu, state }) => {
     </ScrollView>
   )
 })
+
+type Options = {
+  refScroll: any
+  menu: any
+  state: any
+}

@@ -52,26 +52,28 @@ const Content: FC = observer(() => {
 })
 
 const AnimatedView = animated<React.ElementType<ViewProps>>(View)
-export const Sidebar: FC<SidebarProps> = observer(({ isOpen }) => {
-  const animatedStyle = useSpring({
-    config: { duration: 100 },
-    from: { width: tw("w-64").width },
-    to: {
-      width: isOpen ? tw("w-64").width : 0,
-    },
-  })
+export const Sidebar: FC<SidebarProps> = observer(
+  ({ isOpen, testID = "Sidebar" }) => {
+    const animatedStyle = useSpring({
+      config: { duration: 100 },
+      from: { width: tw("w-64").width },
+      to: {
+        width: isOpen ? tw("w-64").width : 0,
+      },
+    })
 
-  return (
-    <AnimatedView
-      testID="Sidebar"
-      style={StyleSheet.flatten([styles.rootSidebar, animatedStyle])}
-    >
-      <ScrollView>
-        <Content />
-      </ScrollView>
-    </AnimatedView>
-  )
-})
+    return (
+      <AnimatedView
+        testID={testID}
+        style={StyleSheet.flatten([styles.rootSidebar, animatedStyle])}
+      >
+        <ScrollView>
+          <Content />
+        </ScrollView>
+      </AnimatedView>
+    )
+  }
+)
 
 const styles = StyleSheet.create({
   rootSidebar: tw(`shadow-2xl flex-col`),

@@ -2,25 +2,26 @@ import React, { FC } from "react"
 import { View, StyleSheet, FlatList } from "react-native"
 import { tw } from "@free/tailwind"
 import { Table, Body, Row, Cell, Header } from "../../component/Table"
-import { useLog, useColumns } from "./hook"
+import { useViewGrid } from "./hook"
 import { useTable } from "react-table"
 import { observer } from "mobx-react-lite"
 
-const Log: FC = observer(() => {
-  const state: any = useLog()
-  const data = state.data
-  const columns: any = useColumns()
+const ViewGrid: FC = observer(() => {
+  const view = useViewGrid()
   const {
     getTableProps,
     getTableBodyProps,
     headerGroups,
     rows,
     prepareRow,
-  } = useTable({ columns, data })
+  } = useTable({
+    columns: view.data.get("column") || [],
+    data: view.data.get("collection") || [],
+  })
   return (
-    <View style={styles.rootLog}>
+    <View style={styles.rootViewGrid}>
       <View style={styles.boxContent}>
-        <Table style={styles.rootTable} scroll {...getTableProps()}>
+        <Table scroll style={styles.rootTable} {...getTableProps()}>
           {headerGroups.map((headerGroup) => (
             <Header {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((column) => {
@@ -68,9 +69,9 @@ const Log: FC = observer(() => {
 })
 
 const styles = StyleSheet.create({
-  rootLog: tw("flex-1 flex-col m-2 shadow-lg bg-white-300"),
+  rootViewGrid: tw("flex-1 flex-col m-2 shadow-lg bg-white-300"),
   rootTable: tw("flex-1"),
   boxContent: tw("flex-no-wrap flex-1"),
 })
 
-export default Log
+export default ViewGrid

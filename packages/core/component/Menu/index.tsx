@@ -63,7 +63,7 @@ export const useMenu = () => {
   const hide = () => state.setOpen(false)
 
   const Menu: FC<MenuProps> = observer(
-    ({ anchor, style, children, onShow }) => {
+    ({ testID = "Menu", anchor, style, children, onShow }) => {
       const { ui } = useStore()
       const { menuWidth, menuHeight, anchorHeight } = state.measure
       let { left, top } = state.measure
@@ -90,7 +90,7 @@ export const useMenu = () => {
       }
 
       return (
-        <View ref={refContainer} collapsable={false}>
+        <View testID={testID} ref={refContainer} collapsable={false}>
           {anchor}
           <Modal
             visible={state.isOpen}

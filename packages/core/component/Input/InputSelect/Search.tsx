@@ -9,7 +9,7 @@ import {
 import { observer } from "mobx-react-lite"
 import { tw } from "@free/tailwind"
 
-export const Search: FC<any> = observer(({ refSearch, state, menu }) => {
+export const Search: FC<Search> = observer(({ refSearch, state, menu }) => {
   let regex: any
   const onChange = (text: string) => {
     regex = new RegExp(text, "i")
@@ -62,3 +62,9 @@ export const Search: FC<any> = observer(({ refSearch, state, menu }) => {
 const styles = StyleSheet.create({
   rootTextInput: tw("w-full bg-white p-2"),
 })
+
+type Search = {
+  refSearch: any
+  state: any
+  menu: any
+}

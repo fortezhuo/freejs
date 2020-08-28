@@ -17,3 +17,12 @@ input,
 button {
   outline: none;
 }
+
+div[data-testid="HorizontalScroll"] > div {
+  min-width: 100%;
+  flex-direction: row;
+}
+div[data-testid="VerticalScroll"] > div {
+  min-width: 100%;
+  flex-direction: column;
+}

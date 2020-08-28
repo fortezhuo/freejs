@@ -4,25 +4,28 @@ import { View, StyleSheet, TouchableWithoutFeedback } from "react-native"
 import { Sidebar } from "../Sidebar"
 import { observer } from "mobx-react-lite"
 import { useStore } from "../Store"
+import { DrawerProps } from "@free/core"
 
-export const Drawer: FC = observer(({ children }) => {
-  const { ui } = useStore()
-  return (
-    <View style={styles.rootDrawer}>
-      {ui.app.auth && (
-        <Sidebar isOpen={ui.isDrawerOpen || !ui.dimension.isMobile} />
-      )}
-      <View style={styles.panelContent}>
-        {ui.isDrawerOpen && (
-          <TouchableWithoutFeedback onPress={ui.toggleDrawer}>
-            <View style={styles.panelOverlay}></View>
-          </TouchableWithoutFeedback>
+export const Drawer: FC<DrawerProps> = observer(
+  ({ testID = "Drawer", children }) => {
+    const { ui } = useStore()
+    return (
+      <View style={styles.rootDrawer} testID={testID}>
+        {ui.app.auth && (
+          <Sidebar isOpen={ui.isDrawerOpen || !ui.dimension.isMobile} />
         )}
-        <View style={styles.panelContent}>{children}</View>
+        <View style={styles.panelContent}>
+          {ui.isDrawerOpen && (
+            <TouchableWithoutFeedback onPress={ui.toggleDrawer}>
+              <View style={styles.panelOverlay}></View>
+            </TouchableWithoutFeedback>
+          )}
+          <View style={styles.panelContent}>{children}</View>
+        </View>
       </View>
-    </View>
-  )
-})
+    )
+  }
+)
 
 const styles = StyleSheet.create({
   rootDrawer: tw("flex-row flex-1"),

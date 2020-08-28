@@ -1,5 +1,8 @@
 type Any = any
 type VoidFunction = () => void
+type ObjectAny = {
+  [key: string]: any
+}
 
 declare module "*.jpg"
 declare module "*.png"

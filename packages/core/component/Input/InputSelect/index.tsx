@@ -6,8 +6,9 @@ import { Anchor } from "./Anchor"
 import { StyleSheet, View, TextInput, ScrollView } from "react-native"
 import { observer, useLocalStore } from "mobx-react-lite"
 import { tw } from "@free/tailwind"
+import { InputSelectProps } from "@free/core"
 
-export const InputSelect: FC<any> = observer((props) => {
+export const InputSelect: FC<InputSelectProps> = observer((props) => {
   const { Menu, show, hide } = useMenu()
   const refSearch = useRef<TextInput>(null)
   const refScroll = useRef<ScrollView>(null)

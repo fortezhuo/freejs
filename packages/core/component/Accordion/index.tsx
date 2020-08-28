@@ -13,7 +13,7 @@ const { color } = tw("text-gray-600")
 const noop = () => {}
 
 export const Accordion: FC<AccordionProps> = observer(
-  ({ icon, label, active = false, children }) => {
+  ({ testID = "Accordion", icon, label, active = false, children }) => {
     const state = useLocalStore(() => ({
       isExpand: active,
       toggle() {
@@ -32,7 +32,7 @@ export const Accordion: FC<AccordionProps> = observer(
     })
     return (
       <TouchableOpacity onPress={state.toggle}>
-        <View style={styles.rootAccordion}>
+        <View style={styles.rootAccordion} testID={testID}>
           <View style={styles.groupAccordion}>
             <IconLabel
               name={icon}
@@ -58,7 +58,14 @@ export const Accordion: FC<AccordionProps> = observer(
 )
 
 export const AccordionItem: FC<AccordionItemProps> = observer(
-  ({ icon, header = false, pathname, children, onPress = noop }) => {
+  ({
+    testID = "AccordionItem",
+    icon,
+    header = false,
+    pathname,
+    children,
+    onPress = noop,
+  }) => {
     const { ui } = useStore()
     const active = pathname === ui.app.location
     const onClose = () => {
@@ -75,6 +82,7 @@ export const AccordionItem: FC<AccordionItemProps> = observer(
       >
         {header ? (
           <View
+            testID={testID}
             style={StyleSheet.flatten([
               styles.rootAccordion,
               styles.groupAccordion,

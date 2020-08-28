@@ -1,81 +1,125 @@
 import React, { FC, cloneElement } from "react"
 import { StyleSheet, View, Text, ScrollView } from "react-native"
+import { IconButton } from "../Icon"
 import { random } from "../../util/random"
 import { tw } from "@free/tailwind"
 import { observer } from "mobx-react-lite"
+import {
+  TableProps,
+  IconButtonProps,
+  RowProps,
+  CellProps,
+  BodyProps,
+} from "@free/core"
 
-export const Table: FC<any> = observer(({ children, style, scroll }) => {
-  return (
-    <View style={StyleSheet.flatten([styles.rootTable, style])}>
-      <ScrollView scrollEnabled={scroll} horizontal>
-        <View style={styles.groupTable}>{children}</View>
-      </ScrollView>
-    </View>
-  )
-})
+export const Table: FC<TableProps> = observer(
+  ({ children, style, scroll, testID = "Table" }) => {
+    return (
+      <View
+        testID={testID}
+        style={StyleSheet.flatten([styles.rootTable, style])}
+      >
+        <View style={{ flex: 1 }}>
+          <ScrollView
+            scrollEnabled={scroll}
+            horizontal
+            testID="HorizontalScroll"
+          >
+            <View style={styles.groupTable}>{children}</View>
+          </ScrollView>
+        </View>
+      </View>
+    )
+  }
+)
 
-export const Header: FC<any> = observer(({ children, style }) => {
+export const Header: FC<RowProps> = observer(({ children, style }) => {
   return (
     <Row style={StyleSheet.flatten([styles.rootHeader, style])}>{children}</Row>
   )
 })
 
-export const Filter: FC<any> = observer(({ children, style }) => {
+export const Filter: FC<RowProps> = observer(({ children, style }) => {
   return (
     <Row style={StyleSheet.flatten([styles.rootFilter, style])}>
-      {children.map((child: any, i: number) => {
-        return cloneElement(child, {
-          filter: true,
-          key: `filterCell_${random()}`,
-        })
-      })}
+      {children &&
+        (children as []).map((child: any, i: number) => {
+          return cloneElement(child, {
+            filter: true,
+            key: `filterCell_${random()}`,
+          })
+        })}
     </Row>
   )
 })
 
-export const Body: FC<any> = observer(({ children, style, scroll }) => {
-  return (
-    <View style={StyleSheet.flatten([styles.rootBody, style])}>
-      <ScrollView scrollEnabled={scroll}>{children}</ScrollView>
-    </View>
-  )
-})
+export const Body: FC<BodyProps> = observer(
+  ({ children, style, scroll, testID = "Body" }) => {
+    return (
+      <View
+        testID={testID}
+        style={StyleSheet.flatten([styles.rootBody, style])}
+      >
+        <ScrollView scrollEnabled={scroll} testID="VerticalScroll">
+          {children}
+        </ScrollView>
+      </View>
+    )
+  }
+)
 
-export const Row: FC<any> = observer(({ children, filter, dark, style }) => {
-  return (
-    <View
-      style={StyleSheet.flatten([
-        styles.rootRow,
-        filter ? styles.rootFilter : {},
-        dark ? styles.rowDark : {},
-        style,
-      ])}
-    >
-      {children}
-    </View>
-  )
-})
+export const Row: FC<RowProps> = observer(
+  ({ children, filter, dark, style, testID = "Row" }) => {
+    return (
+      <View
+        testID={testID}
+        style={StyleSheet.flatten([
+          styles.rootRow,
+          filter ? styles.rootFilter : {},
+          dark ? styles.rowDark : {},
+          style,
+        ])}
+      >
+        {children}
+      </View>
+    )
+  }
+)
 
-export const Cell: FC<any> = observer(({ xs, children, style, filter }) => {
-  const { width } = style || {}
+export const Cell: FC<CellProps> = observer(
+  ({ children, style, filter, testID = "Cell" }) => {
+    return (
+      <View
+        testID={testID}
+        style={StyleSheet.flatten([
+          styles.rootCell,
+          filter ? styles.cellFilter : {},
+          style,
+        ])}
+      >
+        <Text style={styles.textCell}>{children}</Text>
+      </View>
+    )
+  }
+)
 
-  return (
-    <View
-      style={StyleSheet.flatten([
-        styles.rootCell,
-        filter ? styles.cellFilter : {},
-        width ? {} : xs ? { width: 40 } : styles.cellGrow,
-        style,
-      ])}
-    >
-      <Text style={styles.textCell}>{children}</Text>
-    </View>
-  )
-})
+export const CellLink: FC<IconButtonProps> = observer(
+  ({ onPress, testID = "CellLink" }) => {
+    return (
+      <IconButton
+        testID={testID}
+        name="link"
+        size={16}
+        color="#000"
+        onPress={onPress}
+      />
+    )
+  }
+)
 
 const styles = StyleSheet.create({
   rootTable: tw(
-    "shadow-lg bg-white-600 m-1 border border-gray-300 border-solid"
+    "shadow-lg bg-white-800 m-1 border border-gray-300 border-solid"
   ),
   groupTable: tw("flex-col flex-1"),
   rootHeader: tw("bg-white-500 h-10 items-center shadow-md"),
@@ -87,7 +131,6 @@ const styles = StyleSheet.create({
   textCell: tw("text-gray-900"),
   rootRow: tw("flex-row border-solid border-gray-200 border-b flex-no-wrap"),
   rowDark: { backgroundColor: "rgba(192,192,192,0.2)" },
-  rootCell: tw("p-2 w-40 border-r border-solid border-gray-300"),
+  rootCell: tw("p-2 w-40 border-r border-solid border-gray-300 flex-grow"),
   cellFilter: { padding: 0 },
-  cellGrow: tw("flex-grow"),
 })

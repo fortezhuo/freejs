@@ -5,26 +5,29 @@ import { tw } from "@free/tailwind"
 import { useStore } from "../Store"
 import logo from "../../img/logo.png"
 import { observer } from "mobx-react-lite"
+import { TitleProps } from "@free/core"
 
 const Logo: FC = () => {
   return <Image source={logo} style={styles.imgTitle} />
 }
 
-export const Title: FC = observer(({ children }) => {
-  const disabled = false
-  const { ui } = useStore()
-  return (
-    <TouchableOpacity disabled={disabled} onPress={() => ui.app.goto("/")}>
-      <View style={styles.rootTitle}>
-        <Logo />
-        <View style={styles.groupTitle}>
-          <Text style={styles.textTitle}>{configApp.displayName}</Text>
-          {children && <Text style={styles.textSubTitle}>{children}</Text>}
+export const Title: FC<TitleProps> = observer(
+  ({ children, testID = "Title" }) => {
+    const disabled = false
+    const { ui } = useStore()
+    return (
+      <TouchableOpacity disabled={disabled} onPress={() => ui.app.goto("/")}>
+        <View style={styles.rootTitle} testID={testID}>
+          <Logo />
+          <View style={styles.groupTitle}>
+            <Text style={styles.textTitle}>{configApp.displayName}</Text>
+            {children && <Text style={styles.textSubTitle}>{children}</Text>}
+          </View>
         </View>
-      </View>
-    </TouchableOpacity>
-  )
-})
+      </TouchableOpacity>
+    )
+  }
+)
 
 const styles = StyleSheet.create({
   rootTitle: tw("flex-row items-center"),

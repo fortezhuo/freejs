@@ -7,7 +7,6 @@ import { appPath } from "../../util/path"
 import { resolve } from "path"
 
 const format = (time: Date) => dayjs(time).format("DD MMM YYYY HH:mm:ss")
-
 export const readDir = function (this: LogService) {
   return async (req: Request, reply: Reply) => {
     try {
@@ -21,7 +20,9 @@ export const readDir = function (this: LogService) {
 
       const data = await Promise.all(
         files.map(async (file) => {
-          const { mtime, size } = await fs.promises.stat(`log/${file}`)
+          const { mtime, size } = await fs.promises.stat(
+            resolve(appPath, `./log/${file}`)
+          )
           return {
             name: file.replace(/log_|.log/g, ""),
             mtime: format(mtime),
