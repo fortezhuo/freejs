@@ -1,10 +1,6 @@
 declare module "@free/core" {
   import { TextStyle, ViewStyle, TextInputProps, ViewProps } from "react-native"
 
-  type ListStore = {
-    [key: string]: any
-  } | null
-
   type Config = {
     [key: string]: any
   }

@@ -8,19 +8,19 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from "react-native"
+import imgWallpaper from "../../img/wallpaper.jpg"
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context"
 import { tw } from "@free/tailwind"
-import imgWallpaper from "../../img/wallpaper.jpg"
 import { Header } from "../Header"
 import { Drawer } from "../Drawer"
 import { Footer } from "../Footer"
 import { StoreProvider } from "../Store"
-import { useLayout } from "./hook"
+import { useHook } from "./hook"
 import { observer } from "mobx-react-lite"
 import { MainLayoutProps } from "@free/core"
 
 const MainLayout: FC<MainLayoutProps> = ({ wallpaper, children }) => {
-  useLayout()
+  useHook()
   return wallpaper ? (
     <ImageBackground source={imgWallpaper} style={styles.rootBackground}>
       {children}

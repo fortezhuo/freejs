@@ -14,9 +14,9 @@ const Logo: FC = () => {
 export const Title: FC<TitleProps> = observer(
   ({ children, testID = "Title" }) => {
     const disabled = false
-    const { ui } = useStore()
+    const { app } = useStore()
     return (
-      <TouchableOpacity disabled={disabled} onPress={() => ui.app.goto("/")}>
+      <TouchableOpacity disabled={disabled} onPress={() => app.goto("/")}>
         <View style={styles.rootTitle} testID={testID}>
           <Logo />
           <View style={styles.groupTitle}>

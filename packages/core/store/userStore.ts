@@ -1,7 +1,7 @@
 import { BaseStore } from "./baseStore"
 
 class UserStore extends BaseStore {
-  drawer = false
+  isForm = true
   title = "User Management"
 }
 

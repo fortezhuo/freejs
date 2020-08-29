@@ -8,19 +8,19 @@ import { DrawerProps } from "@free/core"
 
 export const Drawer: FC<DrawerProps> = observer(
   ({ testID = "Drawer", children }) => {
-    const { ui } = useStore()
+    const { app } = useStore()
     return (
       <View style={styles.rootDrawer} testID={testID}>
-        {ui.app.auth && (
+        {app.auth && (
           <Sidebar
             isOpen={
-              ui.app.isShowDrawer && (ui.isDrawerOpen || !ui.dimension.isMobile)
+              !app.isForm && (app.isDrawerOpen || !app.dimension.isMobile)
             }
           />
         )}
         <View style={styles.panelContent}>
-          {ui.isDrawerOpen && (
-            <TouchableWithoutFeedback onPress={ui.toggleDrawer}>
+          {app.isDrawerOpen && (
+            <TouchableWithoutFeedback onPress={app.toggleDrawer}>
               <View style={styles.panelOverlay}></View>
             </TouchableWithoutFeedback>
           )}

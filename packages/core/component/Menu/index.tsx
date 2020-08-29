@@ -64,19 +64,19 @@ export const useMenu = () => {
 
   const Menu: FC<MenuProps> = observer(
     ({ testID = "Menu", anchor, style, children, onShow }) => {
-      const { ui } = useStore()
+      const { app } = useStore()
       const { menuWidth, menuHeight, anchorHeight } = state.measure
       let { left, top } = state.measure
 
-      if (left > ui.dimension.width - menuWidth - SCREEN_INDENT) {
-        left = ui.dimension.width - SCREEN_INDENT - menuWidth
+      if (left > app.dimension.width - menuWidth - SCREEN_INDENT) {
+        left = app.dimension.width - SCREEN_INDENT - menuWidth
       } else if (left < SCREEN_INDENT) {
         left = SCREEN_INDENT
       }
 
-      if (top > ui.dimension.height - menuHeight - SCREEN_INDENT) {
-        top = ui.dimension.height - SCREEN_INDENT
-        top = Math.min(ui.dimension.height - SCREEN_INDENT, top + anchorHeight)
+      if (top > app.dimension.height - menuHeight - SCREEN_INDENT) {
+        top = app.dimension.height - SCREEN_INDENT
+        top = Math.min(app.dimension.height - SCREEN_INDENT, top + anchorHeight)
       } else if (top < SCREEN_INDENT) {
         top = SCREEN_INDENT
       } else {

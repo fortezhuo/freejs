@@ -66,12 +66,12 @@ export const AccordionItem: FC<AccordionItemProps> = observer(
     children,
     onPress = noop,
   }) => {
-    const { ui } = useStore()
-    const active = pathname === ui.app.location
+    const { app } = useStore()
+    const active = pathname === app?.location
     const onClose = () => {
-      if (ui.dimension.isMobile) ui.setDrawerOpen(false)
+      if (app.dimension.isMobile) app.setDrawerOpen(false)
     }
-    onPress = pathname ? () => ui.app.goto(pathname) : onPress
+    onPress = pathname ? () => app.goto(pathname) : onPress
 
     return (
       <TouchableOpacity

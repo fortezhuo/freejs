@@ -6,7 +6,9 @@ export const useHook = (store: any) => {
   const { app } = useStore()
   useEffect(() => {
     app.setTitle(store.title)
-    app.showDrawer(store.drawer)
-    document.title = `${store.title} | ${configApp.displayName}`
+    app.setForm(store.isForm)
+    document.title = `${store.title ? store.title + " | " : ""}${
+      configApp.displayName
+    }`
   }, [store.title])
 }

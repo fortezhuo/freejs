@@ -5,7 +5,6 @@ import { acl } from "../util/acl"
 class AppStore {
   _history: any = null
   isUpdating = false
-  drawer = true
   title = undefined
 
   can = (action: string, resource: string) => {
@@ -28,9 +27,14 @@ class AppStore {
   setAuth = (auth: any) => {
     this.auth = auth
   }
+  logout = async () => {
+    await req.get("/api/auth/logout")
+    this.setAuth(undefined)
+    this.goto("/login")
+  }
 
   location: string | undefined = undefined
-  goto = (path: string | undefined) => {
+  goto = (path?: string | undefined) => {
     if (path) {
       this?._history.push(path)
     }
@@ -42,15 +46,22 @@ class AppStore {
     this.subTitle = title
   }
 
-  isShowDrawer?: boolean = true
-  showDrawer(isShowDrawer: boolean) {
-    this.isShowDrawer = isShowDrawer
+  isForm?: boolean = false
+  setForm(isForm: boolean) {
+    this.isForm = isForm
   }
 
-  logout = async () => {
-    await req.get("/api/auth/logout")
-    this.setAuth(undefined)
-    this.goto("/login")
+  dimension: ObjectAny = {}
+  setDimension = (dimension: ObjectAny) => {
+    this.dimension = dimension
+  }
+
+  isDrawerOpen = false
+  toggleDrawer = () => {
+    this.isDrawerOpen = !this.isDrawerOpen
+  }
+  setDrawerOpen = (isOpen: boolean) => {
+    this.isDrawerOpen = isOpen
   }
 }
 
@@ -60,13 +71,18 @@ decorate(AppStore, {
   auth: observable,
   checkAuth: action,
   setAuth: action,
+  logout: action,
   location: observable,
   goto: action,
   subTitle: observable,
   setTitle: action,
-  isShowDrawer: observable,
-  showDrawer: action,
-  logout: action,
+  isForm: observable,
+  setForm: action,
+  dimension: observable,
+  setDimension: action,
+  isDrawerOpen: observable,
+  toggleDrawer: action,
+  setDrawerOpen: action,
 })
 
 export { AppStore }

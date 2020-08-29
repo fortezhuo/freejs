@@ -36,15 +36,14 @@ const column = ((Platform.OS === "web"
 ])
 
 export const useHook = () => {
-  const { log: store } = useStore()
+  const { log } = useStore()
 
   useEffect(() => {
     ;(async function () {
       const res = await get("/api/log", {})
-      store.data.set("collection", res.data.result)
+      log.setData({ column, collection: res.data.result })
     })()
-    store.data.set("column", column)
   }, [])
 
-  return store
+  return log
 }

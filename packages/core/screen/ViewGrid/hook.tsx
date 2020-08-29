@@ -10,16 +10,16 @@ const date = (date: any) => dayjs(date).format("DD MMM YYYY")
 const datetime = (datetime: any) =>
   dayjs(datetime).format("DD MMM YYYY HH:mm:ss")
 
-export const useViewGrid = () => {
+export const useHook = () => {
   const { view } = useStore()
-  const name = `${view.app.location}/`.split("/")[1]
+  const name = `${view?.app?.location}/`.split("/")[1]
 
   useEffect(() => {
     view.title = (config as ObjectAny)[name].title
     view.data.clear()
     getColumn(name)
     getCollection(name)
-  }, [view.app.location])
+  }, [view?.app?.location])
 
   const getCollection = async (name: string) => {
     const res = await get(`/api/${name}`, {})
@@ -49,7 +49,7 @@ export const useViewGrid = () => {
         return (
           <CellLink
             onPress={() => {
-              view.app.goto(`${name}/${cell.value}`)
+              view?.app?.goto(`${name}/${cell.value}`)
             }}
           />
         )

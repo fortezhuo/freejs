@@ -8,9 +8,9 @@ import { observer } from "mobx-react-lite"
 
 export const MenuUser: FC = observer(() => {
   const { show, Menu, MenuItem } = useMenu()
-  const { ui } = useStore()
+  const { app } = useStore()
   return (
-    ui.app.auth && (
+    app.auth && (
       <Menu
         anchor={
           <IconButton
@@ -24,9 +24,9 @@ export const MenuUser: FC = observer(() => {
         <View style={styles.triangle} />
         <View style={styles.rootMenuUser}>
           <View style={styles.boxAuth}>
-            <Text style={styles.textAuth}>{ui?.app?.auth?.fullname}</Text>
+            <Text style={styles.textAuth}>{app?.auth?.fullname}</Text>
           </View>
-          <MenuItem name="log-out" onPress={() => ui.app.logout()}>
+          <MenuItem name="log-out" onPress={() => app.logout()}>
             Logout
           </MenuItem>
         </View>

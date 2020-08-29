@@ -10,8 +10,8 @@ import { getMenu } from "../../config/menu"
 import { random } from "../../util/random"
 
 const Content: FC = observer(() => {
-  const { ui } = useStore()
-  const pathname = ui.app.location
+  const { app } = useStore()
+  const pathname = app.location
   const allowedMenu = getMenu().filter((menu) => menu.visible)
 
   return (

@@ -1,10 +1,9 @@
 import React, { FC, memo } from "react"
 import { devtools } from "../../util/devtools"
-import { ListStore } from "@free/core"
 import * as store from "../../store"
 
 devtools(store)
-const StoreContext = React.createContext<ListStore>(null)
+const StoreContext = React.createContext(store)
 
 export const useStore = () => {
   const store = React.useContext(StoreContext)

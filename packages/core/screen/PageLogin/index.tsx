@@ -6,9 +6,10 @@ import { Button } from "../../component/Button"
 import { IconLabel } from "../../component/Icon"
 import { Layout } from "../../component/Layout"
 import { observer } from "mobx-react-lite"
-import { useLogin } from "./hook"
+import { useHook } from "./hook"
+
 const PageLogin: FC = observer(() => {
-  const store = useLogin()
+  const store = useHook()
   return (
     <Layout store={store}>
       <View style={styles.rootLogin}>

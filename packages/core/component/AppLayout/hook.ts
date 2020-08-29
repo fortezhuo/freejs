@@ -4,19 +4,19 @@ import { useSafeAreaInsets } from "react-native-safe-area-context"
 import { useWindowDimensions } from "react-native"
 import { useHistory } from "react-router"
 
-export const useLayout = () => {
+export const useHook = () => {
   const history = useHistory()
-  const { width, height } = useWindowDimensions()
   const insets = useSafeAreaInsets()
-  const { ui } = useStore()
+  const { width, height } = useWindowDimensions()
+  const { app } = useStore()
 
   useEffect(() => {
-    ui.app._history = history
-    ui.app.goto()
+    app._history = history
+    app.goto()
   }, [])
 
   useEffect(() => {
-    ui.setDimension({
+    app.setDimension({
       isMobile: width < 1200,
       width: width - insets.left - insets.right,
       height: height - insets.top - insets.bottom,
@@ -26,12 +26,10 @@ export const useLayout = () => {
   useEffect(() => {
     ;(async function () {
       try {
-        await ui.app.checkAuth()
+        await app.checkAuth()
       } catch (e) {
-        ui.app.goto("/login")
+        app.goto("/login")
       }
     })()
-  }, [ui.app.auth])
-
-  return ui
+  }, [app.auth])
 }

@@ -10,18 +10,18 @@ import { useStore } from "../Store"
 import { HeaderProps } from "@free/core"
 
 export const Header: FC<HeaderProps> = observer(({ testID = "Header" }) => {
-  const { ui } = useStore()
+  const { app } = useStore()
 
   return (
     <View style={styles.rootHeader} testID={testID}>
-      {ui.app.auth && (
+      {!app.isForm && app.auth && (
         <IconButton
-          name={ui.dimension.isMobile && "menu"}
+          name={app.dimension.isMobile && "menu"}
           style={styles.actionLeft}
-          onPress={ui.dimension.isMobile && ui.toggleDrawer}
+          onPress={app.dimension.isMobile && app.toggleDrawer}
         />
       )}
-      <Title>{ui.app.subTitle}</Title>
+      <Title>{app.subTitle}</Title>
       <View style={styles.boxGrow}></View>
       <MenuUser />
     </View>
