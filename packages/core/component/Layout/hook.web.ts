@@ -7,5 +7,5 @@ export const useHook = (store: any) => {
   useEffect(() => {
     app.setTitle(store.title)
     document.title = `${store.title} | ${configApp.displayName}`
-  }, [])
+  }, [store.title])
 }

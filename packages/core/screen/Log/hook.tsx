@@ -1,5 +1,4 @@
 import React, { useMemo, useEffect } from "react"
-import { IconButton } from "../../component/Icon"
 import { CellLink } from "../../component/Table"
 import { useLocalStore } from "mobx-react-lite"
 import { Platform } from "react-native"
@@ -8,6 +7,7 @@ import { get } from "../../request"
 
 export const useLog = () => {
   const state = useLocalStore(() => ({
+    title: "Log Management",
     data: [],
     setData(data: []) {
       state.data = data

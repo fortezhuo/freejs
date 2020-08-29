@@ -1,10 +1,11 @@
 import React from "react"
-import { View, Text } from "react-native"
+import { Text } from "react-native"
+import { Layout } from "../../component/Layout"
 
 const NotFound = () => (
-  <View style={{ flex: 1 }}>
+  <Layout store={{ title: "Not Found" }}>
     <Text>Not Found</Text>
-  </View>
+  </Layout>
 )
 
 export default NotFound

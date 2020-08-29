@@ -15,6 +15,7 @@ export const useViewGrid = () => {
   const name = `${view.app.location}/`.split("/")[1]
 
   useEffect(() => {
+    view.title = (config as ObjectAny)[name].title
     view.data.clear()
     getColumn(name)
     getCollection(name)

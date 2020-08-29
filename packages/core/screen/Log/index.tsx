@@ -5,6 +5,7 @@ import { Table, Body, Row, Cell, Header } from "../../component/Table"
 import { useLog, useColumns } from "./hook"
 import { useTable } from "react-table"
 import { observer } from "mobx-react-lite"
+import { Layout } from "../../component/Layout"
 
 const Log: FC = observer(() => {
   const state: any = useLog()
@@ -18,52 +19,54 @@ const Log: FC = observer(() => {
     prepareRow,
   } = useTable({ columns, data })
   return (
-    <View style={styles.rootLog}>
-      <View style={styles.boxContent}>
-        <Table style={styles.rootTable} scroll {...getTableProps()}>
-          {headerGroups.map((headerGroup) => (
-            <Header {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map((column) => {
-                return (
-                  <Cell
-                    {...column.getHeaderProps()}
-                    style={{ width: column.width, maxWidth: column.maxWidth }}
-                  >
-                    {column.render("Header")}
-                  </Cell>
-                )
-              })}
-            </Header>
-          ))}
-          <Body scroll {...getTableBodyProps()}>
-            <FlatList
-              data={rows}
-              keyExtractor={(row) => row.id}
-              renderItem={({ item }) => {
-                prepareRow(item)
-                return (
-                  <Row {...item.getRowProps()}>
-                    {item.cells.map((cell) => {
-                      return (
-                        <Cell
-                          {...cell.getCellProps()}
-                          style={{
-                            width: cell.column.width,
-                            maxWidth: cell.column.maxWidth,
-                          }}
-                        >
-                          {cell.render("Cell")}
-                        </Cell>
-                      )
-                    })}
-                  </Row>
-                )
-              }}
-            />
-          </Body>
-        </Table>
+    <Layout store={state}>
+      <View style={styles.rootLog}>
+        <View style={styles.boxContent}>
+          <Table style={styles.rootTable} scroll {...getTableProps()}>
+            {headerGroups.map((headerGroup) => (
+              <Header {...headerGroup.getHeaderGroupProps()}>
+                {headerGroup.headers.map((column) => {
+                  return (
+                    <Cell
+                      {...column.getHeaderProps()}
+                      style={{ width: column.width, maxWidth: column.maxWidth }}
+                    >
+                      {column.render("Header")}
+                    </Cell>
+                  )
+                })}
+              </Header>
+            ))}
+            <Body scroll {...getTableBodyProps()}>
+              <FlatList
+                data={rows}
+                keyExtractor={(row) => row.id}
+                renderItem={({ item }) => {
+                  prepareRow(item)
+                  return (
+                    <Row {...item.getRowProps()}>
+                      {item.cells.map((cell) => {
+                        return (
+                          <Cell
+                            {...cell.getCellProps()}
+                            style={{
+                              width: cell.column.width,
+                              maxWidth: cell.column.maxWidth,
+                            }}
+                          >
+                            {cell.render("Cell")}
+                          </Cell>
+                        )
+                      })}
+                    </Row>
+                  )
+                }}
+              />
+            </Body>
+          </Table>
+        </View>
       </View>
-    </View>
+    </Layout>
   )
 })
 

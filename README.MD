@@ -4,25 +4,27 @@ Forte React Everywhere for NodeJS
 
 ## Features
 
-- Monorepo
-- Lazy Loading & Code Splitting
-- Server Side Rendering
+- Server and Client Monorepo
+- Server Side Rendering (SSR)
 - Universal Rendering
-- LDAP Mock Server
+- Lazy Loading & Code Splitting
 - Webpack Dev Server + Hot Reload
+- LDAP Auth / Mock Server
+- Type safe
+- Logging
 
 ## Stacks
 
 ### Backend
 
 - Fastify
-- LDAP Auth
+- LDAP JS
 - MongoDB
 
 ### Frontend
 
-- React Native
-- React Native Web
-- MobX
+- React Hooks
+- React Native/Web
 - React Router Native/DOM
-- Tailwind
+- State Management MobX
+- Tailwind Style

@@ -7,6 +7,7 @@ import { useTable } from "react-table"
 import { observer } from "mobx-react-lite"
 import { ActionBar } from "../../component/ActionBar"
 import { Button } from "../../component/Button"
+import { Layout } from "../../component/Layout"
 
 const ViewGrid: FC = observer(() => {
   const view = useViewGrid()
@@ -21,52 +22,54 @@ const ViewGrid: FC = observer(() => {
     data: view.data.get("collection") || [],
   })
   return (
-    <View style={styles.rootViewGrid}>
-      <View style={styles.boxContent}>
-        <ActionBar>
-          <Button>Test</Button>
-        </ActionBar>
-        <Table scroll style={styles.rootTable} {...getTableProps()}>
-          {headerGroups.map((headerGroup) => (
-            <Header {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map((column) => {
-                return (
-                  <Cell
-                    {...column.getHeaderProps()}
-                    style={(column as any).style || {}}
-                  >
-                    {column.render("Header")}
-                  </Cell>
-                )
-              })}
-            </Header>
-          ))}
-          <Body scroll {...getTableBodyProps()}>
-            <FlatList
-              data={rows}
-              keyExtractor={(row) => row.id}
-              renderItem={({ item }) => {
-                prepareRow(item)
-                return (
-                  <Row {...item.getRowProps()}>
-                    {item.cells.map((cell) => {
-                      return (
-                        <Cell
-                          {...cell.getCellProps()}
-                          style={(cell.column as any).style || {}}
-                        >
-                          {cell.render("Cell")}
-                        </Cell>
-                      )
-                    })}
-                  </Row>
-                )
-              }}
-            />
-          </Body>
-        </Table>
+    <Layout store={view}>
+      <View style={styles.rootViewGrid}>
+        <View style={styles.boxContent}>
+          <ActionBar>
+            <Button>Test</Button>
+          </ActionBar>
+          <Table scroll style={styles.rootTable} {...getTableProps()}>
+            {headerGroups.map((headerGroup) => (
+              <Header {...headerGroup.getHeaderGroupProps()}>
+                {headerGroup.headers.map((column) => {
+                  return (
+                    <Cell
+                      {...column.getHeaderProps()}
+                      style={(column as any).style || {}}
+                    >
+                      {column.render("Header")}
+                    </Cell>
+                  )
+                })}
+              </Header>
+            ))}
+            <Body scroll {...getTableBodyProps()}>
+              <FlatList
+                data={rows}
+                keyExtractor={(row) => row.id}
+                renderItem={({ item }) => {
+                  prepareRow(item)
+                  return (
+                    <Row {...item.getRowProps()}>
+                      {item.cells.map((cell) => {
+                        return (
+                          <Cell
+                            {...cell.getCellProps()}
+                            style={(cell.column as any).style || {}}
+                          >
+                            {cell.render("Cell")}
+                          </Cell>
+                        )
+                      })}
+                    </Row>
+                  )
+                }}
+              />
+            </Body>
+          </Table>
+        </View>
       </View>
-    </View>
+    </Layout>
   )
 })
 

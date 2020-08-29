@@ -50,7 +50,6 @@ declare module "@free/core" {
 
   interface HeaderProps {
     testID?: string
-    children: ReactNode
   }
 
   // AppLayout / MainLayout
