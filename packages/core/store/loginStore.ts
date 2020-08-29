@@ -2,7 +2,7 @@ import { BaseStore, decorate, action } from "./baseStore"
 import * as req from "../request"
 
 class LoginStore extends BaseStore {
-  title = "Login Page"
+  title = undefined
   login = async () => {
     try {
       this.isUpdating = true

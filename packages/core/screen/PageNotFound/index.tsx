@@ -1,11 +1,15 @@
 import React from "react"
 import { Text } from "react-native"
 import { Layout } from "../../component/Layout"
+import { useStore } from "../../component/Store"
 
-const PageNotFound = () => (
-  <Layout store={{ drawer: true, title: "Not Found" }}>
-    <Text>Not Found</Text>
-  </Layout>
-)
+const PageNotFound = () => {
+  const { app } = useStore()
+  return (
+    <Layout store={app}>
+      <Text>Not Found</Text>
+    </Layout>
+  )
+}
 
 export default PageNotFound

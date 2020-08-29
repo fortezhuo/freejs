@@ -5,6 +5,8 @@ import { acl } from "../util/acl"
 class AppStore {
   _history: any = null
   isUpdating = false
+  drawer = true
+  title = undefined
 
   can = (action: string, resource: string) => {
     const roles = this?.auth?.roles
