@@ -40,6 +40,11 @@ class AppStore {
     this.subTitle = title
   }
 
+  isShowDrawer?: boolean = true
+  showDrawer(isShowDrawer: boolean) {
+    this.isShowDrawer = isShowDrawer
+  }
+
   logout = async () => {
     await req.get("/api/auth/logout")
     this.setAuth(undefined)
@@ -57,6 +62,8 @@ decorate(AppStore, {
   goto: action,
   subTitle: observable,
   setTitle: action,
+  isShowDrawer: observable,
+  showDrawer: action,
   logout: action,
 })
 

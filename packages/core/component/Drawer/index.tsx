@@ -12,7 +12,11 @@ export const Drawer: FC<DrawerProps> = observer(
     return (
       <View style={styles.rootDrawer} testID={testID}>
         {ui.app.auth && (
-          <Sidebar isOpen={ui.isDrawerOpen || !ui.dimension.isMobile} />
+          <Sidebar
+            isOpen={
+              ui.app.isShowDrawer && (ui.isDrawerOpen || !ui.dimension.isMobile)
+            }
+          />
         )}
         <View style={styles.panelContent}>
           {ui.isDrawerOpen && (

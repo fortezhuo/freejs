@@ -2,17 +2,17 @@ import React from "react"
 import loadable from "@loadable/component"
 import { Switch, Route } from "react-router-dom"
 
-const Home = loadable(() => import("@free/core/screen/Home"), {
+const Home = loadable(() => import("@free/core/screen/PageHome"), {
   ssr: true,
   fallback: <span>Loading ...</span>,
 })
 
-const Login = loadable(() => import("@free/core/screen/Login"), {
+const Login = loadable(() => import("@free/core/screen/PageLogin"), {
   ssr: true,
   fallback: <span>Loading ...</span>,
 })
 
-const Log = loadable(() => import("@free/core/screen/Log"), {
+const Log = loadable(() => import("@free/core/screen/SettingLog"), {
   ssr: true,
   fallback: <span>Loading ...</span>,
 })
@@ -27,7 +27,12 @@ const ViewGrid = loadable(() => import("@free/core/screen/ViewGrid"), {
   fallback: <span>Loading ...</span>,
 })
 
-const NotFound = loadable(() => import("@free/core/screen/NotFound"), {
+const NotFound = loadable(() => import("@free/core/screen/PageNotFound"), {
+  ssr: true,
+  fallback: <span>Loading ...</span>,
+})
+
+const User = loadable(() => import("@free/core/screen/SettingUser"), {
   ssr: true,
   fallback: <span>Loading ...</span>,
 })
@@ -40,6 +45,7 @@ const App = () => {
         <Route exact path="/login" component={Login} />
         <Route exact path="/log" component={Log} />
         <Route exact path="/user" component={ViewGrid} />
+        <Route exact path="/user/:id" component={User} />
         <Route path="*" component={NotFound} />
       </Switch>
     </AppLayout>

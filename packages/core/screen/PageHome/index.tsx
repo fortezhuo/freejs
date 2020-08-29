@@ -5,10 +5,11 @@ import { Layout } from "../../component/Layout"
 import { observer, useLocalStore } from "mobx-react-lite"
 import { tw } from "@free/tailwind"
 
-const Home: FC = observer(() => {
+const PageHome: FC = observer(() => {
   const { show, hide, Menu } = useMenu()
   const store = useLocalStore(() => ({
     title: "Main",
+    drawer: true,
   }))
 
   return (
@@ -96,4 +97,4 @@ const styles = StyleSheet.create({
   rootHome: tw("flex-1"),
 })
 
-export default Home
+export default PageHome

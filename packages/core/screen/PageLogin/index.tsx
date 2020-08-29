@@ -7,7 +7,7 @@ import { IconLabel } from "../../component/Icon"
 import { Layout } from "../../component/Layout"
 import { observer } from "mobx-react-lite"
 import { useLogin } from "./hook"
-const Login: FC = observer(() => {
+const PageLogin: FC = observer(() => {
   const store = useLogin()
   return (
     <Layout store={store}>
@@ -61,4 +61,4 @@ const styles = StyleSheet.create({
   ),
 })
 
-export default Login
+export default PageLogin

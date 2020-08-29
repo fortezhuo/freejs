@@ -2,24 +2,25 @@ import React, { FC } from "react"
 import { View, StyleSheet, FlatList } from "react-native"
 import { tw } from "@free/tailwind"
 import { Table, Body, Row, Cell, Header } from "../../component/Table"
-import { useLog, useColumns } from "./hook"
 import { useTable } from "react-table"
 import { observer } from "mobx-react-lite"
 import { Layout } from "../../component/Layout"
+import { useHook } from "./hook"
 
-const Log: FC = observer(() => {
-  const state: any = useLog()
-  const data = state.data
-  const columns: any = useColumns()
+const SettingLog: FC = observer(() => {
+  const store = useHook()
   const {
     getTableProps,
     getTableBodyProps,
     headerGroups,
     rows,
     prepareRow,
-  } = useTable({ columns, data })
+  } = useTable({
+    columns: store.data.get("column") || [],
+    data: store.data.get("collection") || [],
+  })
   return (
-    <Layout store={state}>
+    <Layout store={store}>
       <View style={styles.rootLog}>
         <View style={styles.boxContent}>
           <Table style={styles.rootTable} scroll {...getTableProps()}>
@@ -76,4 +77,4 @@ const styles = StyleSheet.create({
   boxContent: tw("flex-no-wrap flex-1"),
 })
 
-export default Log
+export default SettingLog
