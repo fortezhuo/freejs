@@ -121,9 +121,17 @@ export const CellLink: FC<IconButtonProps> = observer(
   }
 )
 
-export const CellCheckbox: FC<any> = observer(() => {
-  return <InputCheckbox style={{ padding: 0, marginTop: -2 }} />
-})
+export const CellCheckbox: FC<any> = observer(
+  ({ testID = "CellCheckbox", ...rest }) => {
+    return (
+      <InputCheckbox
+        testID={testID}
+        style={{ padding: 0, marginTop: -2 }}
+        {...rest}
+      />
+    )
+  }
+)
 
 const styles = StyleSheet.create({
   rootTable: tw(

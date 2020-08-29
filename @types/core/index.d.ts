@@ -96,6 +96,18 @@ declare module "@free/core" {
     onChange?: VoidFunction
   }
 
+  interface InputCheckboxProps extends IconButtonProps {
+    testID?: string
+    multi?: boolean
+    model?: string
+    store?: any
+    name: string
+    value: string
+    color?: string
+    disabled?: boolean
+    onChange?: VoidFunction
+  }
+
   interface InputSelectProps {
     options?: []
     model?: string

@@ -3,12 +3,19 @@ import { CellLink, CellCheckbox, Cell } from "../../component/Table"
 import { useStore } from "../../component/Store"
 import { get } from "../../request"
 import * as config from "./config"
+import dayjs from "dayjs"
+
+const date = (date: any) => dayjs(date).format("DD MMM YYYY")
+
+const datetime = (datetime: any) =>
+  dayjs(datetime).format("DD MMM YYYY HH:mm:ss")
 
 export const useViewGrid = () => {
   const { view } = useStore()
   const name = `${view.app.location}/`.split("/")[1]
 
   useEffect(() => {
+    view.data.clear()
     getColumn(name)
     getCollection(name)
   }, [view.app.location])
@@ -46,7 +53,11 @@ export const useViewGrid = () => {
           />
         )
       case "checkbox":
-        return <CellCheckbox />
+        return <CellCheckbox value={cell.value} store={view} name="selection" />
+      case "date":
+        return date(cell.value)
+      case "datetime":
+        return datetime(cell.value)
       default:
         return cell.value
     }

@@ -12,7 +12,7 @@ export const user = {
       name: "username",
       filter: true,
       search: ["username"],
-      style: { width: 200 },
+      style: { width: 150 },
     },
     {
       label: "Full Name",
@@ -33,6 +33,19 @@ export const user = {
       name: "roles",
       filter: true,
       search: ["roles"],
+      style: { width: 200 },
+    },
+    {
+      label: "Updated At",
+      name: "updated_at",
+      type: "datetime",
+      filter: false,
+      style: { width: 200 },
+    },
+    {
+      label: "Updated By",
+      name: "updated_by",
+      filter: ["updated_by"],
       style: { width: 200 },
     },
   ],

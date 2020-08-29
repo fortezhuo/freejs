@@ -5,6 +5,8 @@ import { Table, Body, Row, Cell, Header } from "../../component/Table"
 import { useViewGrid } from "./hook"
 import { useTable } from "react-table"
 import { observer } from "mobx-react-lite"
+import { ActionBar } from "../../component/ActionBar"
+import { Button } from "../../component/Button"
 
 const ViewGrid: FC = observer(() => {
   const view = useViewGrid()
@@ -21,6 +23,9 @@ const ViewGrid: FC = observer(() => {
   return (
     <View style={styles.rootViewGrid}>
       <View style={styles.boxContent}>
+        <ActionBar>
+          <Button>Test</Button>
+        </ActionBar>
         <Table scroll style={styles.rootTable} {...getTableProps()}>
           {headerGroups.map((headerGroup) => (
             <Header {...headerGroup.getHeaderGroupProps()}>
