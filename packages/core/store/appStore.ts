@@ -63,6 +63,19 @@ class AppStore {
   setDrawerOpen = (isOpen: boolean) => {
     this.isDrawerOpen = isOpen
   }
+  error = undefined
+  setError = (error: any) => {
+    const message = error
+      ? error.data
+        ? error.data.message
+        : error.message
+      : undefined
+    this.error = message
+  }
+  fatalError = undefined
+  setFatalError = (error: any) => {
+    this.fatalError = error
+  }
 }
 
 decorate(AppStore, {
@@ -83,6 +96,10 @@ decorate(AppStore, {
   isDrawerOpen: observable,
   toggleDrawer: action,
   setDrawerOpen: action,
+  error: observable,
+  setError: action,
+  fatalError: observable,
+  setFatalError: action,
 })
 
 export { AppStore }

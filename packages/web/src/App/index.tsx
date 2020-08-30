@@ -1,6 +1,7 @@
 import React from "react"
 import loadable from "@loadable/component"
 import { Switch, Route } from "react-router-dom"
+import BigLoader from "../component/BigLoader"
 
 const Home = loadable(() => import("@free/core/screen/PageHome"), {
   ssr: true,
@@ -19,7 +20,7 @@ const Log = loadable(() => import("@free/core/screen/SettingLog"), {
 
 const AppLayout = loadable(() => import("@free/core/component/AppLayout"), {
   ssr: true,
-  fallback: <span>Loading ...</span>,
+  fallback: <BigLoader />,
 })
 
 const ViewGrid = loadable(() => import("@free/core/screen/ViewGrid"), {

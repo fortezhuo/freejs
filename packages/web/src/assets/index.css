@@ -26,3 +26,95 @@ div[data-testid="VerticalScroll"] > div {
   min-width: 100%;
   flex-direction: column;
 }
+div[data-testid="Sidebar"] > div {
+  scrollbar-width: none;
+}
+
+.applayout {
+  background: #2b6cb0;
+  min-height: 100%;
+}
+
+.pre-container {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+}
+
+.pre-logo {
+  margin-left: -80px;
+  margin-bottom: 50px;
+}
+
+.pre-loader {
+  width: 250px;
+  height: 50px;
+  line-height: 50px;
+  text-align: center;
+  position: absolute;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  font-family: helvetica, arial, sans-serif;
+  text-transform: uppercase;
+  font-weight: 900;
+  color: #fff;
+  letter-spacing: 0.2em;
+}
+
+.pre-loader::before,
+.pre-loader::after {
+  content: "";
+  display: block;
+  width: 15px;
+  height: 15px;
+  background: #fff;
+  position: absolute;
+  -webkit-animation: load 0.7s infinite alternate ease-in-out;
+  animation: load 0.7s infinite alternate ease-in-out;
+}
+
+.pre-loader::before {
+  top: 0;
+}
+
+.pre-loader::after {
+  bottom: 0;
+}
+
+@-webkit-keyframes load {
+  0% {
+    left: 0;
+    height: 30px;
+    width: 15px;
+  }
+
+  50% {
+    height: 8px;
+    width: 40px;
+  }
+
+  100% {
+    left: 235px;
+    height: 30px;
+    width: 15px;
+  }
+}
+
+@keyframes load {
+  0% {
+    left: 0;
+    height: 30px;
+    width: 15px;
+  }
+
+  50% {
+    height: 8px;
+    width: 40px;
+  }
+
+  100% {
+    left: 235px;
+    height: 30px;
+    width: 15px;
+  }
+}

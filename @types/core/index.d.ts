@@ -20,6 +20,13 @@ declare module "@free/core" {
     children?: SubMenu[]
   }
 
+  type Route = {
+    path: string[]
+    form: boolean | string
+    view: boolean
+    visible: boolean
+  }
+
   //Accordion
   interface AccordionProps {
     testID?: string

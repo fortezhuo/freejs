@@ -14,6 +14,7 @@ import { tw } from "@free/tailwind"
 import { Header } from "../Header"
 import { Drawer } from "../Drawer"
 import { Footer } from "../Footer"
+import { Snackbar } from "../Snackbar"
 import { StoreProvider } from "../Store"
 import { useHook } from "./hook"
 import { observer } from "mobx-react-lite"
@@ -42,7 +43,10 @@ export const AppLayout: FC = observer(({ children }) => {
             <View style={styles.rootApp}>
               <Header />
               <MainLayout wallpaper>
-                <Drawer>{children}</Drawer>
+                <Drawer>
+                  {children}
+                  <Snackbar />
+                </Drawer>
                 <Footer />
               </MainLayout>
             </View>

@@ -11,9 +11,19 @@ class LoginStore extends BaseStore {
         "password",
         "domain"
       )
+      if (
+        (username || "") == "" ||
+        (password || "") == "" ||
+        (domain || "") == ""
+      ) {
+        throw new Error("Please fill username, password and domain")
+      }
+
       const res = await req.post("/api/auth", { username, password, domain })
       this.app?.setAuth(res.data.result)
       this.app?.goto("/")
+    } catch (err) {
+      this.app?.setError(err)
     } finally {
       this.isUpdating = false
     }
