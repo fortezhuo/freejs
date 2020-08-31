@@ -22,7 +22,7 @@ declare module "@free/core" {
 
   type Route = {
     path: string[]
-    form: boolean | string
+    component: string
     view: boolean
     visible: boolean
   }
@@ -128,9 +128,15 @@ declare module "@free/core" {
     disabled?: boolean
   }
 
+  // Layout
   interface LayoutProps extends ViewProps {
     testID?: string
     store?: any
+  }
+
+  // Loader
+  type LoaderProps = {
+    primary?: boolean
   }
 
   // Menu

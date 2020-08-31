@@ -1,55 +1,22 @@
 import React from "react"
 import loadable from "@loadable/component"
-import { Switch, Route } from "react-router-dom"
 import BigLoader from "../component/BigLoader"
-
-const Home = loadable(() => import("@free/core/screen/PageHome"), {
-  ssr: true,
-  fallback: <span>Loading ...</span>,
-})
-
-const Login = loadable(() => import("@free/core/screen/PageLogin"), {
-  ssr: true,
-  fallback: <span>Loading ...</span>,
-})
-
-const Log = loadable(() => import("@free/core/screen/SettingLog"), {
-  ssr: true,
-  fallback: <span>Loading ...</span>,
-})
+import { useRoutes } from "@free/core/component/Routes"
+import * as screen from "../screen"
 
 const AppLayout = loadable(() => import("@free/core/component/AppLayout"), {
   ssr: true,
   fallback: <BigLoader />,
 })
 
-const ViewGrid = loadable(() => import("@free/core/screen/ViewGrid"), {
-  ssr: true,
-  fallback: <span>Loading ...</span>,
-})
-
-const NotFound = loadable(() => import("@free/core/screen/PageNotFound"), {
-  ssr: true,
-  fallback: <span>Loading ...</span>,
-})
-
-const User = loadable(() => import("@free/core/screen/SettingUser"), {
-  ssr: true,
-  fallback: <span>Loading ...</span>,
-})
-
 const App = () => {
+  const Routes = useRoutes(screen)
+
   return (
     <AppLayout>
-      <Switch>
-        <Route exact path="/" component={Home} />
-        <Route exact path="/login" component={Login} />
-        <Route exact path="/log" component={Log} />
-        <Route exact path="/user" component={ViewGrid} />
-        <Route exact path="/user/:id" component={User} />
-        <Route path="*" component={NotFound} />
-      </Switch>
+      <Routes />
     </AppLayout>
   )
 }
+
 export default App
