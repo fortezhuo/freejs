@@ -1,5 +1,5 @@
 import React, { useEffect } from "react"
-import { CellLink, CellCheckbox, Cell } from "../../component/Table"
+import { CellLink, CellCheckbox } from "../../component/Table"
 import { useStore } from "../../component/Store"
 import { get } from "../../request"
 import * as config from "./config"
@@ -41,7 +41,10 @@ export const useHook = () => {
         icon: "search",
         type: "primary",
         children: "Filter",
-        onPress: () => {},
+        onPress: () => {
+          const isFilter = view.temp.get("isFilter") || false
+          view.temp.set("isFilter", !isFilter)
+        },
         visible: true,
       },
     }

@@ -12,6 +12,9 @@ import { random } from "../../util/random"
 
 const ViewGrid: FC = observer(() => {
   const store = useHook()
+  const column = store.data.get("column") || []
+  const button = store.data.get("button") || []
+  const isFilter = store.temp.get("isFilter") || false
   const {
     getTableProps,
     getTableBodyProps,
@@ -19,10 +22,12 @@ const ViewGrid: FC = observer(() => {
     rows,
     prepareRow,
   } = useTable({
-    columns: store.data.get("column") || [],
+    columns: column,
     data: store.data.get("collection") || [],
   })
-  const button = store.data.get("button") || []
+
+  console.log(column)
+
   return (
     <Layout store={store}>
       <View style={styles.rootViewGrid}>
@@ -30,7 +35,12 @@ const ViewGrid: FC = observer(() => {
           {button.length != 0 && (
             <ActionBar>
               {button.map((prop: ObjectAny) => (
-                <Button key={"act_" + random()} store={store} {...prop} />
+                <Button
+                  key={"act_" + random()}
+                  store={store}
+                  {...prop}
+                  style={{ marginRight: 4 }}
+                />
               ))}
             </ActionBar>
           )}
@@ -49,7 +59,7 @@ const ViewGrid: FC = observer(() => {
                 })}
               </Header>
             ))}
-            <Row filter />
+            {isFilter && <Row filter>{}</Row>}
             <Body scroll {...getTableBodyProps()}>
               <FlatList
                 data={rows}

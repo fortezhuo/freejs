@@ -8,5 +8,7 @@ export const ActionBar: FC<any> = ({ children }) => {
 }
 
 const styles = StyleSheet.create({
-  rootActionBar: tw(`${theme.bgActionBar} flex-row p-1 overflow-hidden`),
+  rootActionBar: tw(
+    `${theme.bgActionBar} flex-row p-1 overflow-hidden shadow-xl`
+  ),
 })

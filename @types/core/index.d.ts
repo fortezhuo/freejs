@@ -1,5 +1,11 @@
 declare module "@free/core" {
-  import { TextStyle, ViewStyle, TextInputProps, ViewProps } from "react-native"
+  import {
+    TextStyle,
+    ViewStyle,
+    TextInputProps,
+    ViewProps,
+    TextProps as RNTextProps,
+  } from "react-native"
 
   type Config = {
     [key: string]: any
@@ -131,6 +137,7 @@ declare module "@free/core" {
   // Layout
   interface LayoutProps extends ViewProps {
     testID?: string
+    form?: boolean
     store?: any
   }
 

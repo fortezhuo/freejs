@@ -11,7 +11,7 @@ const role = {
       },
       {
         resource: "user",
-        action: ["create"],
+        action: ["*"],
       }),
     ]),
 }

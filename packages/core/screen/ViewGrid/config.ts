@@ -3,7 +3,7 @@ export const user = {
   title: "User Management",
   name: "user",
   search: ["username", "fullname"],
-  button: ["new", "delete", "search"],
+  button: ["new", "delete", "filter"],
   column: [
     { label: "", name: "_id", type: "checkbox" },
     { label: "", name: "_id", type: "link" },
