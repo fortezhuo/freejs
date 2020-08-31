@@ -8,6 +8,7 @@ import {
 } from "react-native"
 import { observer } from "mobx-react-lite"
 import { tw } from "@free/tailwind"
+import { theme } from "../../../config/theme"
 
 export const Search: FC<Search> = observer(({ refSearch, state, menu }) => {
   let regex: any
@@ -60,7 +61,7 @@ export const Search: FC<Search> = observer(({ refSearch, state, menu }) => {
 })
 
 const styles = StyleSheet.create({
-  rootTextInput: tw("w-full bg-white p-2"),
+  rootTextInput: tw(`w-full ${theme.bgInput} p-2`),
 })
 
 type Search = {

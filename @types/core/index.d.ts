@@ -88,6 +88,13 @@ declare module "@free/core" {
     onPress?: VoidFunction
   }
 
+  interface ButtonProps extends IconButtonProps {
+    store: any
+    type?: string
+    outline?: boolean
+    icon?: string
+  }
+
   // Input
   interface InputTextProps extends TextInputProps {
     testID?: string

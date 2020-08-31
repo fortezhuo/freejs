@@ -38,7 +38,7 @@ export const tw: any = (classNames, adhoc) => {
 
 export const color: any = (name) => {
   const obj = tw(name)
-  return obj.backgroundColor
+  return obj.backgroundColor || obj.color
 }
 
 export const adjust: any = (twColor, n) => {

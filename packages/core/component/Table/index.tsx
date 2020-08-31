@@ -134,19 +134,14 @@ export const CellCheckbox: FC<any> = observer(
 )
 
 const styles = StyleSheet.create({
-  rootTable: tw(
-    "shadow-lg bg-white-800 m-1 border border-gray-300 border-solid"
-  ),
+  rootTable: tw(`${theme.bgTable} border ${theme.borderTable} shadow-lg m-1`),
   groupTable: tw("flex-col flex-1"),
-  rootHeader: tw("bg-white-500 h-10 items-center shadow-md"),
+  rootHeader: tw(`${theme.bgTable} h-10 items-center shadow-md`),
   rootBody: tw("flex-1"),
-  rootFilter: {
-    backgroundColor: "rgba(252,129,129,0.3)",
-    ...tw("h-10 items-center shadow-md"),
-  },
-  textCell: tw("text-gray-900"),
-  rootRow: tw("flex-row border-solid border-gray-200 border-b flex-no-wrap"),
-  rowDark: { backgroundColor: "rgba(192,192,192,0.2)" },
-  rootCell: tw("p-2 w-40 border-r border-solid border-gray-300 flex-grow"),
+  rootFilter: tw(`${theme.bgRowFilter} h-10 items-center`),
+  textCell: tw(theme.textCell),
+  rootRow: tw(`${theme.borderTable} border-b flex-row flex-no-wrap`),
+  rowDark: tw(theme.bgRowDark),
+  rootCell: tw(`${theme.borderTable} p-2 w-40 border-r flex-grow`),
   cellFilter: { padding: 0 },
 })

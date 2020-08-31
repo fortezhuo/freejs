@@ -26,7 +26,36 @@ const ViewGrid: FC = observer(() => {
       <View style={styles.rootViewGrid}>
         <View style={styles.boxContent}>
           <ActionBar>
-            <Button>Test</Button>
+            <Button type="primary" store={store}>
+              Test
+            </Button>
+            <Button type="default" store={store}>
+              Test
+            </Button>
+            <Button type="success" store={store}>
+              Test
+            </Button>
+            <Button type="error" store={store}>
+              Test
+            </Button>
+            <Button type="warning" store={store}>
+              Test
+            </Button>
+            <Button outline type="primary" store={store}>
+              Test
+            </Button>
+            <Button outline type="default" store={store}>
+              Test
+            </Button>
+            <Button outline type="success" store={store}>
+              Test
+            </Button>
+            <Button outline type="error" store={store}>
+              Test
+            </Button>
+            <Button outline type="warning" store={store}>
+              Test
+            </Button>
           </ActionBar>
           <Table scroll style={styles.rootTable} {...getTableProps()}>
             {headerGroups.map((headerGroup) => (
@@ -43,14 +72,15 @@ const ViewGrid: FC = observer(() => {
                 })}
               </Header>
             ))}
+            <Row filter />
             <Body scroll {...getTableBodyProps()}>
               <FlatList
                 data={rows}
                 keyExtractor={(row) => row.id}
-                renderItem={({ item }) => {
+                renderItem={({ item, index }) => {
                   prepareRow(item)
                   return (
-                    <Row {...item.getRowProps()}>
+                    <Row dark={index % 2} {...item.getRowProps()}>
                       {item.cells.map((cell) => {
                         return (
                           <Cell

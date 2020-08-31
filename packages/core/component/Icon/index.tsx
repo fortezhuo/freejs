@@ -1,12 +1,13 @@
 import React, { FC } from "react"
 import FeatherIcon from "react-native-vector-icons/Feather"
-import { TouchableOpacity, View, Text } from "react-native"
+import { TouchableOpacity, View, Text, StyleSheet } from "react-native"
 import { theme } from "../../config/theme"
 import { color } from "@free/tailwind"
 import { observer } from "mobx-react-lite"
 import { IconProps, IconLabelProps, IconButtonProps } from "@free/core"
+import { tw } from "@free/tailwind"
 
-const disabledColor = color("bg-gray-600")
+const disabledColor = color(theme.textDisabled)
 
 export const Icon: FC<IconProps> = observer(
   ({ name, size = 24, color = "white" }) => {
@@ -57,8 +58,14 @@ export const IconButton: FC<IconButtonProps> = observer(
       <TouchableOpacity testID={testID} disabled={disabled} onPress={onPress}>
         <IconLabel
           style={style}
-          styleContainer={styleContainer}
-          styleText={styleText}
+          styleContainer={StyleSheet.flatten([
+            styleContainer,
+            disabled ? styles.disabledContainer : {},
+          ])}
+          styleText={StyleSheet.flatten([
+            styleText,
+            disabled ? styles.disabledText : {},
+          ])}
           name={name}
           size={size}
           color={disabled ? disabledColor : color}
@@ -72,4 +79,9 @@ export const IconButton: FC<IconButtonProps> = observer(
 
 export const IconLink: FC<IconButtonProps> = observer(() => {
   return <IconButton size={20} name="link" color={color(theme.primary)} />
+})
+
+const styles = StyleSheet.create({
+  disabledContainer: tw(theme.bgDisabled),
+  disabledText: tw(theme.textDisabled),
 })

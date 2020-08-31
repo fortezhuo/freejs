@@ -3,45 +3,53 @@ import { IconButton } from "../Icon"
 import { StyleSheet } from "react-native"
 import { observer } from "mobx-react-lite"
 import { theme } from "../../config/theme"
-import { tw } from "@free/tailwind"
+import { tw, border, text, color } from "@free/tailwind"
+import { isRGBLight } from "../../util/color"
+import { ButtonProps } from "@free/core"
 
-export const Button: FC<any> = observer((props) => {
-  const {
+export const Button: FC<ButtonProps> = observer((props) => {
+  let {
+    store,
     testID = "Button",
     type = "default",
-    disabled,
     outline,
     children,
     icon,
     style,
-    ...rest
+    disabled,
+    onPress = undefined,
   } = props
 
-  const color = tw(
+  const bgColor = tw(
     outline
-      ? `border border-solid ${theme[type].replace("bg", "border")}`
+      ? `border border-solid ${
+          isRGBLight(color(theme[type]))
+            ? "border-gray-700"
+            : border(theme[type])
+        }`
       : theme[type]
   )
   const textColor = tw(
-    outline ? theme[type].replace("bg", "text") : "text-white"
+    outline
+      ? text(isRGBLight(color(theme[type])) ? "bg-gray-700" : theme[type])
+      : isRGBLight(color(theme[type]))
+      ? "text-gray-700"
+      : "text-white"
   )
+
+  disabled = disabled || store.isUpdating
 
   return (
     <IconButton
       testID={testID}
       disabled={disabled}
-      styleContainer={StyleSheet.flatten([
-        styles.rootButton,
-        color,
-        style,
-        disabled ? styles.rootDisabled : {},
-      ])}
+      styleContainer={StyleSheet.flatten([styles.rootButton, bgColor, style])}
       styleText={StyleSheet.flatten([styles.textButton, textColor])}
       style={styles.iconButton}
-      name={icon}
+      name={store.isUpdating ? "loader" : icon}
       color={textColor.color}
       size={18}
-      {...rest}
+      onPress={onPress}
     >
       {children}
     </IconButton>
@@ -50,9 +58,9 @@ export const Button: FC<any> = observer((props) => {
 
 const styles: any = StyleSheet.create({
   rootButton: {
-    minWidth: 100,
+    minWidth: 36,
+    height: 36,
     ...tw("p-2 flex-row justify-center rounded"),
   },
-  rootDisabled: tw("bg-gray-400"),
   textButton: tw("mx-2 leading-5"),
 })

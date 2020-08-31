@@ -38,7 +38,7 @@ const PageLogin: FC = observer(() => {
               placeholder="Domain"
               options={store.temp.get("domain") || []}
             />
-            <Button type="primary" onPress={store.login}>
+            <Button store={store} type="primary" onPress={store.login}>
               Login
             </Button>
           </View>

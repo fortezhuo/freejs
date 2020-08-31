@@ -4,6 +4,7 @@ import { StyleSheet, Text, View } from "react-native"
 import { observer } from "mobx-react-lite"
 import { tw, color } from "@free/tailwind"
 import { StateComponent } from "@free/core"
+import { theme } from "../../../config/theme"
 
 const Placeholder: FC<StateComponent> = observer(({ state }) => {
   return <Text style={styles.placeholder}>{state.placeholder}</Text>
@@ -35,12 +36,12 @@ export const Display: FC<StateComponent> = observer(({ state }) => {
       ) : (
         <Placeholder state={state} />
       )}
-      <Clear state={state} />
+      {!state.disabled && <Clear state={state} />}
     </>
   )
 })
 
 const styles = StyleSheet.create({
-  rootSingle: tw("flex-grow"),
-  placeholder: tw("text-gray-600"),
+  rootSingle: tw(`flex-grow ${theme.textInput}`),
+  placeholder: tw(theme.textDisabled),
 })

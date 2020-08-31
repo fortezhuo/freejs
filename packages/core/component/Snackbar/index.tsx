@@ -5,6 +5,7 @@ import { Modal } from "../Modal"
 import { tw } from "@free/tailwind"
 import { observer } from "mobx-react-lite"
 import { useHook } from "./hook"
+import { theme } from "../../config/theme"
 
 export const Snackbar: FC = observer(() => {
   const { hide, error } = useHook()
@@ -24,7 +25,7 @@ export const Snackbar: FC = observer(() => {
 })
 
 const styles = StyleSheet.create({
-  rootSnackbar: tw("absolute w-full p-3 bg-gray-500 bottom-0 mb-6 flex-row"),
-  snackbarError: tw("bg-red-700"),
-  textSnackbar: tw("text-white flex-grow"),
+  rootSnackbar: tw(`absolute w-full p-3 bottom-0 mb-6 flex-row`),
+  snackbarError: tw(theme.error),
+  textSnackbar: tw(`${theme.textSnackbar} flex-grow`),
 })

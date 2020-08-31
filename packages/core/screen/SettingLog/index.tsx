@@ -42,10 +42,10 @@ const SettingLog: FC = observer(() => {
               <FlatList
                 data={rows}
                 keyExtractor={(row) => row.id}
-                renderItem={({ item }) => {
+                renderItem={({ item, index }) => {
                   prepareRow(item)
                   return (
-                    <Row {...item.getRowProps()}>
+                    <Row dark={index % 2} {...item.getRowProps()}>
                       {item.cells.map((cell) => {
                         return (
                           <Cell

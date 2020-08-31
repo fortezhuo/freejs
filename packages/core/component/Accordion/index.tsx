@@ -102,12 +102,12 @@ export const AccordionItem: FC<AccordionItemProps> = observer(
             size={20}
             color={active ? "#fff" : color}
             styleContainer={StyleSheet.flatten([
-              styles.rootItem,
-              active ? styles.rootItemActive : {},
+              styles.rootAccordionItem,
+              active ? styles.rootAccordionItemActive : {},
             ])}
             styleText={StyleSheet.flatten([
-              styles.textItem,
-              active ? styles.textActive : {},
+              styles.textAccordionItem,
+              active ? styles.textAccordionItemActive : {},
             ])}
           >
             {children}
@@ -120,21 +120,17 @@ export const AccordionItem: FC<AccordionItemProps> = observer(
 
 const styles = StyleSheet.create({
   rootAccordion: tw("flex-col shadow-md z-10"),
-  rootItem: tw(
-    `flex-row shadow-md ${adjust(theme.default, -3)} border-b ${border(
-      adjust(theme.default, -2)
-    )} px-4 py-3 items-center`
+  rootAccordionItem: tw(
+    `flex-row shadow-md ${theme.bgAccordionItem} ${theme.borderAccordion} px-4 py-3 items-center`
   ),
-  rootItemActive: tw(`${adjust(theme.primary, -1)}`),
+  rootAccordionItemActive: tw(`${theme.bgAccordionItemActive}`),
   groupAccordion: tw(
-    `flex-row z-10 ${theme.primary} border-b ${border(
-      adjust(theme.primary, -2)
-    )} px-4 py-3 items-center`
+    `flex-row z-10 ${theme.bgAccordion} ${theme.borderAccordion} px-4 py-3 items-center`
   ),
   groupLabel: tw("flex-grow flex-row items-center"),
   groupItem: tw("flex-col flex-shrink z-0"),
-  textAccordion: tw("px-2 text-white"),
-  textItem: tw("px-2 text-gray-600"),
-  textActive: tw(`text-white`),
+  textAccordion: tw(`px-2 ${theme.textAccordion}`),
+  textAccordionItem: tw(`px-2 ${theme.textAccordionItem}`),
+  textAccordionItemActive: tw(`${theme.textAccordionItemActive}`),
   iconChevron: tw("mr-2"),
 })

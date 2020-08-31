@@ -3,6 +3,7 @@ import { Display } from "./Display"
 import { View, TouchableWithoutFeedback, StyleSheet } from "react-native"
 import { tw } from "@free/tailwind"
 import { observer } from "mobx-react-lite"
+import { theme } from "../../../config/theme"
 
 export const Anchor: FC<Anchor> = observer(({ state, menu }) => {
   return (
@@ -20,8 +21,8 @@ export const Anchor: FC<Anchor> = observer(({ state, menu }) => {
 })
 
 const styles = StyleSheet.create({
-  rootAnchor: tw("bg-white border border-gray-300 rounded p-2 w-full flex-row"),
-  inputDisabled: tw("bg-gray-400"),
+  rootAnchor: tw(`${theme.borderInput} ${theme.bgInput} p-2 w-full flex-row`),
+  inputDisabled: tw(theme.bgDisabled),
 })
 
 type Anchor = {

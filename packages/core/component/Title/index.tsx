@@ -3,9 +3,10 @@ import { configApp } from "@free/env"
 import { TouchableOpacity, View, Text, Image, StyleSheet } from "react-native"
 import { tw } from "@free/tailwind"
 import { useStore } from "../Store"
-import logo from "../../img/logo.png"
 import { observer } from "mobx-react-lite"
 import { TitleProps } from "@free/core"
+import { theme } from "../../config/theme"
+import logo from "../../img/logo.png"
 
 const Logo: FC = () => {
   return <Image source={logo} style={styles.imgTitle} />
@@ -33,6 +34,6 @@ const styles = StyleSheet.create({
   rootTitle: tw("flex-row items-center"),
   imgTitle: tw("h-10 w-10 mr-3"),
   groupTitle: tw("flex-col"),
-  textTitle: tw("text-white text-xl"),
-  textSubTitle: tw("text-white text-xs"),
+  textTitle: tw(`${theme.textTitle} text-xl`),
+  textSubTitle: tw(`${theme.textTitle} text-xs`),
 })

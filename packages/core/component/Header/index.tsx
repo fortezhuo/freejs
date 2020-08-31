@@ -30,7 +30,7 @@ export const Header: FC<HeaderProps> = observer(({ testID = "Header" }) => {
 
 const styles = StyleSheet.create({
   rootHeader: tw(
-    `flex-row flex-no-wrap h-16 px-4 items-center ${theme.primary} shadow-md z-10`
+    `flex-row flex-no-wrap h-16 px-4 items-center ${theme.bgHeader} shadow-md z-10`
   ),
   boxGrow: tw("flex-grow"),
   actionLeft: tw("mr-4"),
