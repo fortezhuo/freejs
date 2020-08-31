@@ -6,7 +6,6 @@ import * as config from "./config"
 import dayjs from "dayjs"
 
 const date = (date: any) => dayjs(date).format("DD MMM YYYY")
-
 const datetime = (datetime: any) =>
   dayjs(datetime).format("DD MMM YYYY HH:mm:ss")
 
@@ -17,9 +16,42 @@ export const useHook = () => {
   useEffect(() => {
     view.title = (config as ObjectAny)[name].title
     view.data.clear()
+    getButton(name)
     getColumn(name)
     getCollection(name)
   }, [view?.app?.location])
+
+  const getButton = async (name: string) => {
+    const list: ObjectAny = {
+      new: {
+        icon: "file-plus",
+        type: "primary",
+        children: "New",
+        onPress: () => view.app?.goto(`${name}/new`),
+        visible: view.app?.can("create", name),
+      },
+      delete: {
+        icon: "trash-2",
+        type: "danger",
+        children: "Delete",
+        onPress: () => view.app?.can("delete", name),
+        visible: view.app?.can("delete", name),
+      },
+      filter: {
+        icon: "search",
+        type: "primary",
+        children: "Filter",
+        onPress: () => {},
+        visible: true,
+      },
+    }
+
+    const button = await (config as ObjectAny)[name].button
+      .map((btn: string) => list[btn])
+      .filter((btn: ObjectAny) => !!btn && btn.visible)
+
+    view.data.set("button", button)
+  }
 
   const getCollection = async (name: string) => {
     const res = await get(`/api/${name}`, {})

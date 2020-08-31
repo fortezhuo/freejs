@@ -26,6 +26,6 @@ export const Snackbar: FC = observer(() => {
 
 const styles = StyleSheet.create({
   rootSnackbar: tw(`absolute w-full p-3 bottom-0 mb-6 flex-row`),
-  snackbarError: tw(theme.error),
+  snackbarError: tw(theme.danger),
   textSnackbar: tw(`${theme.textSnackbar} flex-grow`),
 })

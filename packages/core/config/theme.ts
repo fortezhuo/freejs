@@ -5,7 +5,7 @@ let theme: Config = {
   primary: "bg-blue-500",
   warning: "bg-yellow-500",
   default: "bg-gray-300",
-  error: "bg-red-700",
+  danger: "bg-red-700",
   success: "bg-green-500",
   disabled: "bg-gray-400",
 }

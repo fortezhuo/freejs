@@ -8,6 +8,7 @@ import { observer } from "mobx-react-lite"
 import { ActionBar } from "../../component/ActionBar"
 import { Button } from "../../component/Button"
 import { Layout } from "../../component/Layout"
+import { random } from "../../util/random"
 
 const ViewGrid: FC = observer(() => {
   const store = useHook()
@@ -21,42 +22,18 @@ const ViewGrid: FC = observer(() => {
     columns: store.data.get("column") || [],
     data: store.data.get("collection") || [],
   })
+  const button = store.data.get("button") || []
   return (
     <Layout store={store}>
       <View style={styles.rootViewGrid}>
         <View style={styles.boxContent}>
-          <ActionBar>
-            <Button type="primary" store={store}>
-              Test
-            </Button>
-            <Button type="default" store={store}>
-              Test
-            </Button>
-            <Button type="success" store={store}>
-              Test
-            </Button>
-            <Button type="error" store={store}>
-              Test
-            </Button>
-            <Button type="warning" store={store}>
-              Test
-            </Button>
-            <Button outline type="primary" store={store}>
-              Test
-            </Button>
-            <Button outline type="default" store={store}>
-              Test
-            </Button>
-            <Button outline type="success" store={store}>
-              Test
-            </Button>
-            <Button outline type="error" store={store}>
-              Test
-            </Button>
-            <Button outline type="warning" store={store}>
-              Test
-            </Button>
-          </ActionBar>
+          {button.length != 0 && (
+            <ActionBar>
+              {button.map((prop: ObjectAny) => (
+                <Button key={"act_" + random()} store={store} {...prop} />
+              ))}
+            </ActionBar>
+          )}
           <Table scroll style={styles.rootTable} {...getTableProps()}>
             {headerGroups.map((headerGroup) => (
               <Header {...headerGroup.getHeaderGroupProps()}>

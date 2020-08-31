@@ -8,7 +8,7 @@ const server = {
   },
   default: {
     host: "0.0.0.0",
-    port: 8000,
+    port: 80,
     firstTime: "No",
   },
 }
