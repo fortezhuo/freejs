@@ -6,57 +6,56 @@ import { observer } from "mobx-react-lite"
 import { useStore } from "../Store"
 import _flattenDeep from "lodash/flattenDeep"
 
-export const useRoutes = (Screen: any) => {
+const Routes: FC<{ screen: any }> = observer(({ screen }) => {
   const { app } = useStore()
-  const Routes: FC = observer(() => {
-    const routes = getRoute(app.auth && app)
-    const aRoute = _flattenDeep(
-      routes.map((route, i) => {
-        const routeView = route.view
-          ? route.path.map((path: string) => {
-              return (
-                <Route
-                  key={"rv_" + random()}
-                  exact
-                  path={path}
-                  component={Screen.ViewGrid}
-                />
-              )
-            })
-          : []
-        const routeComponent = route.view
-          ? route.path.map((path: string) => {
-              return (
-                <Route
-                  key={"rc_" + random()}
-                  exact
-                  path={`${path}/:id`}
-                  component={Screen[route.component]}
-                />
-              )
-            })
-          : route.path.map((path: string) => {
-              return (
-                <Route
-                  key={"rc_" + random()}
-                  exact
-                  path={path}
-                  component={Screen[route.component]}
-                />
-              )
-            })
-        return [routeComponent, routeView]
-      })
-    )
+  const routes = getRoute(app.auth && app)
+  const aRoute = _flattenDeep(
+    routes.map((route, i) => {
+      const routeView = route.view
+        ? route.path.map((path: string) => {
+            return (
+              <Route
+                key={"rv_" + random()}
+                exact
+                path={path}
+                component={screen.ViewGrid}
+              />
+            )
+          })
+        : []
+      const routeComponent = route.view
+        ? route.path.map((path: string) => {
+            return (
+              <Route
+                key={"rc_" + random()}
+                exact
+                path={`${path}/:id`}
+                component={screen[route.component]}
+              />
+            )
+          })
+        : route.path.map((path: string) => {
+            return (
+              <Route
+                key={"rc_" + random()}
+                exact
+                path={path}
+                component={screen[route.component]}
+              />
+            )
+          })
+      return [routeComponent, routeView]
+    })
+  )
 
-    return (
-      <Switch>
-        <Route exact path="/" component={Screen.PageHome} />
-        <Route exact path="/login" component={Screen.PageLogin} />
-        {aRoute}
-        <Route path="*" component={Screen.PageNotFound} />
-      </Switch>
-    )
-  })
-  return Routes
-}
+  return (
+    <Switch>
+      <Route exact path="/" component={screen.PageHome} />
+      <Route exact path="/login" component={screen.PageLogin} />
+      {aRoute}
+      <Route path="*" component={screen.PageNotFound} />
+    </Switch>
+  )
+})
+
+export default Routes

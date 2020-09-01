@@ -123,6 +123,15 @@ declare module "@free/core" {
     onChange?: VoidFunction
   }
 
+  type InputDateTimeProps = {
+    store: any
+    model?: string
+    name: string
+    onChange?: VoidFunction
+    type?: string
+    disabled?: boolean
+  }
+
   interface InputSelectProps {
     options?: []
     model?: string

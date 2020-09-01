@@ -26,8 +26,6 @@ const ViewGrid: FC = observer(() => {
     data: store.data.get("collection") || [],
   })
 
-  console.log(column)
-
   return (
     <Layout store={store}>
       <View style={styles.rootViewGrid}>

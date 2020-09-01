@@ -5,9 +5,6 @@ import { AppRegistry } from "react-native"
 import { BrowserRouter } from "react-router-dom"
 import App from "./App"
 
-import "./assets/index.css"
-import "./assets/helper.js"
-
 const isDev = FREE_NODE_ENV !== "production"
 
 AppRegistry.registerComponent("Web", () =>

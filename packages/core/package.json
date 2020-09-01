@@ -8,20 +8,23 @@
   },
   "devDependencies": {
     "@types/react": "^16.9.43",
+    "@types/react-flatpickr": "^3.8.1",
     "@types/react-native": "^0.63.2",
     "@types/react-native-vector-icons": "^6.4.5",
     "@types/react-router": "^5.1.8",
     "@types/react-router-dom": "^5.1.5",
-    "@types/react-router-native": "^5.1.0"
+    "@types/react-router-native": "^5.1.0",
+    "@types/react-table": "^7.0.22"
   },
   "dependencies": {
     "@free/env": "1.0.0",
     "@free/tailwind": "1.0.0",
-    "@types/react-table": "^7.0.22",
+    "@react-native-community/datetimepicker": "^3.0.1",
     "axios": "^0.19.2",
     "mobx": "^5.15.4",
     "mobx-react-lite": "^2.0.7",
     "react": "^16.13.1",
+    "react-flatpickr": "^3.10.6",
     "react-native-file-viewer": "^2.1.1",
     "react-native-fs": "^2.16.6",
     "react-native-safe-area-context": "^3.1.1",
