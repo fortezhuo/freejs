@@ -6,6 +6,7 @@ import * as Form from "../../component/Form"
 import * as Input from "../../component/Input"
 import { ActionBar } from "../../component/ActionBar"
 import { Button } from "../../component/Button"
+import { Text } from "react-native"
 
 const SettingUser: FC = observer(() => {
   const user = useHook()
@@ -21,11 +22,17 @@ const SettingUser: FC = observer(() => {
         </Button>
       </ActionBar>
       <Form.Main>
-        <Input.DateTime store={user} name="updated_at"></Input.DateTime>
+        <Form.Row>
+          <Form.Col sm={12} md={2} lg={2} xl={2}>
+            <Text>Label</Text>
+          </Form.Col>
+          <Form.Col sm={12} md={10} lg={10} xl={10}>
+            <Input.DateTime store={user} name="date" />
+          </Form.Col>
+        </Form.Row>
       </Form.Main>
     </Layout>
   )
 })
 
-//
 export default SettingUser

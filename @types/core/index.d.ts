@@ -73,6 +73,17 @@ declare module "@free/core" {
     info?: string
   }
 
+  // FormRow
+  type FormRowProps = {
+    nowrap?: boolean
+    smHidden?: boolean
+    mdHidden?: boolean
+    lgHidden?: boolean
+    xlHidden?: boolean
+    children: ReactNode
+    style?: any
+  }
+
   // Icon
   interface IconProps {
     testID?: string
