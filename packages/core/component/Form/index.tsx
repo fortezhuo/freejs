@@ -4,7 +4,7 @@ import { theme } from "../../config/theme"
 import { tw } from "@free/tailwind"
 import { useHook } from "./hook"
 import { observer } from "mobx-react-lite"
-import { FormRowProps } from "@free/core"
+import { FormRowProps, FormColProps } from "@free/core"
 
 export const Main: FC = ({ children }) => {
   return (
@@ -44,22 +44,7 @@ export const Row: FC<FormRowProps> = observer(
   }
 )
 
-type Col = {
-  sm?: number
-  smHidden?: boolean
-  md?: number
-  mdHidden?: boolean
-  lg?: number
-  lgHidden?: boolean
-  xl?: number
-  xlHidden?: boolean
-  style?: any
-  children?: any
-  input?: boolean
-  error?: boolean
-}
-
-export const Col: FC<Col> = observer(
+export const Col: FC<FormColProps> = observer(
   ({
     sm,
     smHidden,

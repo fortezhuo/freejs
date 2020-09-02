@@ -84,6 +84,22 @@ declare module "@free/core" {
     style?: any
   }
 
+  // FormCol
+  type FormColProps = {
+    sm?: number
+    smHidden?: boolean
+    md?: number
+    mdHidden?: boolean
+    lg?: number
+    lgHidden?: boolean
+    xl?: number
+    xlHidden?: boolean
+    style?: any
+    children?: any
+    input?: boolean
+    error?: boolean
+  }
+
   // Icon
   interface IconProps {
     testID?: string
