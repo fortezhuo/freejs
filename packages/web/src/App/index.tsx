@@ -1,6 +1,7 @@
 import React from "react"
 import loadable from "@loadable/component"
 import BigLoader from "../component/BigLoader"
+import Loader from "../component/Loader"
 import * as screen from "../screen"
 
 const AppLayout = loadable(() => import("../component/AppLayout"), {
@@ -10,7 +11,7 @@ const AppLayout = loadable(() => import("../component/AppLayout"), {
 
 const Routes = loadable(() => import("@free/core/component/Routes"), {
   ssr: true,
-  fallback: <span>Loading ...</span>,
+  fallback: <Loader />,
 })
 
 const App = () => {
