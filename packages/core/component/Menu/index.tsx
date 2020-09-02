@@ -97,7 +97,7 @@ export const useMenu = () => {
             onShow={onShow}
             onRequestClose={hide}
             onBackdropPress={hide}
-            transparent={false}
+            transparent
           >
             <View
               style={StyleSheet.flatten([styles.rootMenu, menuStyle, style])}
