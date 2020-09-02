@@ -13,6 +13,13 @@ Forte React Everywhere for NodeJS
 - Type safe
 - Logging
 
+## Command
+
+- Install : `yarn install`
+- Development + LDAP Server : `yarn dev:ldap`
+- Build : `yarn build`
+- Production + LDAP Server : `yarn start:ldap`
+
 ## Stacks
 
 ### Backend
