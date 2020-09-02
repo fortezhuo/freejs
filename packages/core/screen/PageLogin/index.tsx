@@ -1,5 +1,5 @@
 import React, { FC } from "react"
-import { View, StyleSheet, ScrollView } from "react-native"
+import { View, StyleSheet, ScrollView, Text } from "react-native"
 import { tw } from "@free/tailwind"
 import * as Input from "../../component/Input"
 import { Button } from "../../component/Button"

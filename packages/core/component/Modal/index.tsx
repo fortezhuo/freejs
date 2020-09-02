@@ -16,6 +16,7 @@ export const Modal: FC<ModalProps> = memo(
     return (
       <RNModal
         animationType="none"
+        supportedOrientations={["portrait", "landscape"]}
         transparent={true}
         visible={visible}
         onShow={onShow}
