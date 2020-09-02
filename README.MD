@@ -33,43 +33,43 @@ Forte React Everywhere for NodeJS
 
 ### Backend
 
-[x] Pretty Logging
-[x] LDAP Auth / Login
-[x] LDAP Mock Server
-[x] MongoDB Connect / Services
-[x] Roles
-[] ACL Bind
-[] Safe Delete / Trash Management
-[] Mail Service
-[] Workflow
-[] Mail Template
-[] Attachment
+- [x] Pretty Logging
+- [x] LDAP Auth / Login
+- [x] LDAP Mock Server
+- [x] MongoDB Connect / Services
+- [x] Roles
+- [ ] ACL Bind
+- [ ] Safe Delete / Trash Management
+- [ ] Mail Service
+- [ ] Workflow Engine
+- [ ] Mail Engine
+- [ ] Attachment
 
 ### Frontend
 
-[x] Accordion
-[x] AppLayout, Header, Title, Content, Footer
-[x] Button / Action Bar
-[x] Drawer / Sidebar
-[x] Form Layout, Row, Col Responsive
-[x] Icon
-[x] Input Text
-[] Input Textarea
-[x] Input Select
-[] Input Select Async
-[] Input Select Creatable
-[] Input Select Async Creatable
-[x] Input Checkbox
-[] Input Radio
-[] Input DateTime
-[] Loader
-[x] Menu
-[x] Modal
-[x] Routes
-[] Section
-[x] Snackbar
-[x] Table
-[] Table Sortable
-[] Table Filterable
-[] Table Paging
-[x] Text
+- [x] Accordion
+- [x] AppLayout, Header, Title, Content, Footer
+- [x] Button / Action Bar
+- [x] Drawer / Sidebar
+- [x] Form Layout, Row, Col Responsive
+- [x] Icon
+- [x] Input Text
+- [ ] Input Textarea
+- [x] Input Select
+- [ ] Input Select Async
+- [ ] Input Select Creatable
+- [ ] Input Select Async Creatable
+- [x] Input Checkbox
+- [ ] Input Radio
+- [ ] Input DateTime
+- [ ] Loader
+- [x] Menu
+- [x] Modal
+- [x] Routes
+- [ ] Section
+- [x] Snackbar
+- [x] Table
+- [ ] Table Sortable
+- [ ] Table Filterable
+- [ ] Table Paging
+- [x] Text
