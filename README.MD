@@ -1,6 +1,6 @@
 # FREE JS
 
-Forte React Everywhere for NodeJS
+WIP | Forte React Everywhere for NodeJS
 
 ## Features
 
@@ -19,6 +19,16 @@ Forte React Everywhere for NodeJS
 - Development + LDAP Server : `yarn dev:ldap`
 - Build : `yarn build`
 - Production + LDAP Server : `yarn start:ldap`
+
+## Scaffolding Folder
+
+- core : client component, store management, and screen
+- env : share env variable
+- ldapmock : ldap mocking server
+- logger : custom fastify logger
+- mobile : react native (ios/android) folder
+- server : server instance with session / routes / ssr
+- web : react native web folder
 
 ## Stacks
 
