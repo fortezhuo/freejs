@@ -27,13 +27,13 @@ const SettingUser: FC = observer(() => {
             <Text>Label 1</Text>
           </Form.Col>
           <Form.Col input md={4}>
-            <Input.DateTime store={user} name="date" />
+            <Input.Text store={user} name="date" />
           </Form.Col>
           <Form.Col md={2}>
             <Text>Label 2</Text>
           </Form.Col>
           <Form.Col input md={4}>
-            <Input.DateTime store={user} name="date" />
+            <Input.Text store={user} name="date" />
           </Form.Col>
         </Form.Row>
         <Form.Row>
@@ -41,13 +41,13 @@ const SettingUser: FC = observer(() => {
             <Text>Label 1</Text>
           </Form.Col>
           <Form.Col input md={4}>
-            <Input.DateTime store={user} name="date" />
+            <Input.Text store={user} name="date" />
           </Form.Col>
           <Form.Col md={2}>
             <Text>Label 2</Text>
           </Form.Col>
           <Form.Col input md={4}>
-            <Input.DateTime store={user} name="date" />
+            <Input.Text store={user} name="date" />
           </Form.Col>
         </Form.Row>
         <Form.Row>
@@ -55,13 +55,13 @@ const SettingUser: FC = observer(() => {
             <Text>Label 1</Text>
           </Form.Col>
           <Form.Col input md={4}>
-            <Input.DateTime store={user} name="date" />
+            <Input.Text store={user} name="date" />
           </Form.Col>
           <Form.Col md={2}>
             <Text>Label 2</Text>
           </Form.Col>
           <Form.Col input md={4}>
-            <Input.DateTime store={user} name="date" />
+            <Input.Text store={user} name="date" />
           </Form.Col>
         </Form.Row>
         <Form.Row>
@@ -69,13 +69,13 @@ const SettingUser: FC = observer(() => {
             <Text>Label 1</Text>
           </Form.Col>
           <Form.Col input md={4}>
-            <Input.DateTime store={user} name="date" />
+            <Input.Text store={user} name="date" />
           </Form.Col>
           <Form.Col md={2}>
             <Text>Label 2</Text>
           </Form.Col>
           <Form.Col input md={4}>
-            <Input.DateTime store={user} name="date" />
+            <Input.Text store={user} name="date" />
           </Form.Col>
         </Form.Row>
         <Form.Row>
@@ -83,13 +83,13 @@ const SettingUser: FC = observer(() => {
             <Text>Label 1</Text>
           </Form.Col>
           <Form.Col input md={4}>
-            <Input.DateTime store={user} name="date" />
+            <Input.Text store={user} name="date" />
           </Form.Col>
           <Form.Col md={2}>
             <Text>Label 2</Text>
           </Form.Col>
           <Form.Col input md={4}>
-            <Input.DateTime store={user} name="date" />
+            <Input.Text store={user} name="date" />
           </Form.Col>
         </Form.Row>
         <Form.Row>
@@ -97,13 +97,13 @@ const SettingUser: FC = observer(() => {
             <Text>Label 1</Text>
           </Form.Col>
           <Form.Col input md={4}>
-            <Input.DateTime store={user} name="date" />
+            <Input.Text store={user} name="date" />
           </Form.Col>
           <Form.Col md={2}>
             <Text>Label 2</Text>
           </Form.Col>
           <Form.Col input md={4}>
-            <Input.DateTime store={user} name="date" />
+            <Input.Text store={user} name="date" />
           </Form.Col>
         </Form.Row>
         <Form.Row>
@@ -111,13 +111,13 @@ const SettingUser: FC = observer(() => {
             <Text>Label 1</Text>
           </Form.Col>
           <Form.Col input md={4}>
-            <Input.DateTime store={user} name="date" />
+            <Input.Text store={user} name="date" />
           </Form.Col>
           <Form.Col md={2}>
             <Text>Label 2</Text>
           </Form.Col>
           <Form.Col input md={4}>
-            <Input.DateTime store={user} name="date" />
+            <Input.Text store={user} name="date" />
           </Form.Col>
         </Form.Row>
         <Form.Row>
@@ -125,13 +125,13 @@ const SettingUser: FC = observer(() => {
             <Text>Label 1</Text>
           </Form.Col>
           <Form.Col input md={4}>
-            <Input.DateTime store={user} name="date" />
+            <Input.Text store={user} name="date" />
           </Form.Col>
           <Form.Col md={2}>
             <Text>Label 2</Text>
           </Form.Col>
           <Form.Col input md={4}>
-            <Input.DateTime store={user} name="date" />
+            <Input.Text store={user} name="date" />
           </Form.Col>
         </Form.Row>
         <Form.Row>
@@ -139,13 +139,13 @@ const SettingUser: FC = observer(() => {
             <Text>Label 1</Text>
           </Form.Col>
           <Form.Col input md={4}>
-            <Input.DateTime store={user} name="date" />
+            <Input.Text store={user} name="date" />
           </Form.Col>
           <Form.Col md={2}>
             <Text>Label 2</Text>
           </Form.Col>
           <Form.Col input md={4}>
-            <Input.DateTime store={user} name="date" />
+            <Input.Text store={user} name="date" />
           </Form.Col>
         </Form.Row>
         <Form.Row>
@@ -153,13 +153,13 @@ const SettingUser: FC = observer(() => {
             <Text>Label 1</Text>
           </Form.Col>
           <Form.Col input md={4}>
-            <Input.DateTime store={user} name="date" />
+            <Input.Text store={user} name="date" />
           </Form.Col>
           <Form.Col md={2}>
             <Text>Label 2</Text>
           </Form.Col>
           <Form.Col input md={4}>
-            <Input.DateTime store={user} name="date" />
+            <Input.Text store={user} name="date" />
           </Form.Col>
         </Form.Row>
         <Form.Row>
@@ -167,13 +167,13 @@ const SettingUser: FC = observer(() => {
             <Text>Label 1</Text>
           </Form.Col>
           <Form.Col input md={4}>
-            <Input.DateTime store={user} name="date" />
+            <Input.Text store={user} name="date" />
           </Form.Col>
           <Form.Col md={2}>
             <Text>Label 2</Text>
           </Form.Col>
           <Form.Col input md={4}>
-            <Input.DateTime store={user} name="date" />
+            <Input.Text store={user} name="date" />
           </Form.Col>
         </Form.Row>
         <Form.Row>
@@ -181,13 +181,13 @@ const SettingUser: FC = observer(() => {
             <Text>Label 1</Text>
           </Form.Col>
           <Form.Col input md={4}>
-            <Input.DateTime store={user} name="date" />
+            <Input.Text store={user} name="date" />
           </Form.Col>
           <Form.Col md={2}>
             <Text>Label 2</Text>
           </Form.Col>
           <Form.Col input md={4}>
-            <Input.DateTime store={user} name="date" />
+            <Input.Text store={user} name="date" />
           </Form.Col>
         </Form.Row>
         <Form.Row>
@@ -195,13 +195,13 @@ const SettingUser: FC = observer(() => {
             <Text>Label 1</Text>
           </Form.Col>
           <Form.Col input md={4}>
-            <Input.DateTime store={user} name="date" />
+            <Input.Text store={user} name="date" />
           </Form.Col>
           <Form.Col md={2}>
             <Text>Label 2</Text>
           </Form.Col>
           <Form.Col input md={4}>
-            <Input.DateTime store={user} name="date" />
+            <Input.Text store={user} name="date" />
           </Form.Col>
         </Form.Row>
         <Form.Row>
@@ -209,13 +209,13 @@ const SettingUser: FC = observer(() => {
             <Text>Label 1</Text>
           </Form.Col>
           <Form.Col input md={4}>
-            <Input.DateTime store={user} name="date" />
+            <Input.Text store={user} name="date" />
           </Form.Col>
           <Form.Col md={2}>
             <Text>Label 2</Text>
           </Form.Col>
           <Form.Col input md={4}>
-            <Input.DateTime store={user} name="date" />
+            <Input.Text store={user} name="date" />
           </Form.Col>
         </Form.Row>
         <Form.Row>
@@ -223,13 +223,13 @@ const SettingUser: FC = observer(() => {
             <Text>Label 1</Text>
           </Form.Col>
           <Form.Col input md={4}>
-            <Input.DateTime store={user} name="date" />
+            <Input.Text store={user} name="date" />
           </Form.Col>
           <Form.Col md={2}>
             <Text>Label 2</Text>
           </Form.Col>
           <Form.Col input md={4}>
-            <Input.DateTime store={user} name="date" />
+            <Input.Text store={user} name="date" />
           </Form.Col>
         </Form.Row>
         <Form.Row>
@@ -237,13 +237,13 @@ const SettingUser: FC = observer(() => {
             <Text>Label 1</Text>
           </Form.Col>
           <Form.Col input md={4}>
-            <Input.DateTime store={user} name="date" />
+            <Input.Text store={user} name="date" />
           </Form.Col>
           <Form.Col md={2}>
             <Text>Label 2</Text>
           </Form.Col>
           <Form.Col input md={4}>
-            <Input.DateTime store={user} name="date" />
+            <Input.Text store={user} name="date" />
           </Form.Col>
         </Form.Row>
         <Form.Row>
@@ -251,13 +251,13 @@ const SettingUser: FC = observer(() => {
             <Text>Label 1</Text>
           </Form.Col>
           <Form.Col input md={4}>
-            <Input.DateTime store={user} name="date" />
+            <Input.Text store={user} name="date" />
           </Form.Col>
           <Form.Col md={2}>
             <Text>Label 2</Text>
           </Form.Col>
           <Form.Col input md={4}>
-            <Input.DateTime store={user} name="date" />
+            <Input.Text store={user} name="date" />
           </Form.Col>
         </Form.Row>
         <Form.Row>
@@ -265,13 +265,13 @@ const SettingUser: FC = observer(() => {
             <Text>Label 1</Text>
           </Form.Col>
           <Form.Col input md={4}>
-            <Input.DateTime store={user} name="date" />
+            <Input.Text store={user} name="date" />
           </Form.Col>
           <Form.Col md={2}>
             <Text>Label 2</Text>
           </Form.Col>
           <Form.Col input md={4}>
-            <Input.DateTime store={user} name="date" />
+            <Input.Text store={user} name="date" />
           </Form.Col>
         </Form.Row>
         <Form.Row>
@@ -279,13 +279,13 @@ const SettingUser: FC = observer(() => {
             <Text>Label 1</Text>
           </Form.Col>
           <Form.Col input md={4}>
-            <Input.DateTime store={user} name="date" />
+            <Input.Text store={user} name="date" />
           </Form.Col>
           <Form.Col md={2}>
             <Text>Label 2</Text>
           </Form.Col>
           <Form.Col input md={4}>
-            <Input.DateTime store={user} name="date" />
+            <Input.Text store={user} name="date" />
           </Form.Col>
         </Form.Row>
         <Form.Row>
@@ -293,13 +293,13 @@ const SettingUser: FC = observer(() => {
             <Text>Label 1</Text>
           </Form.Col>
           <Form.Col input md={4}>
-            <Input.DateTime store={user} name="date" />
+            <Input.Text store={user} name="date" />
           </Form.Col>
           <Form.Col md={2}>
             <Text>Label 2</Text>
           </Form.Col>
           <Form.Col input md={4}>
-            <Input.DateTime store={user} name="date" />
+            <Input.Text store={user} name="date" />
           </Form.Col>
         </Form.Row>
       </Form.Main>

@@ -3,8 +3,8 @@ import WebDateTimePicker from "react-flatpickr"
 
 export const DateTimePicker: FC<any> = ({
   value,
-  onChange,
   type = "date",
+  onChange,
   ...rest
 }) => {
   return (

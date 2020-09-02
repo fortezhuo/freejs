@@ -74,7 +74,7 @@ export const useHook = () => {
 
   const getStyle = (col: any) => {
     return col.type == "link" || col.type == "checkbox"
-      ? { width: 30, maxWidth: 30 }
+      ? { width: 36, maxWidth: 36 }
       : col.style
   }
 
