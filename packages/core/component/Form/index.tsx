@@ -44,7 +44,22 @@ export const Row: FC<FormRowProps> = observer(
   }
 )
 
-export const Col: FC<any> = observer(
+type Col = {
+  sm?: number
+  smHidden?: boolean
+  md?: number
+  mdHidden?: boolean
+  lg?: number
+  lgHidden?: boolean
+  xl?: number
+  xlHidden?: boolean
+  style?: any
+  children?: any
+  input?: boolean
+  error?: boolean
+}
+
+export const Col: FC<Col> = observer(
   ({
     sm,
     smHidden,
