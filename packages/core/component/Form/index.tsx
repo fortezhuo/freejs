@@ -59,7 +59,12 @@ export const Col: FC<any> = observer(
   }) => {
     const { isHidden, getWidth } = useHook()
     const isShow = !isHidden({ smHidden, mdHidden, lgHidden, xlHidden })
-    const width = getWidth({ sm, md, lg, xl })
+    const width = getWidth({
+      xl: xl ? xl : lg ? lg : md ? md : sm || 12,
+      lg: lg ? lg : md ? md : sm || 12,
+      md: md ? md : sm || 12,
+      sm: sm || 12,
+    })
     return isShow ? (
       <View
         {...rest}
