@@ -1,5 +1,6 @@
 import React, { FC } from "react"
 import { View, StyleSheet, ScrollView } from "react-native"
+import { theme } from "../../config/theme"
 import { tw } from "@free/tailwind"
 import { useHook } from "./hook"
 import { observer } from "mobx-react-lite"
@@ -55,6 +56,8 @@ export const Col: FC<any> = observer(
     xlHidden,
     style,
     children,
+    input,
+    error,
     ...rest
   }) => {
     const { isHidden, getWidth } = useHook()
@@ -68,7 +71,13 @@ export const Col: FC<any> = observer(
     return isShow ? (
       <View
         {...rest}
-        style={StyleSheet.flatten([style, tw(`flex-col ${width}`)])}
+        style={StyleSheet.flatten([
+          style,
+          input ? styles.colInput : {},
+          error ? styles.colError : {},
+          styles.rootCol,
+          tw(`${width}`),
+        ])}
       >
         {children}
       </View>
@@ -78,5 +87,8 @@ export const Col: FC<any> = observer(
 
 const styles = StyleSheet.create({
   rootMain: tw("flex-1 p-1 mt-1 bg-white-700"),
-  rootRow: tw("flex-row"),
+  rootRow: tw("flex-row bg-gray-300 mb-1"),
+  rootCol: tw("flex-col p-2"),
+  colInput: tw(theme.bgFormInput),
+  colError: tw(theme.bgFormError),
 })

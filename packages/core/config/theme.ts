@@ -24,6 +24,9 @@ theme = {
   bgActionBar: "bg-white-700",
   // Footer
   bgFooter: theme.primary,
+  // Form
+  bgFormInput: "bg-white",
+  bgFormError: "bg-red-200",
   // Header
   bgHeader: theme.primary,
   // Input
