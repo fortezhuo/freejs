@@ -33,10 +33,11 @@ Forte React Everywhere for NodeJS
 
 ### Backend
 
-- [x] Favicon, Session, Router, Compress GZIP
+- [x] Integrate Fastify and Webpack Dev Server
+- [x] Favicon, Session, Compress GZIP
 - [x] Server Side Rendering / SSR
 - [x] Lazy Loading Code Splitting
-- [x] Optimized Webpack Entrypoint (Below 244KB)
+- [x] Optimized Webpack Production (size below 244KB)
 - [x] Pretty Logging
 - [x] LDAP Auth / Login
 - [x] LDAP Mock Server
