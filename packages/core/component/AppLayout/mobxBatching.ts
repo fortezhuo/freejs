@@ -1,1 +1,2 @@
-import "mobx-react-lite/batchingForReactNative"
+// empty file
+console.log("FreeJS React Native")

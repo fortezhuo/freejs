@@ -4,11 +4,11 @@
   "private": "true",
   "description": "FreeJS Stack for NodeJS ",
   "scripts": {
+    "analyze": "yarn workspace @free/web analyze",
     "build": "yarn clean:log && yarn clean:build && yarn build:env && yarn build:web && yarn build:server",
     "build:server": "yarn workspace @free/server build",
     "build:web": "yarn workspace @free/web build",
     "build:env": "yarn workspace @free/env build",
-    "analyze": "yarn workspace @free/web analyze",
     "build:tw": "yarn workspace @free/tailwind build",
     "dev": "run-p dev:ldap dev:web dev:server",
     "dev:android": "run-p dev:server:mobile dev:ldap android",
@@ -24,7 +24,8 @@
     "start:ldap": "run-p dev:ldap start",
     "android": "yarn workspace @free/mobile android",
     "ios": "yarn workspace @free/mobile ios",
-    "test:role": "yarn workspace @free/env test-role"
+    "test:role": "yarn workspace @free/env test-role",
+    "postinstall": "yarn workspace @free/env clear-error"
   },
   "repository": {
     "type": "git",
