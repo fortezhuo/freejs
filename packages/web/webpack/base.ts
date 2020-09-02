@@ -21,7 +21,7 @@ const babelLoaderInclude = [
   resolvePath("../tailwind"),
 ]
 
-const babelLoaderExclude = /node_modules[/\\](?!react-native-vector-icons|react-native-safe-area-view|react-native-flexbox-grid)/
+const babelLoaderExclude = /node_modules[/\\](?!react-native-vector-icons|react-native-safe-area-view)/
 
 export const getWebpackRules = (): webpack.Rule[] => [
   {

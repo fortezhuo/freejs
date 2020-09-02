@@ -6,13 +6,7 @@ import { random } from "../../util/random"
 import { tw, color } from "@free/tailwind"
 import { observer } from "mobx-react-lite"
 import { theme } from "../../config/theme"
-import {
-  TableProps,
-  IconButtonProps,
-  RowProps,
-  CellProps,
-  BodyProps,
-} from "@free/core"
+import { TableProps, IconButtonProps, RowProps, CellProps } from "@free/core"
 
 const primary = color(theme.primary)
 
@@ -56,21 +50,6 @@ export const Filter: FC<RowProps> = observer(({ children, style }) => {
     </Row>
   )
 })
-
-export const Body: FC<BodyProps> = observer(
-  ({ children, style, scroll, testID = "Body" }) => {
-    return (
-      <View
-        testID={testID}
-        style={StyleSheet.flatten([styles.rootBody, style])}
-      >
-        <ScrollView scrollEnabled={scroll} testID="VerticalScroll">
-          {children}
-        </ScrollView>
-      </View>
-    )
-  }
-)
 
 export const Row: FC<RowProps> = observer(
   ({ children, filter, dark, style, testID = "Row" }) => {

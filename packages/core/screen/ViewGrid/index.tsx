@@ -1,7 +1,7 @@
 import React, { FC } from "react"
 import { View, StyleSheet, FlatList } from "react-native"
 import { tw } from "@free/tailwind"
-import { Table, Body, Row, Cell, Header } from "../../component/Table"
+import { Table, Row, Cell, Header } from "../../component/Table"
 import { useHook } from "./hook"
 import { useTable } from "react-table"
 import { observer } from "mobx-react-lite"
@@ -15,13 +15,7 @@ const ViewGrid: FC = observer(() => {
   const column = store.data.get("column") || []
   const button = store.data.get("button") || []
   const isFilter = store.temp.get("isFilter") || false
-  const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    rows,
-    prepareRow,
-  } = useTable({
+  const { getTableProps, headerGroups, rows, prepareRow } = useTable({
     columns: column,
     data: store.data.get("collection") || [],
   })
@@ -58,29 +52,27 @@ const ViewGrid: FC = observer(() => {
               </Header>
             ))}
             {isFilter && <Row filter>{}</Row>}
-            <Body scroll {...getTableBodyProps()}>
-              <FlatList
-                data={rows}
-                keyExtractor={(row) => row.id}
-                renderItem={({ item, index }) => {
-                  prepareRow(item)
-                  return (
-                    <Row dark={index % 2} {...item.getRowProps()}>
-                      {item.cells.map((cell) => {
-                        return (
-                          <Cell
-                            {...cell.getCellProps()}
-                            style={(cell.column as any).style || {}}
-                          >
-                            {cell.render("Cell")}
-                          </Cell>
-                        )
-                      })}
-                    </Row>
-                  )
-                }}
-              />
-            </Body>
+            <FlatList
+              data={rows}
+              keyExtractor={(row) => row.id}
+              renderItem={({ item, index }) => {
+                prepareRow(item)
+                return (
+                  <Row dark={index % 2} {...item.getRowProps()}>
+                    {item.cells.map((cell) => {
+                      return (
+                        <Cell
+                          {...cell.getCellProps()}
+                          style={(cell.column as any).style || {}}
+                        >
+                          {cell.render("Cell")}
+                        </Cell>
+                      )
+                    })}
+                  </Row>
+                )
+              }}
+            />
           </Table>
         </View>
       </View>
