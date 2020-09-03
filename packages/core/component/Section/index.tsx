@@ -17,8 +17,8 @@ export const Section: FC<any> = observer(
     }))
 
     return (
-      <TouchableOpacity onPress={state.toggle}>
-        <View style={styles.rootSection} testID={testID}>
+      <View style={styles.rootSection} testID={testID}>
+        <TouchableOpacity onPress={state.toggle}>
           <View style={styles.groupSection}>
             <Icon
               color={color}
@@ -27,9 +27,9 @@ export const Section: FC<any> = observer(
             />
             <Text style={styles.textSection}>{label}</Text>
           </View>
-          {state.isExpand && <View style={styles.groupItem}>{children}</View>}
-        </View>
-      </TouchableOpacity>
+        </TouchableOpacity>
+        {state.isExpand && <View style={styles.groupItem}>{children}</View>}
+      </View>
     )
   }
 )
