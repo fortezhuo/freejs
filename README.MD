@@ -77,6 +77,7 @@ WIP | Forte React Everywhere for NodeJS
 - [x] Icon
 - [x] Input Text
 - [ ] Input Textarea
+- [ ] Input Password
 - [x] Input Select
 - [ ] Input Select Async
 - [ ] Input Select Creatable
@@ -88,7 +89,7 @@ WIP | Forte React Everywhere for NodeJS
 - [x] Menu
 - [x] Modal
 - [x] Routes
-- [ ] Section
+- [x] Section
 - [x] Snackbar
 - [x] Table
 - [ ] Table Sortable

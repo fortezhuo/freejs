@@ -18,11 +18,14 @@
     "dev:web": "yarn workspace @free/web start",
     "dev:server": "yarn workspace @free/server start",
     "dev:server:mobile": "MOBILE=development yarn workspace @free/server start",
-    "clean:build": "rm -rf ./build",
+    "clean:android": "yarn workspace @free/mobile clean-android",
+    "clean:build": "rimraf ./build",
     "clean:build:win": "del \"build\"",
-    "clean:log": "rm -rf ./log/*.log",
+    "clean:ios": "yarn workspace @free/mobile clean-ios",
+    "clean:log": "rimraf ./log/*.log",
     "clean:log:win": "del \"log\\*.log\"",
-    "clean:repo": "rm -rf ./node_modules ./packages/**/node_modules ./repo/mobile/ios/Podfile.lock ./repo/mobile/ios/Pods  ./yarn.lock",
+    "clean:metro": "yarn workspace @free/mobile clean-metro",
+    "clean:repo": "rimraf ./node_modules ./packages/**/node_modules ./repo/mobile/ios/Podfile.lock ./repo/mobile/ios/Pods  ./yarn.lock",
     "clean:repo:win": "del /node_modules /packages/**/node_modules /repo/mobile/ios/Podfile.lock /repo/mobile/ios/Pods  /yarn.lock",
     "start": "NODE_ENV=production node --trace-warnings ./build | NODE_ENV=production logger",
     "start:win": "SET NODE_ENV=production node --trace-warnings ./build | SET NODE_ENV=production logger",
@@ -31,6 +34,7 @@
     "android": "yarn workspace @free/mobile android",
     "ios": "yarn workspace @free/mobile ios",
     "test:role": "yarn workspace @free/env test-role",
+    "install:pod": "yarn workspace @free/mobile link-ios",
     "postinstall": "yarn workspace @free/env clear-error"
   },
   "repository": {
@@ -72,6 +76,7 @@
     "lodash": "^4.17.20",
     "monk": "^7.3.1",
     "npm-run-all": "^4.1.5",
+    "rimraf": "^3.0.2",
     "role-acl": "^4.5.4",
     "simple-ldap-search": "^2.0.11"
   },

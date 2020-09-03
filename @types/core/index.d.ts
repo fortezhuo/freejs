@@ -206,6 +206,14 @@ declare module "@free/core" {
     children: ReactNode
   }
 
+  // Section
+  interface SectionProps {
+    testID?: string
+    label: string
+    show?: boolean
+    children: ReactNode
+  }
+
   // Sidebar
   interface SidebarProps extends ViewProps {
     testID?: string

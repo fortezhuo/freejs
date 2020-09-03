@@ -4,13 +4,13 @@ import { theme } from "../../config/theme"
 import { Icon } from "../Icon"
 import { tw } from "@free/tailwind"
 import { observer, useLocalStore } from "mobx-react-lite"
-//import { SectionProps, SectionItemProps } from "@free/core"
+import { SectionProps } from "@free/core"
 
 const { color } = tw(theme.textSection)
-export const Section: FC<any> = observer(
-  ({ testID = "Section", label, active = false, children }) => {
+export const Section: FC<SectionProps> = observer(
+  ({ testID = "Section", label, show = true, children }) => {
     const state = useLocalStore(() => ({
-      isExpand: active,
+      isExpand: show,
       toggle() {
         state.isExpand = !state.isExpand
       },
