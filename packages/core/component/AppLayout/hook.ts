@@ -1,15 +1,13 @@
 import { useEffect } from "react"
 import { useStore } from "../Store"
-import {
-  useSafeAreaInsets,
-  useSafeAreaFrame,
-} from "react-native-safe-area-context"
+import { useSafeAreaInsets } from "react-native-safe-area-context"
 import { useHistory } from "react-router"
+import { useWindowDimensions } from "./useWindowDimensions"
 
 export const useHook = () => {
   const history = useHistory()
   const insets = useSafeAreaInsets()
-  const { width, height } = useSafeAreaFrame()
+  const { width, height } = useWindowDimensions()
   const { app } = useStore()
 
   useEffect(() => {

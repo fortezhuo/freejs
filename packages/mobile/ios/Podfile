@@ -6,12 +6,11 @@ platform :ios, '10.0'
 target 'Free' do
   config = use_native_modules!
 
-  #use_react_native!(:path => config["reactNativePath"])
   use_react_native!(:path => "../../../node_modules/react-native")
-
   pod 'RNVectorIcons', :path => '../../../node_modules/react-native-vector-icons'
   pod 'react-native-safe-area-context', :path => '../../../node_modules/react-native-safe-area-context'
   pod 'RNDateTimePicker', :path => '../../../node_modules/@react-native-community/datetimepicker/RNDateTimePicker.podspec'
+
 
   target 'FreeTests' do
     inherit! :complete
@@ -25,14 +24,5 @@ target 'Free' do
   use_flipper!
   post_install do |installer|
     flipper_post_install(installer)
-  end
-end
-
-target 'Free-tvOS' do
-  # Pods for Free-tvOS
-
-  target 'Free-tvOSTests' do
-    inherit! :search_paths
-    # Pods for testing
   end
 end

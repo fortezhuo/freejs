@@ -1,6 +1,7 @@
 import React, { FC, useState } from "react"
 import { observer } from "mobx-react-lite"
 import { Layout } from "../../component/Layout"
+import { Section } from "../../component/Section"
 import { useHook } from "./hook"
 import * as Form from "../../component/Form"
 import * as Input from "../../component/Input"
@@ -22,286 +23,290 @@ const SettingUser: FC = observer(() => {
         </Button>
       </ActionBar>
       <Form.Main>
-        <Form.Row>
-          <Form.Col md={2}>
-            <Text>Label 1</Text>
-          </Form.Col>
-          <Form.Col input md={4}>
-            <Input.DateTime store={user} name="date" />
-          </Form.Col>
-          <Form.Col md={2}>
-            <Text>Label 2</Text>
-          </Form.Col>
-          <Form.Col input md={4}>
-            <Input.Text store={user} name="date" />
-          </Form.Col>
-        </Form.Row>
-        <Form.Row>
-          <Form.Col md={2}>
-            <Text>Label 1</Text>
-          </Form.Col>
-          <Form.Col input md={4}>
-            <Input.Text store={user} name="date" />
-          </Form.Col>
-          <Form.Col md={2}>
-            <Text>Label 2</Text>
-          </Form.Col>
-          <Form.Col input md={4}>
-            <Input.Text store={user} name="date" />
-          </Form.Col>
-        </Form.Row>
-        <Form.Row>
-          <Form.Col md={2}>
-            <Text>Label 1</Text>
-          </Form.Col>
-          <Form.Col input md={4}>
-            <Input.Text store={user} name="date" />
-          </Form.Col>
-          <Form.Col md={2}>
-            <Text>Label 2</Text>
-          </Form.Col>
-          <Form.Col input md={4}>
-            <Input.Text store={user} name="date" />
-          </Form.Col>
-        </Form.Row>
-        <Form.Row>
-          <Form.Col md={2}>
-            <Text>Label 1</Text>
-          </Form.Col>
-          <Form.Col input md={4}>
-            <Input.Text store={user} name="date" />
-          </Form.Col>
-          <Form.Col md={2}>
-            <Text>Label 2</Text>
-          </Form.Col>
-          <Form.Col input md={4}>
-            <Input.Text store={user} name="date" />
-          </Form.Col>
-        </Form.Row>
-        <Form.Row>
-          <Form.Col md={2}>
-            <Text>Label 1</Text>
-          </Form.Col>
-          <Form.Col input md={4}>
-            <Input.Text store={user} name="date" />
-          </Form.Col>
-          <Form.Col md={2}>
-            <Text>Label 2</Text>
-          </Form.Col>
-          <Form.Col input md={4}>
-            <Input.Text store={user} name="date" />
-          </Form.Col>
-        </Form.Row>
-        <Form.Row>
-          <Form.Col md={2}>
-            <Text>Label 1</Text>
-          </Form.Col>
-          <Form.Col input md={4}>
-            <Input.Text store={user} name="date" />
-          </Form.Col>
-          <Form.Col md={2}>
-            <Text>Label 2</Text>
-          </Form.Col>
-          <Form.Col input md={4}>
-            <Input.Text store={user} name="date" />
-          </Form.Col>
-        </Form.Row>
-        <Form.Row>
-          <Form.Col md={2}>
-            <Text>Label 1</Text>
-          </Form.Col>
-          <Form.Col input md={4}>
-            <Input.Text store={user} name="date" />
-          </Form.Col>
-          <Form.Col md={2}>
-            <Text>Label 2</Text>
-          </Form.Col>
-          <Form.Col input md={4}>
-            <Input.Text store={user} name="date" />
-          </Form.Col>
-        </Form.Row>
-        <Form.Row>
-          <Form.Col md={2}>
-            <Text>Label 1</Text>
-          </Form.Col>
-          <Form.Col input md={4}>
-            <Input.Text store={user} name="date" />
-          </Form.Col>
-          <Form.Col md={2}>
-            <Text>Label 2</Text>
-          </Form.Col>
-          <Form.Col input md={4}>
-            <Input.Text store={user} name="date" />
-          </Form.Col>
-        </Form.Row>
-        <Form.Row>
-          <Form.Col md={2}>
-            <Text>Label 1</Text>
-          </Form.Col>
-          <Form.Col input md={4}>
-            <Input.Text store={user} name="date" />
-          </Form.Col>
-          <Form.Col md={2}>
-            <Text>Label 2</Text>
-          </Form.Col>
-          <Form.Col input md={4}>
-            <Input.Text store={user} name="date" />
-          </Form.Col>
-        </Form.Row>
-        <Form.Row>
-          <Form.Col md={2}>
-            <Text>Label 1</Text>
-          </Form.Col>
-          <Form.Col input md={4}>
-            <Input.Text store={user} name="date" />
-          </Form.Col>
-          <Form.Col md={2}>
-            <Text>Label 2</Text>
-          </Form.Col>
-          <Form.Col input md={4}>
-            <Input.Text store={user} name="date" />
-          </Form.Col>
-        </Form.Row>
-        <Form.Row>
-          <Form.Col md={2}>
-            <Text>Label 1</Text>
-          </Form.Col>
-          <Form.Col input md={4}>
-            <Input.Text store={user} name="date" />
-          </Form.Col>
-          <Form.Col md={2}>
-            <Text>Label 2</Text>
-          </Form.Col>
-          <Form.Col input md={4}>
-            <Input.Text store={user} name="date" />
-          </Form.Col>
-        </Form.Row>
-        <Form.Row>
-          <Form.Col md={2}>
-            <Text>Label 1</Text>
-          </Form.Col>
-          <Form.Col input md={4}>
-            <Input.Text store={user} name="date" />
-          </Form.Col>
-          <Form.Col md={2}>
-            <Text>Label 2</Text>
-          </Form.Col>
-          <Form.Col input md={4}>
-            <Input.Text store={user} name="date" />
-          </Form.Col>
-        </Form.Row>
-        <Form.Row>
-          <Form.Col md={2}>
-            <Text>Label 1</Text>
-          </Form.Col>
-          <Form.Col input md={4}>
-            <Input.Text store={user} name="date" />
-          </Form.Col>
-          <Form.Col md={2}>
-            <Text>Label 2</Text>
-          </Form.Col>
-          <Form.Col input md={4}>
-            <Input.Text store={user} name="date" />
-          </Form.Col>
-        </Form.Row>
-        <Form.Row>
-          <Form.Col md={2}>
-            <Text>Label 1</Text>
-          </Form.Col>
-          <Form.Col input md={4}>
-            <Input.Text store={user} name="date" />
-          </Form.Col>
-          <Form.Col md={2}>
-            <Text>Label 2</Text>
-          </Form.Col>
-          <Form.Col input md={4}>
-            <Input.Text store={user} name="date" />
-          </Form.Col>
-        </Form.Row>
-        <Form.Row>
-          <Form.Col md={2}>
-            <Text>Label 1</Text>
-          </Form.Col>
-          <Form.Col input md={4}>
-            <Input.Text store={user} name="date" />
-          </Form.Col>
-          <Form.Col md={2}>
-            <Text>Label 2</Text>
-          </Form.Col>
-          <Form.Col input md={4}>
-            <Input.Text store={user} name="date" />
-          </Form.Col>
-        </Form.Row>
-        <Form.Row>
-          <Form.Col md={2}>
-            <Text>Label 1</Text>
-          </Form.Col>
-          <Form.Col input md={4}>
-            <Input.Text store={user} name="date" />
-          </Form.Col>
-          <Form.Col md={2}>
-            <Text>Label 2</Text>
-          </Form.Col>
-          <Form.Col input md={4}>
-            <Input.Text store={user} name="date" />
-          </Form.Col>
-        </Form.Row>
-        <Form.Row>
-          <Form.Col md={2}>
-            <Text>Label 1</Text>
-          </Form.Col>
-          <Form.Col input md={4}>
-            <Input.Text store={user} name="date" />
-          </Form.Col>
-          <Form.Col md={2}>
-            <Text>Label 2</Text>
-          </Form.Col>
-          <Form.Col input md={4}>
-            <Input.Text store={user} name="date" />
-          </Form.Col>
-        </Form.Row>
-        <Form.Row>
-          <Form.Col md={2}>
-            <Text>Label 1</Text>
-          </Form.Col>
-          <Form.Col input md={4}>
-            <Input.Text store={user} name="date" />
-          </Form.Col>
-          <Form.Col md={2}>
-            <Text>Label 2</Text>
-          </Form.Col>
-          <Form.Col input md={4}>
-            <Input.Text store={user} name="date" />
-          </Form.Col>
-        </Form.Row>
-        <Form.Row>
-          <Form.Col md={2}>
-            <Text>Label 1</Text>
-          </Form.Col>
-          <Form.Col input md={4}>
-            <Input.Text store={user} name="date" />
-          </Form.Col>
-          <Form.Col md={2}>
-            <Text>Label 2</Text>
-          </Form.Col>
-          <Form.Col input md={4}>
-            <Input.Text store={user} name="date" />
-          </Form.Col>
-        </Form.Row>
-        <Form.Row>
-          <Form.Col md={2}>
-            <Text>Label 1</Text>
-          </Form.Col>
-          <Form.Col input md={4}>
-            <Input.Text store={user} name="date" />
-          </Form.Col>
-          <Form.Col md={2}>
-            <Text>Label 2</Text>
-          </Form.Col>
-          <Form.Col input md={4}>
-            <Input.Text store={user} name="date" />
-          </Form.Col>
-        </Form.Row>
+        <Section label="Section 1">
+          <Form.Row>
+            <Form.Col md={2}>
+              <Text>Label 1</Text>
+            </Form.Col>
+            <Form.Col input md={4}>
+              <Input.DateTime store={user} name="date" />
+            </Form.Col>
+            <Form.Col md={2}>
+              <Text>Label 2</Text>
+            </Form.Col>
+            <Form.Col input md={4}>
+              <Input.Text store={user} name="date" />
+            </Form.Col>
+          </Form.Row>
+          <Form.Row>
+            <Form.Col md={2}>
+              <Text>Label 1</Text>
+            </Form.Col>
+            <Form.Col input md={4}>
+              <Input.Text store={user} name="date" />
+            </Form.Col>
+            <Form.Col md={2}>
+              <Text>Label 2</Text>
+            </Form.Col>
+            <Form.Col input md={4}>
+              <Input.Text store={user} name="date" />
+            </Form.Col>
+          </Form.Row>
+          <Form.Row>
+            <Form.Col md={2}>
+              <Text>Label 1</Text>
+            </Form.Col>
+            <Form.Col input md={4}>
+              <Input.Text store={user} name="date" />
+            </Form.Col>
+            <Form.Col md={2}>
+              <Text>Label 2</Text>
+            </Form.Col>
+            <Form.Col input md={4}>
+              <Input.Text store={user} name="date" />
+            </Form.Col>
+          </Form.Row>
+          <Form.Row>
+            <Form.Col md={2}>
+              <Text>Label 1</Text>
+            </Form.Col>
+            <Form.Col input md={4}>
+              <Input.Text store={user} name="date" />
+            </Form.Col>
+            <Form.Col md={2}>
+              <Text>Label 2</Text>
+            </Form.Col>
+            <Form.Col input md={4}>
+              <Input.Text store={user} name="date" />
+            </Form.Col>
+          </Form.Row>
+          <Form.Row>
+            <Form.Col md={2}>
+              <Text>Label 1</Text>
+            </Form.Col>
+            <Form.Col input md={4}>
+              <Input.Text store={user} name="date" />
+            </Form.Col>
+            <Form.Col md={2}>
+              <Text>Label 2</Text>
+            </Form.Col>
+            <Form.Col input md={4}>
+              <Input.Text store={user} name="date" />
+            </Form.Col>
+          </Form.Row>
+          <Form.Row>
+            <Form.Col md={2}>
+              <Text>Label 1</Text>
+            </Form.Col>
+            <Form.Col input md={4}>
+              <Input.Text store={user} name="date" />
+            </Form.Col>
+            <Form.Col md={2}>
+              <Text>Label 2</Text>
+            </Form.Col>
+            <Form.Col input md={4}>
+              <Input.Text store={user} name="date" />
+            </Form.Col>
+          </Form.Row>
+        </Section>
+        <Section label="Section 2">
+          <Form.Row>
+            <Form.Col md={2}>
+              <Text>Label 1</Text>
+            </Form.Col>
+            <Form.Col input md={4}>
+              <Input.Text store={user} name="date" />
+            </Form.Col>
+            <Form.Col md={2}>
+              <Text>Label 2</Text>
+            </Form.Col>
+            <Form.Col input md={4}>
+              <Input.Text store={user} name="date" />
+            </Form.Col>
+          </Form.Row>
+          <Form.Row>
+            <Form.Col md={2}>
+              <Text>Label 1</Text>
+            </Form.Col>
+            <Form.Col input md={4}>
+              <Input.Text store={user} name="date" />
+            </Form.Col>
+            <Form.Col md={2}>
+              <Text>Label 2</Text>
+            </Form.Col>
+            <Form.Col input md={4}>
+              <Input.Text store={user} name="date" />
+            </Form.Col>
+          </Form.Row>
+          <Form.Row>
+            <Form.Col md={2}>
+              <Text>Label 1</Text>
+            </Form.Col>
+            <Form.Col input md={4}>
+              <Input.Text store={user} name="date" />
+            </Form.Col>
+            <Form.Col md={2}>
+              <Text>Label 2</Text>
+            </Form.Col>
+            <Form.Col input md={4}>
+              <Input.Text store={user} name="date" />
+            </Form.Col>
+          </Form.Row>
+          <Form.Row>
+            <Form.Col md={2}>
+              <Text>Label 1</Text>
+            </Form.Col>
+            <Form.Col input md={4}>
+              <Input.Text store={user} name="date" />
+            </Form.Col>
+            <Form.Col md={2}>
+              <Text>Label 2</Text>
+            </Form.Col>
+            <Form.Col input md={4}>
+              <Input.Text store={user} name="date" />
+            </Form.Col>
+          </Form.Row>
+          <Form.Row>
+            <Form.Col md={2}>
+              <Text>Label 1</Text>
+            </Form.Col>
+            <Form.Col input md={4}>
+              <Input.Text store={user} name="date" />
+            </Form.Col>
+            <Form.Col md={2}>
+              <Text>Label 2</Text>
+            </Form.Col>
+            <Form.Col input md={4}>
+              <Input.Text store={user} name="date" />
+            </Form.Col>
+          </Form.Row>
+          <Form.Row>
+            <Form.Col md={2}>
+              <Text>Label 1</Text>
+            </Form.Col>
+            <Form.Col input md={4}>
+              <Input.Text store={user} name="date" />
+            </Form.Col>
+            <Form.Col md={2}>
+              <Text>Label 2</Text>
+            </Form.Col>
+            <Form.Col input md={4}>
+              <Input.Text store={user} name="date" />
+            </Form.Col>
+          </Form.Row>
+          <Form.Row>
+            <Form.Col md={2}>
+              <Text>Label 1</Text>
+            </Form.Col>
+            <Form.Col input md={4}>
+              <Input.Text store={user} name="date" />
+            </Form.Col>
+            <Form.Col md={2}>
+              <Text>Label 2</Text>
+            </Form.Col>
+            <Form.Col input md={4}>
+              <Input.Text store={user} name="date" />
+            </Form.Col>
+          </Form.Row>
+          <Form.Row>
+            <Form.Col md={2}>
+              <Text>Label 1</Text>
+            </Form.Col>
+            <Form.Col input md={4}>
+              <Input.Text store={user} name="date" />
+            </Form.Col>
+            <Form.Col md={2}>
+              <Text>Label 2</Text>
+            </Form.Col>
+            <Form.Col input md={4}>
+              <Input.Text store={user} name="date" />
+            </Form.Col>
+          </Form.Row>
+          <Form.Row>
+            <Form.Col md={2}>
+              <Text>Label 1</Text>
+            </Form.Col>
+            <Form.Col input md={4}>
+              <Input.Text store={user} name="date" />
+            </Form.Col>
+            <Form.Col md={2}>
+              <Text>Label 2</Text>
+            </Form.Col>
+            <Form.Col input md={4}>
+              <Input.Text store={user} name="date" />
+            </Form.Col>
+          </Form.Row>
+          <Form.Row>
+            <Form.Col md={2}>
+              <Text>Label 1</Text>
+            </Form.Col>
+            <Form.Col input md={4}>
+              <Input.Text store={user} name="date" />
+            </Form.Col>
+            <Form.Col md={2}>
+              <Text>Label 2</Text>
+            </Form.Col>
+            <Form.Col input md={4}>
+              <Input.Text store={user} name="date" />
+            </Form.Col>
+          </Form.Row>
+          <Form.Row>
+            <Form.Col md={2}>
+              <Text>Label 1</Text>
+            </Form.Col>
+            <Form.Col input md={4}>
+              <Input.Text store={user} name="date" />
+            </Form.Col>
+            <Form.Col md={2}>
+              <Text>Label 2</Text>
+            </Form.Col>
+            <Form.Col input md={4}>
+              <Input.Text store={user} name="date" />
+            </Form.Col>
+          </Form.Row>
+          <Form.Row>
+            <Form.Col md={2}>
+              <Text>Label 1</Text>
+            </Form.Col>
+            <Form.Col input md={4}>
+              <Input.Text store={user} name="date" />
+            </Form.Col>
+            <Form.Col md={2}>
+              <Text>Label 2</Text>
+            </Form.Col>
+            <Form.Col input md={4}>
+              <Input.Text store={user} name="date" />
+            </Form.Col>
+          </Form.Row>
+          <Form.Row>
+            <Form.Col md={2}>
+              <Text>Label 1</Text>
+            </Form.Col>
+            <Form.Col input md={4}>
+              <Input.Text store={user} name="date" />
+            </Form.Col>
+            <Form.Col md={2}>
+              <Text>Label 2</Text>
+            </Form.Col>
+            <Form.Col input md={4}>
+              <Input.Text store={user} name="date" />
+            </Form.Col>
+          </Form.Row>
+          <Form.Row>
+            <Form.Col md={2}>
+              <Text>Label 1</Text>
+            </Form.Col>
+            <Form.Col input md={4}>
+              <Input.Text store={user} name="date" />
+            </Form.Col>
+            <Form.Col md={2}>
+              <Text>Label 2</Text>
+            </Form.Col>
+            <Form.Col input md={4}>
+              <Input.Text store={user} name="date" />
+            </Form.Col>
+          </Form.Row>
+        </Section>
       </Form.Main>
     </Layout>
   )
