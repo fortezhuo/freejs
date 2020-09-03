@@ -42,6 +42,8 @@ const styles = StyleSheet.create({
     `flex-row z-10 ${theme.bgSection} border-t border-b ${theme.borderSection} p-3 items-center`
   ),
   groupLabel: tw("flex-grow flex-row items-center"),
-  groupItem: tw(`flex-col flex-shrink z-0 p-2 border-b ${theme.borderSection}`),
+  groupItem: tw(
+    `bg-white flex-col flex-shrink z-0 p-2 border-b ${theme.borderSection}`
+  ),
   textSection: tw(`px-2 ${theme.textSection}`),
 })

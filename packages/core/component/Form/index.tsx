@@ -1,5 +1,5 @@
 import React, { FC } from "react"
-import { View, StyleSheet, ScrollView } from "react-native"
+import { View, StyleSheet, ScrollView, Text } from "react-native"
 import { theme } from "../../config/theme"
 import { tw } from "@free/tailwind"
 import { useHook } from "./hook"
@@ -83,9 +83,14 @@ export const Col: FC<FormColProps> = observer(
   }
 )
 
+export const Label: FC = observer(({ children }) => {
+  return <Text style={styles.textLabel}>{children}</Text>
+})
+
 const styles = StyleSheet.create({
   rootMain: tw("flex-1 p-1 mt-1 bg-white-700"),
-  rootRow: tw("flex-row bg-gray-300 mb-1"),
+  rootRow: tw(`${theme.bgFormRow} flex-row mb-1`),
   rootCol: tw("flex-col p-2"),
-  colInput: tw(theme.bgFormInput),
+  colInput: tw(`${theme.borderFormCol} ${theme.bgFormInput}`),
+  textLabel: tw(theme.textFormLabel),
 })

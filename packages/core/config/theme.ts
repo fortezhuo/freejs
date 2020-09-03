@@ -26,6 +26,9 @@ theme = {
   bgFooter: theme.primary,
   // Form
   bgFormInput: "bg-white",
+  bgFormRow: "bg-gray-300",
+  borderFormCol: "border border-gray-300",
+  textFormLabel: "text-gray-700",
   // Header
   bgHeader: theme.primary,
   // Input
