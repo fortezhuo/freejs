@@ -6,6 +6,7 @@
   "scripts": {
     "analyze": "yarn workspace @free/web analyze",
     "build": "yarn clean:log && yarn clean:build && yarn build:env && yarn build:web && yarn build:server",
+    "build:win": "yarn clean:log:win && yarn clean:build:win && yarn build:env && yarn build:web && yarn build:server",
     "build:server": "yarn workspace @free/server build",
     "build:web": "yarn workspace @free/web build",
     "build:env": "yarn workspace @free/env build",
