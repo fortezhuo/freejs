@@ -23,11 +23,10 @@ const PageLogin: FC = observer(() => {
               placeholder="Username"
               autoCapitalize="none"
             />
-            <Input.Text
+            <Input.Password
               store={store}
               data-name="password"
               name="password"
-              secureTextEntry
               placeholder="Password"
               autoCapitalize="none"
             />

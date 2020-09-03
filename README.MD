@@ -77,7 +77,7 @@ WIP | Forte React Everywhere for NodeJS
 - [x] Icon
 - [x] Input Text
 - [ ] Input Textarea
-- [ ] Input Password
+- [x] Input Password
 - [x] Input Select
 - [ ] Input Select Async
 - [ ] Input Select Creatable
