@@ -1,7 +1,7 @@
 import React, { FC } from "react"
 import { DateTimePicker } from "./Raw"
-import { observer } from "mobx-react-lite"
 import { InputDateTimeProps } from "@free/core"
+import { observer } from "mobx-react-lite"
 
 export const InputDateTime: FC<InputDateTimeProps> = observer(
   ({
@@ -25,7 +25,7 @@ export const InputDateTime: FC<InputDateTimeProps> = observer(
       <DateTimePicker
         type={type}
         disabled={disabled}
-        value={value}
+        value={value || new Date()}
         onChange={onChangeDateTime}
       />
     )

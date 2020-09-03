@@ -7,6 +7,8 @@ import { theme } from "../../../config/theme"
 
 const helperProps = (props: InputTextProps) => {
   const { store, model = "data", name, disabled, onChange, ...rest } = props
+  const isEmpty = (store.temp.get("validateEmpty") || []).indexOf(name) >= 0
+
   return {
     name,
     value: store[model].get(name) || "",
@@ -17,6 +19,7 @@ const helperProps = (props: InputTextProps) => {
       }
     },
     disabled: disabled || store.isUpdating,
+    isEmpty,
     ...rest,
   }
 }
@@ -29,6 +32,7 @@ export const InputText: FC<InputTextProps> = observer((_props) => {
       style={StyleSheet.flatten([
         styles.rootInput,
         props.disabled ? styles.inputDisabled : {},
+        props.isEmpty ? styles.inputError : {},
       ])}
       {...props}
     />
@@ -40,4 +44,5 @@ const styles: any = StyleSheet.create({
     `${theme.bgInput} ${theme.borderInput} ${theme.textInput} p-2 w-full`
   ),
   inputDisabled: tw(theme.bgDisabled),
+  inputError: tw(theme.bgError),
 })

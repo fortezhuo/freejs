@@ -57,7 +57,6 @@ export const Col: FC<FormColProps> = observer(
     style,
     children,
     input,
-    error,
     ...rest
   }) => {
     const { isHidden, getWidth } = useHook()
@@ -74,7 +73,6 @@ export const Col: FC<FormColProps> = observer(
         style={StyleSheet.flatten([
           style,
           input ? styles.colInput : {},
-          error ? styles.colError : {},
           styles.rootCol,
           tw(`${width}`),
         ])}
@@ -90,5 +88,4 @@ const styles = StyleSheet.create({
   rootRow: tw("flex-row bg-gray-300 mb-1"),
   rootCol: tw("flex-col p-2"),
   colInput: tw(theme.bgFormInput),
-  colError: tw(theme.bgFormError),
 })

@@ -1,9 +1,15 @@
 import React, { FC, Children } from "react"
-import { View, TouchableOpacity, StyleSheet, ViewProps } from "react-native"
+import {
+  View,
+  TouchableOpacity,
+  StyleSheet,
+  ViewProps,
+  Platform,
+} from "react-native"
 import { theme } from "../../config/theme"
 import { useSpring, animated } from "react-spring/native"
 import { IconLabel, Icon } from "../Icon"
-import { tw, adjust, border } from "@free/tailwind"
+import { tw } from "@free/tailwind"
 import { observer, useLocalStore } from "mobx-react-lite"
 import { useStore } from "../Store"
 import { AccordionProps, AccordionItemProps } from "@free/core"
@@ -20,8 +26,8 @@ export const Accordion: FC<AccordionProps> = observer(
         state.isExpand = !state.isExpand
       },
     }))
-
-    const height = Children.count(children) * 47
+    const itemHeight = Platform.OS == "ios" ? 45 : 47
+    const height = Children.count(children) * itemHeight
     const accordionProps = useSpring({
       config: { duration: 120 },
       from: active ? { opacity: 1, height } : { opacity: 0, height: 0 },

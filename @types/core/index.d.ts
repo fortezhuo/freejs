@@ -97,7 +97,6 @@ declare module "@free/core" {
     style?: any
     children?: any
     input?: boolean
-    error?: boolean
   }
 
   // Icon

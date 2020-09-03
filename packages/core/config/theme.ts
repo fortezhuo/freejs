@@ -26,11 +26,11 @@ theme = {
   bgFooter: theme.primary,
   // Form
   bgFormInput: "bg-white",
-  bgFormError: "bg-red-200",
   // Header
   bgHeader: theme.primary,
   // Input
   bgDisabled: theme.disabled,
+  bgError: "bg-red-200",
   textDisabled: "text-gray-600",
   bgInput: "bg-white",
   borderInput: "border rounded border-gray-300",
