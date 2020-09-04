@@ -18,3 +18,13 @@ declare module "@free/server" {
 }
 
 declare module "simple-ldap-search" {}
+
+declare module "@free/mail" {
+  type mailProp = {
+    from: string
+    to: string | Array<string>
+    subject: string
+    text: string
+    html: string
+  }
+}
