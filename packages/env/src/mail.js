@@ -1,11 +1,23 @@
+const freeEnv = process.env.FREE_ENV || "default"
 const mail = {
-  host: "smtp.hostname.co.id",
-  port: 587,
-  secure: false,
-  auth: {
-    user: "freejs@hostname.co.id.",
-    pass: "password",
+  local: {
+    host: "0.0.0.0",
+    port: 25,
+    secure: false,
+    auth: {
+      user: "admin@0.0.0.0",
+      pass: "password",
+    },
+  },
+  default: {
+    host: "0.0.0.0",
+    port: 8587,
+    secure: false,
+    auth: {
+      user: "admin@localhost",
+      pass: "password",
+    },
   },
 }
 
-module.exports = mail
+module.exports = mail[freeEnv]

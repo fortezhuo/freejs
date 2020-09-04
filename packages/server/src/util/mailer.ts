@@ -4,14 +4,20 @@ import { mailProp } from "@free/mail"
 
 export const mailer = async (mail: mailProp) => {
   try {
+    /*
     if (process.env.NODE_ENV === "development") {
       const testAccount = await nodemailer.createTestAccount()
+      configMail.port = 587
       configMail.host = "smtp.ethereal.email"
       configMail.auth = {
         user: testAccount.user,
         pass: testAccount.pass,
       }
     }
+    */
+
+    console.log(configMail)
+
     const transporter = nodemailer.createTransport(configMail)
 
     mail.from = `${mail.from} <${configMail.auth.user}>`

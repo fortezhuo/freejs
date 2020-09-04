@@ -1,5 +1,5 @@
 {
-  "name": "@free/ldapmock",
+  "name": "@free/mock",
   "version": "1.0.0",
   "private": true,
   "scripts": {
@@ -7,5 +7,9 @@
   },
   "prettier": {
     "semi": false
+  },
+  "dependencies": {
+    "@types/smtp-server": "^3.5.4",
+    "smtp-server": "^3.7.0"
   }
 }

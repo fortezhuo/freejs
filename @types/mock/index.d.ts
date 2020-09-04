@@ -1,4 +1,4 @@
-declare module "@free/ldapmock" {
+declare module "@free/mock" {
   type LDAPData = {
     dn: string
     attributes: {
