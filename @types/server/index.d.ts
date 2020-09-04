@@ -10,17 +10,14 @@ declare module "@free/server" {
   type Reply = FastifyReply
   interface Request extends FastifyRequest {
     database?: any
+    mail?: any
   }
 
   type ValidationSchema = {
     [key: string]: any
   }
-}
 
-declare module "simple-ldap-search" {}
-
-declare module "@free/mail" {
-  type mailProp = {
+  type Mail = {
     from: string
     to: string | Array<string>
     subject: string
@@ -28,3 +25,5 @@ declare module "@free/mail" {
     html: string
   }
 }
+
+declare module "simple-ldap-search" {}

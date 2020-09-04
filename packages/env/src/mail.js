@@ -2,10 +2,11 @@ const freeEnv = process.env.FREE_ENV || "default"
 const mail = {
   local: {
     host: "0.0.0.0",
-    port: 25,
+    port: 8587,
     secure: false,
+    pool: false,
     auth: {
-      user: "admin@0.0.0.0",
+      user: "admin@localhost",
       pass: "password",
     },
   },
@@ -13,6 +14,7 @@ const mail = {
     host: "0.0.0.0",
     port: 8587,
     secure: false,
+    pool: false,
     auth: {
       user: "admin@localhost",
       pass: "password",
