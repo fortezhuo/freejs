@@ -28,8 +28,8 @@ export class DatabaseService extends BaseService {
     this.update = update.bind(this)
   }
 
-  handleRequest = (req: Request) => {
-    this._handleRequest(req)
+  handleRequest = (req: Request, action: string) => {
+    this._handleRequest(req, action, this.name)
 
     const { params, query, body: rawBody, session } = req as {
       [key: string]: any

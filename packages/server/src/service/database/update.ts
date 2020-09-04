@@ -10,7 +10,7 @@ export const update = function (this: DatabaseService) {
     const { validate } = Schema[this.name]
 
     try {
-      const { option, q, body, authname } = this.handleRequest(req)
+      const { option, q, body, authname } = this.handleRequest(req, "update")
       if (!q) throw new Exception(400, "Parameter not found")
       if (!validate(body))
         throw new Exception(400, this.name.toUpperCase(), validate.errors)

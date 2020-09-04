@@ -6,7 +6,10 @@ export const findAll = function (this: DatabaseService) {
     reply.statusCode = 200
     try {
       const collection = req.database[this.dbName].get(this.name)
-      const { q, projection, limit, sort, page, skip } = this.handleRequest(req)
+      const { q, projection, limit, sort, page, skip } = this.handleRequest(
+        req,
+        "read"
+      )
 
       const data = await collection.find(q, {
         projection,

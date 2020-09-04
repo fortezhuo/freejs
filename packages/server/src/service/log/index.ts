@@ -14,7 +14,7 @@ export class LogService extends BaseService {
   }
 
   handleRequest = (req: Request) => {
-    this._handleRequest(req)
+    this._handleRequest(req, "read", "log")
     const { params } = req as {
       [key: string]: any
     }

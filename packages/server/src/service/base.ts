@@ -3,6 +3,7 @@ import { Exception } from "../util/exception"
 
 export class BaseService {
   protected instance: Instance | undefined
+
   constructor() {
     this.instance = undefined
   }
@@ -10,15 +11,23 @@ export class BaseService {
     this.instance = instance
   }
 
-  _handleRequest = (req: Request) => {
+  _handleRequest = (req: Request, action: string, resource: string) => {
     const { session } = req as {
       [key: string]: any
     }
     const authname = session?.auth?.username || "Anonymous"
+    const roles = session?.auth?.roles || []
+    const granted = session?.can(action, resource)
 
     if (authname === "Anonymous") throw new Exception(401, "Anonymous detected")
+    if (!granted)
+      throw new Exception(
+        403,
+        `Insufficient ${roles} access to ${action} this ${resource}`
+      )
   }
-  handleRequest = (req: Request) => this._handleRequest(req)
+  handleRequest = (req: Request, action: string, resource: string) =>
+    this._handleRequest(req, action, resource)
 
   _handleError = (
     req: Request,

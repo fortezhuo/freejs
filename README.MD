@@ -60,7 +60,7 @@ WIP | Forte React Everywhere for NodeJS
 - [x] LDAP Mock Server
 - [x] MongoDB Connect / Services
 - [x] Roles
-- [ ] ACL Bind
+- [x] ACL Bind
 - [ ] Safe Delete / Trash Management
 - [ ] Mail Service
 - [ ] Workflow Engine

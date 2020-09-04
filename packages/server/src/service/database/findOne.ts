@@ -7,7 +7,7 @@ export const findOne = function (this: DatabaseService) {
     try {
       reply.statusCode = 200
       const collection = req.database[this.dbName].get(this.name)
-      const { q, projection } = this.handleRequest(req)
+      const { q, projection } = this.handleRequest(req, "read")
       if (!q) throw new Exception(400, "Parameter not found")
       const data = await collection.findOne(q, {
         projection,

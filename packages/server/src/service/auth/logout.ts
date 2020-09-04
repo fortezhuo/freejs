@@ -6,6 +6,9 @@ export const logout = function (this: BaseService) {
     try {
       reply.statusCode = 200
       req.session.auth = undefined
+      req.session.can = function () {
+        return false
+      }
       reply.send({
         success: true,
       })

@@ -3,6 +3,7 @@ import { configLDAP } from "@free/env"
 import { Exception } from "../../util/exception"
 import { Request, Reply } from "@free/server"
 import { BaseService } from "../base"
+import { acl } from "../../util/acl"
 
 export const login = function (this: BaseService) {
   return async (req: Request, reply: Reply) => {
@@ -10,6 +11,8 @@ export const login = function (this: BaseService) {
       reply.statusCode = 200
       const data = await authenticate(req)
       req.session.auth = data
+      req.session.user = data.username
+      req.session.can = can(data.roles)
       reply.send({
         success: true,
         result: data,
@@ -19,6 +22,13 @@ export const login = function (this: BaseService) {
     }
   }
 }
+
+const can = (roles: any) =>
+  function (action: string, resource: string) {
+    if (!roles) return false
+    const { granted }: any = acl.can(roles).execute(action).sync().on(resource)
+    return granted
+  }
 
 const authenticate = async (req: Request) => {
   let data = null

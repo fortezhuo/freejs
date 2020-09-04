@@ -5,5 +5,5 @@ const acl = new AccessControl(configACL)
 let test: any
 
 console.log("acl", acl)
-test = acl.can("Admin").execute("update").sync().on("setting")
-console.log("admin update log", test.granted)
+test = acl.can("Admin").execute("read").sync().on("log")
+console.log("admin read log", test.granted)
