@@ -21,7 +21,7 @@ const babelLoaderInclude = [
   resolvePath("../tailwind"),
 ]
 
-const babelLoaderExclude = /node_modules[/\\](?!react-native-vector-icons|react-native-safe-area-view)/
+const babelLoaderExclude = /node_modules[/\\](?!react-native-vector-icons|react-native-safe-area-view|react-native-gesture-handler)/
 
 export const getWebpackRules = (): webpack.Rule[] => [
   {
@@ -36,6 +36,7 @@ export const getWebpackRules = (): webpack.Rule[] => [
           ["@babel/preset-env", { modules: false }],
           "@babel/preset-react",
           "@babel/preset-typescript",
+          "@babel/preset-flow",
         ],
         plugins: [
           "react-hot-loader/babel",
@@ -61,6 +62,7 @@ export const getWebpackRules = (): webpack.Rule[] => [
           "@babel/preset-env",
           "@babel/preset-react",
           "@babel/preset-typescript",
+          "@babel/preset-flow",
         ],
         plugins: [
           "@babel/plugin-proposal-class-properties",
@@ -122,6 +124,7 @@ export const getWebpackPlugins = (isWeb: boolean): webpack.Plugin[] =>
       new LoadablePlugin(),
       new MiniCssExtractPlugin(),
       new webpack.DefinePlugin({
+        __DEV__: JSON.stringify(isDev),
         FREE_STAMP: JSON.stringify(stamp),
         FREE_NODE_ENV: JSON.stringify(isDev ? "development" : "production"),
       }),

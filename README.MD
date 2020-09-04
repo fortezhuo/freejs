@@ -71,9 +71,14 @@ WIP | Forte React Everywhere for NodeJS
 
 - [x] Accordion
 - [x] AppLayout, Header, Title, Content, Footer
+- [ ] Authentication (Face ID / Fingerprint)
 - [x] Button / Action Bar
+- [ ] Button / Action Bar for Mobile
+- [ ] Carousel
+- [ ] Charts
 - [x] Drawer / Sidebar
 - [x] Form Layout, Row, Col Responsive
+- [x] Gesture Handler
 - [x] Icon
 - [x] Input Text
 - [ ] Input Textarea
@@ -88,11 +93,14 @@ WIP | Forte React Everywhere for NodeJS
 - [x] Loader
 - [x] Menu
 - [x] Modal
+- [ ] Push Notification (FCM/APN)
 - [x] Routes
 - [x] Section
+- [ ] Section Swipe and Button Navigation for Mobile
 - [x] Snackbar
 - [x] Table
 - [ ] Table Sortable
 - [ ] Table Filterable
 - [ ] Table Paging
+- [ ] Table for Mobile, Swipe for Delete
 - [x] Text
