@@ -10,9 +10,10 @@ export const login = function (this: BaseService) {
     try {
       reply.statusCode = 200
       const data = await authenticate(req)
-      req.session.auth = data
-      req.session.user = data.username
-      req.session.can = can(data.roles)
+      req.session.auth = {
+        ...data,
+        can: can(data?.roles, { readers: data.username }),
+      }
       reply.send({
         success: true,
         result: data,
@@ -23,11 +24,11 @@ export const login = function (this: BaseService) {
   }
 }
 
-const can = (roles: any) =>
+const can = (roles: any, context: any = {}) =>
   function (action: string, resource: string) {
-    if (!roles) return false
-    const { granted }: any = acl.can(roles).execute(action).sync().on(resource)
-    return granted
+    return !roles
+      ? { granted: false }
+      : acl.can(roles).context(context).execute(action).sync().on(resource)
   }
 
 const authenticate = async (req: Request) => {
@@ -84,6 +85,11 @@ const authenticate = async (req: Request) => {
         },
       }
     )
+    if (!fetch)
+      throw new Exception(
+        403,
+        "Unregistered account detected, please contact Administrator"
+      )
     data = fetch
   }
   return data

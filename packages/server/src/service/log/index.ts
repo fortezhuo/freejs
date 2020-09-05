@@ -14,10 +14,10 @@ export class LogService extends BaseService {
   }
 
   handleRequest = (req: Request) => {
-    this._handleRequest(req, "read", "log")
+    const auth = this.handleAuth(req, "read", "log")
     const { params } = req as {
       [key: string]: any
     }
-    return { name: params.name }
+    return { auth, name: params.name }
   }
 }

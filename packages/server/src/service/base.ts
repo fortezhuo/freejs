@@ -11,23 +11,30 @@ export class BaseService {
     this.instance = instance
   }
 
-  _handleRequest = (req: Request, action: string, resource: string) => {
+  handleAuth = (req: Request, action: string, resource: string) => {
     const { session } = req as {
       [key: string]: any
     }
-    const authname = session?.auth?.username || "Anonymous"
+    const username = session?.auth?.username || "Anonymous"
     const roles = session?.auth?.roles || []
-    const granted = session?.can(action, resource)
-
-    if (authname === "Anonymous") throw new Exception(401, "Anonymous detected")
-    if (!granted)
+    const permission = session?.auth?.can(action, resource) || {
+      granted: false,
+    }
+    if (username === "Anonymous") throw new Exception(401, "Anonymous detected")
+    if (!permission.granted)
       throw new Exception(
         403,
         `Insufficient ${roles} access to ${action} this ${resource}`
       )
+    return {
+      username,
+      roles,
+      resource,
+      fields: permission.attributes,
+      context: permission.context,
+    }
   }
-  handleRequest = (req: Request, action: string, resource: string) =>
-    this._handleRequest(req, action, resource)
+  handleRequest: any = this.handleAuth
 
   _handleError = (
     req: Request,

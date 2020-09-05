@@ -29,12 +29,11 @@ export class DatabaseService extends BaseService {
   }
 
   handleRequest = (req: Request, action: string) => {
-    this._handleRequest(req, action, this.name)
+    const auth = this.handleAuth(req, action, this.name)
 
-    const { params, query, body: rawBody, session } = req as {
+    const { params, query, body: rawBody } = req as {
       [key: string]: any
     }
-    const authname = session?.auth?.username || "Anonymous"
 
     const { _id, ...body } = rawBody || { _id: null }
     let projection: { [key: string]: number } = {}
@@ -75,7 +74,7 @@ export class DatabaseService extends BaseService {
       option,
       page,
       skip,
-      authname,
+      auth,
     }
   }
 }
