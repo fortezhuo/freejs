@@ -42,7 +42,9 @@
     "universal",
     "monorepo",
     "framework",
-    "react-native"
+    "react-native",
+    "server-side-rendering",
+    "ssr"
   ],
   "author": "Hedi Kasmanto",
   "license": "MIT",
