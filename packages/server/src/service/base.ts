@@ -20,6 +20,7 @@ export class BaseService {
     const permission = session?.auth?.can(action, resource) || {
       granted: false,
     }
+
     if (username === "Anonymous") throw new Exception(401, "Anonymous detected")
     if (!permission.granted)
       throw new Exception(
@@ -31,7 +32,7 @@ export class BaseService {
       roles,
       resource,
       fields: permission.attributes,
-      context: permission.context,
+      context: permission._.context,
     }
   }
   handleRequest: any = this.handleAuth

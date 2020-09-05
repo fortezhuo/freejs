@@ -6,9 +6,9 @@ let test: any
 
 console.log("acl", acl)
 test = acl
-  .can("Admin")
+  .can("User")
   .context({ readers: "hedi" })
-  .execute("read")
+  .execute(["read", "read:own"])
   .sync()
-  .on("log")
-console.log("admin read log", test)
+  .on("user")
+console.log("User read user", test)

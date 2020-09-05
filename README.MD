@@ -61,6 +61,8 @@ WIP | Forte React Everywhere for NodeJS
 - [x] MongoDB Connect / Services
 - [x] Roles
 - [x] ACL Bind
+- [x] ACL Readers Field LN Style
+- [ ] ACL Authors Field LN Style (Editable)
 - [ ] Safe Delete / Trash Management
 - [ ] Mail Service
 - [ ] Workflow Engine

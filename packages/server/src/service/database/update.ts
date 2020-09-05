@@ -19,7 +19,19 @@ export const update = function (this: DatabaseService) {
       const data = await collection.update(
         q,
         {
-          $set: { ...body, updated_by: auth.username, updated_at: new Date() },
+          $set: {
+            ...body,
+            updated_by: auth.username,
+            updated_at: new Date(),
+            readers:
+              body.readers && (body.readers || []).length != 0
+                ? body.readers
+                : ["*"],
+            authors:
+              body.authors && (body.authors || []).length != 0
+                ? body.authors
+                : ["*"],
+          },
         },
         option
       )

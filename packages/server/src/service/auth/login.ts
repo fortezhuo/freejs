@@ -10,9 +10,10 @@ export const login = function (this: BaseService) {
     try {
       reply.statusCode = 200
       const data = await authenticate(req)
+      const list = (data?.roles || []).concat([data.username, "*"])
       req.session.auth = {
         ...data,
-        can: can(data?.roles, { readers: data.username }),
+        can: can(data?.roles, { list }),
       }
       reply.send({
         success: true,
@@ -24,7 +25,7 @@ export const login = function (this: BaseService) {
   }
 }
 
-const can = (roles: any, context: any = {}) =>
+const can = (roles: any, context: any) =>
   function (action: string, resource: string) {
     return !roles
       ? { granted: false }
@@ -62,6 +63,8 @@ const authenticate = async (req: Request) => {
       updated_by: auth.user.sAMAccountName,
       created_at: new Date(),
       updated_at: new Date(),
+      readers: ["*"],
+      authors: ["Admin"],
     }
     const {
       _id,

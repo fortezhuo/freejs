@@ -21,6 +21,14 @@ export const insert = function (this: DatabaseService) {
         created_by: auth.username,
         updated_at: new Date(),
         updated_by: auth.username,
+        readers:
+          body.readers && (body.readers || []).length != 0
+            ? body.readers
+            : ["*"],
+        authors:
+          body.authors && (body.authors || []).length != 0
+            ? body.authors
+            : ["*"],
       })
       reply.send({
         success: true,
