@@ -10,7 +10,7 @@ export const logout = function (this: BaseService) {
         success: true,
       })
     } catch (err) {
-      this.handleError(req, reply, err)
+      this.onErrorHandler(req, reply, err)
     }
   }
 }

@@ -14,7 +14,7 @@ export const findAll = function (this: DatabaseService) {
         page,
         skip,
         auth,
-      } = this.handleRequest(req, "read")
+      } = this.onRequestHandler(req)
 
       const query = {
         readers: { $exists: true, $in: auth.context.list },
@@ -42,7 +42,7 @@ export const findAll = function (this: DatabaseService) {
         max,
       })
     } catch (err) {
-      this.handleError(req, reply, err)
+      this.onErrorHandler(req, reply, err)
     }
   }
 }

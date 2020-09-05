@@ -20,7 +20,7 @@ export const login = function (this: BaseService) {
         result: data,
       })
     } catch (err) {
-      this.handleError(req, reply, err)
+      this.onErrorHandler(req, reply, err)
     }
   }
 }

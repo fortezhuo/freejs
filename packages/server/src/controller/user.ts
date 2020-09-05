@@ -4,10 +4,10 @@ import { DatabaseService } from "../service/database"
 const user = new DatabaseService("user")
 
 export const userController = async (instance: Instance) => {
-  user.register(instance)
+  user.bindInstance(instance)
   instance.get("/user", user.findAll())
   instance.get("/user/:q", user.findOne())
-  instance.post("/user", user.create())
-  instance.patch("/user/:q", user.update())
+  instance.post("/user", user.save())
+  instance.patch("/user/:q", user.save())
   instance.delete("/user/:q", user.remove())
 }

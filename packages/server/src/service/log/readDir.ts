@@ -11,7 +11,7 @@ export const readDir = function (this: LogService) {
   return async (req: Request, reply: Reply) => {
     try {
       reply.statusCode = 200
-      this.handleRequest(req)
+      this.onRequestHandler(req)
       const files = await fs
         .readdirSync(resolve(appPath, "./log"))
         .filter((name) => name.indexOf(".log") > 0)
@@ -35,7 +35,7 @@ export const readDir = function (this: LogService) {
         result: data,
       })
     } catch (err) {
-      this.handleError(req, reply, err)
+      this.onErrorHandler(req, reply, err)
     }
   }
 }

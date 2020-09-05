@@ -41,6 +41,7 @@ FreeJS is considered unstable. The API could change or be removed in future
 - Fastify
 - LDAP JS
 - MongoDB
+- NodeMailer
 
 ### Frontend
 
@@ -62,12 +63,13 @@ FreeJS is considered unstable. The API could change or be removed in future
 - [x] Pretty Logging
 - [x] LDAP Auth / Login
 - [x] LDAP Mock Server
+- [x] SMTP Mock Server
 - [x] MongoDB Connect / Services
-- [ ] Customize Database Service Hooks (beforeSave,afterSave,etc...)
+- [x] Customize Database Service Hooks
 - [x] Roles
 - [x] ACL Bind
-- [x] ACL Readers Field LN Style
-- [ ] ACL Authors Field LN Style (Editable)
+- [x] ACL Readers Field Lotus Notes Style
+- [ ] ACL Authors Field Lotus Notes Style (Editable)
 - [ ] Safe Delete / Trash Management
 - [ ] Mail Service
 - [ ] Workflow Engine

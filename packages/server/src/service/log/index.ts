@@ -13,8 +13,8 @@ export class LogService extends BaseService {
     this.download = download.bind(this)
   }
 
-  handleRequest = (req: Request) => {
-    const auth = this.handleAuth(req, "read", "log")
+  onRequestHandler = (req: Request) => {
+    const auth = this.onAuthenticate(req, "log")
     const { params } = req as {
       [key: string]: any
     }

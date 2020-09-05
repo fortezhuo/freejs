@@ -1,4 +1,4 @@
-import { Request, Reply, Instance } from "@free/server"
+import { Request, Reply } from "@free/server"
 import { Exception } from "../../util/exception"
 import { DatabaseService } from "."
 
@@ -6,7 +6,7 @@ export const remove = function (this: DatabaseService) {
   return async (req: Request, reply: Reply) => {
     reply.statusCode = 200
     try {
-      const { q, option, auth } = this.handleRequest(req, "delete")
+      const { q, option, auth } = this.onRequestHandler(req)
       if (!q) throw new Exception(400, "Parameter not found")
 
       const query = {
@@ -21,7 +21,7 @@ export const remove = function (this: DatabaseService) {
         result: data,
       })
     } catch (err) {
-      this.handleError(req, reply, err)
+      this.onErrorHandler(req, reply, err)
     }
   }
 }

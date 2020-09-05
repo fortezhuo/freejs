@@ -3,18 +3,24 @@ import { Exception } from "../util/exception"
 
 export class BaseService {
   protected instance: Instance | undefined
-
   constructor() {
     this.instance = undefined
   }
-  register(instance: Instance) {
-    this.instance = instance
-  }
-
-  handleAuth = (req: Request, action: string, resource: string) => {
-    const { session } = req as {
+  protected onAuthenticate = (req: Request, resource: string) => {
+    let { session, method } = req as {
       [key: string]: any
     }
+    method = method.toUpperCase()
+    const action =
+      method === "GET"
+        ? "read"
+        : method === "POST"
+        ? "create"
+        : method === "PATCH"
+        ? "update"
+        : method === "DELETE"
+        ? "delete"
+        : "undefined"
     const username = session?.auth?.username || "Anonymous"
     const roles = session?.auth?.roles || []
     const permission = session?.auth?.can(action, resource) || {
@@ -35,9 +41,8 @@ export class BaseService {
       context: permission._.context,
     }
   }
-  handleRequest: any = this.handleAuth
 
-  _handleError = (
+  protected onError = (
     req: Request,
     reply: Reply,
     err: any,
@@ -67,10 +72,15 @@ export class BaseService {
       stack: reply.statusCode === 500 ? err.stack : undefined,
     })
   }
-  handleError = (
+  bindInstance(instance: Instance) {
+    this.instance = instance
+  }
+  onRequestHandler: any = this.onAuthenticate
+
+  onErrorHandler = (
     req: Request,
     reply: Reply,
     err: any,
     logging: boolean = true
-  ) => this._handleError(req, reply, err, logging)
+  ) => this.onError(req, reply, err, logging)
 }

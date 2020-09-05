@@ -3,9 +3,8 @@ import { BaseService } from "../base"
 import { Request } from "@free/server"
 import { findAll } from "./findAll"
 import { findOne } from "./findOne"
-import { create } from "./create"
 import { remove } from "./remove"
-import { update } from "./update"
+import { save } from "./save"
 
 export class DatabaseService extends BaseService {
   public name: string
@@ -13,9 +12,8 @@ export class DatabaseService extends BaseService {
   public collection: any
   public findAll: any
   public findOne: any
-  public create: any
   public remove: any
-  public update: any
+  public save: any
 
   constructor(name: string, dbName?: string) {
     super()
@@ -23,13 +21,15 @@ export class DatabaseService extends BaseService {
     this.dbName = dbName ? dbName : "app"
     this.findAll = findAll.bind(this)
     this.findOne = findOne.bind(this)
-    this.create = create.bind(this)
     this.remove = remove.bind(this)
-    this.update = update.bind(this)
+    this.save = save.bind(this)
   }
 
-  handleRequest = (req: Request, action: string) => {
-    const auth = this.handleAuth(req, action, this.name)
+  onBeforeSave = (collection: any, handler: any) => {}
+  onAfterSave = (collection: any, handler: any) => {}
+
+  onRequestHandler = (req: Request) => {
+    const auth = this.onAuthenticate(req, this.name)
 
     const { params, query, body: rawBody } = req as {
       [key: string]: any
