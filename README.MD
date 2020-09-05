@@ -62,6 +62,7 @@ FreeJS is considered unstable. The API could change or be removed in future
 - [x] Optimized Webpack Production (size below 244KB)
 - [x] Pretty Logging
 - [x] LDAP Auth / Login
+- [ ] LDAP Name Search
 - [x] LDAP Mock Server
 - [x] SMTP Mock Server
 - [x] MongoDB Connect / Services

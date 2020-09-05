@@ -1,10 +1,11 @@
-import { useStore } from "../Store"
 import { useEffect } from "react"
+import { useTitle } from "./useTitle"
 
 export const useHook = (store: any) => {
-  const { app } = useStore()
+  useTitle(store)
   useEffect(() => {
-    app.setTitle(store.title)
-    app.setForm(store.isForm)
-  }, [store.title])
+    if (store.onEdit) {
+      store.onEdit()
+    }
+  }, [])
 }

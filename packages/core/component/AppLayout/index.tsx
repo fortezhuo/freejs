@@ -1,5 +1,3 @@
-import "./mobxBatching"
-
 import React, { FC } from "react"
 import {
   View,

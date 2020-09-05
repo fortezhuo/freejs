@@ -23,7 +23,7 @@ export const Header: FC<HeaderProps> = observer(({ testID = "Header" }) => {
       )}
       <Title>{app.subTitle}</Title>
       <View style={styles.boxGrow}></View>
-      <MenuUser />
+      {!app.isForm && <MenuUser />}
     </View>
   )
 })

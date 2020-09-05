@@ -8,7 +8,7 @@ console.log("acl", acl)
 test = acl
   .can("User")
   .context({ readers: "hedi" })
-  .execute(["read", "read:own"])
+  .execute("read")
   .sync()
   .on("user")
 console.log("User read user", test)
