@@ -3,7 +3,7 @@ import { BaseService } from "../base"
 import { Request } from "@free/server"
 import { findAll } from "./findAll"
 import { findOne } from "./findOne"
-import { insert } from "./insert"
+import { create } from "./create"
 import { remove } from "./remove"
 import { update } from "./update"
 
@@ -13,7 +13,7 @@ export class DatabaseService extends BaseService {
   public collection: any
   public findAll: any
   public findOne: any
-  public insert: any
+  public create: any
   public remove: any
   public update: any
 
@@ -23,7 +23,7 @@ export class DatabaseService extends BaseService {
     this.dbName = dbName ? dbName : "app"
     this.findAll = findAll.bind(this)
     this.findOne = findOne.bind(this)
-    this.insert = insert.bind(this)
+    this.create = create.bind(this)
     this.remove = remove.bind(this)
     this.update = update.bind(this)
   }
@@ -52,17 +52,17 @@ export class DatabaseService extends BaseService {
 
     const skip = (page - 1) * limit
 
+    ;(fields === "" ? [] : fields.split(","))
+      .concat(auth.fields[0] === "*" ? [] : auth.fields)
+      .forEach((field: string) => {
+        projection[field.replace("-", "")] = field.indexOf("-") >= 0 ? 0 : 1
+      })
+
     if (q) {
       q =
         q.indexOf("{") >= 0 && q.indexOf("}") >= 0
           ? JSON.parse(q)
           : { _id: monkID(q) }
-    }
-
-    if (fields !== "") {
-      fields.split(",").forEach((field: string) => {
-        projection[field] = 1
-      })
     }
 
     return {

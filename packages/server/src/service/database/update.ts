@@ -15,9 +15,14 @@ export const update = function (this: DatabaseService) {
       if (!validate(body))
         throw new Exception(400, this.name.toUpperCase(), validate.errors)
 
+      const query = {
+        authors: { $exists: true, $in: auth.context.list },
+        ...q,
+      }
+
       const collection = req.database[this.dbName].get(this.name)
       const data = await collection.update(
-        q,
+        query,
         {
           $set: {
             ...body,

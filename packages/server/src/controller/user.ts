@@ -7,7 +7,7 @@ export const userController = async (instance: Instance) => {
   user.register(instance)
   instance.get("/user", user.findAll())
   instance.get("/user/:q", user.findOne())
-  instance.post("/user", user.insert())
+  instance.post("/user", user.create())
   instance.patch("/user/:q", user.update())
   instance.delete("/user/:q", user.remove())
 }

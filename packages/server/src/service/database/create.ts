@@ -5,7 +5,7 @@ import { DatabaseService } from "."
 
 const Schema: ValidationSchema = RawSchema
 
-export const insert = function (this: DatabaseService) {
+export const create = function (this: DatabaseService) {
   return async (req: Request, reply: Reply) => {
     reply.statusCode = 201
     const { validate } = Schema[this.name]

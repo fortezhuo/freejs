@@ -59,6 +59,7 @@ WIP | Forte React Everywhere for NodeJS
 - [x] LDAP Auth / Login
 - [x] LDAP Mock Server
 - [x] MongoDB Connect / Services
+- [ ] Customize Database Service Hooks (beforeSave,afterSave,etc...)
 - [x] Roles
 - [x] ACL Bind
 - [x] ACL Readers Field LN Style
