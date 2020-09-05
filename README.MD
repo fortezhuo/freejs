@@ -1,6 +1,10 @@
 # FREE JS
 
-WIP | Forte React Everywhere for NodeJS
+Forte React Everywhere for NodeJS
+
+## Work in Progress | WIP
+
+FreeJS is considered unstable. The API could change or be removed in future
 
 ## Features
 
@@ -16,15 +20,15 @@ WIP | Forte React Everywhere for NodeJS
 ## Command
 
 - Install : `yarn install`
-- Development + LDAP Server : `yarn dev:ldap`
+- Development + Mock LDAP & SMTP Server : `yarn dev`
 - Build : `yarn build`
-- Production + LDAP Server : `yarn start:ldap`
+- Production + Mock LDAP & SMTP Server : `yarn start:mock`
 
 ## Scaffolding Folder
 
 - core : client component, store management, and screen
 - env : share env variable
-- ldapmock : ldap mocking server
+- mock : ldap & smtp mocking server
 - logger : custom fastify logger
 - mobile : react native (ios/android) folder
 - server : server instance with session / routes / ssr
