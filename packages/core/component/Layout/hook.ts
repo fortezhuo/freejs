@@ -4,8 +4,8 @@ import { useTitle } from "./useTitle"
 export const useHook = (store: any) => {
   useTitle(store)
   useEffect(() => {
-    if (store.onEdit) {
-      store.onEdit()
-    }
+    ;(async function () {
+      if (store.onLoad) await store.onLoad()
+    })()
   }, [])
 }

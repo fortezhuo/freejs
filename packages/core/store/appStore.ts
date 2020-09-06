@@ -4,7 +4,7 @@ import { acl } from "../util/acl"
 
 class AppStore {
   routerHistory: any = null
-  title = null
+  title: string | undefined = undefined
 
   // observable
   auth: any = null
@@ -13,7 +13,7 @@ class AppStore {
   fatalError = undefined
   isDrawerOpen = false
   isForm?: boolean = false
-  isUpdating = false
+  isLoading = false
   routerLocation: string | undefined = undefined
   routerParams: any = null
   subTitle?: string | undefined
@@ -26,11 +26,11 @@ class AppStore {
   }
   checkAuth = async () => {
     try {
-      this.isUpdating = true
+      this.isLoading = true
       const res = await req.get("/api/auth")
       this.auth = res.data.result
     } finally {
-      this.isUpdating = false
+      this.isLoading = false
     }
   }
   goto = (path?: string | undefined) => {
@@ -47,28 +47,37 @@ class AppStore {
   set = (name: string, value: any) => {
     ;(this as any)[name] = value
   }
+  setError = (err: any) => {
+    if (err.status && err.status === 500) {
+      this.fatalError = err
+      this.goto("/error")
+    } else {
+      this.error = err
+    }
+  }
   toggleDrawer = () => {
     this.isDrawerOpen = !this.isDrawerOpen
   }
 }
 
 decorate(AppStore, {
-  isUpdating: observable,
-  set: action,
-  can: action,
   auth: observable,
-  checkAuth: action,
-  logout: action,
-  routerLocation: observable,
-  routerParams: observable,
-  goto: action,
-  subTitle: observable,
-  isForm: observable,
-  dimension: observable,
-  isDrawerOpen: observable,
-  toggleDrawer: action,
   error: observable,
   fatalError: observable,
+  isDrawerOpen: observable,
+  isForm: observable,
+  isLoading: observable,
+  dimension: observable,
+  routerLocation: observable,
+  routerParams: observable,
+  subTitle: observable,
+  can: action,
+  checkAuth: action,
+  goto: action,
+  logout: action,
+  set: action,
+  setError: action,
+  toggleDrawer: action,
 })
 
 export { AppStore }

@@ -20,6 +20,11 @@ export const PageNotFound = loadable(
   }
 )
 
+export const PageError = loadable(() => import("@free/core/screen/PageError"), {
+  ssr: true,
+  fallback: <Loader />,
+})
+
 export const SettingLog = loadable(
   () => import("@free/core/screen/SettingLog"),
   {

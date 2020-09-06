@@ -20,7 +20,7 @@ export const findOne = function (this: DatabaseService) {
       })
       reply.send({
         success: true,
-        data,
+        result: data,
       })
     } catch (err) {
       this.onErrorHandler(req, reply, err)

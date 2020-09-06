@@ -3,13 +3,13 @@ import { H4 } from "../../component/Text"
 import { Layout } from "../../component/Layout"
 import { useHook } from "./hook"
 
-const PageHome = () => {
+const PageError = () => {
   const store = useHook()
   return (
     <Layout store={store}>
-      <H4>Home</H4>
+      <H4>Fatal Error</H4>
     </Layout>
   )
 }
 
-export default PageHome
+export default PageError

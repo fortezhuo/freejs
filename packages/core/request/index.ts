@@ -3,7 +3,7 @@ import { platform } from "../config/platform"
 
 const axios = Axios.create({
   baseURL: platform.baseURL,
-  withCredentials: false,
+  withCredentials: true,
 })
 
 axios.interceptors.response.use(
@@ -23,7 +23,6 @@ export const get = async function (url: string, param?: any) {
   return await axios({
     url,
     method: "GET",
-    withCredentials: true,
     params: { ...param },
   })
 }

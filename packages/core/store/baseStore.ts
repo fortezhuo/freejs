@@ -1,12 +1,13 @@
-import { observable, decorate, action } from "mobx"
+import { observable, decorate, action, ObservableMap } from "mobx"
 import { AppStore } from "./appStore"
 
 class BaseStore {
   isForm?: boolean | undefined = false
   title?: string | undefined
   app: AppStore | undefined = undefined
-  data = new Map()
-  temp = new Map()
+  data = new ObservableMap()
+  temp = new ObservableMap()
+  isLoading = false
   isUpdating = false
 
   constructor(app: AppStore) {
@@ -37,6 +38,7 @@ class BaseStore {
 decorate(BaseStore, {
   data: observable,
   temp: observable,
+  isLoading: observable,
   isUpdating: observable,
 })
 

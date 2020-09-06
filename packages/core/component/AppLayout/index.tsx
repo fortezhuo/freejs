@@ -15,7 +15,6 @@ import { Footer } from "../Footer"
 import { Snackbar } from "../Snackbar"
 import { StoreProvider } from "../Store"
 import { useHook } from "./hook"
-import { observer } from "mobx-react-lite"
 import { MainLayoutProps } from "@free/core"
 
 const MainLayout: FC<MainLayoutProps> = ({ wallpaper, children }) => {
@@ -29,7 +28,7 @@ const MainLayout: FC<MainLayoutProps> = ({ wallpaper, children }) => {
   )
 }
 
-export const AppLayout: FC = observer(({ children }) => {
+export const AppLayout: FC = ({ children }) => {
   return (
     <SafeAreaProvider>
       <KeyboardAvoidingView
@@ -53,7 +52,7 @@ export const AppLayout: FC = observer(({ children }) => {
       </KeyboardAvoidingView>
     </SafeAreaProvider>
   )
-})
+}
 
 export default AppLayout
 

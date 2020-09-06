@@ -4,7 +4,7 @@ import { tw, color } from "@free/tailwind"
 import { theme } from "../../config/theme"
 import { LoaderProps } from "@free/core"
 
-const Loader: FC<LoaderProps> = ({ primary }) => {
+export const Loader: FC<LoaderProps> = ({ primary }) => {
   return (
     <View style={styles.rootLoader}>
       <ActivityIndicator
@@ -18,5 +18,3 @@ const Loader: FC<LoaderProps> = ({ primary }) => {
 const styles = StyleSheet.create({
   rootLoader: tw("justify-center items-center flex-1"),
 })
-
-export default Loader

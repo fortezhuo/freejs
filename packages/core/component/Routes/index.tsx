@@ -52,6 +52,7 @@ const Routes: FC<{ screen: any }> = observer(({ screen }) => {
     <Switch>
       <Route exact path="/" component={screen.PageHome} />
       <Route exact path="/login" component={screen.PageLogin} />
+      <Route exact path="/error" component={screen.PageError} />
       {aRoute}
       <Route path="*" component={screen.PageNotFound} />
     </Switch>

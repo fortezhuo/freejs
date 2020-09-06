@@ -23,6 +23,7 @@ class LoginStore extends BaseStore {
       this.app?.set("auth", res.data.result)
       this.app?.goto("/")
     } catch (err) {
+      console.log("auth", err)
       this.app?.set("error", err)
     } finally {
       this.isUpdating = false
