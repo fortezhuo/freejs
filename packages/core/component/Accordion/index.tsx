@@ -73,9 +73,9 @@ export const AccordionItem: FC<AccordionItemProps> = observer(
     onPress = noop,
   }) => {
     const { app } = useStore()
-    const active = pathname === app?.location
+    const active = pathname === app?.routerLocation
     const onClose = () => {
-      if (app.dimension.isMobile) app.setDrawerOpen(false)
+      if (app.dimension.isMobile) app.set("isDrawerOpen", false)
     }
     onPress = pathname ? () => app.goto(pathname) : onPress
 

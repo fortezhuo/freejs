@@ -11,7 +11,7 @@ import { random } from "../../util/random"
 
 const Content: FC = observer(() => {
   const { app } = useStore()
-  const pathname = app.location
+  const pathname = app.routerLocation
   const allowedMenu = getMenu().filter((menu) => menu.visible)
 
   return (

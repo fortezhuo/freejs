@@ -11,12 +11,12 @@ export const useHook = () => {
   const { app } = useStore()
 
   useEffect(() => {
-    app._history = history
+    app.routerHistory = history
     app.goto()
   }, [])
 
   useEffect(() => {
-    app.setDimension({
+    app.set("dimension", {
       isMobile: width < 1200,
       width: width - insets.left - insets.right,
       height: height - insets.top - insets.bottom,

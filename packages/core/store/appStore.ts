@@ -3,9 +3,20 @@ import * as req from "../request"
 import { acl } from "../util/acl"
 
 class AppStore {
-  _history: any = null
+  routerHistory: any = null
+  title = null
+
+  // observable
+  auth: any = null
+  dimension: ObjectAny = {}
+  error = undefined
+  fatalError = undefined
+  isDrawerOpen = false
+  isForm?: boolean = false
   isUpdating = false
-  title = undefined
+  routerLocation: string | undefined = undefined
+  routerParams: any = null
+  subTitle?: string | undefined
 
   can = (action: string, resource: string) => {
     const roles = this?.auth?.roles
@@ -13,8 +24,6 @@ class AppStore {
     const { granted }: any = acl.can(roles).execute(action).sync().on(resource)
     return granted
   }
-
-  auth: any = null
   checkAuth = async () => {
     try {
       this.isUpdating = true
@@ -24,82 +33,42 @@ class AppStore {
       this.isUpdating = false
     }
   }
-  setAuth = (auth: any) => {
-    this.auth = auth
+  goto = (path?: string | undefined) => {
+    if (path) {
+      this?.routerHistory.push(path)
+    }
+    this.routerLocation = this?.routerHistory?.location.pathname
   }
   logout = async () => {
     await req.get("/api/auth/logout")
-    this.setAuth(undefined)
+    this.auth = undefined
     this.goto("/login")
   }
-
-  location: string | undefined = undefined
-  goto = (path?: string | undefined) => {
-    if (path) {
-      this?._history.push(path)
-    }
-    this.location = this?._history?.location.pathname
+  set = (name: string, value: any) => {
+    ;(this as any)[name] = value
   }
-
-  subTitle?: string | undefined
-  setTitle(title?: string) {
-    this.subTitle = title
-  }
-
-  isForm?: boolean = false
-  setForm(isForm: boolean) {
-    this.isForm = isForm
-  }
-
-  dimension: ObjectAny = {}
-  setDimension = (dimension: ObjectAny) => {
-    this.dimension = dimension
-  }
-
-  isDrawerOpen = false
   toggleDrawer = () => {
     this.isDrawerOpen = !this.isDrawerOpen
-  }
-  setDrawerOpen = (isOpen: boolean) => {
-    this.isDrawerOpen = isOpen
-  }
-  error = undefined
-  setError = (error: any) => {
-    const message = error
-      ? error.data
-        ? error.data.message
-        : error.message
-      : undefined
-    this.error = message
-  }
-  fatalError = undefined
-  setFatalError = (error: any) => {
-    this.fatalError = error
   }
 }
 
 decorate(AppStore, {
   isUpdating: observable,
+  set: action,
   can: action,
   auth: observable,
   checkAuth: action,
-  setAuth: action,
   logout: action,
-  location: observable,
+  routerLocation: observable,
+  routerParams: observable,
   goto: action,
   subTitle: observable,
-  setTitle: action,
   isForm: observable,
-  setForm: action,
   dimension: observable,
-  setDimension: action,
   isDrawerOpen: observable,
   toggleDrawer: action,
-  setDrawerOpen: action,
   error: observable,
-  setError: action,
   fatalError: observable,
-  setFatalError: action,
 })
 
 export { AppStore }

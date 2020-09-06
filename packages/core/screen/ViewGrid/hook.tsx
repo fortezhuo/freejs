@@ -11,7 +11,7 @@ const datetime = (datetime: any) =>
 
 export const useHook = () => {
   const { view } = useStore()
-  const name = `${view?.app?.location}/`.split("/")[1]
+  const name = `${view?.app?.routerLocation}/`.split("/")[1]
 
   useEffect(() => {
     view.title = (config as ObjectAny)[name].title
@@ -19,7 +19,7 @@ export const useHook = () => {
     getButton(name)
     getColumn(name)
     getCollection(name)
-  }, [view?.app?.location])
+  }, [view?.app?.routerLocation])
 
   const getButton = async (name: string) => {
     const list: ObjectAny = {

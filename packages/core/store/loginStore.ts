@@ -20,10 +20,10 @@ class LoginStore extends BaseStore {
       }
 
       const res = await req.post("/api/auth", { username, password, domain })
-      this.app?.setAuth(res.data.result)
+      this.app?.set("auth", res.data.result)
       this.app?.goto("/")
     } catch (err) {
-      this.app?.setError(err)
+      this.app?.set("error", err)
     } finally {
       this.isUpdating = false
     }
