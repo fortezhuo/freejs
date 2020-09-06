@@ -4,9 +4,7 @@ import * as req from "../request"
 
 class DocumentStore extends BaseStore {
   isForm = true
-  get name() {
-    return this.constructor.name.toLowerCase().replace(/store/g, "")
-  }
+  name: string | undefined
   get id() {
     return this.app?.routerParams.id
   }
