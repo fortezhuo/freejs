@@ -16,22 +16,22 @@ theme = {
   bgAccordion: "bg-white-800",
   bgAccordionItem: "bg-gray-200",
   bgAccordionItemActive: adjust(theme.primary, -4),
-  borderAccordion: `border-b ${border(adjust(theme.primary, -3))}`,
+  borderAccordion: `border-b border-gray-300`,
   textAccordion: text(theme.primary),
-  textAccordionItem: "text-gray-600",
-  textAccordionItemActive: "text-gray-600",
+  textAccordionItem: "text-gray-700",
+  textAccordionItemActive: "text-gray-700",
   // Action Bar
   bgActionBar: "bg-white-700",
   // Footer
-  bgFooter: "bg-white-800",
-  textFooter: text(theme.primary),
+  bgFooter: "bg-black-500",
+  textFooter: "text-white",
   // Form
   bgFormInput: "bg-white",
   bgFormRow: "bg-gray-300",
   borderFormCol: "border border-gray-300",
   textFormLabel: "text-gray-700",
   // Header
-  bgHeader: "bg-white-900",
+  bgHeader: theme.primary,
   // Input
   bgDisabled: theme.disabled,
   bgError: "bg-red-200",
@@ -51,12 +51,12 @@ theme = {
   textSnackbar: "text-white",
   // Table
   bgTable: "bg-white-800",
-  bgRowDark: "bg-gray-300",
+  bgRowDark: adjust(theme.primary, -4),
   bgRowFilter: "bg-red-200",
   borderTable: "border-gray-400 border-solid",
   textCell: "text-gray-900",
   // Title
-  textTitle: text(theme.primary),
+  textTitle: "text-white",
 }
 
 export { theme }

@@ -4,7 +4,7 @@ import { IconButton } from "../Icon"
 import { useMenu } from "../Menu"
 import { useStore } from "../Store"
 import { theme } from "../../config/theme"
-import { tw, color, border } from "@free/tailwind"
+import { tw, color, adjust } from "@free/tailwind"
 import { observer } from "mobx-react-lite"
 
 export const MenuUser: FC = observer(() => {
@@ -17,7 +17,7 @@ export const MenuUser: FC = observer(() => {
           <IconButton
             style={styles.iconMenuUser}
             name={"user"}
-            size={26}
+            size={24}
             onPress={show}
           />
         }
@@ -38,11 +38,9 @@ export const MenuUser: FC = observer(() => {
 
 const styles = StyleSheet.create({
   rootMenuUser: tw("bg-white shadow-md rounded"),
-  iconMenuUser: tw(
-    `rounded-full border-2 border-solid ${border(theme.primary)}`
-  ),
-  boxAuth: tw("bg-gray-400 p-2 items-center"),
-  textAuth: tw("text-gray-600 font-bold text-xs"),
+  iconMenuUser: tw(`rounded-full border-2 border-solid border-white p-1`),
+  boxAuth: tw(`${adjust(theme.primary, -1)} p-2 items-center`),
+  textAuth: tw("text-gray-100 font-bold text-xs"),
   triangle: {
     alignSelf: "flex-end",
     marginRight: 20,
@@ -56,6 +54,6 @@ const styles = StyleSheet.create({
     borderBottomWidth: 10,
     borderLeftColor: "transparent",
     borderRightColor: "transparent",
-    borderBottomColor: color("bg-gray-400"),
+    borderBottomColor: color(adjust(theme.primary, -1)),
   },
 })

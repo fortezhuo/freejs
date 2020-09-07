@@ -172,7 +172,6 @@ declare module "@free/core" {
   // Layout
   interface LayoutProps extends ViewProps {
     testID?: string
-    form?: boolean
     store?: any
   }
 

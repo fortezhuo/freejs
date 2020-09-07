@@ -13,49 +13,47 @@ const PageLogin: FC = observer(() => {
   return (
     <Layout store={store}>
       <View style={styles.rootLogin}>
-        <ScrollView>
-          <View style={styles.boxLogin}>
-            <IconLabel style={styles.iconLogo} name={"user"} size={60} />
-            <Input.Text
-              data-name="username"
-              store={store}
-              name="username"
-              placeholder="Username"
-              autoCapitalize="none"
-            />
-            <Input.Password
-              store={store}
-              data-name="password"
-              name="password"
-              placeholder="Password"
-              autoCapitalize="none"
-            />
-            <Input.Select
-              store={store}
-              data-name="domain"
-              name="domain"
-              placeholder="Domain"
-              options={store.temp.get("domain") || []}
-            />
-            <Button store={store} type="primary" onPress={store.login}>
-              Login
-            </Button>
-          </View>
-        </ScrollView>
+        <View style={styles.boxLogin}>
+          <IconLabel style={styles.iconLogo} name={"user"} size={60} />
+          <Input.Text
+            data-name="username"
+            store={store}
+            name="username"
+            placeholder="Username"
+            autoCapitalize="none"
+          />
+          <Input.Password
+            store={store}
+            data-name="password"
+            name="password"
+            placeholder="Password"
+            autoCapitalize="none"
+          />
+          <Input.Select
+            store={store}
+            data-name="domain"
+            name="domain"
+            placeholder="Domain"
+            options={store.temp.get("domain") || []}
+          />
+          <Button store={store} type="primary" onPress={store.login}>
+            Login
+          </Button>
+        </View>
       </View>
     </Layout>
   )
 })
 
 const styles = StyleSheet.create({
-  rootLogin: tw("flex-1 flex-col"),
-  boxLogin: tw(
-    "bg-white p-4 mt-16 self-center justify-between shadow-xl rounded",
-    {
+  rootLogin: tw("flex-1 flex-col items-center justify-center"),
+  boxLogin: {
+    marginTop: -80,
+    ...tw("bg-white p-4 justify-between shadow-xl rounded", {
       width: 300,
       height: 300,
-    }
-  ),
+    }),
+  },
   iconLogo: tw(
     "self-center rounded-full p-2 border-2 border-solid border-white bg-blue-500"
   ),

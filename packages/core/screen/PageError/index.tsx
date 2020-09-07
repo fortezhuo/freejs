@@ -9,7 +9,7 @@ const PageError = () => {
   const store = useHook()
   const fatalError = (store?.fatalError as any)?.data
   return (
-    <Layout store={store} form>
+    <Layout store={store}>
       <H3>Fatal Error</H3>
       <View style={styles.rootStack}>
         <H5>{fatalError.message}</H5>

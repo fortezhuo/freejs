@@ -37,7 +37,7 @@ export const AppLayout: FC = ({ children }) => {
       >
         <StoreProvider>
           <SafeAreaView style={styles.rootApp}>
-            <MainLayout>
+            <MainLayout wallpaper>
               <Header />
               <Drawer>
                 {children}

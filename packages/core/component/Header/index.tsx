@@ -13,18 +13,20 @@ export const Header: FC<HeaderProps> = observer(({ testID = "Header" }) => {
   const { app } = useStore()
 
   return (
-    <View style={styles.rootHeader} testID={testID}>
-      {!app.isForm && app.auth && (
-        <IconButton
-          name={app.dimension.isMobile && "menu"}
-          style={styles.actionLeft}
-          onPress={app.dimension.isMobile && app.toggleDrawer}
-        />
-      )}
-      <Title>{app.subTitle}</Title>
-      <View style={styles.boxGrow}></View>
-      {!app.isForm && <MenuUser />}
-    </View>
+    app.auth && (
+      <View style={styles.rootHeader} testID={testID}>
+        {!app.isForm && (
+          <IconButton
+            name={app.dimension.isMobile && "menu"}
+            style={styles.actionLeft}
+            onPress={app.dimension.isMobile && app.toggleDrawer}
+          />
+        )}
+        <Title>{app.subTitle}</Title>
+        <View style={styles.boxGrow}></View>
+        {!app.isForm && <MenuUser />}
+      </View>
+    )
   )
 })
 

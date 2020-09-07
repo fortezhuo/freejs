@@ -12,7 +12,7 @@ const SettingUser: FC = observer(() => {
   const user = useHook()
 
   return (
-    <Layout form store={user}>
+    <Layout store={user}>
       <ActionBar>
         <Button store={user} type="primary" style={{ marginRight: 4 }}>
           Save

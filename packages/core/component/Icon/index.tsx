@@ -8,7 +8,7 @@ import { IconProps, IconLabelProps, IconButtonProps } from "@free/core"
 import { tw } from "@free/tailwind"
 
 const disabledColor = color(theme.textDisabled)
-const iconColor = color(theme.primary)
+const iconColor = "white"
 
 export const Icon: FC<IconProps> = observer(
   ({ name, size = 24, color = iconColor }) => {

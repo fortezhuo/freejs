@@ -15,7 +15,7 @@ import { useStore } from "../Store"
 import { AccordionProps, AccordionItemProps } from "@free/core"
 
 const AnimatedView = animated<React.ElementType<ViewProps>>(View)
-const { color: textColor } = tw("text-gray-600")
+const { color: textColor } = tw(theme.textAccordionItem)
 const { color: iconColor } = tw(theme.textAccordion)
 const noop = () => {}
 

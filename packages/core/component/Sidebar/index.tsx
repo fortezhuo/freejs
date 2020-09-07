@@ -73,6 +73,6 @@ export const Sidebar: FC<SidebarProps> = observer(
 )
 
 const styles = StyleSheet.create({
-  rootSidebar: tw(`shadow-2xl flex-col`),
-  rootContent: tw("flex-no-wrap w-64"),
+  rootSidebar: tw(`shadow-md flex-col bg-white-200`),
+  rootContent: tw("flex-no-wrap w-64 p-1 bg-white"),
 })

@@ -64,7 +64,7 @@ const SettingLog: FC = observer(() => {
 })
 
 const styles = StyleSheet.create({
-  rootLog: tw("flex-1 flex-col m-2 shadow-lg bg-white-300"),
+  rootLog: tw("flex-1 flex-col"),
   rootTable: tw("flex-1"),
   boxContent: tw("flex-no-wrap flex-1"),
 })
