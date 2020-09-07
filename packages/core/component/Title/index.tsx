@@ -17,7 +17,7 @@ export const Title: FC<TitleProps> = observer(
     const disabled = false
     const { app } = useStore()
     return (
-      <TouchableOpacity disabled={disabled} onPress={() => app.goto("/user")}>
+      <TouchableOpacity disabled={disabled} onPress={() => app.goto("/")}>
         <View style={styles.rootTitle} testID={testID}>
           <Logo />
           <View style={styles.groupTitle}>

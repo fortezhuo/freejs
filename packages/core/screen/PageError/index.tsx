@@ -35,6 +35,7 @@ const PageError = observer(() => {
             store={store}
             onPress={() => {
               store.set("fatalError", undefined)
+              store.goto("/")
             }}
           >
             Back to Home
