@@ -110,7 +110,7 @@ declare module "@free/core" {
   interface IconLabelProps extends IconProps {
     name?: string | undefined
     style?: ViewStyle
-    styleContainer?: ViewStyle
+    styleContainer?: any
     styleText?: TextStyle
     children?: string
   }
@@ -172,6 +172,7 @@ declare module "@free/core" {
   // Layout
   interface LayoutProps extends ViewProps {
     testID?: string
+    filter?: boolean
     store?: any
   }
 

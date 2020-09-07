@@ -27,7 +27,7 @@ export const Accordion: FC<AccordionProps> = observer(
         state.isExpand = !state.isExpand
       },
     }))
-    const itemHeight = Platform.OS == "ios" ? 45 : 47
+    const itemHeight = 46
     const height = Children.count(children) * itemHeight
     const accordionProps = useSpring({
       config: { duration: 120 },

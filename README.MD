@@ -11,6 +11,7 @@ FreeJS is considered unstable. The API could change or be removed in future
 - Server and Client Monorepo
 - Server Side Rendering (SSR)
 - Universal Rendering
+- Universal Access Control List (ACL)
 - Lazy Loading & Code Splitting
 - Webpack Dev Server + Hot Reload
 - LDAP Auth / Mock Server
@@ -68,7 +69,7 @@ FreeJS is considered unstable. The API could change or be removed in future
 - [x] MongoDB Connect / Services
 - [x] Customize Database Service Hooks
 - [x] Roles
-- [x] ACL Bind
+- [x] ACL Integration with MongoDB service
 - [x] ACL Readers Field Lotus Notes Style
 - [ ] ACL Authors Field Lotus Notes Style (Editable)
 - [ ] Safe Delete / Trash Management
@@ -105,6 +106,11 @@ FreeJS is considered unstable. The API could change or be removed in future
 - [x] Modal
 - [ ] Push Notification (FCM/APN)
 - [x] Routes
+- [ ] Screen Home
+- [x] Screen Login
+- [x] Screen View
+- [ ] Screen Error 404
+- [x] Screen Error 500
 - [x] Section
 - [ ] Section Swipe and Button Navigation for Mobile
 - [x] Snackbar

@@ -11,7 +11,7 @@ import { useHook } from "./hook"
 const PageLogin: FC = observer(() => {
   const store = useHook()
   return (
-    <Layout store={store}>
+    <Layout store={store} filter={false}>
       <View style={styles.rootLogin}>
         <View style={styles.boxLogin}>
           <IconLabel style={styles.iconLogo} name={"user"} size={60} />

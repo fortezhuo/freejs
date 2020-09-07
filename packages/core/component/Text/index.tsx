@@ -49,9 +49,9 @@ export const H5: FC<TextProps> = ({ children, style }) => {
 
 const styles = StyleSheet.create({
   text: tw("text-gray-900"),
-  h1: tw("text-4xl"),
-  h2: tw("text-3xl"),
-  h3: tw("text-2xl"),
-  h4: tw("text-xl"),
-  h5: tw("text-lg"),
+  h1: tw("text-4xl my-1"),
+  h2: tw("text-3xl my-1"),
+  h3: tw("text-2xl my-1"),
+  h4: tw("text-xl my-1"),
+  h5: tw("text-lg my-1"),
 })

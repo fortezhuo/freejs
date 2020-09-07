@@ -72,8 +72,8 @@ export const Col: FC<FormColProps> = observer(
         {...rest}
         style={StyleSheet.flatten([
           style,
-          input ? styles.colInput : {},
           styles.rootCol,
+          input ? styles.colInput : {},
           tw(`${width}`),
         ])}
       >
@@ -89,8 +89,8 @@ export const Label: FC = observer(({ children }) => {
 
 const styles = StyleSheet.create({
   rootMain: tw("flex-1 p-1 mt-1 bg-white-700"),
-  rootRow: tw(`${theme.bgFormRow} flex-row mb-1`),
+  rootRow: { marginBottom: 1, ...tw(`${theme.bgFormRow} flex-row`) },
   rootCol: tw("flex-col p-2"),
-  colInput: tw(`${theme.borderFormCol} ${theme.bgFormInput}`),
-  textLabel: tw(theme.textFormLabel),
+  colInput: tw(`${theme.borderFormCol} ${theme.bgFormInput} py-3`),
+  textLabel: tw(`${theme.textFormLabel}`),
 })
