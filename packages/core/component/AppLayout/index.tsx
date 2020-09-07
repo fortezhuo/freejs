@@ -20,11 +20,11 @@ import { MainLayoutProps } from "@free/core"
 const MainLayout: FC<MainLayoutProps> = ({ wallpaper, children }) => {
   useHook()
   return wallpaper ? (
-    <ImageBackground source={imgWallpaper} style={styles.rootBackground}>
+    <ImageBackground source={imgWallpaper} style={styles.rootApp}>
       {children}
     </ImageBackground>
   ) : (
-    <View style={styles.rootBackground}>{children}</View>
+    <View style={styles.rootApp}>{children}</View>
   )
 }
 
@@ -36,17 +36,15 @@ export const AppLayout: FC = ({ children }) => {
         behavior={Platform.OS === "ios" ? "padding" : undefined}
       >
         <StoreProvider>
-          <SafeAreaView style={styles.rootSafe}>
-            <View style={styles.rootApp}>
+          <SafeAreaView style={styles.rootApp}>
+            <MainLayout>
               <Header />
-              <MainLayout wallpaper>
-                <Drawer>
-                  {children}
-                  <Snackbar />
-                </Drawer>
-                <Footer />
-              </MainLayout>
-            </View>
+              <Drawer>
+                {children}
+                <Snackbar />
+              </Drawer>
+              <Footer />
+            </MainLayout>
           </SafeAreaView>
         </StoreProvider>
       </KeyboardAvoidingView>
@@ -57,7 +55,5 @@ export const AppLayout: FC = ({ children }) => {
 export default AppLayout
 
 const styles = StyleSheet.create({
-  rootSafe: tw(`flex-1`),
   rootApp: tw("flex-1"),
-  rootBackground: tw("flex-1"),
 })

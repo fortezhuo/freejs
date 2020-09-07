@@ -18,5 +18,5 @@ const styles = StyleSheet.create({
   rootFooter: tw(
     `flex-row flex-no-wrap overflow-hidden justify-between ${theme.bgFooter} inset-x-0 bottom-0 px-2 h-6 items-center`
   ),
-  textLeft: tw("text-white"),
+  textLeft: tw(theme.textFooter),
 })

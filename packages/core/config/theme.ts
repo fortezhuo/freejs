@@ -1,5 +1,5 @@
 import { Config } from "@free/core"
-import { adjust, border } from "@free/tailwind"
+import { adjust, border, text } from "@free/tailwind"
 
 let theme: Config = {
   primary: "bg-blue-500",
@@ -13,24 +13,25 @@ let theme: Config = {
 theme = {
   ...theme,
   // Accordion
-  bgAccordion: theme.primary,
-  bgAccordionItem: adjust(theme.primary, -4),
-  bgAccordionItemActive: adjust(theme.primary, -1),
+  bgAccordion: "bg-white-800",
+  bgAccordionItem: "bg-gray-200",
+  bgAccordionItemActive: adjust(theme.primary, -4),
   borderAccordion: `border-b ${border(adjust(theme.primary, -3))}`,
-  textAccordion: "text-white",
+  textAccordion: text(theme.primary),
   textAccordionItem: "text-gray-600",
-  textAccordionItemActive: "text-white",
+  textAccordionItemActive: "text-gray-600",
   // Action Bar
   bgActionBar: "bg-white-700",
   // Footer
-  bgFooter: theme.primary,
+  bgFooter: "bg-white-800",
+  textFooter: text(theme.primary),
   // Form
   bgFormInput: "bg-white",
   bgFormRow: "bg-gray-300",
   borderFormCol: "border border-gray-300",
   textFormLabel: "text-gray-700",
   // Header
-  bgHeader: theme.primary,
+  bgHeader: "bg-white-900",
   // Input
   bgDisabled: theme.disabled,
   bgError: "bg-red-200",
@@ -55,7 +56,7 @@ theme = {
   borderTable: "border-gray-400 border-solid",
   textCell: "text-gray-900",
   // Title
-  textTitle: "text-white",
+  textTitle: text(theme.primary),
 }
 
 export { theme }

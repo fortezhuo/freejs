@@ -9,13 +9,14 @@ import {
 import { theme } from "../../config/theme"
 import { useSpring, animated } from "react-spring/native"
 import { IconLabel, Icon } from "../Icon"
-import { tw } from "@free/tailwind"
+import { tw, color } from "@free/tailwind"
 import { observer, useLocalStore } from "mobx-react-lite"
 import { useStore } from "../Store"
 import { AccordionProps, AccordionItemProps } from "@free/core"
 
 const AnimatedView = animated<React.ElementType<ViewProps>>(View)
-const { color } = tw("text-gray-600")
+const { color: textColor } = tw("text-gray-600")
+const { color: iconColor } = tw(theme.textAccordion)
 const noop = () => {}
 
 export const Accordion: FC<AccordionProps> = observer(
@@ -39,9 +40,15 @@ export const Accordion: FC<AccordionProps> = observer(
     return (
       <TouchableOpacity onPress={state.toggle}>
         <View style={styles.rootAccordion} testID={testID}>
-          <View style={styles.groupAccordion}>
+          <View
+            style={StyleSheet.flatten([
+              styles.groupAccordion,
+              state.isExpand ? styles.accordionExpand : {},
+            ])}
+          >
             <IconLabel
               name={icon}
+              color={iconColor}
               styleContainer={styles.groupLabel}
               styleText={styles.textAccordion}
             >
@@ -49,6 +56,7 @@ export const Accordion: FC<AccordionProps> = observer(
             </IconLabel>
             <Icon
               size={20}
+              color={iconColor}
               name={`chevron-${state.isExpand ? "up" : "down"}`}
             />
           </View>
@@ -106,7 +114,7 @@ export const AccordionItem: FC<AccordionItemProps> = observer(
           <IconLabel
             name={icon}
             size={20}
-            color={active ? "#fff" : color}
+            color={textColor}
             styleContainer={StyleSheet.flatten([
               styles.rootAccordionItem,
               active ? styles.rootAccordionItemActive : {},
@@ -126,9 +134,11 @@ export const AccordionItem: FC<AccordionItemProps> = observer(
 
 const styles = StyleSheet.create({
   rootAccordion: tw("flex-col shadow-md z-10"),
-  rootAccordionItem: tw(
-    `flex-row shadow-md ${theme.bgAccordionItem} ${theme.borderAccordion} px-4 py-3 items-center`
-  ),
+  accordionExpand: {
+    borderLeftColor: color(theme.primary),
+    ...tw(`border-l border-l-4`),
+  },
+  rootAccordionItem: tw(`flex-row px-4 py-3 items-center`),
   rootAccordionItemActive: tw(`${theme.bgAccordionItemActive}`),
   groupAccordion: tw(
     `flex-row z-10 ${theme.bgAccordion} ${theme.borderAccordion} px-4 py-3 items-center`

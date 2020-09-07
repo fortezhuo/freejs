@@ -44,9 +44,6 @@ const Content: FC = observer(() => {
           </Accordion>
         )
       })}
-      <AccordionItem header icon="help-circle">
-        About Application
-      </AccordionItem>
     </View>
   )
 })
