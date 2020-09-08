@@ -84,7 +84,7 @@ FreeJS is considered unstable. The API could change or be removed in future
 - [x] AppLayout, Header, Title, Content, Footer
 - [ ] Authentication (Face ID / Fingerprint)
 - [x] Button / Action Bar
-- [ ] Button / Action Bar for Mobile
+- [x] Button / Action Bar for Mobile
 - [ ] Carousel
 - [ ] Charts
 - [x] Drawer / Sidebar

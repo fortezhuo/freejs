@@ -36,8 +36,16 @@ export const RNModal: FC<ModalProps> = ({
   onDismiss = noop,
   children,
 }) => {
+  const [isShow, set] = useState(visible)
+
   useEffect(() => {
-    return visible ? onShow() : onDismiss()
+    if (visible) {
+      set(true)
+      onShow()
+    } else {
+      onDismiss()
+      set(false)
+    }
   }, [visible])
 
   return (
@@ -45,7 +53,7 @@ export const RNModal: FC<ModalProps> = ({
       <View
         style={StyleSheet.flatten([
           styles.baseStyle,
-          styles[visible ? "visible" : "hidden"],
+          styles[isShow ? "visible" : "hidden"],
         ])}
       >
         {children}

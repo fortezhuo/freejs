@@ -201,6 +201,7 @@ declare module "@free/core" {
     visible: boolean
     transparent?: boolean = false
     onShow?: VoidFunction
+    onDismiss?: VoidFunction
     onRequestClose?: VoidFunction
     onBackdropPress?: VoidFunction | undefined
     children: ReactNode
