@@ -33,5 +33,5 @@ export const loadBanner: Banner = (isProd = true) => {
   if (!isProd) {
     console.log(infoDevServer)
   }
-  console.log("\x1b[0m", "")
+  console.log("\x1b", "")
 }
