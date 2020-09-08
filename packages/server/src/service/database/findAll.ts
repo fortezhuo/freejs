@@ -17,7 +17,7 @@ export const findAll = function (this: DatabaseService) {
       } = this.onRequestHandler(req)
 
       const query = {
-        readers: { $exists: true, $in: auth.context.list },
+        _docReaders: { $exists: true, $in: auth.context.list },
         ...q,
       }
 

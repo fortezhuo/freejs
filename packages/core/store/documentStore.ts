@@ -15,8 +15,11 @@ class DocumentStore extends BaseStore {
   async onLoad() {
     try {
       this.isLoading = true
-      const res = await req.get(`/api/${this.name}/${this.id}`)
-      this.data.merge(res.data.result)
+      this.data.clear()
+      if (this.id.length === 24) {
+        const res = await req.get(`/api/${this.name}/${this.id}`)
+        this.data.merge(res.data.result)
+      }
     } catch (err) {
       this.app?.setError(err)
     } finally {

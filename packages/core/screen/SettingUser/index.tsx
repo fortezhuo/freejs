@@ -10,7 +10,6 @@ import { Button } from "../../component/Button"
 
 const SettingUser: FC = observer(() => {
   const user = useHook()
-
   return (
     <Layout store={user}>
       <ActionBar>

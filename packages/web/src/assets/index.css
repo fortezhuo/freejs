@@ -15,10 +15,18 @@ select,
 textarea {
   outline: 0;
 }
+
+@media all and (max-width: 1200px) {
+  div {
+    scrollbar-width: none;
+  }
+}
+
 div[data-testid="HorizontalScroll"] > div {
   min-width: 100%;
   flex-direction: row;
 }
+
 div[data-testid="VerticalScroll"] > div {
   min-width: 100%;
   flex-direction: column;

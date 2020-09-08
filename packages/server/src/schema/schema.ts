@@ -3,11 +3,11 @@ import Ajv from "ajv"
 
 export { S }
 export const baseSchema = S.object()
-  .prop("created_at", S.object())
-  .prop("updated_at", S.object())
-  .prop("created_by", S.string())
-  .prop("updated_by", S.string())
-  .prop("readers", S.array())
-  .prop("authors", S.array())
+  .prop("_createdAt", S.object())
+  .prop("_createdBy", S.string())
+  .prop("_docAuthors", S.array())
+  .prop("_docReaders", S.array())
+  .prop("_updatedAt", S.object())
+  .prop("_updatedBy", S.string())
 
 export const ajv = new Ajv({ allErrors: true })

@@ -40,14 +40,18 @@ const create = async function (collection: any, handler: any) {
   const { body, auth } = handler
   return await collection.insert({
     ...body,
-    created_at: new Date(),
-    created_by: auth.username,
-    updated_at: new Date(),
-    updated_by: auth.username,
-    readers:
-      body.readers && (body.readers || []).length != 0 ? body.readers : ["*"],
-    authors:
-      body.authors && (body.authors || []).length != 0 ? body.authors : ["*"],
+    _createdAt: new Date(),
+    _createdBy: auth.username,
+    _updatedAt: new Date(),
+    _updatedBy: auth.username,
+    _docReaders:
+      body._docReaders && (body._docReaders || []).length != 0
+        ? body._docReaders
+        : ["*"],
+    _docAuthors:
+      body._docAuthors && (body._docAuthors || []).length != 0
+        ? body._docAuthors
+        : ["*"],
   })
 }
 
@@ -66,16 +70,16 @@ const update = async function (collection: any, handler: any) {
     {
       $set: {
         ...body,
-        updated_by: auth.username,
-        updated_at: new Date(),
-        readers:
-          body.readers && (body.readers || []).length != 0
-            ? body.readers
+        _docAuthors:
+          body._docAuthors && (body._docAuthors || []).length != 0
+            ? body._docAuthors
             : ["*"],
-        authors:
-          body.authors && (body.authors || []).length != 0
-            ? body.authors
+        _docReaders:
+          body._docReaders && (body._docReaders || []).length != 0
+            ? body._docReaders
             : ["*"],
+        _updatedBy: auth.username,
+        _updatedAt: new Date(),
       },
     },
     option

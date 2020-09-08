@@ -1,12 +1,5 @@
 import { useStore } from "../Store"
 
-const getScreenSize = (width: number) => {
-  if (width >= 1200) return "xl"
-  if (width >= 992 && width < 1200) return "lg"
-  if (width >= 768 && width < 992) return "md"
-  if (width < 768) return "sm"
-}
-
 const isHiddenByScreen = (screen?: string, props?: ObjectAny) => {
   switch (screen) {
     case "sm":
@@ -59,8 +52,9 @@ const getWidthByScreen = (screen?: string, props?: ObjectAny) => {
 
 export const useHook = () => {
   const { app } = useStore()
-  const screen = getScreenSize(app?.dimension?.width)
-  const isHidden = (props: ObjectAny) => isHiddenByScreen(screen, props)
-  const getWidth = (props: ObjectAny) => getWidthByScreen(screen, props)
-  return { screen, isHidden, getWidth }
+  const isHidden = (props: ObjectAny) =>
+    isHiddenByScreen(app.dimension.screen, props)
+  const getWidth = (props: ObjectAny) =>
+    getWidthByScreen(app.dimension.screen, props)
+  return { isHidden, getWidth }
 }

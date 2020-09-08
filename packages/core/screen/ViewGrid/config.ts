@@ -37,15 +37,15 @@ export const user = {
     },
     {
       label: "Updated At",
-      name: "updated_at",
+      name: "_updatedAt",
       type: "datetime",
       filter: false,
       style: { width: 200 },
     },
     {
       label: "Updated By",
-      name: "updated_by",
-      filter: ["updated_by"],
+      name: "_updatedBy",
+      filter: ["_updatedBy"],
       style: { width: 200 },
     },
   ],

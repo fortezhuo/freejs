@@ -5,7 +5,6 @@ type Config = {
 type ConfigServer = {
   host: string
   port: number
-  firstTime: string
 }
 
 type ConfigAny = {

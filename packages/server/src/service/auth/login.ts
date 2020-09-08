@@ -55,39 +55,28 @@ const authenticate = async (req: Request) => {
 
   if (total === 0) {
     const values = {
+      _createdAt: new Date(),
+      _createdBy: auth.user.sAMAccountName,
+      _docAuthors: ["Admin"],
+      _docReaders: ["*"],
+      _updatedAt: new Date(),
+      _updatedBy: auth.user.sAMAccountName,
       username: auth.user.sAMAccountName,
       fullname: auth.user.displayName,
       email: auth.user.mail,
       roles: ["Admin"],
-      created_by: auth.user.sAMAccountName,
-      updated_by: auth.user.sAMAccountName,
-      created_at: new Date(),
-      updated_at: new Date(),
-      readers: ["*"],
-      authors: ["Admin"],
     }
     const {
       _id,
-      created_at,
-      updated_at,
-      created_by,
-      updated_by,
+      createdAt,
+      createdBy,
+      updatedAt,
+      updatedBy,
       ...fetch
     } = await collection.insert(values)
     data = fetch
   } else {
-    const fetch = await collection.findOne(
-      { username },
-      {
-        projection: {
-          _id: 0,
-          created_at: 0,
-          updated_at: 0,
-          created_by: 0,
-          updated_by: 0,
-        },
-      }
-    )
+    const fetch = await collection.findOne({ username }, {})
     if (!fetch)
       throw new Exception(
         403,

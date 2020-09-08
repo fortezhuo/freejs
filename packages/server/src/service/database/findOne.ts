@@ -11,7 +11,7 @@ export const findOne = function (this: DatabaseService) {
       if (!q) throw new Exception(400, "Parameter not found")
 
       const query = {
-        readers: { $exists: true, $in: auth.context.list },
+        _docReaders: { $exists: true, $in: auth.context.list },
         ...q,
       }
 

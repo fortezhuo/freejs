@@ -1,14 +1,13 @@
 import React, { FC } from "react"
-import { View, StyleSheet, FlatList } from "react-native"
+import { View, StyleSheet, FlatList, Text } from "react-native"
 import { tw } from "@free/tailwind"
 import { Table, Row, Cell, Header } from "../../component/Table"
 import { useHook } from "./hook"
 import { useTable } from "react-table"
 import { observer } from "mobx-react-lite"
 import { ActionBar } from "../../component/ActionBar"
-import { Button } from "../../component/Button"
+import * as ActionGroup from "../../component/ActionGroup"
 import { Layout } from "../../component/Layout"
-import { random } from "../../util/random"
 
 const ViewGrid: FC = observer(() => {
   const store = useHook()
@@ -25,16 +24,15 @@ const ViewGrid: FC = observer(() => {
       <View style={styles.rootViewGrid}>
         <View style={styles.boxContent}>
           {button.length != 0 && (
-            <ActionBar>
-              {button.map((prop: ObjectAny) => (
-                <Button
-                  key={"act_" + random()}
+            <ActionBar
+              left={
+                <ActionGroup.Large
                   store={store}
-                  {...prop}
-                  style={{ marginRight: 4 }}
+                  button={button}
+                  size={["xl", "lg"]}
                 />
-              ))}
-            </ActionBar>
+              }
+            />
           )}
           <Table scroll style={styles.rootTable} {...getTableProps()}>
             {headerGroups.map((headerGroup) => (
@@ -76,6 +74,7 @@ const ViewGrid: FC = observer(() => {
           </Table>
         </View>
       </View>
+      <ActionGroup.Small store={store} button={button} size={["sm", "md"]} />
     </Layout>
   )
 })
