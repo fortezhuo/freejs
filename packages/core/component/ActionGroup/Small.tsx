@@ -40,6 +40,7 @@ export const Small: FC<any> = observer(({ store, button, size }) => {
           set({ transform: "translateY(500px)" })
         }}
         onBackdropPress={() => {
+          console.log("close")
           state.toggle()
         }}
       >

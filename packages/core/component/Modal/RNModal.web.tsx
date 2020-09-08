@@ -1,6 +1,6 @@
-import React, { FC, useEffect, useState } from "react"
+import React, { FC, useEffect, useState, useCallback, useRef } from "react"
 import { createPortal } from "react-dom"
-import { StyleSheet, View, ModalProps } from "react-native"
+import { StyleSheet, ModalProps } from "react-native"
 
 const noop: any = () => {}
 
@@ -36,28 +36,45 @@ export const RNModal: FC<ModalProps> = ({
   onDismiss = noop,
   children,
 }) => {
-  const [isShow, set] = useState(visible)
+  const wasVisible = useRef<boolean | undefined>()
+  const [isRender, setRender] = useState(false)
+
+  const onClose = useCallback(() => {
+    if (visible) {
+      if (onShow) {
+        onShow()
+      }
+    } else {
+      setRender(false)
+      if (onDismiss) {
+        onDismiss()
+      }
+    }
+  }, [onDismiss, onShow, visible])
 
   useEffect(() => {
     if (visible) {
-      set(true)
-      onShow()
-    } else {
-      onDismiss()
-      set(false)
+      setRender(true)
     }
-  }, [visible])
+
+    if (visible !== wasVisible.current) {
+      onClose()
+    }
+
+    wasVisible.current = visible
+  }, [visible, onClose])
 
   return (
     <Portal>
-      <View
+      <div
+        onAnimationEnd={onClose}
         style={StyleSheet.flatten([
           styles.baseStyle,
-          styles[isShow ? "visible" : "hidden"],
+          styles[isRender ? "visible" : "hidden"],
         ])}
       >
         {children}
-      </View>
+      </div>
     </Portal>
   )
 }
