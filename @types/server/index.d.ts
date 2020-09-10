@@ -27,3 +27,8 @@ declare module "@free/server" {
 }
 
 declare module "simple-ldap-search" {}
+
+declare module "@free/upload" {
+  type attachment = any
+  type saveTo = string & ("local" | "gdrive")
+}

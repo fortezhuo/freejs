@@ -14,6 +14,8 @@
     "@free/env": "*",
     "@loadable/server": "^5.13.1",
     "@types/nodemailer": "^6.4.0",
+    "fastify-file-upload": "^3.0.0",
+    "googleapis": "39",
     "nodemailer": "^6.4.11"
   },
   "devDependencies": {

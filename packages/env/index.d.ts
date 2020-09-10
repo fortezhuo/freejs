@@ -22,6 +22,23 @@ type ConfigMail = {
   }
 }
 
+type configUpload = {
+  local: {
+    tempdir: string
+    dir: string
+  }
+  gdrive: {
+    token_path: array
+    drive_folder_id: string
+    scope: array
+    installed: {
+      client_id: string
+      client_secret: string
+      redirect_uris: array
+    }
+  }
+}
+
 export const configLDAP: ConfigAny
 export const configPlatform: ConfigAny
 export const configServer: ConfigServer
@@ -31,3 +48,4 @@ export const configDatabase: Config
 export const configProxy: string
 export const configACL: ConfigAny
 export const configMail: configMail
+export const configUpload: configUpload
