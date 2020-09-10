@@ -122,8 +122,6 @@ export const CellLink: FC<IconButtonProps> = observer(
   }
 )
 
-export const CellMobile: FC = observer(() => {})
-
 export const CellCheckbox: FC<any> = observer(
   ({ style, testID = "CellCheckbox", ...rest }) => {
     return (

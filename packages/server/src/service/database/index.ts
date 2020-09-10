@@ -7,7 +7,6 @@ import { remove } from "./remove"
 import { save } from "./save"
 
 export class DatabaseService extends BaseService {
-  public name: string
   public dbName: string
   public collection: any
   public findAll: any
@@ -16,8 +15,7 @@ export class DatabaseService extends BaseService {
   public save: any
 
   constructor(name: string, dbName?: string) {
-    super()
-    this.name = name
+    super(name)
     this.dbName = dbName ? dbName : "app"
     this.findAll = findAll.bind(this)
     this.findOne = findOne.bind(this)
@@ -29,8 +27,6 @@ export class DatabaseService extends BaseService {
   onAfterSave = (collection: any, handler: any) => {}
 
   onRequestHandler = (req: Request) => {
-    const auth = this.onAuthenticate(req, this.name)
-
     const { params, query, body: rawBody } = req as {
       [key: string]: any
     }
@@ -53,7 +49,7 @@ export class DatabaseService extends BaseService {
     const skip = (page - 1) * limit
 
     ;(fields === "" ? [] : fields.split(","))
-      .concat(auth.fields[0] === "*" ? [] : auth.fields)
+      .concat(this.auth?.fields[0] === "*" ? [] : this.auth?.fields)
       .forEach((field: string) => {
         projection[field.replace("-", "")] = field.indexOf("-") >= 0 ? 0 : 1
       })
@@ -74,7 +70,6 @@ export class DatabaseService extends BaseService {
       option,
       page,
       skip,
-      auth,
     }
   }
 }

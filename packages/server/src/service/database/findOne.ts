@@ -7,11 +7,11 @@ export const findOne = function (this: DatabaseService) {
     try {
       reply.statusCode = 200
       const collection = req.database[this.dbName].get(this.name)
-      const { q, projection, auth } = this.onRequestHandler(req)
+      const { q, projection } = this.onRequestHandler(req)
       if (!q) throw new Exception(400, "Parameter not found")
 
       const query = {
-        _docReaders: { $exists: true, $in: auth.context.list },
+        _docReaders: { $exists: true, $in: this.auth?.context.list },
         ...q,
       }
 

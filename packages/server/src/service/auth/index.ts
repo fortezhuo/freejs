@@ -8,7 +8,7 @@ export class AuthService extends BaseService {
   public login: any
   public logout: any
   constructor() {
-    super()
+    super("auth")
     this.check = check.bind(this)
     this.login = login.bind(this)
     this.logout = logout.bind(this)

@@ -58,7 +58,7 @@ const authenticate = async (req: Request) => {
       _createdAt: new Date(),
       _createdBy: auth.user.sAMAccountName,
       _docAuthors: ["Admin"],
-      _docReaders: ["*"],
+      _docReaders: [auth.user.sAMAccountName, "Admin"],
       _updatedAt: new Date(),
       _updatedBy: auth.user.sAMAccountName,
       username: auth.user.sAMAccountName,

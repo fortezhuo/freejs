@@ -8,7 +8,7 @@ export class LogService extends BaseService {
   public readDir: any
   public download: any
   constructor() {
-    super()
+    super("log")
     this.readDir = readDir.bind(this)
     this.download = download.bind(this)
   }

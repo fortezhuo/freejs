@@ -6,11 +6,11 @@ export const remove = function (this: DatabaseService) {
   return async (req: Request, reply: Reply) => {
     reply.statusCode = 200
     try {
-      const { q, option, auth } = this.onRequestHandler(req)
+      const { q, option } = this.onRequestHandler(req)
       if (!q) throw new Exception(400, "Parameter not found")
 
       const query = {
-        authors: { $exists: true, $in: auth.context.list },
+        authors: { $exists: true, $in: this.auth?.context.list },
         ...q,
       }
 

@@ -21,8 +21,8 @@ export const save = function (this: DatabaseService) {
 
       const data =
         method === "PATCH"
-          ? update(collection, handler)
-          : create(collection, handler)
+          ? update(this.auth, collection, handler)
+          : create(this.auth, collection, handler)
 
       await this.onAfterSave(collection, handler)
 
@@ -36,8 +36,8 @@ export const save = function (this: DatabaseService) {
   }
 }
 
-const create = async function (collection: any, handler: any) {
-  const { body, auth } = handler
+const create = async function (auth: any, collection: any, handler: any) {
+  const { body } = handler
   return await collection.insert({
     ...body,
     _createdAt: new Date(),
@@ -55,8 +55,8 @@ const create = async function (collection: any, handler: any) {
   })
 }
 
-const update = async function (collection: any, handler: any) {
-  const { option, q, body, auth } = handler
+const update = async function (auth: any, collection: any, handler: any) {
+  const { option, q, body } = handler
 
   if (!q) throw new Exception(400, "Parameter not found")
 

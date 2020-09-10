@@ -5,7 +5,7 @@ import { upload } from "./upload"
 export class UploadFileServices extends BaseService {
   public upload: any
   constructor() {
-    super()
+    super("upload")
     this.upload = upload.bind(this)
   }
 }

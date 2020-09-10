@@ -1,5 +1,4 @@
 import { BaseService } from "../base"
-import { Request } from "@free/server"
 import { gdriveSetup, gdriveSetToken } from "./gdrive"
 
 export class GoogleDriveServices extends BaseService {
@@ -7,7 +6,7 @@ export class GoogleDriveServices extends BaseService {
   public gdriveSetToken: any
 
   constructor() {
-    super()
+    super("gdrive")
     this.gdriveSetup = gdriveSetup.bind(this)
     this.gdriveSetToken = gdriveSetToken.bind(this)
   }

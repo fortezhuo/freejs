@@ -2,9 +2,13 @@ import { Instance, Request, Reply } from "@free/server"
 import { Exception } from "../util/exception"
 
 export class BaseService {
+  protected name: string
   protected instance: Instance | undefined
-  constructor() {
+  protected auth: ObjectAny | undefined
+  constructor(name: string) {
+    this.name = name
     this.instance = undefined
+    this.auth = undefined
   }
   protected onAuthenticate = (req: Request, resource: string) => {
     let { session, method } = req as {
@@ -33,7 +37,7 @@ export class BaseService {
         403,
         `Insufficient ${roles} access to ${action} this ${resource}`
       )
-    return {
+    this.auth = {
       username,
       roles,
       resource,
@@ -55,10 +59,10 @@ export class BaseService {
     }
     if (this.instance) {
       const code = reply.statusCode
-      const username = req?.session?.auth?.username || "Anonymous"
+      const fullname = req?.session?.auth?.fullname || "Anonymous"
       const method = req?.method
       const url = req.raw.url
-      const message = `${username} ${method} ${url} ${err.message}`
+      const message = `${fullname} ${method} ${url} ${err.message}`
 
       if (logging) {
         this.instance.log.warn(message)
@@ -74,8 +78,16 @@ export class BaseService {
   }
   bindInstance(instance: Instance) {
     this.instance = instance
+    this.instance.addHook("preValidation", async (req, reply) => {
+      try {
+        if (this.name !== "auth") {
+          this.onAuthenticate(req, this.name)
+        }
+      } catch (err) {
+        this.onErrorHandler(req, reply, err)
+      }
+    })
   }
-  onRequestHandler: any = this.onAuthenticate
 
   onErrorHandler = (
     req: Request,

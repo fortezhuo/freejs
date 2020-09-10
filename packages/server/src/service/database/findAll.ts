@@ -6,18 +6,12 @@ export const findAll = function (this: DatabaseService) {
     reply.statusCode = 200
     try {
       const collection = req.database[this.dbName].get(this.name)
-      const {
-        q,
-        projection,
-        limit,
-        sort,
-        page,
-        skip,
-        auth,
-      } = this.onRequestHandler(req)
+      const { q, projection, limit, sort, page, skip } = this.onRequestHandler(
+        req
+      )
 
       const query = {
-        _docReaders: { $exists: true, $in: auth.context.list },
+        _docReaders: { $exists: true, $in: this.auth?.context.list },
         ...q,
       }
 
