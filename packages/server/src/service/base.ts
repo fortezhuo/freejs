@@ -3,12 +3,14 @@ import { Exception } from "../util/exception"
 
 export class BaseService {
   protected name: string
+  protected disableAuth: boolean
   protected instance: Instance | undefined
   protected auth: ObjectAny | undefined
   constructor(name: string) {
     this.name = name
     this.instance = undefined
     this.auth = undefined
+    this.disableAuth = false
   }
   protected onAuthenticate = (req: Request, resource: string) => {
     let { session, method } = req as {
@@ -80,7 +82,7 @@ export class BaseService {
     this.instance = instance
     this.instance.addHook("preValidation", async (req, reply) => {
       try {
-        if (this.name !== "auth") {
+        if (!this.disableAuth) {
           this.onAuthenticate(req, this.name)
         }
       } catch (err) {
