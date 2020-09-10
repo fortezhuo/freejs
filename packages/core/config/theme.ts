@@ -1,5 +1,5 @@
 import { Config } from "@free/core"
-import { adjust, border, text } from "@free/tailwind"
+import { adjust, text } from "@free/tailwind"
 
 let theme: Config = {
   primary: "bg-blue-500",

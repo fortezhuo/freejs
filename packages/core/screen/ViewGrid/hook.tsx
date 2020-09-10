@@ -1,17 +1,13 @@
 import React, { useEffect } from "react"
-import { CellLink, CellCheckbox } from "../../component/Table"
+import { CellLink, CellCheckbox, Cell } from "../../component/Table"
 import { useStore } from "../../component/Store"
 import { get } from "../../request"
 import * as config from "./config"
-import dayjs from "dayjs"
-
-const date = (date: any) => dayjs(date).format("DD MMM YYYY")
-const datetime = (datetime: any) =>
-  dayjs(datetime).format("DD MMM YYYY HH:mm:ss")
 
 export const useHook = () => {
   const { view } = useStore()
   const name = `${view?.app?.routerLocation}/`.split("/")[1]
+  const isMobile = ["sm", "md"].indexOf(view?.app?.dimension.screen) >= 0
 
   useEffect(() => {
     view.title = (config as ObjectAny)[name].title
@@ -45,7 +41,7 @@ export const useHook = () => {
           const isFilter = view.temp.get("isFilter") || false
           view.temp.set("isFilter", !isFilter)
         },
-        visible: true,
+        visible: !isMobile,
       },
     }
 
@@ -53,7 +49,7 @@ export const useHook = () => {
       .map((btn: string) => list[btn])
       .filter((btn: ObjectAny) => !!btn && btn.visible)
 
-    view.data.set("button", button)
+    view.data.set(`button_${isMobile ? "mobile" : "desktop"}`, button)
   }
 
   const getCollection = async (name: string) => {
@@ -61,6 +57,7 @@ export const useHook = () => {
     view.data.set("collection", res.data.result)
   }
 
+  // Desktop
   const getColumn = (name: string) => {
     const column = (config as ObjectAny)[name].column.map((col: ObjectAny) => ({
       id: col.type ? `${col.name}_${col.type}` : col.name,
@@ -83,19 +80,37 @@ export const useHook = () => {
       case "link":
         return (
           <CellLink
+            style={(cell.column as any).style || {}}
             onPress={() => {
               view?.app?.goto(`${name}/${cell.value}`)
             }}
           />
         )
       case "checkbox":
-        return <CellCheckbox value={cell.value} store={view} name="selection" />
+        return (
+          <CellCheckbox
+            value={cell.value}
+            store={view}
+            name="selection"
+            style={(cell.column as any).style || {}}
+          />
+        )
       case "date":
-        return date(cell.value)
+        return (
+          <Cell style={(cell.column as any).style || {}} type="date">
+            {cell.value}
+          </Cell>
+        )
       case "datetime":
-        return datetime(cell.value)
+        return (
+          <Cell style={(cell.column as any).style || {}} type="datetime">
+            {cell.value}
+          </Cell>
+        )
       default:
-        return cell.value
+        return (
+          <Cell style={(cell.column as any).style || {}}>{cell.value}</Cell>
+        )
     }
   }
 

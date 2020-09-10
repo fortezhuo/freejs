@@ -25,8 +25,6 @@
     "mobx-react-lite": "^2.0.7",
     "react": "^16.13.1",
     "react-flatpickr": "^3.10.6",
-    "react-native-file-viewer": "^2.1.1",
-    "react-native-fs": "^2.16.6",
     "react-native-gesture-handler": "^1.8.0",
     "react-native-safe-area-context": "^3.1.1",
     "react-native-vector-icons": "fortezhuo/react-native-vector-icons",

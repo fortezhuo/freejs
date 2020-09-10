@@ -7,6 +7,11 @@ import { tw, color } from "@free/tailwind"
 import { observer } from "mobx-react-lite"
 import { theme } from "../../config/theme"
 import { TableProps, IconButtonProps, RowProps, CellProps } from "@free/core"
+import dayjs from "dayjs"
+
+const date = (date: any) => dayjs(date).format("DD MMM YYYY")
+const datetime = (datetime: any) =>
+  dayjs(datetime).format("DD MMM YYYY HH:mm:ss")
 
 const primary = color(theme.primary)
 
@@ -70,7 +75,22 @@ export const Row: FC<RowProps> = observer(
 )
 
 export const Cell: FC<CellProps> = observer(
-  ({ children, style, filter, testID = "Cell" }) => {
+  ({
+    children: _children,
+    type = "string",
+    style,
+    filter,
+    testID = "Cell",
+  }) => {
+    const children =
+      typeof _children !== "string"
+        ? _children
+        : type == "date"
+        ? date(_children)
+        : type == "datetime"
+        ? datetime(_children)
+        : _children
+
     return (
       <View
         testID={testID}
@@ -87,27 +107,33 @@ export const Cell: FC<CellProps> = observer(
 )
 
 export const CellLink: FC<IconButtonProps> = observer(
-  ({ onPress, testID = "CellLink" }) => {
+  ({ style, onPress, testID = "CellLink" }) => {
     return (
-      <IconButton
-        testID={testID}
-        name="link"
-        size={16}
-        color={primary}
-        onPress={onPress}
-      />
+      <Cell style={style}>
+        <IconButton
+          testID={testID}
+          name="link"
+          size={16}
+          color={primary}
+          onPress={onPress}
+        />
+      </Cell>
     )
   }
 )
 
+export const CellMobile: FC = observer(() => {})
+
 export const CellCheckbox: FC<any> = observer(
-  ({ testID = "CellCheckbox", ...rest }) => {
+  ({ style, testID = "CellCheckbox", ...rest }) => {
     return (
-      <InputCheckbox
-        testID={testID}
-        style={{ padding: 0, marginTop: -2 }}
-        {...rest}
-      />
+      <Cell style={style}>
+        <InputCheckbox
+          testID={testID}
+          style={{ padding: 0, marginTop: -2 }}
+          {...rest}
+        />
+      </Cell>
     )
   }
 )

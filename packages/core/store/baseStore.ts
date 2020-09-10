@@ -4,7 +4,6 @@ import { AppStore } from "./appStore"
 class BaseStore {
   isForm: boolean | undefined = false
   title: string | undefined
-  name: string | undefined
   app: AppStore | undefined = undefined
   data = new ObservableMap()
   temp = new ObservableMap()
