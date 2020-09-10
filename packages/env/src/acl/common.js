@@ -1,4 +1,5 @@
 const user = [
+  { resource: "attach", action: ["*"] },
   { resource: "create", action: ["*"] },
   { resource: "view", action: ["*"] },
 ]

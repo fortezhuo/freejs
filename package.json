@@ -65,6 +65,7 @@
     "fastify-compress": "^3.2.2",
     "fastify-cookie": "^4.0.2",
     "fastify-favicon": "^3.0.0",
+    "fastify-multipart": "^3.2.0",
     "fastify-plugin": "^2.3.0",
     "fastify-session": "^5.0.0",
     "fastify-static": "^3.2.0",
