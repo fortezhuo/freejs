@@ -22,10 +22,7 @@ const SettingLog: FC = observer(() => {
               <Header {...headerGroup.getHeaderGroupProps()}>
                 {headerGroup.headers.map((column) => {
                   return (
-                    <Cell
-                      {...column.getHeaderProps()}
-                      style={{ width: column.width, maxWidth: column.maxWidth }}
-                    >
+                    <Cell {...column.getHeaderProps()} style={column.style}>
                       {column.render("Header")}
                     </Cell>
                   )
@@ -39,19 +36,7 @@ const SettingLog: FC = observer(() => {
                 prepareRow(item)
                 return (
                   <Row dark={index % 2} {...item.getRowProps()}>
-                    {item.cells.map((cell) => {
-                      return (
-                        <Cell
-                          {...cell.getCellProps()}
-                          style={{
-                            width: cell.column.width,
-                            maxWidth: cell.column.maxWidth,
-                          }}
-                        >
-                          {cell.render("Cell")}
-                        </Cell>
-                      )
-                    })}
+                    {item.cells.map((cell) => cell.render("Cell"))}
                   </Row>
                 )
               }}

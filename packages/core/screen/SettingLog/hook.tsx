@@ -1,5 +1,5 @@
 import React, { useMemo, useEffect } from "react"
-import { CellLink } from "../../component/Table"
+import { CellLink, Cell } from "../../component/Table"
 import { Platform } from "react-native"
 import { download } from "./helper"
 import { get } from "../../request"
@@ -11,9 +11,13 @@ const column = ((Platform.OS === "web"
         id: "link",
         Header: "",
         accessor: "name",
-        Cell: (cell: any) => <CellLink onPress={() => download(cell.value)} />,
-        maxWidth: 30,
-        width: 30,
+        style: { maxWidth: 36, width: 36 },
+        Cell: (cell: any) => (
+          <CellLink
+            style={cell.column.style}
+            onPress={() => download(cell.value)}
+          />
+        ),
       },
     ]
   : []) as Array<{}>).concat([
@@ -21,17 +25,24 @@ const column = ((Platform.OS === "web"
     id: "name",
     Header: "Log Name",
     accessor: "name",
-    width: 200,
+    style: { width: 200 },
+    Cell: (cell: any) => <Cell style={cell.column.style}>{cell.value}</Cell>,
   },
   {
     Header: "Size",
     accessor: "size",
-    width: 50,
+    style: { width: 50 },
+    Cell: (cell: any) => <Cell style={cell.column.style}>{cell.value}</Cell>,
   },
   {
     Header: "Last Modified",
     accessor: "mtime",
-    width: 200,
+    style: { width: 200 },
+    Cell: (cell: any) => (
+      <Cell style={cell.column.style} type="datetime">
+        {cell.value}
+      </Cell>
+    ),
   },
 ])
 

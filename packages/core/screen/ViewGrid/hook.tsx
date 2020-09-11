@@ -63,16 +63,10 @@ export const useHook = () => {
       id: col.type ? `${col.name}_${col.type}` : col.name,
       Header: col.label,
       accessor: col.name,
-      style: getStyle(col),
+      style: col.style,
       Cell: getCell(col.type),
     }))
     view.data.set("column", column)
-  }
-
-  const getStyle = (col: any) => {
-    return col.type == "link" || col.type == "checkbox"
-      ? { width: 36, maxWidth: 36 }
-      : col.style
   }
 
   const getCell = (type: string) => (cell: any) => {
@@ -80,7 +74,7 @@ export const useHook = () => {
       case "link":
         return (
           <CellLink
-            style={(cell.column as any).style || {}}
+            style={cell.column.style}
             onPress={() => {
               view?.app?.goto(`${name}/${cell.value}`)
             }}
@@ -92,25 +86,23 @@ export const useHook = () => {
             value={cell.value}
             store={view}
             name="selection"
-            style={(cell.column as any).style || {}}
+            style={cell.column.style}
           />
         )
       case "date":
         return (
-          <Cell style={(cell.column as any).style || {}} type="date">
+          <Cell style={cell.column.style} type="date">
             {cell.value}
           </Cell>
         )
       case "datetime":
         return (
-          <Cell style={(cell.column as any).style || {}} type="datetime">
+          <Cell style={cell.column.style} type="datetime">
             {cell.value}
           </Cell>
         )
       default:
-        return (
-          <Cell style={(cell.column as any).style || {}}>{cell.value}</Cell>
-        )
+        return <Cell style={cell.column.style}>{cell.value}</Cell>
     }
   }
 

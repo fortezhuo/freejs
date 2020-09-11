@@ -89,10 +89,7 @@ const ViewGrid: FC = observer(() => {
                   <Cell>Content</Cell>
                 ) : (
                   headerGroup.headers.map((column) => (
-                    <Cell
-                      {...column.getHeaderProps()}
-                      style={(column as any).style || {}}
-                    >
+                    <Cell {...column.getHeaderProps()} style={column.style}>
                       {column.render("Header")}
                     </Cell>
                   ))

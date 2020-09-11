@@ -5,8 +5,18 @@ export const user = {
   search: ["username", "fullname"],
   button: ["new", "delete", "filter"],
   column: [
-    { label: "", name: "_id", type: "checkbox" },
-    { label: "", name: "_id", type: "link" },
+    {
+      label: "",
+      name: "_id",
+      type: "checkbox",
+      style: { width: 36, maxWidth: 36 },
+    },
+    {
+      label: "",
+      name: "_id",
+      type: "link",
+      style: { width: 36, maxWidth: 36 },
+    },
     {
       label: "User Name",
       name: "username",
