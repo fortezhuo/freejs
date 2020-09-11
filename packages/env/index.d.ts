@@ -48,4 +48,4 @@ export const configDatabase: Config
 export const configProxy: string
 export const configACL: ConfigAny
 export const configMail: configMail
-export const configUpload: configUpload
+export const configGDrive: configAny

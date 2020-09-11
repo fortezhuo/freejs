@@ -1,13 +1,13 @@
 import { Request, Reply } from "@free/server"
 import { Exception } from "../../util/exception"
-import { BaseService } from "../base"
+import { UploadService } from "."
 import { resolve } from "path"
 import { appPath } from "../../util/path"
 import { pipeline } from "stream"
 import fs from "fs"
 import util from "util"
 
-export const upload = function (this: BaseService) {
+export const store = function (this: UploadService) {
   return async (req: Request, reply: Reply) => {
     if (!req.isMultipart()) throw new Exception(400, "Request is not multipart")
     const parts = await req.files()
