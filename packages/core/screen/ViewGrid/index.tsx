@@ -40,22 +40,19 @@ const ViewGrid: FC = observer(() => {
             style={styles.rootTable}
             {...getTableProps()}
           >
-            {headerGroups.map((headerGroup) => (
-              <Header {...headerGroup.getHeaderGroupProps()}>
-                {isMobile ? (
-                  <Cell>Content</Cell>
-                ) : (
-                  headerGroup.headers.map((column) => (
+            {!isMobile &&
+              headerGroups.map((headerGroup) => (
+                <Header {...headerGroup.getHeaderGroupProps()}>
+                  {headerGroup.headers.map((column) => (
                     <Cell
                       {...column.getHeaderProps()}
                       style={(column as any).style}
                     >
                       {column.render("Header")}
                     </Cell>
-                  ))
-                )}
-              </Header>
-            ))}
+                  ))}
+                </Header>
+              ))}
             {isFilter && <Row filter>{}</Row>}
             <FlatList
               data={rows}
