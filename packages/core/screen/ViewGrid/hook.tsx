@@ -63,8 +63,9 @@ export const useHook = () => {
     if (isMobile) {
       column = column.filter((col: any) => col.isMobileVisible)
       column.forEach((col: any) => {
-        if (col.type !== "link")
+        if (col.name !== "_id") {
           label[col.type ? `${col.name}_${col.type}` : col.name] = col.label
+        }
       })
     }
 
@@ -123,5 +124,5 @@ export const useHook = () => {
     }
   }
 
-  return view
+  return { name, store: view }
 }

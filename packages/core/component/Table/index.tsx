@@ -1,11 +1,13 @@
-import React, { FC, cloneElement } from "react"
-import { StyleSheet, View, Text, ScrollView } from "react-native"
-import { IconButton } from "../Icon"
+import React, { FC, cloneElement, createRef } from "react"
+import { StyleSheet, View, Text, ScrollView, Animated } from "react-native"
+import { IconButton, IconLabel } from "../Icon"
 import { InputCheckbox } from "../Input/InputCheckbox"
 import { random } from "../../util/random"
 import { tw, color } from "@free/tailwind"
 import { observer } from "mobx-react-lite"
 import { theme } from "../../config/theme"
+import { RectButton } from "react-native-gesture-handler"
+import Swipeable from "react-native-gesture-handler/Swipeable"
 import { TableProps, IconButtonProps, RowProps, CellProps } from "@free/core"
 import dayjs from "dayjs"
 
@@ -137,22 +139,66 @@ export const CellCheckbox: FC<any> = observer(
 )
 
 export const RowMobile: FC<RowProps> = observer(
-  ({ data, label, dark, style, testID = "RowMobile" }) => {
-    console.log(data)
+  ({ store, name, data, label, dark, style, testID = "RowMobile" }) => {
+    const path = `${name}/${data._id_link}`
+    const ref = createRef<any>()
+    const width = 88
     return (
-      <View
-        testID={testID}
-        style={StyleSheet.flatten([
-          styles.rootRow,
-          styles.rowMobile,
-          dark ? styles.rowDark : {},
-          style,
-        ])}
+      <Swipeable
+        ref={ref}
+        friction={2}
+        leftThreshold={30}
+        rightThreshold={40}
+        useNativeAnimations={false}
+        renderRightActions={(progress: any) => {
+          const trans = progress.interpolate({
+            inputRange: [0, 1],
+            outputRange: [width, 0],
+          })
+          const onDelete = () => {
+            ref?.current.close()
+            alert("Delete")
+          }
+          return (
+            <View
+              style={{
+                width,
+              }}
+            >
+              <Animated.View
+                style={{ flex: 1, transform: [{ translateX: trans }] }}
+              >
+                <RectButton onPress={onDelete} style={styles.boxDelete}>
+                  <IconLabel
+                    styleContainer={styles.iconDelete}
+                    name="trash-2"
+                  ></IconLabel>
+                </RectButton>
+              </Animated.View>
+            </View>
+          )
+        }}
       >
-        {Object.keys(data).map((key) => {
-          return <Text key={random()}>{label[key] + " : " + data[key]}</Text>
-        })}
-      </View>
+        <RectButton onPress={() => store?.app.goto(path)}>
+          <View
+            testID={testID}
+            style={StyleSheet.flatten([
+              styles.rootRow,
+              styles.rowMobile,
+              dark ? styles.rowDark : {},
+              style,
+            ])}
+          >
+            {Object.keys(data).map((key) => {
+              return key === "_id_link" ? null : (
+                <Text style={styles.textCellSmall} key={random()}>
+                  {label[key] + " : " + data[key]}
+                </Text>
+              )
+            })}
+          </View>
+        </RectButton>
+      </Swipeable>
     )
   }
 )
@@ -164,9 +210,12 @@ const styles = StyleSheet.create({
   rootBody: tw("flex-1"),
   rootFilter: tw(`${theme.bgRowFilter} h-10 items-center`),
   textCell: tw(theme.textCell),
+  textCellSmall: tw(`${theme.textCell} text-sm`),
   rootRow: tw(`${theme.borderTable} border-b flex-row flex-no-wrap`),
-  rowMobile: tw("flex-col"),
+  rowMobile: tw("flex-col p-2"),
   rowDark: tw(theme.bgRowDark),
   rootCell: tw(`${theme.borderTable} p-2 w-40 border-r flex-grow`),
   cellFilter: { padding: 0 },
+  boxDelete: tw("flex-1"),
+  iconDelete: tw(`${theme.danger} flex-row flex-1 justify-center items-center`),
 })

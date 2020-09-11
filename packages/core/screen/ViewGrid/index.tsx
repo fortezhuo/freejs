@@ -1,8 +1,7 @@
 import React, { FC, createRef } from "react"
-import { View, StyleSheet, FlatList, Animated } from "react-native"
+import { View, StyleSheet, Animated } from "react-native"
 import { tw } from "@free/tailwind"
 import { Table, Row, RowMobile, Cell, Header } from "../../component/Table"
-import { IconLabel } from "../../component/Icon"
 import { useHook } from "./hook"
 import { useTable } from "react-table"
 import { observer } from "mobx-react-lite"
@@ -10,56 +9,12 @@ import { ActionBar } from "../../component/ActionBar"
 import * as ActionGroup from "../../component/ActionGroup"
 import { Layout } from "../../component/Layout"
 import { theme } from "../../config/theme"
-import Swipeable from "react-native-gesture-handler/Swipeable"
-import { RectButton } from "react-native-gesture-handler"
+import { FlatList } from "react-native-gesture-handler"
 
 const Wrapper: any = View
 
-const SwipeableRow: FC<any> = ({ children }) => {
-  const ref = createRef<any>()
-  const width = 88
-  return (
-    <Swipeable
-      ref={ref}
-      friction={2}
-      leftThreshold={30}
-      rightThreshold={40}
-      renderRightActions={(progress: any) => {
-        const trans = progress.interpolate({
-          inputRange: [0, 1],
-          outputRange: [width, 0],
-        })
-        const onPress = () => {
-          ref?.current.close()
-          alert("Delete")
-        }
-        return (
-          <View
-            style={{
-              width,
-            }}
-          >
-            <Animated.View
-              style={{ flex: 1, transform: [{ translateX: trans }] }}
-            >
-              <RectButton onPress={onPress} style={styles.boxDelete}>
-                <IconLabel
-                  styleContainer={styles.iconDelete}
-                  name="trash-2"
-                ></IconLabel>
-              </RectButton>
-            </Animated.View>
-          </View>
-        )
-      }}
-    >
-      {children}
-    </Swipeable>
-  )
-}
-
 const ViewGrid: FC = observer(() => {
-  const store = useHook()
+  const { name, store } = useHook()
   const column = store.data.get("column") || []
   const label = store.data.get("label") || []
   const isMobile = ["sm", "md"].indexOf(store?.app?.dimension.screen) >= 0
@@ -85,22 +40,19 @@ const ViewGrid: FC = observer(() => {
             style={styles.rootTable}
             {...getTableProps()}
           >
-            {headerGroups.map((headerGroup) => (
-              <Header {...headerGroup.getHeaderGroupProps()}>
-                {isMobile ? (
-                  <Cell>Content</Cell>
-                ) : (
-                  headerGroup.headers.map((column) => (
+            {!isMobile &&
+              headerGroups.map((headerGroup) => (
+                <Header {...headerGroup.getHeaderGroupProps()}>
+                  {headerGroup.headers.map((column) => (
                     <Cell
                       {...column.getHeaderProps()}
                       style={(column as any).style}
                     >
                       {column.render("Header")}
                     </Cell>
-                  ))
-                )}
-              </Header>
-            ))}
+                  ))}
+                </Header>
+              ))}
             {isFilter && <Row filter>{}</Row>}
             <FlatList
               data={rows}
@@ -108,13 +60,14 @@ const ViewGrid: FC = observer(() => {
               renderItem={({ item, index }) => {
                 prepareRow(item)
                 return isMobile ? (
-                  <SwipeableRow>
-                    <RowMobile
-                      dark={index % 2}
-                      data={item.values}
-                      label={label}
-                    />
-                  </SwipeableRow>
+                  <RowMobile
+                    index={index}
+                    store={store}
+                    name={name}
+                    dark={index % 2}
+                    data={item.values}
+                    label={label}
+                  />
                 ) : (
                   <Row dark={index % 2} {...item.getRowProps()}>
                     {item.cells.map((cell) => (
