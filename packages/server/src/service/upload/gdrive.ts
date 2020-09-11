@@ -19,7 +19,6 @@ export const auth = function (this: UploadService) {
 
 export const token = function (this: UploadService) {
   const tokenPath = resolve(appPath, config.stored_token)
-
   const getToken = async (code: string) => {
     return new Promise((resolve, reject) => {
       this.gapiOAuthClient.getToken(code, async (err: any, token: any) => {
@@ -44,12 +43,11 @@ export const token = function (this: UploadService) {
 export const store = function (this: UploadService) {
   let drive: any
   const tokenPath = resolve(appPath, config.stored_token)
-
   const uploadGDrive = async (part: any) => {
     return new Promise(async (resolve, reject) => {
       if (!drive) {
         const token = await fs.readFile(tokenPath, "utf-8")
-        this.gapiOAuthClient.setCredentials(token)
+        this.gapiOAuthClient.setCredentials(JSON.parse(token))
         drive = this.gapi.drive({ version: "v3", auth: this.gapiOAuthClient })
       }
       drive.files.create(
@@ -62,7 +60,6 @@ export const store = function (this: UploadService) {
         },
         (err: Error, file: any) => {
           if (err) {
-            console.log("ERROR", err.message)
             reject(err)
           } else {
             resolve(file.data.id)
