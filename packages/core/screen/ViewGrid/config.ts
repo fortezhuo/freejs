@@ -10,12 +10,14 @@ export const user = {
       name: "_id",
       type: "checkbox",
       style: { width: 36, maxWidth: 36 },
+      isMobileVisible: false,
     },
     {
       label: "",
       name: "_id",
       type: "link",
       style: { width: 36, maxWidth: 36 },
+      isMobileVisible: true,
     },
     {
       label: "User Name",
@@ -23,6 +25,7 @@ export const user = {
       filter: true,
       search: ["username"],
       style: { width: 150 },
+      isMobileVisible: true,
     },
     {
       label: "Full Name",
@@ -30,6 +33,7 @@ export const user = {
       filter: true,
       search: ["fullname"],
       style: { width: 200 },
+      isMobileVisible: true,
     },
     {
       label: "Email",
@@ -37,6 +41,7 @@ export const user = {
       filter: true,
       search: ["email"],
       style: { width: 200 },
+      isMobileVisible: true,
     },
     {
       label: "Roles",
@@ -44,6 +49,7 @@ export const user = {
       filter: true,
       search: ["roles"],
       style: { width: 200 },
+      isMobileVisible: true,
     },
     {
       label: "Updated At",
@@ -51,12 +57,14 @@ export const user = {
       type: "datetime",
       filter: false,
       style: { width: 200 },
+      isMobileVisible: true,
     },
     {
       label: "Updated By",
       name: "_updatedBy",
       filter: ["_updatedBy"],
       style: { width: 200 },
+      isMobileVisible: true,
     },
   ],
 }

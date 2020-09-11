@@ -7,6 +7,8 @@ import { observer } from "mobx-react-lite"
 import { Layout } from "../../component/Layout"
 import { useHook } from "./hook"
 
+const Wrapper: any = View
+
 const SettingLog: FC = observer(() => {
   const store = useHook()
   const { getTableProps, headerGroups, rows, prepareRow } = useTable({
@@ -22,7 +24,10 @@ const SettingLog: FC = observer(() => {
               <Header {...headerGroup.getHeaderGroupProps()}>
                 {headerGroup.headers.map((column) => {
                   return (
-                    <Cell {...column.getHeaderProps()} style={column.style}>
+                    <Cell
+                      {...column.getHeaderProps()}
+                      style={(column as any).style}
+                    >
                       {column.render("Header")}
                     </Cell>
                   )
@@ -36,7 +41,13 @@ const SettingLog: FC = observer(() => {
                 prepareRow(item)
                 return (
                   <Row dark={index % 2} {...item.getRowProps()}>
-                    {item.cells.map((cell) => cell.render("Cell"))}
+                    {item.cells.map((cell) => {
+                      return (
+                        <Wrapper {...cell.getCellProps()}>
+                          {cell.render("Cell")}
+                        </Wrapper>
+                      )
+                    })}
                   </Row>
                 )
               }}

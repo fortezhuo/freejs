@@ -1,8 +1,8 @@
 import React, { FC, createRef } from "react"
 import { View, StyleSheet, FlatList, Animated } from "react-native"
 import { tw } from "@free/tailwind"
-import { Table, Row, Cell, Header } from "../../component/Table"
-import { IconButton } from "../../component/Icon"
+import { Table, Row, RowMobile, Cell, Header } from "../../component/Table"
+import { IconLabel } from "../../component/Icon"
 import { useHook } from "./hook"
 import { useTable } from "react-table"
 import { observer } from "mobx-react-lite"
@@ -11,6 +11,9 @@ import * as ActionGroup from "../../component/ActionGroup"
 import { Layout } from "../../component/Layout"
 import { theme } from "../../config/theme"
 import Swipeable from "react-native-gesture-handler/Swipeable"
+import { RectButton } from "react-native-gesture-handler"
+
+const Wrapper: any = View
 
 const SwipeableRow: FC<any> = ({ children }) => {
   const ref = createRef<any>()
@@ -34,19 +37,17 @@ const SwipeableRow: FC<any> = ({ children }) => {
           <View
             style={{
               width,
-              flexDirection: "row",
             }}
           >
             <Animated.View
               style={{ flex: 1, transform: [{ translateX: trans }] }}
             >
-              <IconButton
-                styleContainer={styles.boxDelete}
-                name="trash-2"
-                onPress={onPress}
-              >
-                Delete
-              </IconButton>
+              <RectButton onPress={onPress} style={styles.boxDelete}>
+                <IconLabel
+                  styleContainer={styles.iconDelete}
+                  name="trash-2"
+                ></IconLabel>
+              </RectButton>
             </Animated.View>
           </View>
         )
@@ -60,6 +61,7 @@ const SwipeableRow: FC<any> = ({ children }) => {
 const ViewGrid: FC = observer(() => {
   const store = useHook()
   const column = store.data.get("column") || []
+  const label = store.data.get("label") || []
   const isMobile = ["sm", "md"].indexOf(store?.app?.dimension.screen) >= 0
   const buttonDesktop = store.data.get("button_desktop")
   const buttonMobile = store.data.get("button_mobile")
@@ -89,7 +91,10 @@ const ViewGrid: FC = observer(() => {
                   <Cell>Content</Cell>
                 ) : (
                   headerGroup.headers.map((column) => (
-                    <Cell {...column.getHeaderProps()} style={column.style}>
+                    <Cell
+                      {...column.getHeaderProps()}
+                      style={(column as any).style}
+                    >
                       {column.render("Header")}
                     </Cell>
                   ))
@@ -104,13 +109,19 @@ const ViewGrid: FC = observer(() => {
                 prepareRow(item)
                 return isMobile ? (
                   <SwipeableRow>
-                    <Row dark={index % 2} style={styles.rowMobile}>
-                      <Cell>Mobile</Cell>
-                    </Row>
+                    <RowMobile
+                      dark={index % 2}
+                      data={item.values}
+                      label={label}
+                    />
                   </SwipeableRow>
                 ) : (
                   <Row dark={index % 2} {...item.getRowProps()}>
-                    {item.cells.map((cell) => cell.render("Cell"))}
+                    {item.cells.map((cell) => (
+                      <Wrapper {...cell.getCellProps()}>
+                        {cell.render("Cell")}
+                      </Wrapper>
+                    ))}
                   </Row>
                 )
               }}
@@ -131,7 +142,8 @@ const styles = StyleSheet.create({
   rootViewGrid: tw("flex-1 flex-col"),
   rootTable: tw("flex-1"),
   boxTable: tw("flex-no-wrap flex-1"),
-  boxDelete: tw(`${theme.danger} flex-row`),
+  boxDelete: tw("flex-1"),
+  iconDelete: tw(`${theme.danger} flex-row flex-1 justify-center items-center`),
   rowMobile: tw("flex-col"),
 })
 

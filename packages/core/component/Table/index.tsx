@@ -136,6 +136,27 @@ export const CellCheckbox: FC<any> = observer(
   }
 )
 
+export const RowMobile: FC<RowProps> = observer(
+  ({ data, label, dark, style, testID = "RowMobile" }) => {
+    console.log(data)
+    return (
+      <View
+        testID={testID}
+        style={StyleSheet.flatten([
+          styles.rootRow,
+          styles.rowMobile,
+          dark ? styles.rowDark : {},
+          style,
+        ])}
+      >
+        {Object.keys(data).map((key) => {
+          return <Text key={random()}>{label[key] + " : " + data[key]}</Text>
+        })}
+      </View>
+    )
+  }
+)
+
 const styles = StyleSheet.create({
   rootTable: tw(`${theme.bgTable} border ${theme.borderTable} shadow-lg m-1`),
   groupTable: tw("flex-col flex-1"),
@@ -144,6 +165,7 @@ const styles = StyleSheet.create({
   rootFilter: tw(`${theme.bgRowFilter} h-10 items-center`),
   textCell: tw(theme.textCell),
   rootRow: tw(`${theme.borderTable} border-b flex-row flex-no-wrap`),
+  rowMobile: tw("flex-col"),
   rowDark: tw(theme.bgRowDark),
   rootCell: tw(`${theme.borderTable} p-2 w-40 border-r flex-grow`),
   cellFilter: { padding: 0 },

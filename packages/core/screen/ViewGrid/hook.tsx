@@ -57,16 +57,33 @@ export const useHook = () => {
     view.data.set("collection", res.data.result)
   }
 
-  // Desktop
   const getColumn = (name: string) => {
-    const column = (config as ObjectAny)[name].column.map((col: ObjectAny) => ({
-      id: col.type ? `${col.name}_${col.type}` : col.name,
-      Header: col.label,
-      accessor: col.name,
-      style: col.style,
-      Cell: getCell(col.type),
-    }))
+    let column = (config as ObjectAny)[name].column
+    const label: any = {}
+    if (isMobile) {
+      column = column.filter((col: any) => col.isMobileVisible)
+      column.forEach((col: any) => {
+        if (col.type !== "link")
+          label[col.type ? `${col.name}_${col.type}` : col.name] = col.label
+      })
+    }
+
+    column = column.map((col: ObjectAny) =>
+      isMobile
+        ? {
+            id: col.type ? `${col.name}_${col.type}` : col.name,
+            accessor: col.name,
+          }
+        : {
+            id: col.type ? `${col.name}_${col.type}` : col.name,
+            Header: col.label,
+            accessor: col.name,
+            style: col.style,
+            Cell: getCell(col.type),
+          }
+    )
     view.data.set("column", column)
+    view.data.set("label", label)
   }
 
   const getCell = (type: string) => (cell: any) => {
