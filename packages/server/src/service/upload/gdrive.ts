@@ -19,19 +19,24 @@ export const auth = function (this: UploadService) {
 
 export const token = function (this: UploadService) {
   const tokenPath = resolve(appPath, config.stored_token)
+
+  const getToken = async (code: string) => {
+    return new Promise((resolve, reject) => {
+      this.gapiOAuthClient.getToken(code, async (err: any, token: any) => {
+        if (err) reject(err)
+        resolve(token)
+      })
+    })
+  }
+
   return async (req: Request, reply: Reply) => {
     const code = (req.query as any)?.code
     if (!code) throw new Error("GDrive Auth Failed")
-    this.gapiOAuthClient.getToken(code, async (err: any, token: any) => {
-      if (err) {
-        this.onErrorHandler(req, reply, err)
-      }
-      this.gapiOAuthClient.setCredentials(token)
-      await fs.writeFile(tokenPath, JSON.stringify(token))
-      reply.send({
-        message: `Token file stored at ${tokenPath}`,
-        ...token,
-      })
+    const token = await getToken(code)
+    await fs.writeFile(tokenPath, JSON.stringify(token))
+    reply.send({
+      message: `Token file stored at ${tokenPath}`,
+      token,
     })
   }
 }
@@ -72,8 +77,9 @@ export const store = function (this: UploadService) {
     const parts = await req.files()
     let files = []
     for await (const part of parts) {
-      files.push(await uploadGDrive(part))
+      const id = await uploadGDrive(part)
+      files.push(id)
     }
-    reply.send("Data uploaded to GDrive successfully")
+    reply.send({ message: "Data uploaded to GDrive successfully", files })
   }
 }
