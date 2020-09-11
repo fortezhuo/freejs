@@ -19,19 +19,24 @@ const primary = color(theme.primary)
 
 export const Table: FC<TableProps> = observer(
   ({ children, style, scroll, testID = "Table" }) => {
+    const Wrapper: FC = ({ children }) =>
+      scroll ? (
+        <ScrollView scrollEnabled={scroll} horizontal testID="HorizontalScroll">
+          {children}
+        </ScrollView>
+      ) : (
+        <View style={{ flex: 1 }}>{children}</View>
+      )
+
     return (
       <View
         testID={testID}
         style={StyleSheet.flatten([styles.rootTable, style])}
       >
         <View style={{ flex: 1 }}>
-          <ScrollView
-            scrollEnabled={scroll}
-            horizontal
-            testID="HorizontalScroll"
-          >
+          <Wrapper>
             <View style={styles.groupTable}>{children}</View>
-          </ScrollView>
+          </Wrapper>
         </View>
       </View>
     )
