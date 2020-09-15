@@ -35,6 +35,11 @@ div[data-testid="Sidebar"] > div,
 div[data-testid="Stack"] > div {
   scrollbar-width: none;
 }
+
+div[data-testid="BottomSheet"] {
+  overflow: hidden;
+}
+
 .applayout {
   background: #2b6cb0;
   min-height: 100%;

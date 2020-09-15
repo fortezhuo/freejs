@@ -1,20 +1,18 @@
-import React, { FC, Children } from "react"
+import React, { FC, Children, useRef, useEffect } from "react"
 import {
   View,
   TouchableOpacity,
   StyleSheet,
-  ViewProps,
+  Animated,
   Platform,
 } from "react-native"
 import { theme } from "../../config/theme"
-import { useSpring, animated } from "react-spring/native"
 import { IconLabel, Icon } from "../Icon"
 import { tw, color } from "@free/tailwind"
 import { observer, useLocalStore } from "mobx-react-lite"
 import { useStore } from "../Store"
 import { AccordionProps, AccordionItemProps } from "@free/core"
 
-const AnimatedView = animated<React.ElementType<ViewProps>>(View)
 const { color: textColor } = tw(theme.textAccordionItem)
 const { color: iconColor } = tw(theme.textAccordion)
 const noop = () => {}
@@ -28,15 +26,22 @@ export const Accordion: FC<AccordionProps> = observer(
       },
     }))
     const itemHeight = 46
-    const height = Children.count(children) * itemHeight
-    const accordionProps = useSpring({
-      config: { duration: 120 },
-      from: active ? { opacity: 1, height } : { opacity: 0, height: 0 },
-      to: {
-        opacity: state.isExpand ? 1 : 0,
-        height: state.isExpand ? height : 0,
-      },
+    const childHeight = Children.count(children) * itemHeight
+
+    const opacity = useRef(new Animated.Value(0)).current
+    const height = opacity.interpolate({
+      inputRange: [0, 1],
+      outputRange: [0, childHeight],
     })
+
+    useEffect(() => {
+      Animated.timing(opacity, {
+        toValue: state.isExpand ? 1 : 0,
+        duration: 120,
+        useNativeDriver: Platform.OS !== "web",
+      }).start()
+    }, [state.isExpand])
+
     return (
       <TouchableOpacity onPress={state.toggle}>
         <View style={styles.rootAccordion} testID={testID}>
@@ -60,11 +65,11 @@ export const Accordion: FC<AccordionProps> = observer(
               name={`chevron-${state.isExpand ? "up" : "down"}`}
             />
           </View>
-          <AnimatedView
-            style={StyleSheet.flatten([styles.groupItem, accordionProps])}
+          <Animated.View
+            style={StyleSheet.flatten([styles.groupItem, { height, opacity }])}
           >
             {children}
-          </AnimatedView>
+          </Animated.View>
         </View>
       </TouchableOpacity>
     )

@@ -1,6 +1,11 @@
 import React, { Component } from "react"
 import { Animated, StyleSheet, Text, View, Dimensions } from "react-native"
-import { PanGestureHandler, State } from "react-native-gesture-handler"
+import {
+  PanGestureHandler,
+  NativeViewGestureHandler,
+  State,
+  TapGestureHandler,
+} from "react-native-gesture-handler"
 
 const HEADER_HEIGHT = 50
 const windowHeight = Dimensions.get("window").height
@@ -53,7 +58,13 @@ export class Small extends Component {
       extrapolate: "clamp",
     })
   }
-  onHandlerStateChange = ({ nativeEvent }: any) => {
+  _onHeaderHandlerStateChange = ({ nativeEvent }: any) => {
+    if (nativeEvent.oldState === State.BEGAN) {
+      this._lastScrollY.setValue(0)
+    }
+    this._onHandlerStateChange({ nativeEvent })
+  }
+  _onHandlerStateChange = ({ nativeEvent }: any) => {
     if (nativeEvent.oldState === State.ACTIVE) {
       let { velocityY, translationY } = nativeEvent
       translationY -= this._lastScrollYValue
@@ -101,7 +112,7 @@ export class Small extends Component {
             ref={this.drawerheader as any}
             shouldCancelWhenOutside={true}
             onGestureEvent={this._onGestureEvent}
-            onHandlerStateChange={this.onHandlerStateChange}
+            onHandlerStateChange={this._onHeaderHandlerStateChange}
           >
             <View style={styles.header} />
           </PanGestureHandler>
