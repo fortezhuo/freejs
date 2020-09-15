@@ -1,7 +1,6 @@
-import React, { FC } from "react"
-import { View, StyleSheet, ScrollView, ViewProps } from "react-native"
+import React, { FC, useEffect, useRef } from "react"
+import { View, StyleSheet, ScrollView, Animated, Platform } from "react-native"
 import { tw } from "@free/tailwind"
-import { useSpring, animated } from "react-spring/native"
 import { Accordion, AccordionItem } from "../Accordion"
 import { SidebarProps } from "@free/core"
 import { observer } from "mobx-react-lite"
@@ -48,26 +47,31 @@ const Content: FC = observer(() => {
   )
 })
 
-const AnimatedView = animated<React.ElementType<ViewProps>>(View)
 export const Sidebar: FC<SidebarProps> = observer(
   ({ isOpen, testID = "Sidebar" }) => {
-    const animatedStyle = useSpring({
-      config: { duration: 100 },
-      from: { width: tw("w-64").width },
-      to: {
-        width: isOpen ? tw("w-64").width : 0,
-      },
+    const opacity = useRef(new Animated.Value(1)).current
+    const width = opacity.interpolate({
+      inputRange: [0, 1],
+      outputRange: [0, tw("w-64").width],
     })
 
+    useEffect(() => {
+      Animated.timing(opacity, {
+        toValue: isOpen ? 1 : 0,
+        duration: 120,
+        useNativeDriver: Platform.OS !== "web",
+      }).start()
+    }, [isOpen])
+
     return (
-      <AnimatedView
+      <Animated.View
         testID={testID}
-        style={StyleSheet.flatten([styles.rootSidebar, animatedStyle])}
+        style={StyleSheet.flatten([styles.rootSidebar, { opacity, width }])}
       >
         <ScrollView>
           <Content />
         </ScrollView>
-      </AnimatedView>
+      </Animated.View>
     )
   }
 )

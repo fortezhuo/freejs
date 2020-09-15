@@ -29,7 +29,6 @@
     "react-native-safe-area-context": "^3.1.1",
     "react-native-vector-icons": "fortezhuo/react-native-vector-icons",
     "react-router": "^5.2.0",
-    "react-spring": "^8.0.27",
     "react-table": "^7.5.0"
   }
 }
