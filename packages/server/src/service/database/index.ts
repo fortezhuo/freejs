@@ -4,22 +4,27 @@ import { Request } from "@free/server"
 import { findAll } from "./findAll"
 import { findOne } from "./findOne"
 import { remove } from "./remove"
+import { restore } from "./restore"
 import { save } from "./save"
 
 export class DatabaseService extends BaseService {
   public dbName: string
+  public dbTrashName: string
   public collection: any
   public findAll: any
   public findOne: any
   public remove: any
+  public restore: any
   public save: any
 
-  constructor(name: string, dbName?: string) {
+  constructor(name: string, dbName?: string, dbTrashName?: string) {
     super(name)
     this.dbName = dbName ? dbName : "app"
+    this.dbTrashName = dbTrashName ? dbTrashName : "trash"
     this.findAll = findAll.bind(this)
     this.findOne = findOne.bind(this)
     this.remove = remove.bind(this)
+    this.restore = restore.bind(this)
     this.save = save.bind(this)
   }
 
