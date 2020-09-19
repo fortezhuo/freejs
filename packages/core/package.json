@@ -22,13 +22,13 @@
     "@react-native-community/datetimepicker": "^3.0.1",
     "axios": "^0.19.2",
     "mobx": "^5.15.4",
-    "mobx-react-lite": "^2.0.7",
+    "mobx-react-lite": "^2.2.2",
     "react": "^16.13.1",
     "react-flatpickr": "^3.10.6",
     "react-native-gesture-handler": "^1.8.0",
-    "react-native-safe-area-context": "^3.1.1",
+    "react-native-safe-area-context": "^3.1.8",
     "react-native-vector-icons": "fortezhuo/react-native-vector-icons",
     "react-router": "^5.2.0",
-    "react-table": "^7.5.0"
+    "react-table": "^7.5.1"
   }
 }

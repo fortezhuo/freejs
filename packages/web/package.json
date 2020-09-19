@@ -13,9 +13,8 @@
   },
   "dependencies": {
     "@free/core": "*",
-    "@loadable/babel-plugin": "^5.13.0",
-    "@loadable/component": "^5.13.1",
-    "@loadable/server": "^5.13.1",
+    "@loadable/component": "^5.13.2",
+    "@loadable/server": "^5.13.2",
     "react-dom": "^16.13.1",
     "react-native-web": "^0.12.3",
     "react-router-dom": "^5.2.0"
@@ -32,7 +31,7 @@
     "@babel/preset-typescript": "^7.10.4",
     "@babel/runtime": "^7.11.0",
     "@hot-loader/react-dom": "^16.13.0",
-    "@loadable/babel-plugin": "^5.13.0",
+    "@loadable/babel-plugin": "^5.13.2",
     "@loadable/webpack-plugin": "^5.13.0",
     "@types/compression-webpack-plugin": "^4.0.0",
     "@types/loadable__component": "^5.13.0",
