@@ -1407,6 +1407,24 @@
 	"items-stretch": {
 		"alignItems": "stretch"
 	},
+	"content-center": {
+		"alignContent": "center"
+	},
+	"content-start": {
+		"alignContent": "flex-start"
+	},
+	"content-end": {
+		"alignContent": "flex-end"
+	},
+	"content-between": {
+		"alignContent": "space-between"
+	},
+	"content-around": {
+		"alignContent": "space-around"
+	},
+	"content-evenly": {
+		"alignContent": "space-evenly"
+	},
 	"self-auto": {
 		"alignSelf": "auto"
 	},
@@ -1421,6 +1439,21 @@
 	},
 	"self-stretch": {
 		"alignSelf": "stretch"
+	},
+	"justify-items-auto": {
+		"justifyItems": "auto"
+	},
+	"justify-items-start": {
+		"justifyItems": "start"
+	},
+	"justify-items-end": {
+		"justifyItems": "end"
+	},
+	"justify-items-center": {
+		"justifyItems": "center"
+	},
+	"justify-items-stretch": {
+		"justifyItems": "stretch"
 	},
 	"justify-start": {
 		"justifyContent": "flex-start"
@@ -1440,20 +1473,20 @@
 	"justify-evenly": {
 		"justifyContent": "space-evenly"
 	},
-	"content-center": {
-		"alignContent": "center"
+	"justify-self-auto": {
+		"justifySelf": "auto"
 	},
-	"content-start": {
-		"alignContent": "flex-start"
+	"justify-self-start": {
+		"justifySelf": "start"
 	},
-	"content-end": {
-		"alignContent": "flex-end"
+	"justify-self-end": {
+		"justifySelf": "end"
 	},
-	"content-between": {
-		"alignContent": "space-between"
+	"justify-self-center": {
+		"justifySelf": "center"
 	},
-	"content-around": {
-		"alignContent": "space-around"
+	"justify-self-stretch": {
+		"justifySelf": "stretch"
 	},
 	"flex-1": {
 		"flexGrow": 1,
