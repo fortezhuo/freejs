@@ -59,7 +59,7 @@ export const Sidebar: FC<SidebarProps> = observer(
       Animated.timing(opacity, {
         toValue: isOpen ? 1 : 0,
         duration: 120,
-        useNativeDriver: Platform.OS !== "web",
+        useNativeDriver: false,
       }).start()
     }, [isOpen])
 

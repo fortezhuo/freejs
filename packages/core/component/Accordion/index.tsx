@@ -38,7 +38,7 @@ export const Accordion: FC<AccordionProps> = observer(
       Animated.timing(opacity, {
         toValue: state.isExpand ? 1 : 0,
         duration: 120,
-        useNativeDriver: Platform.OS !== "web",
+        useNativeDriver: false,
       }).start()
     }, [state.isExpand])
 

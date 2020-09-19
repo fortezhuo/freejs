@@ -13,6 +13,7 @@
     "dev": "run-p dev:mock dev:web dev:server",
     "dev:android": "run-p dev:server:mobile dev:mock android",
     "dev:ios": "run-p dev:server:mobile dev:mock ios",
+    "dev+ios": "run-p dev ios",
     "dev:mock": "yarn workspace @free/mock start",
     "dev:web": "yarn workspace @free/web start",
     "dev:server": "yarn workspace @free/server start",

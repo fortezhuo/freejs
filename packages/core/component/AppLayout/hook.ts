@@ -30,7 +30,7 @@ export const useHook = () => {
       height: height - insets.top - insets.bottom,
       screen,
     })
-  }, [width])
+  }, [width, height])
 
   useEffect(() => {
     ;(async function () {

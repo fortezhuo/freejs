@@ -1,39 +1,70 @@
-import React, { useRef, FC } from "react"
-import { PanGestureHandler, State } from "react-native-gesture-handler"
+import React, { useRef, FC, useState, useEffect } from "react"
+import {
+  PanGestureHandler,
+  TapGestureHandler,
+  State,
+} from "react-native-gesture-handler"
 import { View, StyleSheet, Animated, Platform } from "react-native"
 import { Button } from "../Button"
-import { Icon } from "../Icon"
+import { IconLabel } from "../Icon"
 import { random } from "../../util/random"
 import { observer } from "mobx-react-lite"
 import { tw, color } from "@free/tailwind"
 
 export const Small: FC<any> = observer(({ store, button }) => {
+  const winHeight =
+    store.app.dimension.height - (Platform.OS == "web" ? 130 : 150)
+  const boxHeight = winHeight - (button || []).length * 48 - 58
+  const SNAP_POINTS_FROM_TOP = [boxHeight, winHeight]
+  const START = SNAP_POINTS_FROM_TOP[0]
+  const END = SNAP_POINTS_FROM_TOP[SNAP_POINTS_FROM_TOP.length - 1]
+  const [lastSnap, setLastSnap] = useState(END)
+
+  const wrapper = useRef(null)
   const drawer = useRef(null)
   const dragY = useRef(new Animated.Value(0)).current
-  const translateY = useRef(new Animated.Value(550)).current
+  const offsetY = useRef(new Animated.Value(END)).current
+
+  const translateY = Animated.add(offsetY, dragY).interpolate({
+    inputRange: [START, END],
+    outputRange: [START, END],
+    extrapolate: "clamp",
+  })
   const onGestureEvent = Animated.event(
     [{ nativeEvent: { translationY: dragY } }],
     { useNativeDriver: false }
   )
+
   const onStateChange = ({ nativeEvent }: any) => {
-    if (nativeEvent.oldState === State.BEGAN) {
-      if ((dragY as any)._value < 0) {
-        Animated.timing(translateY, {
-          toValue: 200,
-          duration: 120,
-          useNativeDriver: Platform.OS !== "web",
-        }).start()
-      } else {
-        Animated.timing(translateY, {
-          toValue: 550,
-          duration: 120,
-          useNativeDriver: Platform.OS !== "web",
-        }).start()
+    if (nativeEvent.oldState === State.ACTIVE) {
+      let { velocityY, translationY } = nativeEvent
+      const dragToss = 0.05
+      const endOffsetY = lastSnap + translationY + dragToss * velocityY
+
+      let destSnapPoint = SNAP_POINTS_FROM_TOP[0]
+      for (let i = 0; i < SNAP_POINTS_FROM_TOP.length; i++) {
+        const snapPoint = SNAP_POINTS_FROM_TOP[i]
+        const distFromSnap = Math.abs(snapPoint - endOffsetY)
+        if (distFromSnap < Math.abs(destSnapPoint - endOffsetY)) {
+          destSnapPoint = snapPoint
+        }
       }
+      setLastSnap(destSnapPoint)
+      offsetY.extractOffset()
+      offsetY.setValue(translationY)
+      offsetY.flattenOffset()
+      dragY.setValue(0)
+      Animated.spring(offsetY, {
+        velocity: velocityY,
+        tension: 68,
+        friction: 12,
+        toValue: destSnapPoint,
+        useNativeDriver: true,
+      }).start()
     }
   }
 
-  return (
+  return button ? (
     <View
       testID="BottomSheet"
       style={StyleSheet.flatten([
@@ -42,45 +73,52 @@ export const Small: FC<any> = observer(({ store, button }) => {
       ])}
       pointerEvents="box-none"
     >
-      <Animated.View
-        style={[
-          {
-            transform: [{ translateY }],
-          },
-        ]}
+      <TapGestureHandler
+        ref={wrapper}
+        maxDurationMs={100000}
+        maxDeltaY={lastSnap - SNAP_POINTS_FROM_TOP[0]}
       >
-        <PanGestureHandler
-          ref={drawer}
-          shouldCancelWhenOutside={true}
-          onGestureEvent={onGestureEvent}
-          onHandlerStateChange={onStateChange}
+        <Animated.View
+          style={[
+            {
+              transform: [{ translateY }],
+            },
+          ]}
         >
-          <View>
-            <View style={styles.rootHeader}>
-              <Icon name="chevron-up" color={color("bg-gray-600")} />
-            </View>
-            {button && (
-              <View style={styles.rootContent}>
-                {button.map(({ icon, type, ...prop }: ObjectAny) => (
-                  <Button
-                    {...prop}
-                    key={"act_" + random()}
-                    store={store}
-                    style={{ marginVertical: 2 }}
-                  />
-                ))}
-              </View>
-            )}
+          <PanGestureHandler
+            ref={drawer}
+            simultaneousHandlers={[wrapper]}
+            shouldCancelWhenOutside={true}
+            onGestureEvent={onGestureEvent}
+            onHandlerStateChange={onStateChange}
+          >
+            <Animated.View>
+              <IconLabel
+                //              onPress={() => setOpen(!isOpen)}
+                styleContainer={styles.rootHeader}
+                name={"chevron-down"}
+                color={color("bg-gray-600")}
+              />
+            </Animated.View>
+          </PanGestureHandler>
+          <View style={[styles.rootContent]}>
+            {button.map(({ icon, type, ...prop }: ObjectAny) => (
+              <Button
+                {...prop}
+                key={"act_" + random()}
+                store={store}
+                style={{ marginVertical: 2 }}
+              />
+            ))}
           </View>
-        </PanGestureHandler>
-      </Animated.View>
+        </Animated.View>
+      </TapGestureHandler>
     </View>
-  )
+  ) : null
 })
 
 const styles = StyleSheet.create({
   rootSheet: tw("mx-1"),
-  rootSmall: tw("absolute"),
   rootHeader: tw("items-center"),
-  rootContent: tw("flex-1 bg-white"),
+  rootContent: tw("p-3 bg-black-500"),
 })
