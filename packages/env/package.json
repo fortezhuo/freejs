@@ -10,7 +10,7 @@
   },
   "scripts": {
     "build": "ts-node ./build.ts",
-    "clear-error": "ts-node ./clearMetro.ts",
+    "clear-error": "ts-node ./patch.ts",
     "test-role": "ts-node ./testRole.ts"
   }
 }
