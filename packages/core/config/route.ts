@@ -3,7 +3,7 @@ import { AppStore } from "../store/appStore"
 
 const getSetting: (visible: boolean) => Route[] = (visible: boolean) => {
   return [
-    { path: ["/log"], component: "SettingLog", view: true, visible: visible },
+    { path: ["/log"], component: "SettingLog", view: false, visible: visible },
     {
       path: ["/user"],
       component: "SettingUser",

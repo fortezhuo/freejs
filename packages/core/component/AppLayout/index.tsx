@@ -16,10 +16,8 @@ import { Snackbar } from "../Snackbar"
 import { StoreProvider } from "../Store"
 import { useHook } from "./hook"
 import { MainLayoutProps } from "@free/core"
-import { useDimensions } from "./useDimensions"
 
 const MainLayout: FC<MainLayoutProps> = ({ wallpaper, children }) => {
-  useDimensions()
   useHook()
   return wallpaper ? (
     <ImageBackground source={imgWallpaper} style={styles.rootApp}>
