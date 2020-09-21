@@ -10,7 +10,6 @@ target 'Free' do
   pod 'RNVectorIcons', :path => '../../../node_modules/react-native-vector-icons'
   pod 'react-native-safe-area-context', :path => '../../../node_modules/react-native-safe-area-context'
   pod 'RNDateTimePicker', :path => '../../../node_modules/@react-native-community/datetimepicker/RNDateTimePicker.podspec'
-  pod "RNGestureHandler", :path => '../../../node_modules/react-native-gesture-handler/RNGestureHandler.podspec'
 
   target 'FreeTests' do
     inherit! :complete

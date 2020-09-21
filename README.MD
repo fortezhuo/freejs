@@ -89,7 +89,7 @@ FreeJS is considered unstable. The API could change or be removed in future
 - [ ] Charts
 - [x] Drawer / Sidebar
 - [x] Form Layout, Row, Col Responsive
-- [x] Gesture Handler
+- [ ] Gesture Handler
 - [x] Icon
 - [x] Input Text
 - [ ] Input Textarea

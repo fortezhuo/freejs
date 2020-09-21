@@ -12,12 +12,24 @@ export const useHook = () => {
   useEffect(() => {
     view.title = (config as ObjectAny)[name].title
     view.data.clear()
-    getButton(name)
-    getColumn(name)
-    getCollection(name)
+    view.setData({
+      name,
+      isMobile,
+    })
+    setButton(name)
+    setColumn(name)
+    setCollection(name)
   }, [view?.app?.routerLocation])
 
-  const getButton = async (name: string) => {
+  useEffect(() => {
+    view.setData({
+      isMobile,
+    })
+    setButton(name)
+    setColumn(name)
+  }, [isMobile])
+
+  const setButton = async (name: string) => {
     const list: ObjectAny = {
       new: {
         icon: "file-plus",
@@ -52,12 +64,17 @@ export const useHook = () => {
     view.data.set(`button_${isMobile ? "mobile" : "desktop"}`, button)
   }
 
-  const getCollection = async (name: string) => {
-    const res = await get(`/api/${name}`, {})
-    view.data.set("collection", res.data.result)
+  const setCollection = async (name: string) => {
+    try {
+      view.isLoading = true
+      const res = await get(`/api/${name}`, {})
+      view.data.set("collection", res.data.result)
+    } finally {
+      view.isLoading = false
+    }
   }
 
-  const getColumn = (name: string) => {
+  const setColumn = (name: string) => {
     let column = (config as ObjectAny)[name].column
     const label: any = {}
     if (isMobile) {
@@ -124,5 +141,5 @@ export const useHook = () => {
     }
   }
 
-  return { name, store: view }
+  return { name, store: view, isMobile }
 }

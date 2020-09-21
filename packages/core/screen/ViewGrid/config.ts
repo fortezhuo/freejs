@@ -1,4 +1,29 @@
 // Setting user
+export const log = {
+  title: "Log Dummy",
+  name: "user",
+  search: ["username", "fullname"],
+  button: ["new", "delete", "filter"],
+  column: [
+    {
+      label: "",
+      name: "name",
+      type: "link",
+      style: { width: 36, maxWidth: 36 },
+      isMobileVisible: true,
+    },
+    {
+      label: "Size",
+      name: "size",
+      filter: true,
+      search: ["size"],
+      style: { width: 150 },
+      isMobileVisible: true,
+    },
+  ],
+}
+
+// Setting user
 export const user = {
   title: "User Management",
   name: "user",

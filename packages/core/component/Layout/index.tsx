@@ -7,7 +7,13 @@ import { Loader } from "../Loader"
 import { observer } from "mobx-react-lite"
 
 export const Layout: FC<LayoutProps> = observer(
-  ({ testID = "Layout", children, filter = true, store }) => {
+  ({
+    testID = "Layout",
+    children,
+    filter = true,
+    store,
+    isLoading = false,
+  }) => {
     useHook(store)
     return (
       <View
@@ -17,7 +23,7 @@ export const Layout: FC<LayoutProps> = observer(
           filter ? styles.rootFilter : {},
         ])}
       >
-        {store.isLoading ? <Loader /> : children}
+        {store.isLoading || isLoading ? <Loader /> : children}
       </View>
     )
   }
