@@ -172,7 +172,7 @@ declare module "@free/core" {
   // Layout
   interface LayoutProps extends ViewProps {
     testID?: string
-    filter?: boolean
+    isLoading?: boolean
     store?: any
   }
 

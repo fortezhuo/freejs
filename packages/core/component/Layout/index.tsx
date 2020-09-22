@@ -7,17 +7,11 @@ import { Loader } from "../Loader"
 import { observer } from "mobx-react-lite"
 
 export const Layout: FC<LayoutProps> = observer(
-  ({ testID = "Layout", children, filter = true, store }) => {
+  ({ testID = "Layout", children, store, isLoading = false }) => {
     useHook(store)
     return (
-      <View
-        testID={testID}
-        style={StyleSheet.flatten([
-          styles.rootLayout,
-          filter ? styles.rootFilter : {},
-        ])}
-      >
-        {store.isLoading ? <Loader /> : children}
+      <View testID={testID} style={StyleSheet.flatten([styles.rootLayout])}>
+        {store.isLoading || isLoading ? <Loader /> : children}
       </View>
     )
   }
@@ -25,5 +19,4 @@ export const Layout: FC<LayoutProps> = observer(
 
 const styles = {
   rootLayout: tw("flex-1 m-1"),
-  rootFilter: tw("bg-white-500"),
 }

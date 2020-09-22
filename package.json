@@ -23,7 +23,7 @@
     "clean:ios": "yarn workspace @free/mobile clean-ios",
     "clean:log": "rimraf ./log/*.log",
     "clean:metro": "yarn workspace @free/mobile clean-metro",
-    "clean:repo": "rimraf ./node_modules ./packages/**/node_modules ./repo/mobile/ios/Podfile.lock ./repo/mobile/ios/Pods  ./yarn.lock",
+    "clean:repo": "rimraf ./node_modules ./packages/**/node_modules ./packages/mobile/ios/Podfile.lock ./packages/mobile/ios/Pods  ./yarn.lock",
     "start": "NODE_ENV=production node --trace-warnings ./build | NODE_ENV=production logger",
     "start:mock": "run-p dev:mock start",
     "android": "yarn workspace @free/mobile android",

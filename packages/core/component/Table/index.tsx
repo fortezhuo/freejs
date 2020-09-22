@@ -17,6 +17,13 @@ const datetime = (datetime: any) =>
 
 const primary = color(theme.primary)
 
+export const withClass = (Component: any) =>
+  class extends React.PureComponent {
+    render() {
+      return <Component {...this.props} />
+    }
+  }
+
 export const Table: FC<TableProps> = observer(
   ({ children, style, scroll, testID = "Table" }) => {
     const Wrapper: FC = ({ children }) =>

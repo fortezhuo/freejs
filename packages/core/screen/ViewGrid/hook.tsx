@@ -8,16 +8,33 @@ export const useHook = () => {
   const { view } = useStore()
   const name = `${view?.app?.routerLocation}/`.split("/")[1]
   const isMobile = ["sm", "md"].indexOf(view?.app?.dimension.screen) >= 0
+  view.title = (config as ObjectAny)[name].title
 
   useEffect(() => {
-    view.title = (config as ObjectAny)[name].title
-    view.data.clear()
-    getButton(name)
-    getColumn(name)
-    getCollection(name)
+    ;(async () => {
+      view.setData({
+        name,
+        isMobile,
+      })
+      setButton(name)
+      setColumn(name)
+      await setCollection(name)
+    })()
+
+    return () => {
+      view.data.clear()
+    }
   }, [view?.app?.routerLocation])
 
-  const getButton = async (name: string) => {
+  useEffect(() => {
+    view.setData({
+      isMobile,
+    })
+    setButton(name)
+    setColumn(name)
+  }, [isMobile])
+
+  const setButton = async (name: string) => {
     const list: ObjectAny = {
       new: {
         icon: "file-plus",
@@ -48,16 +65,21 @@ export const useHook = () => {
     const button = await (config as ObjectAny)[name].button
       .map((btn: string) => list[btn])
       .filter((btn: ObjectAny) => !!btn && btn.visible)
-
+    view.data.set(`button_${isMobile ? "desktop" : "mobile"}`, undefined)
     view.data.set(`button_${isMobile ? "mobile" : "desktop"}`, button)
   }
 
-  const getCollection = async (name: string) => {
-    const res = await get(`/api/${name}`, {})
-    view.data.set("collection", res.data.result)
+  const setCollection = async (name: string) => {
+    try {
+      view.isLoading = true
+      const res = await get(`/api/${name}`, {})
+      view.data.set("collection", res.data.result)
+    } finally {
+      view.isLoading = false
+    }
   }
 
-  const getColumn = (name: string) => {
+  const setColumn = (name: string) => {
     let column = (config as ObjectAny)[name].column
     const label: any = {}
     if (isMobile) {
@@ -124,5 +146,5 @@ export const useHook = () => {
     }
   }
 
-  return { name, store: view }
+  return { name, store: view, isMobile }
 }
