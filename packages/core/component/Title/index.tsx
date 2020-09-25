@@ -34,6 +34,6 @@ const styles = StyleSheet.create({
   rootTitle: tw("flex-row items-center"),
   imgTitle: tw("h-10 w-10 mr-3"),
   groupTitle: tw("flex-col"),
-  textTitle: tw(`${theme.textTitle} text-xl`),
-  textSubTitle: tw(`${theme.textTitle} text-xs`),
+  textTitle: tw(`text-xl`),
+  textSubTitle: tw(`text-xs`),
 })

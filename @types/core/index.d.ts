@@ -64,7 +64,7 @@ declare module "@free/core" {
   // AppLayout / MainLayout
   interface MainLayoutProps extends ViewProps {
     testID?: string
-    wallpaper?: boolean
+    gradient?: boolean
   }
 
   // Footer
@@ -73,8 +73,16 @@ declare module "@free/core" {
     info?: string
   }
 
-  // FormRow
-  type FormRowProps = {
+  // GradientProps
+  interface GradientProps {
+    children: ReactNode
+    style?: any
+    type?: string
+    colors: string[]
+  }
+
+  // GridRow
+  type GridRowProps = {
     nowrap?: boolean
     smHidden?: boolean
     mdHidden?: boolean
@@ -84,8 +92,8 @@ declare module "@free/core" {
     style?: any
   }
 
-  // FormCol
-  type FormColProps = {
+  // Col
+  type GridColProps = {
     sm?: number
     smHidden?: boolean
     md?: number

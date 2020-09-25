@@ -11,6 +11,7 @@ target 'Free' do
   pod 'react-native-safe-area-context', :path => '../../../node_modules/react-native-safe-area-context'
   pod 'RNDateTimePicker', :path => '../../../node_modules/@react-native-community/datetimepicker/RNDateTimePicker.podspec'
   pod "RNGestureHandler", :path => '../../../node_modules/react-native-gesture-handler/RNGestureHandler.podspec'
+  pod 'BVLinearGradient', :path => '../../../node_modules/react-native-linear-gradient'
 
   target 'FreeTests' do
     inherit! :complete

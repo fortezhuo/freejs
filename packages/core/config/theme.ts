@@ -1,7 +1,21 @@
 import { Config } from "@free/core"
 import { adjust, text } from "@free/tailwind"
 
+/* Banpu */
+/*
+Purple : bg-purple-800
+Blue   : bg-blue-400
+Plum   : bg-pink-800
+Pink   : bg-pink-600
+Green  : bg-green-400
+Gray   : bg-gray-400
+Black  : bg-gray-900
+
+*/
+
 let theme: Config = {
+  primary_1: "bg-purple-800",
+  primary_2: "bg-blue-400",
   primary: "bg-blue-500",
   warning: "bg-yellow-500",
   default: "bg-gray-300",

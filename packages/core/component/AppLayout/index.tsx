@@ -1,32 +1,20 @@
 import React, { FC } from "react"
-import {
-  View,
-  StyleSheet,
-  ImageBackground,
-  KeyboardAvoidingView,
-  Platform,
-} from "react-native"
-import imgWallpaper from "../../img/wallpaper.jpg"
+import { StyleSheet, KeyboardAvoidingView, Platform } from "react-native"
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context"
 import { tw } from "@free/tailwind"
-import { Header } from "../Header"
-import { Drawer } from "../Drawer"
-import { Footer } from "../Footer"
-import { Snackbar } from "../Snackbar"
 import { StoreProvider } from "../Store"
+import { Gradient, Drawer, Header } from "../"
 import { useHook } from "./hook"
 import { MainLayoutProps } from "@free/core"
 import { useDimensions } from "./useDimensions"
 
-const MainLayout: FC<MainLayoutProps> = ({ wallpaper, children }) => {
+const MainLayout: FC<MainLayoutProps> = ({ children }) => {
   useDimensions()
   useHook()
-  return wallpaper ? (
-    <ImageBackground source={imgWallpaper} style={styles.rootApp}>
+  return (
+    <Gradient colors={["primary_1", "primary_2"]} style={styles.rootApp}>
       {children}
-    </ImageBackground>
-  ) : (
-    <View style={styles.rootApp}>{children}</View>
+    </Gradient>
   )
 }
 
@@ -39,13 +27,11 @@ export const AppLayout: FC = ({ children }) => {
       >
         <StoreProvider>
           <SafeAreaView style={styles.rootApp}>
-            <MainLayout wallpaper>
-              <Header />
+            <MainLayout>
               <Drawer>
+                <Header />
                 {children}
-                <Snackbar />
               </Drawer>
-              <Footer />
             </MainLayout>
           </SafeAreaView>
         </StoreProvider>
@@ -57,5 +43,5 @@ export const AppLayout: FC = ({ children }) => {
 export default AppLayout
 
 const styles = StyleSheet.create({
-  rootApp: tw("flex-1"),
+  rootApp: tw("flex-1 flex-col justify-center bg-white"),
 })

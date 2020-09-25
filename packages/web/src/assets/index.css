@@ -41,7 +41,7 @@ div[data-testid="BottomSheet"] {
 }
 
 .applayout {
-  background: #2b6cb0;
+  background: linear-gradient(1.5708rad, rgb(85, 60, 154), rgb(99, 179, 237));
   min-height: 100%;
 }
 .big-container {

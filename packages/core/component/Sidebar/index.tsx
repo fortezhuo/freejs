@@ -1,10 +1,9 @@
 import React, { FC, useEffect, useRef } from "react"
-import { View, StyleSheet, ScrollView, Animated, Platform } from "react-native"
+import { View, StyleSheet, ScrollView, Animated } from "react-native"
 import { tw } from "@free/tailwind"
-import { Accordion, AccordionItem } from "../Accordion"
+import { Accordion, AccordionItem, useStore, Title } from ".."
 import { SidebarProps } from "@free/core"
 import { observer } from "mobx-react-lite"
-import { useStore } from "../Store"
 import { getMenu } from "../../config/menu"
 import { random } from "../../util/random"
 
@@ -49,6 +48,7 @@ const Content: FC = observer(() => {
 
 export const Sidebar: FC<SidebarProps> = observer(
   ({ isOpen, testID = "Sidebar" }) => {
+    const { app } = useStore()
     const opacity = useRef(new Animated.Value(1)).current
     const width = opacity.interpolate({
       inputRange: [0, 1],
@@ -68,6 +68,7 @@ export const Sidebar: FC<SidebarProps> = observer(
         testID={testID}
         style={StyleSheet.flatten([styles.rootSidebar, { opacity, width }])}
       >
+        <Title>{app.subTitle}</Title>
         <ScrollView>
           <Content />
         </ScrollView>
@@ -77,6 +78,6 @@ export const Sidebar: FC<SidebarProps> = observer(
 )
 
 const styles = StyleSheet.create({
-  rootSidebar: tw(`shadow-md flex-col bg-white-200`),
+  rootSidebar: tw(`flex-col bg-white shadow-2xl z-10`),
   rootContent: tw("flex-no-wrap w-64 p-1 bg-white"),
 })

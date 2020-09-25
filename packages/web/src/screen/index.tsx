@@ -12,6 +12,7 @@ export const PageLogin = loadable(() => import("@free/core/screen/PageLogin"), {
   fallback: <Loader />,
 })
 
+/*
 export const PageNotFound = loadable(
   () => import("@free/core/screen/PageNotFound"),
   {
@@ -45,3 +46,4 @@ export const ViewGrid = loadable(() => import("@free/core/screen/ViewGrid"), {
   ssr: true,
   fallback: <Loader />,
 })
+*/

@@ -11,6 +11,7 @@ import com.facebook.soloader.SoLoader;
 import com.th3rdwave.safeareacontext.SafeAreaContextPackage;
 import com.reactcommunity.rndatetimepicker.RNDateTimePickerPackage;
 import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
+import com.BV.LinearGradient.LinearGradientPackage; 
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
@@ -32,6 +33,7 @@ public class MainApplication extends Application implements ReactApplication {
           packages.add(new SafeAreaContextPackage());
           packages.add(new RNDateTimePickerPackage());
           packages.add(new RNGestureHandlerPackage());
+          packages.add(new LinearGradientPackage());
           return packages;
         }
 

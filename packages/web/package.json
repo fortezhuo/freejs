@@ -17,6 +17,7 @@
     "@loadable/server": "^5.13.2",
     "react-dom": "^16.13.1",
     "react-native-web": "^0.12.3",
+    "react-native-web-linear-gradient": "^1.1.1",
     "react-router-dom": "^5.2.0"
   },
   "devDependencies": {

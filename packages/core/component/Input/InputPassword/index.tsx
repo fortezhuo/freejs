@@ -67,9 +67,9 @@ export const InputPassword: FC<InputTextProps> = observer((_props) => {
 const styles: any = StyleSheet.create({
   rootWrapper: tw("flex-row"),
   rootInput: tw(
-    `${theme.bgInput} ${theme.borderInput} ${theme.textInput} p-2 w-full`
+    `${theme.bgInput} ${theme.borderInput} ${theme.textInput} p-3 w-full`
   ),
-  rootEye: { right: 10, top: -25, position: "absolute" },
+  rootEye: { right: 12, top: -29, position: "absolute" },
   inputDisabled: tw(theme.bgDisabled),
   inputError: tw(theme.bgError),
 })

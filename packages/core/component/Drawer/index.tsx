@@ -1,16 +1,15 @@
 import React, { FC } from "react"
 import { tw } from "@free/tailwind"
 import { View, StyleSheet, TouchableWithoutFeedback } from "react-native"
-import { Sidebar } from "../Sidebar"
+import { Sidebar, useStore } from ".."
 import { observer } from "mobx-react-lite"
-import { useStore } from "../Store"
 import { DrawerProps } from "@free/core"
 
 export const Drawer: FC<DrawerProps> = observer(
   ({ testID = "Drawer", children }) => {
     const { app } = useStore()
     return (
-      <View style={styles.rootDrawer} testID={testID}>
+      <View style={styles.layoutDrawer} testID={testID}>
         {app.auth && (
           <Sidebar
             isOpen={
@@ -32,8 +31,7 @@ export const Drawer: FC<DrawerProps> = observer(
 )
 
 const styles = StyleSheet.create({
-  rootDrawer: tw("flex-row flex-1"),
-  panelSidebar: tw(`shadow-2xl flex-col`),
+  layoutDrawer: tw("flex-row flex-1"),
   panelOverlay: tw("flex-1 absolute w-full h-full bg-black-500 z-10"),
   panelContent: tw("flex-1"),
 })

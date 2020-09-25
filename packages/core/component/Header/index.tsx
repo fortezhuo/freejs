@@ -1,7 +1,6 @@
 import React, { FC } from "react"
 import { theme } from "../../config/theme"
 import { StyleSheet, View } from "react-native"
-import { Title } from "../Title"
 import { IconButton } from "../Icon"
 import { MenuUser } from "./MenuUser"
 import { tw } from "@free/tailwind"
@@ -22,7 +21,6 @@ export const Header: FC<HeaderProps> = observer(({ testID = "Header" }) => {
             onPress={app.dimension.isMobile && app.toggleDrawer}
           />
         )}
-        <Title>{app.subTitle}</Title>
         <View style={styles.boxGrow}></View>
         {!app.isForm && <MenuUser />}
       </View>
@@ -31,9 +29,7 @@ export const Header: FC<HeaderProps> = observer(({ testID = "Header" }) => {
 })
 
 const styles = StyleSheet.create({
-  rootHeader: tw(
-    `flex-row flex-no-wrap h-16 px-4 items-center ${theme.bgHeader} shadow-md z-10`
-  ),
+  rootHeader: tw(`flex-row flex-no-wrap h-16 px-4 items-center`),
   boxGrow: tw("flex-grow"),
   actionLeft: tw("mr-4"),
 })

@@ -4,7 +4,7 @@ import { theme } from "../../config/theme"
 import { tw } from "@free/tailwind"
 import { useHook } from "./hook"
 import { observer } from "mobx-react-lite"
-import { FormRowProps, FormColProps } from "@free/core"
+import { GridRowProps, GridColProps } from "@free/core"
 
 export const Main: FC = ({ children }) => {
   return (
@@ -14,7 +14,7 @@ export const Main: FC = ({ children }) => {
   )
 }
 
-export const Row: FC<FormRowProps> = observer(
+export const Row: FC<GridRowProps> = observer(
   ({
     nowrap,
     smHidden,
@@ -44,7 +44,7 @@ export const Row: FC<FormRowProps> = observer(
   }
 )
 
-export const Col: FC<FormColProps> = observer(
+export const Col: FC<GridColProps> = observer(
   ({
     sm,
     smHidden,
@@ -71,9 +71,9 @@ export const Col: FC<FormColProps> = observer(
       <View
         {...rest}
         style={StyleSheet.flatten([
-          style,
           styles.rootCol,
           input ? styles.colInput : {},
+          style,
           tw(`${width}`),
         ])}
       >

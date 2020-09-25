@@ -154,6 +154,7 @@ export const getDefaultConfig = (isWeb: boolean): webpack.Configuration => {
     resolve: {
       alias: {
         "react-native": "react-native-web",
+        "react-native-linear-gradient": "react-native-web-linear-gradient",
         "react-dom": isWeb && isDev ? "@hot-loader/react-dom" : "react-dom",
       },
       extensions: [
