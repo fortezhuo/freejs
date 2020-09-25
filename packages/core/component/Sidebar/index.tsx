@@ -1,11 +1,18 @@
 import React, { FC, useEffect, useRef } from "react"
-import { View, StyleSheet, ScrollView, Animated } from "react-native"
+import {
+  View,
+  StyleSheet,
+  ScrollView,
+  Animated,
+  ImageBackground,
+} from "react-native"
 import { tw } from "@free/tailwind"
-import { Accordion, AccordionItem, useStore, Title } from ".."
+import { Accordion, AccordionItem, Title, useStore } from "../"
 import { SidebarProps } from "@free/core"
 import { observer } from "mobx-react-lite"
 import { getMenu } from "../../config/menu"
 import { random } from "../../util/random"
+import imageSidebar from "../../img/sidebar.jpg"
 
 const Content: FC = observer(() => {
   const { app } = useStore()
@@ -66,18 +73,26 @@ export const Sidebar: FC<SidebarProps> = observer(
     return (
       <Animated.View
         testID={testID}
-        style={StyleSheet.flatten([styles.rootSidebar, { opacity, width }])}
+        style={StyleSheet.flatten([
+          app.dimension.isMobile ? {} : tw("shadow-xl z-10"),
+          { opacity, width },
+        ])}
       >
-        <Title>{app.subTitle}</Title>
-        <ScrollView>
-          <Content />
-        </ScrollView>
+        <ImageBackground source={imageSidebar} style={styles.imageSidebar}>
+          <View style={styles.layoutSidebar}>
+            <Title />
+            <ScrollView>
+              <Content />
+            </ScrollView>
+          </View>
+        </ImageBackground>
       </Animated.View>
     )
   }
 )
 
 const styles = StyleSheet.create({
-  rootSidebar: tw(`flex-col bg-white shadow-2xl z-10`),
-  rootContent: tw("flex-no-wrap w-64 p-1 bg-white"),
+  layoutSidebar: tw(`bg-white-800 flex-1`),
+  imageSidebar: tw(`flex-1`),
+  rootContent: tw("flex-no-wrap p-1"),
 })

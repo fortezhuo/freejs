@@ -117,9 +117,9 @@ declare module "@free/core" {
 
   interface IconLabelProps extends IconProps {
     name?: string | undefined
-    style?: ViewStyle
+    style?: any
     styleContainer?: any
-    styleText?: TextStyle
+    styleText?: any
     children?: string
   }
 
@@ -249,11 +249,6 @@ declare module "@free/core" {
 
   type CellProps = {
     [key: string]: any
-  }
-
-  interface TitleProps {
-    testID?: string
-    children: ReactNode
   }
 }
 

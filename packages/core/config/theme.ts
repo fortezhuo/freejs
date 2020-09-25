@@ -16,6 +16,10 @@ Black  : bg-gray-900
 let theme: Config = {
   primary_1: "bg-purple-800",
   primary_2: "bg-blue-400",
+  accordion_border_icon_active: "border border-pink-200",
+  accordion_bg_active: "bg-pink-600",
+  accordion_text: "bg-gray-900",
+
   primary: "bg-blue-500",
   warning: "bg-yellow-500",
   default: "bg-gray-300",
@@ -27,9 +31,7 @@ let theme: Config = {
 theme = {
   ...theme,
   // Accordion
-  bgAccordion: "bg-white-800",
-  bgAccordionItem: "bg-gray-200",
-  bgAccordionItemActive: adjust(theme.primary, -4),
+  bgAccordionItemActive: "bg-black-100",
   borderAccordion: `border-b border-gray-300`,
   textAccordion: text(theme.primary),
   textAccordionItem: "text-gray-700",

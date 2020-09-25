@@ -1,11 +1,5 @@
 import React, { FC, Children, useRef, useEffect } from "react"
-import {
-  View,
-  TouchableOpacity,
-  StyleSheet,
-  Animated,
-  Platform,
-} from "react-native"
+import { View, TouchableOpacity, StyleSheet, Animated } from "react-native"
 import { theme } from "../../config/theme"
 import { IconLabel, Icon } from "../Icon"
 import { tw, color } from "@free/tailwind"
@@ -13,8 +7,8 @@ import { observer, useLocalStore } from "mobx-react-lite"
 import { useStore } from "../Store"
 import { AccordionProps, AccordionItemProps } from "@free/core"
 
-const { color: textColor } = tw(theme.textAccordionItem)
-const { color: iconColor } = tw(theme.textAccordion)
+const activeColor = color(theme.accordion_bg_active)
+const textColor = color(theme.accordion_text)
 const noop = () => {}
 
 export const Accordion: FC<AccordionProps> = observer(
@@ -44,24 +38,26 @@ export const Accordion: FC<AccordionProps> = observer(
 
     return (
       <TouchableOpacity onPress={state.toggle}>
-        <View style={styles.rootAccordion} testID={testID}>
-          <View
-            style={StyleSheet.flatten([
-              styles.groupAccordion,
-              state.isExpand ? styles.accordionExpand : {},
-            ])}
-          >
+        <View style={styles.accordion} testID={testID}>
+          <View style={styles.group}>
             <IconLabel
               name={icon}
-              color={iconColor}
-              styleContainer={styles.groupLabel}
-              styleText={styles.textAccordion}
+              color={state.isExpand ? activeColor : textColor}
+              style={StyleSheet.flatten([
+                styles.icon,
+                state.isExpand ? styles.iconExpand : {},
+              ])}
+              styleContainer={styles.label}
+              styleText={StyleSheet.flatten([
+                styles.textAccordion,
+                state.isExpand ? { color: activeColor } : {},
+              ])}
             >
               {label}
             </IconLabel>
             <Icon
               size={20}
-              color={iconColor}
+              color={state.isExpand ? activeColor : textColor}
               name={`chevron-${state.isExpand ? "up" : "down"}`}
             />
           </View>
@@ -102,14 +98,11 @@ export const AccordionItem: FC<AccordionItemProps> = observer(
         {header ? (
           <View
             testID={testID}
-            style={StyleSheet.flatten([
-              styles.rootAccordion,
-              styles.groupAccordion,
-            ])}
+            style={StyleSheet.flatten([styles.accordion, styles.group])}
           >
             <IconLabel
               name={icon}
-              styleContainer={styles.groupLabel}
+              styleContainer={styles.label}
               styleText={styles.textAccordion}
             >
               {children}
@@ -119,14 +112,14 @@ export const AccordionItem: FC<AccordionItemProps> = observer(
           <IconLabel
             name={icon}
             size={20}
-            color={textColor}
+            color={active ? activeColor : textColor}
             styleContainer={StyleSheet.flatten([
-              styles.rootAccordionItem,
-              active ? styles.rootAccordionItemActive : {},
+              styles.item,
+              active ? styles.itemActive : {},
             ])}
             styleText={StyleSheet.flatten([
-              styles.textAccordionItem,
-              active ? styles.textAccordionItemActive : {},
+              styles.itemText,
+              { color: active ? activeColor : textColor },
             ])}
           >
             {children}
@@ -138,20 +131,14 @@ export const AccordionItem: FC<AccordionItemProps> = observer(
 )
 
 const styles = StyleSheet.create({
-  rootAccordion: tw("flex-col shadow-md z-10"),
-  accordionExpand: {
-    borderLeftColor: color(theme.primary),
-    ...tw(`border-l border-l-4`),
-  },
-  rootAccordionItem: tw(`flex-row px-4 py-3 items-center`),
-  rootAccordionItemActive: tw(`${theme.bgAccordionItemActive}`),
-  groupAccordion: tw(
-    `flex-row z-10 ${theme.bgAccordion} ${theme.borderAccordion} px-4 py-3 items-center`
-  ),
-  groupLabel: tw("flex-grow flex-row items-center"),
+  accordion: tw("flex-col z-10"),
+  icon: tw("p-2 shadow-xl bg-white rounded"),
+  iconExpand: tw(theme.accordion_border_icon_active),
+  item: tw(`flex-row px-4 py-3 pl-10 items-center`),
+  itemActive: { backgroundColor: "rgba(0,0,0,0.03)" },
+  itemText: tw(`px-2`),
+  group: tw(`flex-row px-4 py-3 items-center`),
+  label: tw("flex-grow flex-row items-center"),
   groupItem: tw("flex-col flex-shrink z-0"),
-  textAccordion: tw(`px-2 ${theme.textAccordion}`),
-  textAccordionItem: tw(`px-2 ${theme.textAccordionItem}`),
-  textAccordionItemActive: tw(`${theme.textAccordionItemActive}`),
-  iconChevron: tw("mr-2"),
+  textAccordion: tw(`px-2`),
 })
