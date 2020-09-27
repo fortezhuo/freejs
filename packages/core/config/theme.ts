@@ -16,6 +16,8 @@ Black  : bg-gray-900
 let theme: Config = {
   primary_1: "bg-purple-800",
   primary_2: "bg-blue-400",
+  secondary_1: "bg-gray-600",
+  secondary_2: "bg-gray-400",
   accordion_border_icon_active: "border border-pink-200",
   accordion_bg_active: "bg-pink-600",
   accordion_text: "bg-gray-900",

@@ -40,6 +40,10 @@ div[data-testid="BottomSheet"] {
   overflow: hidden;
 }
 
+div[data-testid="LayoutScroll"] {
+  scrollbar-width: none;
+}
+
 .applayout {
   background: linear-gradient(1.5708rad, rgb(85, 60, 154), rgb(99, 179, 237));
   min-height: 100%;

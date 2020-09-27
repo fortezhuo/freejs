@@ -9,10 +9,56 @@ const PageHome = () => {
   const store = useHook()
   return (
     <Layout store={store}>
-      <View style={styles.view1}>
-        <H4>Home</H4>
-      </View>
-      <View style={styles.view2}>
+      <View>
+        <H4 style={{ color: "white" }}>JUDUL</H4>
+        <Text>Hello</Text>
+        <Text>Hello</Text>
+        <Text>Hello</Text>
+        <Text>Hello</Text>
+        <Text>Hello</Text>
+        <Text>Hello</Text>
+        <Text>Hello</Text>
+        <Text>Hello</Text>
+        <Text>Hello</Text>
+        <Text>Hello</Text>
+        <Text>Hello</Text>
+        <Text>Hello</Text>
+        <Text>Hello</Text>
+        <Text>Hello</Text>
+        <Text>Hello</Text>
+        <Text>Hello</Text>
+        <Text>Hello</Text>
+        <Text>Hello</Text>
+        <Text>Hello</Text>
+        <Text>Hello</Text>
+        <Text>Hello</Text>
+        <Text>Hello</Text>
+        <Text>Hello</Text>
+        <Text>Hello</Text>
+        <Text>Hello</Text>
+        <Text>Hello</Text>
+        <Text>Hello</Text>
+        <Text>Hello</Text>
+        <Text>Hello</Text>
+        <Text>Hello</Text>
+        <Text>Hello</Text>
+        <Text>Hello</Text>
+        <Text>Hello</Text>
+        <Text>Hello</Text>
+        <Text>Hello</Text>
+        <Text>Hello</Text>
+        <Text>Hello</Text>
+        <Text>Hello</Text>
+        <Text>Hello</Text>
+        <Text>Hello</Text>
+        <Text>Hello</Text>
+        <Text>Hello</Text>
+        <Text>Hello</Text>
+        <Text>Hello</Text>
+        <Text>Hello</Text>
+        <Text>Hello</Text>
+        <Text>Hello</Text>
+        <Text>Hello</Text>
         <Text>Hello</Text>
         <Text>Hello</Text>
         <Text>Hello</Text>
@@ -67,10 +113,5 @@ const PageHome = () => {
     </Layout>
   )
 }
-
-const styles = StyleSheet.create({
-  view1: tw("h-12 px-6"),
-  view2: tw("flex-1 bg-gray-200 p-6"),
-})
 
 export default PageHome

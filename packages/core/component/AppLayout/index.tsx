@@ -1,5 +1,5 @@
 import React, { FC } from "react"
-import { StyleSheet, KeyboardAvoidingView, Platform } from "react-native"
+import { StyleSheet, KeyboardAvoidingView, Platform, View } from "react-native"
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context"
 import { tw } from "@free/tailwind"
 import { StoreProvider } from "../Store"
@@ -26,14 +26,14 @@ export const AppLayout: FC = ({ children }) => {
         behavior={Platform.OS === "ios" ? "padding" : undefined}
       >
         <StoreProvider>
-          <SafeAreaView style={styles.rootApp}>
-            <MainLayout>
+          <MainLayout>
+            <SafeAreaView style={styles.rootApp}>
               <Drawer>
                 <Header />
                 {children}
               </Drawer>
-            </MainLayout>
-          </SafeAreaView>
+            </SafeAreaView>
+          </MainLayout>
         </StoreProvider>
       </KeyboardAvoidingView>
     </SafeAreaProvider>
@@ -43,5 +43,5 @@ export const AppLayout: FC = ({ children }) => {
 export default AppLayout
 
 const styles = StyleSheet.create({
-  rootApp: tw("flex-1 flex-col justify-center bg-white"),
+  rootApp: tw("flex-1 bg-transparent"),
 })

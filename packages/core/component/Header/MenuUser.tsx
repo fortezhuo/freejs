@@ -22,14 +22,15 @@ export const MenuUser: FC = observer(() => {
           />
         }
       >
-        <View style={styles.triangle} />
         <View style={styles.rootMenuUser}>
           <View style={styles.boxAuth}>
             <Text style={styles.textAuth}>{app?.auth?.fullname}</Text>
           </View>
-          <MenuItem name="log-out" onPress={() => app.logout()}>
-            Logout
-          </MenuItem>
+          <View style={styles.boxMenu}>
+            <MenuItem name="log-out" onPress={() => app.logout()}>
+              Logout
+            </MenuItem>
+          </View>
         </View>
       </Menu>
     )
@@ -37,23 +38,9 @@ export const MenuUser: FC = observer(() => {
 })
 
 const styles = StyleSheet.create({
-  rootMenuUser: tw("bg-white shadow-md rounded"),
+  rootMenuUser: tw("shadow-md rounded"),
   iconMenuUser: tw(`rounded-full border-2 border-solid border-white p-1`),
-  boxAuth: tw(`${adjust(theme.primary, -1)} p-2 items-center`),
+  boxAuth: tw(`bg-black-200 p-2 items-center mt-4`),
+  boxMenu: tw(`bg-white`),
   textAuth: tw("text-gray-100 font-bold text-xs"),
-  triangle: {
-    alignSelf: "flex-end",
-    marginRight: 20,
-    marginTop: 2,
-    width: 0,
-    height: 0,
-    backgroundColor: "transparent",
-    borderStyle: "solid",
-    borderLeftWidth: 10,
-    borderRightWidth: 10,
-    borderBottomWidth: 10,
-    borderLeftColor: "transparent",
-    borderRightColor: "transparent",
-    borderBottomColor: color(adjust(theme.primary, -1)),
-  },
 })

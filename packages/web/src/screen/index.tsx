@@ -12,6 +12,13 @@ export const PageLogin = loadable(() => import("@free/core/screen/PageLogin"), {
   fallback: <Loader />,
 })
 
+export const SettingLog = loadable(
+  () => import("@free/core/screen/SettingLog"),
+  {
+    ssr: true,
+    fallback: <Loader />,
+  }
+)
 /*
 export const PageNotFound = loadable(
   () => import("@free/core/screen/PageNotFound"),
@@ -26,13 +33,7 @@ export const PageError = loadable(() => import("@free/core/screen/PageError"), {
   fallback: <Loader />,
 })
 
-export const SettingLog = loadable(
-  () => import("@free/core/screen/SettingLog"),
-  {
-    ssr: true,
-    fallback: <Loader />,
-  }
-)
+
 
 export const SettingUser = loadable(
   () => import("@free/core/screen/SettingUser"),
