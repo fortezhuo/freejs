@@ -37,7 +37,7 @@ export const MenuUser: FC = observer(() => {
 })
 
 const styles = StyleSheet.create({
-  rootMenuUser: tw("rounded mt-4"),
+  rootMenuUser: tw("rounded mt-4 bg-black-100", { padding: 2 }),
   iconMenuUser: tw(`rounded-full border-2 border-solid border-white p-1 mr-4`),
   boxAuth: tw(`bg-black-200 p-2 items-center`),
   boxMenu: tw(`bg-white`),

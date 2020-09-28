@@ -19,7 +19,7 @@ const LoginButton: FC<any> = observer(({ store }) => {
     <TouchableOpacity disabled={store.isUpdating} onPress={store.login}>
       <Gradient
         type="vertical"
-        colors={[`${color}_1`, `${color}_2`]}
+        colors={[`${color}_1_bg`, `${color}_2_bg`]}
         style={styles.buttonLogin}
       >
         <Text style={styles.captionLogin}>LOGIN</Text>

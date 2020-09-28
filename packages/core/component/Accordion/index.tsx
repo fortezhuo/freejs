@@ -7,7 +7,7 @@ import { observer, useLocalStore } from "mobx-react-lite"
 import { useStore } from "../Store"
 import { AccordionProps, AccordionItemProps } from "@free/core"
 
-const activeColor = color(theme.accordion_bg_active)
+const activeColor = color(theme.accordion_icon_active_bg)
 const textColor = color(theme.accordion_text)
 const noop = () => {}
 
@@ -21,7 +21,6 @@ export const Accordion: FC<AccordionProps> = observer(
     }))
     const itemHeight = 46
     const childHeight = Children.count(children) * itemHeight
-
     const opacity = useRef(new Animated.Value(0)).current
     const height = opacity.interpolate({
       inputRange: [0, 1],
@@ -38,8 +37,8 @@ export const Accordion: FC<AccordionProps> = observer(
 
     return (
       <TouchableOpacity onPress={state.toggle}>
-        <View style={styles.accordion} testID={testID}>
-          <View style={styles.group}>
+        <View style={styles.viewAccordion} testID={testID}>
+          <View style={styles.viewWrapper}>
             <IconLabel
               name={icon}
               color={state.isExpand ? activeColor : textColor}
@@ -47,9 +46,9 @@ export const Accordion: FC<AccordionProps> = observer(
                 styles.icon,
                 state.isExpand ? styles.iconExpand : {},
               ])}
-              styleContainer={styles.label}
+              styleContainer={styles.viewIcon}
               styleText={StyleSheet.flatten([
-                styles.textAccordion,
+                styles.textIcon,
                 { color: state.isExpand ? activeColor : textColor },
               ])}
             >
@@ -62,7 +61,10 @@ export const Accordion: FC<AccordionProps> = observer(
             />
           </View>
           <Animated.View
-            style={StyleSheet.flatten([styles.groupItem, { height, opacity }])}
+            style={StyleSheet.flatten([
+              styles.viewChildren,
+              { height, opacity },
+            ])}
           >
             {children}
           </Animated.View>
@@ -98,12 +100,15 @@ export const AccordionItem: FC<AccordionItemProps> = observer(
         {header ? (
           <View
             testID={testID}
-            style={StyleSheet.flatten([styles.accordion, styles.group])}
+            style={StyleSheet.flatten([
+              styles.viewAccordion,
+              styles.viewWrapper,
+            ])}
           >
             <IconLabel
               name={icon}
-              styleContainer={styles.label}
-              styleText={styles.textAccordion}
+              styleContainer={styles.viewIcon}
+              styleText={styles.textIcon}
             >
               {children}
             </IconLabel>
@@ -114,11 +119,11 @@ export const AccordionItem: FC<AccordionItemProps> = observer(
             size={20}
             color={active ? activeColor : textColor}
             styleContainer={StyleSheet.flatten([
-              styles.item,
+              styles.viewIconItem,
               active ? styles.itemActive : {},
             ])}
             styleText={StyleSheet.flatten([
-              styles.itemText,
+              styles.textIconItem,
               { color: active ? activeColor : textColor },
             ])}
           >
@@ -131,14 +136,14 @@ export const AccordionItem: FC<AccordionItemProps> = observer(
 )
 
 const styles = StyleSheet.create({
-  accordion: tw("flex-col z-10"),
+  viewAccordion: tw("flex-col z-10"),
+  viewWrapper: tw(`flex-row px-4 py-3 items-center`),
+  viewChildren: tw("flex-col flex-shrink z-0"),
+  viewIcon: tw("flex-grow flex-row items-center"),
+  viewIconItem: tw(`flex-row px-4 py-3 pl-10 items-center`),
   icon: tw("p-2 shadow-xl bg-white rounded"),
-  iconExpand: tw(theme.accordion_border_icon_active),
-  item: tw(`flex-row px-4 py-3 pl-10 items-center`),
+  iconExpand: tw(theme.accordion_icon_active_border),
   itemActive: { backgroundColor: "rgba(0,0,0,0.03)" },
-  itemText: tw(`px-2`),
-  group: tw(`flex-row px-4 py-3 items-center`),
-  label: tw("flex-grow flex-row items-center"),
-  groupItem: tw("flex-col flex-shrink z-0"),
-  textAccordion: tw(`px-2`),
+  textIconItem: tw(`px-2`),
+  textIcon: tw(`px-2`),
 })

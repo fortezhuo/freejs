@@ -7,7 +7,7 @@ import { observer } from "mobx-react-lite"
 import { IconProps, IconLabelProps, IconButtonProps } from "@free/core"
 import { tw } from "@free/tailwind"
 
-const disabledColor = color(theme.textDisabled)
+const disabledColor = color(theme.input_disabled_text)
 const iconColor = "white"
 
 export const Icon: FC<IconProps> = observer(
@@ -61,11 +61,11 @@ export const IconButton: FC<IconButtonProps> = observer(
           style={style}
           styleContainer={StyleSheet.flatten([
             styleContainer,
-            disabled ? styles.disabledContainer : {},
+            disabled ? styles.viewDisabled : {},
           ])}
           styleText={StyleSheet.flatten([
             styleText,
-            disabled ? styles.disabledText : {},
+            disabled ? styles.input_disabled_text : {},
           ])}
           name={name}
           size={size}
@@ -83,6 +83,6 @@ export const IconLink: FC<IconButtonProps> = observer(() => {
 })
 
 const styles = StyleSheet.create({
-  disabledContainer: tw(theme.bgDisabled),
-  disabledText: tw(theme.textDisabled),
+  viewDisabled: tw(theme.input_disabled_bg),
+  input_disabled_text: tw(theme.input_disabled_text),
 })

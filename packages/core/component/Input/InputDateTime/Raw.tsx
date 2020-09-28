@@ -53,9 +53,9 @@ export const DateTimePicker: FC<any> = ({
 }
 
 const styles = StyleSheet.create({
-  rootMenu: tw(theme.bgInput),
-  rootAnchor: tw(`${theme.borderInput} ${theme.bgInput} p-2 w-full flex-row`),
-  textAnchor: tw(theme.textInput),
-  inputDisabled: tw(theme.bgDisabled),
-  inputError: tw(theme.bgError),
+  rootMenu: tw(theme.input_bg),
+  rootAnchor: tw(`${theme.input_border} ${theme.input_bg} p-2 w-full flex-row`),
+  textAnchor: tw(theme.input_text),
+  inputDisabled: tw(theme.input_disabled_bg),
+  inputError: tw(theme.input_error_bg),
 })

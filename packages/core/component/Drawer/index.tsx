@@ -9,7 +9,7 @@ export const Drawer: FC<DrawerProps> = observer(
   ({ testID = "Drawer", children }) => {
     const { app } = useStore()
     return (
-      <View style={styles.layoutDrawer} testID={testID}>
+      <View style={styles.viewDrawer} testID={testID}>
         {app.auth && (
           <Sidebar
             isOpen={
@@ -17,13 +17,13 @@ export const Drawer: FC<DrawerProps> = observer(
             }
           />
         )}
-        <View style={styles.panelContent}>
+        <View style={styles.viewContent}>
           {app.isDrawerOpen && (
             <TouchableWithoutFeedback onPress={app.toggleDrawer}>
-              <View style={styles.panelOverlay}></View>
+              <View style={styles.viewOverlay}></View>
             </TouchableWithoutFeedback>
           )}
-          <View style={styles.panelContent}>{children}</View>
+          <View style={styles.viewChildren}>{children}</View>
         </View>
       </View>
     )
@@ -31,7 +31,8 @@ export const Drawer: FC<DrawerProps> = observer(
 )
 
 const styles = StyleSheet.create({
-  layoutDrawer: tw("flex-row flex-1"),
-  panelOverlay: tw("flex-1 absolute w-full h-full bg-black-500 z-10"),
-  panelContent: tw("flex-1"),
+  viewDrawer: tw("flex-row flex-1"),
+  viewOverlay: tw("flex-1 absolute w-full h-full bg-black-500 z-10"),
+  viewContent: tw("flex-1"),
+  viewChildren: tw("flex-1"),
 })

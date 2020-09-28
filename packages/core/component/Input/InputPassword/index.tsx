@@ -30,7 +30,7 @@ const helperProps = (props: InputTextProps) => {
 const Eye: FC<any> = observer(({ state }) => {
   return (
     <IconButton
-      styleContainer={styles.rootEye}
+      styleContainer={styles.viewEye}
       color={color}
       size={16}
       name={state.secure ? "eye" : "eye-off"}
@@ -53,7 +53,7 @@ export const InputPassword: FC<InputTextProps> = observer((_props) => {
         secureTextEntry={state.secure}
         placeholderTextColor={tw("text-gray-600").color}
         style={StyleSheet.flatten([
-          styles.rootInput,
+          styles.inputPassword,
           props.disabled ? styles.inputDisabled : {},
           props.isEmpty ? styles.inputError : {},
         ])}
@@ -65,11 +65,10 @@ export const InputPassword: FC<InputTextProps> = observer((_props) => {
 })
 
 const styles: any = StyleSheet.create({
-  rootWrapper: tw("flex-row"),
-  rootInput: tw(
-    `${theme.bgInput} ${theme.borderInput} ${theme.textInput} p-3 w-full`
+  inputPassword: tw(
+    `${theme.input_bg} ${theme.input_border} ${theme.input_text} p-3 w-full`
   ),
-  rootEye: { right: 12, top: -29, position: "absolute" },
-  inputDisabled: tw(theme.bgDisabled),
-  inputError: tw(theme.bgError),
+  viewEye: { right: 12, top: -29, position: "absolute" },
+  inputDisabled: tw(theme.input_disabled_bg),
+  inputError: tw(theme.input_error_bg),
 })

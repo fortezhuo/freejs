@@ -10,8 +10,8 @@ export const Anchor: FC<Anchor> = observer(({ state, menu }) => {
     <TouchableWithoutFeedback disabled={state.disabled} onPress={menu.show}>
       <View
         style={StyleSheet.flatten([
-          styles.rootAnchor,
-          state.disabled ? styles.inputDisabled : {},
+          styles.viewAnchor,
+          state.disabled ? styles.viewDisabled : {},
         ])}
       >
         <Display state={state} />
@@ -21,8 +21,8 @@ export const Anchor: FC<Anchor> = observer(({ state, menu }) => {
 })
 
 const styles = StyleSheet.create({
-  rootAnchor: tw(`${theme.borderInput} ${theme.bgInput} p-2 w-full flex-row`),
-  inputDisabled: tw(theme.bgDisabled),
+  viewAnchor: tw(`${theme.input_border} ${theme.input_bg} p-3 w-full flex-row`),
+  viewDisabled: tw(theme.input_disabled_bg),
 })
 
 type Anchor = {

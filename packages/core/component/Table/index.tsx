@@ -15,7 +15,7 @@ const date = (date: any) => dayjs(date).format("DD MMM YYYY")
 const datetime = (datetime: any) =>
   dayjs(datetime).format("DD MMM YYYY HH:mm:ss")
 
-const primary = color(theme.primary)
+const primary = color(theme.input_text)
 
 export const withClass = (Component: any) =>
   class extends React.PureComponent {
@@ -216,17 +216,17 @@ export const RowMobile: FC<RowProps> = observer(
 )
 
 const styles = StyleSheet.create({
-  rootTable: tw(`${theme.bgTable} border ${theme.borderTable} shadow-lg m-1`),
+  rootTable: tw(`shadow-xl`),
   groupTable: tw("flex-col flex-1"),
-  rootHeader: tw(`${theme.bgTable} h-10 items-center shadow-md`),
+  rootHeader: tw(`h-10 items-center shadow-md`),
   rootBody: tw("flex-1"),
-  rootFilter: tw(`${theme.bgRowFilter} h-10 items-center`),
-  textCell: tw(theme.textCell),
-  textCellSmall: tw(`${theme.textCell} text-sm`),
-  rootRow: tw(`${theme.borderTable} border-b flex-row flex-no-wrap`),
+  rootFilter: tw(`bg-red-200 h-10 items-center`),
+  textCell: tw(theme.input_text),
+  textCellSmall: tw(`${theme.input_text} text-sm`),
+  rootRow: tw(`${theme.table_border} flex-row flex-no-wrap`),
   rowMobile: tw("flex-col p-2"),
-  rowDark: tw(theme.bgRowDark),
-  rootCell: tw(`${theme.borderTable} p-2 w-40 border-r flex-grow`),
+  rowDark: { backgroundColor: "rgba(0,0,0,0.08)" },
+  rootCell: tw(`p-2 w-40 flex-grow`),
   cellFilter: { padding: 0 },
   boxDelete: tw("flex-1"),
   iconDelete: tw(`${theme.danger} flex-row flex-1 justify-center items-center`),

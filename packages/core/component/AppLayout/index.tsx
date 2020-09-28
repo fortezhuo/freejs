@@ -12,7 +12,10 @@ const MainLayout: FC<MainLayoutProps> = ({ children }) => {
   useDimensions()
   useHook()
   return (
-    <Gradient colors={["primary_1", "primary_2"]} style={styles.rootApp}>
+    <Gradient
+      colors={["primary_1_bg", "primary_2_bg"]}
+      style={styles.viewFlexTransparent}
+    >
       {children}
     </Gradient>
   )
@@ -22,12 +25,12 @@ export const AppLayout: FC = ({ children }) => {
   return (
     <SafeAreaProvider>
       <KeyboardAvoidingView
-        style={styles.rootApp}
+        style={styles.viewFlexTransparent}
         behavior={Platform.OS === "ios" ? "padding" : undefined}
       >
         <StoreProvider>
           <MainLayout>
-            <SafeAreaView style={styles.rootApp}>
+            <SafeAreaView style={styles.viewFlexTransparent}>
               <Drawer>
                 <Header />
                 {children}
@@ -43,5 +46,5 @@ export const AppLayout: FC = ({ children }) => {
 export default AppLayout
 
 const styles = StyleSheet.create({
-  rootApp: tw("flex-1 bg-transparent"),
+  viewFlexTransparent: tw("flex-1 bg-transparent"),
 })

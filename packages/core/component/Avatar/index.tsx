@@ -10,11 +10,11 @@ export const Avatar: FC<any> = observer(
       <IconLabel
         size={size}
         name={name}
-        styleContainer={StyleSheet.create([styles.iconLogo, styleContainer])}
+        styleContainer={StyleSheet.create([styles.viewLogo, styleContainer])}
         style={style}
       />
     ) : (
-      <View style={styles.iconLogo}>
+      <View style={styles.viewLogo}>
         <Image source={source} style={style} />
       </View>
     )
@@ -22,5 +22,5 @@ export const Avatar: FC<any> = observer(
 )
 
 const styles = StyleSheet.create({
-  iconLogo: tw("self-center rounded-full p-2"),
+  viewLogo: tw("self-center rounded-full p-2"),
 })

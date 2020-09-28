@@ -13,16 +13,16 @@ export const Header: FC<HeaderProps> = observer(({ testID = "Header" }) => {
 
   return (
     app.auth && (
-      <View style={styles.rootHeader} testID={testID}>
+      <View style={styles.viewHeader} testID={testID}>
         {!app.isForm && app.dimension.isMobile && (
           <IconButton
             name={app.dimension.isMobile && "menu"}
-            style={styles.actionLeft}
+            style={styles.iconLeft}
             onPress={app.dimension.isMobile && app.toggleDrawer}
           />
         )}
 
-        <View style={styles.boxGrow}>
+        <View style={styles.viewGrow}>
           <InputSearch />
         </View>
         {!app.isForm && <MenuUser />}
@@ -32,7 +32,7 @@ export const Header: FC<HeaderProps> = observer(({ testID = "Header" }) => {
 })
 
 const styles = StyleSheet.create({
-  rootHeader: tw(`flex-row h-16 items-center`),
-  boxGrow: tw("flex-grow mx-4"),
-  actionLeft: tw("ml-4"),
+  viewHeader: tw(`flex-row h-16 items-center`),
+  viewGrow: tw("flex-grow mx-4"),
+  iconLeft: tw("ml-4"),
 })

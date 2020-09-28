@@ -189,7 +189,7 @@ export const MenuItem: FC<MenuItemProps> = observer(
 
 const styles: any = StyleSheet.create({
   rootMenu: tw("absolute bg-transparent"),
-  rootMenuItem: tw(`flex-1 flex-row p-2 ${theme.borderMenuItem}`),
-  rootMenuActive: tw(theme.bgMenuItemActive),
-  textMenuItem: tw(`${theme.textMenuItem} leading-5 mx-2`),
+  rootMenuItem: tw(`flex-1 flex-row p-2`),
+  rootMenuActive: tw("bg-black-100"),
+  textMenuItem: tw(`${theme.input_text} leading-5 mx-2`),
 })

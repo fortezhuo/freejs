@@ -19,6 +19,12 @@ export const SettingLog = loadable(
     fallback: <Loader />,
   }
 )
+
+export const ViewGrid = loadable(() => import("@free/core/screen/ViewGrid"), {
+  ssr: true,
+  fallback: <Loader />,
+})
+
 /*
 export const PageNotFound = loadable(
   () => import("@free/core/screen/PageNotFound"),

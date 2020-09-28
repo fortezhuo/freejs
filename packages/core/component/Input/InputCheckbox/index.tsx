@@ -6,7 +6,7 @@ import { tw, color } from "@free/tailwind"
 import { observer } from "mobx-react-lite"
 import { InputCheckboxProps } from "@free/core"
 
-const primary = color(theme.primary)
+const defaultColor = color(theme.input_text)
 
 export const InputCheckbox: FC<InputCheckboxProps> = observer(
   ({
@@ -44,7 +44,7 @@ export const InputCheckbox: FC<InputCheckboxProps> = observer(
         disabled={disabled}
         style={StyleSheet.flatten([styles.rootCheckbox, style])}
         name={checked ? "check-circle" : "circle"}
-        color={color || primary}
+        color={color || defaultColor}
         size={20}
         onPress={onPress}
       >

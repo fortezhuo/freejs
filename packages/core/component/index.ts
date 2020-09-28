@@ -11,4 +11,5 @@ export { Loader } from "./Loader"
 export { Sidebar } from "./Sidebar"
 export { Title } from "./Title"
 export { useStore } from "./Store"
+export { H1, H2, H3, H4, H5, Text } from "./Text"
 export { Input }

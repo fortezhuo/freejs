@@ -41,8 +41,8 @@ export const InputText: FC<InputTextProps> = observer((_props) => {
 
 const styles: any = StyleSheet.create({
   rootInput: tw(
-    `${theme.bgInput} ${theme.borderInput} ${theme.textInput} p-3 w-full`
+    `${theme.input_bg} ${theme.input_border} ${theme.input_text} p-3 w-full`
   ),
-  inputDisabled: tw(theme.bgDisabled),
-  inputError: tw(theme.bgError),
+  inputDisabled: tw(theme.input_disabled_bg),
+  inputError: tw(theme.input_error_bg),
 })

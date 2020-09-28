@@ -79,7 +79,7 @@ export const InputSelect: FC<InputSelectProps> = observer((props) => {
       onShow={() => refSearch.current?.focus()}
       anchor={<Anchor state={state} menu={{ show }} />}
     >
-      <View style={styles.rootMenu}>
+      <View style={styles.viewMenu}>
         <Search refSearch={refSearch} state={state} menu={{ hide }} />
         <Options refScroll={refScroll} state={state} menu={{ show, hide }} />
       </View>
@@ -88,9 +88,9 @@ export const InputSelect: FC<InputSelectProps> = observer((props) => {
 })
 
 const styles = StyleSheet.create({
-  rootMenu: {
+  viewMenu: {
     height: 181,
     maxHeight: 181,
-    ...tw(`${theme.bgInput} ${theme.borderInput} border-t-0`),
+    ...tw(`${theme.input_bg} ${theme.input_border} border-t-0`),
   },
 })

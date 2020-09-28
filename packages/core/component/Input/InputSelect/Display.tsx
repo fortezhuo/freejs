@@ -7,7 +7,7 @@ import { StateComponent } from "@free/core"
 import { theme } from "../../../config/theme"
 
 const Placeholder: FC<StateComponent> = observer(({ state }) => {
-  return <Text style={styles.placeholder}>{state.placeholder}</Text>
+  return <Text style={styles.textPlaceholder}>{state.placeholder}</Text>
 })
 
 const Clear: FC<StateComponent> = observer(({ state }) => {
@@ -32,7 +32,7 @@ export const Display: FC<StateComponent> = observer(({ state }) => {
   return (
     <>
       {value ? (
-        <Text style={styles.rootSingle}>{value}</Text>
+        <Text style={styles.textSingle}>{value}</Text>
       ) : (
         <Placeholder state={state} />
       )}
@@ -42,6 +42,6 @@ export const Display: FC<StateComponent> = observer(({ state }) => {
 })
 
 const styles = StyleSheet.create({
-  rootSingle: tw(`flex-grow ${theme.textInput}`),
-  placeholder: tw(theme.textDisabled),
+  textSingle: tw(`flex-grow ${theme.input_text}`),
+  textPlaceholder: tw(theme.input_disabled_text),
 })
