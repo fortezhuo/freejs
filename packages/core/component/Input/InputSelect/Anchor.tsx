@@ -21,7 +21,7 @@ export const Anchor: FC<Anchor> = observer(({ state, menu }) => {
 })
 
 const styles = StyleSheet.create({
-  rootAnchor: tw(`${theme.borderInput} ${theme.bgInput} p-3 w-full flex-row`),
+  rootAnchor: tw(`${theme.borderInput} ${theme.bgInput} p-2 w-full flex-row`),
   inputDisabled: tw(theme.bgDisabled),
 })
 

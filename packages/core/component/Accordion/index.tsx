@@ -50,7 +50,7 @@ export const Accordion: FC<AccordionProps> = observer(
               styleContainer={styles.label}
               styleText={StyleSheet.flatten([
                 styles.textAccordion,
-                state.isExpand ? { color: activeColor } : {},
+                { color: state.isExpand ? activeColor : textColor },
               ])}
             >
               {label}

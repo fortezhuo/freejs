@@ -44,6 +44,7 @@ class AppStore {
     this.auth = undefined
     this.goto("/login")
   }
+
   set = (name: string, value: any) => {
     ;(this as any)[name] = value
   }

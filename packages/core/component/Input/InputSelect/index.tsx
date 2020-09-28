@@ -3,7 +3,13 @@ import { useMenu } from "../../Menu"
 import { Search } from "./Search"
 import { Options } from "./Options"
 import { Anchor } from "./Anchor"
-import { StyleSheet, View, TextInput, ScrollView } from "react-native"
+import {
+  StyleSheet,
+  View,
+  TextInput,
+  ScrollView,
+  KeyboardAvoidingView,
+} from "react-native"
 import { observer, useLocalStore } from "mobx-react-lite"
 import { tw } from "@free/tailwind"
 import { InputSelectProps } from "@free/core"
@@ -83,6 +89,7 @@ export const InputSelect: FC<InputSelectProps> = observer((props) => {
 
 const styles = StyleSheet.create({
   rootMenu: {
+    height: 181,
     maxHeight: 181,
     ...tw(`${theme.bgInput} ${theme.borderInput} border-t-0`),
   },

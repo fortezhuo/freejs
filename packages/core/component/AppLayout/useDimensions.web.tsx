@@ -3,15 +3,18 @@ import { useSafeAreaInsets } from "react-native-safe-area-context"
 import { Dimensions } from "react-native"
 import { getScreenSize } from "./helper"
 import { useEffect } from "react"
+import { useKeyboard } from "./useKeyboard"
 
 export const useDimensions = () => {
   const { app } = useStore()
   const insets = useSafeAreaInsets()
+  const keyboard = useKeyboard()
   const updateDimensions = (window: any) => {
     const { width, height } = window
     const screen = getScreenSize(width)
     app.set("dimension", {
       isMobile: screen !== "xl",
+      keyboard: keyboard,
       width: width - insets.left - insets.right,
       height: height - insets.top - insets.bottom,
       screen,

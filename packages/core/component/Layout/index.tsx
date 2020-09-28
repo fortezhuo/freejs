@@ -24,6 +24,7 @@ export const LayoutFull: FC<LayoutProps> = observer(
           <View testID={testID} style={StyleSheet.flatten([styles.layout])}>
             {store.isLoading || isLoading ? <Loader /> : children}
           </View>
+          <View style={styles.buffer} />
         </ScrollView>
       </View>
     )
@@ -54,4 +55,5 @@ const styles = {
   wrapper21: tw("h-20 bg-transparent"),
   wrapper22: tw("flex-1 bg-gray-200"),
   content: tw("p-6 pt-0"),
+  buffer: tw("h-10"),
 }

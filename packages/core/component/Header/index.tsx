@@ -21,8 +21,10 @@ export const Header: FC<HeaderProps> = observer(({ testID = "Header" }) => {
             onPress={app.dimension.isMobile && app.toggleDrawer}
           />
         )}
-        <InputSearch />
-        <View style={styles.boxGrow}></View>
+
+        <View style={styles.boxGrow}>
+          <InputSearch />
+        </View>
         {!app.isForm && <MenuUser />}
       </View>
     )
@@ -30,7 +32,7 @@ export const Header: FC<HeaderProps> = observer(({ testID = "Header" }) => {
 })
 
 const styles = StyleSheet.create({
-  rootHeader: tw(`flex-row h-16 pr-4 items-center`),
-  boxGrow: tw("flex-grow"),
+  rootHeader: tw(`flex-row h-16 items-center`),
+  boxGrow: tw("flex-grow mx-4"),
   actionLeft: tw("ml-4"),
 })

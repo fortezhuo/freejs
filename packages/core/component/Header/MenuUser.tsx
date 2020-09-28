@@ -3,8 +3,7 @@ import { StyleSheet, View, Text } from "react-native"
 import { IconButton } from "../Icon"
 import { useMenu } from "../Menu"
 import { useStore } from "../Store"
-import { theme } from "../../config/theme"
-import { tw, color, adjust } from "@free/tailwind"
+import { tw } from "@free/tailwind"
 import { observer } from "mobx-react-lite"
 
 export const MenuUser: FC = observer(() => {
@@ -38,9 +37,9 @@ export const MenuUser: FC = observer(() => {
 })
 
 const styles = StyleSheet.create({
-  rootMenuUser: tw("shadow-md rounded"),
-  iconMenuUser: tw(`rounded-full border-2 border-solid border-white p-1`),
-  boxAuth: tw(`bg-black-200 p-2 items-center mt-4`),
+  rootMenuUser: tw("rounded mt-4"),
+  iconMenuUser: tw(`rounded-full border-2 border-solid border-white p-1 mr-4`),
+  boxAuth: tw(`bg-black-200 p-2 items-center`),
   boxMenu: tw(`bg-white`),
   textAuth: tw("text-gray-100 font-bold text-xs"),
 })
