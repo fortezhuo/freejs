@@ -29,7 +29,7 @@ export const DateTimePicker: FC<any> = ({
         <TouchableWithoutFeedback disabled={disabled} onPress={show}>
           <View
             style={StyleSheet.flatten([
-              styles.rootAnchor,
+              styles.viewAnchor,
               disabled ? styles.inputDisabled : {},
             ])}
           >
@@ -38,7 +38,7 @@ export const DateTimePicker: FC<any> = ({
         </TouchableWithoutFeedback>
       }
     >
-      <View style={styles.rootMenu}>
+      <View style={styles.viewDatePicker}>
         <RNDateTimePicker
           testID="dateTimePicker"
           value={date}
@@ -53,9 +53,8 @@ export const DateTimePicker: FC<any> = ({
 }
 
 const styles = StyleSheet.create({
-  rootMenu: tw(theme.input_bg),
-  rootAnchor: tw(`${theme.input_border} ${theme.input_bg} p-2 w-full flex-row`),
+  viewDatePicker: tw(theme.input_bg),
+  viewAnchor: tw(`${theme.input_border} ${theme.input_bg} p-2 w-full flex-row`),
   textAnchor: tw(theme.input_text),
   inputDisabled: tw(theme.input_disabled_bg),
-  inputError: tw(theme.input_error_bg),
 })

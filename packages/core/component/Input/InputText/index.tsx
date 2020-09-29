@@ -30,7 +30,7 @@ export const InputText: FC<InputTextProps> = observer((_props) => {
     <TextInput
       placeholderTextColor={tw("text-gray-600").color}
       style={StyleSheet.flatten([
-        styles.rootInput,
+        styles.inputText,
         props.disabled ? styles.inputDisabled : {},
         props.isEmpty ? styles.inputError : {},
       ])}
@@ -40,7 +40,7 @@ export const InputText: FC<InputTextProps> = observer((_props) => {
 })
 
 const styles: any = StyleSheet.create({
-  rootInput: tw(
+  inputText: tw(
     `${theme.input_bg} ${theme.input_border} ${theme.input_text} p-3 w-full`
   ),
   inputDisabled: tw(theme.input_disabled_bg),

@@ -21,11 +21,11 @@ export const MenuUser: FC = observer(() => {
           />
         }
       >
-        <View style={styles.rootMenuUser}>
-          <View style={styles.boxAuth}>
-            <Text style={styles.textAuth}>{app?.auth?.fullname}</Text>
+        <View style={styles.viewMenu}>
+          <View style={styles.viewUser}>
+            <Text style={styles.textUser}>{app?.auth?.fullname}</Text>
           </View>
-          <View style={styles.boxMenu}>
+          <View style={styles.viewChildren}>
             <MenuItem name="log-out" onPress={() => app.logout()}>
               Logout
             </MenuItem>
@@ -37,9 +37,9 @@ export const MenuUser: FC = observer(() => {
 })
 
 const styles = StyleSheet.create({
-  rootMenuUser: tw("rounded mt-4 bg-black-100", { padding: 2 }),
+  viewMenu: tw("rounded mt-1 bg-black-100", { padding: 2 }),
+  viewUser: tw(`bg-gray-300 p-2 items-center`),
+  viewChildren: tw(`bg-white`),
   iconMenuUser: tw(`rounded-full border-2 border-solid border-white p-1 mr-4`),
-  boxAuth: tw(`bg-black-200 p-2 items-center`),
-  boxMenu: tw(`bg-white`),
-  textAuth: tw("text-gray-100 font-bold text-xs"),
+  textUser: tw("text-gray-700 font-bold text-xs"),
 })

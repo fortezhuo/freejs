@@ -6,7 +6,7 @@ import { LoaderProps } from "@free/core"
 
 export const Loader: FC<LoaderProps> = ({ primary }) => {
   return (
-    <View style={styles.rootLoader}>
+    <View style={styles.viewLoader}>
       <ActivityIndicator
         size="large"
         color={primary ? color(theme.primary) : "white"}
@@ -16,5 +16,5 @@ export const Loader: FC<LoaderProps> = ({ primary }) => {
 }
 
 const styles = StyleSheet.create({
-  rootLoader: tw("justify-center items-center flex-1"),
+  viewLoader: tw("justify-center items-center flex-1"),
 })

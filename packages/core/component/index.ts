@@ -1,4 +1,5 @@
 import * as Input from "./Input"
+import * as ActionGroup from "./ActionGroup"
 export { Accordion, AccordionItem } from "./Accordion"
 export { Avatar } from "./Avatar"
 export { Drawer } from "./Drawer"
@@ -13,3 +14,4 @@ export { Title } from "./Title"
 export { useStore } from "./Store"
 export { H1, H2, H3, H4, H5, Text } from "./Text"
 export { Input }
+export { ActionGroup }

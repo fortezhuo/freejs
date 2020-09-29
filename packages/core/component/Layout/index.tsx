@@ -10,7 +10,7 @@ export const LayoutFull: FC<LayoutProps> = observer(
   ({ testID = "LayoutFull", children, store, isLoading = false }) => {
     useHook(store)
     return (
-      <View style={styles.layout}>
+      <View style={styles.viewLayout}>
         <ScrollView
           testID={"LayoutScroll"}
           keyboardShouldPersistTaps="handled"
@@ -21,10 +21,9 @@ export const LayoutFull: FC<LayoutProps> = observer(
             justifyContent: "center",
           }}
         >
-          <View testID={testID} style={StyleSheet.flatten([styles.layout])}>
+          <View testID={testID} style={styles.viewLayout}>
             {store.isLoading || isLoading ? <Loader /> : children}
           </View>
-          <View style={styles.buffer} />
         </ScrollView>
       </View>
     )
@@ -35,12 +34,12 @@ export const Layout: FC<LayoutProps> = observer(
   ({ testID = "Layout", children, store, isLoading = false }) => {
     return (
       <LayoutFull store={store} isLoading={isLoading}>
-        <View style={styles.wrapper1}></View>
-        <View style={styles.wrapper2}>
-          <View style={styles.wrapper21}></View>
-          <View style={styles.wrapper22}></View>
+        <View style={styles.viewWrapper1}></View>
+        <View style={styles.viewWrapper2}>
+          <View style={styles.viewWrapper21}></View>
+          <View style={styles.viewWrapper22}></View>
         </View>
-        <View style={styles.content} testID={testID}>
+        <View style={styles.viewChildren} testID={testID}>
           {children}
         </View>
       </LayoutFull>
@@ -48,12 +47,11 @@ export const Layout: FC<LayoutProps> = observer(
   }
 )
 
-const styles = {
-  layout: tw("flex-1"),
-  wrapper1: tw("h-20 absolute"),
-  wrapper2: tw("w-full h-full absolute flex-1"),
-  wrapper21: tw("h-20 bg-transparent"),
-  wrapper22: tw("flex-1 bg-gray-200"),
-  content: tw("p-6 pt-0"),
-  buffer: tw("h-10"),
-}
+const styles = StyleSheet.create({
+  viewLayout: tw("flex-1"),
+  viewWrapper1: tw("h-20 absolute"),
+  viewWrapper2: tw("w-full h-full absolute flex-1"),
+  viewWrapper21: tw("h-20 bg-transparent"),
+  viewWrapper22: tw("flex-1 bg-gray-200"),
+  viewChildren: tw("p-6 pt-0"),
+})

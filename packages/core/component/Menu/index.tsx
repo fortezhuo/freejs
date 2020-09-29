@@ -110,7 +110,11 @@ export const useMenu = () => {
             transparent={true}
           >
             <View
-              style={StyleSheet.flatten([styles.rootMenu, menuStyle, style])}
+              style={StyleSheet.flatten([
+                styles.viewChildren,
+                menuStyle,
+                style,
+              ])}
               onLayout={onMenuLayout}
             >
               {children}
@@ -121,7 +125,7 @@ export const useMenu = () => {
     }
   )
 
-  const MenuItem: FC<MenuItemProps> = observer(
+  const BindMenuItem: FC<MenuItemProps> = observer(
     ({
       name,
       color = iconColor,
@@ -131,19 +135,19 @@ export const useMenu = () => {
       style,
     }) => {
       return (
-        <IconButton
+        <MenuItem
           onPress={() => {
             onPress()
             hide()
           }}
-          styleContainer={StyleSheet.flatten([styles.rootMenuItem, style])}
+          styleContainer={style}
           name={name}
           color={color}
           size={18}
-          styleText={StyleSheet.flatten([styles.textMenuItem, styleText])}
+          styleText={styleText}
         >
           {children}
-        </IconButton>
+        </MenuItem>
       )
     }
   )
@@ -152,7 +156,7 @@ export const useMenu = () => {
     show,
     hide,
     Menu,
-    MenuItem,
+    MenuItem: BindMenuItem,
   }
 }
 
@@ -172,14 +176,14 @@ export const MenuItem: FC<MenuItemProps> = observer(
           onPress()
         }}
         styleContainer={StyleSheet.flatten([
-          styles.rootMenuItem,
-          active ? styles.rootMenuActive : {},
+          styles.viewItem,
+          active ? styles.viewItemActive : {},
           style,
         ])}
         name={name}
         color={color}
         size={18}
-        styleText={StyleSheet.flatten([styles.textMenuItem, styleText])}
+        styleText={StyleSheet.flatten([styles.textItem, styleText])}
       >
         {children}
       </IconButton>
@@ -187,9 +191,9 @@ export const MenuItem: FC<MenuItemProps> = observer(
   }
 )
 
-const styles: any = StyleSheet.create({
-  rootMenu: tw("absolute bg-transparent"),
-  rootMenuItem: tw(`flex-1 flex-row p-2`),
-  rootMenuActive: tw("bg-black-100"),
-  textMenuItem: tw(`${theme.input_text} leading-5 mx-2`),
+const styles = StyleSheet.create({
+  viewChildren: tw("absolute bg-transparent"),
+  viewItem: tw(`flex-1 flex-row p-2`),
+  viewItemActive: tw("bg-black-100"),
+  textItem: tw(`${theme.input_text} leading-5 mx-2`),
 })

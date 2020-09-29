@@ -38,21 +38,21 @@ export const useHook = () => {
     const list: ObjectAny = {
       new: {
         icon: "file-plus",
-        type: "primary",
+        type: "primary_2_bg",
         children: "New",
         onPress: () => view.app?.goto(`${name}/new`),
         visible: view.app?.can("create", name),
       },
       delete: {
         icon: "trash-2",
-        type: "danger",
+        type: "danger_bg",
         children: "Delete",
         onPress: () => view.app?.can("delete", name),
         visible: view.app?.can("delete", name),
       },
       filter: {
         icon: "search",
-        type: "primary",
+        type: "primary_2_bg",
         children: "Filter",
         onPress: () => {
           const isFilter = view.temp.get("isFilter") || false

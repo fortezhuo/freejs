@@ -17,11 +17,15 @@ let theme: Config = {
   primary_2_bg: "bg-blue-400",
   secondary_1_bg: "bg-gray-600",
   secondary_2_bg: "bg-gray-400",
-  danger: "bg-pink-800",
+  danger_bg: "bg-pink-800",
+  success_bg: "bg-green-400",
+  warning_bg: "bg-yellow-500",
 }
 
 theme = {
   ...theme,
+  black_bg: "bg-black-900",
+  transparent_bg: "bg-transparent",
   accordion_icon_active_border: "border border-pink-200",
   accordion_icon_active_bg: "bg-pink-600",
   accordion_text: "bg-gray-900",

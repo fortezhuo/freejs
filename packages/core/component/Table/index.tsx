@@ -10,19 +10,13 @@ import { RectButton } from "react-native-gesture-handler"
 import Swipeable from "react-native-gesture-handler/Swipeable"
 import { TableProps, IconButtonProps, RowProps, CellProps } from "@free/core"
 import dayjs from "dayjs"
+import { InputSelect } from "../Input/InputSelect"
 
 const date = (date: any) => dayjs(date).format("DD MMM YYYY")
 const datetime = (datetime: any) =>
   dayjs(datetime).format("DD MMM YYYY HH:mm:ss")
 
 const primary = color(theme.input_text)
-
-export const withClass = (Component: any) =>
-  class extends React.PureComponent {
-    render() {
-      return <Component {...this.props} />
-    }
-  }
 
 export const Table: FC<TableProps> = observer(
   ({ children, style, scroll, testID = "Table" }) => {
@@ -38,11 +32,11 @@ export const Table: FC<TableProps> = observer(
     return (
       <View
         testID={testID}
-        style={StyleSheet.flatten([styles.rootTable, style])}
+        style={StyleSheet.flatten([styles.viewTable, style])}
       >
         <View style={{ flex: 1 }}>
           <Wrapper>
-            <View style={styles.groupTable}>{children}</View>
+            <View style={styles.viewTableChildren}>{children}</View>
           </Wrapper>
         </View>
       </View>
@@ -50,23 +44,36 @@ export const Table: FC<TableProps> = observer(
   }
 )
 
-export const Header: FC<RowProps> = observer(({ children, style }) => {
+export const Pagination = observer(() => {
   return (
-    <Row style={StyleSheet.flatten([styles.rootHeader, style])}>{children}</Row>
+    <View style={styles.viewPage}>
+      <Text>Showing 1 to 2 of 2 entries</Text>
+      <View style={styles.viewPageNumbers}>
+        <Text onPress={() => {}} style={styles.textPage}>
+          First
+        </Text>
+        {[...Array(1)].map((_, i) => (
+          <Text
+            onPress={() => {}}
+            style={StyleSheet.flatten([
+              styles.textPage,
+              i == 0 ? styles.textPageActive : {},
+            ])}
+          >
+            {i + 1}
+          </Text>
+        ))}
+        <Text onPress={() => {}} style={styles.textPage}>
+          Last
+        </Text>
+      </View>
+    </View>
   )
 })
 
-export const Filter: FC<RowProps> = observer(({ children, style }) => {
+export const Header: FC<RowProps> = observer(({ children, style }) => {
   return (
-    <Row style={StyleSheet.flatten([styles.rootFilter, style])}>
-      {children &&
-        (children as []).map((child: any, i: number) => {
-          return cloneElement(child, {
-            filter: true,
-            key: `filterCell_${random()}`,
-          })
-        })}
-    </Row>
+    <Row style={StyleSheet.flatten([styles.viewHeader, style])}>{children}</Row>
   )
 })
 
@@ -76,8 +83,8 @@ export const Row: FC<RowProps> = observer(
       <View
         testID={testID}
         style={StyleSheet.flatten([
-          styles.rootRow,
-          filter ? styles.rootFilter : {},
+          styles.viewRow,
+          filter ? styles.rowFilter : {},
           dark ? styles.rowDark : {},
           style,
         ])}
@@ -109,7 +116,7 @@ export const Cell: FC<CellProps> = observer(
       <View
         testID={testID}
         style={StyleSheet.flatten([
-          styles.rootCell,
+          styles.viewCell,
           filter ? styles.cellFilter : {},
           style,
         ])}
@@ -180,7 +187,7 @@ export const RowMobile: FC<RowProps> = observer(
               <Animated.View
                 style={{ flex: 1, transform: [{ translateX: trans }] }}
               >
-                <RectButton onPress={onDelete} style={styles.boxDelete}>
+                <RectButton onPress={onDelete} style={styles.cellDelete}>
                   <IconLabel
                     styleContainer={styles.iconDelete}
                     name="trash-2"
@@ -195,7 +202,7 @@ export const RowMobile: FC<RowProps> = observer(
           <View
             testID={testID}
             style={StyleSheet.flatten([
-              styles.rootRow,
+              styles.viewRow,
               styles.rowMobile,
               dark ? styles.rowDark : {},
               style,
@@ -216,18 +223,25 @@ export const RowMobile: FC<RowProps> = observer(
 )
 
 const styles = StyleSheet.create({
-  rootTable: tw(`shadow-xl`),
-  groupTable: tw("flex-col flex-1"),
-  rootHeader: tw(`h-10 items-center shadow-md`),
-  rootBody: tw("flex-1"),
-  rootFilter: tw(`bg-red-200 h-10 items-center`),
+  viewTable: tw(`shadow-xl`),
+  viewTableChildren: tw("flex-col flex-1"),
+  viewPage: tw("flex-row justify-between items-center p-1 shadow-sm"),
+  viewPageNumbers: tw(
+    "flex-row rounded-sm border-l border-t border-b border-gray-300"
+  ),
+  textPage: tw(
+    "items-center px-4 py-2 bg-white text-sm text-gray-900 border-gray-300 border-r"
+  ),
+  textPageActive: tw(`bg-gray-300`),
+  viewHeader: tw(`h-10 items-center shadow-md`),
+  viewRow: tw(`${theme.table_border} flex-row flex-no-wrap`),
+  viewCell: tw(`p-2 w-40 flex-grow`),
+  rowDark: { backgroundColor: "rgba(0,0,0,0.08)" },
+  rowFilter: tw(`bg-red-200 h-10 items-center`),
+  rowMobile: tw("flex-col p-2"),
+  cellFilter: { padding: 0 },
+  cellDelete: tw("flex-1"),
   textCell: tw(theme.input_text),
   textCellSmall: tw(`${theme.input_text} text-sm`),
-  rootRow: tw(`${theme.table_border} flex-row flex-no-wrap`),
-  rowMobile: tw("flex-col p-2"),
-  rowDark: { backgroundColor: "rgba(0,0,0,0.08)" },
-  rootCell: tw(`p-2 w-40 flex-grow`),
-  cellFilter: { padding: 0 },
-  boxDelete: tw("flex-1"),
   iconDelete: tw(`${theme.danger} flex-row flex-1 justify-center items-center`),
 })
