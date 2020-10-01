@@ -68,6 +68,5 @@ export const ssr = fp(async (instance) => {
     }
 
     instance.get("/api", api)
-    instance.get("/api/", api)
   }
 })
