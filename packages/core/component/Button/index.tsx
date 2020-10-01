@@ -64,5 +64,6 @@ const styles: any = StyleSheet.create({
       height: 36,
     }
   ),
+  iconButton: tw("ml-2"),
   textButton: tw("mx-2 leading-5"),
 })

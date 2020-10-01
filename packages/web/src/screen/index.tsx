@@ -20,6 +20,14 @@ export const SettingLog = loadable(
   }
 )
 
+export const SettingUser = loadable(
+  () => import("@free/core/screen/SettingUser"),
+  {
+    ssr: true,
+    fallback: <Loader />,
+  }
+)
+
 export const ViewGrid = loadable(() => import("@free/core/screen/ViewGrid"), {
   ssr: true,
   fallback: <Loader />,
@@ -41,13 +49,7 @@ export const PageError = loadable(() => import("@free/core/screen/PageError"), {
 
 
 
-export const SettingUser = loadable(
-  () => import("@free/core/screen/SettingUser"),
-  {
-    ssr: true,
-    fallback: <Loader />,
-  }
-)
+
 
 export const ViewGrid = loadable(() => import("@free/core/screen/ViewGrid"), {
   ssr: true,

@@ -7,16 +7,22 @@ import { observer } from "mobx-react-lite"
 import { Loader } from "../"
 
 export const LayoutFull: FC<LayoutProps> = observer(
-  ({ testID = "LayoutFull", children, store, isLoading = false }) => {
+  ({
+    testID = "LayoutFull",
+    children,
+    store,
+    stickyHeader,
+    isLoading = false,
+  }) => {
     useHook(store)
     return (
       <View style={styles.viewLayout}>
+        {stickyHeader && <View style={styles.viewHeader}>{stickyHeader}</View>}
         <ScrollView
           testID={"LayoutScroll"}
           keyboardShouldPersistTaps="handled"
           keyboardDismissMode="on-drag"
           contentContainerStyle={{
-            display: "flex",
             flexGrow: 1,
             justifyContent: "center",
           }}
@@ -31,15 +37,29 @@ export const LayoutFull: FC<LayoutProps> = observer(
 )
 
 export const Layout: FC<LayoutProps> = observer(
-  ({ testID = "Layout", children, store, isLoading = false }) => {
+  ({
+    testID = "Layout",
+    children,
+    store,
+    isLoading = false,
+    stickyHeader,
+    style,
+  }) => {
     return (
-      <LayoutFull store={store} isLoading={isLoading}>
+      <LayoutFull
+        stickyHeader={stickyHeader}
+        store={store}
+        isLoading={isLoading}
+      >
         <View style={styles.viewWrapper1}></View>
         <View style={styles.viewWrapper2}>
           <View style={styles.viewWrapper21}></View>
           <View style={styles.viewWrapper22}></View>
         </View>
-        <View style={styles.viewChildren} testID={testID}>
+        <View
+          style={StyleSheet.flatten([styles.viewChildren, style])}
+          testID={testID}
+        >
           {children}
         </View>
       </LayoutFull>
@@ -49,9 +69,10 @@ export const Layout: FC<LayoutProps> = observer(
 
 const styles = StyleSheet.create({
   viewLayout: tw("flex-1"),
-  viewWrapper1: tw("h-20 absolute"),
+  viewWrapper1: tw("h-1 absolute"),
   viewWrapper2: tw("w-full h-full absolute flex-1"),
   viewWrapper21: tw("h-20 bg-transparent"),
   viewWrapper22: tw("flex-1 bg-gray-200"),
+  viewHeader: tw("px-6 pb-3"),
   viewChildren: tw("p-6 pt-0"),
 })

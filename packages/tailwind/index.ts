@@ -29,7 +29,9 @@ export const tw: any = (classNames, adhoc) => {
     if (styles[className]) {
       Object.assign(obj, styles[className])
     } else {
-      console.warn(`Unsupported Tailwind class: "${className}"`)
+      console.warn(
+        `Unsupported Tailwind class: "${className}" on "${classNames}"`
+      )
     }
   }
 

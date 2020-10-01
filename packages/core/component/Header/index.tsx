@@ -1,10 +1,9 @@
 import React, { FC } from "react"
 import { StyleSheet, View } from "react-native"
-import { IconButton } from "../Icon"
+import { IconButton, useStore, H3 } from "../"
 import { MenuUser } from "./MenuUser"
 import { tw } from "@free/tailwind"
 import { observer } from "mobx-react-lite"
-import { useStore } from "../Store"
 import { HeaderProps } from "@free/core"
 import { InputSearch } from "./InputSearch"
 
@@ -23,7 +22,11 @@ export const Header: FC<HeaderProps> = observer(({ testID = "Header" }) => {
         )}
 
         <View style={styles.viewGrow}>
-          <InputSearch />
+          {app.isForm ? (
+            <H3 style={styles.textTitle}>{app.subTitle}</H3>
+          ) : (
+            <InputSearch />
+          )}
         </View>
         {!app.isForm && <MenuUser />}
       </View>
@@ -34,5 +37,6 @@ export const Header: FC<HeaderProps> = observer(({ testID = "Header" }) => {
 const styles = StyleSheet.create({
   viewHeader: tw(`flex-row h-16 items-center`),
   viewGrow: tw("flex-grow mx-4"),
+  textTitle: tw("text-white"),
   iconLeft: tw("ml-4"),
 })

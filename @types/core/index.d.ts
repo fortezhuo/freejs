@@ -84,6 +84,7 @@ declare module "@free/core" {
   // GridRow
   type GridRowProps = {
     nowrap?: boolean
+    dark?: boolean
     smHidden?: boolean
     mdHidden?: boolean
     lgHidden?: boolean
@@ -104,7 +105,6 @@ declare module "@free/core" {
     xlHidden?: boolean
     style?: any
     children?: any
-    input?: boolean
   }
 
   // Icon
@@ -182,6 +182,7 @@ declare module "@free/core" {
     testID?: string
     isLoading?: boolean
     store?: any
+    stickyHeader?: ReactNode
   }
 
   // Loader

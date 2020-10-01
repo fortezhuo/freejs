@@ -141,7 +141,7 @@ const styles = StyleSheet.create({
   viewChildren: tw("flex-col flex-shrink z-0"),
   viewIcon: tw("flex-grow flex-row items-center"),
   viewIconItem: tw(`flex-row px-4 py-3 pl-10 items-center`),
-  icon: tw("p-2 shadow-xl bg-white rounded"),
+  icon: tw("p-2 shadow-md bg-white rounded"),
   iconExpand: tw(theme.accordion_icon_active_border),
   itemActive: { backgroundColor: "rgba(0,0,0,0.03)" },
   textIconItem: tw(`px-2`),

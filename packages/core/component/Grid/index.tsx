@@ -1,18 +1,10 @@
 import React, { FC } from "react"
-import { View, StyleSheet, ScrollView, Text } from "react-native"
+import { View, StyleSheet, Text } from "react-native"
 import { theme } from "../../config/theme"
 import { tw } from "@free/tailwind"
 import { useHook } from "./hook"
 import { observer } from "mobx-react-lite"
 import { GridRowProps, GridColProps } from "@free/core"
-
-export const Main: FC = ({ children }) => {
-  return (
-    <View style={styles.viewMain}>
-      <ScrollView>{children}</ScrollView>
-    </View>
-  )
-}
 
 export const Row: FC<GridRowProps> = observer(
   ({
@@ -23,6 +15,7 @@ export const Row: FC<GridRowProps> = observer(
     xlHidden,
     style,
     children,
+    dark = false,
     ...rest
   }) => {
     const { isHidden } = useHook()
@@ -33,6 +26,7 @@ export const Row: FC<GridRowProps> = observer(
         style={StyleSheet.flatten([
           style,
           styles.viewRow,
+          dark ? styles.viewRowDark : {},
           {
             flexWrap: nowrap ? "nowrap" : "wrap",
           },
@@ -56,7 +50,6 @@ export const Col: FC<GridColProps> = observer(
     xlHidden,
     style,
     children,
-    input,
     ...rest
   }) => {
     const { isHidden, getWidth } = useHook()
@@ -70,12 +63,7 @@ export const Col: FC<GridColProps> = observer(
     return isShow ? (
       <View
         {...rest}
-        style={StyleSheet.flatten([
-          styles.viewColumn,
-          input ? styles.viewInput : {},
-          style,
-          tw(`${width}`),
-        ])}
+        style={StyleSheet.flatten([styles.viewColumn, style, tw(`${width}`)])}
       >
         {children}
       </View>
@@ -88,11 +76,8 @@ export const Label: FC = observer(({ children }) => {
 })
 
 const styles = StyleSheet.create({
-  viewMain: tw("flex-1 p-1 mt-1 bg-white-700"),
-  viewRow: { marginBottom: 1, ...tw(`flex-row`) },
-  viewColumn: tw("flex-col p-2"),
-  viewInput: tw(
-    `${theme.grid_column_input_border} ${theme.grid_column_input_bg} py-3`
-  ),
-  textLabel: tw(`${theme.grid_label}`),
+  viewRow: tw(`flex-row p-2`),
+  viewRowDark: { backgroundColor: "rgba(0,0,0,0.05)" },
+  viewColumn: tw("flex-col justify-center"),
+  textLabel: tw(`${theme.input_text} p-1`),
 })
