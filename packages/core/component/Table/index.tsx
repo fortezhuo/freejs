@@ -54,6 +54,7 @@ export const Pagination = observer(() => {
         </Text>
         {[...Array(1)].map((_, i) => (
           <Text
+            key={"page_" + random()}
             onPress={() => {}}
             style={StyleSheet.flatten([
               styles.textPage,
@@ -234,7 +235,7 @@ const styles = StyleSheet.create({
   ),
   textPageActive: tw(`bg-gray-300`),
   viewHeader: tw(`h-10 items-center shadow-md`),
-  viewRow: tw(`${theme.table_border} flex-row flex-no-wrap`),
+  viewRow: tw(`flex-row flex-no-wrap`),
   viewCell: tw(`p-2 w-40 flex-grow`),
   rowDark: { backgroundColor: "rgba(0,0,0,0.08)" },
   rowFilter: tw(`bg-red-200 h-10 items-center`),
@@ -243,5 +244,7 @@ const styles = StyleSheet.create({
   cellDelete: tw("flex-1"),
   textCell: tw(theme.input_text),
   textCellSmall: tw(`${theme.input_text} text-sm`),
-  iconDelete: tw(`${theme.danger} flex-row flex-1 justify-center items-center`),
+  iconDelete: tw(
+    `${theme.danger_bg} flex-row flex-1 justify-center items-center`
+  ),
 })

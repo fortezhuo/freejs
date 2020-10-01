@@ -88,9 +88,9 @@ export const InputSelect: FC<InputSelectProps> = observer((props) => {
 })
 
 const styles = StyleSheet.create({
-  viewMenu: {
+  viewMenu: tw(`${theme.input_bg} ${theme.input_border}`, {
+    marginTop: 1,
+    paddingTop: 3,
     height: 181,
-    maxHeight: 181,
-    ...tw(`${theme.input_bg} ${theme.input_border} border-t-0`),
-  },
+  }),
 })

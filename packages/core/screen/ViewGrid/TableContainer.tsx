@@ -1,5 +1,5 @@
 import React, { FC } from "react"
-import { View, StyleSheet, Text } from "react-native"
+import { View, StyleSheet } from "react-native"
 import { tw } from "@free/tailwind"
 import {
   Table,
@@ -12,6 +12,7 @@ import {
 import { observer } from "mobx-react-lite"
 import { useTable } from "react-table"
 import { FlatList } from "react-native-gesture-handler"
+import { random } from "../../util/random"
 
 const Wrapper: any = View
 
@@ -21,7 +22,6 @@ export const TableContainer: FC<any> = observer(
       columns,
       data,
     })
-
     return (
       <View style={styles.viewTable}>
         <Pagination />
@@ -48,7 +48,6 @@ export const TableContainer: FC<any> = observer(
                 <RowMobile
                   index={index}
                   store={store}
-                  name={name}
                   dark={index % 2}
                   data={item.values}
                   label={label}

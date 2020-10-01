@@ -24,8 +24,6 @@ let theme: Config = {
 
 theme = {
   ...theme,
-  black_bg: "bg-black-900",
-  transparent_bg: "bg-transparent",
   accordion_icon_active_border: "border border-pink-200",
   accordion_icon_active_bg: "bg-pink-600",
   accordion_text: "bg-gray-900",

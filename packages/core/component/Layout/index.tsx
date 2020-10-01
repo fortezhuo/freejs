@@ -6,31 +6,39 @@ import { useHook } from "./hook"
 import { observer } from "mobx-react-lite"
 import { Loader } from "../"
 
+const Wrapper: FC<any> = observer((props) =>
+  props.scroll ? (
+    <ScrollView
+      testID={"LayoutScroll"}
+      keyboardShouldPersistTaps="handled"
+      keyboardDismissMode="on-drag"
+      contentContainerStyle={styles.viewWrapper}
+    >
+      {props.children}
+    </ScrollView>
+  ) : (
+    <View style={styles.viewWrapper}>{props.children}</View>
+  )
+)
+
 export const LayoutFull: FC<LayoutProps> = observer(
   ({
     testID = "LayoutFull",
     children,
     store,
     stickyHeader,
+    scroll = true,
     isLoading = false,
   }) => {
     useHook(store)
     return (
       <View style={styles.viewLayout}>
         {stickyHeader && <View style={styles.viewHeader}>{stickyHeader}</View>}
-        <ScrollView
-          testID={"LayoutScroll"}
-          keyboardShouldPersistTaps="handled"
-          keyboardDismissMode="on-drag"
-          contentContainerStyle={{
-            flexGrow: 1,
-            justifyContent: "center",
-          }}
-        >
+        <Wrapper scroll={scroll}>
           <View testID={testID} style={styles.viewLayout}>
             {store.isLoading || isLoading ? <Loader /> : children}
           </View>
-        </ScrollView>
+        </Wrapper>
       </View>
     )
   }
@@ -43,12 +51,14 @@ export const Layout: FC<LayoutProps> = observer(
     store,
     isLoading = false,
     stickyHeader,
+    scroll,
     style,
   }) => {
     return (
       <LayoutFull
         stickyHeader={stickyHeader}
         store={store}
+        scroll={scroll}
         isLoading={isLoading}
       >
         <View style={styles.viewWrapper1}></View>
@@ -69,6 +79,7 @@ export const Layout: FC<LayoutProps> = observer(
 
 const styles = StyleSheet.create({
   viewLayout: tw("flex-1"),
+  viewWrapper: tw("flex-grow"),
   viewWrapper1: tw("h-1 absolute"),
   viewWrapper2: tw("w-full h-full absolute flex-1"),
   viewWrapper21: tw("h-20 bg-transparent"),

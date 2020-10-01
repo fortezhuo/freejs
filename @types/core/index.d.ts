@@ -182,6 +182,7 @@ declare module "@free/core" {
     testID?: string
     isLoading?: boolean
     store?: any
+    scroll?: boolean
     stickyHeader?: ReactNode
   }
 

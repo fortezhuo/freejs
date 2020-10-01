@@ -1,5 +1,5 @@
 import React, { FC } from "react"
-import { View, StyleSheet } from "react-native"
+import { View, StyleSheet, Platform } from "react-native"
 import { tw } from "@free/tailwind"
 import { TableContainer } from "./TableContainer"
 import { useHook } from "./hook"
@@ -20,7 +20,7 @@ const ViewGrid: FC = observer(() => {
     store.data.get("isMobile") !== isMobile
 
   return (
-    <Layout store={store} isLoading={isLoading}>
+    <Layout store={store} isLoading={isLoading} scroll={Platform.OS === "web"}>
       <View style={styles.viewGrid}>
         <View style={styles.viewTitle}>
           <H3 style={styles.textTitle}>{store?.app?.subTitle}</H3>
@@ -54,7 +54,9 @@ const styles = StyleSheet.create({
   textTitle: tw("text-white"),
   viewTable: tw("flex-col bg-white rounded-lg p-1"),
   boxDelete: tw("flex-1"),
-  iconDelete: tw(`${theme.danger} flex-row flex-1 justify-center items-center`),
+  iconDelete: tw(
+    `${theme.danger_bg} flex-row flex-1 justify-center items-center`
+  ),
   rowMobile: tw("flex-col"),
 })
 
