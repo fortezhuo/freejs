@@ -69,7 +69,6 @@ const styles = StyleSheet.create({
     `${theme.danger_bg} flex-row flex-1 justify-center items-center`
   ),
   rowMobile: tw("flex-col"),
-  bottomSheet: tw("w-full bg-red-500 p-0", { height: 10 }),
 })
 
 export default ViewGrid

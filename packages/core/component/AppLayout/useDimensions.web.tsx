@@ -16,6 +16,7 @@ export const useDimensions = () => {
       width: width - insets.left - insets.right,
       height: height - insets.top - insets.bottom,
       screen,
+      insets,
     })
   }
   updateDimensions(Dimensions.get("window"))
