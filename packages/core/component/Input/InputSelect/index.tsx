@@ -76,6 +76,7 @@ export const InputSelect: FC<InputSelectProps> = observer((props) => {
 
   return (
     <Menu
+      waitKeyboard
       onShow={() => refSearch.current?.focus()}
       anchor={<Anchor state={state} menu={{ show }} />}
     >

@@ -1,4 +1,4 @@
-import React, { useRef, FC, useState, useEffect } from "react"
+import React, { useRef, FC, useState } from "react"
 import {
   PanGestureHandler,
   TapGestureHandler,
@@ -13,8 +13,9 @@ import { tw, color } from "@free/tailwind"
 
 export const Small: FC<any> = observer(({ store, button }) => {
   const winHeight =
-    store.app.dimension.height - (Platform.OS == "web" ? 130 : 150)
-  const boxHeight = winHeight - (button || []).length * 48 - 58
+    store.app.dimension.height - (Platform.OS == "web" ? 130 : 40)
+  const insetsBottom = store.app.dimension.insets.bottom
+  const boxHeight = winHeight - 116 - (button || []).length * 40
   const SNAP_POINTS_FROM_TOP = [boxHeight, winHeight]
   const START = SNAP_POINTS_FROM_TOP[0]
   const END = SNAP_POINTS_FROM_TOP[SNAP_POINTS_FROM_TOP.length - 1]
@@ -30,6 +31,7 @@ export const Small: FC<any> = observer(({ store, button }) => {
     outputRange: [START, END],
     extrapolate: "clamp",
   })
+
   const onGestureEvent = Animated.event(
     [{ nativeEvent: { translationY: dragY } }],
     { useNativeDriver: false }
@@ -40,7 +42,6 @@ export const Small: FC<any> = observer(({ store, button }) => {
       let { velocityY, translationY } = nativeEvent
       const dragToss = 0.05
       const endOffsetY = lastSnap + translationY + dragToss * velocityY
-
       let destSnapPoint = SNAP_POINTS_FROM_TOP[0]
       for (let i = 0; i < SNAP_POINTS_FROM_TOP.length; i++) {
         const snapPoint = SNAP_POINTS_FROM_TOP[i]
@@ -67,17 +68,10 @@ export const Small: FC<any> = observer(({ store, button }) => {
   return button ? (
     <View
       testID="BottomSheet"
-      style={StyleSheet.flatten([
-        StyleSheet.absoluteFillObject,
-        styles.rootSheet,
-      ])}
+      style={StyleSheet.flatten([StyleSheet.absoluteFillObject])}
       pointerEvents="box-none"
     >
-      <TapGestureHandler
-        ref={wrapper}
-        maxDurationMs={100000}
-        maxDeltaY={lastSnap - SNAP_POINTS_FROM_TOP[0]}
-      >
+      <TapGestureHandler ref={wrapper} maxDurationMs={100000}>
         <Animated.View
           style={[
             {
@@ -94,22 +88,29 @@ export const Small: FC<any> = observer(({ store, button }) => {
           >
             <Animated.View>
               <IconLabel
-                //              onPress={() => setOpen(!isOpen)}
-                styleContainer={styles.rootHeader}
-                name={"chevron-down"}
-                color={color("bg-gray-600")}
+                styleContainer={StyleSheet.flatten([styles.rootHeader])}
+                name={"chevron-up"}
+                color={"black"}
               />
             </Animated.View>
           </PanGestureHandler>
-          <View style={[styles.rootContent]}>
+          <View style={[styles.rootContent, { paddingVertical: insetsBottom }]}>
             {button.map(({ icon, type, ...prop }: ObjectAny) => (
               <Button
+                type={"transparent_bg"}
                 {...prop}
                 key={"act_" + random()}
                 store={store}
                 style={{ marginVertical: 2 }}
               />
             ))}
+            <Button
+              type={"transparent_bg"}
+              store={store}
+              style={{ marginTop: 12 }}
+            >
+              Close
+            </Button>
           </View>
         </Animated.View>
       </TapGestureHandler>
@@ -118,7 +119,6 @@ export const Small: FC<any> = observer(({ store, button }) => {
 })
 
 const styles = StyleSheet.create({
-  rootSheet: tw("mx-1"),
-  rootHeader: tw("items-center"),
-  rootContent: tw("p-3 bg-black-500"),
+  rootHeader: tw("items-center justify-center h-10"),
+  rootContent: tw("px-3 bg-black-300"),
 })

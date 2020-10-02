@@ -1,5 +1,5 @@
 import React, { FC } from "react"
-import { View, StyleSheet, Platform } from "react-native"
+import { View, StyleSheet, Platform, Text } from "react-native"
 import { tw } from "@free/tailwind"
 import { TableContainer } from "./TableContainer"
 import { useHook } from "./hook"
@@ -20,31 +20,42 @@ const ViewGrid: FC = observer(() => {
     store.data.get("isMobile") !== isMobile
 
   return (
-    <Layout store={store} isLoading={isLoading} scroll={Platform.OS === "web"}>
-      <View style={styles.viewGrid}>
-        <View style={styles.viewTitle}>
-          <H3 style={styles.textTitle}>{store?.app?.subTitle}</H3>
-          <ActionGroup.Large store={store} button={buttonDesktop} />
+    <>
+      <Layout
+        store={store}
+        isLoading={isLoading}
+        scroll={Platform.OS === "web"}
+      >
+        <View style={styles.viewGrid}>
+          <View style={styles.viewTitle}>
+            <H3 style={styles.textTitle}>{store?.app?.subTitle}</H3>
+            <ActionGroup.Large store={store} button={buttonDesktop} />
+          </View>
+          <View
+            style={StyleSheet.flatten([
+              styles.viewTable,
+              { height: store.app?.dimension.height - 144 },
+            ])}
+          >
+            {columns && data && (
+              <TableContainer
+                isMobile={isMobile}
+                store={store}
+                columns={columns}
+                data={data}
+                name={name}
+                label={label}
+              />
+            )}
+          </View>
         </View>
-        <View
-          style={StyleSheet.flatten([
-            styles.viewTable,
-            { height: store.app?.dimension.height - 144 },
-          ])}
-        >
-          {columns && data && (
-            <TableContainer
-              isMobile={isMobile}
-              store={store}
-              columns={columns}
-              data={data}
-              name={name}
-              label={label}
-            />
-          )}
-        </View>
-      </View>
-    </Layout>
+      </Layout>
+      <ActionGroup.Small
+        store={store}
+        button={buttonMobile}
+        size={["sm", "md"]}
+      />
+    </>
   )
 })
 
@@ -58,6 +69,7 @@ const styles = StyleSheet.create({
     `${theme.danger_bg} flex-row flex-1 justify-center items-center`
   ),
   rowMobile: tw("flex-col"),
+  bottomSheet: tw("w-full bg-red-500 p-0", { height: 10 }),
 })
 
 export default ViewGrid

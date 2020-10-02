@@ -63,7 +63,14 @@ export const useMenu = () => {
   const hide = () => state.setOpen(false)
 
   const Menu: FC<MenuProps> = observer(
-    ({ testID = "Menu", anchor, style, children, onShow }) => {
+    ({
+      testID = "Menu",
+      waitKeyboard = false,
+      anchor,
+      style,
+      children,
+      onShow,
+    }) => {
       const { app } = useStore()
       const { menuWidth, menuHeight, anchorHeight } = state.measure
       let { left, top } = state.measure
@@ -93,7 +100,8 @@ export const useMenu = () => {
       }
 
       const menuStyle = {
-        opacity: app.dimension.keyboard.status === "shown" ? 1 : 0,
+        opacity:
+          app.dimension.keyboard.status === "shown" || !waitKeyboard ? 1 : 0,
         width: menuWidth,
         left,
         top: top,

@@ -194,6 +194,7 @@ declare module "@free/core" {
   // Menu
   interface MenuProps {
     testID?: string
+    waitKeyboard?: boolean
     onShow?: VoidFunction
     anchor: ReactNode
     style?: ViewStyle

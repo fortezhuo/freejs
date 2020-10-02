@@ -20,6 +20,7 @@ export const useDimensions = () => {
       keyboard: keyboard,
       width: width - insets.left - insets.right,
       height: height - insets.top - insets.bottom,
+      insets,
       screen,
     })
   }, [width, height, keyboard.status])

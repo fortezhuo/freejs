@@ -20,7 +20,7 @@ export const Button: FC<ButtonProps> = observer((props) => {
     onPress = undefined,
   } = props
 
-  const theme_bg = theme[type] === "bg-transparent" ? "bg-white" : theme[type]
+  const theme_bg = type === "transparent_bg" ? "bg-white" : theme[type]
 
   const bgColor = tw(
     outline
