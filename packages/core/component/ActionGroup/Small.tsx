@@ -5,6 +5,7 @@ import {
   State,
   TapGestureHandler,
 } from "react-native-gesture-handler"
+import { observer } from "mobx-react-lite"
 
 const HEADER_HEIGHT = 5
 const windowHeight = Dimensions.get("window").height
