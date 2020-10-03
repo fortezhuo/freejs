@@ -3,7 +3,7 @@ import { View, TouchableOpacity, StyleSheet, Animated } from "react-native"
 import { theme } from "../../config/theme"
 import { IconLabel, Icon } from "../Icon"
 import { tw, color } from "@free/tailwind"
-import { observer, useLocalStore } from "mobx-react-lite"
+import { observer, useLocalObservable } from "mobx-react-lite"
 import { useStore } from "../Store"
 import { AccordionProps, AccordionItemProps } from "@free/core"
 
@@ -13,7 +13,7 @@ const noop = () => {}
 
 export const Accordion: FC<AccordionProps> = observer(
   ({ testID = "Accordion", icon, label, active = false, children }) => {
-    const state = useLocalStore(() => ({
+    const state = useLocalObservable(() => ({
       isExpand: active,
       toggle() {
         state.isExpand = !state.isExpand

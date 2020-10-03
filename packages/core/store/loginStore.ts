@@ -1,8 +1,14 @@
-import { BaseStore, decorate, action } from "./baseStore"
+import { BaseStore, makeObservable, action } from "./baseStore"
 import * as req from "../request"
+import { AppStore } from "./appStore"
 
 class LoginStore extends BaseStore {
   title = undefined
+
+  constructor(app: AppStore) {
+    super(app)
+    makeObservable(this, { login: action })
+  }
   login = async () => {
     try {
       this.isUpdating = true
@@ -30,9 +36,5 @@ class LoginStore extends BaseStore {
     }
   }
 }
-
-decorate(LoginStore, {
-  login: action,
-})
 
 export { LoginStore }

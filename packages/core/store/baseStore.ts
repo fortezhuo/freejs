@@ -1,4 +1,4 @@
-import { observable, decorate, action, ObservableMap } from "mobx"
+import { observable, makeObservable, action, ObservableMap } from "mobx"
 import { AppStore } from "./appStore"
 
 class BaseStore {
@@ -12,6 +12,15 @@ class BaseStore {
 
   constructor(app: AppStore) {
     this.app = app
+    makeObservable(this, {
+      data: observable,
+      temp: observable,
+      setData: action,
+      setTemp: action,
+      set: action,
+      isLoading: observable,
+      isUpdating: observable,
+    })
   }
 
   getData(...args: string[]) {
@@ -35,11 +44,4 @@ class BaseStore {
   }
 }
 
-decorate(BaseStore, {
-  data: observable,
-  temp: observable,
-  isLoading: observable,
-  isUpdating: observable,
-})
-
-export { BaseStore, decorate, observable, action }
+export { BaseStore, makeObservable, observable, action }

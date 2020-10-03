@@ -5,7 +5,7 @@ export const useHook = () => {
   const { app } = useStore()
   useEffect(() => {
     app.title = undefined
-    app.isForm = false
+    app.set("isForm", false)
   }, [])
   return app
 }

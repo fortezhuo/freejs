@@ -1,4 +1,4 @@
-import { observable, action, decorate } from "mobx"
+import { observable, action, makeObservable } from "mobx"
 import * as req from "../request"
 import { acl } from "../util/acl"
 
@@ -18,6 +18,28 @@ class AppStore {
   routerParams: any = null
   subTitle?: string | undefined
 
+  constructor() {
+    makeObservable(this, {
+      auth: observable,
+      error: observable,
+      fatalError: observable,
+      isDrawerOpen: observable,
+      isForm: observable,
+      isLoading: observable,
+      dimension: observable,
+      routerLocation: observable,
+      routerParams: observable,
+      subTitle: observable,
+      can: action,
+      checkAuth: action,
+      goto: action,
+      logout: action,
+      set: action,
+      setError: action,
+      toggleDrawer: action,
+    })
+  }
+
   can = (action: string, resource: string) => {
     const roles = this?.auth?.roles
     if (!roles) return false
@@ -26,9 +48,9 @@ class AppStore {
   }
   checkAuth = async () => {
     try {
-      this.isLoading = true
+      this.set("isLoading", true)
       const res = await req.get("/api/auth")
-      this.auth = res.data.result
+      this.set("auth", res.data.result)
     } finally {
       this.isLoading = false
     }
@@ -41,7 +63,7 @@ class AppStore {
   }
   logout = async () => {
     await req.get("/api/auth/logout")
-    this.auth = undefined
+    this.set("auth", undefined)
     this.goto("/login")
   }
 
@@ -60,25 +82,5 @@ class AppStore {
     this.isDrawerOpen = !this.isDrawerOpen
   }
 }
-
-decorate(AppStore, {
-  auth: observable,
-  error: observable,
-  fatalError: observable,
-  isDrawerOpen: observable,
-  isForm: observable,
-  isLoading: observable,
-  dimension: observable,
-  routerLocation: observable,
-  routerParams: observable,
-  subTitle: observable,
-  can: action,
-  checkAuth: action,
-  goto: action,
-  logout: action,
-  set: action,
-  setError: action,
-  toggleDrawer: action,
-})
 
 export { AppStore }

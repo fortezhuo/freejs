@@ -1,7 +1,7 @@
 import React, { FC } from "react"
 import { TextInput, StyleSheet, View } from "react-native"
 import { tw } from "@free/tailwind"
-import { observer, useLocalStore } from "mobx-react-lite"
+import { observer, useLocalObservable } from "mobx-react-lite"
 import { IconButton } from "../../Icon"
 import { InputTextProps } from "@free/core"
 import { theme } from "../../../config/theme"
@@ -16,7 +16,11 @@ const helperProps = (props: InputTextProps) => {
     name,
     value: store[model].get(name) || "",
     onChangeText: async (text: string) => {
-      store[model].set(name, text)
+      if (model === "data") {
+        store.setData({ [name]: text })
+      } else {
+        store.setTemp({ [name]: text })
+      }
       if (onChange) {
         await onChange()
       }
@@ -41,7 +45,7 @@ const Eye: FC<any> = observer(({ state }) => {
 
 export const InputPassword: FC<InputTextProps> = observer((_props) => {
   const props = helperProps(_props)
-  const state = useLocalStore(() => ({
+  const state = useLocalObservable(() => ({
     secure: true,
     toggle() {
       state.secure = !state.secure

@@ -3,13 +3,13 @@ import { View, TouchableOpacity, StyleSheet, Text } from "react-native"
 import { theme } from "../../config/theme"
 import { Icon } from "../Icon"
 import { tw, color } from "@free/tailwind"
-import { observer, useLocalStore } from "mobx-react-lite"
+import { observer, useLocalObservable } from "mobx-react-lite"
 import { SectionProps } from "@free/core"
 
 const textColor = color(theme.input_text)
 export const Section: FC<SectionProps> = observer(
   ({ testID = "Section", label, show = true, children }) => {
-    const state = useLocalStore(() => ({
+    const state = useLocalObservable(() => ({
       isExpand: show,
       toggle() {
         state.isExpand = !state.isExpand

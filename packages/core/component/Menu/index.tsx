@@ -2,7 +2,7 @@ import React, { FC, useRef } from "react"
 import { View, StyleSheet, Keyboard } from "react-native"
 import { Modal } from "../Modal"
 import { IconButton } from "../Icon"
-import { observer, useLocalStore } from "mobx-react-lite"
+import { observer, useLocalObservable } from "mobx-react-lite"
 import { tw } from "@free/tailwind"
 import { useStore } from "../Store"
 import { MenuProps, MenuItemProps } from "@free/core"
@@ -14,7 +14,7 @@ const noop = () => {}
 
 export const useMenu = () => {
   const refContainer = useRef<View>(null)
-  const state = useLocalStore(() => ({
+  const state = useLocalObservable(() => ({
     isOpen: false,
     measure: {
       top: 0,

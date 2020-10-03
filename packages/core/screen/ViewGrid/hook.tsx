@@ -71,11 +71,11 @@ export const useHook = () => {
 
   const setCollection = async (name: string) => {
     try {
-      view.isLoading = true
+      view.set("isLoading", true)
       const res = await get(`/api/${name}`, {})
       view.data.set("collection", res.data.result)
     } finally {
-      view.isLoading = false
+      view.set("isLoading", false)
     }
   }
 

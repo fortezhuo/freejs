@@ -13,7 +13,11 @@ const helperProps = (props: InputTextProps) => {
     name,
     value: store[model].get(name) || "",
     onChangeText: async (text: string) => {
-      store[model].set(name, text)
+      if (model === "data") {
+        store.setData({ [name]: text })
+      } else {
+        store.setTemp({ [name]: text })
+      }
       if (onChange) {
         await onChange()
       }
