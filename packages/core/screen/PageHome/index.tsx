@@ -12,7 +12,7 @@ const PageHome = observer(() => {
     <>
       <Layout store={store}>
         <View>
-          <H4 style={styles.textTitle}>JUDUL 1111</H4>
+          <H4 style={styles.textTitle}>JUDUL </H4>
         </View>
         <View>
           <Text>TEST</Text>

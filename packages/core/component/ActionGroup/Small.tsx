@@ -1,43 +1,39 @@
-import React, { useRef, FC, useState } from "react"
+import React, { useRef, useState } from "react"
+import { Animated, StyleSheet, Text, View, Dimensions } from "react-native"
 import {
   PanGestureHandler,
-  TapGestureHandler,
   State,
+  TapGestureHandler,
 } from "react-native-gesture-handler"
-import { View, StyleSheet, Animated, Platform } from "react-native"
-import { Button } from "../Button"
-import { IconLabel } from "../Icon"
-import { random } from "../../util/random"
-import { observer } from "mobx-react-lite"
-import { tw, color } from "@free/tailwind"
 
-export const Small: FC<any> = observer(({ store, button }) => {
-  const winHeight =
-    store.app.dimension.height - (Platform.OS == "web" ? 130 : 40)
-  const insetsBottom = store.app.dimension.insets.bottom
-  const boxHeight = winHeight - 116 - (button || []).length * 40
-  const SNAP_POINTS_FROM_TOP = [boxHeight, winHeight]
+const HEADER_HEIGHT = 5
+const windowHeight = Dimensions.get("window").height
+const SNAP_POINTS_FROM_TOP = [windowHeight * 0.4, windowHeight * 0.91]
+const USE_NATIVE_DRIVER = true
+
+export const Small = () => {
   const START = SNAP_POINTS_FROM_TOP[0]
   const END = SNAP_POINTS_FROM_TOP[SNAP_POINTS_FROM_TOP.length - 1]
-  const [lastSnap, setLastSnap] = useState(END)
 
-  const wrapper = useRef(null)
+  const tapGesture = useRef(null)
   const drawer = useRef(null)
+  const drawerheader = useRef(null)
   const dragY = useRef(new Animated.Value(0)).current
-  const offsetY = useRef(new Animated.Value(END)).current
-
-  const translateY = Animated.add(offsetY, dragY).interpolate({
+  const translateYOffset = useRef(new Animated.Value(END)).current
+  const translateY = Animated.add(translateYOffset, dragY).interpolate({
     inputRange: [START, END],
     outputRange: [START, END],
     extrapolate: "clamp",
   })
 
+  const [lastSnap, setSnap] = useState(END)
+
   const onGestureEvent = Animated.event(
     [{ nativeEvent: { translationY: dragY } }],
-    { useNativeDriver: false }
+    { useNativeDriver: USE_NATIVE_DRIVER }
   )
 
-  const onStateChange = ({ nativeEvent }: any) => {
+  const onHandlerStateChange = ({ nativeEvent }: any) => {
     if (nativeEvent.oldState === State.ACTIVE) {
       let { velocityY, translationY } = nativeEvent
       const dragToss = 0.05
@@ -50,75 +46,87 @@ export const Small: FC<any> = observer(({ store, button }) => {
           destSnapPoint = snapPoint
         }
       }
-      setLastSnap(destSnapPoint)
-      offsetY.extractOffset()
-      offsetY.setValue(translationY)
-      offsetY.flattenOffset()
+      setSnap(destSnapPoint)
+      translateYOffset.extractOffset()
+      translateYOffset.setValue(translationY)
+      translateYOffset.flattenOffset()
       dragY.setValue(0)
-      Animated.spring(offsetY, {
+      Animated.spring(translateYOffset, {
         velocity: velocityY,
         tension: 68,
         friction: 12,
         toValue: destSnapPoint,
-        useNativeDriver: true,
+        useNativeDriver: USE_NATIVE_DRIVER,
       }).start()
     }
   }
 
-  return button ? (
-    <View
-      testID="BottomSheet"
-      style={StyleSheet.flatten([StyleSheet.absoluteFillObject])}
-      pointerEvents="box-none"
+  return (
+    <TapGestureHandler
+      maxDurationMs={100000}
+      ref={tapGesture}
+      maxDeltaY={lastSnap - SNAP_POINTS_FROM_TOP[0]}
     >
-      <TapGestureHandler ref={wrapper} maxDurationMs={100000}>
+      <View style={StyleSheet.absoluteFillObject} pointerEvents="box-none">
         <Animated.View
           style={[
+            StyleSheet.absoluteFillObject,
             {
               transform: [{ translateY }],
             },
           ]}
         >
           <PanGestureHandler
-            ref={drawer}
-            simultaneousHandlers={[wrapper]}
-            shouldCancelWhenOutside={true}
+            ref={drawerheader}
+            simultaneousHandlers={tapGesture}
+            shouldCancelWhenOutside={false}
             onGestureEvent={onGestureEvent}
-            onHandlerStateChange={onStateChange}
+            onHandlerStateChange={onHandlerStateChange}
           >
-            <Animated.View>
-              <IconLabel
-                styleContainer={StyleSheet.flatten([styles.rootHeader])}
-                name={"chevron-up"}
-                color={"black"}
-              />
+            <Animated.View style={styles.header} />
+          </PanGestureHandler>
+          <PanGestureHandler
+            ref={drawer}
+            simultaneousHandlers={tapGesture}
+            shouldCancelWhenOutside={false}
+            onGestureEvent={onGestureEvent}
+            onHandlerStateChange={onHandlerStateChange}
+          >
+            <Animated.View style={styles.container}>
+              <Text>Text</Text>
+              <Text>Text</Text>
+              <Text>Text</Text>
+              <Text>Text</Text>
+              <Text>Text</Text>
+              <Text>Text</Text>
+              <Text>Text</Text>
+              <Text>Text</Text>
+              <Text>Text</Text>
+              <Text>Text</Text>
+              <Text>Text</Text>
+              <Text>Text</Text>
+              <Text>Text</Text>
+              <Text>Text</Text>
+              <Text>Text</Text>
+              <Text>Text</Text>
+              <Text>Text</Text>
+              <Text>Text</Text>
             </Animated.View>
           </PanGestureHandler>
-          <View style={[styles.rootContent, { paddingVertical: insetsBottom }]}>
-            {button.map(({ icon, type, ...prop }: ObjectAny) => (
-              <Button
-                type={"transparent_bg"}
-                {...prop}
-                key={"act_" + random()}
-                store={store}
-                style={{ marginVertical: 2 }}
-              />
-            ))}
-            <Button
-              type={"transparent_bg"}
-              store={store}
-              style={{ marginTop: 12 }}
-            >
-              Close
-            </Button>
-          </View>
         </Animated.View>
-      </TapGestureHandler>
-    </View>
-  ) : null
-})
+      </View>
+    </TapGestureHandler>
+  )
+}
 
 const styles = StyleSheet.create({
-  rootHeader: tw("items-center justify-center h-10"),
-  rootContent: tw("px-3 bg-black-300"),
+  container: {
+    flex: 1,
+  },
+  header: {
+    height: HEADER_HEIGHT,
+    width: 150,
+    alignSelf: "center",
+    backgroundColor: "red",
+  },
 })
