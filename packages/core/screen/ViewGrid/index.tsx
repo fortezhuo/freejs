@@ -61,9 +61,9 @@ const ViewGrid: FC = observer(() => {
 
 const styles = StyleSheet.create({
   viewGrid: tw("flex-1 flex-col"),
-  viewTitle: tw("flex-row m-3 justify-between items-center"),
+  viewTitle: tw("flex-row justify-between items-center"),
   textTitle: tw("text-white"),
-  viewTable: tw("flex-col bg-white rounded-lg p-1 mt-3"),
+  viewTable: tw("flex-col bg-white rounded-lg p-2"),
   boxDelete: tw("flex-1"),
   iconDelete: tw(
     `${theme.danger_bg} flex-row flex-1 justify-center items-center`

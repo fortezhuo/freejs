@@ -3,6 +3,7 @@ import * as ActionGroup from "./ActionGroup"
 export { Accordion, AccordionItem } from "./Accordion"
 export { ActionGroup }
 export { Avatar } from "./Avatar"
+export { Button } from "./Button"
 export { Drawer } from "./Drawer"
 export { Col, Row, Label } from "./Grid"
 export { Gradient } from "./Gradient"

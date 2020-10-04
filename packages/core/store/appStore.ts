@@ -16,7 +16,7 @@ class AppStore {
   isLoading = false
   routerLocation: string | undefined = undefined
   routerParams: any = null
-  subTitle?: string | undefined
+  subTitle?: string | undefined = ""
 
   constructor() {
     makeObservable(this, {
@@ -52,7 +52,7 @@ class AppStore {
       const res = await req.get("/api/auth")
       this.set("auth", res.data.result)
     } finally {
-      this.isLoading = false
+      this.set("isLoading", false)
     }
   }
   goto = (path?: string | undefined) => {

@@ -6,17 +6,18 @@ import {
   TapGestureHandler,
 } from "react-native-gesture-handler"
 import { observer } from "mobx-react-lite"
-import { Button } from "../Button"
+import { Button, IconLabel } from ".."
 import { random } from "../../util/random"
+import { tw } from "@free/tailwind"
 
-const HEADER_HEIGHT = 5
+const HEADER_HEIGHT = 20
 const USE_NATIVE_DRIVER = Platform.OS !== "web"
 
 export const Small: FC<any> = observer(({ store, button }) => {
-  const padding = store.app.dimension.insets.bottom
+  const padding = store.app.dimension.insets.bottom || 10
   const windowHeight = store.app.dimension.height - 5
   const SNAP_POINTS_FROM_TOP = [
-    windowHeight * 0.4,
+    windowHeight - HEADER_HEIGHT - (button || []).length * 53,
     windowHeight - HEADER_HEIGHT,
   ]
   const START = SNAP_POINTS_FROM_TOP[0]
@@ -69,63 +70,71 @@ export const Small: FC<any> = observer(({ store, button }) => {
   }
 
   return (
-    <TapGestureHandler
-      maxDurationMs={100000}
-      ref={tapGesture}
-      maxDeltaY={lastSnap - SNAP_POINTS_FROM_TOP[0]}
-    >
-      <View style={StyleSheet.absoluteFillObject} pointerEvents="box-none">
-        <Animated.View
-          style={[
-            StyleSheet.absoluteFillObject,
-            {
-              transform: [{ translateY }],
-            },
-          ]}
+    button && (
+      <TapGestureHandler
+        maxDurationMs={100000}
+        ref={tapGesture}
+        maxDeltaY={lastSnap - SNAP_POINTS_FROM_TOP[0]}
+      >
+        <View
+          style={StyleSheet.absoluteFillObject}
+          pointerEvents="box-none"
+          testID="BottomSheet"
         >
-          <PanGestureHandler
-            ref={drawerheader}
-            simultaneousHandlers={tapGesture}
-            shouldCancelWhenOutside={false}
-            onGestureEvent={onGestureEvent}
-            onHandlerStateChange={onHandlerStateChange}
+          <Animated.View
+            style={[
+              StyleSheet.absoluteFillObject,
+              {
+                transform: [{ translateY }],
+              },
+            ]}
           >
-            <Animated.View style={styles.header} />
-          </PanGestureHandler>
-          <PanGestureHandler
-            ref={drawer}
-            simultaneousHandlers={tapGesture}
-            shouldCancelWhenOutside={false}
-            onGestureEvent={onGestureEvent}
-            onHandlerStateChange={onHandlerStateChange}
-          >
-            <Animated.View style={styles.container}>
-              {button.map(({ icon, type, ...prop }: ObjectAny) => (
-                <Button
-                  type={"transparent_bg"}
-                  {...prop}
-                  key={"act_" + random()}
-                  store={store}
-                  style={{ marginVertical: 2 }}
+            <PanGestureHandler
+              ref={drawerheader}
+              simultaneousHandlers={tapGesture}
+              shouldCancelWhenOutside={false}
+              onGestureEvent={onGestureEvent}
+              onHandlerStateChange={onHandlerStateChange}
+            >
+              <Animated.View style={styles.header}>
+                <IconLabel
+                  name={lastSnap === END ? "chevron-up" : "chevron-down"}
+                  color={"black"}
                 />
-              ))}
-            </Animated.View>
-          </PanGestureHandler>
-        </Animated.View>
-      </View>
-    </TapGestureHandler>
+              </Animated.View>
+            </PanGestureHandler>
+            <PanGestureHandler
+              ref={drawer}
+              simultaneousHandlers={tapGesture}
+              shouldCancelWhenOutside={false}
+              onGestureEvent={onGestureEvent}
+              onHandlerStateChange={onHandlerStateChange}
+            >
+              <Animated.View
+                style={StyleSheet.flatten([styles.container, { padding }])}
+              >
+                {button.map(({ icon, type, ...prop }: ObjectAny) => (
+                  <Button
+                    type={"transparent_bg"}
+                    {...prop}
+                    key={"act_" + random()}
+                    store={store}
+                    style={{ marginVertical: 2 }}
+                  />
+                ))}
+              </Animated.View>
+            </PanGestureHandler>
+          </Animated.View>
+        </View>
+      </TapGestureHandler>
+    )
   )
 })
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "rgba(0,0,0,0.1)",
+    backgroundColor: "rgba(192,192,192,0.5)",
   },
-  header: {
-    height: HEADER_HEIGHT,
-    width: 150,
-    alignSelf: "center",
-    backgroundColor: "red",
-  },
+  header: tw("items-center"),
 })
