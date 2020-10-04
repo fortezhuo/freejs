@@ -1,5 +1,4 @@
-import React, { useEffect } from "react"
-import { CellLink, CellCheckbox, Cell } from "../../component/Table"
+import { useEffect } from "react"
 import { useStore } from "../../component/Store"
 import { get } from "../../request"
 import * as config from "./config"
@@ -65,15 +64,17 @@ export const useHook = () => {
     const button = await (config as ObjectAny)[name].button
       .map((btn: string) => list[btn])
       .filter((btn: ObjectAny) => !!btn && btn.visible)
-    view.data.set(`button_${isMobile ? "desktop" : "mobile"}`, undefined)
-    view.data.set(`button_${isMobile ? "mobile" : "desktop"}`, button)
+    view.setData({
+      [`button_${isMobile ? "desktop" : "mobile"}`]: undefined,
+      [`button_${isMobile ? "mobile" : "desktop"}`]: button,
+    })
   }
 
   const setCollection = async (name: string) => {
     try {
       view.set("isLoading", true)
       const res = await get(`/api/${name}`, {})
-      view.data.set("collection", res.data.result)
+      view.setData({ collection: res.data.result })
     } finally {
       view.set("isLoading", false)
     }
@@ -102,48 +103,11 @@ export const useHook = () => {
             Header: col.label,
             accessor: col.name,
             style: col.style,
-            Cell: getCell(col.type),
+            type: col.type,
           }
     )
-    view.data.set("column", column)
-    view.data.set("label", label)
-  }
 
-  const getCell = (type: string) => (cell: any) => {
-    switch (type) {
-      case "link":
-        return (
-          <CellLink
-            style={cell.column.style}
-            onPress={() => {
-              view?.app?.goto(`${name}/${cell.value}`)
-            }}
-          />
-        )
-      case "checkbox":
-        return (
-          <CellCheckbox
-            value={cell.value}
-            store={view}
-            name="selection"
-            style={cell.column.style}
-          />
-        )
-      case "date":
-        return (
-          <Cell style={cell.column.style} type="date">
-            {cell.value}
-          </Cell>
-        )
-      case "datetime":
-        return (
-          <Cell style={cell.column.style} type="datetime">
-            {cell.value}
-          </Cell>
-        )
-      default:
-        return <Cell style={cell.column.style}>{cell.value}</Cell>
-    }
+    view.setData({ column, label })
   }
 
   return { name, store: view, isMobile }

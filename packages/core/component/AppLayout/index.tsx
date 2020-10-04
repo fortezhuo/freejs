@@ -1,5 +1,5 @@
 import React, { FC } from "react"
-import { StyleSheet, KeyboardAvoidingView, Platform, View } from "react-native"
+import { StyleSheet, KeyboardAvoidingView, Platform } from "react-native"
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context"
 import { tw } from "@free/tailwind"
 import { StoreProvider } from "../Store"

@@ -1,16 +1,16 @@
-import React, { FC, cloneElement, createRef } from "react"
+import React, { FC, createRef } from "react"
 import { StyleSheet, View, Text, ScrollView, Animated } from "react-native"
-import { IconButton, IconLabel } from "../Icon"
+import { TableProps, IconButtonProps, RowProps, CellProps } from "@free/core"
+import { IconButton, IconLabel } from ".."
 import { InputCheckbox } from "../Input/InputCheckbox"
 import { random } from "../../util/random"
 import { tw, color } from "@free/tailwind"
 import { observer } from "mobx-react-lite"
 import { theme } from "../../config/theme"
+import { download } from "./helper"
 import { RectButton } from "react-native-gesture-handler"
 import Swipeable from "react-native-gesture-handler/Swipeable"
-import { TableProps, IconButtonProps, RowProps, CellProps } from "@free/core"
 import dayjs from "dayjs"
-import { InputSelect } from "../Input/InputSelect"
 
 const date = (date: any) => dayjs(date).format("DD MMM YYYY")
 const datetime = (datetime: any) =>
@@ -222,6 +222,56 @@ export const RowMobile: FC<RowProps> = observer(
     )
   }
 )
+
+export const useDefaultColumn = (store: any) => {
+  return {
+    Cell: (cell: any) => {
+      switch (cell.column.type) {
+        case "link":
+          return (
+            <CellLink
+              style={cell.column.style}
+              onPress={() => {
+                store?.app?.goto(`${name}/${cell.value}`)
+              }}
+            />
+          )
+        case "download":
+          return (
+            <CellLink
+              style={cell.column.style}
+              onPress={() => {
+                download(cell.column.path, cell.value)
+              }}
+            />
+          )
+        case "checkbox":
+          return (
+            <CellCheckbox
+              value={cell.value}
+              store={store}
+              name="selection"
+              style={cell.column.style}
+            />
+          )
+        case "date":
+          return (
+            <Cell style={cell.column.style} type="date">
+              {cell.value}
+            </Cell>
+          )
+        case "datetime":
+          return (
+            <Cell style={cell.column.style} type="datetime">
+              {cell.value}
+            </Cell>
+          )
+        default:
+          return <Cell style={cell.column.style}>{cell.value}</Cell>
+      }
+    },
+  }
+}
 
 const styles = StyleSheet.create({
   viewTable: tw(`shadow-xl`),

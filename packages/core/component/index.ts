@@ -12,6 +12,15 @@ export { Layout, LayoutFull } from "./Layout"
 export { Loader } from "./Loader"
 export { Section } from "./Section"
 export { Sidebar } from "./Sidebar"
+export {
+  Table,
+  Row as TableRow,
+  RowMobile as TableRowMobile,
+  Cell as TableCell,
+  Header as TableHeader,
+  Pagination as TablePagination,
+  useDefaultColumn,
+} from "./Table"
 export { Title } from "./Title"
 export { useStore } from "./Store"
 export { H1, H2, H3, H4, H5, Text } from "./Text"

@@ -1,18 +1,24 @@
-import React, { useRef, useState } from "react"
-import { Animated, StyleSheet, Text, View, Dimensions } from "react-native"
+import React, { FC, useRef, useState } from "react"
+import { Animated, StyleSheet, View, Platform } from "react-native"
 import {
   PanGestureHandler,
   State,
   TapGestureHandler,
 } from "react-native-gesture-handler"
 import { observer } from "mobx-react-lite"
+import { Button } from "../Button"
+import { random } from "../../util/random"
 
 const HEADER_HEIGHT = 5
-const windowHeight = Dimensions.get("window").height
-const SNAP_POINTS_FROM_TOP = [windowHeight * 0.4, windowHeight * 0.91]
-const USE_NATIVE_DRIVER = true
+const USE_NATIVE_DRIVER = Platform.OS !== "web"
 
-export const Small = () => {
+export const Small: FC<any> = observer(({ store, button }) => {
+  const padding = store.app.dimension.insets.bottom
+  const windowHeight = store.app.dimension.height - 5
+  const SNAP_POINTS_FROM_TOP = [
+    windowHeight * 0.4,
+    windowHeight - HEADER_HEIGHT,
+  ]
   const START = SNAP_POINTS_FROM_TOP[0]
   const END = SNAP_POINTS_FROM_TOP[SNAP_POINTS_FROM_TOP.length - 1]
 
@@ -94,35 +100,27 @@ export const Small = () => {
             onHandlerStateChange={onHandlerStateChange}
           >
             <Animated.View style={styles.container}>
-              <Text>Text</Text>
-              <Text>Text</Text>
-              <Text>Text</Text>
-              <Text>Text</Text>
-              <Text>Text</Text>
-              <Text>Text</Text>
-              <Text>Text</Text>
-              <Text>Text</Text>
-              <Text>Text</Text>
-              <Text>Text</Text>
-              <Text>Text</Text>
-              <Text>Text</Text>
-              <Text>Text</Text>
-              <Text>Text</Text>
-              <Text>Text</Text>
-              <Text>Text</Text>
-              <Text>Text</Text>
-              <Text>Text</Text>
+              {button.map(({ icon, type, ...prop }: ObjectAny) => (
+                <Button
+                  type={"transparent_bg"}
+                  {...prop}
+                  key={"act_" + random()}
+                  store={store}
+                  style={{ marginVertical: 2 }}
+                />
+              ))}
             </Animated.View>
           </PanGestureHandler>
         </Animated.View>
       </View>
     </TapGestureHandler>
   )
-}
+})
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "rgba(0,0,0,0.1)",
   },
   header: {
     height: HEADER_HEIGHT,

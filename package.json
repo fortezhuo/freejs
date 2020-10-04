@@ -61,7 +61,7 @@
     "ajv": "^6.12.5",
     "axios": "^0.20.0",
     "dayjs": "^1.8.36",
-    "fastify": "^3.4.1",
+    "fastify": "3.4.1",
     "fastify-compress": "^3.2.2",
     "fastify-cookie": "^4.0.2",
     "fastify-favicon": "^3.0.0",

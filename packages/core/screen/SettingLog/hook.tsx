@@ -1,7 +1,5 @@
-import React, { useMemo, useEffect } from "react"
-import { CellLink, Cell } from "../../component/Table"
+import React, { useEffect } from "react"
 import { Platform } from "react-native"
-import { download } from "./helper"
 import { get } from "../../request"
 import { useStore } from "../../component/Store"
 
@@ -12,12 +10,8 @@ const column = ((Platform.OS === "web"
         Header: "",
         accessor: "name",
         style: { maxWidth: 36, width: 36 },
-        Cell: (cell: any) => (
-          <CellLink
-            style={cell.column.style}
-            onPress={() => download(cell.value)}
-          />
-        ),
+        type: "download",
+        path: "/api/log",
       },
     ]
   : []) as Array<{}>).concat([
@@ -26,23 +20,19 @@ const column = ((Platform.OS === "web"
     Header: "Log Name",
     accessor: "name",
     style: { width: 200 },
-    Cell: (cell: any) => <Cell style={cell.column.style}>{cell.value}</Cell>,
+    type: "string",
   },
   {
     Header: "Size",
     accessor: "size",
     style: { width: 50 },
-    Cell: (cell: any) => <Cell style={cell.column.style}>{cell.value}</Cell>,
+    type: "string",
   },
   {
     Header: "Last Modified",
     accessor: "mtime",
     style: { width: 200 },
-    Cell: (cell: any) => (
-      <Cell style={cell.column.style} type="datetime">
-        {cell.value}
-      </Cell>
-    ),
+    type: "datetime",
   },
 ])
 
