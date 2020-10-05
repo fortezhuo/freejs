@@ -1,22 +1,35 @@
 // Setting user
 export const log = {
   title: "Log Management",
-  name: "log",
   button: [],
   column: [
     {
       label: "",
       name: "name",
-      type: "link",
+      type: "download_log",
       style: { width: 36, maxWidth: 36 },
+      isMobileVisible: false,
+    },
+    {
+      label: "Log",
+      name: "name",
+      type: "string",
+      style: { width: 150 },
       isMobileVisible: true,
     },
     {
       label: "Size",
       name: "size",
-      filter: true,
+      filter: false,
       search: ["size"],
       style: { width: 150 },
+      isMobileVisible: true,
+    },
+    {
+      label: "Last Modified",
+      name: "mtime",
+      style: { width: 200 },
+      type: "datetime",
       isMobileVisible: true,
     },
   ],
@@ -25,7 +38,6 @@ export const log = {
 // Setting user
 export const user = {
   title: "User Management",
-  name: "user",
   search: ["username", "fullname"],
   button: ["new", "delete", "filter"],
   column: [
@@ -40,6 +52,7 @@ export const user = {
       label: "",
       name: "_id",
       type: "link",
+      path: "user",
       style: { width: 36, maxWidth: 36 },
       isMobileVisible: true,
     },

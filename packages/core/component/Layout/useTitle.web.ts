@@ -8,7 +8,7 @@ export const useTitle = (store: any) => {
   const params = useParams()
   useEffect(() => {
     app.set("subTitle", store.title)
-    //app.set("isForm", store.isForm)
+    app.set("isForm", store.isForm)
     app.set("routerParams", params)
     document.title = `${store.title ? store.title + " | " : ""}${
       configApp.displayName

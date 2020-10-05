@@ -129,12 +129,12 @@ export const Cell: FC<CellProps> = observer(
 )
 
 export const CellLink: FC<IconButtonProps> = observer(
-  ({ style, onPress, testID = "CellLink" }) => {
+  ({ style, name = "link", onPress, testID = "CellLink" }) => {
     return (
       <Cell style={style}>
         <IconButton
           testID={testID}
-          name="link"
+          name={name}
           size={16}
           color={primary}
           onPress={onPress}
@@ -159,8 +159,8 @@ export const CellCheckbox: FC<any> = observer(
 )
 
 export const RowMobile: FC<RowProps> = observer(
-  ({ store, name, data, label, dark, style, testID = "RowMobile" }) => {
-    const path = `${name}/${data._id_link}`
+  ({ store, data, label, dark, style, testID = "RowMobile", actDelete }) => {
+    const path = data._id_link ? `${store.name}/${data._id_link}` : null
     const ref = createRef<any>()
     const width = 88
     return (
@@ -177,29 +177,35 @@ export const RowMobile: FC<RowProps> = observer(
           })
           const onDelete = () => {
             ref?.current.close()
-            alert("Delete")
+            actDelete.onPress()
           }
           return (
-            <View
-              style={{
-                width,
-              }}
-            >
-              <Animated.View
-                style={{ flex: 1, transform: [{ translateX: trans }] }}
+            actDelete && (
+              <View
+                style={{
+                  width,
+                }}
               >
-                <RectButton onPress={onDelete} style={styles.cellDelete}>
-                  <IconLabel
-                    styleContainer={styles.iconDelete}
-                    name="trash-2"
-                  ></IconLabel>
-                </RectButton>
-              </Animated.View>
-            </View>
+                <Animated.View
+                  style={{ flex: 1, transform: [{ translateX: trans }] }}
+                >
+                  <RectButton onPress={onDelete} style={styles.cellDelete}>
+                    <IconLabel
+                      styleContainer={styles.iconDelete}
+                      name="trash-2"
+                    ></IconLabel>
+                  </RectButton>
+                </Animated.View>
+              </View>
+            )
           )
         }}
       >
-        <RectButton onPress={() => store?.app.goto(path)}>
+        <RectButton
+          onPress={() => {
+            if (path) store?.app.goto(path)
+          }}
+        >
           <View
             testID={testID}
             style={StyleSheet.flatten([
@@ -232,16 +238,17 @@ export const useDefaultColumn = (store: any) => {
             <CellLink
               style={cell.column.style}
               onPress={() => {
-                store?.app?.goto(`${name}/${cell.value}`)
+                store?.app?.goto(`${store.name}/${cell.value}`)
               }}
             />
           )
-        case "download":
+        case "download_log":
           return (
             <CellLink
+              name="download"
               style={cell.column.style}
               onPress={() => {
-                download(cell.column.path, cell.value)
+                download(`/api/${store.name}`, cell.value)
               }}
             />
           )
