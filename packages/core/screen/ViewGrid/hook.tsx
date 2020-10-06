@@ -9,7 +9,7 @@ export const useHook = () => {
   const search = view.data.get("search") || ""
   view.name = name
   view.title = (config as ObjectAny)[name].title
-  view.search = (config as ObjectAny)[name].search
+  view.search = (config as ObjectAny)[name].search || []
 
   useEffect(() => {
     view.setData({
@@ -29,9 +29,10 @@ export const useHook = () => {
   const setCollection = async (name: string) => {
     try {
       view.set("isLoading", true)
+      const params = view.name !== "log" ? { q: search } : {}
       const {
         data: { result, page, limit, total },
-      } = await get(`/api/${name}`, { q: search })
+      } = await get(`/api/${name}`, params)
       view.setData({
         collection: result,
         page,

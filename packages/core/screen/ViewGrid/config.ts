@@ -38,7 +38,7 @@ export const log = {
 // Setting user
 export const user = {
   title: "User Management",
-  search: ["username", "fullname"],
+  search: ["username", "fullname", "email"],
   button: ["new", "delete", "filter"],
   column: [
     {

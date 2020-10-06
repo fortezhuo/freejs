@@ -1,4 +1,4 @@
-import React, { FC, useState, useCallback } from "react"
+import React, { FC, useState, useCallback, useEffect } from "react"
 import { TextInput, StyleSheet } from "react-native"
 import { tw } from "@free/tailwind"
 import { observer } from "mobx-react-lite"
@@ -7,6 +7,7 @@ import { useStore } from ".."
 
 export const InputSearch: FC = observer((_props) => {
   const { view } = useStore()
+  const name = view.data.get("name")
   const [text, setText] = useState("")
   const buildSearch = useCallback(
     (text: string) => {
@@ -19,10 +20,14 @@ export const InputSearch: FC = observer((_props) => {
             })),
           }
     },
-    [view.name]
+    [name]
   )
 
-  return (
+  useEffect(() => {
+    setText("")
+  }, [view?.app?.routerLocation])
+
+  return name !== "log" ? (
     <TextInput
       value={text}
       placeholder="Search ..."
@@ -33,7 +38,7 @@ export const InputSearch: FC = observer((_props) => {
         view.setData({ search: JSON.stringify(buildSearch(text)) })
       }}
     />
-  )
+  ) : null
 })
 
 const styles: any = StyleSheet.create({
