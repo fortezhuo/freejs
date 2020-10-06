@@ -32,5 +32,7 @@ export const useKeyboard = (): any => {
         Keyboard.removeListener("keyboardWillHide", onKeyboardWillHide)
       }
     }, [])
+  } else {
+    app.set("keyboard", { height: 0, status: "shown" })
   }
 }
