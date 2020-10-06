@@ -15,7 +15,7 @@ export const InputSearch: FC = observer((_props) => {
       return text === ""
         ? undefined
         : {
-            $or: view.search.map((field) => ({
+            $or: (view.search || []).map((field) => ({
               [field]: { $regex: text, $options: "i" },
             })),
           }

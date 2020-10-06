@@ -7,8 +7,10 @@ import { Gradient, Drawer, Header } from "../"
 import { useHook } from "./hook"
 import { MainLayoutProps } from "@free/core"
 import { useDimensions } from "./useDimensions"
+import { useKeyboard } from "./useKeyboard"
 
 const MainLayout: FC<MainLayoutProps> = ({ children }) => {
+  useKeyboard()
   useDimensions()
   useHook()
   return (

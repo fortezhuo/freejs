@@ -1,35 +1,36 @@
-import { useEffect, useState } from "react"
-import { Keyboard, KeyboardEvent } from "react-native"
+import { useEffect } from "react"
+import { Keyboard, KeyboardEvent, Platform } from "react-native"
+import { useStore } from "../Store"
 
 export const useKeyboard = (): any => {
-  const [keyboard, setKeyboard] = useState({ height: 0, status: "hidden" })
+  const { app } = useStore()
 
-  function onKeyboardDidShow(e: KeyboardEvent): void {
-    setKeyboard({ height: e.endCoordinates.height, status: "shown" })
-  }
-  function onKeyboardWillShow(e: KeyboardEvent): void {
-    setKeyboard({ height: e.endCoordinates.height, status: "show" })
-  }
-
-  function onKeyboardDidHide(): void {
-    setKeyboard({ height: 0, status: "hidden" })
-  }
-  function onKeyboardWillHide(e: KeyboardEvent): void {
-    setKeyboard({ height: e.endCoordinates.height, status: "hide" })
-  }
-
-  useEffect(() => {
-    Keyboard.addListener("keyboardDidShow", onKeyboardDidShow)
-    Keyboard.addListener("keyboardDidHide", onKeyboardDidHide)
-    Keyboard.addListener("keyboardWillShow", onKeyboardWillShow)
-    Keyboard.addListener("keyboardWillHide", onKeyboardWillHide)
-    return (): void => {
-      Keyboard.removeListener("keyboardDidShow", onKeyboardDidShow)
-      Keyboard.removeListener("keyboardDidHide", onKeyboardDidHide)
-      Keyboard.removeListener("keyboardWillShow", onKeyboardWillShow)
-      Keyboard.removeListener("keyboardWillHide", onKeyboardWillHide)
+  if (Platform.OS !== "web") {
+    function onKeyboardDidShow(e: KeyboardEvent): void {
+      app.set("keyboard", { height: e.endCoordinates.height, status: "shown" })
     }
-  }, [])
+    function onKeyboardWillShow(e: KeyboardEvent): void {
+      app.set("keyboard", { height: e.endCoordinates.height, status: "show" })
+    }
 
-  return keyboard
+    function onKeyboardDidHide(): void {
+      app.set("keyboard", { height: 0, status: "hidden" })
+    }
+    function onKeyboardWillHide(e: KeyboardEvent): void {
+      app.set("keyboard", { height: e.endCoordinates.height, status: "hide" })
+    }
+
+    useEffect(() => {
+      Keyboard.addListener("keyboardDidShow", onKeyboardDidShow)
+      Keyboard.addListener("keyboardDidHide", onKeyboardDidHide)
+      Keyboard.addListener("keyboardWillShow", onKeyboardWillShow)
+      Keyboard.addListener("keyboardWillHide", onKeyboardWillHide)
+      return (): void => {
+        Keyboard.removeListener("keyboardDidShow", onKeyboardDidShow)
+        Keyboard.removeListener("keyboardDidHide", onKeyboardDidHide)
+        Keyboard.removeListener("keyboardWillShow", onKeyboardWillShow)
+        Keyboard.removeListener("keyboardWillHide", onKeyboardWillHide)
+      }
+    }, [])
+  }
 }

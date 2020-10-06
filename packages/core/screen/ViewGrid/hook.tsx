@@ -9,7 +9,7 @@ export const useHook = () => {
   const search = view.data.get("search") || ""
   view.name = name
   view.title = (config as ObjectAny)[name].title
-  view.search = (config as ObjectAny)[name].search || []
+  view.search = (config as ObjectAny)[name].search
 
   useEffect(() => {
     view.setData({

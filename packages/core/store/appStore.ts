@@ -9,6 +9,7 @@ class AppStore {
   // observable
   auth: any = null
   dimension: ObjectAny = {}
+  keyboard: ObjectAny = { height: 0, status: "hidden" }
   error = undefined
   fatalError = undefined
   isDrawerOpen = false
@@ -27,6 +28,7 @@ class AppStore {
       isForm: observable,
       isLoading: observable,
       dimension: observable,
+      keyboard: observable,
       routerLocation: observable,
       routerParams: observable,
       subTitle: observable,
