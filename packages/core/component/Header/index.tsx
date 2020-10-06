@@ -20,6 +20,13 @@ export const Header: FC<HeaderProps> = observer(({ testID = "Header" }) => {
             onPress={app.dimension.isMobile && app.toggleDrawer}
           />
         )}
+        {app.isForm && app.dimension.isMobile && (
+          <IconButton
+            name={"chevron-left"}
+            style={styles.iconLeft}
+            onPress={app.goback}
+          />
+        )}
 
         <View style={styles.viewGrow}>
           {app.isForm ? (

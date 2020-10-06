@@ -32,6 +32,7 @@ class AppStore {
       subTitle: observable,
       can: action,
       checkAuth: action,
+      goback: action,
       goto: action,
       logout: action,
       set: action,
@@ -54,6 +55,13 @@ class AppStore {
     } finally {
       this.set("isLoading", false)
     }
+  }
+  goback = () => {
+    const path = this.routerLocation?.substring(
+      0,
+      this.routerLocation.lastIndexOf("/")
+    )
+    this.goto(path)
   }
   goto = (path?: string | undefined) => {
     if (path) {

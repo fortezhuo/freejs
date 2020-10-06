@@ -44,31 +44,57 @@ export const Table: FC<TableProps> = observer(
   }
 )
 
-export const Pagination = observer(() => {
+const getNum = (num: number, delim: number, stop: number): number => {
+  const nDelim = delim < 0 ? delim + 1 : delim - 1
+  if (stop == 0) {
+    return num + delim > stop ? num + delim : getNum(num, nDelim, stop)
+  } else {
+    return num + delim <= stop ? num + delim : getNum(num, nDelim, stop)
+  }
+}
+
+const pageBetween = (start: number, end: number) => {
+  start = getNum(start, -2, 0)
+  end = getNum(start, +5, end)
+  const pages = [...Array(end - start + 1)].map((_, i) => start + i)
+  return pages
+}
+
+export const Pagination: FC<any> = observer(({ store }) => {
+  const page = store.data.get("page") || 1
+  const max = store.data.get("max") || 1
+  const limit = store.data.get("limit")
+  const total = store.data.get("total")
+  const desc = `Showing ${(page - 1) * limit + 1} to ${
+    page * limit < total ? page * limit : total
+  } of ${total} entries`
+
   return (
-    <View style={styles.viewPage}>
-      <Text>Showing 1 to 2 of 2 entries</Text>
-      <View style={styles.viewPageNumbers}>
-        <Text onPress={() => {}} style={styles.textPage}>
-          First
-        </Text>
-        {[...Array(1)].map((_, i) => (
-          <Text
-            key={"page_" + random()}
-            onPress={() => {}}
-            style={StyleSheet.flatten([
-              styles.textPage,
-              i == 0 ? styles.textPageActive : {},
-            ])}
-          >
-            {i + 1}
+    total && (
+      <View style={styles.viewPage}>
+        <Text>{desc}</Text>
+        <View style={styles.viewPageNumbers}>
+          <Text onPress={() => {}} style={styles.textPage}>
+            First
           </Text>
-        ))}
-        <Text onPress={() => {}} style={styles.textPage}>
-          Last
-        </Text>
+          {pageBetween(page, max).map((_, i) => (
+            <Text
+              key={"page_" + random()}
+              onPress={() => {}}
+              style={StyleSheet.flatten([
+                styles.textPage,
+                i == 0 ? styles.textPageActive : {},
+              ])}
+            >
+              {i + 1}
+            </Text>
+          ))}
+          <Text onPress={() => {}} style={styles.textPage}>
+            Last
+          </Text>
+        </View>
       </View>
-    </View>
+    )
   )
 })
 

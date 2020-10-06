@@ -6,28 +6,38 @@ import * as config from "./config"
 export const useHook = () => {
   const { view } = useStore()
   const name = `${view?.app?.routerLocation}/`.split("/")[1]
+  const search = view.data.get("search") || ""
   view.name = name
   view.title = (config as ObjectAny)[name].title
+  view.search = (config as ObjectAny)[name].search
 
   useEffect(() => {
-    ;(async () => {
-      view.setTemp({
-        name,
-      })
-      await setCollection(name)
-    })()
-
+    view.setData({
+      name,
+    })
     return () => {
-      view.temp.clear()
       view.data.clear()
     }
   }, [view?.app?.routerLocation])
 
+  useEffect(() => {
+    ;(async () => {
+      await setCollection(name)
+    })()
+  }, [view?.app?.routerLocation, search])
+
   const setCollection = async (name: string) => {
     try {
       view.set("isLoading", true)
-      const res = await get(`/api/${name}`, {})
-      view.setData({ collection: res.data.result })
+      const {
+        data: { result, page, limit, total },
+      } = await get(`/api/${name}`, { q: search })
+      view.setData({
+        collection: result,
+        page,
+        limit,
+        total,
+      })
     } finally {
       view.set("isLoading", false)
     }

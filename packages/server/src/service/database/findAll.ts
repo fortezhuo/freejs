@@ -9,11 +9,12 @@ export const findAll = function (this: DatabaseService) {
       const { q, projection, limit, sort, page, skip } = this.onRequestHandler(
         req
       )
-
-      const query = {
-        _docReaders: { $exists: true, $in: this.auth?.context.list },
-        ...q,
-      }
+      const query = this.disableAuth
+        ? q
+        : {
+            _docReaders: { $exists: true, $in: this.auth?.context.list },
+            ...q,
+          }
 
       const data = await collection.find(query, {
         projection,

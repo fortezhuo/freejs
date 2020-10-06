@@ -10,10 +10,12 @@ export const findOne = function (this: DatabaseService) {
       const { q, projection } = this.onRequestHandler(req)
       if (!q) throw new Exception(400, "Parameter not found")
 
-      const query = {
-        _docReaders: { $exists: true, $in: this.auth?.context.list },
-        ...q,
-      }
+      const query = this.disableAuth
+        ? q
+        : {
+            _docReaders: { $exists: true, $in: this.auth?.context.list },
+            ...q,
+          }
 
       const data = await collection.findOne(query, {
         projection,

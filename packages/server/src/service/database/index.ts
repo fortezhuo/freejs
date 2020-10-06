@@ -19,6 +19,7 @@ export class DatabaseService extends BaseService {
 
   constructor(name: string, dbName?: string, dbTrashName?: string) {
     super(name)
+    this.disableAuth = true
     this.dbName = dbName ? dbName : "app"
     this.dbTrashName = dbTrashName ? dbTrashName : "trash"
     this.findAll = findAll.bind(this)
@@ -53,11 +54,14 @@ export class DatabaseService extends BaseService {
 
     const skip = (page - 1) * limit
 
-    ;(fields === "" ? [] : fields.split(","))
-      .concat(this.auth?.fields[0] === "*" ? [] : this.auth?.fields)
-      .forEach((field: string) => {
-        projection[field.replace("-", "")] = field.indexOf("-") >= 0 ? 0 : 1
-      })
+    ;(this.disableAuth
+      ? []
+      : (fields === "" ? [] : fields.split(",")).concat(
+          this.auth?.fields[0] === "*" ? [] : this.auth?.fields
+        )
+    ).forEach((field: string) => {
+      projection[field.replace("-", "")] = field.indexOf("-") >= 0 ? 0 : 1
+    })
 
     if (q) {
       q =

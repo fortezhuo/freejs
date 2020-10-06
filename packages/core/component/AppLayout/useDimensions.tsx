@@ -16,7 +16,7 @@ export const useDimensions = () => {
   useEffect(() => {
     const screen = getScreenSize(width)
     app.set("dimension", {
-      isMobile: screen !== "xl",
+      isMobile: screen !== "xl" && screen !== "lg",
       keyboard: keyboard,
       width: width - insets.left - insets.right,
       height: height - insets.top - insets.bottom,

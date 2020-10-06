@@ -11,7 +11,7 @@ export const useDimensions = () => {
     const { width, height } = window
     const screen = getScreenSize(width)
     app.set("dimension", {
-      isMobile: screen !== "xl",
+      isMobile: screen !== "xl" && screen !== "lg",
       keyboard: { height: 0, status: "shown" },
       width: width - insets.left - insets.right,
       height: height - insets.top - insets.bottom,

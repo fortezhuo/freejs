@@ -13,14 +13,22 @@ import { tw } from "@free/tailwind"
 const HEADER_HEIGHT = 20
 const USE_NATIVE_DRIVER = Platform.OS !== "web"
 
-export const Small: FC<any> = observer(({ store, actions }) => {
-  actions = actions.filter((act: ObjectAny) => act.children !== "Delete")
-
+const Single: FC<any> = observer(({ store, actions }) => {
+  return (
+    <Button
+      {...actions[0]}
+      store={store}
+      style={styles.single}
+      type={"single_button_bg"}
+    />
+  )
+})
+const Multi: FC<any> = observer(({ store, actions }) => {
   const isShow = actions.length != 0 && store.app.dimension.isMobile
-  const padding = store.app.dimension.insets.bottom || 10
+  const padding = store.app.dimension.insets.bottom || 20
   const windowHeight = store.app.dimension.height - 5
   const SNAP_POINTS_FROM_TOP = [
-    windowHeight - HEADER_HEIGHT - (actions || []).length * 53,
+    windowHeight - HEADER_HEIGHT - padding * 2 - (actions || []).length * 40,
     windowHeight - HEADER_HEIGHT,
   ]
   const START = SNAP_POINTS_FROM_TOP[0]
@@ -132,10 +140,22 @@ export const Small: FC<any> = observer(({ store, actions }) => {
   ) : null
 })
 
+export const Small: FC<any> = observer(({ store, actions }) => {
+  actions = actions.filter((act: ObjectAny) => act.children !== "Delete")
+  return actions.length == 0 ? null : actions.length == 1 ? (
+    <Single store={store} actions={actions} />
+  ) : (
+    <Multi store={store} actions={actions} />
+  )
+})
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "rgba(92,92,92,0.5)",
   },
   header: tw("items-center"),
+  single: tw("absolute bottom-0 right-0 mb-3 mr-3 shadow-md h-12", {
+    minWidth: 100,
+  }),
 })

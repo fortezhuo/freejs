@@ -30,7 +30,7 @@ export const TableContainer: FC<any> = observer(({ store, actDelete }) => {
   })
   return columns && data ? (
     <View style={styles.viewTable}>
-      <TablePagination />
+      {!isMobile && <TablePagination store={store} />}
       <Table scroll={!isMobile} style={styles.viewTable} {...getTableProps()}>
         {!isMobile &&
           headerGroups.map((headerGroup) => (
@@ -51,8 +51,8 @@ export const TableContainer: FC<any> = observer(({ store, actDelete }) => {
             prepareRow(item)
             return isMobile ? (
               <TableRowMobile
-                actDelete={actDelete}
                 store={store}
+                actDelete={actDelete}
                 dark={index % 2}
                 data={item.values}
                 label={labels}

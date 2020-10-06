@@ -10,7 +10,7 @@ import { theme } from "../../config/theme"
 const ViewGrid: FC = observer(() => {
   const { store } = useHook()
   const { actions, actDelete } = useActions(store)
-  const isLoading = store.isLoading || store.temp.get("name") !== store.name
+  const isLoading = store.isLoading || store.data.get("name") !== store.name
 
   return (
     <>

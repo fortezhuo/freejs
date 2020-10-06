@@ -36,6 +36,7 @@ theme = {
   input_disabled_bg: theme.secondary_2_bg,
   input_disabled_text: "text-gray-600",
   input_error_bg: "bg-red-200",
+  single_button_bg: "bg-pink-800",
 }
 
 export { theme }
