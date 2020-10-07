@@ -61,7 +61,7 @@ export const Search: FC<Search> = observer(({ refSearch, state, menu }) => {
 })
 
 const styles = StyleSheet.create({
-  inputText: tw(`w-full ${theme.input_bg} p-2`),
+  inputText: tw(`w-full ${theme.input_bg} p-2 px-3`),
 })
 
 type Search = {

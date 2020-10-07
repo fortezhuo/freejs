@@ -1,5 +1,5 @@
 import React, { FC } from "react"
-import { TextInput, StyleSheet, View } from "react-native"
+import { TextInput, StyleSheet, View, Platform } from "react-native"
 import { tw } from "@free/tailwind"
 import { observer, useLocalObservable } from "mobx-react-lite"
 import { IconButton } from "../../Icon"
@@ -34,7 +34,7 @@ const helperProps = (props: InputTextProps) => {
 const Eye: FC<any> = observer(({ state }) => {
   return (
     <IconButton
-      styleContainer={styles.viewEye}
+      styleContainer={styles.eye}
       color={color}
       size={16}
       name={state.secure ? "eye" : "eye-off"}
@@ -52,15 +52,17 @@ export const InputPassword: FC<InputTextProps> = observer((_props) => {
     },
   }))
   return (
-    <View>
+    <View
+      style={StyleSheet.flatten([
+        styles.viewPassword,
+        props.disabled ? styles.inputDisabled : {},
+        props.isEmpty ? styles.inputError : {},
+      ])}
+    >
       <TextInput
         secureTextEntry={state.secure}
         placeholderTextColor={tw("text-gray-600").color}
-        style={StyleSheet.flatten([
-          styles.inputPassword,
-          props.disabled ? styles.inputDisabled : {},
-          props.isEmpty ? styles.inputError : {},
-        ])}
+        style={styles.inputPassword}
         {...props}
       />
       <Eye state={state} />
@@ -69,10 +71,18 @@ export const InputPassword: FC<InputTextProps> = observer((_props) => {
 })
 
 const styles: any = StyleSheet.create({
-  inputPassword: tw(
-    `${theme.input_bg} ${theme.input_border} ${theme.input_text} p-3 w-full`
+  viewPassword: tw(
+    `${theme.input_bg} ${theme.input_border} w-full pl-${
+      Platform.OS === "android" ? 2 : 3
+    } pr-3 flex-row items-center`,
+    {
+      minHeight: 43,
+      maxHeight: 43,
+      height: 43,
+    }
   ),
-  viewEye: { right: 12, top: -29, position: "absolute" },
+  inputPassword: tw(`${theme.input_text} flex-1`),
   inputDisabled: tw(theme.input_disabled_bg),
   inputError: tw(theme.input_error_bg),
+  eye: tw("mt-1"),
 })

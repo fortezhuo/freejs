@@ -1,5 +1,5 @@
 import React, { FC, useRef } from "react"
-import { View, StyleSheet } from "react-native"
+import { View, StyleSheet, Platform } from "react-native"
 import { Modal } from "../Modal"
 import { IconButton } from "../Icon"
 import { observer, useLocalObservable } from "mobx-react-lite"
@@ -82,26 +82,19 @@ export const useMenu = () => {
         left = SCREEN_INDENT
       }
 
-      if (
-        top >
-        app.dimension.height - app.keyboard.height - menuHeight - SCREEN_INDENT
-      ) {
-        top =
-          app.dimension.height -
-          app.keyboard.height -
-          menuHeight +
-          anchorHeight * 2
-      } else if (top < SCREEN_INDENT) {
-        top = SCREEN_INDENT
-      } else {
+      if (Platform.OS === "web") {
         top += anchorHeight
+      } else {
+        top = app.dimension.height - menuHeight + 2
+        top -= Platform.OS === "ios" ? app.keyboard.height : 0
+        top += Platform.OS === "android" ? 0 : anchorHeight * 2
       }
 
       const menuStyle = {
         opacity: isShow || !waitKeyboard ? 1 : 0,
         width: menuWidth,
         left,
-        top: top,
+        top,
       }
 
       return (
@@ -115,6 +108,7 @@ export const useMenu = () => {
             transparent={true}
           >
             <View
+              collapsable={false}
               style={StyleSheet.flatten([
                 styles.viewChildren,
                 menuStyle,

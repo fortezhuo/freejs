@@ -24,34 +24,6 @@ const ldap = {
       filterKey: "sAMAccountName",
       username: "cn=admin,dc=ROCKMAN,dc=COM",
     },
-    {
-      domain: "rockman.com",
-      host: "ldap://0.0.0.0:389",
-      base: "dc=ROCKMAN,dc=COM",
-      filterKey: "sAMAccountName",
-      username: "cn=admin,dc=ROCKMAN,dc=COM",
-    },
-    {
-      domain: "rockman.com",
-      host: "ldap://0.0.0.0:389",
-      base: "dc=ROCKMAN,dc=COM",
-      filterKey: "sAMAccountName",
-      username: "cn=admin,dc=ROCKMAN,dc=COM",
-    },
-    {
-      domain: "rockman.com",
-      host: "ldap://0.0.0.0:389",
-      base: "dc=ROCKMAN,dc=COM",
-      filterKey: "sAMAccountName",
-      username: "cn=admin,dc=ROCKMAN,dc=COM",
-    },
-    {
-      domain: "rockman.com",
-      host: "ldap://0.0.0.0:389",
-      base: "dc=ROCKMAN,dc=COM",
-      filterKey: "sAMAccountName",
-      username: "cn=admin,dc=ROCKMAN,dc=COM",
-    },
   ],
 }
 

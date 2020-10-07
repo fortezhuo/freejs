@@ -6,11 +6,10 @@ export const useHook = () => {
   const { login } = useStore()
 
   useEffect(() => {
-    login.data.set("domain", ldap[0].domain)
-    login.temp.set(
-      "domain",
-      ldap.map((l: any) => ({ id: l.domain, label: l.domain }))
-    )
+    login.setData({ domain: ldap[0].domain })
+    login.setTemp({
+      domain: ldap.map((l: any) => ({ id: l.domain, label: l.domain })),
+    })
   }, [])
 
   useEffect(() => {

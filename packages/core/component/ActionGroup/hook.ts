@@ -24,7 +24,7 @@ export const useActions = (store: any, button: any) => {
       children: "Filter",
       onPress: () => {
         const isFilter = store.temp.get("isFilter") || false
-        store.temp.set("isFilter", !isFilter)
+        store.setTemp({ isFilter: !isFilter })
       },
       visible: !isMobile,
     },

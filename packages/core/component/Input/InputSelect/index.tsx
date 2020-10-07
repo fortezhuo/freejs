@@ -85,8 +85,14 @@ export const InputSelect: FC<InputSelectProps> = observer(
         anchor={<Anchor state={state} menu={{ show }} />}
       >
         <View style={styles.viewMenu}>
-          <Search refSearch={refSearch} state={state} menu={{ hide }} />
-          <Options refScroll={refScroll} state={state} menu={{ show, hide }} />
+          <View style={styles.viewWrapper}>
+            <Search refSearch={refSearch} state={state} menu={{ hide }} />
+            <Options
+              refScroll={refScroll}
+              state={state}
+              menu={{ show, hide }}
+            />
+          </View>
         </View>
       </Menu>
     )
@@ -94,9 +100,9 @@ export const InputSelect: FC<InputSelectProps> = observer(
 )
 
 const styles = StyleSheet.create({
-  viewMenu: tw(`${theme.input_bg} ${theme.input_border}`, {
+  viewMenu: {
     marginTop: 1,
-    paddingTop: 3,
     height: 181,
-  }),
+  },
+  viewWrapper: tw(`${theme.input_bg} ${theme.input_border}`, { paddingTop: 3 }),
 })

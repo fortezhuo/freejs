@@ -11,7 +11,7 @@ class LoginStore extends BaseStore {
   }
   login = async () => {
     try {
-      this.isUpdating = true
+      this.set("isUpdating", true)
       const [username, password, domain] = this.getData(
         "username",
         "password",
@@ -32,7 +32,7 @@ class LoginStore extends BaseStore {
       console.log("auth", err)
       this.app?.set("error", err)
     } finally {
-      this.isUpdating = false
+      this.set("isUpdating", false)
     }
   }
 }
