@@ -95,6 +95,7 @@ declare module "@free/core" {
 
   // Col
   type GridColProps = {
+    light?: boolean
     sm?: number
     smHidden?: boolean
     md?: number

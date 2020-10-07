@@ -50,6 +50,7 @@ export const Col: FC<GridColProps> = observer(
     xlHidden,
     style,
     children,
+    light,
     ...rest
   }) => {
     const { isHidden, getWidth } = useHook()
@@ -63,7 +64,12 @@ export const Col: FC<GridColProps> = observer(
     return isShow ? (
       <View
         {...rest}
-        style={StyleSheet.flatten([styles.viewColumn, style, tw(`${width}`)])}
+        style={StyleSheet.flatten([
+          styles.viewColumn,
+          light ? styles.viewColumnLight : {},
+          style,
+          tw(`${width}`),
+        ])}
       >
         {children}
       </View>
@@ -76,8 +82,9 @@ export const Label: FC = observer(({ children }) => {
 })
 
 const styles = StyleSheet.create({
-  viewRow: tw(`flex-row p-2`),
+  viewRow: tw(`flex-row shadow-sm`, { margin: 1 }),
   viewRowDark: { backgroundColor: "rgba(0,0,0,0.05)" },
-  viewColumn: tw("flex-col justify-center"),
+  viewColumn: tw("p-2 flex-col justify-center"),
+  viewColumnLight: tw("bg-white"),
   textLabel: tw(`${theme.input_text} p-1`),
 })

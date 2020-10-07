@@ -35,15 +35,15 @@ const SettingUser: FC = observer(() => {
           <Col md={2}>
             <Label>User Name</Label>
           </Col>
-          <Col md={10}>
+          <Col light md={10}>
             <Input.Text store={user} name="username" />
           </Col>
         </Row>
-        <Row>
+        <Row dark>
           <Col md={2}>
             <Label>Full Name</Label>
           </Col>
-          <Col md={10}>
+          <Col light md={10}>
             <Input.Text store={user} name="fullname" />
           </Col>
         </Row>
@@ -51,15 +51,15 @@ const SettingUser: FC = observer(() => {
           <Col md={2}>
             <Label>Email</Label>
           </Col>
-          <Col md={10}>
+          <Col light md={10}>
             <Input.Text store={user} name="email" />
           </Col>
         </Row>
-        <Row>
+        <Row dark>
           <Col md={2}>
             <Label>Role</Label>
           </Col>
-          <Col md={10}>
+          <Col light md={10}>
             <Input.Select
               store={user}
               name="roles"
