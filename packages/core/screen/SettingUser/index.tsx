@@ -6,8 +6,6 @@ import { useHook } from "./hook"
 import { Button } from "../../component/Button"
 import { tw } from "@free/tailwind"
 
-console.log("test")
-
 const SettingUser: FC = observer(() => {
   const user = useHook()
   return (

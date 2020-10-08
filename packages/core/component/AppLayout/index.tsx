@@ -2,6 +2,7 @@ import React, { FC } from "react"
 import { StyleSheet, KeyboardAvoidingView, Platform } from "react-native"
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context"
 import { tw } from "@free/tailwind"
+import { theme } from "../../config/theme"
 import { StoreProvider } from "../Store"
 import { Gradient, Drawer, Header } from "../"
 import { useHook } from "./hook"
@@ -13,11 +14,10 @@ const MainLayout: FC<MainLayoutProps> = ({ children }) => {
   useKeyboard()
   useDimensions()
   useHook()
+
+  const colors = [theme.primary_1_bg, theme.primary_2_bg]
   return (
-    <Gradient
-      colors={["primary_1_bg", "primary_2_bg"]}
-      style={styles.viewFlexTransparent}
-    >
+    <Gradient colors={colors} style={styles.viewFlexTransparent}>
       {children}
     </Gradient>
   )

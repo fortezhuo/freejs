@@ -1,28 +1,24 @@
 import React, { FC } from "react"
-import {
-  Input,
-  IconLabel,
-  LayoutFull,
-  Col,
-  Gradient,
-  Avatar,
-} from "../../component"
+import { Input, LayoutFull, Col, Gradient, Avatar } from "../../component"
 import { View, StyleSheet, Text, TouchableOpacity } from "react-native"
+import { theme } from "../../config/theme"
 import { tw } from "@free/tailwind"
 import { observer } from "mobx-react-lite"
 import { useHook } from "./hook"
 import logo from "../../img/logo.png"
 
 const LoginButton: FC<any> = observer(({ store }) => {
-  const color = store.isUpdating ? "secondary" : "primary"
+  const colors = store.isUpdating
+    ? [theme.disabled_bg, theme.disabled_bg]
+    : [theme.primary_1_bg, theme.primary_2_bg]
   return (
     <TouchableOpacity disabled={store.isUpdating} onPress={store.login}>
-      <Gradient
-        type="vertical"
-        colors={[`${color}_1_bg`, `${color}_2_bg`]}
-        style={styles.buttonLogin}
-      >
-        <Text style={styles.captionLogin}>LOGIN</Text>
+      <Gradient type="vertical" colors={colors} style={styles.buttonLogin}>
+        <Text
+          style={store.isUpdating ? styles.textLoginDisabled : styles.textLogin}
+        >
+          LOGIN
+        </Text>
       </Gradient>
     </TouchableOpacity>
   )
@@ -75,7 +71,8 @@ const styles = StyleSheet.create({
   buttonLogin: tw(
     "w-full mt-4 p-3 items-center justify-center rounded-full shadow-md"
   ),
-  captionLogin: tw("text-white"),
+  textLogin: tw("text-white"),
+  textLoginDisabled: tw(theme.disabled_text),
 })
 
 export default PageLogin

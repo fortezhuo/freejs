@@ -13,7 +13,7 @@ FreeJS is considered unstable. The API could change or be removed in future
 - Universal Rendering
 - Universal Access Control List (ACL)
 - Lazy Loading & Code Splitting
-- Webpack Dev Server + Hot Reload
+- Webpack Dev Server + ~~Hot Reload~~ FAST REFRESH
 - LDAP Auth / Mock Server
 - Type safe
 - Logging
@@ -81,10 +81,11 @@ FreeJS is considered unstable. The API could change or be removed in future
 ### Frontend
 
 - [x] Accordion
-- [x] AppLayout, Header, Title, Content, Footer
+- [x] AppLayout, Header, Title
 - [ ] Authentication (Face ID / Fingerprint)
-- [x] Button / Action Bar
-- [x] Button / Action Bar for Mobile
+- [x] Action Group
+- [x] Button
+- [x] Bottom Sheet for Mobile
 - [ ] Carousel
 - [ ] Charts
 - [x] Drawer / Sidebar
@@ -96,7 +97,7 @@ FreeJS is considered unstable. The API could change or be removed in future
 - [x] Input Password
 - [x] Input Select
 - [ ] Input Select Async
-- [ ] Input Select Creatable
+- [x] Input Select Creatable
 - [ ] Input Select Async Creatable
 - [x] Input Checkbox
 - [ ] Input Radio
@@ -110,13 +111,13 @@ FreeJS is considered unstable. The API could change or be removed in future
 - [x] Screen Login
 - [x] Screen View
 - [ ] Screen Error 404
-- [x] Screen Error 500
+- [ ] Screen Error 500
 - [x] Section
-- [ ] Section Swipe and Button Navigation for Mobile
+- [ ] Section Swipe
 - [x] Snackbar
 - [x] Table
 - [ ] Table Sortable
 - [ ] Table Filterable
 - [ ] Table Paging
-- [ ] Table for Mobile, Swipe for Delete
+- [x] Table for Mobile, Swipe for Delete
 - [x] Text

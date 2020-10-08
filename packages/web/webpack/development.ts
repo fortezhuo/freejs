@@ -6,14 +6,12 @@ import {
 } from "./base"
 import { configProxy } from "@free/env"
 
-const entryClient = ["react-hot-loader/patch", resolvePath("src")]
-
 const webpackDevConfig = {
   ...getDefaultConfig(true),
   mode: "development",
   devtool: "source-map",
   watch: true,
-  entry: entryClient,
+  entry: resolvePath("src"),
   output: {
     publicPath: `/`,
   },

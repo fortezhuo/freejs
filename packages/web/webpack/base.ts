@@ -6,6 +6,7 @@ import LoadablePlugin from "@loadable/webpack-plugin"
 import HtmlWebPackPlugin from "html-webpack-plugin"
 import CompressionPlugin from "compression-webpack-plugin"
 import MiniCssExtractPlugin from "mini-css-extract-plugin"
+import ReactRefreshWebpackPlugin from "@pmmmwh/react-refresh-webpack-plugin"
 import { resolve } from "path"
 import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer"
 
@@ -39,14 +40,13 @@ export const getWebpackRules = (): webpack.Rule[] => [
           "@babel/preset-flow",
         ],
         plugins: [
-          "react-hot-loader/babel",
           ["@babel/plugin-proposal-class-properties", { loose: true }],
           "@babel/plugin-syntax-dynamic-import",
           "@babel/plugin-proposal-object-rest-spread",
           "@babel/plugin-transform-runtime",
           "@loadable/babel-plugin",
           "react-native-web",
-        ],
+        ].concat(isDev ? ["react-refresh/babel"] : []),
       },
     },
   },
@@ -116,7 +116,10 @@ export const getWebpackPlugins = (isWeb: boolean): webpack.Plugin[] =>
   )
     .concat(
       isDev
-        ? [new webpack.HotModuleReplacementPlugin()]
+        ? [
+            new webpack.HotModuleReplacementPlugin(),
+            new ReactRefreshWebpackPlugin(),
+          ]
         : [new CompressionPlugin()]
     )
     .concat(isAnalyzer ? [new BundleAnalyzerPlugin()] : [])
@@ -155,7 +158,6 @@ export const getDefaultConfig = (isWeb: boolean): webpack.Configuration => {
       alias: {
         "react-native": "react-native-web",
         "react-native-linear-gradient": "react-native-web-linear-gradient",
-        "react-dom": isWeb && isDev ? "@hot-loader/react-dom" : "react-dom",
       },
       extensions: [
         ".web.js",
