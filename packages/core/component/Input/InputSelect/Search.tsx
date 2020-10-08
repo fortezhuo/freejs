@@ -11,12 +11,9 @@ import { tw } from "@free/tailwind"
 import { theme } from "../../../config/theme"
 
 export const Search: FC<Search> = observer(({ refSearch, state, menu }) => {
-  let regex: any
   const onChange = (text: string) => {
-    regex = new RegExp(text, "i")
     state.setIndex(0)
     state.setSearch(text)
-    state.setOptions(state._options.filter((opt: any) => regex.test(opt.label)))
   }
   const onChangeIndex = (index: number) => {
     if (
@@ -28,7 +25,8 @@ export const Search: FC<Search> = observer(({ refSearch, state, menu }) => {
   }
 
   const onEnter = async () => {
-    const option = state.options[state.index]
+    const { options, index } = state
+    const option = index < options.length ? options[index] : undefined
     await state.onSelect(option)
   }
 

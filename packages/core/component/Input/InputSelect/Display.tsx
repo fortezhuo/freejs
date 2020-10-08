@@ -1,4 +1,4 @@
-import React, { FC } from "react"
+import React, { FC, useCallback } from "react"
 import { IconButton } from "../../Icon"
 import { StyleSheet, Text, View } from "react-native"
 import { observer } from "mobx-react-lite"
@@ -7,16 +7,19 @@ import { StateComponent } from "@free/core"
 import { theme } from "../../../config/theme"
 import { random } from "../../../util/random"
 
-const Chip: FC<any> = observer(({ onPress, children }) => {
+const iconColor = color(theme.input_text)
+
+const Chip: FC<any> = observer(({ state, children }) => {
+  const onClear = useCallback((val) => state.onClear(val), [])
   return (
     <IconButton
-      name="x-square"
+      name="x"
       styleContainer={styles.viewChip}
       styleText={styles.textChip}
       style={styles.iconChip}
       size={16}
-      color={"#888"}
-      onPress={onPress}
+      color={iconColor}
+      onPress={() => onClear(children)}
     >
       {children}
     </IconButton>
@@ -35,12 +38,7 @@ const Clear: FC<StateComponent> = observer(({ state }) => {
   return state.value == null ? (
     <View />
   ) : (
-    <IconButton
-      color={color("bg-gray-700")}
-      name="x"
-      size={16}
-      onPress={onClear}
-    />
+    <IconButton color={iconColor} name="x" size={16} onPress={onClear} />
   )
 })
 
@@ -53,7 +51,9 @@ export const Display: FC<StateComponent> = observer(({ state }) => {
         {display ? (
           multi ? (
             display.map((_value: any) => (
-              <Chip key={"chip_" + random()}>{_value}</Chip>
+              <Chip state={state} key={"chip_" + random()}>
+                {_value}
+              </Chip>
             ))
           ) : (
             <Text style={styles.textSingle}>{display}</Text>

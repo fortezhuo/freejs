@@ -168,6 +168,7 @@ declare module "@free/core" {
   }
 
   interface InputSelectProps {
+    creatable?: boolean
     options?: []
     model?: string
     store: any

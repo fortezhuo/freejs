@@ -9,10 +9,9 @@ import { tw } from "@free/tailwind"
 import { InputSelectProps } from "@free/core"
 import { theme } from "../../../config/theme"
 
-const toJSON = (proxy: any) => JSON.parse(JSON.stringify(proxy))
-
 export const InputSelect: FC<InputSelectProps> = observer(
   ({
+    creatable = false,
     options: _options,
     disabled: _disabled,
     onChange: _onChange,
@@ -32,6 +31,7 @@ export const InputSelect: FC<InputSelectProps> = observer(
     const state = useLocalObservable(() => ({
       _options,
       model,
+      creatable,
       placeholder,
       name,
       multi,
@@ -57,20 +57,27 @@ export const InputSelect: FC<InputSelectProps> = observer(
         state.options = options
       },
       async onSelect(option: any) {
-        const options = state.multi
-          ? state.value.concat([toJSON(option)])
-          : option
-        state.onChange(options)
+        if (option) {
+          const { value, multi } = state
+          const options = multi ? value.concat([option]) : option
+          state.index = 0
+          await state.onChange(options)
+        }
+      },
+      async onClear(display: string) {
+        const { value, keyLabel } = state
+        const options = value.filter(
+          (_value: any) => _value[keyLabel] !== display
+        )
+        await state.onChange(options)
       },
       async onChange(options: any) {
         const singleValue = state.singleValue
         const setValue = (args: any) =>
           model === "data" ? store.setData(args) : store.setTemp(args)
-
         if (!singleValue) {
           setValue({ [`${state.name}_data`]: options ? options : undefined })
         }
-
         setValue({
           [state.name]: options
             ? state.multi
@@ -78,7 +85,6 @@ export const InputSelect: FC<InputSelectProps> = observer(
               : options.value
             : undefined,
         })
-
         if (_onChange) await _onChange()
       },
       get value() {
@@ -93,7 +99,7 @@ export const InputSelect: FC<InputSelectProps> = observer(
           : { [keyLabel]: _value, [keyValue]: _value }
       },
       get display() {
-        const { singleValue, keyValue, keyLabel, multi } = state
+        const { singleValue, keyLabel, multi } = state
         let _value = store[model].get(singleValue ? name : `${name}_data`)
         _value = multi ? _value || [] : _value
 

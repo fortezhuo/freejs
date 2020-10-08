@@ -66,6 +66,7 @@ const SettingUser: FC = observer(() => {
             <Input.Select
               store={user}
               name="roles"
+              creatable
               multi
               options={user.temp.get("roles") || []}
             />
