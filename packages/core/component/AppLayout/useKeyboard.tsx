@@ -33,6 +33,8 @@ export const useKeyboard = (): any => {
       }
     }, [])
   } else {
-    app.set("keyboard", { height: 0, status: "shown" })
+    useEffect(() => {
+      app.set("keyboard", { height: 0, status: "shown" })
+    }, [])
   }
 }

@@ -6,6 +6,8 @@ import { useHook } from "./hook"
 import { Button } from "../../component/Button"
 import { tw } from "@free/tailwind"
 
+console.log("test")
+
 const SettingUser: FC = observer(() => {
   const user = useHook()
   return (
@@ -60,7 +62,7 @@ const SettingUser: FC = observer(() => {
         </Row>
         <Row dark>
           <Col md={2}>
-            <Label>Role</Label>
+            <Label>Roles</Label>
           </Col>
           <Col light md={10}>
             <Input.Select

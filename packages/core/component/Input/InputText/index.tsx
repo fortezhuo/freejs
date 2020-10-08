@@ -13,11 +13,9 @@ const helperProps = (props: InputTextProps) => {
     name,
     value: store[model].get(name) || "",
     onChangeText: async (text: string) => {
-      if (model === "data") {
-        store.setData({ [name]: text })
-      } else {
-        store.setTemp({ [name]: text })
-      }
+      const setValue = (args: any) =>
+        model === "data" ? store.setData(args) : store.setTemp(args)
+      setValue({ [name]: text })
       if (onChange) {
         await onChange()
       }

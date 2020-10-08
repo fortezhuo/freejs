@@ -1,4 +1,4 @@
-import React, { FC } from "react"
+import React, { FC, useCallback } from "react"
 import {
   TextInput,
   StyleSheet,
@@ -11,24 +11,31 @@ import { tw } from "@free/tailwind"
 import { theme } from "../../../config/theme"
 
 export const Search: FC<Search> = observer(({ refSearch, state, menu }) => {
-  const onChange = (text: string) => {
+  const onChange = useCallback((text: string) => {
     state.setIndex(0)
     state.setSearch(text)
-  }
-  const onChangeIndex = (index: number) => {
+  }, [])
+
+  const onChangeIndex = useCallback((index: number) => {
     if (
       (state.index <= 0 && index === -1) ||
       (state.index >= state.options.length - 1 && index === +1)
     )
       return
     state.setIndex(state.index + index)
-  }
+  }, [])
 
-  const onEnter = async () => {
+  const onEnter = useCallback(async () => {
     const { options, index } = state
     const option = index < options.length ? options[index] : undefined
     await state.onSelect(option)
-  }
+  }, [])
+
+  const onBackSpace = useCallback(async () => {
+    let { value } = state
+    value.pop()
+    await state.onChange(value)
+  }, [])
 
   const onKeyPress =
     Platform.OS !== "web"
@@ -40,6 +47,7 @@ export const Search: FC<Search> = observer(({ refSearch, state, menu }) => {
           } else if (key == "Escape") {
             menu.hide()
           } else if (key == "Backspace" && state.multi) {
+            onBackSpace()
           } else if (key == "Enter") {
             onEnter()
             menu.hide()

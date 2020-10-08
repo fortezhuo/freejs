@@ -1,7 +1,6 @@
 import { BaseStore, action, makeObservable } from "./baseStore"
 import * as req from "../request"
 import { AppStore } from "./appStore"
-import { toJS } from "mobx"
 
 class DocumentStore extends BaseStore {
   isForm = true

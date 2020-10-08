@@ -1,6 +1,6 @@
 import React, { FC, useCallback } from "react"
-import { IconButton } from "../../Icon"
-import { StyleSheet, Text, View } from "react-native"
+import { Icon, IconButton, Text } from "../.."
+import { StyleSheet, View, TouchableOpacity } from "react-native"
 import { observer } from "mobx-react-lite"
 import { tw, color } from "@free/tailwind"
 import { StateComponent } from "@free/core"
@@ -12,17 +12,12 @@ const defaultColor = color(theme.default_text)
 const Chip: FC<any> = observer(({ state, children }) => {
   const onClear = useCallback((val) => state.onClear(val), [])
   return (
-    <IconButton
-      name="x"
-      styleContainer={styles.viewChip}
-      styleText={styles.textChip}
-      style={styles.iconChip}
-      size={16}
-      color={defaultColor}
-      onPress={() => onClear(children)}
-    >
-      {children}
-    </IconButton>
+    <View style={styles.viewChip}>
+      <TouchableOpacity onPress={() => onClear(children)}>
+        <Icon name="x" size={16} color={defaultColor}></Icon>
+      </TouchableOpacity>
+      <Text style={styles.textChip}>{children}</Text>
+    </View>
   )
 })
 
@@ -32,9 +27,9 @@ const Placeholder: FC<StateComponent> = observer(({ state }) => {
 
 const Clear: FC<StateComponent> = observer(({ state }) => {
   const { multi, value } = state
-  const onClear = () => {
+  const onClear = useCallback(() => {
     state.onChange(multi ? [] : "")
-  }
+  }, [])
 
   return (multi ? value.length == 0 : value === "") ? (
     <View />
@@ -78,6 +73,5 @@ const styles = StyleSheet.create({
     marginHorizontal: 2,
     backgroundColor: "rgba(0,0,0,0.1)",
   }),
-  iconChip: tw("mr-1", { marginTop: 1 }),
-  textChip: tw(`${theme.default_text}`),
+  textChip: tw(`${theme.default_text} mx-1`),
 })
