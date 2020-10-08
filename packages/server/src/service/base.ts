@@ -2,6 +2,7 @@ import { Instance, Request, Reply } from "@free/server"
 import { Exception } from "../util/exception"
 
 const isDev = process.env.NODE_ENV !== "production"
+const disableAuth = process.env.DISABLE_AUTH === "true"
 
 export class BaseService {
   protected name: string
@@ -12,12 +13,12 @@ export class BaseService {
     this.name = name
     this.instance = undefined
     this.auth = undefined
-    this.disableAuth = false
+    this.disableAuth = disableAuth
   }
   protected onAuthenticate = (req: Request, resource: string) => {
     if (this.disableAuth && isDev) {
       this.instance?.log.warn(
-        "Disable Authentication Enabled -- For Testing Only"
+        "[TESTING] Disable Authentication - Fake Tester Enabled"
       )
       this.auth = {
         username: "fake_tester",

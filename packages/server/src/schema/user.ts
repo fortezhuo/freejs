@@ -1,13 +1,8 @@
-import { S, baseSchema, ajv } from "./schema"
+import { Joi, createSchema } from "./schema"
 
-const schema = S.object()
-  .prop("username", S.string().required())
-  .prop("fullname", S.string().required())
-  .prop("email", S.string().format("email").required())
-  .prop("roles", S.array())
-  .extend(baseSchema)
-  .valueOf()
-
-const validate = ajv.compile(schema)
-
-export const user = { schema, validate }
+export const user = createSchema({
+  username: Joi.string().required(),
+  fullname: Joi.string().required(),
+  email: Joi.string().email().required(),
+  roles: Joi.array(),
+})

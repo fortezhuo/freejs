@@ -58,7 +58,6 @@
   "dependencies": {
     "@free/logger": "1.0.0",
     "@types/lodash": "^4.14.161",
-    "ajv": "^6.12.5",
     "axios": "^0.20.0",
     "dayjs": "^1.8.36",
     "fastify": "3.5.1",
@@ -70,8 +69,8 @@
     "fastify-session": "^5.0.0",
     "fastify-static": "^3.2.1",
     "filesize": "^6.1.0",
-    "fluent-schema": "^1.0.4",
     "googleapis": "61.0.0",
+    "joi": "^17.2.1",
     "ldapjs": "^2.1.1",
     "lodash": "^4.17.20",
     "monk": "^7.3.1",

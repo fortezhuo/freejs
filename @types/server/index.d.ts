@@ -13,10 +13,6 @@ declare module "@free/server" {
     mail?: any
   }
 
-  type ValidationSchema = {
-    [key: string]: any
-  }
-
   type Mail = {
     from: string
     to: string | Array<string>

@@ -1,27 +1,20 @@
-import S from "fluent-schema"
-import Ajv from "ajv"
+import Joi from "joi"
 
-export { S }
-export const baseSchema = S.object()
-  .prop("_createdAt", S.object())
-  .prop("_createdBy", S.string())
-  .prop("_docAuthors", S.array())
-  .prop("_docReaders", S.array())
-  .prop("_updatedAt", S.object())
-  .prop("_updatedBy", S.string())
+export { Joi }
+export const createSchema = (schema: any) => {
+  return Joi.object({
+    ...schema,
+    _createdAt: Joi.date().timestamp(),
+    _createdBy: Joi.string(),
+    _docAuthors: Joi.array(),
+    _docReaders: Joi.array(),
+    _updatedAt: Joi.date().timestamp(),
+    _updatedBy: Joi.string(),
+  })
+}
 
-export const ajv = new Ajv({ allErrors: true })
-
-export const normalize = (errors: any) => {
-  return errors.reduce((acc: any, e: any) => {
-    if (e.dataPath.length && e.dataPath[0] === ".") {
-      acc[e.dataPath.slice(1)] = e.message.toUpperCase()[0] + e.message.slice(1)
-    } else if (e.dataPath === "") {
-      acc[e.params.missingProperty] =
-        e.message.toUpperCase()[0] + e.message.slice(1).replace(/'/g, '"')
-    } else {
-      acc[e.dataPath] = e.message.toUpperCase()[0] + e.message.slice(1)
-    }
+export const normalize = (errors: any) =>
+  errors.details.reduce((acc: any, e: any) => {
+    acc[e.path[0]] = e.message
     return acc
   }, {})
-}

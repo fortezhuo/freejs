@@ -1,39 +1,30 @@
-import * as RawSchema from "../../schema"
-import { normalize } from "../../schema/schema"
-import { Request, Reply, ValidationSchema } from "@free/server"
+import { Request, Reply } from "@free/server"
 import { Exception } from "../../util/exception"
 import { DatabaseService } from "."
 
-const Schema: ValidationSchema = RawSchema
-
 export const save = function (this: DatabaseService) {
   return async (req: Request, reply: Reply) => {
-    const { validate } = Schema[this.name]
     const method = req?.method.toUpperCase()
     reply.statusCode = method === "PATCH" ? 200 : 201
 
     try {
       const handler = this.onRequestHandler(req)
-      if (!validate(handler.body))
-        throw new Exception(
-          400,
-          `Validation Error for ${this.name.toUpperCase()}`,
-          normalize(validate.errors)
-        )
-      const collection = req.database[this.dbName].get(this.name)
-      await this.onBeforeSave(collection, handler)
 
-      const data =
-        method === "PATCH"
-          ? await update(this.auth, collection, handler)
-          : await create(this.auth, collection, handler)
+      if (this.onValidation(handler.body)) {
+        const collection = req.database[this.dbName].get(this.name)
+        await this.onBeforeSave(collection, handler)
 
-      await this.onAfterSave(collection, handler)
+        const data =
+          method === "PATCH"
+            ? await update(this.auth, collection, handler)
+            : await create(this.auth, collection, handler)
+        await this.onAfterSave(collection, handler)
 
-      reply.send({
-        success: true,
-        result: data,
-      })
+        reply.send({
+          success: true,
+          result: data,
+        })
+      }
     } catch (err) {
       this.onErrorHandler(req, reply, err)
     }

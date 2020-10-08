@@ -13,7 +13,6 @@ export class UploadService extends BaseService {
   public gdriveStore: any
   constructor() {
     super("upload")
-    this.disableAuth = true
 
     /* GDrive Enable */
     this.gapi = google
