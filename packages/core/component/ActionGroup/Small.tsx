@@ -141,7 +141,10 @@ const Multi: FC<any> = observer(({ store, actions }) => {
 })
 
 export const Small: FC<any> = observer(({ store, actions }) => {
-  actions = actions.filter((act: ObjectAny) => act.children !== "Delete")
+  actions = actions.filter(
+    (act: ObjectAny) => act.children !== "Delete" && act.children !== "Close"
+  )
+
   return actions.length == 0 ? null : actions.length == 1 ? (
     <Single store={store} actions={actions} />
   ) : (

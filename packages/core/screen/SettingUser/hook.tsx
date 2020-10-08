@@ -1,15 +1,37 @@
-import { useEffect } from "react"
-import { useStore } from "../../component/Store"
+import { useEffect, useMemo } from "react"
+import { useStore, useEvent } from "../../component"
 import { configACL as acl } from "@free/env"
 
 export const useHook = () => {
   const { user } = useStore()
-  useEffect(() => {
-    user.temp.set(
-      "roles",
-      Object.keys(acl).map((role: any) => ({ value: role, label: role }))
-    )
+  const event = useEvent(user)
+  const actions = useMemo(() => {
+    return [
+      {
+        icon: "save",
+        type: "primary_1_bg",
+        children: "Save",
+        onPress: async () => await event.save(),
+        visible: true,
+      },
+      {
+        icon: "log-out",
+        type: "danger_bg",
+        children: "Close",
+        onPress: event.close,
+        visible: true,
+      },
+    ]
   }, [])
 
-  return user
+  useEffect(() => {
+    user.setTemp({
+      roles: Object.keys(acl).map((role: any) => ({
+        value: role,
+        label: role,
+      })),
+    })
+  }, [])
+
+  return { user, actions }
 }

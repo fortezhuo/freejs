@@ -13,6 +13,7 @@ class DocumentStore extends BaseStore {
       afterLoad: action,
       beforeEdit: action,
       beforeLoad: action,
+      clear: action,
       onLoad: action,
       onEdit: action,
       save: action,
@@ -26,6 +27,11 @@ class DocumentStore extends BaseStore {
   async afterLoad() {}
   async beforeEdit() {}
   async beforeLoad() {}
+  clear() {
+    this.isLoading = false
+    this.isUpdating = false
+    this.data.clear()
+  }
   async onLoad() {
     try {
       this.set("isLoading", true)
@@ -45,6 +51,7 @@ class DocumentStore extends BaseStore {
     try {
       this.set("isLoading", true)
       await req.post(`/api/${this.name}`, this.toJSON(this.data))
+      return true
     } catch (err) {
       this.app?.setError(err)
     } finally {

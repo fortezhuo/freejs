@@ -2,6 +2,7 @@ import * as Input from "./Input"
 import * as ActionGroup from "./ActionGroup"
 export { Accordion, AccordionItem } from "./Accordion"
 export { ActionGroup }
+export { useEvent } from "./ActionGroup/hook"
 export { Avatar } from "./Avatar"
 export { Button } from "./Button"
 export { Drawer } from "./Drawer"
