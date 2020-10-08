@@ -8,7 +8,7 @@ export const useHook = () => {
   useEffect(() => {
     login.setData({ domain: ldap[0].domain })
     login.setTemp({
-      domain: ldap.map((l: any) => ({ id: l.domain, label: l.domain })),
+      domain: ldap.map((l: any) => ({ value: l.domain, label: l.domain })),
     })
   }, [])
 

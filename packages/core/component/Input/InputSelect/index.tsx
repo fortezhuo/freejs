@@ -9,6 +9,8 @@ import { tw } from "@free/tailwind"
 import { InputSelectProps } from "@free/core"
 import { theme } from "../../../config/theme"
 
+const toJSON = (proxy: any) => JSON.parse(JSON.stringify(proxy))
+
 export const InputSelect: FC<InputSelectProps> = observer(
   ({
     options: _options,
@@ -16,6 +18,9 @@ export const InputSelect: FC<InputSelectProps> = observer(
     onChange: _onChange,
     model = "data",
     placeholder = "Select ...",
+    singleValue = true,
+    keyValue = "value",
+    keyLabel = "label",
     store,
     name,
     multi,
@@ -30,7 +35,15 @@ export const InputSelect: FC<InputSelectProps> = observer(
       placeholder,
       name,
       multi,
+      keyValue,
+      keyLabel,
+      singleValue,
       search: "",
+      set(args: { [key: string]: any }) {
+        Object.keys(args).forEach((key: string) => {
+          ;(state as any)[key] = args[key]
+        })
+      },
       setSearch(search: string) {
         state.search = search
       },
@@ -43,31 +56,52 @@ export const InputSelect: FC<InputSelectProps> = observer(
       setOptions(options: any) {
         state.options = options
       },
+      async onSelect(option: any) {
+        const options = state.multi
+          ? state.value.concat([toJSON(option)])
+          : option
+        state.onChange(options)
+      },
       async onChange(options: any) {
-        if (model === "data") {
-          store.setData({
-            [name]: options
-              ? multi
-                ? options.map((opt: any) => opt.id)
-                : options.id
-              : undefined,
-            [`${name}_data`]: options ? options : undefined,
-          })
-        } else {
-          store.setTemp({
-            [name]: options
-              ? multi
-                ? options.map((opt: any) => opt.id)
-                : options.id
-              : undefined,
-            [`${name}_data`]: options ? options : undefined,
-          })
+        const singleValue = state.singleValue
+        const setValue = (args: any) =>
+          model === "data" ? store.setData(args) : store.setTemp(args)
+
+        if (!singleValue) {
+          setValue({ [`${state.name}_data`]: options ? options : undefined })
         }
+
+        setValue({
+          [state.name]: options
+            ? state.multi
+              ? options.map((opt: any) => (opt ? opt[state.keyValue] : "err"))
+              : options.value
+            : undefined,
+        })
 
         if (_onChange) await _onChange()
       },
       get value() {
-        return store[model].get(name)
+        const { singleValue, keyValue, keyLabel, multi } = state
+        let _value = store[model].get(singleValue ? name : `${name}_data`)
+        _value = multi ? _value || [] : _value
+
+        return !singleValue
+          ? _value
+          : multi
+          ? _value.map((v: string) => ({ [keyLabel]: v, [keyValue]: v }))
+          : { [keyLabel]: _value, [keyValue]: _value }
+      },
+      get display() {
+        const { singleValue, keyValue, keyLabel, multi } = state
+        let _value = store[model].get(singleValue ? name : `${name}_data`)
+        _value = multi ? _value || [] : _value
+
+        return !singleValue
+          ? multi
+            ? _value.map((v: any) => v[keyLabel])
+            : _value[keyLabel]
+          : _value
       },
       get disabled() {
         return _disabled || store.isUpdating
@@ -75,8 +109,8 @@ export const InputSelect: FC<InputSelectProps> = observer(
     }))
 
     useEffect(() => {
-      state._options = _options
-    }, [_options])
+      state.set({ _options, multi })
+    }, [_options, multi])
 
     return (
       <Menu

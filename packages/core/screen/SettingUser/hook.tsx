@@ -7,7 +7,7 @@ export const useHook = () => {
   useEffect(() => {
     user.temp.set(
       "roles",
-      Object.keys(acl).map((role: any) => ({ id: role, label: role }))
+      Object.keys(acl).map((role: any) => ({ value: role, label: role }))
     )
   }, [])
 

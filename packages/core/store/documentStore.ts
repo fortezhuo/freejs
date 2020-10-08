@@ -1,6 +1,7 @@
 import { BaseStore, action, makeObservable } from "./baseStore"
 import * as req from "../request"
 import { AppStore } from "./appStore"
+import { toJS } from "mobx"
 
 class DocumentStore extends BaseStore {
   isForm = true
@@ -15,6 +16,7 @@ class DocumentStore extends BaseStore {
       beforeLoad: action,
       onLoad: action,
       onEdit: action,
+      save: action,
     })
   }
 
@@ -40,6 +42,16 @@ class DocumentStore extends BaseStore {
     }
   }
   onEdit() {}
+  async save() {
+    try {
+      this.set("isLoading", true)
+      await req.post(`/api/${this.name}`, this.toJSON(this.data))
+    } catch (err) {
+      this.app?.setError(err)
+    } finally {
+      this.set("isLoading", false)
+    }
+  }
 }
 
 export { DocumentStore }

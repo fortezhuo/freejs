@@ -27,10 +27,9 @@ export const Search: FC<Search> = observer(({ refSearch, state, menu }) => {
     state.setIndex(state.index + index)
   }
 
-  const onEnter = () => {
+  const onEnter = async () => {
     const option = state.options[state.index]
-    const options = state.multi ? state.value().push(option) : option
-    state.onChange(options)
+    await state.onSelect(option)
   }
 
   const onKeyPress =
@@ -53,7 +52,7 @@ export const Search: FC<Search> = observer(({ refSearch, state, menu }) => {
     <TextInput
       ref={refSearch}
       value={state.search}
-      style={state.multi ? {} : styles.inputText}
+      style={styles.inputText}
       onChangeText={onChange}
       onKeyPress={onKeyPress}
     />

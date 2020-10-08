@@ -71,6 +71,7 @@ export const Layout: FC<LayoutProps> = observer(
           testID={testID}
         >
           {children}
+          <View style={styles.viewBuffer} />
         </View>
       </LayoutFull>
     )
@@ -86,4 +87,5 @@ const styles = StyleSheet.create({
   viewWrapper22: tw("flex-1 bg-gray-200"),
   viewHeader: tw("px-6 pb-3"),
   viewChildren: tw("p-6 pt-0"),
+  viewBuffer: { height: 150 },
 })

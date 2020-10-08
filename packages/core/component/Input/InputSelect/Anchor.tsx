@@ -11,6 +11,7 @@ export const Anchor: FC<Anchor> = observer(({ state, menu }) => {
       <View
         style={StyleSheet.flatten([
           styles.viewAnchor,
+          state.multi ? styles.viewMulti : {},
           state.disabled ? styles.viewDisabled : {},
         ])}
       >
@@ -25,6 +26,7 @@ const styles = StyleSheet.create({
     `${theme.input_border} ${theme.input_bg} p-3 w-full flex-row`,
     { minHeight: 43 }
   ),
+  viewMulti: tw("pt-1 pl-1 pb-1"),
   viewDisabled: tw(theme.input_disabled_bg),
 })
 

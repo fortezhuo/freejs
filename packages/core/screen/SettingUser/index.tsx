@@ -19,6 +19,9 @@ const SettingUser: FC = observer(() => {
               store={user}
               type="primary_1_bg"
               style={{ marginRight: 4 }}
+              onPress={async () => {
+                await user.save()
+              }}
             >
               Save
             </Button>
@@ -36,7 +39,7 @@ const SettingUser: FC = observer(() => {
             <Label>User Name</Label>
           </Col>
           <Col light md={10}>
-            <Input.Text store={user} name="username" />
+            <Input.Text store={user} name="username" placeholder="User Name" />
           </Col>
         </Row>
         <Row dark>
@@ -44,7 +47,7 @@ const SettingUser: FC = observer(() => {
             <Label>Full Name</Label>
           </Col>
           <Col light md={10}>
-            <Input.Text store={user} name="fullname" />
+            <Input.Text store={user} name="fullname" placeholder="Full Name" />
           </Col>
         </Row>
         <Row dark>
@@ -52,7 +55,7 @@ const SettingUser: FC = observer(() => {
             <Label>Email</Label>
           </Col>
           <Col light md={10}>
-            <Input.Text store={user} name="email" />
+            <Input.Text store={user} name="email" placeholder="Email" />
           </Col>
         </Row>
         <Row dark>
@@ -63,6 +66,7 @@ const SettingUser: FC = observer(() => {
             <Input.Select
               store={user}
               name="roles"
+              multi
               options={user.temp.get("roles") || []}
             />
           </Col>

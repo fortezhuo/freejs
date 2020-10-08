@@ -175,6 +175,9 @@ declare module "@free/core" {
     multi?: boolean
     onChange?: VoidFunction
     placeholder?: string
+    singleValue?: boolean
+    keyValue?: string
+    keyLabel?: string
     disabled?: boolean
   }
 

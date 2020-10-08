@@ -1,4 +1,4 @@
-import { observable, makeObservable, action, ObservableMap } from "mobx"
+import { observable, makeObservable, action, ObservableMap, toJS } from "mobx"
 import { AppStore } from "./appStore"
 
 class BaseStore {
@@ -21,6 +21,10 @@ class BaseStore {
       isLoading: observable,
       isUpdating: observable,
     })
+  }
+
+  toJSON(map: ObservableMap) {
+    return Object.fromEntries(toJS(map))
   }
 
   getData(...args: string[]) {

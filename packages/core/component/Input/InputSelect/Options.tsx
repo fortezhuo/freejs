@@ -9,11 +9,6 @@ export const Options: FC<Options> = observer(({ refScroll, menu, state }) => {
     state.setOptions(state._options)
   }, [])
 
-  const onSelect = (option: any) => {
-    const options = state.multi ? state.value().push(option) : option
-    state.onChange(options)
-  }
-
   return (
     <ScrollView ref={refScroll} keyboardShouldPersistTaps="handled">
       {state.options.map((opt: any, i: number) => (
@@ -21,7 +16,7 @@ export const Options: FC<Options> = observer(({ refScroll, menu, state }) => {
           key={"option_" + random()}
           active={i === state.index}
           onPress={() => {
-            onSelect(opt)
+            state.onSelect(opt)
             menu.hide()
           }}
         >
