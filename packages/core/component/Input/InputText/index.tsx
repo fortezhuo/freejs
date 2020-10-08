@@ -4,6 +4,7 @@ import { tw } from "@free/tailwind"
 import { observer } from "mobx-react-lite"
 import { InputTextProps } from "@free/core"
 import { theme } from "../../../config/theme"
+import { DisplayError } from "../DisplayError"
 
 const helperProps = (props: InputTextProps) => {
   const { store, model = "data", name, disabled, onChange, ...rest } = props
@@ -29,15 +30,18 @@ const helperProps = (props: InputTextProps) => {
 export const InputText: FC<InputTextProps> = observer((_props) => {
   const props = helperProps(_props)
   return (
-    <TextInput
-      placeholderTextColor={tw("text-gray-600").color}
-      style={StyleSheet.flatten([
-        styles.inputText,
-        props.disabled ? styles.inputDisabled : {},
-        props.isEmpty ? styles.inputError : {},
-      ])}
-      {...props}
-    />
+    <>
+      <TextInput
+        placeholderTextColor={tw("text-gray-600").color}
+        style={StyleSheet.flatten([
+          styles.inputText,
+          props.disabled ? styles.inputDisabled : {},
+          props.isEmpty ? styles.inputError : {},
+        ])}
+        {...props}
+      />
+      <DisplayError name={props.name} />
+    </>
   )
 })
 

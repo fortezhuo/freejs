@@ -1,4 +1,5 @@
 import * as RawSchema from "../../schema"
+import { normalize } from "../../schema/schema"
 import { Request, Reply, ValidationSchema } from "@free/server"
 import { Exception } from "../../util/exception"
 import { DatabaseService } from "."
@@ -14,15 +15,18 @@ export const save = function (this: DatabaseService) {
     try {
       const handler = this.onRequestHandler(req)
       if (!validate(handler.body))
-        throw new Exception(400, this.name.toUpperCase(), validate.errors)
+        throw new Exception(
+          400,
+          `Validation Error for ${this.name.toUpperCase()}`,
+          normalize(validate.errors)
+        )
       const collection = req.database[this.dbName].get(this.name)
-
       await this.onBeforeSave(collection, handler)
 
       const data =
         method === "PATCH"
-          ? update(this.auth, collection, handler)
-          : create(this.auth, collection, handler)
+          ? await update(this.auth, collection, handler)
+          : await create(this.auth, collection, handler)
 
       await this.onAfterSave(collection, handler)
 
@@ -37,22 +41,23 @@ export const save = function (this: DatabaseService) {
 }
 
 const create = async function (auth: any, collection: any, handler: any) {
-  const { body } = handler
-  return await collection.insert({
-    ...body,
+  const body = {
+    ...handler.body,
     _createdAt: new Date(),
     _createdBy: auth.username,
     _updatedAt: new Date(),
     _updatedBy: auth.username,
     _docReaders:
-      body._docReaders && (body._docReaders || []).length != 0
-        ? body._docReaders
+      handler.body._docReaders && (handler.body._docReaders || []).length != 0
+        ? handler.body._docReaders
         : ["*"],
     _docAuthors:
-      body._docAuthors && (body._docAuthors || []).length != 0
-        ? body._docAuthors
+      handler.body._docAuthors && (handler.body._docAuthors || []).length != 0
+        ? handler.body._docAuthors
         : ["*"],
-  })
+  }
+
+  return await collection.insert(body)
 }
 
 const update = async function (auth: any, collection: any, handler: any) {

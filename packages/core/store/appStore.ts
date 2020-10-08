@@ -85,7 +85,12 @@ class AppStore {
       this.fatalError = err
       this.goto("/error")
     } else {
-      this.error = err
+      const error = err.data ? err.data : err
+      if (error.message.indexOf("Validation Error") >= 0) {
+        this.error = error.errors
+      } else {
+        this.error = error
+      }
     }
   }
   toggleDrawer = () => {

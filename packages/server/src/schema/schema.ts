@@ -11,3 +11,17 @@ export const baseSchema = S.object()
   .prop("_updatedBy", S.string())
 
 export const ajv = new Ajv({ allErrors: true })
+
+export const normalize = (errors: any) => {
+  return errors.reduce((acc: any, e: any) => {
+    if (e.dataPath.length && e.dataPath[0] === ".") {
+      acc[e.dataPath.slice(1)] = e.message.toUpperCase()[0] + e.message.slice(1)
+    } else if (e.dataPath === "") {
+      acc[e.params.missingProperty] =
+        e.message.toUpperCase()[0] + e.message.slice(1).replace(/'/g, '"')
+    } else {
+      acc[e.dataPath] = e.message.toUpperCase()[0] + e.message.slice(1)
+    }
+    return acc
+  }, {})
+}

@@ -23,6 +23,7 @@ let theme: Config = {
   default_text: "text-gray-900",
   disabled_bg: "bg-gray-400",
   disabled_text: "text-gray-600",
+  danger_text: "text-pink-800",
 }
 
 theme = {

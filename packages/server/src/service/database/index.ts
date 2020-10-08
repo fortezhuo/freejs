@@ -19,7 +19,6 @@ export class DatabaseService extends BaseService {
 
   constructor(name: string, dbName?: string, dbTrashName?: string) {
     super(name)
-    this.disableAuth = true
     this.dbName = dbName ? dbName : "app"
     this.dbTrashName = dbTrashName ? dbTrashName : "trash"
     this.findAll = findAll.bind(this)
@@ -36,7 +35,6 @@ export class DatabaseService extends BaseService {
     const { params, query, body: rawBody } = req as {
       [key: string]: any
     }
-
     const { _id, ...body } = rawBody || { _id: null }
     let projection: { [key: string]: number } = {}
     let q = query.q ? query.q : params.q

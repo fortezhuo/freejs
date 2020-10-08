@@ -1,6 +1,8 @@
 import { Instance, Request, Reply } from "@free/server"
 import { Exception } from "../util/exception"
 
+const isDev = process.env.NODE_ENV !== "production"
+
 export class BaseService {
   protected name: string
   protected disableAuth: boolean
@@ -13,38 +15,52 @@ export class BaseService {
     this.disableAuth = false
   }
   protected onAuthenticate = (req: Request, resource: string) => {
-    let { session, method } = req as {
-      [key: string]: any
-    }
-    method = method.toUpperCase()
-    const action =
-      method === "GET"
-        ? "read"
-        : method === "POST"
-        ? "create"
-        : method === "PATCH"
-        ? "update"
-        : method === "DELETE"
-        ? "delete"
-        : "undefined"
-    const username = session?.auth?.username || "Anonymous"
-    const roles = session?.auth?.roles || []
-    const permission = session?.auth?.can(action, resource) || {
-      granted: false,
-    }
-
-    if (username === "Anonymous") throw new Exception(401, "Anonymous detected")
-    if (!permission.granted)
-      throw new Exception(
-        403,
-        `Insufficient ${roles} access to ${action} this ${resource}`
+    if (this.disableAuth && isDev) {
+      this.instance?.log.warn(
+        "Disable Authentication Enabled -- For Testing Only"
       )
-    this.auth = {
-      username,
-      roles,
-      resource,
-      fields: permission.attributes,
-      context: permission._.context,
+      this.auth = {
+        username: "fake_tester",
+        roles: ["Admin"],
+        resource,
+        fields: [],
+        context: {},
+      }
+    } else {
+      let { session, method } = req as {
+        [key: string]: any
+      }
+      method = method.toUpperCase()
+      const action =
+        method === "GET"
+          ? "read"
+          : method === "POST"
+          ? "create"
+          : method === "PATCH"
+          ? "update"
+          : method === "DELETE"
+          ? "delete"
+          : "undefined"
+      const username = session?.auth?.username || "Anonymous"
+      const roles = session?.auth?.roles || []
+      const permission = session?.auth?.can(action, resource) || {
+        granted: false,
+      }
+
+      if (username === "Anonymous")
+        throw new Exception(401, "Anonymous detected")
+      if (!permission.granted)
+        throw new Exception(
+          403,
+          `Insufficient ${roles} access to ${action} this ${resource}`
+        )
+      this.auth = {
+        username,
+        roles,
+        resource,
+        fields: permission.attributes,
+        context: permission._.context,
+      }
     }
   }
 
@@ -82,9 +98,7 @@ export class BaseService {
     this.instance = instance
     this.instance.addHook("preValidation", async (req, reply) => {
       try {
-        if (!this.disableAuth) {
-          this.onAuthenticate(req, this.name)
-        }
+        this.onAuthenticate(req, this.name)
       } catch (err) {
         this.onErrorHandler(req, reply, err)
       }
