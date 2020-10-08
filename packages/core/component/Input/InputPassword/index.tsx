@@ -72,7 +72,7 @@ export const InputPassword: FC<InputTextProps> = observer((_props) => {
 
 const styles: any = StyleSheet.create({
   viewPassword: tw(
-    `${theme.input_bg} ${theme.input_border} w-full pl-${
+    `${theme.default_bg} ${theme.input_border} w-full pl-${
       Platform.OS === "android" ? 2 : 3
     } pr-3 flex-row items-center`,
     {
@@ -81,8 +81,8 @@ const styles: any = StyleSheet.create({
       height: 43,
     }
   ),
-  inputPassword: tw(`${theme.input_text} flex-1`),
-  inputDisabled: tw(theme.input_disabled_bg),
+  inputPassword: tw(`${theme.default_text} flex-1`),
+  inputDisabled: tw(theme.disabled_bg),
   inputError: tw(theme.input_error_bg),
   eye: tw("mt-1"),
 })

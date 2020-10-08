@@ -194,5 +194,5 @@ const styles = StyleSheet.create({
   viewChildren: tw("absolute bg-transparent"),
   viewItem: tw(`flex-1 flex-row p-2`),
   viewItemActive: tw("bg-black-100"),
-  textItem: tw(`${theme.input_text} leading-5 mx-2`),
+  textItem: tw(`${theme.default_text} leading-5 mx-2`),
 })

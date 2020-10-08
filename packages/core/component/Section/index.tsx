@@ -6,7 +6,7 @@ import { tw, color } from "@free/tailwind"
 import { observer, useLocalObservable } from "mobx-react-lite"
 import { SectionProps } from "@free/core"
 
-const textColor = color(theme.input_text)
+const defaultColor = color(theme.default_text)
 export const Section: FC<SectionProps> = observer(
   ({ testID = "Section", label, show = true, children }) => {
     const state = useLocalObservable(() => ({
@@ -21,7 +21,7 @@ export const Section: FC<SectionProps> = observer(
         <TouchableOpacity onPress={state.toggle}>
           <View style={styles.groupSection}>
             <Icon
-              color={textColor}
+              color={defaultColor}
               size={20}
               name={`chevron-${state.isExpand ? "up" : "down"}`}
             />
@@ -41,5 +41,5 @@ const styles = StyleSheet.create({
   groupSection: tw(`flex-row z-10 p-3 items-center border-b border-gray-400`),
   groupLabel: tw("flex-grow flex-row items-center"),
   groupItem: tw(`bg-white flex-col`),
-  textSection: tw(`px-2 font-bold ${theme.input_text}`),
+  textSection: tw(`px-2 font-bold ${theme.default_text}`),
 })

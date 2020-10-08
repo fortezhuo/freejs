@@ -7,7 +7,7 @@ import { StateComponent } from "@free/core"
 import { theme } from "../../../config/theme"
 import { random } from "../../../util/random"
 
-const iconColor = color(theme.input_text)
+const defaultColor = color(theme.default_text)
 
 const Chip: FC<any> = observer(({ state, children }) => {
   const onClear = useCallback((val) => state.onClear(val), [])
@@ -18,7 +18,7 @@ const Chip: FC<any> = observer(({ state, children }) => {
       styleText={styles.textChip}
       style={styles.iconChip}
       size={16}
-      color={iconColor}
+      color={defaultColor}
       onPress={() => onClear(children)}
     >
       {children}
@@ -31,14 +31,15 @@ const Placeholder: FC<StateComponent> = observer(({ state }) => {
 })
 
 const Clear: FC<StateComponent> = observer(({ state }) => {
+  const { multi, value } = state
   const onClear = () => {
-    state.onChange(undefined)
+    state.onChange(multi ? [] : "")
   }
 
-  return state.value == null ? (
+  return (multi ? value.length == 0 : value === "") ? (
     <View />
   ) : (
-    <IconButton color={iconColor} name="x" size={16} onPress={onClear} />
+    <IconButton color={defaultColor} name="x" size={16} onPress={onClear} />
   )
 })
 
@@ -70,13 +71,13 @@ export const Display: FC<StateComponent> = observer(({ state }) => {
 const styles = StyleSheet.create({
   viewDisplay: tw("flex-1 flex-row items-center"),
   viewValue: tw("flex-1 flex-row flex-wrap"),
-  textSingle: tw(`flex-grow ml-2 ${theme.input_text}`),
-  textPlaceholder: tw(`${theme.input_disabled_text} ml-2`),
+  textSingle: tw(`flex-grow ml-2 ${theme.default_text}`),
+  textPlaceholder: tw(`${theme.disabled_text} ml-2`),
   viewChip: tw("rounded-lg flex-row flex-grow-0 h-8 items-center px-1", {
     margin: 1,
     marginHorizontal: 2,
     backgroundColor: "rgba(0,0,0,0.1)",
   }),
   iconChip: tw("mr-1", { marginTop: 1 }),
-  textChip: tw(`${theme.input_text}`),
+  textChip: tw(`${theme.default_text}`),
 })

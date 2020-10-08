@@ -3,15 +3,17 @@ import { ScrollView } from "react-native"
 import { MenuItem } from "../../Menu"
 import { random } from "../../../util/random"
 import { observer } from "mobx-react-lite"
+import _escapeRegexp from "lodash/escapeRegExp"
 
 export const Options: FC<Options> = observer(({ refScroll, menu, state }) => {
-  const { display, options, creatable, keyLabel, keyValue, search } = state
+  let { display, options, creatable, keyLabel, keyValue, search } = state
+  search = _escapeRegexp(search)
   useEffect(() => {
     const regex = new RegExp(search, "i")
-    const filterOptions = state._options.filter(
-      (opt: any) =>
-        regex.test(opt[keyLabel]) && display.indexOf(opt[keyLabel]) < 0
-    )
+    const filterOptions = state._options.filter((opt: any) => {
+      return regex.test(opt[keyLabel]) && display.indexOf(opt[keyLabel]) < 0
+    })
+
     const newOptions =
       filterOptions.length === 0 &&
       creatable &&

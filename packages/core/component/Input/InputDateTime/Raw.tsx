@@ -53,8 +53,10 @@ export const DateTimePicker: FC<any> = ({
 }
 
 const styles = StyleSheet.create({
-  viewDatePicker: tw(theme.input_bg),
-  viewAnchor: tw(`${theme.input_border} ${theme.input_bg} p-2 w-full flex-row`),
-  textAnchor: tw(theme.input_text),
-  inputDisabled: tw(theme.input_disabled_bg),
+  viewDatePicker: tw(theme.default_bg),
+  viewAnchor: tw(
+    `${theme.input_border} ${theme.default_bg} p-2 w-full flex-row`
+  ),
+  textAnchor: tw(theme.default_text),
+  inputDisabled: tw(theme.disabled_bg),
 })

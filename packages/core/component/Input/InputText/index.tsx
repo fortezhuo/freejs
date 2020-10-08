@@ -45,9 +45,9 @@ export const InputText: FC<InputTextProps> = observer((_props) => {
 
 const styles: any = StyleSheet.create({
   inputText: tw(
-    `${theme.input_bg} ${theme.input_border} ${theme.input_text} p-3 w-full`,
+    `${theme.default_bg} ${theme.input_border} ${theme.default_text} p-3 w-full`,
     { minHeight: 43, maxHeight: 43, height: 43 }
   ),
-  inputDisabled: tw(theme.input_disabled_bg),
+  inputDisabled: tw(theme.disabled_bg),
   inputError: tw(theme.input_error_bg),
 })

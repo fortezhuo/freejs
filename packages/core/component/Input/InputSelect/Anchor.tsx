@@ -23,11 +23,11 @@ export const Anchor: FC<Anchor> = observer(({ state, menu }) => {
 
 const styles = StyleSheet.create({
   viewAnchor: tw(
-    `${theme.input_border} ${theme.input_bg} p-3 w-full flex-row`,
+    `${theme.input_border} ${theme.default_bg} p-3 w-full flex-row`,
     { minHeight: 43 }
   ),
   viewMulti: tw("pt-1 pl-1 pb-1"),
-  viewDisabled: tw(theme.input_disabled_bg),
+  viewDisabled: tw(theme.disabled_bg),
 })
 
 type Anchor = {

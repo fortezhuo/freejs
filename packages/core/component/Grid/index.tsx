@@ -86,5 +86,5 @@ const styles = StyleSheet.create({
   viewRowDark: { backgroundColor: "rgba(0,0,0,0.05)" },
   viewColumn: tw("p-2 flex-col justify-center"),
   viewColumnLight: tw("bg-white"),
-  textLabel: tw(`${theme.input_text} p-1`),
+  textLabel: tw(`${theme.default_text} p-1`),
 })

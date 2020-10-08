@@ -20,7 +20,7 @@ const Wrapper: any = View
 export const TableContainer: FC<any> = observer(({ store, actDelete }) => {
   const defaultColumn = useDefaultColumn(store)
   const isMobile = store?.app.dimension.isMobile
-  const { columns, labels } = useColumns(store)
+  const { columns, keys } = useColumns(store)
   const data = store.data.get("collection")
 
   const { getTableProps, headerGroups, rows, prepareRow } = useTable({
@@ -55,7 +55,7 @@ export const TableContainer: FC<any> = observer(({ store, actDelete }) => {
                 actDelete={actDelete}
                 dark={index % 2}
                 data={item.values}
-                label={labels}
+                keys={keys}
               />
             ) : (
               <TableRow dark={index % 2} {...item.getRowProps()}>

@@ -8,7 +8,7 @@ import { useStore } from "../Store"
 import { AccordionProps, AccordionItemProps } from "@free/core"
 
 const activeColor = color(theme.accordion_icon_active_bg)
-const textColor = color(theme.accordion_text)
+const defaultColor = color(theme.default_text)
 const noop = () => {}
 
 export const Accordion: FC<AccordionProps> = observer(
@@ -41,7 +41,7 @@ export const Accordion: FC<AccordionProps> = observer(
           <View style={styles.viewWrapper}>
             <IconLabel
               name={icon}
-              color={state.isExpand ? activeColor : textColor}
+              color={state.isExpand ? activeColor : defaultColor}
               style={StyleSheet.flatten([
                 styles.icon,
                 state.isExpand ? styles.iconExpand : {},
@@ -49,14 +49,14 @@ export const Accordion: FC<AccordionProps> = observer(
               styleContainer={styles.viewIcon}
               styleText={StyleSheet.flatten([
                 styles.textIcon,
-                { color: state.isExpand ? activeColor : textColor },
+                { color: state.isExpand ? activeColor : defaultColor },
               ])}
             >
               {label}
             </IconLabel>
             <Icon
               size={20}
-              color={state.isExpand ? activeColor : textColor}
+              color={state.isExpand ? activeColor : defaultColor}
               name={`chevron-${state.isExpand ? "up" : "down"}`}
             />
           </View>
@@ -117,14 +117,14 @@ export const AccordionItem: FC<AccordionItemProps> = observer(
           <IconLabel
             name={icon}
             size={20}
-            color={active ? activeColor : textColor}
+            color={active ? activeColor : defaultColor}
             styleContainer={StyleSheet.flatten([
               styles.viewIconItem,
               active ? styles.itemActive : {},
             ])}
             styleText={StyleSheet.flatten([
               styles.textIconItem,
-              { color: active ? activeColor : textColor },
+              { color: active ? activeColor : defaultColor },
             ])}
           >
             {children}

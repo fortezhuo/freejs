@@ -111,19 +111,22 @@ export const useColumns = (store: any) => {
           }
     )
   }, [isMobile, name])
-  const labels = useMemo(() => {
-    const label: any = {}
+  const keys = useMemo(() => {
+    const key: any = {}
     if (isMobile) {
       ;(config as ObjectAny)[name].column
         .filter((col: any) => col.isMobileVisible)
         .forEach((col: any) => {
           if (col.name !== "_id") {
-            label[col.type ? `${col.name}_${col.type}` : col.name] = col.label
+            key[col.type ? `${col.name}_${col.type}` : col.name] = {
+              label: col.label,
+              type: col.type,
+            }
           }
         })
     }
-    return label
+    return key
   }, [isMobile, name])
 
-  return { columns, labels }
+  return { columns, keys }
 }

@@ -106,8 +106,8 @@ export const InputSelect: FC<InputSelectProps> = observer(
         return !singleValue
           ? multi
             ? _value.map((v: any) => v[keyLabel])
-            : _value[keyLabel]
-          : _value
+            : _value[keyLabel] || ""
+          : _value || ""
       },
       get disabled() {
         return _disabled || store.isUpdating
@@ -144,5 +144,7 @@ const styles = StyleSheet.create({
     marginTop: 1,
     height: 181,
   },
-  viewWrapper: tw(`${theme.input_bg} ${theme.input_border}`, { paddingTop: 3 }),
+  viewWrapper: tw(`${theme.default_bg} ${theme.input_border}`, {
+    paddingTop: 3,
+  }),
 })

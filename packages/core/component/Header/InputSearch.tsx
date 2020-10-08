@@ -43,6 +43,6 @@ export const InputSearch: FC = observer((_props) => {
 
 const styles: any = StyleSheet.create({
   inputSearch: tw(
-    `${theme.input_bg} ${theme.input_border} rounded-full ${theme.input_text} p-3 px-6 w-full`
+    `${theme.default_bg} ${theme.input_border} rounded-full ${theme.default_text} p-3 px-6 w-full`
   ),
 })

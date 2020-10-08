@@ -6,7 +6,7 @@ import { tw, color } from "@free/tailwind"
 import { observer } from "mobx-react-lite"
 import { InputCheckboxProps } from "@free/core"
 
-const defaultColor = color(theme.input_text)
+const defaultColor = color(theme.default_text)
 
 export const InputCheckbox: FC<InputCheckboxProps> = observer(
   ({

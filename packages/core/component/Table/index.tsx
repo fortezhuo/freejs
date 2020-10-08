@@ -12,11 +12,10 @@ import { RectButton } from "react-native-gesture-handler"
 import Swipeable from "react-native-gesture-handler/Swipeable"
 import dayjs from "dayjs"
 
+const defaultColor = color(theme.default_text)
 const date = (date: any) => dayjs(date).format("DD MMM YYYY")
 const datetime = (datetime: any) =>
   dayjs(datetime).format("DD MMM YYYY HH:mm:ss")
-
-const primary = color(theme.input_text)
 
 export const Table: FC<TableProps> = observer(
   ({ children, style, scroll, testID = "Table" }) => {
@@ -123,22 +122,7 @@ export const Row: FC<RowProps> = observer(
 )
 
 export const Cell: FC<CellProps> = observer(
-  ({
-    children: _children,
-    type = "string",
-    style,
-    filter,
-    testID = "Cell",
-  }) => {
-    const children =
-      typeof _children !== "string"
-        ? _children
-        : type == "date"
-        ? date(_children)
-        : type == "datetime"
-        ? datetime(_children)
-        : _children
-
+  ({ children, style, filter, testID = "Cell" }) => {
     return (
       <View
         testID={testID}
@@ -162,7 +146,7 @@ export const CellLink: FC<IconButtonProps> = observer(
           testID={testID}
           name={name}
           size={16}
-          color={primary}
+          color={defaultColor}
           onPress={onPress}
         />
       </Cell>
@@ -185,7 +169,7 @@ export const CellCheckbox: FC<any> = observer(
 )
 
 export const RowMobile: FC<RowProps> = observer(
-  ({ store, data, label, dark, style, testID = "RowMobile", actDelete }) => {
+  ({ store, data, keys, dark, style, testID = "RowMobile", actDelete }) => {
     const path = data._id_link ? `${store.name}/${data._id_link}` : null
     const ref = createRef<any>()
     const width = 88
@@ -242,9 +226,18 @@ export const RowMobile: FC<RowProps> = observer(
             ])}
           >
             {Object.keys(data).map((key) => {
+              if (key === "_id_link") return null
+              const label = keys[key].label
+              let value = data[key]
+              switch (keys[key].type) {
+                case "datetime":
+                  value = datetime(value)
+                case "date":
+                  value = date(value)
+              }
               return key === "_id_link" ? null : (
                 <Text style={styles.textCellSmall} key={random()}>
-                  {label[key] + " : " + data[key]}
+                  {label + " : " + value}
                 </Text>
               )
             })}
@@ -288,17 +281,9 @@ export const useDefaultColumn = (store: any) => {
             />
           )
         case "date":
-          return (
-            <Cell style={cell.column.style} type="date">
-              {cell.value}
-            </Cell>
-          )
+          return <Cell style={cell.column.style}>{date(cell.value)}</Cell>
         case "datetime":
-          return (
-            <Cell style={cell.column.style} type="datetime">
-              {cell.value}
-            </Cell>
-          )
+          return <Cell style={cell.column.style}>{datetime(cell.value)}</Cell>
         default:
           return <Cell style={cell.column.style}>{cell.value}</Cell>
       }
@@ -325,8 +310,8 @@ const styles = StyleSheet.create({
   rowMobile: tw("flex-col p-2"),
   cellFilter: { padding: 0 },
   cellDelete: tw("flex-1"),
-  textCell: tw(theme.input_text),
-  textCellSmall: tw(`${theme.input_text} text-sm`),
+  textCell: tw(theme.default_text),
+  textCellSmall: tw(`${theme.default_text} text-sm`),
   iconDelete: tw(
     `${theme.danger_bg} flex-row flex-1 justify-center items-center`
   ),
