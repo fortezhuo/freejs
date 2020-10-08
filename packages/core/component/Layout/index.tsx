@@ -71,7 +71,7 @@ export const Layout: FC<LayoutProps> = observer(
           testID={testID}
         >
           {children}
-          <View style={styles.viewBuffer} />
+          {store.isForm && <View style={styles.viewBuffer} />}
         </View>
       </LayoutFull>
     )

@@ -24,7 +24,6 @@ const Single: FC<any> = observer(({ store, actions }) => {
   )
 })
 const Multi: FC<any> = observer(({ store, actions }) => {
-  const isShow = actions.length != 0 && store.app.dimension.isMobile
   const padding = store.app.dimension.insets.bottom || 20
   const windowHeight = store.app.dimension.height - 5
   const SNAP_POINTS_FROM_TOP = [
@@ -80,7 +79,7 @@ const Multi: FC<any> = observer(({ store, actions }) => {
     }
   }
 
-  return isShow ? (
+  return (
     <TapGestureHandler
       maxDurationMs={100000}
       ref={tapGesture}
@@ -137,19 +136,22 @@ const Multi: FC<any> = observer(({ store, actions }) => {
         </Animated.View>
       </View>
     </TapGestureHandler>
-  ) : null
+  )
 })
 
 export const Small: FC<any> = observer(({ store, actions }) => {
   actions = actions.filter(
     (act: ObjectAny) => act.children !== "Delete" && act.children !== "Close"
   )
+  const isShow = actions.length != 0 && store.app.dimension.isMobile
 
-  return actions.length == 0 ? null : actions.length == 1 ? (
-    <Single store={store} actions={actions} />
-  ) : (
-    <Multi store={store} actions={actions} />
-  )
+  return isShow ? (
+    actions.length == 1 ? (
+      <Single store={store} actions={actions} />
+    ) : (
+      <Multi store={store} actions={actions} />
+    )
+  ) : null
 })
 
 const styles = StyleSheet.create({
