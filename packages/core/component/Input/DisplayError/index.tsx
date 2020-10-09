@@ -5,10 +5,16 @@ import { observer } from "mobx-react-lite"
 import { tw } from "@free/tailwind"
 import { theme } from "../../../config/theme"
 
-export const DisplayError: FC<any> = observer(({ name }) => {
+export const DisplayError: FC<any> = observer(({ name, style }) => {
   const { app } = useStore()
   const errorText = ((app?.error || {}) as any)[name]
-  return errorText && <Text style={styles.textError}>* {errorText}</Text>
+  return (
+    errorText && (
+      <Text style={StyleSheet.flatten([styles.textError, style])}>
+        * {errorText}
+      </Text>
+    )
+  )
 })
 
 const styles = StyleSheet.create({

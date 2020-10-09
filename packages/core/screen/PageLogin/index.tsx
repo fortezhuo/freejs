@@ -61,12 +61,16 @@ const PageLogin: FC = observer(() => {
                 placeholder="Domain"
                 options={store.temp.get("domain") || []}
               />
+              <Input.DisplayError
+                store={store}
+                name="message"
+                style={styles.textError}
+              />
               <LoginButton store={store} />
             </View>
           </Col>
         </View>
       </LayoutFull>
-      <Snackbar error />
     </>
   )
 })
@@ -83,6 +87,7 @@ const styles = StyleSheet.create({
   ),
   textLogin: tw("text-white"),
   textLoginDisabled: tw(theme.disabled_text),
+  textError: tw("self-end"),
 })
 
 export default PageLogin
