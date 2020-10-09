@@ -29,25 +29,27 @@ const helperProps = (props: InputTextProps) => {
 export const InputText: FC<InputTextProps> = observer((_props) => {
   const props = helperProps(_props)
   return (
-    <Base
-      isLoading={_props.store.isLoading}
-      style={StyleSheet.flatten([
-        styles.viewInput,
-        props.disabled ? styles.viewDisabled : {},
-      ])}
-    >
-      <TextInput
-        placeholderTextColor={tw("text-gray-600").color}
-        style={styles.inputText}
-        {...props}
-      />
+    <>
+      <Base
+        isLoading={_props.store.isLoading}
+        style={StyleSheet.flatten([
+          styles.viewInput,
+          props.disabled ? styles.viewDisabled : {},
+        ])}
+      >
+        <TextInput
+          placeholderTextColor={tw("text-gray-600").color}
+          style={styles.inputText}
+          {...props}
+        />
+      </Base>
       <DisplayError name={props.name} />
-    </Base>
+    </>
   )
 })
 
 const styles: any = StyleSheet.create({
-  viewInput: tw(`${theme.default_bg} ${theme.input_border} w-full h-12`),
-  inputText: tw(`${theme.default_text} flex-1 mx-4`),
+  viewInput: tw(`${theme.default_bg} ${theme.input_border} w-full h-10`),
+  inputText: tw(`${theme.default_text} flex-1 mx-3`),
   viewDisabled: tw(theme.disabled_bg),
 })

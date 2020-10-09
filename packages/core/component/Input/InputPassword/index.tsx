@@ -1,6 +1,7 @@
 import React, { FC } from "react"
 import { TextInput, StyleSheet } from "react-native"
 import { Base } from "../../Base"
+import { DisplayError } from "../DisplayError"
 import { tw } from "@free/tailwind"
 import { observer, useLocalObservable } from "mobx-react-lite"
 import { IconButton } from "../../Icon"
@@ -51,29 +52,32 @@ export const InputPassword: FC<InputTextProps> = observer((_props) => {
     },
   }))
   return (
-    <Base
-      isLoading={_props.store.isLoading}
-      style={StyleSheet.flatten([
-        styles.viewInput,
-        props.disabled ? styles.viewDisabled : {},
-      ])}
-    >
-      <TextInput
-        secureTextEntry={state.secure}
-        placeholderTextColor={tw("text-gray-600").color}
-        style={styles.inputPassword}
-        {...props}
-      />
-      <Eye state={state} />
-    </Base>
+    <>
+      <Base
+        isLoading={_props.store.isLoading}
+        style={StyleSheet.flatten([
+          styles.viewInput,
+          props.disabled ? styles.viewDisabled : {},
+        ])}
+      >
+        <TextInput
+          secureTextEntry={state.secure}
+          placeholderTextColor={tw("text-gray-600").color}
+          style={styles.inputPassword}
+          {...props}
+        />
+        <Eye state={state} />
+      </Base>
+      <DisplayError name={props.name} />
+    </>
   )
 })
 
 const styles: any = StyleSheet.create({
   viewInput: tw(
-    `${theme.default_bg} ${theme.input_border} w-full h-12 flex-row items-center`
+    `${theme.default_bg} ${theme.input_border} w-full h-10 flex-row items-center`
   ),
   viewDisabled: tw(theme.disabled_bg),
-  inputPassword: tw(`${theme.default_text} flex-1 mx-4`),
+  inputPassword: tw(`${theme.default_text} flex-1 mx-3`),
   eye: tw("mt-1 mr-3"),
 })

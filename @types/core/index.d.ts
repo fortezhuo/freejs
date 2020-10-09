@@ -194,7 +194,7 @@ declare module "@free/core" {
 
   // Loader
   type LoaderProps = {
-    primary?: boolean
+    themeColor?: string
   }
 
   // Menu

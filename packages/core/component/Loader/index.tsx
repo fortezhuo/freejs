@@ -1,15 +1,14 @@
 import React, { FC } from "react"
 import { ActivityIndicator, View, StyleSheet } from "react-native"
 import { tw, color } from "@free/tailwind"
-import { theme } from "../../config/theme"
 import { LoaderProps } from "@free/core"
 
-export const Loader: FC<LoaderProps> = ({ primary }) => {
+export const Loader: FC<LoaderProps> = ({ themeColor }) => {
   return (
     <View style={styles.viewLoader}>
       <ActivityIndicator
         size="large"
-        color={primary ? color(theme.primary) : "white"}
+        color={themeColor ? color(themeColor) : "white"}
       />
     </View>
   )

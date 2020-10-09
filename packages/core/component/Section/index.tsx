@@ -1,12 +1,12 @@
 import React, { FC } from "react"
-import { View, TouchableOpacity, StyleSheet, Text } from "react-native"
+import { View, TouchableOpacity, StyleSheet } from "react-native"
 import { theme } from "../../config/theme"
-import { Icon } from "../Icon"
+import { Icon, H5 } from ".."
 import { tw, color } from "@free/tailwind"
 import { observer, useLocalObservable } from "mobx-react-lite"
 import { SectionProps } from "@free/core"
 
-const defaultColor = color(theme.default_text)
+const defaultColor = color(theme.disabled_text)
 export const Section: FC<SectionProps> = observer(
   ({ testID = "Section", label, show = true, children }) => {
     const state = useLocalObservable(() => ({
@@ -25,7 +25,7 @@ export const Section: FC<SectionProps> = observer(
               size={20}
               name={`chevron-${state.isExpand ? "up" : "down"}`}
             />
-            <Text style={styles.textSection}>{label}</Text>
+            <H5 style={styles.textSection}>{label}</H5>
           </View>
         </TouchableOpacity>
         {state.isExpand && <View style={styles.groupItem}>{children}</View>}
@@ -41,5 +41,5 @@ const styles = StyleSheet.create({
   groupSection: tw(`flex-row z-10 p-3 items-center border-b border-gray-400`),
   groupLabel: tw("flex-grow flex-row items-center"),
   groupItem: tw(`bg-white flex-col`),
-  textSection: tw(`px-2 font-bold ${theme.default_text}`),
+  textSection: tw(`px-2 ${theme.disabled_text}`),
 })

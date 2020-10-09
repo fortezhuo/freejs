@@ -25,7 +25,6 @@ const SettingUser: FC = observer(() => {
             <View style={styles.viewButton}>
               <ActionGroup.Large store={user} actions={actions} />
             </View>
-            <H3 style={styles.textStatus}>Draft</H3>
           </View>
         }
       >

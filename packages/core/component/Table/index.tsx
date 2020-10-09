@@ -69,31 +69,35 @@ export const Pagination: FC<any> = observer(({ store }) => {
   } of ${total} entries`
 
   return (
-    total && (
-      <View style={styles.viewPage}>
-        <Text>{desc}</Text>
-        <View style={styles.viewPageNumbers}>
-          <Text onPress={() => {}} style={styles.textPage}>
-            First
-          </Text>
-          {pageBetween(page, max).map((_, i) => (
-            <Text
-              key={"page_" + random()}
-              onPress={() => {}}
-              style={StyleSheet.flatten([
-                styles.textPage,
-                i == 0 ? styles.textPageActive : {},
-              ])}
-            >
-              {i + 1}
+    <View style={styles.viewPage}>
+      {total ? (
+        <>
+          <Text>{desc}</Text>
+          <View style={styles.viewPageNumbers}>
+            <Text onPress={() => {}} style={styles.textPage}>
+              First
             </Text>
-          ))}
-          <Text onPress={() => {}} style={styles.textPage}>
-            Last
-          </Text>
-        </View>
-      </View>
-    )
+            {pageBetween(page, max).map((_, i) => (
+              <Text
+                key={"page_" + random()}
+                onPress={() => {}}
+                style={StyleSheet.flatten([
+                  styles.textPage,
+                  i == 0 ? styles.textPageActive : {},
+                ])}
+              >
+                {i + 1}
+              </Text>
+            ))}
+            <Text onPress={() => {}} style={styles.textPage}>
+              Last
+            </Text>
+          </View>
+        </>
+      ) : (
+        <Text>No Data Found</Text>
+      )}
+    </View>
   )
 })
 
@@ -294,7 +298,7 @@ export const useDefaultColumn = (store: any) => {
 const styles = StyleSheet.create({
   viewTable: tw(`shadow-xl`),
   viewTableChildren: tw("flex-col flex-1"),
-  viewPage: tw("flex-row justify-between items-center p-1 shadow-sm"),
+  viewPage: tw("flex-row justify-between items-center p-1 shadow-sm h-10"),
   viewPageNumbers: tw(
     "flex-row rounded-sm border-l border-t border-b border-gray-300"
   ),

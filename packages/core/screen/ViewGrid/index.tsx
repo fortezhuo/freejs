@@ -4,13 +4,12 @@ import { tw } from "@free/tailwind"
 import { TableContainer } from "./TableContainer"
 import { useHook, useActions } from "./hook"
 import { observer } from "mobx-react-lite"
-import { Base, Layout, H3, ActionGroup } from "../../component"
+import { Layout, H3, ActionGroup } from "../../component"
 import { theme } from "../../config/theme"
 
 const ViewGrid: FC = observer(() => {
   const { store } = useHook()
   const { actions, actDelete } = useActions(store)
-  const isLoading = store.isLoading || store.data.get("name") !== store.name
 
   return (
     <>
@@ -20,15 +19,14 @@ const ViewGrid: FC = observer(() => {
             <H3 style={styles.textTitle}>{store?.app?.subTitle}</H3>
             <ActionGroup.Large store={store} actions={actions} />
           </View>
-          <Base
-            isLoading={isLoading}
+          <View
             style={StyleSheet.flatten([
               styles.viewTable,
               { height: store.app?.dimension.height - 144 },
             ])}
           >
             <TableContainer store={store} actDelete={actDelete} />
-          </Base>
+          </View>
         </View>
       </Layout>
       <ActionGroup.Small store={store} actions={actions} />

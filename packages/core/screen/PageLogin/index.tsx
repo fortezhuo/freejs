@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
   boxInput: tw("mt-4 justify-between flex-1"),
   iconLogo: tw("self-center w-20 h-20", { marginTop: -10 }),
   buttonLogin: tw(
-    "w-full mt-3 h-12 items-center justify-center rounded-full shadow-md"
+    "w-full mt-3 h-10 items-center justify-center rounded-full shadow-md"
   ),
   textLogin: tw("text-white"),
   textLoginDisabled: tw(theme.disabled_text),

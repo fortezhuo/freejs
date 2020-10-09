@@ -4,5 +4,5 @@ export const user = createSchema({
   username: Joi.string().required(),
   fullname: Joi.string().required(),
   email: Joi.string().email().required(),
-  roles: Joi.array(),
+  roles: Joi.array().required(),
 })
