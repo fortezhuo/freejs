@@ -76,7 +76,10 @@ const Skeleton: FC<any> = ({ style }): JSX.Element => {
 export const Base: FC<any> = ({ isLoading, style, children }) => {
   return (
     <View
-      style={StyleSheet.flatten([style, isLoading ? styles.viewClear : {}])}
+      style={StyleSheet.flatten([
+        style,
+        isLoading ? [styles.viewClear, styles.viewBase] : {},
+      ])}
     >
       {isLoading ? <Skeleton style={style} /> : children}
     </View>
@@ -84,8 +87,17 @@ export const Base: FC<any> = ({ isLoading, style, children }) => {
 }
 
 const styles = StyleSheet.create({
+  viewBase: {
+    minWidth: undefined,
+    width: undefined,
+    backgroundColor: undefined,
+  },
   viewClear: {
     borderWidth: 0,
+    paddingLeft: 0,
+    paddingTop: 0,
+    paddingBottom: 0,
+    paddingRight: 0,
     flexDirection: undefined,
     alignItems: undefined,
   },

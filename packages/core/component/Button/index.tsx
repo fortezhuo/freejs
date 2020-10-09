@@ -41,6 +41,7 @@ export const Button: FC<ButtonProps> = observer((props) => {
 
   return (
     <IconButton
+      store={store}
       testID={testID}
       disabled={disabled}
       styleContainer={StyleSheet.flatten([styles.viewButton, bgColor, style])}
@@ -57,13 +58,10 @@ export const Button: FC<ButtonProps> = observer((props) => {
 })
 
 const styles: any = StyleSheet.create({
-  viewButton: tw(
-    "p-2 flex-row justify-center items-center rounded-full shadow-sm",
-    {
-      minWidth: 36,
-      height: 36,
-    }
-  ),
+  viewButton: tw("p-2 flex-row justify-center items-center rounded-full", {
+    minWidth: 36,
+    height: 36,
+  }),
   iconButton: tw("ml-2"),
   textButton: tw("mx-2 leading-5"),
 })

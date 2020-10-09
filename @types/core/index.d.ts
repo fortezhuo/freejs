@@ -117,6 +117,7 @@ declare module "@free/core" {
   }
 
   interface IconLabelProps extends IconProps {
+    store?: any
     name?: string | undefined
     style?: any
     styleContainer?: any

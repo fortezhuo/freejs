@@ -1,5 +1,5 @@
 import React, { FC } from "react"
-import { Button } from "../Button"
+import { Button } from ".."
 import { random } from "../../util/random"
 import { observer } from "mobx-react-lite"
 import { View, StyleSheet } from "react-native"
@@ -14,7 +14,7 @@ export const Large: FC<any> = observer(({ store, actions }) => {
           key={"actlarge_" + random()}
           store={store}
           {...prop}
-          style={{ marginRight: 4 }}
+          style={{ marginRight: 4, minWidth: 100 }}
         />
       ))}
     </View>

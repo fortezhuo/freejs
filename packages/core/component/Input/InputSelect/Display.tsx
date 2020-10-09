@@ -42,7 +42,12 @@ export const Display: FC<StateComponent> = observer(({ state }) => {
   const { multi, display } = state
 
   return (
-    <View style={styles.viewDisplay}>
+    <View
+      style={StyleSheet.flatten([
+        styles.viewDisplay,
+        multi ? styles.viewMulti : {},
+      ])}
+    >
       <View style={styles.viewValue} testID="ViewValue">
         {display ? (
           multi ? (
@@ -65,7 +70,7 @@ export const Display: FC<StateComponent> = observer(({ state }) => {
 
 const styles = StyleSheet.create({
   viewDisplay: tw("flex-1 flex-row items-center mx-4"),
-  viewMulti: tw("pt-1 pl-1 pb-1"),
+  viewMulti: tw("mt-1 ml-1 mb-1"),
   viewValue: tw("flex-1 flex-row flex-wrap"),
   textSingle: tw(`flex-grow ${theme.default_text}`),
   textPlaceholder: tw(`${theme.disabled_text}`),

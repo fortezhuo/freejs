@@ -1,6 +1,7 @@
 import React, { FC } from "react"
 import FeatherIcon from "react-native-vector-icons/Feather"
 import { TouchableOpacity, View, Text, StyleSheet } from "react-native"
+import { Base } from "../Base"
 import { theme } from "../../config/theme"
 import { color } from "@free/tailwind"
 import { observer } from "mobx-react-lite"
@@ -23,6 +24,7 @@ export const Icon: FC<IconProps> = observer(
 export const IconLabel: FC<IconLabelProps> = observer(
   ({
     testID = "IconLabel",
+    store,
     name,
     size,
     color,
@@ -32,12 +34,16 @@ export const IconLabel: FC<IconLabelProps> = observer(
     children,
   }) => {
     return (
-      <View style={styleContainer} testID={testID}>
+      <Base
+        isLoading={store ? store.isLoading : false}
+        style={styleContainer}
+        testID={testID}
+      >
         <View style={style}>
           {name && <Icon size={size} color={color} name={name} />}
         </View>
         {children && <Text style={styleText}>{children}</Text>}
-      </View>
+      </Base>
     )
   }
 )
@@ -45,6 +51,7 @@ export const IconLabel: FC<IconLabelProps> = observer(
 export const IconButton: FC<IconButtonProps> = observer(
   ({
     testID = "IconButton",
+    store,
     name,
     color,
     size,
@@ -58,6 +65,7 @@ export const IconButton: FC<IconButtonProps> = observer(
     return (
       <TouchableOpacity testID={testID} disabled={disabled} onPress={onPress}>
         <IconLabel
+          store={store}
           style={style}
           styleContainer={StyleSheet.flatten([
             styleContainer,
