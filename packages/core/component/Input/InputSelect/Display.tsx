@@ -64,10 +64,11 @@ export const Display: FC<StateComponent> = observer(({ state }) => {
 })
 
 const styles = StyleSheet.create({
-  viewDisplay: tw("flex-1 flex-row items-center"),
+  viewDisplay: tw("flex-1 flex-row items-center mx-4"),
+  viewMulti: tw("pt-1 pl-1 pb-1"),
   viewValue: tw("flex-1 flex-row flex-wrap"),
-  textSingle: tw(`flex-grow ml-2 ${theme.default_text}`),
-  textPlaceholder: tw(`${theme.disabled_text} ml-2`),
+  textSingle: tw(`flex-grow ${theme.default_text}`),
+  textPlaceholder: tw(`${theme.disabled_text}`),
   viewChip: tw("rounded-lg flex-row flex-grow-0 h-8 items-center px-1", {
     margin: 1,
     marginHorizontal: 2,

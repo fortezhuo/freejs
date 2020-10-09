@@ -112,6 +112,9 @@ export const InputSelect: FC<InputSelectProps> = observer(
       get disabled() {
         return _disabled || store.isUpdating
       },
+      get isLoading() {
+        return store.isLoading
+      },
     }))
 
     useEffect(() => {

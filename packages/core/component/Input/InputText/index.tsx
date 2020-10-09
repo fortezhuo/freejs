@@ -1,5 +1,6 @@
 import React, { FC } from "react"
 import { TextInput, StyleSheet } from "react-native"
+import { Base } from "../../Base"
 import { tw } from "@free/tailwind"
 import { observer } from "mobx-react-lite"
 import { InputTextProps } from "@free/core"
@@ -8,7 +9,6 @@ import { DisplayError } from "../DisplayError"
 
 const helperProps = (props: InputTextProps) => {
   const { store, model = "data", name, disabled, onChange, ...rest } = props
-  const isEmpty = (store.temp.get("validateEmpty") || []).indexOf(name) >= 0
 
   return {
     name,
@@ -22,7 +22,6 @@ const helperProps = (props: InputTextProps) => {
       }
     },
     disabled: disabled || store.isUpdating,
-    isEmpty,
     ...rest,
   }
 }
@@ -30,26 +29,25 @@ const helperProps = (props: InputTextProps) => {
 export const InputText: FC<InputTextProps> = observer((_props) => {
   const props = helperProps(_props)
   return (
-    <>
+    <Base
+      isLoading={_props.store.isLoading}
+      style={StyleSheet.flatten([
+        styles.viewInput,
+        props.disabled ? styles.viewDisabled : {},
+      ])}
+    >
       <TextInput
         placeholderTextColor={tw("text-gray-600").color}
-        style={StyleSheet.flatten([
-          styles.inputText,
-          props.disabled ? styles.inputDisabled : {},
-          props.isEmpty ? styles.inputError : {},
-        ])}
+        style={styles.inputText}
         {...props}
       />
       <DisplayError name={props.name} />
-    </>
+    </Base>
   )
 })
 
 const styles: any = StyleSheet.create({
-  inputText: tw(
-    `${theme.default_bg} ${theme.input_border} ${theme.default_text} p-3 w-full`,
-    { minHeight: 43, maxHeight: 43, height: 43 }
-  ),
-  inputDisabled: tw(theme.disabled_bg),
-  inputError: tw(theme.input_error_bg),
+  viewInput: tw(`${theme.default_bg} ${theme.input_border} w-full h-12`),
+  inputText: tw(`${theme.default_text} flex-1 mx-4`),
+  viewDisabled: tw(theme.disabled_bg),
 })

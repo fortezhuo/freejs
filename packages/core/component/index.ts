@@ -4,6 +4,7 @@ export { Accordion, AccordionItem } from "./Accordion"
 export { ActionGroup }
 export { useEvent } from "./ActionGroup/hook"
 export { Avatar } from "./Avatar"
+export { Base } from "./Base"
 export { Button } from "./Button"
 export { Drawer } from "./Drawer"
 export { Col, Row, Label } from "./Grid"

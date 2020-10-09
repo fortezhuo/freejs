@@ -1,5 +1,6 @@
 import React, { FC } from "react"
-import { TextInput, StyleSheet, View, Platform } from "react-native"
+import { TextInput, StyleSheet } from "react-native"
+import { Base } from "../../Base"
 import { tw } from "@free/tailwind"
 import { observer, useLocalObservable } from "mobx-react-lite"
 import { IconButton } from "../../Icon"
@@ -10,7 +11,6 @@ const { color } = tw("text-gray-700")
 
 const helperProps = (props: InputTextProps) => {
   const { store, model = "data", name, disabled, onChange, ...rest } = props
-  const isEmpty = (store.temp.get("validateEmpty") || []).indexOf(name) >= 0
 
   return {
     name,
@@ -26,7 +26,6 @@ const helperProps = (props: InputTextProps) => {
       }
     },
     disabled: disabled || store.isUpdating,
-    isEmpty,
     ...rest,
   }
 }
@@ -52,11 +51,11 @@ export const InputPassword: FC<InputTextProps> = observer((_props) => {
     },
   }))
   return (
-    <View
+    <Base
+      isLoading={_props.store.isLoading}
       style={StyleSheet.flatten([
-        styles.viewPassword,
-        props.disabled ? styles.inputDisabled : {},
-        props.isEmpty ? styles.inputError : {},
+        styles.viewInput,
+        props.disabled ? styles.viewDisabled : {},
       ])}
     >
       <TextInput
@@ -66,23 +65,15 @@ export const InputPassword: FC<InputTextProps> = observer((_props) => {
         {...props}
       />
       <Eye state={state} />
-    </View>
+    </Base>
   )
 })
 
 const styles: any = StyleSheet.create({
-  viewPassword: tw(
-    `${theme.default_bg} ${theme.input_border} w-full pl-${
-      Platform.OS === "android" ? 2 : 3
-    } pr-3 flex-row items-center`,
-    {
-      minHeight: 43,
-      maxHeight: 43,
-      height: 43,
-    }
+  viewInput: tw(
+    `${theme.default_bg} ${theme.input_border} w-full h-12 flex-row items-center`
   ),
-  inputPassword: tw(`${theme.default_text} flex-1`),
-  inputDisabled: tw(theme.disabled_bg),
-  inputError: tw(theme.input_error_bg),
-  eye: tw("mt-1"),
+  viewDisabled: tw(theme.disabled_bg),
+  inputPassword: tw(`${theme.default_text} flex-1 mx-4`),
+  eye: tw("mt-1 mr-3"),
 })

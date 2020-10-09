@@ -7934,6 +7934,11 @@ react-native-safe-area-context@^3.1.8:
   resolved "https://registry.yarnpkg.com/react-native-safe-area-context/-/react-native-safe-area-context-3.1.8.tgz#7a9883aa0f38f9c77d4bef2b89e4e285bc1024a3"
   integrity sha512-9gUlsDZ96QwT9AKzA6aVWM/NX5rlJgauZ9HgCDVzKbe29UQYT1740QJnnaI2GExmkFGp6o7ZLNhCXZW95eYVFA==
 
+react-native-skeleton-placeholder@^2.0.8:
+  version "2.0.8"
+  resolved "https://registry.yarnpkg.com/react-native-skeleton-placeholder/-/react-native-skeleton-placeholder-2.0.8.tgz#ab7996238324dc5cc99e5b7bfc992ca2193deb5d"
+  integrity sha512-Qq9/uP33XFye63sqkQgMntKSt0ZHw8QgsyLP+e0cODTDq8UVUNRaQEC5hDpUCynpAerFIMpLe8d9oBsrx3Rtfw==
+
 react-native-vector-icons@7.1.0:
   version "7.1.0"
   resolved "https://registry.yarnpkg.com/react-native-vector-icons/-/react-native-vector-icons-7.1.0.tgz#145487d617b2a81d395d2cf64e6e065fcab3a454"

@@ -36,7 +36,7 @@ export const LayoutFull: FC<LayoutProps> = observer(
         {stickyHeader && <View style={styles.viewHeader}>{stickyHeader}</View>}
         <Wrapper scroll={scroll}>
           <View testID={testID} style={styles.viewLayout}>
-            {store.isLoading || isLoading ? <Loader /> : children}
+            {children}
           </View>
         </Wrapper>
       </View>
@@ -44,23 +44,12 @@ export const LayoutFull: FC<LayoutProps> = observer(
   }
 )
 
+// {store.isLoading || isLoading ? <Loader /> : children}
+
 export const Layout: FC<LayoutProps> = observer(
-  ({
-    testID = "Layout",
-    children,
-    store,
-    isLoading = false,
-    stickyHeader,
-    scroll,
-    style,
-  }) => {
+  ({ testID = "Layout", children, store, stickyHeader, scroll, style }) => {
     return (
-      <LayoutFull
-        stickyHeader={stickyHeader}
-        store={store}
-        scroll={scroll}
-        isLoading={isLoading}
-      >
+      <LayoutFull stickyHeader={stickyHeader} store={store} scroll={scroll}>
         <View style={styles.viewWrapper1}></View>
         <View style={styles.viewWrapper2}>
           <View style={styles.viewWrapper21}></View>

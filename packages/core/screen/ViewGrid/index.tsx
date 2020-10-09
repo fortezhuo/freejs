@@ -14,11 +14,7 @@ const ViewGrid: FC = observer(() => {
 
   return (
     <>
-      <Layout
-        store={store}
-        isLoading={isLoading}
-        scroll={Platform.OS === "web"}
-      >
+      <Layout store={store} scroll={Platform.OS === "web"}>
         <View style={styles.viewGrid}>
           <View style={styles.viewTitle}>
             <H3 style={styles.textTitle}>{store?.app?.subTitle}</H3>

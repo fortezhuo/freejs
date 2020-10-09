@@ -66,10 +66,10 @@ const styles = StyleSheet.create({
   boxLogin: tw("bg-white p-8 shadow-xl rounded-lg", {
     height: 400,
   }),
-  boxInput: tw("mt-6 justify-between flex-1"),
-  iconLogo: tw("self-center w-20 h-20"),
+  boxInput: tw("mt-4 justify-between flex-1"),
+  iconLogo: tw("self-center w-20 h-20", { marginTop: -10 }),
   buttonLogin: tw(
-    "w-full mt-4 p-3 items-center justify-center rounded-full shadow-md"
+    "w-full mt-3 h-12 items-center justify-center rounded-full shadow-md"
   ),
   textLogin: tw("text-white"),
   textLoginDisabled: tw(theme.disabled_text),

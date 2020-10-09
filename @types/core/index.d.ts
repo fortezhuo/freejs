@@ -237,10 +237,8 @@ declare module "@free/core" {
     isOpen: boolean
   }
 
-  // StateComponent
   interface StateComponent {
-    testID?: string
-    state?: any
+    state: any
   }
 
   interface TableProps extends ViewProps {
