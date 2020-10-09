@@ -110,7 +110,11 @@ const ldapAuth = async (username: string, password: string, domain: string) => {
     }
   } catch (err) {
     const code = err.message.indexOf("ECONNREFUSED") >= 0 ? 500 : 401
-    throw new Exception(code, err.message)
+    const message =
+      err.message.indexOf("Search error") >= 0
+        ? "No Username Found"
+        : err.message
+    throw new Exception(code, message)
   } finally {
     ldap.destroy()
   }

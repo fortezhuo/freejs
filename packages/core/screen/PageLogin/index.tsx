@@ -1,5 +1,12 @@
 import React, { FC } from "react"
-import { Input, LayoutFull, Col, Gradient, Avatar } from "../../component"
+import {
+  Input,
+  LayoutFull,
+  Col,
+  Gradient,
+  Avatar,
+  Snackbar,
+} from "../../component"
 import { View, StyleSheet, Text, TouchableOpacity } from "react-native"
 import { theme } from "../../config/theme"
 import { tw } from "@free/tailwind"
@@ -27,37 +34,40 @@ const LoginButton: FC<any> = observer(({ store }) => {
 const PageLogin: FC = observer(() => {
   const store = useHook()
   return (
-    <LayoutFull store={store}>
-      <View style={styles.pageLogin}>
-        <Col sm={11} md={10} lg={4} xl={4} style={styles.boxLogin}>
-          <Avatar source={logo} style={styles.iconLogo} />
-          <View style={styles.boxInput}>
-            <Input.Text
-              data-name="username"
-              store={store}
-              name="username"
-              placeholder="Username"
-              autoCapitalize="none"
-            />
-            <Input.Password
-              store={store}
-              data-name="password"
-              name="password"
-              placeholder="Password"
-              autoCapitalize="none"
-            />
-            <Input.Select
-              store={store}
-              data-name="domain"
-              name="domain"
-              placeholder="Domain"
-              options={store.temp.get("domain") || []}
-            />
-            <LoginButton store={store} />
-          </View>
-        </Col>
-      </View>
-    </LayoutFull>
+    <>
+      <LayoutFull store={store}>
+        <View style={styles.pageLogin}>
+          <Col sm={11} md={10} lg={4} xl={4} style={styles.boxLogin}>
+            <Avatar source={logo} style={styles.iconLogo} />
+            <View style={styles.boxInput}>
+              <Input.Text
+                data-name="username"
+                store={store}
+                name="username"
+                placeholder="Username"
+                autoCapitalize="none"
+              />
+              <Input.Password
+                store={store}
+                data-name="password"
+                name="password"
+                placeholder="Password"
+                autoCapitalize="none"
+              />
+              <Input.Select
+                store={store}
+                data-name="domain"
+                name="domain"
+                placeholder="Domain"
+                options={store.temp.get("domain") || []}
+              />
+              <LoginButton store={store} />
+            </View>
+          </Col>
+        </View>
+      </LayoutFull>
+      <Snackbar error />
+    </>
   )
 })
 

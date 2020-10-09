@@ -13,8 +13,10 @@ export { Header } from "./Header"
 export { IconLabel, Icon, IconButton } from "./Icon"
 export { Layout, LayoutFull } from "./Layout"
 export { Loader } from "./Loader"
+export { Modal } from "./Modal"
 export { Section } from "./Section"
 export { Sidebar } from "./Sidebar"
+export { Snackbar } from "./Snackbar"
 export {
   Table,
   Row as TableRow,
