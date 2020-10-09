@@ -95,11 +95,13 @@ export class BaseService {
       stack: reply.statusCode === 500 ? err.stack : undefined,
     })
   }
-  bindInstance(instance: Instance) {
+  bindInstance(instance: Instance, skipAuth: boolean = false) {
     this.instance = instance
     this.instance.addHook("preValidation", async (req, reply) => {
       try {
-        this.onAuthenticate(req, this.name)
+        if (!skipAuth) {
+          this.onAuthenticate(req, this.name)
+        }
       } catch (err) {
         this.onErrorHandler(req, reply, err)
       }

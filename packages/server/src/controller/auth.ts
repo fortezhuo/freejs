@@ -3,7 +3,7 @@ import { AuthService } from "../service/auth"
 
 export const authController = async (instance: FastifyInstance) => {
   const auth = new AuthService()
-  auth.bindInstance(instance)
+  auth.bindInstance(instance, true)
 
   instance.get("/auth", auth.check())
   instance.post("/auth", auth.login())
