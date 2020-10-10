@@ -1,15 +1,22 @@
 import React, { FC } from "react"
 import { View, StyleSheet, Platform } from "react-native"
 import { tw } from "@free/tailwind"
-import { TableContainer } from "./TableContainer"
-import { useHook, useActions } from "./hook"
+import { TableGrid } from "./TableGrid"
+import { useHook, useActions, useColumns } from "./hook"
 import { observer } from "mobx-react-lite"
-import { Layout, H3, ActionGroup } from "../../component"
+import { Layout, H3, ActionGroup, useDefaultColumn } from "../../component"
 import { theme } from "../../config/theme"
 
 const ViewGrid: FC = observer(() => {
   const { store } = useHook()
   const { actions, actDelete } = useActions(store)
+
+  const isLoading = store.isLoading || store.data.get("name") !== store.name
+  const { columns, keys } = useColumns(store)
+  const isMobile = store.app?.dimension.isMobile
+  const data = store.data.get("collection") || []
+  const pageMax = store.data.get("max") || 0
+  const defaultColumn = useDefaultColumn(store)
 
   return (
     <>
@@ -25,7 +32,17 @@ const ViewGrid: FC = observer(() => {
               { height: store.app?.dimension.height - 144 },
             ])}
           >
-            <TableContainer store={store} actDelete={actDelete} />
+            <TableGrid
+              store={store}
+              columns={columns}
+              data={data}
+              defaultColumn={defaultColumn}
+              actDelete={actDelete}
+              isMobile={isMobile}
+              isLoading={isLoading}
+              keys={keys}
+              pageMax={pageMax}
+            />
           </View>
         </View>
       </Layout>

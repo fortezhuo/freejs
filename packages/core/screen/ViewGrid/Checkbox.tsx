@@ -1,5 +1,5 @@
 import React, { forwardRef, useRef, useEffect } from "react"
-import { Icon } from "../../component/Icon"
+import { Icon, TableCell } from "../../component"
 import { StyleSheet, View, TouchableOpacity } from "react-native"
 import { theme } from "../../config/theme"
 import { tw, color } from "@free/tailwind"

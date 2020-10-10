@@ -1,5 +1,6 @@
-import { useEffect, useMemo } from "react"
-import { useStore } from "../../component/Store"
+import React, { useEffect, useMemo } from "react"
+import { useStore, TableCell } from "../../component"
+import { Checkbox } from "./Checkbox"
 import { get } from "../../request"
 import * as config from "./config"
 
@@ -7,6 +8,7 @@ export const useHook = () => {
   const { view } = useStore()
   const name = `${view?.app?.routerLocation}/`.split("/")[1]
   const search = view.data.get("search") || ""
+  const pageIndex = view.data.get("pageIndex") || 1
   view.name = name
   view.title = (config as ObjectAny)[name].title
   view.search = (config as ObjectAny)[name].search
@@ -31,13 +33,14 @@ export const useHook = () => {
       view.set("isLoading", true)
       const params = view.name !== "log" ? { q: search } : {}
       const {
-        data: { result, page, limit, total },
+        data: { result, page, limit, total, max },
       } = await get(`/api/${name}`, params)
       view.setData({
         collection: result,
         page,
         limit,
         total,
+        max,
       })
     } finally {
       view.set("isLoading", false)
@@ -129,4 +132,22 @@ export const useColumns = (store: any) => {
   }, [isMobile, name])
 
   return { columns, keys }
+}
+
+export const useSelection = (hooks: any) => {
+  return hooks.visibleColumns.push((columns: any) => [
+    {
+      id: "selection",
+      style: { width: 36, maxWidth: 36 },
+      Header: ({ getToggleAllPageRowsSelectedProps }: any) => {
+        return <Checkbox {...getToggleAllPageRowsSelectedProps()} />
+      },
+      Cell: ({ row }: any) => (
+        <TableCell style={{ width: 36, maxWidth: 36 }}>
+          <Checkbox {...row.getToggleRowSelectedProps()} />
+        </TableCell>
+      ),
+    },
+    ...columns,
+  ])
 }

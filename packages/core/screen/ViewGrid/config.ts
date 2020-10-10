@@ -41,15 +41,6 @@ export const user = {
   search: ["username", "fullname", "email"],
   button: ["new", "delete", "filter"],
   column: [
-    /*
-    {
-      label: "",
-      name: "_id",
-      type: "checkbox",
-      style: { width: 36, maxWidth: 36 },
-      isMobileVisible: false,
-    },
-    */
     {
       label: "",
       name: "_id",
