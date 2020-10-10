@@ -19,7 +19,13 @@ export const Checkbox = forwardRef(
       <TouchableOpacity ref={resolvedRef} onPress={onChange}>
         <View style={styles.viewCheckbox}>
           <Icon
-            name={checked ? "check-square" : "square"}
+            name={
+              indeterminate
+                ? "minus-square"
+                : checked
+                ? "check-square"
+                : "square"
+            }
             color={defaultColor}
             size={18}
           />

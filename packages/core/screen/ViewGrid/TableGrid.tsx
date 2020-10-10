@@ -64,9 +64,12 @@ export const TableGrid: FC<any> = observer(
       store.setData({ pageIndex, pageSize })
     }, [pageIndex, pageSize])
 
-    // Render the UI for your table
     return (
-      <Table style={styles.viewTable} scroll {...getTableProps()}>
+      <Table
+        scroll={!isMobile && !isLoading}
+        style={styles.viewTable}
+        {...getTableProps()}
+      >
         {!isMobile &&
           headerGroups.map((headerGroup: any) => (
             <TableHeader {...headerGroup.getHeaderGroupProps()}>
