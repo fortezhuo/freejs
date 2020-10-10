@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
   ),
   textLogin: tw("text-white"),
   textLoginDisabled: tw(theme.disabled_text),
-  textError: tw("self-end"),
+  textError: tw("ml-1"),
 })
 
 export default PageLogin

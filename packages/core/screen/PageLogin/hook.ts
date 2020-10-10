@@ -4,7 +4,6 @@ import { configLDAP as ldap } from "@free/env"
 
 export const useHook = () => {
   const { login } = useStore()
-
   useEffect(() => {
     login.setData({ domain: ldap[0].domain })
     login.setTemp({
