@@ -10,13 +10,19 @@ import { theme } from "../../config/theme"
 const ViewGrid: FC = observer(() => {
   const { store } = useHook()
   const { actions, actDelete } = useActions(store)
+  const [
+    name,
+    collection = [],
+    pageIndex,
+    limit,
+    total,
+    pageMax,
+  ] = store.getData("name", "collection", "page", "limit", "total", "max")
   const isMobile = store.app?.dimension.isMobile
-  const isLoading = store.isLoading || store.data.get("name") !== store.name
+  const isLoading = store.isLoading || name !== store.name
   const isShowTable = store.data.get("isMobile") === isMobile
   const { columns, keys } = useColumns(store)
-  const data = store.data.get("collection") || []
-  const pageMax = store.data.get("max") || 0
-  const defaultColumn = useDefaultColumn(store)
+  const columnsFormat = useDefaultColumn(store)
 
   return (
     <>
@@ -34,15 +40,22 @@ const ViewGrid: FC = observer(() => {
           >
             {isShowTable && (
               <TableGrid
-                store={store}
-                columns={columns}
-                data={data}
-                defaultColumn={defaultColumn}
                 actDelete={actDelete}
-                isMobile={isMobile}
-                isLoading={isLoading}
-                keys={keys}
-                pageMax={pageMax}
+                store={store}
+                data={{
+                  columns,
+                  columnsFormat,
+                  collection,
+                  keys,
+                  isMobile,
+                  isLoading,
+                }}
+                page={{
+                  index: pageIndex,
+                  limit: limit,
+                  total: total,
+                  max: pageMax,
+                }}
               />
             )}
           </View>

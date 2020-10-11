@@ -6,17 +6,45 @@ import { random } from "../../util/random"
 import { tw } from "@free/tailwind"
 import { TouchableOpacity } from "react-native-gesture-handler"
 
-export const Pagination: FC<any> = observer(({ store, gotoPage }) => {
-  const page = store.data.get("page") || 1
-  const pages = store.data.get("pages") || []
-  const limit = store.data.get("limit")
-  const total = store.data.get("total")
-  const desc = `Showing ${(page - 1) * limit + 1} to ${
-    page * limit < total ? page * limit : total
+const pagination = (c: number, m: number) => {
+  let current = c,
+    last = m,
+    delta = 2,
+    left = current - delta,
+    right = current + delta + 1,
+    range = [],
+    rangeWithDots = [],
+    l
+
+  for (let i = 1; i <= last; i++) {
+    if (i == 1 || i == last || (i >= left && i < right)) {
+      range.push(i)
+    }
+  }
+
+  for (let i of range) {
+    if (l) {
+      if (i - l === 2) {
+        rangeWithDots.push(l + 1)
+      } else if (i - l !== 1) {
+        rangeWithDots.push("...")
+      }
+    }
+    rangeWithDots.push(i)
+    l = i
+  }
+
+  return rangeWithDots
+}
+
+export const Pagination: FC<any> = observer(({ store, page }) => {
+  const { index, limit, total, max, goto } = page
+  const desc = `Showing ${(index - 1) * limit + 1} to ${
+    index * limit < total ? index * limit : total
   } of ${total} entries`
 
   const setPage = useCallback((i) => {
-    gotoPage(i)
+    goto(i)
     store.setData({ page: i })
   }, [])
 
@@ -26,16 +54,16 @@ export const Pagination: FC<any> = observer(({ store, gotoPage }) => {
         <>
           <Text>{desc}</Text>
           <View style={styles.viewPageNumbers}>
-            {pages.map((i: string) => (
+            {pagination(index, max).map((i: any) => (
               <TouchableOpacity
                 key={"page_" + random()}
                 disabled={i === "..." || i == page}
-                onPress={() => setPage(+i)}
+                onPress={() => setPage(i)}
               >
                 <Text
                   style={StyleSheet.flatten([
                     styles.textPage,
-                    i == page ? styles.textPageActive : {},
+                    i == index ? styles.textPageActive : {},
                   ])}
                 >
                   {i}

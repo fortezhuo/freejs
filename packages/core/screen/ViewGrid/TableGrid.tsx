@@ -22,34 +22,32 @@ const WrapperPress: any = TouchableOpacity
 const defaultColor = color(theme.default_text)
 
 export const TableGrid: FC<any> = observer(
-  ({
-    store,
-    isLoading,
-    isMobile,
-    columns,
-    data,
-    defaultColumn,
-    actDelete,
-    keys,
-    pageMax,
-  }) => {
-    const isShowPagination = store.name !== "log" && !isMobile
+  ({ store, data, actDelete, page }) => {
+    const {
+      columns,
+      columnsFormat,
+      collection,
+      keys,
+      isMobile,
+      isLoading,
+    } = data
 
+    const isShowPagination = store.name !== "log" && !isMobile
     const {
       getTableProps,
       getTableBodyProps,
       headerGroups,
       prepareRow,
-      page,
+      page: rows,
       gotoPage,
     }: any = useTable(
       {
         columns,
-        data,
+        data: collection,
         initialState: { pageIndex: 1 },
         manualPagination: true,
-        defaultColumn,
-        pageCount: pageMax,
+        defaultColumn: columnsFormat,
+        pageCount: page.max,
       } as any,
       useSortBy,
       usePagination,
@@ -59,7 +57,9 @@ export const TableGrid: FC<any> = observer(
 
     return (
       <>
-        {isShowPagination && <Pagination store={store} gotoPage={gotoPage} />}
+        {isShowPagination && (
+          <Pagination store={store} page={{ ...page, goto: gotoPage }} />
+        )}
 
         <Table
           scroll={!isMobile && !isLoading}
@@ -105,7 +105,7 @@ export const TableGrid: FC<any> = observer(
           ) : (
             <FlatList
               {...getTableBodyProps()}
-              data={page}
+              data={rows}
               keyExtractor={(row: any) => row.id}
               renderItem={({ item, index }: any) => {
                 prepareRow(item)
