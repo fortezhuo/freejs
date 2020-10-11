@@ -1,5 +1,12 @@
 import React, { FC, createRef } from "react"
-import { StyleSheet, View, Text, ScrollView, Animated } from "react-native"
+import {
+  StyleSheet,
+  View,
+  Text,
+  ScrollView,
+  Animated,
+  TouchableOpacity,
+} from "react-native"
 import { TableProps, RowProps, CellProps } from "@free/core"
 import { Icon, IconLabel, Link } from ".."
 import { random } from "../../util/random"
@@ -90,6 +97,18 @@ export const CellLink: FC<CellProps> = observer(
         <Link href={link}>
           <Icon name={name} size={16} color={defaultColor} />
         </Link>
+      </Cell>
+    )
+  }
+)
+
+export const CellDownload: FC<CellProps> = observer(
+  ({ style, name = "download", onPress }) => {
+    return (
+      <Cell style={style} testID="CellLink">
+        <TouchableOpacity onPress={onPress}>
+          <Icon name={name} size={16} color={defaultColor} />
+        </TouchableOpacity>
       </Cell>
     )
   }
@@ -189,8 +208,7 @@ export const useDefaultColumn = (store: any) => {
           )
         case "download_log":
           return (
-            <CellLink
-              name="download"
+            <CellDownload
               style={cell.column.style}
               onPress={() => {
                 download(`/api/${store.name}`, cell.value)

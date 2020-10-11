@@ -101,7 +101,7 @@ export const TableGrid: FC<any> = observer(
               </TableHeader>
             ))}
           {isLoading ? (
-            <Loader themeColor={"bg-gray-700"} />
+            <Loader themeColor={"bg-gray-400"} />
           ) : (
             <FlatList
               {...getTableBodyProps()}

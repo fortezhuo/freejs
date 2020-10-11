@@ -46,7 +46,7 @@ export class DatabaseService extends BaseService {
       option = "{}",
       sort = "{}",
       fields = "",
-      limit = 2 /*30*/,
+      limit = 30,
       page = 1,
     } = query
 

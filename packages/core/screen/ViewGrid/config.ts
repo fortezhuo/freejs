@@ -62,7 +62,7 @@ export const user = {
       name: "fullname",
       filter: true,
       search: ["fullname"],
-      style: { width: 200 },
+      style: { width: 300 },
       isMobileVisible: true,
     },
     {
@@ -70,7 +70,7 @@ export const user = {
       name: "email",
       filter: true,
       search: ["email"],
-      style: { width: 200 },
+      style: { width: 300 },
       isMobileVisible: true,
     },
     {
