@@ -46,7 +46,7 @@ export const user = {
       name: "_id",
       type: "link",
       path: "user",
-      style: { width: 36, maxWidth: 36 },
+      style: { width: 36, maxWidth: 36, marginTop: 1 },
       isMobileVisible: true,
     },
     {

@@ -6,6 +6,7 @@ import * as config from "./config"
 
 export const useHook = () => {
   const { view } = useStore()
+  const isMobile = view.app?.dimension.isMobile
   const name = `${view?.app?.routerLocation}/`.split("/")[1]
   const search = view.data.get("search") || ""
   const pageIndex = view.data.get("pageIndex") || 1
@@ -21,6 +22,10 @@ export const useHook = () => {
       view.data.clear()
     }
   }, [view?.app?.routerLocation])
+
+  useEffect(() => {
+    view.setData({ isMobile })
+  }, [isMobile])
 
   useEffect(() => {
     ;(async () => {
