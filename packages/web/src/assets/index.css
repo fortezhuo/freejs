@@ -16,6 +16,10 @@ textarea {
   outline: 0;
 }
 
+a {
+  text-decoration: none;
+}
+
 @media all and (max-width: 1200px) {
   div {
     scrollbar-width: none;

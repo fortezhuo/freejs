@@ -1,7 +1,7 @@
-import React, { FC, Children, useRef, useEffect } from "react"
+import React, { FC, Children, useRef, useEffect, useCallback } from "react"
 import { View, TouchableOpacity, StyleSheet, Animated } from "react-native"
 import { theme } from "../../config/theme"
-import { IconLabel, Icon } from "../Icon"
+import { IconLabel, Icon, Link } from ".."
 import { tw, color } from "@free/tailwind"
 import { observer, useLocalObservable } from "mobx-react-lite"
 import { useStore } from "../Store"
@@ -85,18 +85,32 @@ export const AccordionItem: FC<AccordionItemProps> = observer(
   }) => {
     const { app } = useStore()
     const active = pathname === app?.routerLocation
-    const onClose = () => {
+    const onClose = useCallback(() => {
       if (app.dimension.isMobile) app.set("isDrawerOpen", false)
-    }
-    onPress = pathname ? () => app.goto(pathname) : onPress
+    }, [])
+
+    const Wrapper: FC = useCallback(
+      ({ children }) => {
+        return pathname ? (
+          <Link href={pathname} beforeAction={onClose}>
+            {children}
+          </Link>
+        ) : (
+          <TouchableOpacity
+            onPress={() => {
+              onClose()
+              onPress()
+            }}
+          >
+            {children}
+          </TouchableOpacity>
+        )
+      },
+      [pathname, onPress]
+    )
 
     return (
-      <TouchableOpacity
-        onPress={() => {
-          onClose()
-          onPress()
-        }}
-      >
+      <Wrapper>
         {header ? (
           <View
             testID={testID}
@@ -130,7 +144,7 @@ export const AccordionItem: FC<AccordionItemProps> = observer(
             {children}
           </IconLabel>
         )}
-      </TouchableOpacity>
+      </Wrapper>
     )
   }
 )

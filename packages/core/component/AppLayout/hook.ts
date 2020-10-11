@@ -12,6 +12,10 @@ export const useHook = () => {
   }, [])
 
   useEffect(() => {
+    app.set("routerLocation", app?.routerHistory?.location.pathname)
+  }, [history.location.pathname])
+
+  useEffect(() => {
     ;(async function () {
       try {
         await app.checkAuth()

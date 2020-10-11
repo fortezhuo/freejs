@@ -192,6 +192,16 @@ declare module "@free/core" {
     stickyHeader?: ReactNode
   }
 
+  // Link
+  type LinkProps = {
+    href: string
+    target?: string | undefined
+    disabled?: boolean
+    children: ReactNode
+    beforeAction?: VoidFunction
+    afterAction?: VoidFunction
+  }
+
   // Loader
   type LoaderProps = {
     themeColor?: string

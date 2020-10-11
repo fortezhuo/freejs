@@ -36,5 +36,5 @@ export const Checkbox = forwardRef(
 )
 
 const styles = StyleSheet.create({
-  viewCheckbox: { paddingTop: 1, ...tw("h-6") },
+  viewCheckbox: tw("h-6"),
 })

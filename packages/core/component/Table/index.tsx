@@ -1,8 +1,7 @@
 import React, { FC, createRef } from "react"
 import { StyleSheet, View, Text, ScrollView, Animated } from "react-native"
-import { TableProps, IconButtonProps, RowProps, CellProps } from "@free/core"
-import { IconButton, IconLabel } from ".."
-import { InputCheckbox } from "../Input/InputCheckbox"
+import { TableProps, RowProps, CellProps } from "@free/core"
+import { Icon, IconLabel, Link } from ".."
 import { random } from "../../util/random"
 import { tw, color } from "@free/tailwind"
 import { observer } from "mobx-react-lite"
@@ -142,31 +141,13 @@ export const Cell: FC<CellProps> = observer(
   }
 )
 
-export const CellLink: FC<IconButtonProps> = observer(
-  ({ style, name = "link", onPress, testID = "CellLink" }) => {
+export const CellLink: FC<CellProps> = observer(
+  ({ style, name = "link", link }) => {
     return (
-      <Cell style={style}>
-        <IconButton
-          testID={testID}
-          name={name}
-          size={16}
-          color={defaultColor}
-          onPress={onPress}
-        />
-      </Cell>
-    )
-  }
-)
-
-export const CellCheckbox: FC<any> = observer(
-  ({ style, testID = "CellCheckbox", ...rest }) => {
-    return (
-      <Cell style={style}>
-        <InputCheckbox
-          testID={testID}
-          style={{ padding: 0, marginTop: -2 }}
-          {...rest}
-        />
+      <Cell style={style} testID="CellLink">
+        <Link href={link}>
+          <Icon name={name} size={16} color={defaultColor} />
+        </Link>
       </Cell>
     )
   }
@@ -259,10 +240,9 @@ export const useDefaultColumn = (store: any) => {
         case "link":
           return (
             <CellLink
+              store={store}
+              link={`${store.name}/${cell.value}`}
               style={cell.column.style}
-              onPress={() => {
-                store?.app?.goto(`${store.name}/${cell.value}`)
-              }}
             />
           )
         case "download_log":
@@ -273,15 +253,6 @@ export const useDefaultColumn = (store: any) => {
               onPress={() => {
                 download(`/api/${store.name}`, cell.value)
               }}
-            />
-          )
-        case "checkbox":
-          return (
-            <CellCheckbox
-              value={cell.value}
-              store={store}
-              name="selection"
-              style={cell.column.style}
             />
           )
         case "date":
