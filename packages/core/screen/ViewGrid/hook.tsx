@@ -26,9 +26,12 @@ export const useHook = () => {
 
   useEffect(() => {
     ;(async () => {
-      await setCollection(name)
+      const allowFetch = page ? view.name !== "log" : view.name === "log"
+      if (allowFetch) {
+        await setCollection(name)
+      }
     })()
-  }, [page])
+  }, [page, search])
 
   useEffect(() => {
     view.setData({ isMobile })
@@ -36,20 +39,17 @@ export const useHook = () => {
 
   const setCollection = async (name: string) => {
     const params = view.name !== "log" ? { q: search, page } : {}
-    const allowFetch = page ? view.name !== "log" : view.name === "log"
-    if (allowFetch) {
-      try {
-        view.set("isLoading", true)
-        const { data } = await get(`/api/${name}`, params)
-        view.setData({
-          collection: data.result,
-          limit: data.limit,
-          total: data.total,
-          max: data.max,
-        })
-      } finally {
-        view.set("isLoading", false)
-      }
+    try {
+      view.set("isLoading", true)
+      const { data } = await get(`/api/${name}`, params)
+      view.setData({
+        collection: data.result,
+        limit: data.limit,
+        total: data.total,
+        max: data.max,
+      })
+    } finally {
+      view.set("isLoading", false)
     }
   }
 

@@ -37,7 +37,7 @@ export const InputSearch: FC = observer((_props) => {
         style={styles.inputText}
         onChangeText={setText}
         onSubmitEditing={() => {
-          view.setData({ search: JSON.stringify(buildSearch(text)) })
+          view.setData({ search: JSON.stringify(buildSearch(text)), page: 1 })
         }}
       />
     </Base>
