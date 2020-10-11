@@ -145,9 +145,9 @@ export const useSelection = (hooks: any) => {
     {
       id: "selection",
       style: { width: 36, maxWidth: 36 },
-      Header: ({ getToggleAllPageRowsSelectedProps }: any) => (
-        <Checkbox {...getToggleAllPageRowsSelectedProps()} />
-      ),
+      Header: ({ getToggleAllPageRowsSelectedProps }: any) => {
+        return <Checkbox {...getToggleAllPageRowsSelectedProps()} />
+      },
       Cell: ({ row }: any) => (
         <TableCell style={{ width: 36, maxWidth: 36 }}>
           <Checkbox {...row.getToggleRowSelectedProps()} />
