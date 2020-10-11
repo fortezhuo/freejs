@@ -4,12 +4,47 @@ import { Checkbox } from "./Checkbox"
 import { get } from "../../request"
 import * as config from "./config"
 
+const pagination = (c: number, m: number) => {
+  let current = c,
+    last = m,
+    delta = 2,
+    left = current - delta,
+    right = current + delta + 1,
+    range = [],
+    rangeWithDots = [],
+    l
+
+  for (let i = 1; i <= last; i++) {
+    if (i == 1 || i == last || (i >= left && i < right)) {
+      range.push(i)
+    }
+  }
+
+  for (let i of range) {
+    if (l) {
+      if (i - l === 2) {
+        rangeWithDots.push(l + 1)
+      } else if (i - l !== 1) {
+        rangeWithDots.push("...")
+      }
+    }
+    rangeWithDots.push(i)
+    l = i
+  }
+
+  return rangeWithDots
+}
+
 export const useHook = () => {
   const { view } = useStore()
   const isMobile = view.app?.dimension.isMobile
   const name = `${view?.app?.routerLocation}/`.split("/")[1]
-  const search = view.data.get("search") || ""
-  const pageIndex = view.data.get("pageIndex") || 1
+  const [search, page, limit, max] = view.getData(
+    "search",
+    "page",
+    "limit",
+    "max"
+  )
   view.name = name
   view.title = (config as ObjectAny)[name].title
   view.search = (config as ObjectAny)[name].search
@@ -31,21 +66,23 @@ export const useHook = () => {
     ;(async () => {
       await setCollection(name)
     })()
-  }, [view?.app?.routerLocation, search])
+  }, [view?.app?.routerLocation, search, limit, page])
+
+  useEffect(() => {
+    view.setData({ pages: pagination(page, max) })
+  }, [page, max])
 
   const setCollection = async (name: string) => {
     try {
       view.set("isLoading", true)
-      const params = view.name !== "log" ? { q: search } : {}
-      const {
-        data: { result, page, limit, total, max },
-      } = await get(`/api/${name}`, params)
+      const params = view.name !== "log" ? { q: search, limit, page } : {}
+      const { data } = await get(`/api/${name}`, params)
       view.setData({
-        collection: result,
-        page,
-        limit,
-        total,
-        max,
+        collection: data.result,
+        page: data.page,
+        limit: data.limit,
+        total: data.total,
+        max: data.max,
       })
     } finally {
       view.set("isLoading", false)

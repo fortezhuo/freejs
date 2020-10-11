@@ -42,64 +42,6 @@ export const Table: FC<TableProps> = observer(
   }
 )
 
-const getNum = (num: number, delim: number, stop: number): number => {
-  const nDelim = delim < 0 ? delim + 1 : delim - 1
-  if (stop == 0) {
-    return num + delim > stop ? num + delim : getNum(num, nDelim, stop)
-  } else {
-    return num + delim <= stop ? num + delim : getNum(num, nDelim, stop)
-  }
-}
-
-const pageBetween = (start: number, end: number) => {
-  start = getNum(start, -2, 0)
-  end = getNum(start, +5, end)
-  const pages = [...Array(end - start + 1)].map((_, i) => start + i)
-  return pages
-}
-
-export const Pagination: FC<any> = observer(({ store }) => {
-  const page = store.data.get("page") || 1
-  const max = store.data.get("max") || 1
-  const limit = store.data.get("limit")
-  const total = store.data.get("total")
-  const desc = `Showing ${(page - 1) * limit + 1} to ${
-    page * limit < total ? page * limit : total
-  } of ${total} entries`
-
-  return (
-    <View style={styles.viewPage}>
-      {total ? (
-        <>
-          <Text>{desc}</Text>
-          <View style={styles.viewPageNumbers}>
-            <Text onPress={() => {}} style={styles.textPage}>
-              First
-            </Text>
-            {pageBetween(page, max).map((_, i) => (
-              <Text
-                key={"page_" + random()}
-                onPress={() => {}}
-                style={StyleSheet.flatten([
-                  styles.textPage,
-                  i == 0 ? styles.textPageActive : {},
-                ])}
-              >
-                {i + 1}
-              </Text>
-            ))}
-            <Text onPress={() => {}} style={styles.textPage}>
-              Last
-            </Text>
-          </View>
-        </>
-      ) : (
-        <Text>No Data Found</Text>
-      )}
-    </View>
-  )
-})
-
 export const Header: FC<RowProps> = observer(({ children, style }) => {
   return (
     <Row style={StyleSheet.flatten([styles.viewHeader, style])}>{children}</Row>
@@ -269,14 +211,6 @@ export const useDefaultColumn = (store: any) => {
 const styles = StyleSheet.create({
   viewTable: tw(`shadow-xl`),
   viewTableChildren: tw("flex-col flex-1"),
-  viewPage: tw("flex-row justify-between items-center p-1 shadow-sm h-10"),
-  viewPageNumbers: tw(
-    "flex-row rounded-sm border-l border-t border-b border-gray-300"
-  ),
-  textPage: tw(
-    "items-center px-4 py-2 bg-white text-sm text-gray-900 border-gray-300 border-r"
-  ),
-  textPageActive: tw(`bg-gray-300`),
   viewHeader: tw(`h-10 items-center shadow-md`),
   viewRow: tw(`flex-row flex-no-wrap pt-1`),
   viewCell: tw(`p-2 w-40 flex-grow`),

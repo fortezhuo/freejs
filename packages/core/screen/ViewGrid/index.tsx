@@ -12,7 +12,7 @@ const ViewGrid: FC = observer(() => {
   const { actions, actDelete } = useActions(store)
   const isMobile = store.app?.dimension.isMobile
   const isLoading = store.isLoading || store.data.get("name") !== store.name
-  const isShow = store.data.get("isMobile") === isMobile
+  const isShowTable = store.data.get("isMobile") === isMobile
   const { columns, keys } = useColumns(store)
   const data = store.data.get("collection") || []
   const pageMax = store.data.get("max") || 0
@@ -32,7 +32,7 @@ const ViewGrid: FC = observer(() => {
               { height: store.app?.dimension.height - 144 },
             ])}
           >
-            {isShow && (
+            {isShowTable && (
               <TableGrid
                 store={store}
                 columns={columns}

@@ -24,7 +24,6 @@ export {
   RowMobile as TableRowMobile,
   Cell as TableCell,
   Header as TableHeader,
-  Pagination as TablePagination,
   useDefaultColumn,
 } from "./Table"
 export { Title } from "./Title"

@@ -117,8 +117,10 @@ FreeJS is considered unstable. The API could change or be removed in future
 - [ ] Section Swipe
 - [x] Snackbar
 - [x] Table
-- [ ] Table Sortable
+- [x] Table Checkbox
+- [ ] Table Delete
+- [x] Table Sortable
 - [ ] Table Filterable
-- [ ] Table Paging
-- [x] Table for Mobile, Swipe for Delete
+- [x] Table Paging
+- [x] Table for Mobile, Swipe for Show Delete Button
 - [x] Text
