@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo } from "react"
 import { useStore, TableCell } from "../../component"
+import { View } from "react-native"
 import { Checkbox } from "./Checkbox"
 import { get } from "../../request"
 import * as config from "./config"
@@ -144,13 +145,13 @@ export const useSelection = (hooks: any) => {
   return hooks.visibleColumns.push((columns: any) => [
     {
       id: "selection",
-      style: { width: 36, maxWidth: 36 },
-      Header: ({ getToggleAllPageRowsSelectedProps }: any) => {
-        return <Checkbox {...getToggleAllPageRowsSelectedProps()} />
+      style: { width: 36, maxWidth: 36, marginTop: 1 },
+      Header: (header: any) => {
+        return <Checkbox {...header.getToggleAllPageRowsSelectedProps()} />
       },
-      Cell: ({ row }: any) => (
-        <TableCell style={{ width: 36, maxWidth: 36 }}>
-          <Checkbox {...row.getToggleRowSelectedProps()} />
+      Cell: (cell: any) => (
+        <TableCell style={cell.column.style}>
+          <Checkbox {...cell.row.getToggleRowSelectedProps()} />
         </TableCell>
       ),
     },

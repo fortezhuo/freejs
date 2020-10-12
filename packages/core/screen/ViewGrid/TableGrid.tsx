@@ -6,8 +6,10 @@ import { useSelection } from "./hook"
 import { observer } from "mobx-react-lite"
 import { theme } from "../../config/theme"
 import {
-  IconLabel,
+  Icon,
+  Text,
   Loader,
+  Table,
   TableScroll,
   TableRow,
   TableRowMobile,
@@ -17,8 +19,6 @@ import {
 import { tw, color } from "@free/tailwind"
 import { Pagination } from "./Pagination"
 
-const Wrapper: any = View
-const WrapperPress: any = TouchableOpacity
 const defaultColor = color(theme.default_text)
 
 export const TableGrid: FC<any> = observer(
@@ -31,16 +31,8 @@ export const TableGrid: FC<any> = observer(
       isMobile,
       isLoading,
     } = data
-
     const isShowPagination = store.name !== "log" && !isMobile
-    const {
-      getTableProps,
-      getTableBodyProps,
-      headerGroups,
-      prepareRow,
-      page: rows,
-      gotoPage,
-    }: any = useTable(
+    const { headerGroups, prepareRow, page: rows, gotoPage }: any = useTable(
       {
         columns,
         data: collection,
@@ -55,56 +47,54 @@ export const TableGrid: FC<any> = observer(
       useSelection
     )
 
+    const TableWrapper = isMobile ? Table : TableScroll
+
     return (
       <>
         {isShowPagination && (
           <Pagination store={store} page={{ ...page, goto: gotoPage }} />
         )}
-
-        <TableScroll
-          scroll={!isMobile && !isLoading}
-          style={styles.viewTable}
-          {...getTableProps()}
-        >
+        <TableWrapper scroll={!isLoading} style={styles.viewTable}>
           {!isMobile &&
-            headerGroups.map((headerGroup: any) => (
-              <TableHeader {...headerGroup.getHeaderGroupProps()}>
-                {headerGroup.headers.map((column: any) => {
-                  const { onClick, ...header } = column.getHeaderProps(
-                    column.getSortByToggleProps()
-                  )
-                  const onPress = useCallback((e) => {
-                    return column.canSort
-                      ? column.toggleSortBy(undefined, true)
-                      : {}
-                  }, [])
-                  return (
-                    <WrapperPress {...header} onPress={onPress}>
-                      <TableCell style={(column as any).style}>
-                        {column.render("Header")}
-                        {column.isSorted && (
-                          <IconLabel
-                            styleContainer={styles.iconSort}
-                            color={defaultColor}
-                            name={
-                              column.isSortedDesc
-                                ? "chevron-down"
-                                : "chevron-up"
-                            }
-                            size={16}
-                          />
-                        )}
-                      </TableCell>
-                    </WrapperPress>
-                  )
-                })}
-              </TableHeader>
-            ))}
+            headerGroups.map((headerGroup: any) => {
+              const { key } = headerGroup.getHeaderGroupProps()
+              return (
+                <TableHeader key={key}>
+                  {headerGroup.headers.map((column: any) => {
+                    const { key } = column.getHeaderProps(
+                      column.getSortByToggleProps()
+                    )
+                    const onPress = useCallback((e) => {
+                      return column.canSort
+                        ? column.toggleSortBy(undefined, true)
+                        : {}
+                    }, [])
+                    return (
+                      <TouchableOpacity key={key} onPress={onPress}>
+                        <TableCell style={(column as any).style}>
+                          <Text>{column.render("Header")} </Text>
+                          {column.isSorted && (
+                            <Icon
+                              color={defaultColor}
+                              name={
+                                column.isSortedDesc
+                                  ? "chevron-down"
+                                  : "chevron-up"
+                              }
+                              size={16}
+                            />
+                          )}
+                        </TableCell>
+                      </TouchableOpacity>
+                    )
+                  })}
+                </TableHeader>
+              )
+            })}
           {isLoading ? (
             <Loader themeColor={"bg-gray-400"} />
           ) : (
             <FlatList
-              {...getTableBodyProps()}
               data={rows}
               keyExtractor={(row: any) => row.id}
               renderItem={({ item, index }: any) => {
@@ -118,18 +108,21 @@ export const TableGrid: FC<any> = observer(
                     keys={keys}
                   />
                 ) : (
-                  <TableRow dark={index % 2} {...item.getRowProps()}>
-                    {item.cells.map((cell: any) => (
-                      <Wrapper {...cell.getCellProps()}>
-                        {cell.render("Cell")}
-                      </Wrapper>
-                    ))}
+                  <TableRow dark={index % 2}>
+                    {item.cells.map((cell: any) => {
+                      const { key } = cell.getCellProps()
+                      return (
+                        <View key={key}>
+                          <Text>{cell.render("Cell")}</Text>
+                        </View>
+                      )
+                    })}
                   </TableRow>
                 )
               }}
             />
           )}
-        </TableScroll>
+        </TableWrapper>
       </>
     )
   }
@@ -137,5 +130,4 @@ export const TableGrid: FC<any> = observer(
 
 const styles = StyleSheet.create({
   viewTable: tw("flex-1"),
-  iconSort: tw("ml-2"),
 })

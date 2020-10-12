@@ -1,4 +1,4 @@
-import React, { FC, createRef } from "react"
+import React, { FC, createRef, memo } from "react"
 import {
   StyleSheet,
   View,
@@ -23,98 +23,117 @@ const date = (date: any) => dayjs(date).format("DD MMM YYYY")
 const datetime = (datetime: any) =>
   dayjs(datetime).format("DD MMM YYYY HH:mm:ss")
 
-export const TableScroll: FC<TableProps> = observer(
-  ({ children, style, scroll, testID = "Table" }) => {
-    return (
-      <View
-        testID={testID}
-        style={StyleSheet.flatten([styles.viewTable, style])}
-      >
-        <ScrollView horizontal scrollEnabled={scroll}>
-          <View style={styles.viewTableChildren}>{children}</View>
-        </ScrollView>
-      </View>
-    )
-  }
-)
-
-export const Table: FC<TableProps> = observer(
-  ({ children, style, testID = "Table" }) => {
-    return (
-      <View
-        testID={testID}
-        style={StyleSheet.flatten([styles.viewTable, style])}
-      >
+export const TableScroll: FC<TableProps> = ({
+  children,
+  style,
+  scroll,
+  testID = "Table",
+}) => {
+  return (
+    <View testID={testID} style={StyleSheet.flatten([styles.viewTable, style])}>
+      <ScrollView horizontal scrollEnabled={scroll}>
         <View style={styles.viewTableChildren}>{children}</View>
-      </View>
-    )
-  }
-)
+      </ScrollView>
+    </View>
+  )
+}
 
-export const Header: FC<RowProps> = observer(({ children, style }) => {
+export const Table: FC<TableProps> = ({
+  children,
+  style,
+  testID = "Table",
+}) => {
+  return (
+    <View testID={testID} style={StyleSheet.flatten([styles.viewTable, style])}>
+      <View style={styles.viewTableChildren}>{children}</View>
+    </View>
+  )
+}
+
+export const Header: FC<RowProps> = ({ children, style }) => {
   return (
     <Row style={StyleSheet.flatten([styles.viewHeader, style])}>{children}</Row>
   )
-})
+}
 
-export const Row: FC<RowProps> = observer(
-  ({ children, filter, dark, style, testID = "Row" }) => {
-    return (
-      <View
-        testID={testID}
-        style={StyleSheet.flatten([
-          styles.viewRow,
-          filter ? styles.rowFilter : {},
-          dark ? styles.rowDark : {},
-          style,
-        ])}
-      >
-        {children}
-      </View>
-    )
-  }
-)
+export const Row: FC<RowProps> = ({
+  children,
+  filter,
+  dark,
+  style,
+  testID = "Row",
+}) => {
+  return (
+    <View
+      testID={testID}
+      style={StyleSheet.flatten([
+        styles.viewRow,
+        filter ? styles.rowFilter : {},
+        dark ? styles.rowDark : {},
+        style,
+      ])}
+    >
+      {children}
+    </View>
+  )
+}
 
-export const Cell: FC<CellProps> = observer(
-  ({ children, style, filter, testID = "Cell" }) => {
-    return (
-      <View
-        testID={testID}
-        style={StyleSheet.flatten([
-          styles.viewCell,
-          filter ? styles.cellFilter : {},
-          style,
-        ])}
-      >
-        <Text style={styles.textCell}>{children}</Text>
-      </View>
-    )
-  }
-)
+export const Cell: FC<CellProps> = ({
+  children,
+  style,
+  filter,
+  testID = "Cell",
+}) => {
+  return (
+    <View
+      testID={testID}
+      style={StyleSheet.flatten([
+        styles.viewCell,
+        filter ? styles.cellFilter : {},
+        style,
+      ])}
+    >
+      {children}
+    </View>
+  )
+}
 
-export const CellLink: FC<CellProps> = observer(
-  ({ style, name = "link", link }) => {
-    return (
-      <Cell style={style} testID="CellLink">
-        <Link href={link}>
-          <Icon name={name} size={16} color={defaultColor} />
-        </Link>
-      </Cell>
-    )
-  }
-)
+export const CellText: FC<CellProps> = ({
+  children,
+  style,
+  filter,
+  testID = "CellText",
+}) => {
+  return (
+    <Cell style={style} filter={filter} testID={testID}>
+      <Text style={styles.textCell}>{children}</Text>
+    </Cell>
+  )
+}
 
-export const CellDownload: FC<CellProps> = observer(
-  ({ style, name = "download", onPress }) => {
-    return (
-      <Cell style={style} testID="CellLink">
-        <TouchableOpacity onPress={onPress}>
-          <Icon name={name} size={16} color={defaultColor} />
-        </TouchableOpacity>
-      </Cell>
-    )
-  }
-)
+export const CellLink: FC<CellProps> = ({ style, name = "link", link }) => {
+  return (
+    <Cell style={style} testID="CellLink">
+      <Link href={link}>
+        <Icon name={name} size={16} color={defaultColor} />
+      </Link>
+    </Cell>
+  )
+}
+
+export const CellDownload: FC<CellProps> = ({
+  style,
+  name = "download",
+  onPress,
+}) => {
+  return (
+    <Cell style={style} testID="CellLink">
+      <TouchableOpacity onPress={onPress}>
+        <Icon name={name} size={16} color={defaultColor} />
+      </TouchableOpacity>
+    </Cell>
+  )
+}
 
 export const RowMobile: FC<RowProps> = observer(
   ({ store, data, keys, dark, style, testID = "RowMobile", actDelete }) => {
@@ -231,12 +250,12 @@ export const useDefaultColumn = (store: any) => {
 const styles = StyleSheet.create({
   viewTable: tw(`shadow-xl`),
   viewTableChildren: tw("flex-col flex-1"),
-  viewHeader: tw(`h-10 items-center shadow-md`),
-  viewRow: tw(`flex-row flex-no-wrap pt-1`),
-  viewCell: tw(`p-2 w-40 flex-grow`),
+  viewHeader: tw(`h-12 shadow-md`),
+  viewRow: tw(`flex-row flex-no-wrap items-center`),
+  viewCell: tw(`p-2 w-40 flex-grow flex-row`),
   rowDark: { backgroundColor: "rgba(0,0,0,0.08)" },
   rowFilter: tw(`bg-red-200 h-10 items-center`),
-  rowMobile: tw("flex-col p-2"),
+  rowMobile: tw("flex-col p-2 items-start"),
   cellFilter: { padding: 0 },
   cellDelete: tw("flex-1"),
   textCell: tw(theme.default_text),

@@ -46,7 +46,7 @@ export const Search: FC<Search> = observer(({ refSearch, state, menu }) => {
             onChangeIndex(key == "ArrowUp" ? -1 : 1)
           } else if (key == "Escape") {
             menu.hide()
-          } else if (key == "Backspace" && state.multi) {
+          } else if (key == "Backspace" && state.multi && state.search == "") {
             onBackSpace()
           } else if (key == "Enter") {
             onEnter()

@@ -1,5 +1,5 @@
 import React, { forwardRef, useRef, useEffect } from "react"
-import { IconLabel } from "../../component"
+import { Icon } from "../../component"
 import { StyleSheet, TouchableOpacity } from "react-native"
 import { theme } from "../../config/theme"
 import { tw, color } from "@free/tailwind"
@@ -16,8 +16,7 @@ export const Checkbox = forwardRef(
 
     return (
       <TouchableOpacity ref={resolvedRef} onPress={onChange}>
-        <IconLabel
-          styleContainer={styles.viewCheckbox}
+        <Icon
           name={
             indeterminate ? "minus-square" : checked ? "check-square" : "square"
           }
@@ -28,7 +27,3 @@ export const Checkbox = forwardRef(
     )
   }
 )
-
-const styles = StyleSheet.create({
-  viewCheckbox: tw("h-6"),
-})

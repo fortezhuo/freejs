@@ -24,6 +24,7 @@ export {
   Row as TableRow,
   RowMobile as TableRowMobile,
   Cell as TableCell,
+  CellText as TableCellText,
   Header as TableHeader,
   useDefaultColumn,
 } from "./Table"
