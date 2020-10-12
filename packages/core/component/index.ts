@@ -20,6 +20,7 @@ export { Sidebar } from "./Sidebar"
 export { Snackbar } from "./Snackbar"
 export {
   Table,
+  TableScroll,
   Row as TableRow,
   RowMobile as TableRowMobile,
   Cell as TableCell,

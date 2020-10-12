@@ -23,27 +23,29 @@ const date = (date: any) => dayjs(date).format("DD MMM YYYY")
 const datetime = (datetime: any) =>
   dayjs(datetime).format("DD MMM YYYY HH:mm:ss")
 
-export const Table: FC<TableProps> = observer(
+export const TableScroll: FC<TableProps> = observer(
   ({ children, style, scroll, testID = "Table" }) => {
-    const Wrapper: FC = ({ children }) =>
-      scroll ? (
-        <ScrollView scrollEnabled={scroll} horizontal testID="HorizontalScroll">
-          {children}
-        </ScrollView>
-      ) : (
-        <View style={{ flex: 1 }}>{children}</View>
-      )
-
     return (
       <View
         testID={testID}
         style={StyleSheet.flatten([styles.viewTable, style])}
       >
-        <View style={{ flex: 1 }}>
-          <Wrapper>
-            <View style={styles.viewTableChildren}>{children}</View>
-          </Wrapper>
-        </View>
+        <ScrollView horizontal scrollEnabled={scroll}>
+          <View style={styles.viewTableChildren}>{children}</View>
+        </ScrollView>
+      </View>
+    )
+  }
+)
+
+export const Table: FC<TableProps> = observer(
+  ({ children, style, testID = "Table" }) => {
+    return (
+      <View
+        testID={testID}
+        style={StyleSheet.flatten([styles.viewTable, style])}
+      >
+        <View style={styles.viewTableChildren}>{children}</View>
       </View>
     )
   }
