@@ -111,11 +111,7 @@ export const TableGrid: FC<any> = observer(
                   <TableRow dark={index % 2}>
                     {item.cells.map((cell: any) => {
                       const { key } = cell.getCellProps()
-                      return (
-                        <View key={key}>
-                          <Text>{cell.render("Cell")}</Text>
-                        </View>
-                      )
+                      return <View key={key}>{cell.render("Cell")}</View>
                     })}
                   </TableRow>
                 )

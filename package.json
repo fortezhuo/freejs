@@ -57,7 +57,7 @@
   },
   "dependencies": {
     "@free/logger": "1.0.0",
-    "@types/lodash": "^4.14.161",
+    "@types/lodash": "^4.14.162",
     "axios": "^0.20.0",
     "dayjs": "^1.8.36",
     "fastify": "3.5.1",
@@ -87,7 +87,6 @@
     ]
   },
   "devDependencies": {
-    "@types/fs-extra": "^9.0.1",
     "@types/ldapjs": "^1.0.8",
     "@types/node": "^14.11.8",
     "@types/nodemailer": "^6.4.0",

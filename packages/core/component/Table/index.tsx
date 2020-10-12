@@ -237,11 +237,17 @@ export const useDefaultColumn = (store: any) => {
             />
           )
         case "date":
-          return <Cell style={cell.column.style}>{date(cell.value)}</Cell>
+          return (
+            <CellText style={cell.column.style}>{date(cell.value)}</CellText>
+          )
         case "datetime":
-          return <Cell style={cell.column.style}>{datetime(cell.value)}</Cell>
+          return (
+            <CellText style={cell.column.style}>
+              {datetime(cell.value)}
+            </CellText>
+          )
         default:
-          return <Cell style={cell.column.style}>{cell.value}</Cell>
+          return <CellText style={cell.column.style}>{cell.value}</CellText>
       }
     },
   }
