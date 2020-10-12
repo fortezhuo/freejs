@@ -1,8 +1,8 @@
 import React, { forwardRef, useRef, useEffect } from "react"
 import { Icon } from "../../component"
-import { StyleSheet, TouchableOpacity } from "react-native"
+import { TouchableOpacity } from "react-native"
 import { theme } from "../../config/theme"
-import { tw, color } from "@free/tailwind"
+import { color } from "@free/tailwind"
 const defaultColor = color(theme.default_text)
 
 export const Checkbox = forwardRef(

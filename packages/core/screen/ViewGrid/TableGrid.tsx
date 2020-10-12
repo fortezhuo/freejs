@@ -1,5 +1,11 @@
 import React, { FC, useCallback } from "react"
-import { useTable, usePagination, useRowSelect, useSortBy } from "react-table"
+import {
+  useTable,
+  usePagination,
+  useRowSelect,
+  useSortBy,
+  useFilters,
+} from "react-table"
 import { View, StyleSheet, TouchableOpacity } from "react-native"
 import { FlatList } from "react-native-gesture-handler"
 import { useSelection } from "./hook"
@@ -41,6 +47,7 @@ export const TableGrid: FC<any> = observer(
         defaultColumn: columnsFormat,
         pageCount: page.max,
       } as any,
+      useFilters,
       useSortBy,
       usePagination,
       useRowSelect,

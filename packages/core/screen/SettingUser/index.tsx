@@ -10,7 +10,7 @@ import {
   H3,
   ActionGroup,
 } from "../../component"
-import { View, StyleSheet } from "react-native"
+import { View, StyleSheet, Text } from "react-native"
 import { useHook } from "./hook"
 import { tw } from "@free/tailwind"
 

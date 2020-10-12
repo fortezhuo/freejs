@@ -1,6 +1,5 @@
 import React, { useEffect, useMemo } from "react"
 import { useStore, TableCell } from "../../component"
-import { View } from "react-native"
 import { Checkbox } from "./Checkbox"
 import { get } from "../../request"
 import * as config from "./config"

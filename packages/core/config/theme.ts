@@ -1,5 +1,4 @@
 import { Config } from "@free/core"
-import { adjust } from "@free/tailwind"
 
 /* Banpu */
 /*

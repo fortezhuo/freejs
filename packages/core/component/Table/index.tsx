@@ -1,4 +1,4 @@
-import React, { FC, createRef, memo } from "react"
+import React, { FC, createRef } from "react"
 import {
   StyleSheet,
   View,
@@ -13,15 +13,16 @@ import { random } from "../../util/random"
 import { tw, color } from "@free/tailwind"
 import { observer } from "mobx-react-lite"
 import { theme } from "../../config/theme"
-import { download } from "./helper"
+import dayjs from "dayjs"
 import { RectButton } from "react-native-gesture-handler"
 import Swipeable from "react-native-gesture-handler/Swipeable"
-import dayjs from "dayjs"
+export { useDefaultColumn } from "./hook"
 
-const defaultColor = color(theme.default_text)
 const date = (date: any) => dayjs(date).format("DD MMM YYYY")
 const datetime = (datetime: any) =>
   dayjs(datetime).format("DD MMM YYYY HH:mm:ss")
+
+const defaultColor = color(theme.default_text)
 
 export const TableScroll: FC<TableProps> = ({
   children,
@@ -214,44 +215,6 @@ export const RowMobile: FC<RowProps> = observer(
     )
   }
 )
-
-export const useDefaultColumn = (store: any) => {
-  return {
-    Cell: (cell: any) => {
-      switch (cell.column.type) {
-        case "link":
-          return (
-            <CellLink
-              store={store}
-              link={`${store.name}/${cell.value}`}
-              style={cell.column.style}
-            />
-          )
-        case "download_log":
-          return (
-            <CellDownload
-              style={cell.column.style}
-              onPress={() => {
-                download(`/api/${store.name}`, cell.value)
-              }}
-            />
-          )
-        case "date":
-          return (
-            <CellText style={cell.column.style}>{date(cell.value)}</CellText>
-          )
-        case "datetime":
-          return (
-            <CellText style={cell.column.style}>
-              {datetime(cell.value)}
-            </CellText>
-          )
-        default:
-          return <CellText style={cell.column.style}>{cell.value}</CellText>
-      }
-    },
-  }
-}
 
 const styles = StyleSheet.create({
   viewTable: tw(`shadow-xl`),

@@ -1,4 +1,5 @@
-import styles from "./styles.json"
+import tailwindStyles from "./styles.json"
+import matchAll from "match-all"
 
 const useVariables = (object) => {
   const newObject = {}
@@ -18,35 +19,72 @@ const useVariables = (object) => {
   return newObject
 }
 
-export const tw: any = (classNames, adhoc) => {
-  const obj = {}
+const FONT_VARIANT_REGEX = /(oldstyle-nums|lining-nums|tabular-nums|proportional-nums)/g
 
-  if (!classNames) {
-    return obj
+const addFontVariant = (style, classNames) => {
+  const matches = matchAll(classNames, FONT_VARIANT_REGEX).toArray()
+
+  if (matches.length > 0) {
+    style.fontVariant = matches
+  }
+}
+
+const FONT_SIZE_REGEX = /text-(xs|sm|base|lg|xl|2xl|3xl|4xl|5xl|6xl)/
+const LETTER_SPACING_REGEX = /(tracking-[a-z]+)/
+
+const addLetterSpacing = (tailwindStyles, style, classNames) => {
+  const letterSpacingMatches = LETTER_SPACING_REGEX.exec(classNames)
+
+  if (!letterSpacingMatches) {
+    return
   }
 
-  for (const className of classNames.replace(/\s\s+/g, " ").trim().split(" ")) {
-    if (styles[className]) {
-      Object.assign(obj, styles[className])
+  const fontSizeMatches = FONT_SIZE_REGEX.exec(classNames)
+
+  if (!fontSizeMatches) {
+    throw new Error(
+      "Font size is required when applying letter spacing, e.g. 'text-lg tracking-tighter'" // eslint-disable-line quotes
+    )
+  }
+
+  const letterSpacingClass = letterSpacingMatches[0]
+  const { letterSpacing } = tailwindStyles[letterSpacingClass]
+  const fontSizeClass = fontSizeMatches[0]
+  const { fontSize } = tailwindStyles[fontSizeClass]
+
+  style.letterSpacing = Number.parseFloat(letterSpacing) * fontSize
+}
+
+export const tw: any = (classNames, adhoc) => {
+  const style = {}
+
+  if (!classNames) {
+    return style
+  }
+
+  addFontVariant(style, classNames)
+  addLetterSpacing(tailwindStyles, style, classNames)
+
+  const separateClassNames = classNames
+    .replace(/\s+/g, " ")
+    .trim()
+    .split(" ")
+    .filter((className) => !className.startsWith("tracking-"))
+
+  for (const className of separateClassNames) {
+    if (tailwindStyles[className]) {
+      Object.assign(style, tailwindStyles[className])
     } else {
-      console.warn(
-        `Unsupported Tailwind class: "${className}" on "${classNames}"`
-      )
+      console.warn(`Unsupported Tailwind class: "${className}"`)
     }
   }
 
-  return adhoc ? { ...useVariables(obj), ...adhoc } : useVariables(obj)
+  return adhoc ? { ...useVariables(style), ...adhoc } : useVariables(style)
 }
 
 export const color: any = (name) => {
   const obj = tw(name)
   return obj.backgroundColor || obj.color
-}
-
-export const adjust: any = (twColor, n) => {
-  const intensity = twColor.split("-").pop()
-  const prefix = twColor.replace(intensity, "")
-  return `${prefix}${(+(intensity / 100) + n) * 100}`
 }
 
 export const border: any = (twColor) => {
@@ -55,8 +93,4 @@ export const border: any = (twColor) => {
 
 export const text: any = (twColor) => {
   return twColor.replace("bg-", "text-")
-}
-
-export const replaceKey = (key, twClass) => {
-  return { [key]: Object.values(tw(twClass))[0] }
 }
