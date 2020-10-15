@@ -8,9 +8,7 @@ import { observer } from "mobx-react-lite"
 
 const Wrapper: FC<any> = observer((props) =>
   props.scroll ? (
-    <KeyboardAwareScrollView testID={"LayoutScroll"}>
-      {props.children}
-    </KeyboardAwareScrollView>
+    <KeyboardAwareScrollView>{props.children}</KeyboardAwareScrollView>
   ) : (
     <View style={styles.viewWrapper}>{props.children}</View>
   )

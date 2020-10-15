@@ -1,9 +1,10 @@
 import { Component } from "react"
 
-import ReactNative, {
+import {
   DeviceEventEmitter,
   Keyboard,
   NativeModules,
+  findNodeHandle,
 } from "react-native"
 
 const ScrollViewManager = NativeModules.ScrollViewManager
@@ -77,7 +78,7 @@ export class Base extends Component<any, any> {
   _updateKeyboardAwareViewContentSize() {
     if (ScrollViewManager && ScrollViewManager.getContentSize) {
       ScrollViewManager.getContentSize(
-        ReactNative.findNodeHandle(this._keyboardAwareView),
+        findNodeHandle(this._keyboardAwareView),
         (res: any) => {
           if (this._keyboardAwareView) {
             this._keyboardAwareView.contentSize = res
@@ -109,7 +110,7 @@ export class Base extends Component<any, any> {
             this._keyboardAwareView
               .getScrollResponder()
               .scrollResponderScrollNativeHandleToKeyboard(
-                ReactNative.findNodeHandle(textInputRef),
+                findNodeHandle(textInputRef),
                 this.props.scrollToInputAdditionalOffset,
                 true
               )
