@@ -1,55 +1,40 @@
 import React, { FC } from "react"
-import { View, StyleSheet, ScrollView } from "react-native"
+import { View, StyleSheet } from "react-native"
+import { KeyboardAwareScrollView } from "../KeyboardAwareScrollView"
 import { tw } from "@free/tailwind"
 import { LayoutProps } from "@free/core"
 import { useHook } from "./hook"
 import { observer } from "mobx-react-lite"
-import { Loader } from "../"
 
 const Wrapper: FC<any> = observer((props) =>
   props.scroll ? (
-    <ScrollView
-      testID={"LayoutScroll"}
-      keyboardShouldPersistTaps="handled"
-      keyboardDismissMode="on-drag"
-      contentContainerStyle={styles.viewWrapper}
-    >
+    <KeyboardAwareScrollView testID={"LayoutScroll"}>
       {props.children}
-    </ScrollView>
+    </KeyboardAwareScrollView>
   ) : (
     <View style={styles.viewWrapper}>{props.children}</View>
   )
 )
 
 export const LayoutFull: FC<LayoutProps> = observer(
-  ({
-    testID = "LayoutFull",
-    children,
-    store,
-    stickyHeader,
-    scroll = true,
-    isLoading = false,
-  }) => {
+  ({ testID = "LayoutFull", children, scroll = true, store, stickyHeader }) => {
     useHook(store)
+
     return (
-      <View style={styles.viewLayout}>
+      <View style={styles.viewLayout} testID={testID}>
         {stickyHeader && <View style={styles.viewHeader}>{stickyHeader}</View>}
         <Wrapper scroll={scroll}>
-          <View testID={testID} style={styles.viewLayout}>
-            {children}
-          </View>
+          <View style={styles.viewLayout}>{children}</View>
         </Wrapper>
       </View>
     )
   }
 )
 
-// {store.isLoading || isLoading ? <Loader /> : children}
-
 export const Layout: FC<LayoutProps> = observer(
-  ({ testID = "Layout", children, store, stickyHeader, scroll, style }) => {
+  ({ testID = "Layout", children, scroll, store, stickyHeader, style }) => {
     return (
-      <LayoutFull stickyHeader={stickyHeader} store={store} scroll={scroll}>
+      <LayoutFull scroll={scroll} stickyHeader={stickyHeader} store={store}>
         <View style={styles.viewWrapper1}></View>
         <View style={styles.viewWrapper2}>
           <View style={styles.viewWrapper21}></View>

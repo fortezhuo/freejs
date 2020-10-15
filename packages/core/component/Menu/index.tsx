@@ -1,5 +1,5 @@
-import React, { FC, useRef } from "react"
-import { View, StyleSheet, Platform } from "react-native"
+import React, { FC, useRef, useEffect } from "react"
+import { View, StyleSheet, Keyboard } from "react-native"
 import { Modal } from "../Modal"
 import { IconButton } from "../Icon"
 import { observer, useLocalObservable } from "mobx-react-lite"
@@ -60,20 +60,14 @@ export const useMenu = () => {
       )
     }
   }
-  const hide = () => state.setOpen(false)
+  const hide = () => {
+    state.setOpen(false)
+  }
 
   const Menu: FC<MenuProps> = observer(
-    ({
-      testID = "Menu",
-      waitKeyboard = false,
-      anchor,
-      style,
-      children,
-      onShow,
-    }) => {
+    ({ testID = "Menu", anchor, style, children, onShow }) => {
       const { app } = useStore()
       const { menuWidth, menuHeight, anchorHeight } = state.measure
-      const isShow = app.keyboard.status === "shown"
       let { left, top } = state.measure
 
       if (left > app.dimension.width - menuWidth - SCREEN_INDENT) {
@@ -82,16 +76,9 @@ export const useMenu = () => {
         left = SCREEN_INDENT
       }
 
-      if (Platform.OS === "web") {
-        top += anchorHeight
-      } else {
-        top = app.dimension.height - menuHeight + 2
-        top -= Platform.OS === "ios" ? app.keyboard.height : 0
-        top += Platform.OS === "android" ? 0 : anchorHeight * 2
-      }
+      top += anchorHeight
 
       const menuStyle = {
-        opacity: isShow || !waitKeyboard ? 1 : 0,
         width: menuWidth,
         left,
         top,

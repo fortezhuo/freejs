@@ -212,6 +212,7 @@ declare module "@free/core" {
     testID?: string
     waitKeyboard?: boolean
     onShow?: VoidFunction
+    onDismiss?: VoidFunction
     anchor: ReactNode
     style?: ViewStyle
     children: ReactNode

@@ -36,7 +36,7 @@ const PageLogin: FC = observer(() => {
   return (
     <>
       <LayoutFull store={store}>
-        <View style={styles.pageLogin}>
+        <View style={styles.pageLogin} testID="PageLogin">
           <Col sm={11} md={10} lg={4} xl={4} style={styles.boxLogin}>
             <Avatar source={logo} style={styles.iconLogo} />
             <View style={styles.boxInput}>
