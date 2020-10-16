@@ -2,51 +2,15 @@ import React, { FC, useRef, useState, useEffect } from "react"
 import { Display } from "./Display"
 import { Base } from "../../Base"
 import { DisplayError } from "../DisplayError"
-import {
-  TouchableOpacity,
-  StyleSheet,
-  TextInput,
-  Keyboard,
-  Platform,
-} from "react-native"
+import { TouchableOpacity, StyleSheet } from "react-native"
 import { tw } from "@free/tailwind"
 import { observer } from "mobx-react-lite"
 import { theme } from "../../../config/theme"
 
 export const Anchor: FC<Anchor> = observer(({ state, menu }) => {
-  const refInput = useRef<TextInput>(null)
-  const [isTap, setTap] = useState(false)
-  const isNotWeb = Platform.OS !== "web"
-  if (isNotWeb) {
-    const blurToShow = () => {
-      setTimeout(() => {
-        refInput.current?.blur()
-      }, 200)
-    }
-
-    useEffect(() => {
-      if (isTap) {
-        refInput.current?.focus()
-        setTap(false)
-      }
-    }, [isTap])
-
-    useEffect(() => {
-      Keyboard.addListener("keyboardDidShow", blurToShow)
-      return (): void => {
-        Keyboard.removeListener("keyboardDidShow", blurToShow)
-      }
-    }, [])
-  }
   return (
     <>
-      {isNotWeb && (
-        <TextInput ref={refInput} onBlur={menu.show} style={{ height: 1 }} />
-      )}
-      <TouchableOpacity
-        disabled={state.disabled}
-        onPress={() => (isNotWeb ? setTap(true) : menu.show())}
-      >
+      <TouchableOpacity disabled={state.disabled} onPress={menu.show}>
         <Base
           isLoading={state.isLoading}
           style={StyleSheet.flatten([
