@@ -1,6 +1,6 @@
 import React, { useState, useEffect, FC, useRef, useCallback } from "react"
 
-import { Keyboard, ScrollView, View } from "react-native"
+import { Keyboard, ScrollView } from "react-native"
 
 export const KeyboardAwareScrollView: FC<any> = ({ children, ...rest }) => {
   const refScroll = useRef<ScrollView>(null)

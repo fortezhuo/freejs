@@ -43,6 +43,7 @@ export const Layout: FC<LayoutProps> = observer(
           testID={testID}
         >
           {children}
+          {store.isForm && <View style={{ height: 150 }} />}
         </View>
       </LayoutFull>
     )
