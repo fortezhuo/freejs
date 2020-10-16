@@ -1,5 +1,5 @@
-import React, { FC, useRef, useEffect } from "react"
-import { View, StyleSheet, Keyboard } from "react-native"
+import React, { FC, useRef } from "react"
+import { View, StyleSheet } from "react-native"
 import { Modal } from "../Modal"
 import { IconButton } from "../Icon"
 import { observer, useLocalObservable } from "mobx-react-lite"

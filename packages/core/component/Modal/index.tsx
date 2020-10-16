@@ -1,6 +1,8 @@
+export { default as ModalAnimated } from "react-native-modal"
+
 import React, { FC, memo } from "react"
 import { View, StyleSheet, TouchableWithoutFeedback } from "react-native"
-import { RNModal } from "./RNModal"
+import { Modal as RNModal } from "react-native"
 import { tw } from "@free/tailwind"
 import { ModalProps } from "@free/core"
 
