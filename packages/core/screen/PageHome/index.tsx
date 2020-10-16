@@ -1,21 +1,34 @@
-import React from "react"
-import { View, StyleSheet } from "react-native"
+import React, { useState } from "react"
+import { View, StyleSheet, Button } from "react-native"
 import { H4, Text } from "../../component/Text"
 import { Layout } from "../../component/Layout"
+import Modal from "react-native-modal"
 import { useHook } from "./hook"
 import { observer } from "mobx-react-lite"
 import { tw } from "@free/tailwind"
 
 const PageHome = observer(() => {
   const store = useHook()
+  const [isModalVisible, setModalVisible] = useState(false)
+  const toggleModal = () => {
+    setModalVisible(!isModalVisible)
+  }
   return (
     <>
       <Layout store={store}>
         <View>
           <H4 style={styles.textTitle}>JUDUL </H4>
-        </View>
-        <View>
-          <Text>TEST</Text>
+          <View style={{ flex: 1 }}>
+            <Button title="Show modal" onPress={toggleModal} />
+
+            <Modal isVisible={isModalVisible}>
+              <View style={{ flex: 1 }}>
+                <Text>Hello!</Text>
+
+                <Button title="Hide modal" onPress={toggleModal} />
+              </View>
+            </Modal>
+          </View>
         </View>
       </Layout>
     </>
