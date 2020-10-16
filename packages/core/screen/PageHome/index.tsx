@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { View, StyleSheet, Button } from "react-native"
-import { H4, Text, Layout, ModalAnimated } from "../../component"
+import { H4, Text, Layout, Modal } from "../../component"
 import { useHook } from "./hook"
 import { observer } from "mobx-react-lite"
 import { tw } from "@free/tailwind"
@@ -19,13 +19,13 @@ const PageHome = observer(() => {
           <View style={{ flex: 1 }}>
             <Button title="Show modal" onPress={toggleModal} />
 
-            <ModalAnimated isVisible={isModalVisible}>
+            <Modal isVisible={isModalVisible}>
               <View style={{ flex: 1 }}>
                 <Text>Hello!</Text>
 
                 <Button title="Hide modal" onPress={toggleModal} />
               </View>
-            </ModalAnimated>
+            </Modal>
           </View>
         </View>
       </Layout>

@@ -1,7 +1,6 @@
 import React, { FC, useRef } from "react"
 import { View, StyleSheet } from "react-native"
-import { Modal } from "../Modal"
-import { IconButton } from "../Icon"
+import { Modal, IconButton } from "../"
 import { observer, useLocalObservable } from "mobx-react-lite"
 import { tw } from "@free/tailwind"
 import { useStore } from "../Store"
@@ -88,11 +87,15 @@ export const useMenu = () => {
         <View testID={testID} ref={refContainer} collapsable={false}>
           {anchor}
           <Modal
-            visible={state.isOpen}
+            animationIn="fadeIn"
+            animationOut="fadeOut"
+            backdropTransitionOutTiming={0}
+            style={{ margin: 0 }}
+            isVisible={state.isOpen}
             onShow={onShow}
-            onRequestClose={hide}
+            onBackButtonPress={hide}
             onBackdropPress={hide}
-            transparent={true}
+            backdropColor={"transparent"}
           >
             <View
               collapsable={false}
