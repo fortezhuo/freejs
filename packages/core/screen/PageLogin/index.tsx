@@ -39,7 +39,7 @@ const PageLogin: FC = observer(() => {
       style={{ justifyContent: "center", flexDirection: "column" }}
     >
       <View style={styles.pageLogin} testID="PageLogin">
-        <Col sm={11} md={10} lg={4} xl={4} style={styles.boxLogin}>
+        <Col sm={11} md={9} lg={4} xl={4} style={styles.boxLogin}>
           <Avatar source={logo} style={styles.iconLogo} />
           <View style={styles.boxInput}>
             <Input.Text
