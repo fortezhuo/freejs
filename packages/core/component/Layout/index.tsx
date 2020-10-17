@@ -1,5 +1,5 @@
 import React, { FC } from "react"
-import { View, StyleSheet } from "react-native"
+import { View, StyleSheet, Platform } from "react-native"
 import { KeyboardAwareScrollView } from "../KeyboardAwareScrollView"
 import { tw } from "@free/tailwind"
 import { LayoutProps } from "@free/core"
@@ -31,6 +31,7 @@ export const LayoutFull: FC<LayoutProps> = observer(
 
 export const Layout: FC<LayoutProps> = observer(
   ({ testID = "Layout", children, scroll, store, stickyHeader, style }) => {
+    const isWeb = Platform.OS === "web"
     return (
       <LayoutFull scroll={scroll} stickyHeader={stickyHeader} store={store}>
         <View style={styles.viewWrapper1}></View>
@@ -43,7 +44,7 @@ export const Layout: FC<LayoutProps> = observer(
           testID={testID}
         >
           {children}
-          {store.isForm && <View style={{ height: 150 }} />}
+          {store.isForm && isWeb && <View style={{ height: 150 }} />}
         </View>
       </LayoutFull>
     )

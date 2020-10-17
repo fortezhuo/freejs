@@ -210,7 +210,6 @@ declare module "@free/core" {
   // Menu
   interface MenuProps {
     testID?: string
-    waitKeyboard?: boolean
     onShow?: VoidFunction
     onDismiss?: VoidFunction
     anchor: ReactNode
