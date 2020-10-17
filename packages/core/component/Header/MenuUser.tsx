@@ -5,6 +5,7 @@ import { useMenu } from "../Menu"
 import { useStore } from "../Store"
 import { tw } from "@free/tailwind"
 import { observer } from "mobx-react-lite"
+import _debounce from "lodash/debounce"
 
 export const MenuUser: FC = observer(() => {
   const { show, Menu, MenuItem } = useMenu()
@@ -26,7 +27,7 @@ export const MenuUser: FC = observer(() => {
             <Text style={styles.textUser}>{app?.auth?.fullname}</Text>
           </View>
           <View style={styles.viewChildren}>
-            <MenuItem name="log-out" onPress={() => app.logout()}>
+            <MenuItem name="log-out" onPress={_debounce(app.logout, 300)}>
               Logout
             </MenuItem>
           </View>
