@@ -1,6 +1,6 @@
 import React, { useState } from "react"
-import { View, StyleSheet, Button } from "react-native"
-import { H4, Text, Layout, Modal } from "../../component"
+import { View, StyleSheet } from "react-native"
+import { H4, Text, Layout, Modal, IconButton } from "../../component"
 import { useHook } from "./hook"
 import { observer } from "mobx-react-lite"
 import { tw } from "@free/tailwind"
@@ -17,14 +17,17 @@ const PageHome = observer(() => {
         <View>
           <H4 style={styles.textTitle}>JUDUL </H4>
           <View style={{ flex: 1 }}>
-            <Button title="Show modal" onPress={toggleModal} />
+            <IconButton
+              onPress={toggleModal}
+              style={{ backgroundColor: "white" }}
+            >
+              Button
+            </IconButton>
 
-            <Modal isVisible={isModalVisible}>
-              <View style={{ flex: 1 }}>
-                <Text>Hello!</Text>
+            <Modal isVisible={isModalVisible} onBackdropPress={toggleModal}>
+              <Text>Hello!</Text>
 
-                <Button title="Hide modal" onPress={toggleModal} />
-              </View>
+              <IconButton onPress={toggleModal}>Hide</IconButton>
             </Modal>
           </View>
         </View>
