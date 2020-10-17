@@ -24,7 +24,8 @@
     "clean:log": "rimraf ./log/*.log",
     "clean:git": "rimraf ./.git/index.lock",
     "clean:metro": "yarn workspace @free/mobile clean-metro",
-    "clean:repo": "rimraf ./node_modules ./packages/**/node_modules ./packages/mobile/ios/Podfile.lock ./packages/mobile/ios/Pods  ./yarn.lock",
+    "clean:repo": "rimraf ./node_modules ./packages/**/node_modules ./yarn.lock",
+    "clean:pod": "rimraf ./packages/mobile/ios/Podfile.lock ./packages/mobile/ios/Pods",
     "start": "NODE_ENV=production node --trace-warnings ./build | NODE_ENV=production logger",
     "start:mock": "run-p dev:mock start",
     "android": "yarn workspace @free/mobile android",
@@ -85,6 +86,10 @@
   "workspaces": {
     "packages": [
       "packages/*"
+    ],
+    "nohoist": [
+      "**/@bam.tech/react-native-make",
+      "**/@bam.tech/react-native-make/**"
     ]
   },
   "devDependencies": {

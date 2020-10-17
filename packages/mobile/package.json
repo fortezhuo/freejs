@@ -13,6 +13,7 @@
   "devDependencies": {
     "@babel/core": "^7.8.4",
     "@babel/runtime": "^7.8.4",
+    "@bam.tech/react-native-make": "^3.0.0",
     "@types/react-router-native": "^5.1.0",
     "@types/react-test-renderer": "^16.9.2",
     "metro-react-native-babel-preset": "^0.63.0",
@@ -21,6 +22,7 @@
   "scripts": {
     "android": "react-native run-android",
     "ios": "react-native run-ios",
+    "icon": "react-native set-icon --path /Users/forte/Pictures/forteLogo.png",
     "link-ios": "cd ios && pod install",
     "clean-ios": "cd ios && rimraf ./Pods ./Podfile.lock",
     "clean-android": "cd android && ./gradlew clean",
