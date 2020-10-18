@@ -26,20 +26,22 @@ export const Options: FC<Options> = observer(({ refScroll, menu, state }) => {
 
   return (
     <>
-      <ScrollView ref={refScroll} keyboardShouldPersistTaps="handled">
-        {options.map((opt: any, i: number) => (
-          <MenuItem
-            key={"option_" + random()}
-            active={i === state.index}
-            onPress={() => {
-              state.onSelect(opt)
-              !state.isMobile && menu.hide()
-            }}
-          >
-            {opt.__creatable ? `Create : "${opt[keyLabel]}"` : opt[keyLabel]}
-          </MenuItem>
-        ))}
-      </ScrollView>
+      {options.length != 0 && (
+        <ScrollView ref={refScroll} keyboardShouldPersistTaps="handled">
+          {options.map((opt: any, i: number) => (
+            <MenuItem
+              key={"option_" + random()}
+              active={i === state.index}
+              onPress={() => {
+                state.onSelect(opt)
+                !state._isMobileShow && menu.hide()
+              }}
+            >
+              {opt.__creatable ? `Create : "${opt[keyLabel]}"` : opt[keyLabel]}
+            </MenuItem>
+          ))}
+        </ScrollView>
+      )}
       {options.length == 0 && <MenuItem disabled>No option</MenuItem>}
     </>
   )

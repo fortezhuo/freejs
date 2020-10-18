@@ -26,14 +26,27 @@ export const Content: FC<any> = observer(({ state, children, menu }) => {
       {state._isMobileShow && (
         <>
           <H4>{state.placeholder}</H4>
-          <Display state={state} />
+          <View style={styles.viewInput}>
+            <Display state={state} />
+          </View>
         </>
       )}
-      <View style={styles.viewWrapper}>{children}</View>
+      <View
+        style={StyleSheet.flatten([
+          styles.viewWrapper,
+          state._isMobileShow ? styles.viewWrapperMobile : {},
+        ])}
+      >
+        {children}
+      </View>
       {state._isMobileShow && (
         <View style={styles.viewButton}>
-          <Button onPress={onCommit}>OK</Button>
-          <Button onPress={onCancel}>Cancel</Button>
+          <Button type={"primary_1_bg"} icon="check" onPress={onCommit}>
+            OK
+          </Button>
+          <Button type={"danger_bg"} icon="x" onPress={onCancel}>
+            Cancel
+          </Button>
         </View>
       )}
     </View>
@@ -41,13 +54,17 @@ export const Content: FC<any> = observer(({ state, children, menu }) => {
 })
 
 const styles = StyleSheet.create({
-  viewButton: tw("flex-row"),
+  viewButton: tw("flex-row justify-evenly self-end", { width: 200 }),
   viewMenuDesktop: {
     marginTop: 1,
     height: 181,
   },
-  viewMenuMobile: tw("bg-white p-6 rounded-lg shadow-lg"),
+  viewMenuMobile: tw("bg-white p-3 rounded-lg shadow-lg"),
+  viewInput: tw(
+    `${theme.default_bg} ${theme.input_border} w-full h-10 flex-row my-2`
+  ),
   viewWrapper: tw(`${theme.default_bg} ${theme.input_border}`, {
     paddingTop: 3,
   }),
+  viewWrapperMobile: tw("mb-2", { height: 200 }),
 })

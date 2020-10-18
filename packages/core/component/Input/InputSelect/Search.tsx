@@ -56,6 +56,7 @@ export const Search: FC<Search> = observer(({ refSearch, state, menu }) => {
 
   return (
     <TextInput
+      placeholder="Please type here ..."
       ref={refSearch}
       value={state.search}
       style={styles.inputText}
