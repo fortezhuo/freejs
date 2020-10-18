@@ -4,14 +4,7 @@ import { useLocalObservable } from "mobx-react-lite"
 
 export const useWrapper = (store: any) => {
   const isMobile = store.app.dimension.isMobile
-  const width = store.app.dimension.width
   const wrapper: any = isMobile ? useDialog() : useMenu()
-
-  useEffect(() => {
-    if (wrapper) {
-      wrapper.hide()
-    }
-  }, [width])
 
   return {
     Wrapper: wrapper.Dialog ? wrapper.Dialog : wrapper.Menu,
