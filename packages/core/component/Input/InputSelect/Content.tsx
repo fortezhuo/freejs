@@ -7,6 +7,9 @@ import { theme } from "../../../config/theme"
 import { tw } from "@free/tailwind"
 
 export const Content: FC<any> = observer(({ state, children, menu }) => {
+  const placeholder = `${
+    state.placeholder.toLowerCase().indexOf("select") >= 0 ? "" : "Select "
+  }${state.placeholder}`
   const onCancel = useCallback(() => {
     state.set({ _isMobileShow: false })
     menu.hide()
@@ -25,7 +28,7 @@ export const Content: FC<any> = observer(({ state, children, menu }) => {
     >
       {state._isMobileShow && (
         <>
-          <H4>{state.placeholder}</H4>
+          <H4>{placeholder}</H4>
           <View style={styles.viewInput}>
             <Display state={state} />
           </View>
@@ -66,5 +69,5 @@ const styles = StyleSheet.create({
   viewWrapper: tw(`${theme.default_bg} ${theme.input_border}`, {
     paddingTop: 3,
   }),
-  viewWrapperMobile: tw("mb-2", { height: 200 }),
+  viewWrapperMobile: tw("mb-2", { height: 181 }),
 })

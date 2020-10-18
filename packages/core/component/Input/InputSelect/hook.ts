@@ -1,9 +1,10 @@
 import { useEffect } from "react"
+import { Platform } from "react-native"
 import { useMenu, useDialog } from "../.."
 import { useLocalObservable } from "mobx-react-lite"
 
 export const useWrapper = (store: any) => {
-  const isMobile = store.app.dimension.isMobile
+  const isMobile = Platform.OS !== "web"
   const wrapper: any = isMobile ? useDialog() : useMenu()
 
   return {

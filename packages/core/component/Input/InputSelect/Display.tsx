@@ -22,7 +22,12 @@ const Chip: FC<any> = observer(({ state, children }) => {
 })
 
 const Placeholder: FC<StateComponent> = observer(({ state }) => {
-  return <Text style={styles.textPlaceholder}>{state.placeholder}</Text>
+  const style = state.multi ? { paddingHorizontal: 8 } : {}
+  return (
+    <Text style={StyleSheet.flatten([styles.textPlaceholder, style])}>
+      {state.placeholder}
+    </Text>
+  )
 })
 
 const Clear: FC<StateComponent> = observer(({ state }) => {
@@ -40,6 +45,7 @@ const Clear: FC<StateComponent> = observer(({ state }) => {
 
 export const Display: FC<StateComponent> = observer(({ state }) => {
   const { multi, display } = state
+  const isBlank = multi ? display.length == 0 : display === ""
 
   return (
     <View
@@ -49,7 +55,7 @@ export const Display: FC<StateComponent> = observer(({ state }) => {
       ])}
     >
       <View style={styles.viewValue} testID="ViewValue">
-        {display ? (
+        {!isBlank ? (
           multi ? (
             display.map((_value: any) => (
               <Chip state={state} key={"chip_" + random()}>
