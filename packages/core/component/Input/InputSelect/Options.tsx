@@ -33,7 +33,7 @@ export const Options: FC<Options> = observer(({ refScroll, menu, state }) => {
             active={i === state.index}
             onPress={() => {
               state.onSelect(opt)
-              menu.hide()
+              !state.isMobile && menu.hide()
             }}
           >
             {opt.__creatable ? `Create : "${opt[keyLabel]}"` : opt[keyLabel]}

@@ -1,12 +1,5 @@
 import React, { FC } from "react"
-import {
-  Input,
-  LayoutFull,
-  Col,
-  Gradient,
-  Avatar,
-  Snackbar,
-} from "../../component"
+import { Input, LayoutFull, Col, Gradient, Avatar } from "../../component"
 import { View, StyleSheet, Text, TouchableOpacity } from "react-native"
 import { theme } from "../../config/theme"
 import { tw } from "@free/tailwind"

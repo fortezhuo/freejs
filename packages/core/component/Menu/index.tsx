@@ -1,9 +1,8 @@
 import React, { FC, useRef } from "react"
 import { View, StyleSheet } from "react-native"
-import { Modal, IconButton } from "../"
+import { Modal, IconButton, useStore } from "../"
 import { observer, useLocalObservable } from "mobx-react-lite"
 import { tw } from "@free/tailwind"
-import { useStore } from "../Store"
 import { MenuProps, MenuItemProps } from "@free/core"
 import { theme } from "../../config/theme"
 
@@ -65,8 +64,9 @@ export const useMenu = () => {
 
   const Menu: FC<MenuProps> = observer(
     ({ testID = "Menu", anchor, style, children, onShow }) => {
+      if (!state || !state.measure) return null
       const { app } = useStore()
-      const { menuWidth, menuHeight, anchorHeight } = state.measure
+      const { menuWidth, anchorHeight } = state.measure
       let { left, top } = state.measure
 
       if (left > app.dimension.width - menuWidth - SCREEN_INDENT) {

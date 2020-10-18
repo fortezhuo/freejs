@@ -9,7 +9,7 @@ import { ButtonProps } from "@free/core"
 
 export const Button: FC<ButtonProps> = observer((props) => {
   let {
-    store,
+    store = undefined,
     testID = "Button",
     type = "transparent_bg",
     outline,
@@ -37,7 +37,7 @@ export const Button: FC<ButtonProps> = observer((props) => {
       : "text-white"
   )
 
-  disabled = disabled || store.isUpdating
+  disabled = disabled || store?.isUpdating
 
   return (
     <IconButton
@@ -47,7 +47,7 @@ export const Button: FC<ButtonProps> = observer((props) => {
       styleContainer={StyleSheet.flatten([styles.viewButton, bgColor, style])}
       styleText={StyleSheet.flatten([styles.textButton, textColor])}
       style={styles.iconButton}
-      name={store.isUpdating ? "loader" : icon}
+      name={store?.isUpdating ? "loader" : icon}
       color={textColor.color}
       size={18}
       onPress={onPress}

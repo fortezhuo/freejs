@@ -131,7 +131,7 @@ declare module "@free/core" {
   }
 
   interface ButtonProps extends IconButtonProps {
-    store: any
+    store?: any
     type?: string
     outline?: boolean
     icon?: string

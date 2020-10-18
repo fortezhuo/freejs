@@ -18,7 +18,7 @@ export const Anchor: FC<Anchor> = observer(({ state, menu }) => {
             state.disabled ? styles.viewDisabled : {},
           ])}
         >
-          <Display state={state} />
+          {!state._isMobileShow && <Display state={state} />}
         </Base>
       </TouchableOpacity>
       <DisplayError name={state.name} />

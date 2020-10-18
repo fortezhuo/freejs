@@ -63,7 +63,7 @@ export const Display: FC<StateComponent> = observer(({ state }) => {
           <Placeholder state={state} />
         )}
       </View>
-      {!state.disabled && <Clear state={state} />}
+      {!(state.disabled || state._isMobileShow) && <Clear state={state} />}
     </View>
   )
 })
