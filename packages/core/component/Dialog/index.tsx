@@ -30,9 +30,9 @@ export const useDialog = () => {
         <View testID={testID} ref={refContainer} collapsable={false}>
           {anchor}
           <Modal
+            style={{ margin: 0 }}
             avoidKeyboard={true}
             backdropTransitionOutTiming={0}
-            style={{ margin: 0 }}
             isVisible={state.isOpen}
             onShow={onShow}
             onBackButtonPress={allowBackDrop ? hide : noop}

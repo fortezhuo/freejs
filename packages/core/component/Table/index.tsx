@@ -32,7 +32,7 @@ export const TableScroll: FC<TableProps> = ({
 }) => {
   return (
     <View testID={testID} style={StyleSheet.flatten([styles.viewTable, style])}>
-      <ScrollView horizontal scrollEnabled={scroll}>
+      <ScrollView horizontal scrollEnabled={scroll} testID="HorizontalScroll">
         <View style={styles.viewTableChildren}>{children}</View>
       </ScrollView>
     </View>
