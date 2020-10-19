@@ -7,23 +7,28 @@ export const remove = function (this: DatabaseService) {
     reply.statusCode = 200
     try {
       const collection = req.database[this.dbName].get(this.name)
+      const trash = req.database[this.dbTrashName].get(this.name)
       const { q, option } = this.onRequestHandler(req)
       if (!q) throw new Exception(400, "Parameter not found")
 
-      const query = {
-        _docAuthors: { $exists: true, $in: this.auth?.context.list },
-        ...q,
+      const query = this.disableAuth
+        ? q
+        : {
+            _docAuthors: { $exists: true, $in: this.auth?.context.list },
+            ...q,
+          }
+
+      const data = await collection.findOne(query, {})
+
+      if (await trash.insert(data)) {
+        const result = await collection.remove(query, option)
+        reply.send({
+          success: true,
+          result,
+        })
+      } else {
+        throw new Exception(400, "Move to Trash failed")
       }
-      const data = await collection.findOne(q)
-
-      const trashCollection = req.database[this.dbTrashName].get(this.name)
-      await trashCollection.insert(data)
-
-      const removeResult = await collection.remove(query, option)
-      reply.send({
-        success: true,
-        result: removeResult,
-      })
     } catch (err) {
       this.onErrorHandler(req, reply, err)
     }

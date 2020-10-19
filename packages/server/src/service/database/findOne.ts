@@ -6,8 +6,8 @@ export const findOne = function (this: any) {
   return async (req: Request, reply: Reply) => {
     try {
       reply.statusCode = 200
-      const collection = req.database[this.dbName].get(this.name)
-      const { q, projection } = this.onRequestHandler(req)
+      const { q, projection, name = undefined } = this.onRequestHandler(req)
+      const collection = req.database[this.dbName].get(name || this.name)
       if (!q) throw new Exception(400, "Parameter not found")
 
       const query = this.disableAuth
