@@ -8,7 +8,7 @@ import { useStore } from ".."
 
 export const InputSearch: FC = observer((_props) => {
   const { view } = useStore()
-  const name = view.data.get("name")
+  const [name, isFilter = false] = view.getData("name", "isFilter")
   const [text, setText] = useState("")
   const buildSearch = useCallback(
     (text: string) => {
@@ -29,15 +29,26 @@ export const InputSearch: FC = observer((_props) => {
   }, [view?.app?.routerLocation])
 
   return name !== "log" ? (
-    <Base isLoading={view.isLoading} style={styles.viewInput}>
+    <Base
+      isLoading={view.isLoading}
+      style={StyleSheet.flatten([
+        styles.viewInput,
+        isFilter ? styles.viewDisabled : {},
+      ])}
+    >
       <TextInput
         value={text}
+        editable={!isFilter}
         placeholder="Search ..."
         placeholderTextColor={tw("text-gray-600").color}
         style={styles.inputText}
         onChangeText={setText}
         onSubmitEditing={() => {
-          view.setData({ search: JSON.stringify(buildSearch(text)), page: 1 })
+          view.setData({
+            isSearch: text !== "",
+            search: JSON.stringify(buildSearch(text)),
+            page: 1,
+          })
         }}
       />
     </Base>
@@ -48,5 +59,6 @@ const styles: any = StyleSheet.create({
   viewInput: tw(
     `${theme.default_bg} ${theme.input_border} w-full rounded-full h-12`
   ),
+  viewDisabled: tw(theme.disabled_bg),
   inputText: tw(`${theme.default_text} flex-1 mx-6`),
 })

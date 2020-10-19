@@ -34,7 +34,7 @@ export const useDialog = () => {
             avoidKeyboard={true}
             backdropTransitionOutTiming={0}
             isVisible={state.isOpen}
-            onShow={onShow}
+            onModalShow={onShow}
             onBackButtonPress={allowBackDrop ? hide : noop}
             onBackdropPress={allowBackDrop ? hide : noop}
           >

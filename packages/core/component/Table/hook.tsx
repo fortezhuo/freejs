@@ -33,6 +33,10 @@ export const useDefaultColumn = (store: any) => {
           return null
         case "download_log":
           return null
+        case "date":
+          return null
+        case "datetime":
+          return null
         default:
           return (
             <Input.Text

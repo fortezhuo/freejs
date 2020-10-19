@@ -49,14 +49,14 @@ export const TableGrid: FC<any> = observer(
       useSelection
     )
 
-    const TableWrapper = isMobile ? Table : TableScroll
+    const TableWrapper = isMobile || isLoading ? Table : TableScroll
 
     return (
       <>
         {isShowPagination && (
           <Pagination store={store} page={{ ...page, goto: gotoPage }} />
         )}
-        <TableWrapper scroll={!isLoading} style={styles.viewTable}>
+        <TableWrapper style={styles.viewTable}>
           {!isMobile &&
             headerGroups.map((headerGroup: any) => {
               const { key } = headerGroup.getHeaderGroupProps()

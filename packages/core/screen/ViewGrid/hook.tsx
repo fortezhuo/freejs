@@ -69,6 +69,7 @@ export const useActions = (store: any) => {
   const name = store.name
   const button = (config as ObjectAny)[name].button
   const isMobile = store?.app.dimension.isMobile
+  const isSearch = store.data.get("isSearch") || false
   return useMemo(() => {
     const list: any = {
       new: {
@@ -89,6 +90,7 @@ export const useActions = (store: any) => {
         icon: "search",
         type: "primary_2_bg",
         children: "Filter",
+        disabled: isSearch,
         onPress: () => {
           const isFilter = store.data.get("isFilter") || false
           store.setData({ isFilter: !isFilter })
@@ -103,7 +105,7 @@ export const useActions = (store: any) => {
         .map((btn: string) => list[btn])
         .filter((btn: ObjectAny) => !!btn && btn.visible),
     }
-  }, [name, isMobile])
+  }, [name, isMobile, isSearch])
 }
 
 export const useColumns = (store: any) => {
