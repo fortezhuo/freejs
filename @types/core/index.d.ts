@@ -67,6 +67,17 @@ declare module "@free/core" {
     gradient?: boolean
   }
 
+  // Dialog
+  interface DialogProps {
+    testID?: string
+    allowBackDrop?: boolean
+    onShow?: VoidFunction
+    onDismiss?: VoidFunction
+    anchor: ReactNode
+    style?: ViewStyle
+    children: ReactNode
+  }
+
   // Footer
   interface FooterProps {
     testID?: string
@@ -210,6 +221,7 @@ declare module "@free/core" {
   // Menu
   interface MenuProps {
     testID?: string
+    allowBackDrop?: boolean
     onShow?: VoidFunction
     onDismiss?: VoidFunction
     anchor: ReactNode

@@ -63,7 +63,7 @@ export const useMenu = () => {
   }
 
   const Menu: FC<MenuProps> = observer(
-    ({ testID = "Menu", anchor, style, children, onShow }) => {
+    ({ testID = "Menu", anchor, style, children, onShow, allowBackDrop }) => {
       if (!state || !state.measure) return null
       const { app } = useStore()
       const { menuWidth, anchorHeight } = state.measure
@@ -93,8 +93,8 @@ export const useMenu = () => {
             style={{ margin: 0 }}
             isVisible={state.isOpen}
             onShow={onShow}
-            onBackButtonPress={hide}
-            onBackdropPress={hide}
+            onBackButtonPress={allowBackDrop ? hide : noop}
+            onBackdropPress={allowBackDrop ? hide : noop}
             backdropColor={"transparent"}
           >
             <View

@@ -4,7 +4,7 @@ import { Search } from "./Search"
 import { Options } from "./Options"
 import { Anchor } from "./Anchor"
 import { Content } from "./Content"
-import { TextInput, ScrollView } from "react-native"
+import { TextInput, ScrollView, Platform } from "react-native"
 import { observer } from "mobx-react-lite"
 import { InputSelectProps } from "@free/core"
 
@@ -16,6 +16,7 @@ export const InputSelect: FC<InputSelectProps> = observer((props) => {
 
   return (
     <Wrapper
+      allowBackDrop={Platform.OS === "web"}
       onShow={() => {
         state.onShow()
         refSearch.current?.focus()

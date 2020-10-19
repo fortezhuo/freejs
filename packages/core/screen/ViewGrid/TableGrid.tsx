@@ -1,11 +1,6 @@
 import React, { FC, useCallback } from "react"
-import {
-  useTable,
-  usePagination,
-  useRowSelect,
-  useSortBy,
-  useFilters,
-} from "react-table"
+import { useTable, usePagination, useRowSelect, useSortBy } from "react-table"
+import { random } from "../../util/random"
 import { View, StyleSheet, TouchableOpacity } from "react-native"
 import { FlatList } from "react-native-gesture-handler"
 import { useSelection } from "./hook"
@@ -37,6 +32,7 @@ export const TableGrid: FC<any> = observer(
       isMobile,
       isLoading,
     } = data
+    const isFilter = store.temp.get("isFilter") || false
     const isShowPagination = store.name !== "log" && !isMobile
     const { headerGroups, prepareRow, page: rows, gotoPage }: any = useTable(
       {
@@ -47,7 +43,6 @@ export const TableGrid: FC<any> = observer(
         defaultColumn: columnsFormat,
         pageCount: page.max,
       } as any,
-      useFilters,
       useSortBy,
       usePagination,
       useRowSelect,
@@ -66,36 +61,53 @@ export const TableGrid: FC<any> = observer(
             headerGroups.map((headerGroup: any) => {
               const { key } = headerGroup.getHeaderGroupProps()
               return (
-                <TableHeader key={key}>
-                  {headerGroup.headers.map((column: any) => {
-                    const { key } = column.getHeaderProps(
-                      column.getSortByToggleProps()
-                    )
-                    const onPress = useCallback((e) => {
-                      return column.canSort
-                        ? column.toggleSortBy(undefined, true)
-                        : {}
-                    }, [])
-                    return (
-                      <TouchableOpacity key={key} onPress={onPress}>
-                        <TableCell style={(column as any).style}>
-                          <Text>{column.render("Header")} </Text>
-                          {column.isSorted && (
-                            <Icon
-                              color={defaultColor}
-                              name={
-                                column.isSortedDesc
-                                  ? "chevron-down"
-                                  : "chevron-up"
-                              }
-                              size={16}
-                            />
-                          )}
-                        </TableCell>
-                      </TouchableOpacity>
-                    )
-                  })}
-                </TableHeader>
+                <View key={key}>
+                  <TableHeader>
+                    {headerGroup.headers.map((column: any) => {
+                      const { key } = column.getHeaderProps(
+                        column.getSortByToggleProps()
+                      )
+                      const onPress = useCallback((e) => {
+                        return column.canSort
+                          ? column.toggleSortBy(undefined, true)
+                          : {}
+                      }, [])
+                      return (
+                        <TouchableOpacity key={key} onPress={onPress}>
+                          <TableCell style={(column as any).style}>
+                            <Text>{column.render("Header")} </Text>
+                            {column.isSorted && (
+                              <Icon
+                                color={defaultColor}
+                                name={
+                                  column.isSortedDesc
+                                    ? "chevron-down"
+                                    : "chevron-up"
+                                }
+                                size={16}
+                              />
+                            )}
+                          </TableCell>
+                        </TouchableOpacity>
+                      )
+                    })}
+                  </TableHeader>
+                  {isFilter && (
+                    <TableRow filter>
+                      {headerGroup.headers.map((column: any) => {
+                        return (
+                          <TableCell
+                            filter
+                            style={(column as any).style}
+                            key={"filter_" + random()}
+                          >
+                            {column.render("Filter")}
+                          </TableCell>
+                        )
+                      })}
+                    </TableRow>
+                  )}
+                </View>
               )
             })}
           {isLoading ? (

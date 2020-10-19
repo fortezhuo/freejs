@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo } from "react"
-import { useStore, TableCell } from "../../component"
+import { useStore, TableCell, Text } from "../../component"
 import { Checkbox } from "./Checkbox"
 import { get } from "../../request"
 import * as config from "./config"
@@ -144,6 +144,7 @@ export const useSelection = (hooks: any) => {
   return hooks.visibleColumns.push((columns: any) => [
     {
       id: "selection",
+      type: "checkbox",
       style: { width: 36, maxWidth: 36, marginTop: 1 },
       Header: (header: any) => {
         return <Checkbox {...header.getToggleAllPageRowsSelectedProps()} />

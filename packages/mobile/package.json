@@ -22,6 +22,7 @@
   "scripts": {
     "android": "react-native run-android",
     "ios": "react-native run-ios",
+    "ipad": "react-native run-ios --simulator=\"iPad Pro (9.7-inch)\"",
     "icon": "react-native set-icon --path /Users/forte/Pictures/forteLogo.png",
     "link-ios": "cd ios && pod install",
     "clean-ios": "cd ios && rimraf ./Pods ./Podfile.lock",

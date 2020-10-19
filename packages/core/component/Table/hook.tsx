@@ -1,4 +1,5 @@
 import React from "react"
+import * as Input from "../Input"
 import { CellText, CellDownload, CellLink } from "./"
 import { download } from "./helper"
 import dayjs from "dayjs"
@@ -9,6 +10,20 @@ const datetime = (datetime: any) =>
 
 export const useDefaultColumn = (store: any) => {
   return {
+    Filter: (filter: any) => {
+      switch (filter.column.type) {
+        case "checkbox":
+          return null
+        case "link":
+          return null
+        case "download_log":
+          return null
+        default:
+          return (
+            <Input.Text store={store} name={filter.column.id} model="temp" />
+          )
+      }
+    },
     Cell: (cell: any) => {
       switch (cell.column.type) {
         case "link":
