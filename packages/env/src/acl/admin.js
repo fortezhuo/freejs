@@ -6,6 +6,10 @@ const role = {
     .concat(common.admin)
     .concat([
       {
+        resource: "trash",
+        action: ["*"],
+      },
+      {
         resource: "log",
         action: ["*"],
       },

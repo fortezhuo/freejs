@@ -1,14 +1,20 @@
 import { Request, Reply } from "@free/server"
-import { DatabaseService } from "./"
 
-export const findAll = function (this: DatabaseService) {
+export const findAll = function (this: any) {
   return async (req: Request, reply: Reply) => {
     reply.statusCode = 200
     try {
-      const collection = req.database[this.dbName].get(this.name)
-      const { q, projection, limit, sort, page, skip } = this.onRequestHandler(
-        req
-      )
+      const {
+        q,
+        projection,
+        limit,
+        sort,
+        page,
+        skip,
+        name = undefined,
+      } = this.onRequestHandler(req)
+      const collection = req.database[this.dbName].get(name || this.name)
+
       const query = this.disableAuth
         ? q
         : {

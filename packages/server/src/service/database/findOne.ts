@@ -2,7 +2,7 @@ import { Request, Reply } from "@free/server"
 import { DatabaseService } from "./"
 import { Exception } from "../../util/exception"
 
-export const findOne = function (this: DatabaseService) {
+export const findOne = function (this: any) {
   return async (req: Request, reply: Reply) => {
     try {
       reply.statusCode = 200

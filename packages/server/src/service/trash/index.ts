@@ -1,38 +1,23 @@
 import { id as monkID } from "monk"
 import { BaseService } from "../base"
+import { list } from "./list"
+import { findAll } from "../database/findAll"
+import { findOne } from "../database/findOne"
 import { Request } from "@free/server"
-import { findAll } from "./findAll"
-import { findOne } from "./findOne"
-import { remove } from "./remove"
-import { restore } from "./restore"
-import { save } from "./save"
-import { Exception } from "../../util/exception"
-import * as schema from "../../schema"
-import { normalize } from "../../schema/schema"
 
-export class DatabaseService extends BaseService {
-  public dbName: string = "app"
-  public dbTrashName: string = "trash"
-  public schema: any
-  public collection: any
+export class TrashService extends BaseService {
+  public dbName: string = "trash"
+  public list: any
+  public restore: any
   public findAll: any
   public findOne: any
-  public remove: any
-  public restore: any
-  public save: any
-
-  constructor(name: string) {
-    super(name)
-    this.schema = (schema as any)[name]
+  constructor() {
+    super("trash")
+    this.list = list.bind(this)
     this.findAll = findAll.bind(this)
     this.findOne = findOne.bind(this)
-    this.remove = remove.bind(this)
-    this.restore = restore.bind(this)
-    this.save = save.bind(this)
   }
 
-  onBeforeSave = (collection: any, handler: any) => {}
-  onAfterSave = (collection: any, handler: any) => {}
   onRequestHandler = (req: Request) => {
     const { params, query, body: rawBody } = req as {
       [key: string]: any
@@ -40,6 +25,7 @@ export class DatabaseService extends BaseService {
     const { _id, ...body } = rawBody || { _id: null }
     let projection: { [key: string]: number } = {}
     let q = query.q ? query.q : params.q
+    let name = params.name
     let {
       option = "{}",
       sort = "{}",
@@ -79,19 +65,7 @@ export class DatabaseService extends BaseService {
       option,
       page,
       skip,
+      name,
     }
-  }
-  onValidation(body: any) {
-    const { error } = this.schema.validate(body, {
-      abortEarly: false,
-    })
-    if (error)
-      throw new Exception(
-        400,
-        `Validation Error for ${this.name.toUpperCase()}`,
-        normalize(error)
-      )
-
-    return true
   }
 }
