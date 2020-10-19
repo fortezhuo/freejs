@@ -8,7 +8,7 @@ export const useHook = () => {
   const { view } = useStore()
   const isMobile = view.app?.dimension.isMobile
   const name = `${view?.app?.routerLocation}/`.split("/")[1]
-  const [search, page] = view.getData("search", "page")
+  const [search, page, isFilter] = view.getData("search", "page", "isFilter")
   view.name = name
   view.title = (config as ObjectAny)[name].title
   view.search = (config as ObjectAny)[name].search
@@ -36,6 +36,15 @@ export const useHook = () => {
   useEffect(() => {
     view.setData({ isMobile })
   }, [isMobile])
+
+  useEffect(() => {
+    if (!isFilter) {
+      view.setData({
+        search: undefined,
+        page: 1,
+      })
+    }
+  }, [isFilter])
 
   const setCollection = async (name: string) => {
     const params = view.name !== "log" ? { q: search, page } : {}
@@ -81,8 +90,8 @@ export const useActions = (store: any) => {
         type: "primary_2_bg",
         children: "Filter",
         onPress: () => {
-          const isFilter = store.temp.get("isFilter") || false
-          store.temp.set("isFilter", !isFilter)
+          const isFilter = store.data.get("isFilter") || false
+          store.setData({ isFilter: !isFilter })
         },
         visible: !isMobile,
       },

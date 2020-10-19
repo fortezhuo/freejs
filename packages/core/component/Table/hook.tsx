@@ -1,4 +1,5 @@
-import React from "react"
+import React, { useCallback } from "react"
+import { entries } from "mobx"
 import * as Input from "../Input"
 import { CellText, CellDownload, CellLink } from "./"
 import { download } from "./helper"
@@ -9,6 +10,20 @@ const datetime = (datetime: any) =>
   dayjs(datetime).format("DD MMM YYYY HH:mm:ss")
 
 export const useDefaultColumn = (store: any) => {
+  const name = store.name
+  const onFilterSearch = useCallback(() => {
+    const query = entries(store.temp)
+      .filter((values) => values[1] !== "")
+      .map((values) => ({
+        [values[0]]: { $regex: values[1].replace(" ", "|"), $options: "i" },
+      }))
+
+    store.setData({
+      search: query.length === 0 ? undefined : JSON.stringify({ $and: query }),
+      page: 1,
+    })
+  }, [name])
+
   return {
     Filter: (filter: any) => {
       switch (filter.column.type) {
@@ -20,7 +35,12 @@ export const useDefaultColumn = (store: any) => {
           return null
         default:
           return (
-            <Input.Text store={store} name={filter.column.id} model="temp" />
+            <Input.Text
+              store={store}
+              name={filter.column.id}
+              model="temp"
+              onSubmitEditing={onFilterSearch}
+            />
           )
       }
     },
