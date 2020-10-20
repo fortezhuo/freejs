@@ -1,32 +1,30 @@
 import React, { useEffect, useMemo } from "react"
-import { useStore, TableCell, Text } from "../../component"
+import { useStore, TableCell } from "../../component"
 import { TableCheckbox } from "../../shared/TableCheckbox"
 import { get } from "../../request"
-import * as config from "./config"
 
 export const useHook = () => {
-  const { view } = useStore()
-  const isMobile = view.app?.dimension.isMobile
-  const name = `${view?.app?.routerLocation}/`.split("/")[1]
-  const [search, page, isFilter] = view.getData("search", "page", "isFilter")
-  view.name = name
-  view.title = (config as ObjectAny)[name].title
-  view.search = (config as ObjectAny)[name].search
+  const { trash } = useStore()
+
+  const isMobile = trash.app?.dimension.isMobile
+  const name = `${trash?.app?.routerLocation}/`.split("/")[1]
+  const [search, page, isFilter] = trash.getData("search", "page", "isFilter")
+  trash.name = name
 
   useEffect(() => {
-    view.setData({
+    trash.setData({
       name,
-      page: view.name !== "log" ? 1 : undefined,
-      search: view.name !== "log" ? "" : undefined,
+      page: trash.name !== "log" ? 1 : undefined,
+      search: trash.name !== "log" ? "" : undefined,
     })
     return () => {
-      view.data.clear()
+      trash.data.clear()
     }
-  }, [view?.app?.routerLocation])
+  }, [trash?.app?.routerLocation])
 
   useEffect(() => {
     ;(async () => {
-      const allowFetch = page ? view.name !== "log" : view.name === "log"
+      const allowFetch = page ? trash.name !== "log" : trash.name === "log"
       if (allowFetch) {
         await setCollection(name)
       }
@@ -34,59 +32,70 @@ export const useHook = () => {
   }, [page, search])
 
   useEffect(() => {
-    view.setData({ isMobile })
+    trash.setData({ isMobile })
   }, [isMobile])
 
   useEffect(() => {
     if (!isFilter) {
-      view.setData({
+      trash.setData({
         search: undefined,
         page: 1,
       })
     }
   }, [isFilter])
 
-  const setCollection = async (name: string) => {
-    const params = view.name !== "log" ? { q: search, page } : {}
+  const setListCollection = async (name: string) => {
     try {
-      view.set("isLoading", true)
+      trash.set("isLoading", true)
+      const { data } = await get(`/api/trash`, {})
+      trash.setData({
+        list: data.result,
+      })
+    } finally {
+      trash.set("isLoading", false)
+    }
+  }
+
+  const setCollection = async (name: string) => {
+    const params = trash.name !== "log" ? { q: search, page } : {}
+    try {
+      trash.set("isLoading", true)
       const { data } = await get(`/api/${name}`, params)
-      view.setData({
+      trash.setData({
         collection: data.result,
         limit: data.limit,
         total: data.total,
         max: data.max,
       })
     } finally {
-      view.set("isLoading", false)
+      trash.set("isLoading", false)
     }
   }
 
-  return { store: view }
+  return { store: trash }
 }
 
 export const useActions = (store: any) => {
   const name = store.name
-  const button = (config as ObjectAny)[name].button
   const isMobile = store?.app.dimension.isMobile
   const isSearch = store.data.get("isSearch") || false
   return useMemo(() => {
-    const list: any = {
-      new: {
+    const list: any = [
+      {
         icon: "file-plus",
         type: "primary_2_bg",
-        children: "New",
+        children: "Collection",
         onPress: () => store.app?.goto(`${name}/new`),
-        visible: store.app?.can("create", name),
+        visible: true,
       },
-      delete: {
+      {
         icon: "trash-2",
         type: "danger_bg",
         children: "Delete",
         onPress: () => alert("Delete"),
-        visible: store.app?.can("delete", name),
+        visible: true,
       },
-      filter: {
+      {
         icon: "search",
         type: "primary_2_bg",
         children: "Filter",
@@ -97,11 +106,11 @@ export const useActions = (store: any) => {
         },
         visible: !isMobile,
       },
-    }
+    ]
 
     return {
-      actDelete: button.indexOf("delete") < 0 ? null : list.delete,
-      actions: button
+      actDelete: list[1],
+      actions: list
         .map((btn: string) => list[btn])
         .filter((btn: ObjectAny) => !!btn && btn.visible),
     }
@@ -111,42 +120,8 @@ export const useActions = (store: any) => {
 export const useColumns = (store: any) => {
   const isMobile = store?.app.dimension.isMobile
   const name = store.name
-  const columns = useMemo(() => {
-    let column = (config as ObjectAny)[name].column
-    if (isMobile) {
-      column = column.filter((col: any) => col.isMobileVisible)
-    }
-    return column.map((col: ObjectAny) =>
-      isMobile
-        ? {
-            id: col.type ? `${col.name}_${col.type}` : col.name,
-            accessor: col.name,
-          }
-        : {
-            id: col.type ? `${col.name}_${col.type}` : col.name,
-            Header: col.label,
-            accessor: col.name,
-            style: col.style,
-            type: col.type,
-          }
-    )
-  }, [isMobile, name])
-  const keys = useMemo(() => {
-    const key: any = {}
-    if (isMobile) {
-      ;(config as ObjectAny)[name].column
-        .filter((col: any) => col.isMobileVisible)
-        .forEach((col: any) => {
-          if (col.name !== "_id") {
-            key[col.type ? `${col.name}_${col.type}` : col.name] = {
-              label: col.label,
-              type: col.type,
-            }
-          }
-        })
-    }
-    return key
-  }, [isMobile, name])
+  const columns = {}
+  const keys = {}
 
   return { columns, keys }
 }

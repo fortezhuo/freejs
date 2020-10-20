@@ -1,6 +1,8 @@
 import { Request, Reply } from "@free/server"
+import { DatabaseService } from "."
+import { TrashService } from "../trash"
 
-export const findAll = function (this: any) {
+export const findAll = function (this: DatabaseService | TrashService) {
   return async (req: Request, reply: Reply) => {
     reply.statusCode = 200
     try {

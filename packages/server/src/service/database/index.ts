@@ -34,6 +34,7 @@ export class DatabaseService extends BaseService {
   onBeforeSave = (collection: any, handler: any) => {}
   onAfterSave = (collection: any, handler: any) => {}
   onRequestHandler = (req: Request) => {
+    const name = undefined
     const { params, query, body: rawBody } = req as {
       [key: string]: any
     }
@@ -79,6 +80,7 @@ export class DatabaseService extends BaseService {
       option,
       page,
       skip,
+      name,
     }
   }
   onValidation(body: any) {

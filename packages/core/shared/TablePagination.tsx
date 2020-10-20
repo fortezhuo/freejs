@@ -1,8 +1,8 @@
 import React, { FC, useCallback } from "react"
 import { View, StyleSheet } from "react-native"
-import { Text } from "../../component"
+import { Text } from "../component"
 import { observer } from "mobx-react-lite"
-import { random } from "../../util/random"
+import { random } from "../util/random"
 import { tw } from "@free/tailwind"
 import { TouchableOpacity } from "react-native-gesture-handler"
 
@@ -37,7 +37,7 @@ const pagination = (c: number, m: number) => {
   return rangeWithDots
 }
 
-export const Pagination: FC<any> = observer(({ store, page }) => {
+export const TablePagination: FC<any> = observer(({ store, page }) => {
   const { index, limit, total, max, goto } = page
   const desc = `Showing ${(index - 1) * limit + 1} to ${
     index * limit < total ? index * limit : total

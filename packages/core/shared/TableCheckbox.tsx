@@ -1,11 +1,11 @@
 import React, { forwardRef, useRef, useEffect } from "react"
-import { Icon } from "../../component"
+import { Icon } from "../component"
 import { TouchableOpacity } from "react-native"
-import { theme } from "../../config/theme"
+import { theme } from "../config/theme"
 import { color } from "@free/tailwind"
 const defaultColor = color(theme.default_text)
 
-export const Checkbox = forwardRef(
+export const TableCheckbox = forwardRef(
   ({ indeterminate, checked, onChange }: any, ref) => {
     const defaultRef = useRef()
     const resolvedRef: any = ref || defaultRef

@@ -5,10 +5,10 @@ const isDev = process.env.NODE_ENV !== "production"
 const disableAuth = process.env.DISABLE_AUTH === "true"
 
 export class BaseService {
-  protected name: string
-  protected disableAuth: boolean
+  public name: string
+  public disableAuth: boolean
   protected instance: Instance | undefined
-  protected auth: ObjectAny | undefined
+  public auth: ObjectAny | undefined
   constructor(name: string) {
     this.name = name
     this.instance = undefined
