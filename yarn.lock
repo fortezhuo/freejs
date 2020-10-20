@@ -4342,10 +4342,10 @@ fastify-warning@^0.2.0:
   resolved "https://registry.yarnpkg.com/fastify-warning/-/fastify-warning-0.2.0.tgz#e717776026a4493dc9a2befa44db6d17f618008f"
   integrity sha512-s1EQguBw/9qtc1p/WTY4eq9WMRIACkj+HTcOIK1in4MV5aFaQC9ZCIt0dJ7pr5bIf4lPpHvAtP2ywpTNgs7hqw==
 
-fastify@3.6.0:
-  version "3.6.0"
-  resolved "https://registry.yarnpkg.com/fastify/-/fastify-3.6.0.tgz#b5fae09eccecb2be9e4ff24abc98cd7f0f0d10c3"
-  integrity sha512-nz35mhJpJNjSPZzw05x+ITXokeIMmG3MFPzzS/yNzDfw24sGol7Gr3cN3+X3t3PZV1kQG9vJbKDUzgDA+YbbCA==
+fastify@3.7.0:
+  version "3.7.0"
+  resolved "https://registry.yarnpkg.com/fastify/-/fastify-3.7.0.tgz#b177cbb50efe4d38a3758427432f46eb873843b1"
+  integrity sha512-xmiR1TOSNXXNHfEvBwhWlyj158q59vZkPLIKQ71f7qJG5QMPqCbeYUUFRaDKTaLFhRqmLLFprBpJsO5nbSMiPQ==
   dependencies:
     abstract-logging "^2.0.0"
     ajv "^6.12.2"
@@ -4355,7 +4355,7 @@ fastify@3.6.0:
     fastify-warning "^0.2.0"
     find-my-way "^3.0.0"
     flatstr "^1.0.12"
-    light-my-request "^4.1.0"
+    light-my-request "^4.2.0"
     pino "^6.2.1"
     proxy-addr "^2.0.5"
     readable-stream "^3.4.0"
@@ -6050,10 +6050,10 @@ leven@^3.1.0:
   resolved "https://registry.yarnpkg.com/leven/-/leven-3.1.0.tgz#77891de834064cccba82ae7842bb6b14a13ed7f2"
   integrity sha512-qsda+H8jTaUaN/x5vzW2rzc+8Rw4TAQ/4KjB46IwK5VH+IlVeeeje/EoZRpiXvIqjFgK84QffqPztGI3VBLG1A==
 
-light-my-request@^4.1.0:
-  version "4.1.1"
-  resolved "https://registry.yarnpkg.com/light-my-request/-/light-my-request-4.1.1.tgz#71a4f5742affd21d54e70895b6c6cec08feb9bad"
-  integrity sha512-4H0T0PQcFB/fGTIkNV5ShuftWnuUKdtLWq5t2zt+lwMWRZkVviTfmJqGOXeAAqkdREnGJQXa8zJ4wXJ0LrzrTA==
+light-my-request@^4.2.0:
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/light-my-request/-/light-my-request-4.2.0.tgz#c109f2bebd73a832442f5a48fac0f1c5c5c99d0c"
+  integrity sha512-qTdrT9S4yEfiAxyhY1tyqLxK5LelE31g9rGudQkvn8n35oxMBkdsmUmeLS6kwfU4TXSxxESyQuWrNgiAnYeIQg==
   dependencies:
     ajv "^6.12.2"
     cookie "^0.4.0"
@@ -9609,10 +9609,10 @@ symbol-observable@1.0.1:
   resolved "https://registry.yarnpkg.com/symbol-observable/-/symbol-observable-1.0.1.tgz#8340fc4702c3122df5d22288f88283f513d3fdd4"
   integrity sha1-g0D8RwLDEi310iKI+IKD9RPT/dQ=
 
-tailwindcss@^1.9.4:
-  version "1.9.4"
-  resolved "https://registry.yarnpkg.com/tailwindcss/-/tailwindcss-1.9.4.tgz#5ae8ff84bc8234df22ba5f2c7feafb64bb14da55"
-  integrity sha512-CVeP4J1pDluBM/AF11JPku9Cx+VwQ6MbOcnlobnWVVZnq+xku8sa+XXmYzy/GvE08qD8w+OmpSdN21ZFPoVDRg==
+tailwindcss@^1.9.5:
+  version "1.9.5"
+  resolved "https://registry.yarnpkg.com/tailwindcss/-/tailwindcss-1.9.5.tgz#3339b790a68bc1f09a8efd8eb94cb05aed5235c2"
+  integrity sha512-Je5t1fAfyW333YTpSxF+8uJwbnrkpyBskDtZYgSMMKQbNp6QUhEKJ4g/JIevZjD2Zidz9VxLraEUq/yWOx6nQg==
   dependencies:
     "@fullhuman/postcss-purgecss" "^2.1.2"
     autoprefixer "^9.4.5"

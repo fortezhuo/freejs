@@ -64,7 +64,7 @@
     "@types/lodash": "^4.14.162",
     "axios": "^0.20.0",
     "dayjs": "^1.9.3",
-    "fastify": "3.6.0",
+    "fastify": "3.7.0",
     "fastify-compress": "^3.2.2",
     "fastify-cookie": "^4.0.2",
     "fastify-favicon": "^3.0.0",
