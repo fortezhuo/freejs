@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo } from "react"
-import { useStore, TableCell } from "../../component"
+import { useStore, TableCell, useDialog } from "../../component"
 import { TableCheckbox } from "../../shared/TableCheckbox"
 import { get } from "../../request"
 
@@ -84,6 +84,7 @@ export const useHook = () => {
 }
 
 export const useActions = (store: any) => {
+  const { show, Dialog } = useDialog()
   const isMobile = store?.app.dimension.isMobile
   const isSearch = store.data.get("isSearch") || false
   return useMemo(() => {
@@ -92,7 +93,7 @@ export const useActions = (store: any) => {
         icon: "layers",
         type: "primary_2_bg",
         children: "Collection",
-        onPress: () => store.app?.goto(`${name}/new`),
+        onPress: show,
         visible: true,
       },
       {
@@ -119,6 +120,7 @@ export const useActions = (store: any) => {
 
     return {
       actDelete: list[1],
+      Dialog,
       actions: list.filter((btn: ObjectAny) => btn.visible),
     }
   }, [])

@@ -73,7 +73,7 @@ declare module "@free/core" {
     allowBackDrop?: boolean
     onShow?: VoidFunction
     onDismiss?: VoidFunction
-    anchor: ReactNode
+    anchor?: ReactNode
     style?: ViewStyle
     children: ReactNode
   }

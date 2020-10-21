@@ -9,9 +9,7 @@ import { theme } from "../../config/theme"
 
 const SettingTrash: FC = observer(() => {
   const { store } = useHook()
-  const { actions, actDelete } = useActions(store)
-
-  console.log(actions)
+  const { actions, actDelete, Dialog } = useActions(store)
 
   const [
     name,
@@ -43,6 +41,11 @@ const SettingTrash: FC = observer(() => {
           ></View>
         </View>
       </Layout>
+      <Dialog>
+        <View style={styles.viewSelection}>
+          <H3>haloooo</H3>
+        </View>
+      </Dialog>
       <ActionGroup.Small store={store} actions={actions} />
     </>
   )
@@ -50,6 +53,7 @@ const SettingTrash: FC = observer(() => {
 
 const styles = StyleSheet.create({
   viewGrid: tw("flex-1 flex-col"),
+  viewSelection: tw("bg-white p-3 rounded-lg shadow-lg"),
   viewTitle: tw("flex-row justify-between items-center mb-2 h-10"),
   textTitle: tw("text-white"),
   viewTable: tw("flex-col bg-white rounded-lg p-2"),
