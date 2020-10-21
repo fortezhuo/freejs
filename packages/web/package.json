@@ -40,7 +40,7 @@
     "@types/mini-css-extract-plugin": "^1.0.0",
     "@types/react-dom": "^16.9.8",
     "@types/terser-webpack-plugin": "^4.2.0",
-    "@types/webpack-bundle-analyzer": "^3.8.0",
+    "@types/webpack-bundle-analyzer": "^3.9.0",
     "@types/webpack-node-externals": "^2.5.0",
     "babel-loader": "^8.1.0",
     "babel-plugin-react-native-web": "^0.14.2",
