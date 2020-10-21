@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "@free/env": "*",
-    "@loadable/server": "^5.13.2"
+    "@loadable/server": "^5.14.0"
   },
   "devDependencies": {
     "@types/loadable__server": "^5.12.2"
