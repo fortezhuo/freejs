@@ -10,6 +10,9 @@ import { theme } from "../../config/theme"
 const SettingTrash: FC = observer(() => {
   const { store } = useHook()
   const { actions, actDelete } = useActions(store)
+
+  console.log(actions)
+
   const [
     name,
     collection = [],

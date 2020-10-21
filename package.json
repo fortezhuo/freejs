@@ -71,7 +71,7 @@
     "fastify-multipart": "^3.2.1",
     "fastify-plugin": "^3.0.0",
     "fastify-session": "^5.0.0",
-    "fastify-static": "^3.2.1",
+    "fastify-static": "^3.3.0",
     "filesize": "^6.1.0",
     "googleapis": "61.0.0",
     "joi": "^17.2.1",

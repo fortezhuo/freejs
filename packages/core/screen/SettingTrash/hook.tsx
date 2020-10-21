@@ -12,6 +12,13 @@ export const useHook = () => {
   trash.name = name
 
   useEffect(() => {
+    ;(async () => {
+      setListCollection()
+    })()
+  }, [])
+
+  /*
+  useEffect(() => {
     trash.setData({
       name,
       page: trash.name !== "log" ? 1 : undefined,
@@ -43,8 +50,9 @@ export const useHook = () => {
       })
     }
   }, [isFilter])
+*/
 
-  const setListCollection = async (name: string) => {
+  const setListCollection = async () => {
     try {
       trash.set("isLoading", true)
       const { data } = await get(`/api/trash`, {})
@@ -76,13 +84,12 @@ export const useHook = () => {
 }
 
 export const useActions = (store: any) => {
-  const name = store.name
   const isMobile = store?.app.dimension.isMobile
   const isSearch = store.data.get("isSearch") || false
   return useMemo(() => {
     const list: any = [
       {
-        icon: "file-plus",
+        icon: "layers",
         type: "primary_2_bg",
         children: "Collection",
         onPress: () => store.app?.goto(`${name}/new`),
@@ -108,13 +115,13 @@ export const useActions = (store: any) => {
       },
     ]
 
+    console.log(list)
+
     return {
       actDelete: list[1],
-      actions: list
-        .map((btn: string) => list[btn])
-        .filter((btn: ObjectAny) => !!btn && btn.visible),
+      actions: list.filter((btn: ObjectAny) => btn.visible),
     }
-  }, [name, isMobile, isSearch])
+  }, [])
 }
 
 export const useColumns = (store: any) => {

@@ -5,7 +5,7 @@ export const list = function (this: TrashService) {
   return async (req: Request, reply: Reply) => {
     reply.statusCode = 200
     try {
-      const list = (await req.database.app.listCollections()).map(
+      const list = (await req.database.trash.listCollections()).map(
         (col: any) => col.name
       )
       reply.send({
