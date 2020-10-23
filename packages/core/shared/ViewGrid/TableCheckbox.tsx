@@ -1,7 +1,7 @@
 import React, { forwardRef, useRef, useEffect } from "react"
-import { Icon } from "../component"
+import { Icon } from "../../component"
 import { TouchableOpacity } from "react-native"
-import { theme } from "../config/theme"
+import { theme } from "../../config/theme"
 import { color } from "@free/tailwind"
 const defaultColor = color(theme.default_text)
 

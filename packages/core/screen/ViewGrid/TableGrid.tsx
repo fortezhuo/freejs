@@ -18,7 +18,7 @@ import {
   TableHeader,
 } from "../../component"
 import { tw, color } from "@free/tailwind"
-import { TablePagination } from "../../shared/TablePagination"
+import { TablePagination } from "../../shared/ViewGrid/TablePagination"
 
 const defaultColor = color(theme.default_text)
 

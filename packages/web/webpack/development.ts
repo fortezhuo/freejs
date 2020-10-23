@@ -6,7 +6,7 @@ import {
 } from "./base"
 import { configProxy } from "@free/env"
 
-const webpackDevConfig = {
+const webpackDevConfig: any = {
   ...getDefaultConfig(true),
   mode: "development",
   devtool: "source-map",

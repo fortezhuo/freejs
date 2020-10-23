@@ -24,7 +24,7 @@ const babelLoaderInclude = [
 
 const babelLoaderExclude = /node_modules[/\\](?!react-native-vector-icons|react-native-safe-area-view|react-native-gesture-handler|react-native-animatable)/
 
-export const getWebpackRules = (): webpack.Rule[] => [
+export const getWebpackRules = (): any => [
   {
     test: /\.(tsx|ts)$/,
     include: babelLoaderInclude,
@@ -103,17 +103,27 @@ export const getWebpackRules = (): webpack.Rule[] => [
   },
 ]
 
-export const getWebpackPlugins = (isWeb: boolean): webpack.Plugin[] =>
-  (isWeb
-    ? [
-        new HtmlWebPackPlugin({
-          template: "src/assets/index.html",
-          favicon: "./src/assets/favicon.ico",
-          filename: "./index.html",
-        }),
-      ]
-    : []
-  )
+export const getWebpackPlugins = (isWeb: boolean): any =>
+  [
+    new LoadablePlugin(),
+    new MiniCssExtractPlugin(),
+    new webpack.DefinePlugin({
+      __DEV__: JSON.stringify(isDev),
+      FREE_STAMP: JSON.stringify(stamp),
+      FREE_NODE_ENV: JSON.stringify(isDev ? "development" : "production"),
+    }),
+  ]
+    .concat(
+      isWeb
+        ? [
+            new HtmlWebPackPlugin({
+              template: "src/assets/index.html",
+              favicon: "./src/assets/favicon.ico",
+              filename: "./index.html",
+            }),
+          ]
+        : []
+    )
     .concat(
       isDev
         ? [
@@ -123,21 +133,12 @@ export const getWebpackPlugins = (isWeb: boolean): webpack.Plugin[] =>
         : [new CompressionPlugin()]
     )
     .concat(isAnalyzer ? [new BundleAnalyzerPlugin()] : [])
-    .concat([
-      new LoadablePlugin(),
-      new MiniCssExtractPlugin(),
-      new webpack.DefinePlugin({
-        __DEV__: JSON.stringify(isDev),
-        FREE_STAMP: JSON.stringify(stamp),
-        FREE_NODE_ENV: JSON.stringify(isDev ? "development" : "production"),
-      }),
-    ])
 
-export const getDefaultConfig = (isWeb: boolean): webpack.Configuration => {
+export const getDefaultConfig = (isWeb: boolean): any => {
   return {
     optimization:
       isWeb && !isDev
-        ? {
+        ? ({
             minimize: true,
             minimizer: [
               new TerserPlugin({
@@ -152,7 +153,7 @@ export const getDefaultConfig = (isWeb: boolean): webpack.Configuration => {
               minSize: 10000,
               maxSize: 250000,
             },
-          }
+          } as any)
         : undefined,
     resolve: {
       alias: {

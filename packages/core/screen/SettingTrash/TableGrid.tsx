@@ -18,7 +18,7 @@ import {
   TableHeader,
 } from "../../component"
 import { tw, color } from "@free/tailwind"
-import { TablePagination } from "../../shared/TablePagination"
+import { TablePagination } from "../../shared/ViewGrid/TablePagination"
 
 const defaultColor = color(theme.default_text)
 
@@ -32,8 +32,8 @@ export const TableGrid: FC<any> = observer(
       isMobile,
       isLoading,
     } = data
-    const isFilter = store.data.get("isFilter") || false
-    const isShowPagination = store.name !== "log" && !isMobile
+    const [name = "", isFilter = false] = store.getData("name", "isFilter")
+    const isShowPagination = name !== "" && !isMobile
     const { headerGroups, prepareRow, page: rows, gotoPage }: any = useTable(
       {
         columns,

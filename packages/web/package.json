@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "@free/core": "*",
-    "@loadable/component": "^5.14.0",
+    "@loadable/component": "^5.14.1",
     "@loadable/server": "^5.14.0",
     "react-dom": "^16.14.0",
     "react-native-web": "fortezhuo/react-native-web",
@@ -49,7 +49,7 @@
     "file-loader": "^6.1.1",
     "html-loader": "^1.3.2",
     "html-webpack-plugin": "^4.3.0",
-    "mini-css-extract-plugin": "^1.1.1",
+    "mini-css-extract-plugin": "^1.1.2",
     "react-refresh": "^0.9.0",
     "terser-webpack-plugin": "^4.2.3",
     "type-fest": "^0.18.0",

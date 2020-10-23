@@ -30,6 +30,7 @@ declare module "@free/core" {
     path: string[]
     component: string
     view: boolean
+    trash?: boolean
     visible: boolean
   }
 

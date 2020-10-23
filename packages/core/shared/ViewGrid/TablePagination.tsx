@@ -1,8 +1,8 @@
 import React, { FC, useCallback } from "react"
 import { View, StyleSheet } from "react-native"
-import { Text } from "../component"
+import { Text } from "../../component"
 import { observer } from "mobx-react-lite"
-import { random } from "../util/random"
+import { random } from "../../util/random"
 import { tw } from "@free/tailwind"
 import { TouchableOpacity } from "react-native-gesture-handler"
 

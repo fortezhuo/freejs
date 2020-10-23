@@ -25,13 +25,30 @@ const Routes: FC<{ screen: any }> = observer(({ screen }) => {
         : []
       const routeComponent = route.view
         ? route.path.map((path: string) => {
-            return (
+            return [
               <Route
                 key={"rc_" + random()}
                 exact
                 path={`${path}/:id`}
                 component={screen[route.component]}
-              />
+              />,
+            ].concat(
+              route.trash
+                ? [
+                    <Route
+                      key={"rt_" + random()}
+                      exact
+                      path={`/trash${path}`}
+                      component={screen.SettingTrash}
+                    />,
+                    <Route
+                      key={"rtc_" + random()}
+                      exact
+                      path={`/trash${path}/:id`}
+                      component={screen[route.component]}
+                    />,
+                  ]
+                : []
             )
           })
         : route.path.map((path: string) => {
@@ -44,6 +61,7 @@ const Routes: FC<{ screen: any }> = observer(({ screen }) => {
               />
             )
           })
+
       return [routeComponent, routeView]
     })
   )

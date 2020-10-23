@@ -13,7 +13,7 @@ const distServer = resolvePath("../../build/static/node")
 const entryServer = resolvePath("src/index.node.tsx")
 
 const isAnalyzer = process.env.ANALYZER === "true"
-const webpackProdClient = {
+const webpackProdClient: any = {
   ...getDefaultConfig(true),
   target: "web",
   name: "web",
@@ -21,7 +21,7 @@ const webpackProdClient = {
   devtool: "source-map",
   output: {
     path: distClient,
-    filename: `web.${stamp}.js`,
+    filename: `web.${stamp}_[chunkhash].js`,
     publicPath: `/static/web/`,
   },
   module: {
@@ -46,7 +46,7 @@ const webpackProdServer: webpack.Configuration = {
   ],
   output: {
     path: distServer,
-    filename: `node.${stamp}.js`,
+    filename: `node.${stamp}_[chunkhash:5].js`,
     publicPath: `/static/node/`,
     libraryTarget: "commonjs2",
   },
