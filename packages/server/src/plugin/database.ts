@@ -7,8 +7,7 @@ export const database = fp(async (instance: FastifyInstance) => {
   const result: any = await load()
   instance.decorateRequest("database", result.database)
   instance.addHook("onClose", (instance: any, done) => {
-    instance.database.app.close()
-    instance.database.trash.close()
+    instance.database.close()
     done()
   })
   instance.log.info(result.message)

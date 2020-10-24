@@ -8,7 +8,7 @@ export const findOne = function (this: DatabaseService | TrashService) {
     try {
       reply.statusCode = 200
       const { q, projection, name = undefined } = this.onRequestHandler(req)
-      const collection = req.database[this.dbName].get(name || this.name)
+      const collection = req.database.get(name || this.name)
       if (!q) throw new Exception(400, "Parameter not found")
 
       const query = this.disableAuth

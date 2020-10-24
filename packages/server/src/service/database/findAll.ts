@@ -15,7 +15,7 @@ export const findAll = function (this: DatabaseService | TrashService) {
         skip,
         name = undefined,
       } = this.onRequestHandler(req)
-      const collection = req.database[this.dbName].get(name || this.name)
+      const collection = req.database.get(name || this.name)
 
       const query = this.disableAuth
         ? q

@@ -12,25 +12,17 @@ const connect = (uri: string) => {
 }
 
 export const load = async () => {
-  let app, trash
+  let database
   try {
-    app = await connect(`${configDatabase.url}/${configDatabase.app}`)
+    database = await connect(`${configDatabase.url}/${configDatabase.name}`)
   } catch (err) {
     throw new Error(
-      `Failed to connect ${configDatabase.app} at ${configDatabase.url}`
-    )
-  }
-
-  try {
-    trash = await connect(`${configDatabase.url}/${configDatabase.trash}`)
-  } catch (err) {
-    throw new Error(
-      `Failed to connect ${configDatabase.trash} at ${configDatabase.url}`
+      `Failed to connect ${configDatabase.name} at ${configDatabase.url}`
     )
   }
 
   return {
-    database: { app, trash },
-    message: `Database ${configDatabase.app} connected at ${configDatabase.url}`,
+    database,
+    message: `Database ${configDatabase.name} connected at ${configDatabase.url}`,
   }
 }

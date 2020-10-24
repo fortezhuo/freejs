@@ -6,8 +6,8 @@ export const remove = function (this: DatabaseService) {
   return async (req: Request, reply: Reply) => {
     reply.statusCode = 200
     try {
-      const collection = req.database[this.dbName].get(this.name)
-      const trash = req.database[this.dbTrashName].get(this.name)
+      const collection = req.database.get(this.name)
+      const trash = req.database.get(`deleted`)
       const { q, option } = this.onRequestHandler(req)
       if (!q) throw new Exception(400, "Parameter not found")
 

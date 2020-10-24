@@ -34,7 +34,7 @@ const can = (roles: any, context: any) =>
 
 const authenticate = async (req: Request) => {
   let data = null
-  const collection = req.database.app.get("user")
+  const collection = req.database.get("user")
   const { username, password, domain } = req.body as {
     [key: string]: string | undefined
   }

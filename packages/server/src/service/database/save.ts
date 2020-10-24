@@ -11,7 +11,7 @@ export const save = function (this: DatabaseService) {
       const handler = this.onRequestHandler(req)
 
       if (this.onValidation(handler.body)) {
-        const collection = req.database[this.dbName].get(this.name)
+        const collection = req.database.get(this.name)
         await this.onBeforeSave(collection, handler)
 
         const data =
