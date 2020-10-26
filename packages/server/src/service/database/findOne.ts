@@ -1,14 +1,13 @@
 import { Request, Reply } from "@free/server"
 import { DatabaseService } from "."
-import { TrashService } from "../trash"
 import { Exception } from "../../util/exception"
 
-export const findOne = function (this: DatabaseService | TrashService) {
+export const findOne = function (this: DatabaseService) {
   return async (req: Request, reply: Reply) => {
     try {
       reply.statusCode = 200
-      const { q, projection, name = undefined } = this.onRequestHandler(req)
-      const collection = req.database.get(name || this.name)
+      const { q, projection } = this.onRequestHandler(req)
+      const collection = req.database.get(this.name)
       if (!q) throw new Exception(400, "Parameter not found")
 
       const query = this.disableAuth

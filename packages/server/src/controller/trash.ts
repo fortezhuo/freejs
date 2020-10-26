@@ -1,11 +1,11 @@
-import { FastifyInstance } from "fastify"
-import { TrashService } from "../service/trash"
+import { Instance } from "@free/server"
+import { DatabaseService } from "../service/database"
 
-export const trashController = async (instance: FastifyInstance) => {
-  const trash = new TrashService()
+const trash = new DatabaseService("deleted")
+
+export const trashController = async (instance: Instance) => {
   trash.bindInstance(instance)
-
-  instance.get("/trash", trash.list())
-  instance.get("/trash/:name", trash.findAll())
-  instance.get("/trash/:name/:q", trash.findOne())
+  instance.get("/trash", trash.findAll())
+  instance.get("/trash/:q", trash.findOne())
+  instance.post("/trash/restore/:q", trash.restore())
 }

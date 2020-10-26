@@ -6,25 +6,25 @@ export const restore = function (this: DatabaseService) {
   return async (req: Request, reply: Reply) => {
     reply.statusCode = 200
     try {
-      const trashCollection = req.database.get("deleted")
+      const trash = req.database.get("deleted")
       const { q, option } = this.onRequestHandler(req)
       if (!q) throw new Exception(400, "Parameter not found")
+      const deleted = await trash.findOne(q)
 
-      const query = {
-        _docAuthors: { $exists: true, $in: this.auth?.context.list },
-        ...q,
+      if (deleted) {
+        const collection = req.database.get(deleted._deleteFrom)
+        if (await collection.insert(deleted.data)) {
+          await trash.remove(q, option)
+          reply.send({
+            success: true,
+            result: deleted.data,
+          })
+        } else {
+          throw new Exception(400, "Restore failed")
+        }
+      } else {
+        throw new Exception(400, "No data found")
       }
-      const data = await trashCollection.findOne(q)
-
-      const collection = req.database.get(this.name)
-      await collection.insert(data)
-
-      await trashCollection.remove(query, option)
-
-      reply.send({
-        success: true,
-        result: data,
-      })
     } catch (err) {
       this.onErrorHandler(req, reply, err)
     }

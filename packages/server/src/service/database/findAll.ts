@@ -1,21 +1,14 @@
 import { Request, Reply } from "@free/server"
 import { DatabaseService } from "."
-import { TrashService } from "../trash"
 
-export const findAll = function (this: DatabaseService | TrashService) {
+export const findAll = function (this: DatabaseService) {
   return async (req: Request, reply: Reply) => {
     reply.statusCode = 200
     try {
-      const {
-        q,
-        projection,
-        limit,
-        sort,
-        page,
-        skip,
-        name = undefined,
-      } = this.onRequestHandler(req)
-      const collection = req.database.get(name || this.name)
+      const { q, projection, limit, sort, page, skip } = this.onRequestHandler(
+        req
+      )
+      const collection = req.database.get(this.name)
 
       const query = this.disableAuth
         ? q

@@ -11,8 +11,6 @@ import * as schema from "../../schema"
 import { normalize } from "../../schema/schema"
 
 export class DatabaseService extends BaseService {
-  public dbName: string = "app"
-  public dbTrashName: string = "trash"
   public schema: any
   public collection: any
   public findAll: any
@@ -34,7 +32,6 @@ export class DatabaseService extends BaseService {
   onBeforeSave = (collection: any, handler: any) => {}
   onAfterSave = (collection: any, handler: any) => {}
   onRequestHandler = (req: Request) => {
-    const name = undefined
     const { params, query, body: rawBody } = req as {
       [key: string]: any
     }
@@ -80,7 +77,6 @@ export class DatabaseService extends BaseService {
       option,
       page,
       skip,
-      name,
     }
   }
   onValidation(body: any) {
