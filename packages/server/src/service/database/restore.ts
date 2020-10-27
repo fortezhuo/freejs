@@ -6,13 +6,13 @@ export const restore = function (this: DatabaseService) {
   return async (req: Request, reply: Reply) => {
     reply.statusCode = 200
     try {
-      const trash = req.database.get("deleted")
+      const trash = req.database.get("trash")
       const { q, option } = this.onRequestHandler(req)
       if (!q) throw new Exception(400, "Parameter not found")
       const deleted = await trash.findOne(q)
 
       if (deleted) {
-        const collection = req.database.get(deleted._deleteFrom)
+        const collection = req.database.get(deleted._deletedFrom)
         if (await collection.insert(deleted.data)) {
           await trash.remove(q, option)
           reply.send({

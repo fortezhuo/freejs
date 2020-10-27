@@ -1,7 +1,7 @@
 import { Instance } from "@free/server"
 import { DatabaseService } from "../service/database"
 
-const trash = new DatabaseService("deleted")
+const trash = new DatabaseService("trash")
 
 export const trashController = async (instance: Instance) => {
   trash.bindInstance(instance)

@@ -4,20 +4,14 @@ import { tw } from "@free/tailwind"
 import { TableGrid } from "./TableGrid"
 import { useHook, useActions, useColumns } from "./hook"
 import { observer } from "mobx-react-lite"
-import {
-  Layout,
-  H3,
-  ActionGroup,
-  useDefaultColumn,
-  Text,
-} from "../../component"
+import { Layout, H3, ActionGroup, useDefaultColumn } from "../../component"
 import { theme } from "../../config/theme"
 
-const SettingTrash: FC = observer(() => {
+const ViewGrid: FC = observer(() => {
   const { store } = useHook()
-  const { actions, actDelete, DialogCollection } = useActions(store)
+  const { actions, actDelete } = useActions(store)
   const [
-    name = "",
+    name,
     collection = [],
     pageIndex,
     limit,
@@ -25,8 +19,8 @@ const SettingTrash: FC = observer(() => {
     pageMax,
   ] = store.getData("name", "collection", "page", "limit", "total", "max")
   const isMobile = store.app?.dimension.isMobile
-  const isLoading = store.isLoading
-  const isShowTable = store.data.get("isMobile") === isMobile && name !== ""
+  const isLoading = store.isLoading || name !== store.name
+  const isShowTable = store.data.get("isMobile") === isMobile
   const { columns, keys } = useColumns(store)
   const columnsFormat = useDefaultColumn(store)
 
@@ -35,10 +29,7 @@ const SettingTrash: FC = observer(() => {
       <Layout store={store} scroll={Platform.OS === "web"}>
         <View style={styles.viewGrid}>
           <View style={styles.viewTitle}>
-            <H3 style={styles.textTitle}>
-              {store?.app?.subTitle +
-                (name !== "" ? " - " + name.toUpperCase() : "")}
-            </H3>
+            <H3 style={styles.textTitle}>{store?.app?.subTitle}</H3>
             <ActionGroup.Large store={store} actions={actions} />
           </View>
           <View
@@ -47,9 +38,6 @@ const SettingTrash: FC = observer(() => {
               { height: store.app?.dimension.height - 144 },
             ])}
           >
-            {name === "" && (
-              <Text>Please select Collection to continue ...</Text>
-            )}
             {isShowTable && (
               <TableGrid
                 actDelete={actDelete}
@@ -73,7 +61,6 @@ const SettingTrash: FC = observer(() => {
           </View>
         </View>
       </Layout>
-      <DialogCollection />
       <ActionGroup.Small store={store} actions={actions} />
     </>
   )
@@ -81,7 +68,6 @@ const SettingTrash: FC = observer(() => {
 
 const styles = StyleSheet.create({
   viewGrid: tw("flex-1 flex-col"),
-
   viewTitle: tw("flex-row justify-between items-center mb-2 h-10"),
   textTitle: tw("text-white"),
   viewTable: tw("flex-col bg-white rounded-lg p-2"),
@@ -92,4 +78,4 @@ const styles = StyleSheet.create({
   rowMobile: tw("flex-col"),
 })
 
-export default SettingTrash
+export default ViewGrid

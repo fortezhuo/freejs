@@ -2,7 +2,7 @@ import React, { useEffect, useMemo } from "react"
 import { useStore, TableCell } from "../../component"
 import { TableCheckbox } from "../../shared/ViewGrid/TableCheckbox"
 import { get } from "../../request"
-import * as config from "../../shared/ViewGrid/config"
+import * as config from "./config"
 
 export const useHook = () => {
   const { view } = useStore()

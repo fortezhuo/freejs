@@ -32,8 +32,8 @@ export const TableGrid: FC<any> = observer(
       isMobile,
       isLoading,
     } = data
-    const [name = "", isFilter = false] = store.getData("name", "isFilter")
-    const isShowPagination = name !== "" && !isMobile
+    const isFilter = store.data.get("isFilter") || false
+    const isShowPagination = store.name !== "log" && !isMobile
     const { headerGroups, prepareRow, page: rows, gotoPage }: any = useTable(
       {
         columns,
