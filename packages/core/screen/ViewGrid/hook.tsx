@@ -22,16 +22,15 @@ export const useHook = () => {
     return () => {
       view.data.clear()
     }
-  }, [view?.app?.routerLocation])
+  }, [view.name])
 
   useEffect(() => {
-    ;(async () => {
-      const allowFetch = page ? view.name !== "log" : view.name === "log"
-      if (allowFetch) {
+    setTimeout(() => {
+      ;(async () => {
         await setCollection(name)
-      }
-    })()
-  }, [page, search])
+      })()
+    }, 500)
+  }, [page, search, view.name])
 
   useEffect(() => {
     view.setData({ isMobile })

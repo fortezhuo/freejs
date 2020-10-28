@@ -198,6 +198,7 @@ declare module "@free/core" {
   // Layout
   interface LayoutProps extends ViewProps {
     testID?: string
+    animation?: string
     isLoading?: boolean
     store?: any
     scroll?: boolean

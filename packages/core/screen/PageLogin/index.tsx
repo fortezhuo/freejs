@@ -28,6 +28,7 @@ const PageLogin: FC = observer(() => {
   const store = useHook()
   return (
     <LayoutFull
+      animation="zoomInUp"
       store={store}
       style={{ justifyContent: "center", flexDirection: "column" }}
     >

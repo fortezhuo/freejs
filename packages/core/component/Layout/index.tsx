@@ -5,6 +5,7 @@ import { tw } from "@free/tailwind"
 import { LayoutProps } from "@free/core"
 import { useHook } from "./hook"
 import { observer } from "mobx-react-lite"
+import * as Animatable from "react-native-animatable"
 
 const Wrapper: FC<any> = observer((props) =>
   props.scroll ? (
@@ -15,16 +16,28 @@ const Wrapper: FC<any> = observer((props) =>
 )
 
 export const LayoutFull: FC<LayoutProps> = observer(
-  ({ testID = "LayoutFull", children, scroll = true, store, stickyHeader }) => {
+  ({
+    testID = "LayoutFull",
+    animation = "slideInRight",
+    children,
+    scroll = true,
+    store,
+    stickyHeader,
+  }) => {
     useHook(store)
 
     return (
-      <View style={styles.viewLayout} testID={testID}>
+      <Animatable.View
+        animation={animation}
+        duration={500}
+        style={styles.viewLayout}
+        testID={testID}
+      >
         {stickyHeader && <View style={styles.viewHeader}>{stickyHeader}</View>}
         <Wrapper scroll={scroll}>
           <View style={styles.viewLayout}>{children}</View>
         </Wrapper>
-      </View>
+      </Animatable.View>
     )
   }
 )

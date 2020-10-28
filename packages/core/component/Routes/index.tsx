@@ -1,5 +1,5 @@
 import React, { FC } from "react"
-import { Switch, Route } from "react-router"
+import { Route, Switch } from "react-router"
 import { getRoute } from "@free/core/config/route"
 import { random } from "@free/core/util/random"
 import { observer } from "mobx-react-lite"
