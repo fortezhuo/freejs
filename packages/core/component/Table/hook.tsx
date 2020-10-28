@@ -1,7 +1,7 @@
 import React, { useCallback } from "react"
 import { entries } from "mobx"
-import * as Input from "../Input"
-import { CellText, CellDownload, CellLink } from "./"
+import { Input, Text } from ".."
+import { CellText, CellDownload, CellLink, CellJSON } from "./"
 import { download } from "./helper"
 import dayjs from "dayjs"
 
@@ -77,6 +77,8 @@ export const useDefaultColumn = (store: any) => {
               {datetime(cell.value)}
             </CellText>
           )
+        case "json":
+          return <CellJSON style={cell.column.style}>{cell.value}</CellJSON>
         default:
           return <CellText style={cell.column.style}>{cell.value}</CellText>
       }

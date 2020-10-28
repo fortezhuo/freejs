@@ -136,6 +136,17 @@ export const CellDownload: FC<CellProps> = ({
   )
 }
 
+export const CellJSON: FC<CellProps> = ({ style, children }) => {
+  const value: any = children
+  return (
+    <Cell style={StyleSheet.flatten([styles.cellJSON, style])}>
+      {Object.keys(value).map((key) => {
+        return <Text key={"json_" + random()}>{key + " : " + value[key]}</Text>
+      })}
+    </Cell>
+  )
+}
+
 export const RowMobile: FC<RowProps> = observer(
   ({ store, data, keys, dark, style, testID = "RowMobile", actDelete }) => {
     const path = data._id_link ? `${store.name}/${data._id_link}` : null
@@ -204,7 +215,11 @@ export const RowMobile: FC<RowProps> = observer(
                   value = date(value)
               }
               return key === "_id_link" ? null : (
-                <Text style={styles.textCellSmall} key={random()}>
+                <Text
+                  numberOfLines={1}
+                  style={styles.textCellSmall}
+                  key={random()}
+                >
                   {label + " : " + value}
                 </Text>
               )
@@ -226,6 +241,7 @@ const styles = StyleSheet.create({
   rowFilter: tw(`bg-red-200 h-12 items-center`),
   rowMobile: tw("flex-col p-2 items-start"),
   cellFilter: tw("p-0 pr-1"),
+  cellJSON: tw("flex-col"),
   cellDelete: tw("flex-1"),
   textCell: tw(theme.default_text),
   textCellSmall: tw(`${theme.default_text} text-sm`),
