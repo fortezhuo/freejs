@@ -8,7 +8,9 @@ export const remove = function (this: DatabaseService) {
     try {
       const collection = req.database.get(this.name)
       const trash = req.database.get("trash")
-      trash.createIndex({ "$**": "text" })
+
+      await trash.createIndex({ "$**": "text" })
+
       const { q, option } = this.onRequestHandler(req)
       if (!q) throw new Exception(400, "Parameter not found")
 
