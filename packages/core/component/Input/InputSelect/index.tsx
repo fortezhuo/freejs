@@ -11,8 +11,8 @@ import { InputSelectProps } from "@free/core"
 export const InputSelect: FC<InputSelectProps> = observer((props) => {
   const refSearch = useRef<TextInput>(null)
   const refScroll = useRef<ScrollView>(null)
-  const { Wrapper, hide, show, isMobile } = useWrapper(props.store)
-  const state = useHook(refScroll, isMobile, props)
+  const { Wrapper, hide, show } = useWrapper()
+  const state = useHook(refScroll, props)
 
   return (
     <Wrapper

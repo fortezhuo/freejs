@@ -1,7 +1,7 @@
 import React, { FC, useCallback } from "react"
 import { Button, H4 } from "../.."
 import { Display } from "./Display"
-import { View, StyleSheet } from "react-native"
+import { View, StyleSheet, Platform } from "react-native"
 import { observer } from "mobx-react-lite"
 import { theme } from "../../../config/theme"
 import { tw } from "@free/tailwind"
@@ -22,11 +22,9 @@ export const Content: FC<any> = observer(({ state, children, menu }) => {
 
   return (
     <View
-      style={
-        state._isMobileShow ? styles.viewMenuMobile : styles.viewMenuDesktop
-      }
+      style={state.isMobile ? styles.viewMenuMobile : styles.viewMenuDesktop}
     >
-      {state._isMobileShow && (
+      {state.isMobile && (
         <>
           <H4>{placeholder}</H4>
           <View style={styles.viewInput}>
@@ -37,12 +35,12 @@ export const Content: FC<any> = observer(({ state, children, menu }) => {
       <View
         style={StyleSheet.flatten([
           styles.viewWrapper,
-          state._isMobileShow ? styles.viewWrapperMobile : {},
+          state.isMobile ? styles.viewWrapperMobile : {},
         ])}
       >
         {children}
       </View>
-      {state._isMobileShow && (
+      {state.isMobile && (
         <View style={styles.viewButton}>
           <Button type={"primary_1_bg"} icon="check" onPress={onCommit}>
             OK

@@ -3,7 +3,7 @@ import { Platform } from "react-native"
 import { useMenu, useDialog } from "../.."
 import { useLocalObservable } from "mobx-react-lite"
 
-export const useWrapper = (store: any) => {
+export const useWrapper = () => {
   const isMobile = Platform.OS !== "web"
   const wrapper: any = isMobile ? useDialog() : useMenu()
 
@@ -15,7 +15,7 @@ export const useWrapper = (store: any) => {
   }
 }
 
-export const useHook = (refScroll: any, isMobile: boolean, props: any) => {
+export const useHook = (refScroll: any, props: any) => {
   const {
     creatable = false,
     options: _options,
@@ -39,7 +39,7 @@ export const useHook = (refScroll: any, isMobile: boolean, props: any) => {
       creatable,
       placeholder,
       name,
-      isMobile,
+      isMobile: Platform.OS !== "web",
       multi,
       keyValue,
       keyLabel,
@@ -140,8 +140,8 @@ export const useHook = (refScroll: any, isMobile: boolean, props: any) => {
   })
 
   useEffect(() => {
-    state.set({ _options, multi, isMobile })
-  }, [_options, multi, isMobile])
+    state.set({ _options, multi })
+  }, [_options, multi])
 
   return state
 }
