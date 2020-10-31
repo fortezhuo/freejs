@@ -4731,9 +4731,13 @@ get-caller-file@^2.0.1:
   integrity sha512-DyFP3BM/3YHTQOCUL/w0OZHR0lpKeGrxotcHWcqNEdnltqFwXVfhEBQ94eIo34AfQpo0rGki4cyIiftY06h2Fg==
 
 get-intrinsic@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/get-intrinsic/-/get-intrinsic-1.0.0.tgz#035ccf14a00ae2eb3d110a00fcd10e74706a8fe7"
-  integrity sha512-EMuu0ud8uAP4Zs6tQqMeHiY1PbIBDcZ92QVxqeLfqTMbyvqcDbrtHjfu0RWh8QaUNJ3lP1DSX3J2okgj9JE47g==
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/get-intrinsic/-/get-intrinsic-1.0.1.tgz#94a9768fcbdd0595a1c9273aacf4c89d075631be"
+  integrity sha512-ZnWP+AmS1VUaLgTRy47+zKtjTxz+0xMpx3I52i+aalBK1QP19ggLF3Db89KJX7kjfOfP2eoa01qc++GwPgufPg==
+  dependencies:
+    function-bind "^1.1.1"
+    has "^1.0.3"
+    has-symbols "^1.0.1"
 
 get-stream@^4.0.0:
   version "4.1.0"
@@ -8275,11 +8279,6 @@ react-native-safe-area-context@^3.1.8:
   resolved "https://registry.yarnpkg.com/react-native-safe-area-context/-/react-native-safe-area-context-3.1.8.tgz#7a9883aa0f38f9c77d4bef2b89e4e285bc1024a3"
   integrity sha512-9gUlsDZ96QwT9AKzA6aVWM/NX5rlJgauZ9HgCDVzKbe29UQYT1740QJnnaI2GExmkFGp6o7ZLNhCXZW95eYVFA==
 
-react-native-skeleton-placeholder@^2.0.11:
-  version "2.0.11"
-  resolved "https://registry.yarnpkg.com/react-native-skeleton-placeholder/-/react-native-skeleton-placeholder-2.0.11.tgz#5c9e5b5e5741749fc81f6ed5d0011ef0a0be7dd5"
-  integrity sha512-vF8ZDDqd/biGjw3iUmE96JtIWM//ttrvX4VLgh5XTQB5JshazA9MgM5NK+4mlwCT0duWN4nhxis+T9Xw3JKALw==
-
 react-native-vector-icons@7.1.0:
   version "7.1.0"
   resolved "https://registry.yarnpkg.com/react-native-vector-icons/-/react-native-vector-icons-7.1.0.tgz#145487d617b2a81d395d2cf64e6e065fcab3a454"
@@ -8293,11 +8292,6 @@ react-native-vector-icons@7.1.0:
     lodash.template "^4.5.0"
     prop-types "^15.7.2"
     yargs "^15.0.2"
-
-react-native-web-linear-gradient@^1.1.1:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/react-native-web-linear-gradient/-/react-native-web-linear-gradient-1.1.1.tgz#3c872f099695a31d90448fa5d137f04e81ad7a11"
-  integrity sha512-tjah65P8tSwMi/bzi+/JEinpyhL4875npOyHvm51HfF3uq8XmD6GzlxU7LIIgpqXw7GeI/1UghBCKHAoGIAVeQ==
 
 react-native-web@^0.14.7:
   version "0.14.7"

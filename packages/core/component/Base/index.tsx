@@ -7,7 +7,7 @@ import {
   ViewStyle,
   Platform,
 } from "react-native"
-import LinearGradient from "react-native-linear-gradient"
+import { LinearGradient } from "../Gradient/Linear"
 import { tw, color } from "@free/tailwind"
 
 const GRADIENT_START = { x: 0, y: 0 }

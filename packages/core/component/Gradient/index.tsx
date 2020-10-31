@@ -1,5 +1,5 @@
 import React, { FC } from "react"
-import LinearGradient from "react-native-linear-gradient"
+import { LinearGradient } from "./Linear"
 import { color } from "@free/tailwind"
 import { GradientProps } from "@free/core"
 
