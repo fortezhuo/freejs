@@ -9,5 +9,3 @@ declare module "*.png"
 declare var FREE_NODE_ENV: string
 declare var FREE_STAMP: string
 declare var window: any
-
-declare module "react-native-skeleton-placeholder" {}
