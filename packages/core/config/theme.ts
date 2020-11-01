@@ -17,6 +17,7 @@ let theme: Config = {
   danger_bg: "bg-pink-800",
   success_bg: "bg-green-400",
   warning_bg: "bg-yellow-500",
+  secondary_bg: "bg-gray-600",
   default_bg: "bg-white",
   default_border: "border-gray-400",
   default_text: "text-gray-900",

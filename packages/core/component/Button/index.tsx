@@ -16,6 +16,7 @@ export const Button: FC<ButtonProps> = observer((props) => {
     children,
     icon,
     style,
+    styleText,
     disabled,
     onPress = undefined,
   } = props
@@ -45,8 +46,8 @@ export const Button: FC<ButtonProps> = observer((props) => {
       testID={testID}
       disabled={disabled}
       styleContainer={StyleSheet.flatten([styles.viewButton, bgColor, style])}
-      styleText={StyleSheet.flatten([styles.textButton, textColor])}
-      style={styles.iconButton}
+      styleText={StyleSheet.flatten([styles.textButton, textColor, styleText])}
+      style={children ? styles.iconButton : {}}
       name={store?.isUpdating ? "loader" : icon}
       color={textColor.color}
       size={18}

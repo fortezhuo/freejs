@@ -15,13 +15,6 @@ export const useHook = () => {
         visible: true,
       },
       {
-        icon: "save",
-        type: "primary_1_bg",
-        children: "Save",
-        onPress: async () => await event.save(),
-        visible: true,
-      },
-      {
         icon: "log-out",
         type: "danger_bg",
         children: "Close",
