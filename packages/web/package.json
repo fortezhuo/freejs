@@ -32,7 +32,7 @@
     "@babel/runtime": "^7.11.0",
     "@loadable/babel-plugin": "^5.13.2",
     "@loadable/webpack-plugin": "^5.14.0",
-    "@pmmmwh/react-refresh-webpack-plugin": "^0.4.2",
+    "@pmmmwh/react-refresh-webpack-plugin": "^0.4.3",
     "@types/compression-webpack-plugin": "^4.0.0",
     "@types/loadable__component": "^5.13.0",
     "@types/loadable__webpack-plugin": "^5.7.0",
