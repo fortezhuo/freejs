@@ -3,7 +3,6 @@ import * as req from "../request"
 import { acl } from "../util/acl"
 
 class AppStore {
-  routerHistory: any = null
   title: string | undefined = undefined
 
   // observable
@@ -14,7 +13,6 @@ class AppStore {
   isDrawerOpen = false
   isForm?: boolean = false
   isLoading = false
-  routerLocation: string | undefined = undefined
   routerParams: any = null
   subTitle?: string | undefined = ""
 
@@ -27,8 +25,6 @@ class AppStore {
       isForm: observable,
       isLoading: observable,
       dimension: observable,
-      routerLocation: observable,
-      routerParams: observable,
       subTitle: observable,
       can: action,
       checkAuth: action,
@@ -57,17 +53,21 @@ class AppStore {
     }
   }
   goback = () => {
+    /*
     const path = this.routerLocation?.substring(
       0,
       this.routerLocation.lastIndexOf("/")
     )
     this.goto(path)
+    */
   }
   goto = (path?: string | undefined) => {
+    /*
     if (path) {
       this?.routerHistory.push(path)
     }
     this.routerLocation = this?.routerHistory?.location.pathname
+    */
   }
   logout = async () => {
     await req.get("/api/auth/logout")

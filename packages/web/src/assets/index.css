@@ -5,6 +5,7 @@ html {
   width: 100%;
   height: 100%;
 }
+
 @font-face {
   src: url(Feather.ttf);
   font-family: Feather;
@@ -24,6 +25,10 @@ a {
   div {
     scrollbar-width: none;
   }
+}
+
+div[data-testid="Header"] {
+  min-width: 100%;
 }
 
 div[data-testid="HorizontalScroll"] > div {

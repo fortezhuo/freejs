@@ -1,11 +1,11 @@
 import React, { FC } from "react"
 import { View, StyleSheet, Platform } from "react-native"
-import { KeyboardAwareScrollView } from "../KeyboardAwareScrollView"
+import { theme } from "../../config/theme"
+import { Gradient, KeyboardAwareScrollView } from "../"
 import { tw } from "@free/tailwind"
 import { LayoutProps } from "@free/core"
 import { useHook } from "./hook"
 import { observer } from "mobx-react-lite"
-import * as Animatable from "react-native-animatable"
 
 const Wrapper: FC<any> = observer((props) =>
   props.scroll ? (
@@ -16,28 +16,17 @@ const Wrapper: FC<any> = observer((props) =>
 )
 
 export const LayoutFull: FC<LayoutProps> = observer(
-  ({
-    testID = "LayoutFull",
-    animation = "slideInRight",
-    children,
-    scroll = true,
-    store,
-    stickyHeader,
-  }) => {
+  ({ testID = "LayoutFull", children, scroll = true, store }) => {
     useHook(store)
-
+    const colors = [theme.primary_1_bg, theme.primary_2_bg]
     return (
-      <Animatable.View
-        animation={animation}
-        duration={500}
-        style={styles.viewLayout}
-        testID={testID}
-      >
-        {stickyHeader && <View style={styles.viewHeader}>{stickyHeader}</View>}
+      <Gradient colors={colors} style={styles.viewLayout}>
         <Wrapper scroll={scroll}>
-          <View style={styles.viewLayout}>{children}</View>
+          <View testID={testID} style={styles.viewLayout}>
+            {children}
+          </View>
         </Wrapper>
-      </Animatable.View>
+      </Gradient>
     )
   }
 )
@@ -66,6 +55,7 @@ export const Layout: FC<LayoutProps> = observer(
 
 const styles = StyleSheet.create({
   viewLayout: tw("flex-1"),
+  viewTransparent: tw("flex-1"),
   viewWrapper: tw("flex-grow"),
   viewWrapper1: tw("h-1 absolute"),
   viewWrapper2: tw("w-full h-full absolute flex-1"),

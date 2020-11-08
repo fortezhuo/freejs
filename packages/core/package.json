@@ -7,31 +7,34 @@
     "semi": false
   },
   "devDependencies": {
-    "@types/react": "^16.9.55",
+    "@types/react": "^16.9.56",
     "@types/react-flatpickr": "^3.8.1",
-    "@types/react-native": "^0.63.30",
+    "@types/react-native": "^0.63.33",
     "@types/react-native-vector-icons": "^6.4.5",
-    "@types/react-router": "^5.1.8",
-    "@types/react-router-dom": "^5.1.5",
-    "@types/react-router-native": "^5.1.0",
     "@types/react-table": "^7.0.25"
   },
   "dependencies": {
     "@free/env": "1.0.0",
     "@free/tailwind": "1.0.0",
+    "@react-native-async-storage/async-storage": "^1.13.2",
     "@react-native-community/datetimepicker": "^3.0.4",
+    "@react-native-community/masked-view": "^0.1.10",
+    "@react-navigation/drawer": "^5.10.7",
+    "@react-navigation/native": "^5.8.7",
+    "@react-navigation/stack": "^5.12.4",
     "axios": "^0.21.0",
     "mobx": "^6.0.1",
-    "mobx-react-lite": "^3.0.1",
+    "mobx-react-lite": "^3.1.5",
     "react": "^16.14.0",
     "react-flatpickr": "^3.10.6",
     "react-native-gesture-handler": "^1.8.0",
     "react-native-linear-gradient": "^2.5.6",
     "react-native-modal": "^11.5.6",
     "react-native-modalize": "^2.0.6",
+    "react-native-reanimated": "^1.13.1",
     "react-native-safe-area-context": "^3.1.8",
+    "react-native-screens": "^2.12.0",
     "react-native-vector-icons": "7.1.0",
-    "react-router": "^5.2.0",
     "react-table": "^7.6.1"
   }
 }

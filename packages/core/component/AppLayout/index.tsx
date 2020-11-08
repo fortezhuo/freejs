@@ -1,21 +1,33 @@
-import React, { FC } from "react"
-import { StyleSheet } from "react-native"
+import React, { FC, useEffect } from "react"
+import { StyleSheet, StatusBar } from "react-native"
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context"
 import { tw } from "@free/tailwind"
 import { theme } from "../../config/theme"
 import { StoreProvider } from "../Store"
-import { Gradient, Drawer, Header } from "../"
-import { useHook } from "./hook"
+import { Gradient, Drawer, useStore } from "../"
 import { MainLayoutProps } from "@free/core"
+import { enableScreens } from "react-native-screens"
 import { useDimensions } from "./useDimensions"
 
+enableScreens()
+
 const MainLayout: FC<MainLayoutProps> = ({ children }) => {
+  const { app } = useStore()
   useDimensions()
-  useHook()
+  useEffect(() => {
+    ;(async function () {
+      try {
+        await app.checkAuth()
+      } catch (e) {
+        console.log(e)
+      }
+    })()
+  }, [app.auth])
 
   const colors = [theme.primary_1_bg, theme.primary_2_bg]
   return (
     <Gradient colors={colors} style={styles.viewFlexTransparent}>
+      <StatusBar barStyle="light-content" backgroundColor="transparent" />
       {children}
     </Gradient>
   )
@@ -25,14 +37,7 @@ export const AppLayout: FC = ({ children }) => {
   return (
     <SafeAreaProvider>
       <StoreProvider>
-        <MainLayout>
-          <SafeAreaView style={styles.viewFlexTransparent}>
-            <Drawer>
-              <Header />
-              {children}
-            </Drawer>
-          </SafeAreaView>
-        </MainLayout>
+        <MainLayout>{children}</MainLayout>
       </StoreProvider>
     </SafeAreaProvider>
   )

@@ -2,12 +2,14 @@ import React, { useEffect, useMemo } from "react"
 import { useStore, TableCell } from "../../component"
 import { TableCheckbox } from "../../shared/ViewGrid/TableCheckbox"
 import { get } from "../../request"
+import { useNavigation } from "@react-navigation/native"
 import * as config from "./config"
 
 export const useHook = () => {
   const { view } = useStore()
+
   const isMobile = view.app?.dimension.isMobile
-  const name = `${view?.app?.routerLocation}/`.split("/")[1]
+  const name = "user" //`${view?.app?.routerLocation}/`.split("/")[1]
   const [search, page, isFilter] = view.getData("search", "page", "isFilter")
   view.name = name
   view.title = (config as ObjectAny)[name].title
@@ -66,6 +68,7 @@ export const useHook = () => {
 
 export const useActions = (store: any) => {
   const name = store.name
+  const navigation = useNavigation()
   const button = (config as ObjectAny)[name].button
   const isMobile = store?.app.dimension.isMobile
   const isSearch = store.data.get("isSearch") || false
@@ -75,7 +78,7 @@ export const useActions = (store: any) => {
         icon: "file-plus",
         type: "primary_2_bg",
         children: "New",
-        onPress: () => store.app?.goto(`${name}/new`),
+        onPress: () => navigation.navigate("FormUser"),
         visible: store.app?.can("create", name),
       },
       delete: {

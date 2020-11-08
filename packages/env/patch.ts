@@ -1,4 +1,5 @@
 import fs from "fs"
+import { string } from "joi"
 import { resolve } from "path"
 
 // Patch Metro
@@ -56,3 +57,19 @@ Object.keys(patchRNGesture).forEach((key) => {
     encoding: "utf8",
   })
 })
+
+// Patch React Navigation
+const fileResourceSavingScene =
+  "@react-navigation/drawer/lib/module/views/ResourceSavingScene"
+const contentResourceSavingScene = fs.readFileSync(
+  resolve(appPath, `./node_modules/${fileResourceSavingScene}.js`),
+  "utf8"
+)
+
+fs.writeFileSync(
+  resolve(appPath, `./node_modules/${fileResourceSavingScene}.web.js`),
+  contentResourceSavingScene.replace(`, shouldUseActivityState `, ""),
+  {
+    encoding: "utf8",
+  }
+)

@@ -11,7 +11,10 @@ import com.facebook.soloader.SoLoader;
 import com.th3rdwave.safeareacontext.SafeAreaContextPackage;
 import com.reactcommunity.rndatetimepicker.RNDateTimePickerPackage;
 import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
+import com.swmansion.rnscreens.RNScreensPackage;
+import com.swmansion.reanimated.ReanimatedPackage;
 import com.BV.LinearGradient.LinearGradientPackage; 
+import com.reactnativecommunity.asyncstorage.AsyncStoragePackage;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
@@ -33,7 +36,10 @@ public class MainApplication extends Application implements ReactApplication {
           packages.add(new SafeAreaContextPackage());
           packages.add(new RNDateTimePickerPackage());
           packages.add(new RNGestureHandlerPackage());
+          packages.add(new RNScreensPackage());
+          packages.add(new ReanimatedPackage());
           packages.add(new LinearGradientPackage());
+          packages.add(new AsyncStoragePackage());
           return packages;
         }
 
