@@ -10,13 +10,14 @@ import { AuthenticateRoutes } from "./AuthenticateRoutes"
 
 const NAVIGATION_PERSISTENCE_KEY = `${configApp.name.toUpperCase()}_STATE`
 
-const Routes: FC<{ screen: any }> = observer(({ screen }) => {
+const Routes: FC<{ screens: any }> = observer(({ screens }) => {
   const { app } = useStore()
   const [isReady, setIsReady] = React.useState(Platform.OS === "web")
   const [initialState, setInitialState] = React.useState()
 
   const config = {
     screens: {
+      Screens: "",
       Home: "",
       Login: "login",
       SettingUser: "user",
@@ -56,11 +57,11 @@ const Routes: FC<{ screen: any }> = observer(({ screen }) => {
   return !isReady || app.isLoading ? (
     <Loader />
   ) : (
-    <NavigationContainer linking={linking}>
+    <NavigationContainer>
       {app.auth ? (
-        <AuthenticateRoutes screen={screen} />
+        <AuthenticateRoutes screens={screens} />
       ) : (
-        <AnonymousRoutes screen={screen} />
+        <AnonymousRoutes screens={screens} />
       )}
     </NavigationContainer>
   )

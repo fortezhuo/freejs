@@ -4,10 +4,10 @@ import { createStackNavigator } from "@react-navigation/stack"
 
 const Stack = createStackNavigator()
 
-export const AnonymousRoutes = observer(({ screen }: any) => {
+export const AnonymousRoutes = observer(({ screens }: any) => {
   return (
     <Stack.Navigator headerMode="none">
-      <Stack.Screen name="Login" component={screen.PageLogin}></Stack.Screen>
+      <Stack.Screen name="Login" component={screens.PageLogin}></Stack.Screen>
     </Stack.Navigator>
   )
 })

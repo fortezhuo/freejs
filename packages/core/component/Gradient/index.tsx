@@ -8,11 +8,13 @@ export const Gradient: FC<GradientProps> = ({
   style,
   type = "horizontal",
   colors,
+  testID,
 }) => {
   const gradient = colors.map((val: string) => color(val))
   const end = type === "vertical" ? { x: 0, y: 1 } : { x: 1, y: 0 }
   return (
     <LinearGradient
+      testID={testID}
       start={{ x: 0, y: 0 }}
       end={end}
       colors={gradient}

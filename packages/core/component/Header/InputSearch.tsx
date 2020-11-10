@@ -26,7 +26,7 @@ export const InputSearch: FC = observer((_props) => {
 
   useEffect(() => {
     setText("")
-  }, [view?.app?.routerLocation])
+  }, [])
 
   return name !== "log" ? (
     <Base

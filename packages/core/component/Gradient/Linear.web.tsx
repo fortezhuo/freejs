@@ -17,6 +17,7 @@ export const LinearGradient: FC<any> = ({
   angleCenter,
   style,
   children,
+  testID,
   ...props
 }) => {
   const { width, height } = useWindowDimensions()
@@ -57,6 +58,7 @@ export const LinearGradient: FC<any> = ({
           backgroundImage: `linear-gradient(${getAngle()},${getColors()})`,
         },
       ]}
+      testID={testID}
     >
       {children}
     </View>

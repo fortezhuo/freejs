@@ -18,7 +18,6 @@ const colors = [theme.primary_1_bg, theme.primary_2_bg]
 
 const ScreenContainer: React.FC<any> = observer(
   ({ navigation, screens, isMobile }) => {
-    navigation.setOptions({ headerStyle: { height: 0 }, headerTitle: "" })
     return (
       <Stack.Navigator
         screenOptions={{

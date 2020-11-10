@@ -1,7 +1,7 @@
 import * as Input from "./Input"
 import * as ActionGroup from "./ActionGroup"
+import * as Header from "./Header"
 export { Accordion, AccordionItem } from "./Accordion"
-export { ActionGroup }
 export { useEvent } from "./ActionGroup/hook"
 export { Avatar } from "./Avatar"
 export { Base } from "./Base"
@@ -11,7 +11,6 @@ export { Drawer } from "./Drawer"
 export { Col, Row, Label } from "./Grid"
 export { Gradient } from "./Gradient"
 export { KeyboardAwareScrollView } from "./KeyboardAwareScrollView"
-export { Header } from "./Header"
 export { IconLabel, Icon, IconButton } from "./Icon"
 export { Layout, LayoutFull } from "./Layout"
 export { Link } from "./Link"
@@ -34,4 +33,4 @@ export {
 export { Title } from "./Title"
 export { useStore } from "./Store"
 export { H1, H2, H3, H4, H5, Text } from "./Text"
-export { Input }
+export { Input, Header, ActionGroup }

@@ -2,7 +2,7 @@ import React from "react"
 import loadable from "@loadable/component"
 import BigLoader from "../component/BigLoader"
 import Loader from "../component/Loader"
-import * as screen from "../screen"
+import * as screens from "../screens"
 
 const AppLayout = loadable(() => import("../component/AppLayout"), {
   ssr: true,
@@ -17,7 +17,7 @@ const Routes = loadable(() => import("@free/core/component/Routes"), {
 const App = () => {
   return (
     <AppLayout>
-      <Routes screen={screen} />
+      <Routes screens={screens} />
     </AppLayout>
   )
 }

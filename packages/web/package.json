@@ -16,7 +16,7 @@
     "@loadable/component": "^5.14.1",
     "@loadable/server": "^5.14.0",
     "react-dom": "^16.14.0",
-    "react-native-web": "^0.14.7"
+    "react-native-web": "fortezhuo/react-native-web"
   },
   "devDependencies": {
     "@babel/core": "^7.11.0",
@@ -41,7 +41,7 @@
     "@types/webpack-bundle-analyzer": "^3.9.0",
     "@types/webpack-node-externals": "^2.5.0",
     "babel-loader": "^8.1.0",
-    "babel-plugin-react-native-web": "^0.14.7",
+    "babel-plugin-react-native-web": "0.12.3",
     "compression-webpack-plugin": "^6.0.4",
     "css-loader": "^5.0.0",
     "file-loader": "^6.2.0",

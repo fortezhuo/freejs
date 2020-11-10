@@ -32,10 +32,10 @@ export const LayoutFull: FC<LayoutProps> = observer(
 )
 
 export const Layout: FC<LayoutProps> = observer(
-  ({ testID = "Layout", children, scroll, store, stickyHeader, style }) => {
+  ({ testID = "Layout", children, scroll, store, style }) => {
     const isWeb = Platform.OS === "web"
     return (
-      <LayoutFull scroll={scroll} stickyHeader={stickyHeader} store={store}>
+      <LayoutFull scroll={scroll} store={store}>
         <View style={styles.viewWrapper1}></View>
         <View style={styles.viewWrapper2}>
           <View style={styles.viewWrapper21}></View>

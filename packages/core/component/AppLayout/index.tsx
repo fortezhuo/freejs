@@ -1,5 +1,5 @@
 import React, { FC, useEffect } from "react"
-import { StyleSheet, StatusBar } from "react-native"
+import { StyleSheet, StatusBar, View } from "react-native"
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context"
 import { tw } from "@free/tailwind"
 import { theme } from "../../config/theme"

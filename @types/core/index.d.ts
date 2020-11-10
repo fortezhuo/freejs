@@ -87,6 +87,7 @@ declare module "@free/core" {
 
   // GradientProps
   interface GradientProps {
+    testID?: string
     children?: ReactNode
     style?: any
     type?: string
