@@ -1,5 +1,6 @@
-import React, { FC, Children, useRef, useEffect, useCallback } from "react"
+import React from "react"
 import { View, TouchableOpacity, StyleSheet, Animated } from "react-native"
+import { DrawerItem } from "@react-navigation/drawer"
 import { theme } from "../../config/theme"
 import { IconLabel, Icon, Link } from ".."
 import { tw, color } from "@free/tailwind"
@@ -11,7 +12,7 @@ const activeColor = color(theme.accordion_icon_active_bg)
 const defaultColor = color(theme.default_text)
 const noop = () => {}
 
-export const Accordion: FC<AccordionProps> = observer(
+export const Accordion: React.FC<AccordionProps> = observer(
   ({ testID = "Accordion", icon, label, active = false, children }) => {
     const state = useLocalObservable(() => ({
       isExpand: active,
@@ -20,14 +21,14 @@ export const Accordion: FC<AccordionProps> = observer(
       },
     }))
     const itemHeight = 46
-    const childHeight = Children.count(children) * itemHeight
-    const opacity = useRef(new Animated.Value(0)).current
+    const childHeight = React.Children.count(children) * itemHeight
+    const opacity = React.useRef(new Animated.Value(0)).current
     const height = opacity.interpolate({
       inputRange: [0, 1],
       outputRange: [0, childHeight],
     })
 
-    useEffect(() => {
+    React.useEffect(() => {
       Animated.timing(opacity, {
         toValue: state.isExpand ? 1 : 0,
         duration: 120,
@@ -74,77 +75,17 @@ export const Accordion: FC<AccordionProps> = observer(
   }
 )
 
-export const AccordionItem: FC<AccordionItemProps> = observer(
-  ({
-    testID = "AccordionItem",
-    icon,
-    header = false,
-    pathname,
-    children,
-    onPress = noop,
-  }) => {
+export const AccordionItem: React.FC<any> = observer(
+  ({ component, icon, navigation, children }) => {
     const { app } = useStore()
-    const active = pathname === app?.routerLocation
-    const onClose = useCallback(() => {
-      if (app.dimension.isMobile) app.set("isDrawerOpen", false)
-    }, [])
-
-    const Wrapper: FC = useCallback(
-      ({ children }) => {
-        return pathname ? (
-          <Link href={pathname} beforeAction={onClose}>
-            {children}
-          </Link>
-        ) : (
-          <TouchableOpacity
-            onPress={() => {
-              onClose()
-              onPress()
-            }}
-          >
-            {children}
-          </TouchableOpacity>
-        )
-      },
-      [pathname, onPress]
-    )
+    const active = false
 
     return (
-      <Wrapper>
-        {header ? (
-          <View
-            testID={testID}
-            style={StyleSheet.flatten([
-              styles.viewAccordion,
-              styles.viewWrapper,
-            ])}
-          >
-            <IconLabel
-              name={icon}
-              styleContainer={styles.viewIcon}
-              styleText={styles.textIcon}
-            >
-              {children}
-            </IconLabel>
-          </View>
-        ) : (
-          <IconLabel
-            name={icon}
-            size={20}
-            color={active ? activeColor : defaultColor}
-            styleContainer={StyleSheet.flatten([
-              styles.viewIconItem,
-              active ? styles.itemActive : {},
-            ])}
-            styleText={StyleSheet.flatten([
-              styles.textIconItem,
-              { color: active ? activeColor : defaultColor },
-            ])}
-          >
-            {children}
-          </IconLabel>
-        )}
-      </Wrapper>
+      <DrawerItem
+        label={children}
+        onPress={() => navigation.navigate(component)}
+        icon={() => <Icon name={icon} color="white" size={16} />}
+      />
     )
   }
 )

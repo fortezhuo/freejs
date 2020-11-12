@@ -1,39 +1,30 @@
 import { Route } from "@free/core"
 import { AppStore } from "../store/appStore"
 
-const getSetting: (visible: boolean, trash: boolean) => Route[] = (
-  visible,
-  trash
-) => {
+const getSetting: (visible: boolean) => Route[] = (visible) => {
   return [
     {
-      path: ["/trash"],
-      component: "SettingTrash",
+      name: "SettingTrash",
       view: false,
-      trash: false,
+      child: true,
       visible: visible,
     },
     {
-      path: ["/log"],
-      component: "SettingLog",
+      name: "SettingLog",
       view: true,
-      trash: false,
+      child: false,
       visible: visible,
     },
     {
-      path: ["/user"],
-      component: "SettingUser",
+      name: "SettingUser",
       view: true,
-      trash,
+      child: true,
       visible: visible,
     },
   ]
 }
 
-const getProfile: (visible: boolean, trash: boolean) => Route[] = (
-  visible,
-  trash
-) => {
+const getProfile: (visible: boolean) => Route[] = (visible) => {
   return []
 }
 
@@ -42,10 +33,9 @@ export const getRoute: (app: AppStore | undefined) => Route[] = (app) => {
 
   const canSetting: boolean = app?.can("read", "setting")
   const canProfile: boolean = app?.can("read", "profile")
-  const canTrash = canSetting
   const route: Route[] = []
   return route
-    .concat(getSetting(canSetting, canTrash))
-    .concat(getProfile(canProfile, canTrash))
+    .concat(getSetting(canSetting))
+    .concat(getProfile(canProfile))
     .filter((route) => route.visible)
 }

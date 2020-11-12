@@ -1,7 +1,7 @@
 import { Menu } from "@free/core"
 import { app } from "../store"
 
-export const getMenu: () => Menu[] = () => {
+export const getMenu: () => any[] = () => {
   const canProfile = app.can("read", "profile")
   const canSetting = app.can("read", "setting")
   return [
@@ -113,7 +113,7 @@ export const getMenu: () => Menu[] = () => {
         {
           label: "Trash",
           icon: "trash-2",
-          path: "/trash",
+          component: "SettingTrash",
           visible: true,
         },
         {
@@ -125,10 +125,10 @@ export const getMenu: () => Menu[] = () => {
         {
           label: "User",
           icon: "user",
-          path: "/user",
+          component: "ViewSettingUser",
           visible: true,
         },
       ],
     },
-  ])
+  ] as any)
 }

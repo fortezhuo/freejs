@@ -27,10 +27,10 @@ declare module "@free/core" {
   }
 
   type Route = {
-    path: string[]
-    component: string
-    view: boolean
-    trash?: boolean
+    name: string
+    alias?: string
+    view: string | boolean
+    child: string | boolean
     visible: boolean
   }
 
@@ -255,12 +255,6 @@ declare module "@free/core" {
     label: string
     show?: boolean
     children: ReactNode
-  }
-
-  // Sidebar
-  interface SidebarProps extends ViewProps {
-    testID?: string
-    isOpen: boolean
   }
 
   interface StateComponent {

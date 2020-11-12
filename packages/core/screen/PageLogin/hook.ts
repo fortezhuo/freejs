@@ -11,11 +11,5 @@ export const useHook = () => {
     })
   }, [])
 
-  useEffect(() => {
-    if (login?.app?.auth) {
-      login.app.goto("/")
-    }
-  }, [login?.app?.auth])
-
   return login
 }

@@ -7,13 +7,13 @@ class AppStore {
 
   // observable
   auth: any = null
+  routes: any = null
   dimension: ObjectAny = {}
   error = undefined
   fatalError = undefined
   isDrawerOpen = false
   isForm?: boolean = false
   isLoading = false
-  routerParams: any = null
   subTitle?: string | undefined = ""
 
   constructor() {
@@ -28,8 +28,6 @@ class AppStore {
       subTitle: observable,
       can: action,
       checkAuth: action,
-      goback: action,
-      goto: action,
       logout: action,
       set: action,
       setError: action,
@@ -52,27 +50,9 @@ class AppStore {
       this.set("isLoading", false)
     }
   }
-  goback = () => {
-    /*
-    const path = this.routerLocation?.substring(
-      0,
-      this.routerLocation.lastIndexOf("/")
-    )
-    this.goto(path)
-    */
-  }
-  goto = (path?: string | undefined) => {
-    /*
-    if (path) {
-      this?.routerHistory.push(path)
-    }
-    this.routerLocation = this?.routerHistory?.location.pathname
-    */
-  }
   logout = async () => {
     await req.get("/api/auth/logout")
     this.set("auth", undefined)
-    this.goto("/login")
   }
 
   set = (name: string, value: any) => {
@@ -81,7 +61,6 @@ class AppStore {
   setError = (err: any) => {
     if (err.status && err.status === 500) {
       this.fatalError = err
-      this.goto("/error")
     } else {
       const error = err.data ? err.data : err
       if (error.message.indexOf("Validation Error") >= 0) {

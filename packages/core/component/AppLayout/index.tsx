@@ -1,6 +1,6 @@
-import React, { FC, useEffect } from "react"
-import { StyleSheet, StatusBar, View } from "react-native"
-import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context"
+import React from "react"
+import { StyleSheet, StatusBar } from "react-native"
+import { SafeAreaProvider } from "react-native-safe-area-context"
 import { tw } from "@free/tailwind"
 import { theme } from "../../config/theme"
 import { StoreProvider } from "../Store"
@@ -11,10 +11,10 @@ import { useDimensions } from "./useDimensions"
 
 enableScreens()
 
-const MainLayout: FC<MainLayoutProps> = ({ children }) => {
+const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   const { app } = useStore()
   useDimensions()
-  useEffect(() => {
+  React.useEffect(() => {
     ;(async function () {
       try {
         await app.checkAuth()
@@ -33,7 +33,7 @@ const MainLayout: FC<MainLayoutProps> = ({ children }) => {
   )
 }
 
-export const AppLayout: FC = ({ children }) => {
+export const AppLayout: React.FC = ({ children }) => {
   return (
     <SafeAreaProvider>
       <StoreProvider>

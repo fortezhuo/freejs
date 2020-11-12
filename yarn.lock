@@ -2272,10 +2272,10 @@ babel-plugin-dynamic-import-node@^2.3.3:
   dependencies:
     object.assign "^4.1.0"
 
-babel-plugin-react-native-web@0.12.3:
-  version "0.12.3"
-  resolved "https://registry.yarnpkg.com/babel-plugin-react-native-web/-/babel-plugin-react-native-web-0.12.3.tgz#e2291c96bcdf8614fa5c0b8cc35a570ead18923e"
-  integrity sha512-vafI23BcpuWr7sd0IkbbY2ZlubC2I0K4bbXShRVKrHfHU6myXV4Sg0AYywBqDIkGiB5M+uJA+d0/DAa6bHCSUw==
+babel-plugin-react-native-web@^0.14.8:
+  version "0.14.8"
+  resolved "https://registry.yarnpkg.com/babel-plugin-react-native-web/-/babel-plugin-react-native-web-0.14.8.tgz#9888840290a25432a076f14518dca095bffb3cad"
+  integrity sha512-NTs8y9q5IYLFHgDBkHwyPJPJWPIVaPVTE2QQ/bd6DJ/o90XngfUNJE3FKslyzK9H84Tz3A/E3FwmXQrOaV+3Fg==
 
 babel-plugin-syntax-trailing-function-commas@^7.0.0-beta.0:
   version "7.0.0-beta.0"
@@ -3450,11 +3450,6 @@ dayjs@^1.8.15, dayjs@^1.9.4:
   version "1.9.6"
   resolved "https://registry.yarnpkg.com/dayjs/-/dayjs-1.9.6.tgz#6f0c77d76ac1ff63720dd1197e5cb87b67943d70"
   integrity sha512-HngNLtPEBWRo8EFVmHFmSXAjtCX8rGNqeXQI0Gh7wCTSqwaKgPIDqu9m07wABVopNwzvOeCb+2711vQhDlcIXw==
-
-debounce@^1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/debounce/-/debounce-1.2.0.tgz#44a540abc0ea9943018dc0eaa95cce87f65cd131"
-  integrity sha512-mYtLl1xfZLi1m4RtQYlZgJUNQjl4ZxVnHzIR8nLLgi4q1YT8o/WM+MK/f8yfcc9s5Ir5zRaPZyZU6xs1Syoocg==
 
 debug@*, debug@4, debug@^4.0.0, debug@^4.1.0, debug@^4.1.1:
   version "4.2.0"
@@ -8322,13 +8317,13 @@ react-native-vector-icons@7.1.0:
     prop-types "^15.7.2"
     yargs "^15.0.2"
 
-react-native-web@fortezhuo/react-native-web:
-  version "0.12.3"
-  resolved "https://codeload.github.com/fortezhuo/react-native-web/tar.gz/ca2fee3bd0a339a431af90c52c1da1b9065e9ec9"
+react-native-web@^0.14.8:
+  version "0.14.8"
+  resolved "https://registry.yarnpkg.com/react-native-web/-/react-native-web-0.14.8.tgz#1f3eba659216936be61b7bcfe4cb6c6f5e8ed056"
+  integrity sha512-MVKEqLMlUFlThp56/LbQM+cyLKyjY6+pk3MFZ/6VC/ZhTldmN86Otd4cxlopJYiEj0woG9klnz3+GmI47bKv0A==
   dependencies:
     array-find-index "^1.0.2"
     create-react-class "^15.6.2"
-    debounce "^1.2.0"
     deep-assign "^3.0.0"
     fbjs "^1.0.0"
     hyphenate-style-name "^1.0.3"

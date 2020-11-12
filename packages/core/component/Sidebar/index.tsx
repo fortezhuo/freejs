@@ -1,30 +1,25 @@
-import React, { FC, useEffect, useRef } from "react"
-import {
-  View,
-  StyleSheet,
-  ScrollView,
-  Animated,
-  ImageBackground,
-} from "react-native"
+import React from "react"
+import { View, StyleSheet, ImageBackground } from "react-native"
 import { tw } from "@free/tailwind"
-import { Accordion, AccordionItem, Title, useStore } from "../"
-import { SidebarProps } from "@free/core"
+import { Accordion, AccordionItem, Title } from "../"
 import { observer } from "mobx-react-lite"
 import { getMenu } from "../../config/menu"
 import { random } from "../../util/random"
+import { DrawerContentScrollView } from "@react-navigation/drawer"
+
 import imageSidebar from "../../img/sidebar.jpg"
 
-const Content: FC = observer(() => {
-  const { app } = useStore()
-  const pathname = app.routerLocation
+const Content: React.FC<any> = observer((props) => {
   const allowedMenu = getMenu().filter((menu) => menu.visible)
 
   return (
-    <View style={styles.rootContent}>
+    <DrawerContentScrollView
+      {...props}
+      scrollEnabled={true}
+      contentContainerStyle={{ flex: 1 }}
+    >
       {allowedMenu.map((menu) => {
-        const active = menu.children
-          ? menu.children.filter((sub) => sub.path === pathname).length !== 0
-          : false
+        const active = false
         return (
           <Accordion
             active={active}
@@ -34,12 +29,13 @@ const Content: FC = observer(() => {
           >
             {menu.children &&
               menu.children
-                .filter((sub) => sub.visible)
-                .map((sub) => {
+                .filter((sub: any) => sub.visible)
+                .map((sub: any) => {
                   return (
                     <AccordionItem
-                      pathname={sub.path}
-                      key={`sub_${random()}`}
+                      key={"sidebar_" + random()}
+                      navigation={props.navigation}
+                      component={sub.component}
                       icon={sub.icon}
                     >
                       {sub.label}
@@ -49,47 +45,24 @@ const Content: FC = observer(() => {
           </Accordion>
         )
       })}
-    </View>
+    </DrawerContentScrollView>
   )
 })
 
-export const Sidebar: FC<SidebarProps> = observer(
-  ({ isOpen, testID = "Sidebar" }) => {
-    const { app } = useStore()
-    const opacity = useRef(new Animated.Value(1)).current
-    const width = opacity.interpolate({
-      inputRange: [0, 1],
-      outputRange: [0, tw("w-64").width],
-    })
+export const Sidebar: React.FC<any> = observer((props) => {
+  React.useEffect(() => {
+    props.setProgress(props.progress)
+  }, [props.progress])
 
-    useEffect(() => {
-      Animated.timing(opacity, {
-        toValue: isOpen ? 1 : 0,
-        duration: 30,
-        useNativeDriver: false,
-      }).start()
-    }, [isOpen])
-
-    return (
-      <Animated.View
-        testID={testID}
-        style={StyleSheet.flatten([
-          app.dimension.isMobile ? {} : tw("shadow-xl z-10"),
-          { opacity, width },
-        ])}
-      >
-        <ImageBackground source={imageSidebar} style={styles.imageSidebar}>
-          <View style={styles.layoutSidebar}>
-            <Title />
-            <ScrollView>
-              <Content />
-            </ScrollView>
-          </View>
-        </ImageBackground>
-      </Animated.View>
-    )
-  }
-)
+  return (
+    <ImageBackground source={imageSidebar} style={styles.imageSidebar}>
+      <View style={styles.layoutSidebar}>
+        <Title navigation={props.navigation} />
+        <Content {...props} />
+      </View>
+    </ImageBackground>
+  )
+})
 
 const styles = StyleSheet.create({
   layoutSidebar: tw(`bg-white-800 flex-1`),

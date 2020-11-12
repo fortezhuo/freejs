@@ -1,117 +1,101 @@
 import React from "react"
 import Animated from "react-native-reanimated"
-import {
-  DrawerItem,
-  createDrawerNavigator,
-  DrawerContentScrollView,
-} from "@react-navigation/drawer"
+import { createDrawerNavigator } from "@react-navigation/drawer"
 import { tw } from "@free/tailwind"
 import { observer } from "mobx-react-lite"
 import { createStackNavigator } from "@react-navigation/stack"
-import { View, Text, StyleSheet } from "react-native"
-import { Gradient, Header, IconButton, Icon, useStore, H3 } from ".."
+import { StyleSheet, Platform } from "react-native"
+import { Gradient, Header, IconButton, useStore, H3, Sidebar } from ".."
 import { theme } from "../../config/theme"
+import { random } from "../../util/random"
 
 const Stack = createStackNavigator()
 const Drawer = createDrawerNavigator()
 const colors = [theme.primary_1_bg, theme.primary_2_bg]
 
 const ScreenContainer: React.FC<any> = observer(
-  ({ navigation, screens, isMobile }) => {
-    navigation.setOptions({ headerStyle: { height: 0 }, headerTitle: "" })
+  ({ navigation, screens, routes, isMobile, style }) => {
     return (
-      <Stack.Navigator
-        screenOptions={{
-          headerTitle: () =>
-            navigation.canGoBack() ? (
-              <H3 style={styles.headerTitle}>Title</H3>
-            ) : (
-              <Header.InputSearch />
-            ),
-          headerLeft: () =>
-            isMobile ? (
-              <IconButton
-                name={navigation.canGoBack() ? "chevron-left" : "menu"}
-                style={styles.headerLeft}
-                onPress={() =>
-                  navigation.canGoBack()
-                    ? navigation.goBack()
-                    : navigation.toggleDrawer()
-                }
-              />
-            ) : undefined,
-          headerBackground: () => (
-            <Gradient style={{ flex: 1 }} colors={colors} />
-          ),
-          headerRight: () => <Header.MenuUser />,
-        }}
+      <Animated.View
+        style={StyleSheet.flatten([styles.screenContainer, style])}
       >
-        <Stack.Screen name="Home">
-          {(props) => <screens.PageHome {...props} />}
-        </Stack.Screen>
-        <Stack.Screen name="User">
-          {(props) => <screens.ViewGrid {...props} />}
-        </Stack.Screen>
-      </Stack.Navigator>
+        <Stack.Navigator
+          screenOptions={{
+            headerTitle: () =>
+              navigation.canGoBack() ? (
+                <H3 style={styles.headerTitle}>Title</H3>
+              ) : (
+                <Header.InputSearch />
+              ),
+            headerLeft: () =>
+              isMobile ? (
+                <IconButton
+                  name={navigation.canGoBack() ? "chevron-left" : "menu"}
+                  style={styles.headerLeft}
+                  onPress={() =>
+                    navigation.canGoBack()
+                      ? navigation.goBack()
+                      : navigation.toggleDrawer()
+                  }
+                />
+              ) : undefined,
+            headerBackground: () => (
+              <Gradient style={{ flex: 1 }} colors={colors} />
+            ),
+            headerRight: () => <Header.MenuUser />,
+          }}
+        >
+          <Stack.Screen name="Home">
+            {(props) => <screens.PageHome {...props} />}
+          </Stack.Screen>
+          {routes.map((route: any) => (
+            <Stack.Screen
+              name={route.name}
+              key={"stack_" + random()}
+              component={screens[route.component]}
+            />
+          ))}
+        </Stack.Navigator>
+      </Animated.View>
     )
   }
 )
 
-const DrawerContent = (props: any) => {
-  return (
-    <DrawerContentScrollView
-      {...props}
-      scrollEnabled={false}
-      contentContainerStyle={{ flex: 1 }}
-    >
-      <View>
-        <Text>FreeJS</Text>
-
-        <DrawerItem
-          label="Home"
-          onPress={() => props.navigation.navigate("Home")}
-          icon={() => <Icon name="home" color="white" size={16} />}
-        />
-        <DrawerItem
-          label="User"
-          onPress={() => props.navigation.navigate("User")}
-          icon={() => <Icon name="message1" color="white" size={16} />}
-        />
-      </View>
-    </DrawerContentScrollView>
-  )
-}
-
-export const AuthenticateRoutes = observer(({ screens }: any) => {
+export const AuthenticateRoutes = observer(({ screens, routes }: any) => {
   const { app } = useStore()
   const [progress, setProgress] = React.useState(new Animated.Value(0))
   const scale = Animated.interpolate(progress, {
     inputRange: [0, 1],
     outputRange: [1, 0.8],
   })
-  const borderRadius = Animated.interpolate(progress, {
-    inputRange: [0, 1],
-    outputRange: [0, 16],
-  })
-  const animatedStyle = { borderRadius, transform: [{ scale }] }
+  const animatedStyle = {
+    overflow: (progress as any)._value === 1 ? "hidden" : "auto",
+    transform: [{ scale }],
+  }
+
   const isMobile = app.dimension.isMobile
+  const options =
+    Platform.OS === "web"
+      ? { headerStyle: { height: 0 }, headerTitle: "" }
+      : {
+          headerShown: false,
+        }
 
   return (
     <Drawer.Navigator
       drawerType={isMobile ? "slide" : "permanent"}
-      overlayColor="transparent"
       drawerContent={(props) => {
-        setProgress(props.progress as any)
-        return <DrawerContent {...props} />
+        return <Sidebar {...props} setProgress={setProgress} />
       }}
     >
-      <Drawer.Screen name="Screens">
+      <Drawer.Screen name="Screens" options={options}>
         {(props) => (
           <ScreenContainer
             {...props}
             isMobile={isMobile}
+            routes={routes}
             screens={screens}
-            style={animatedStyle}
+            style={isMobile ? animatedStyle : {}}
           />
         )}
       </Drawer.Screen>
@@ -122,26 +106,5 @@ export const AuthenticateRoutes = observer(({ screens }: any) => {
 const styles = StyleSheet.create({
   headerLeft: tw(`ml-4`),
   headerTitle: tw("text-white"),
-  stack: {
-    flex: 1,
-    shadowColor: "#FFF",
-    shadowOffset: {
-      width: 0,
-      height: 8,
-    },
-    shadowOpacity: 0.44,
-    shadowRadius: 10.32,
-    elevation: 5,
-    // overflow: 'scroll',
-    // borderWidth: 1,
-  },
-  drawerStyles: { flex: 1, backgroundColor: "transparent" },
-  drawerItem: { alignItems: "flex-start", marginVertical: 0 },
-  drawerLabel: { color: "white", marginLeft: -16 },
-  avatar: {
-    borderRadius: 60,
-    marginBottom: 16,
-    borderColor: "white",
-    borderWidth: StyleSheet.hairlineWidth,
-  },
+  screenContainer: tw("flex-1"),
 })
