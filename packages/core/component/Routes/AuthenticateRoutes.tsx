@@ -13,7 +13,7 @@ const Stack = createStackNavigator()
 const Drawer = createDrawerNavigator()
 const colors = [theme.primary_1_bg, theme.primary_2_bg]
 
-const ScreenContainer: React.FC<any> = observer(
+const Screens: React.FC<any> = observer(
   ({ navigation, screens, routes, isMobile, style }) => {
     return (
       <Animated.View
@@ -90,7 +90,7 @@ export const AuthenticateRoutes = observer(({ screens, routes }: any) => {
     >
       <Drawer.Screen name="Screens" options={options}>
         {(props) => (
-          <ScreenContainer
+          <Screens
             {...props}
             isMobile={isMobile}
             routes={routes}

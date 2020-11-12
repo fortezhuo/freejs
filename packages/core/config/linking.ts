@@ -3,12 +3,18 @@ import { configApp } from "@free/env"
 export const linking: any = {
   prefixes: ["freejs://", "node.rockman.com"],
   config: {
+    initialRouteName: "Home",
     screens: {
-      Screens: "",
-      Home: "index",
       Login: "login",
-      ViewSettingUser: "user",
-      SettingUser: "user/:id",
+      Screens: {
+        path: "",
+        screens: {
+          Home: "index",
+          ViewSettingUser: "user",
+          SettingTrash: "trash",
+          SettingUser: "user/:id",
+        },
+      },
     },
   },
 }
