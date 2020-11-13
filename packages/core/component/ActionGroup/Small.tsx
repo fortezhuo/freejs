@@ -1,4 +1,4 @@
-import React, { FC, useRef } from "react"
+import React from "react"
 import { StyleSheet, View } from "react-native"
 import { Modalize } from "react-native-modalize"
 
@@ -7,10 +7,12 @@ import { Button } from ".."
 import { random } from "../../util/random"
 import { tw } from "@free/tailwind"
 
-const Multi: FC<any> = observer(({ store, actions }) => {
-  const modalizeRef = useRef<Modalize>(null)
+export const Small: React.FC<any> = observer(({ store, actions }) => {
+  const modalizeRef = React.useRef<Modalize>(null)
+  actions = actions.filter((act: ObjectAny) => act.children !== "Delete")
+  const isShow = actions.length != 0 && store.app.dimension.isMobile
 
-  return (
+  return isShow ? (
     <>
       <Button
         icon="zap"
@@ -53,16 +55,9 @@ const Multi: FC<any> = observer(({ store, actions }) => {
         </View>
       </Modalize>
     </>
+  ) : (
+    <View />
   )
-})
-
-export const Small: FC<any> = observer(({ store, actions }) => {
-  actions = actions.filter(
-    (act: ObjectAny) => act.children !== "Delete" && act.children !== "Close"
-  )
-  const isShow = actions.length != 0 && store.app.dimension.isMobile
-
-  return isShow ? <Multi store={store} actions={actions} /> : null
 })
 
 const styles = StyleSheet.create({
