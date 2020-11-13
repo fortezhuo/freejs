@@ -22,12 +22,14 @@ export const useDimensions = () => {
 
   const detectTitleChange = React.useCallback(() => {
     const title = document.title
-    const user: any = document.querySelector('div[data-testid="MenuUser"]')
-    const sidebar: any = document.querySelector('div[data-testid="Sidebar"]')
-      ?.parentNode?.parentNode
+    if (title.indexOf("Login") < 0) {
+      const user: any = document.querySelector('div[data-testid="MenuUser"]')
+      const sidebar: any = document.querySelector('div[data-testid="Sidebar"]')
+        ?.parentNode?.parentNode
 
-    sidebar.style.display = title.indexOf("::") < 0 ? "none" : "flex"
-    user.style.display = title.indexOf("::") < 0 ? "none" : "flex"
+      sidebar.style.display = title.indexOf("::") < 0 ? "none" : "flex"
+      user.style.display = title.indexOf("::") < 0 ? "none" : "flex"
+    }
   }, [])
 
   React.useEffect(() => {

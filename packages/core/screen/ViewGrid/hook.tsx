@@ -78,7 +78,7 @@ export const useActions = (store: any) => {
         icon: "file-plus",
         type: "primary_2_bg",
         children: "New",
-        onPress: () => navigation.navigate("FormUser"),
+        onPress: () => navigation.navigate("SettingUser"),
         visible: store.app?.can("create", name),
       },
       delete: {
