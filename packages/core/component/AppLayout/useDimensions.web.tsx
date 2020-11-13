@@ -1,15 +1,14 @@
-import { useCallback } from "react"
 import { useStore } from "../Store"
 import { useSafeAreaInsets } from "react-native-safe-area-context"
 import { Dimensions } from "react-native"
 import { getScreenSize } from "./helper"
-import { useEffect } from "react"
+import React from "react"
 
 export const useDimensions = () => {
   const { app } = useStore()
   const insets = useSafeAreaInsets()
 
-  const updateDimensions = useCallback((window: any) => {
+  const updateDimensions = React.useCallback((window: any) => {
     const { width, height } = window
     const screen = getScreenSize(width)
     app.set("dimension", {
@@ -21,14 +20,32 @@ export const useDimensions = () => {
     })
   }, [])
 
-  useEffect(() => {
+  const detectTitleChange = React.useCallback(() => {
+    const title = document.title
+    const user: any = document.querySelector('div[data-testid="MenuUser"]')
+    const sidebar: any = document.querySelector('div[data-testid="Sidebar"]')
+      ?.parentNode?.parentNode
+
+    sidebar.style.display = title.indexOf("::") < 0 ? "none" : "flex"
+    user.style.display = title.indexOf("::") < 0 ? "none" : "flex"
+  }, [])
+
+  React.useEffect(() => {
     updateDimensions(Dimensions.get("window"))
     const handleChange = function ({ window }: any) {
       updateDimensions(window)
     }
     Dimensions.addEventListener("change", handleChange)
+
     return () => {
       Dimensions.removeEventListener("change", handleChange)
+    }
+  }, [])
+
+  React.useEffect(() => {
+    window.addEventListener("locationchange", detectTitleChange)
+    return () => {
+      window.removeEventListener("locationchange", detectTitleChange)
     }
   }, [])
 }

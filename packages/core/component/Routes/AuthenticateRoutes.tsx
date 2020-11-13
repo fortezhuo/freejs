@@ -13,53 +13,77 @@ const Stack = createStackNavigator()
 const Drawer = createDrawerNavigator()
 const colors = [theme.primary_1_bg, theme.primary_2_bg]
 
-const Screens: React.FC<any> = observer(
-  ({ navigation, screens, routes, isMobile, style }) => {
-    return (
-      <Animated.View
-        style={StyleSheet.flatten([styles.screenContainer, style])}
+const Screens: React.FC<any> = ({
+  navigation,
+  screens,
+  routes,
+  isMobile,
+  style,
+}) => {
+  return (
+    <Animated.View style={StyleSheet.flatten([styles.screenContainer, style])}>
+      <Stack.Navigator
+        screenOptions={{
+          headerTintColor: "white",
+          headerLeft: (props) => {
+            return isMobile ? (
+              <IconButton
+                name={navigation.canGoBack() ? "chevron-left" : "menu"}
+                style={styles.headerLeft}
+                onPress={() =>
+                  navigation.canGoBack()
+                    ? navigation.goBack()
+                    : navigation.toggleDrawer()
+                }
+              />
+            ) : undefined
+          },
+
+          headerBackground: () => (
+            <Gradient style={{ flex: 1 }} colors={colors} />
+          ),
+          headerRight: () => <Header.MenuUser />,
+        }}
       >
-        <Stack.Navigator
-          screenOptions={{
-            headerTitle: () =>
-              navigation.canGoBack() ? (
-                <H3 style={styles.headerTitle}>Title</H3>
-              ) : (
-                <Header.InputSearch />
-              ),
-            headerLeft: () =>
-              isMobile ? (
+        <Stack.Screen name="Home">
+          {(props) => <screens.PageHome {...props} />}
+        </Stack.Screen>
+        {routes.map((route: any) => {
+          const options: any = {
+            title: route.title,
+          }
+          if (route.component == "ViewGrid") {
+            options["headerTitle"] = () => <Header.InputSearch />
+          }
+          if (route.parent) {
+            options["headerLeft"] = () => {
+              return (
                 <IconButton
-                  name={navigation.canGoBack() ? "chevron-left" : "menu"}
+                  name={"chevron-left"}
                   style={styles.headerLeft}
                   onPress={() =>
                     navigation.canGoBack()
                       ? navigation.goBack()
-                      : navigation.toggleDrawer()
+                      : navigation.navigate(route.parent)
                   }
                 />
-              ) : undefined,
-            headerBackground: () => (
-              <Gradient style={{ flex: 1 }} colors={colors} />
-            ),
-            headerRight: () => <Header.MenuUser />,
-          }}
-        >
-          <Stack.Screen name="Home">
-            {(props) => <screens.PageHome {...props} />}
-          </Stack.Screen>
-          {routes.map((route: any) => (
+              )
+            }
+          }
+
+          return (
             <Stack.Screen
+              options={options}
               name={route.name}
               key={"stack_" + random()}
               component={screens[route.component]}
             />
-          ))}
-        </Stack.Navigator>
-      </Animated.View>
-    )
-  }
-)
+          )
+        })}
+      </Stack.Navigator>
+    </Animated.View>
+  )
+}
 
 export const AuthenticateRoutes = observer(({ screens, routes }: any) => {
   const { app } = useStore()

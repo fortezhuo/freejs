@@ -25,12 +25,16 @@ export const useHook = () => {
   }, [])
 
   useEffect(() => {
+    user?.app?.set("isForm", true)
     user.setTemp({
       roles: Object.keys(acl).map((role: any) => ({
         value: role,
         label: role,
       })),
     })
+    return () => {
+      user?.app?.set("isForm", false)
+    }
   }, [])
 
   return { user, actions }

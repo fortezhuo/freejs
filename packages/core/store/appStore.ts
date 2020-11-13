@@ -7,31 +7,25 @@ class AppStore {
 
   // observable
   auth: any = null
-  routes: any = null
   dimension: ObjectAny = {}
   error = undefined
   fatalError = undefined
-  isDrawerOpen = false
   isForm?: boolean = false
   isLoading = false
-  subTitle?: string | undefined = ""
 
   constructor() {
     makeObservable(this, {
       auth: observable,
       error: observable,
       fatalError: observable,
-      isDrawerOpen: observable,
       isForm: observable,
       isLoading: observable,
       dimension: observable,
-      subTitle: observable,
       can: action,
       checkAuth: action,
       logout: action,
       set: action,
       setError: action,
-      toggleDrawer: action,
     })
   }
 
@@ -69,9 +63,6 @@ class AppStore {
         this.error = error
       }
     }
-  }
-  toggleDrawer = () => {
-    this.isDrawerOpen = !this.isDrawerOpen
   }
 }
 

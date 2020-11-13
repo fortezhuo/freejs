@@ -11,6 +11,7 @@ export const MenuUser: FC = observer(() => {
   return (
     app.auth && (
       <Menu
+        testID="MenuUser"
         anchor={
           <IconButton
             style={styles.iconMenuUser}

@@ -40,17 +40,16 @@ div[data-testid="VerticalScroll"] > div {
   min-width: 100%;
   flex-direction: column;
 }
-div[data-testid="Sidebar"] > div,
-div[data-testid="Stack"] > div {
-  scrollbar-width: none;
-}
-
-div[data-testid="BottomSheet"] {
-  overflow: hidden;
-}
 
 div[data-testid="LayoutScroll"] {
   scrollbar-width: none;
+}
+
+.is_visible {
+  display: initial;
+}
+.is_hidden {
+  display: none;
 }
 
 .applayout {

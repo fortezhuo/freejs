@@ -55,7 +55,11 @@ export const Sidebar: React.FC<any> = observer((props) => {
   }, [props.progress])
 
   return (
-    <ImageBackground source={imageSidebar} style={styles.imageSidebar}>
+    <ImageBackground
+      testID="Sidebar"
+      source={imageSidebar}
+      style={styles.imageSidebar}
+    >
       <View style={styles.layoutSidebar}>
         <Title navigation={props.navigation} />
         <Content {...props} />

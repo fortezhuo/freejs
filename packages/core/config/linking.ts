@@ -1,7 +1,7 @@
 import { configApp } from "@free/env"
 
 export const linking: any = {
-  prefixes: ["freejs://", "node.rockman.com"],
+  prefixes: [`${configApp.name}://`],
   config: {
     initialRouteName: "Home",
     screens: {

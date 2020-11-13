@@ -5,18 +5,21 @@ const getSetting: (visible: boolean) => Route[] = (visible) => {
   return [
     {
       name: "SettingTrash",
+      title: "Trash Management",
       view: false,
       child: true,
       visible: visible,
     },
     {
       name: "SettingLog",
+      title: "Log Management",
       view: true,
       child: false,
       visible: visible,
     },
     {
       name: "SettingUser",
+      title: "User Management",
       view: true,
       child: true,
       visible: visible,

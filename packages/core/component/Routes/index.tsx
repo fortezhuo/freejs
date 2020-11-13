@@ -47,13 +47,18 @@ const Routes: React.FC<any> = observer(({ screens }) => {
           const view = route.view
             ? {
                 name: `View${route.alias ? route.alias : route.name}`,
+                title: route.title,
                 component: "ViewGrid",
               }
             : []
           const child = route.child
             ? {
                 name: `${route.alias ? route.alias : route.name}`,
+                title: route.title,
                 component: route.name,
+                parent: route.view
+                  ? `View${route.alias ? route.alias : route.name}`
+                  : false,
               }
             : []
           return [view, child]
@@ -65,7 +70,20 @@ const Routes: React.FC<any> = observer(({ screens }) => {
   return !isReady || app.isLoading ? (
     <Loader />
   ) : (
-    <NavigationContainer linking={linking}>
+    <NavigationContainer
+      linking={linking}
+      documentTitle={{
+        formatter: (options, route: any) => {
+          const separator =
+            route?.name.indexOf("Home") >= 0 || route?.name.indexOf("View") >= 0
+              ? "::"
+              : "-"
+          return `${options?.title ?? route?.name} ${separator} ${
+            configApp.displayName
+          }`
+        },
+      }}
+    >
       {app.auth ? (
         <AuthenticateRoutes screens={screens} routes={routes} />
       ) : (

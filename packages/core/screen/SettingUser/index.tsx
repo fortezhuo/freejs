@@ -14,7 +14,7 @@ import { View, StyleSheet, Text } from "react-native"
 import { useHook } from "./hook"
 import { tw } from "@free/tailwind"
 
-const SettingUser: FC = observer(() => {
+const SettingUser: FC = observer((props) => {
   const { user, actions } = useHook()
   return (
     <>

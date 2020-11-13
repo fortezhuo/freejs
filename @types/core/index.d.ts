@@ -28,6 +28,7 @@ declare module "@free/core" {
 
   type Route = {
     name: string
+    title: string
     alias?: string
     view: string | boolean
     child: string | boolean
