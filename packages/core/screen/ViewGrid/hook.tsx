@@ -2,18 +2,19 @@ import React, { useEffect, useMemo } from "react"
 import { useStore, TableCell } from "../../component"
 import { TableCheckbox } from "../../shared/ViewGrid/TableCheckbox"
 import { get } from "../../request"
-import { useNavigation } from "@react-navigation/native"
+import { useRoute, useNavigation } from "@react-navigation/native"
 import * as config from "./config"
 
 export const useHook = () => {
   const { view } = useStore()
-
+  const route = useRoute()
+  const routeName = route.name.replace("View", "")
   const isMobile = view.app?.dimension.isMobile
-  const name = "user" //`${view?.app?.routerLocation}/`.split("/")[1]
   const [search, page, isFilter] = view.getData("search", "page", "isFilter")
-  view.name = name
-  view.title = (config as ObjectAny)[name].title
-  view.search = (config as ObjectAny)[name].search
+  const name = (config as ObjectAny)[routeName].name
+  view.name = (config as ObjectAny)[routeName].name
+  view.title = (config as ObjectAny)[routeName].title
+  view.search = (config as ObjectAny)[routeName].search
 
   useEffect(() => {
     view.setData({
@@ -68,8 +69,10 @@ export const useHook = () => {
 
 export const useActions = (store: any) => {
   const name = store.name
+  const route = useRoute()
+  const routeName = route.name.replace("View", "")
   const navigation = useNavigation()
-  const button = (config as ObjectAny)[name].button
+  const button = (config as ObjectAny)[routeName].button
   const isMobile = store?.app.dimension.isMobile
   const isSearch = store.data.get("isSearch") || false
   return useMemo(() => {
@@ -111,10 +114,12 @@ export const useActions = (store: any) => {
 }
 
 export const useColumns = (store: any) => {
+  const route = useRoute()
   const isMobile = store?.app.dimension.isMobile
+  const routeName = route.name.replace("View", "")
   const name = store.name
   const columns = useMemo(() => {
-    let column = (config as ObjectAny)[name].column
+    let column = (config as ObjectAny)[routeName].column
     if (isMobile) {
       column = column.filter((col: any) => col.isMobileVisible)
     }

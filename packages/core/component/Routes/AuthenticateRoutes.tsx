@@ -25,6 +25,10 @@ const Screens: React.FC<any> = ({
       <Stack.Navigator
         screenOptions={{
           headerTintColor: "white",
+          headerTitleStyle: {
+            fontSize: 24,
+            fontWeight: "normal",
+          },
           headerLeft: (props) => {
             return isMobile ? (
               <IconButton

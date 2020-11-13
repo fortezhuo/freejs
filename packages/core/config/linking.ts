@@ -11,6 +11,7 @@ export const linking: any = {
         screens: {
           Home: "index",
           ViewSettingUser: "user",
+          ViewSettingLog: "log",
           SettingTrash: "trash",
           SettingUser: "user/:id",
         },

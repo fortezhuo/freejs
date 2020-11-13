@@ -119,7 +119,7 @@ export const getMenu: () => any[] = () => {
         {
           label: "Log",
           icon: "archive",
-          path: "/log",
+          component: "ViewSettingLog",
           visible: true,
         },
         {

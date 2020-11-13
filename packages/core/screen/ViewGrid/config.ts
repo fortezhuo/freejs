@@ -1,6 +1,6 @@
-// Setting user
-export const log = {
-  title: "Log Management",
+// Setting Log
+export const SettingLog = {
+  name: "log",
   button: [],
   column: [
     {
@@ -36,8 +36,8 @@ export const log = {
 }
 
 // Setting user
-export const user = {
-  title: "User Management",
+export const SettingUser = {
+  name: "user",
   search: ["username", "fullname", "email"],
   button: ["new", "delete", "filter"],
   column: [
