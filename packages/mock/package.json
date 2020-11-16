@@ -10,6 +10,6 @@
   },
   "dependencies": {
     "@types/smtp-server": "^3.5.4",
-    "smtp-server": "^3.7.0"
+    "smtp-server": "^3.8.0"
   }
 }

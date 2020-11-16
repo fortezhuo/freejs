@@ -97,7 +97,7 @@ export const AuthenticateRoutes = observer(({ screens, routes }: any) => {
     outputRange: [1, 0.8],
   })
   const animatedStyle = {
-    overflow: (progress as any)._value === 1 ? "hidden" : "auto",
+    overflow: (progress as any)._value === 1 ? "hidden" : "scroll",
     transform: [{ scale }],
   }
 

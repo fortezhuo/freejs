@@ -4,6 +4,10 @@ const database = {
     url: "mongodb://0.0.0.0:27017",
     name: "FreeJS",
   },
+  huahua: {
+    url: "mongodb://0.0.0.0:27017",
+    name: "FreeJS",
+  },
   default: {
     url: "mongodb://0.0.0.0:27017",
     name: "FreeJS",
