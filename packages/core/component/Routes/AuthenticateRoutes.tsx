@@ -1,7 +1,7 @@
 import React from "react"
 import Animated from "react-native-reanimated"
 import { createDrawerNavigator } from "@react-navigation/drawer"
-import { tw } from "@free/tailwind"
+import { tw, color } from "@free/tailwind"
 import { observer } from "mobx-react-lite"
 import { createStackNavigator } from "@react-navigation/stack"
 import { StyleSheet, Platform } from "react-native"
@@ -9,6 +9,7 @@ import { Gradient, Header, IconButton, useStore, H3, Sidebar } from ".."
 import { theme } from "../../config/theme"
 import { random } from "../../util/random"
 
+const defaultColor = color(theme.default_text)
 const Stack = createStackNavigator()
 const Drawer = createDrawerNavigator()
 const colors = [theme.primary_1_bg, theme.primary_2_bg]

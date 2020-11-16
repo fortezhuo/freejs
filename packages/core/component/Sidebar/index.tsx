@@ -1,16 +1,18 @@
 import React from "react"
 import { View, StyleSheet, ImageBackground } from "react-native"
-import { tw } from "@free/tailwind"
 import { Accordion, AccordionItem, Title } from "../"
 import { observer } from "mobx-react-lite"
 import { getMenu } from "../../config/menu"
 import { random } from "../../util/random"
 import { DrawerContentScrollView } from "@react-navigation/drawer"
-
+import { tw } from "@free/tailwind"
 import imageSidebar from "../../img/sidebar.jpg"
 
 const Content: React.FC<any> = observer((props) => {
   const allowedMenu = getMenu().filter((menu) => menu.visible)
+  const activeName =
+    props.state.routes[0].state?.routes[props.state.routes[0].state.index || 0]
+      .name
 
   return (
     <DrawerContentScrollView
@@ -19,7 +21,10 @@ const Content: React.FC<any> = observer((props) => {
       contentContainerStyle={{ flex: 1 }}
     >
       {allowedMenu.map((menu) => {
-        const active = false
+        const active = menu.children
+          ? menu.children.filter((sub: any) => sub.component === activeName)
+              .length !== 0
+          : false
         return (
           <Accordion
             active={active}
@@ -34,6 +39,7 @@ const Content: React.FC<any> = observer((props) => {
                   return (
                     <AccordionItem
                       key={"sidebar_" + random()}
+                      active={sub.component === activeName}
                       navigation={props.navigation}
                       component={sub.component}
                       icon={sub.icon}

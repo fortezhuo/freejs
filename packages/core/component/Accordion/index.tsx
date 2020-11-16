@@ -1,16 +1,13 @@
 import React from "react"
 import { View, TouchableOpacity, StyleSheet, Animated } from "react-native"
-import { DrawerItem } from "@react-navigation/drawer"
 import { theme } from "../../config/theme"
-import { IconLabel, Icon, Link } from ".."
+import { IconLabel, Icon } from ".."
 import { tw, color } from "@free/tailwind"
 import { observer, useLocalObservable } from "mobx-react-lite"
-import { useStore } from "../Store"
 import { AccordionProps, AccordionItemProps } from "@free/core"
 
 const activeColor = color(theme.accordion_icon_active_bg)
 const defaultColor = color(theme.default_text)
-const noop = () => {}
 
 export const Accordion: React.FC<AccordionProps> = observer(
   ({ testID = "Accordion", icon, label, active = false, children }) => {
@@ -75,17 +72,36 @@ export const Accordion: React.FC<AccordionProps> = observer(
   }
 )
 
-export const AccordionItem: React.FC<any> = observer(
-  ({ component, icon, navigation, children }) => {
-    const { app } = useStore()
-    const active = false
-
+export const AccordionItem: React.FC<AccordionItemProps> = observer(
+  ({
+    testID = "AccordionItem",
+    active,
+    component,
+    icon,
+    navigation,
+    children,
+  }) => {
     return (
-      <DrawerItem
-        label={children}
+      <TouchableOpacity
+        testID={testID}
         onPress={() => navigation.navigate(component)}
-        icon={() => <Icon name={icon} color="white" size={16} />}
-      />
+      >
+        <IconLabel
+          name={icon}
+          size={20}
+          color={active ? activeColor : defaultColor}
+          styleContainer={StyleSheet.flatten([
+            styles.viewIconItem,
+            active ? styles.itemActive : {},
+          ])}
+          styleText={StyleSheet.flatten([
+            styles.textIconItem,
+            { color: active ? activeColor : defaultColor },
+          ])}
+        >
+          {children}
+        </IconLabel>
+      </TouchableOpacity>
     )
   }
 )

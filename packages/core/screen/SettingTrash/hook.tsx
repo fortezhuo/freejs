@@ -1,12 +1,11 @@
-import React, { useEffect, useMemo } from "react"
+import React from "react"
 import { useStore, TableCell } from "../../component"
 import { TableCheckbox } from "../../shared/ViewGrid/TableCheckbox"
 import { get } from "../../request"
 
 export const config = {
   title: "Trash Management",
-  search: ["username", "fullname", "email"],
-  button: ["new", "delete", "filter"],
+  button: ["delete", "filter"],
   column: [
     {
       label: "Data",
@@ -48,37 +47,29 @@ export const config = {
 export const useHook = () => {
   const { trash } = useStore()
   const isMobile = trash.app?.dimension.isMobile
-  const name = `${trash?.app?.routerLocation}/`.split("/")[1]
   const [search, page, isFilter] = trash.getData("search", "page", "isFilter")
-  trash.name = name
-  trash.title = config.title
-  trash.search = config.search
 
-  useEffect(() => {
+  React.useEffect(() => {
     trash.setData({
-      name,
-      page: trash.name !== "log" ? 1 : undefined,
-      search: trash.name !== "log" ? "" : undefined,
+      page: undefined,
+      search: undefined,
     })
     return () => {
       trash.data.clear()
     }
-  }, [trash?.app?.routerLocation])
+  }, [])
 
-  useEffect(() => {
+  React.useEffect(() => {
     ;(async () => {
-      const allowFetch = page ? trash.name !== "log" : trash.name === "log"
-      if (allowFetch) {
-        await setCollection(name)
-      }
+      await setCollection(name)
     })()
   }, [page, search])
 
-  useEffect(() => {
+  React.useEffect(() => {
     trash.setData({ isMobile })
   }, [isMobile])
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (!isFilter) {
       trash.setData({
         search: undefined,
@@ -88,10 +79,10 @@ export const useHook = () => {
   }, [isFilter])
 
   const setCollection = async (name: string) => {
-    const params = trash.name !== "log" ? { q: search, page } : {}
+    const params = { q: search, page }
     try {
       trash.set("isLoading", true)
-      const { data } = await get(`/api/${name}`, params)
+      const { data } = await get(`/api/trash`, params)
       trash.setData({
         collection: data.result,
         limit: data.limit,
@@ -107,27 +98,18 @@ export const useHook = () => {
 }
 
 export const useActions = (store: any) => {
-  const name = store.name
-  const button = config.button
   const isMobile = store?.app.dimension.isMobile
   const isSearch = store.data.get("isSearch") || false
-  return useMemo(() => {
-    const list: any = {
-      new: {
-        icon: "file-plus",
-        type: "primary_2_bg",
-        children: "New",
-        onPress: () => store.app?.goto(`${name}/new`),
-        visible: store.app?.can("create", name),
-      },
-      delete: {
+  return React.useMemo(
+    () => [
+      {
         icon: "trash-2",
         type: "danger_bg",
         children: "Delete",
         onPress: () => alert("Delete"),
-        visible: store.app?.can("delete", name),
+        visible: true,
       },
-      filter: {
+      {
         icon: "search",
         type: "primary_2_bg",
         children: "Filter",
@@ -138,21 +120,15 @@ export const useActions = (store: any) => {
         },
         visible: !isMobile,
       },
-    }
-
-    return {
-      actDelete: button.indexOf("delete") < 0 ? null : list.delete,
-      actions: button
-        .map((btn: string) => list[btn])
-        .filter((btn: ObjectAny) => !!btn && btn.visible),
-    }
-  }, [name, isMobile, isSearch])
+    ],
+    [isMobile, isSearch]
+  )
 }
 
 export const useColumns = (store: any) => {
   const isMobile = store?.app.dimension.isMobile
   const name = store.name
-  const columns = useMemo(() => {
+  const columns = React.useMemo(() => {
     let column = config.column
     if (isMobile) {
       column = column.filter((col: any) => col.isMobileVisible)
@@ -172,7 +148,7 @@ export const useColumns = (store: any) => {
           }
     )
   }, [isMobile, name])
-  const keys = useMemo(() => {
+  const keys = React.useMemo(() => {
     const key: any = {}
     if (isMobile) {
       config.column

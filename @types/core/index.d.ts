@@ -46,12 +46,12 @@ declare module "@free/core" {
 
   interface AccordionItemProps {
     testID?: string
-    pathname?: string
+    active: boolean
     icon: string
-    header?: boolean
     children: string
+    component: string
+    navigation: any
     onPress?: VoidFunction
-    onClose?: VoidFunction
   }
 
   interface DrawerProps {
