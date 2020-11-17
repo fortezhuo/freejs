@@ -1,4 +1,4 @@
-import React, { FC } from "react"
+import React from "react"
 import { observer } from "mobx-react-lite"
 import {
   Layout,
@@ -7,14 +7,13 @@ import {
   Row,
   Input,
   Label,
-  H3,
   ActionGroup,
 } from "../../component"
-import { View, StyleSheet, Text } from "react-native"
+import { View, StyleSheet } from "react-native"
 import { useHook } from "./hook"
 import { tw } from "@free/tailwind"
 
-const SettingUser: FC = observer((props) => {
+const SettingUser: React.FC = observer((props) => {
   const { user, actions } = useHook()
   return (
     <>

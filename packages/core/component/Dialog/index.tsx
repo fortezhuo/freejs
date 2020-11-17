@@ -1,4 +1,4 @@
-import React, { FC, useRef } from "react"
+import React from "react"
 import { View, StyleSheet } from "react-native"
 import { Modal, MenuItem, Col } from "../"
 import { observer, useLocalObservable } from "mobx-react-lite"
@@ -9,7 +9,7 @@ const { color: iconColor } = tw("text-gray-700")
 const noop = () => {}
 
 export const useDialog = () => {
-  const refContainer = useRef<View>(null)
+  const refContainer = React.useRef<View>(null)
   const state = useLocalObservable(() => ({
     isOpen: false,
     setOpen(isOpen: boolean) {
@@ -24,7 +24,7 @@ export const useDialog = () => {
     state.setOpen(false)
   }
 
-  const Dialog: FC<DialogProps> = observer(
+  const Dialog: React.FC<DialogProps> = observer(
     ({ testID = "Dialog", anchor, children, onShow, allowBackDrop = true }) => {
       return (
         <View testID={testID} ref={refContainer} collapsable={false}>
@@ -47,7 +47,7 @@ export const useDialog = () => {
     }
   )
 
-  const BindMenuItem: FC<MenuItemProps> = observer(
+  const BindMenuItem: React.FC<MenuItemProps> = observer(
     ({
       name,
       color = iconColor,

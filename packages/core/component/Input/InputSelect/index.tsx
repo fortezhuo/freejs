@@ -1,4 +1,4 @@
-import React, { FC, useRef } from "react"
+import React from "react"
 import { useWrapper, useHook } from "./hook"
 import { Search } from "./Search"
 import { Options } from "./Options"
@@ -8,9 +8,9 @@ import { TextInput, ScrollView, Platform } from "react-native"
 import { observer } from "mobx-react-lite"
 import { InputSelectProps } from "@free/core"
 
-export const InputSelect: FC<InputSelectProps> = observer((props) => {
-  const refSearch = useRef<TextInput>(null)
-  const refScroll = useRef<ScrollView>(null)
+export const InputSelect: React.FC<InputSelectProps> = observer((props) => {
+  const refSearch = React.useRef<TextInput>(null)
+  const refScroll = React.useRef<ScrollView>(null)
   const { Wrapper, hide, show } = useWrapper()
   const state = useHook(refScroll, props)
 

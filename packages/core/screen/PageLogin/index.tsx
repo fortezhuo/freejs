@@ -1,4 +1,4 @@
-import React, { FC } from "react"
+import React from "react"
 import { Input, LayoutFull, Col, Gradient, Avatar } from "../../component"
 import { View, StyleSheet, Text, TouchableOpacity } from "react-native"
 import { theme } from "../../config/theme"
@@ -7,7 +7,7 @@ import { observer } from "mobx-react-lite"
 import { useHook } from "./hook"
 import logo from "../../img/logo.png"
 
-const LoginButton: FC<any> = observer(({ store }) => {
+const LoginButton: React.FC<any> = observer(({ store }) => {
   const colors = store.isUpdating
     ? [theme.disabled_bg, theme.disabled_bg]
     : [theme.primary_1_bg, theme.primary_2_bg]
@@ -24,7 +24,7 @@ const LoginButton: FC<any> = observer(({ store }) => {
   )
 })
 
-const PageLogin: FC = observer(() => {
+const PageLogin: React.FC = observer(() => {
   const store = useHook()
   return (
     <LayoutFull

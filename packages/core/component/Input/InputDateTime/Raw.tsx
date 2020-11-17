@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react"
+import React from "react"
 import RNDateTimePicker from "@react-native-community/datetimepicker"
 import { theme } from "../../../config/theme"
 import { useMenu } from "../../Menu"
@@ -6,13 +6,13 @@ import { Text, StyleSheet, View, TouchableWithoutFeedback } from "react-native"
 import { tw } from "@free/tailwind"
 import dayjs from "dayjs"
 
-export const DateTimePicker: FC<any> = ({
+export const DateTimePicker: React.FC<any> = ({
   value,
   disabled,
   type = "date",
   onChange,
 }) => {
-  const [date, setDate] = useState(new Date())
+  const [date, setDate] = React.useState(new Date())
   const { Menu, show, hide } = useMenu()
   const onChangeDate = (e: any, selectedDate: any) => {
     const currentDate = selectedDate || date

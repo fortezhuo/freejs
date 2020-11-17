@@ -1,4 +1,4 @@
-import React, { FC, useState, useCallback, useEffect } from "react"
+import React from "react"
 import { TextInput, StyleSheet } from "react-native"
 import { Base } from "../Base"
 import { tw } from "@free/tailwind"
@@ -6,11 +6,11 @@ import { observer } from "mobx-react-lite"
 import { theme } from "../../config/theme"
 import { useStore } from ".."
 
-export const InputSearch: FC = observer((_props) => {
+export const InputSearch: React.FC = observer((_props) => {
   const { view } = useStore()
   const [name, isFilter = false] = view.getData("name", "isFilter")
-  const [text, setText] = useState("")
-  const buildSearch = useCallback(
+  const [text, setText] = React.useState("")
+  const buildSearch = React.useCallback(
     (text: string) => {
       text = text.replace(" ", "|")
       return text === ""
@@ -24,7 +24,7 @@ export const InputSearch: FC = observer((_props) => {
     [name]
   )
 
-  useEffect(() => {
+  React.useEffect(() => {
     setText("")
   }, [])
 

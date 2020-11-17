@@ -1,4 +1,4 @@
-import React, { FC } from "react"
+import React from "react"
 import { View, StyleSheet, Platform } from "react-native"
 import { theme } from "../../config/theme"
 import { Gradient, KeyboardAwareScrollView } from "../"
@@ -7,7 +7,7 @@ import { LayoutProps } from "@free/core"
 import { useHook } from "./hook"
 import { observer } from "mobx-react-lite"
 
-const Wrapper: FC<any> = observer((props) =>
+const Wrapper: React.FC<any> = observer((props) =>
   props.scroll ? (
     <KeyboardAwareScrollView>{props.children}</KeyboardAwareScrollView>
   ) : (
@@ -15,7 +15,7 @@ const Wrapper: FC<any> = observer((props) =>
   )
 )
 
-export const LayoutFull: FC<LayoutProps> = observer(
+export const LayoutFull: React.FC<LayoutProps> = observer(
   ({ testID = "LayoutFull", children, scroll = true, store }) => {
     useHook(store)
     const colors = [theme.primary_1_bg, theme.primary_2_bg]
@@ -31,7 +31,7 @@ export const LayoutFull: FC<LayoutProps> = observer(
   }
 )
 
-export const Layout: FC<LayoutProps> = observer(
+export const Layout: React.FC<LayoutProps> = observer(
   ({ testID = "Layout", children, scroll, store, style }) => {
     const isWeb = Platform.OS === "web"
     return (

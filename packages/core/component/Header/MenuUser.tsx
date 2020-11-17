@@ -1,11 +1,11 @@
-import React, { FC } from "react"
+import React from "react"
 import { StyleSheet, View, Text } from "react-native"
 import { useMenu, useStore, IconButton } from "../"
 import { tw } from "@free/tailwind"
 import { observer } from "mobx-react-lite"
 import _debounce from "lodash/debounce"
 
-export const MenuUser: FC = observer(() => {
+export const MenuUser: React.FC = observer(() => {
   const { show, Menu, MenuItem } = useMenu()
   const { app } = useStore()
   return (

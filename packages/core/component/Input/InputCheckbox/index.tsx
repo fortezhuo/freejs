@@ -1,4 +1,4 @@
-import React, { FC } from "react"
+import React from "react"
 import { IconButton } from "../../Icon"
 import { StyleSheet } from "react-native"
 import { theme } from "../../../config/theme"
@@ -8,7 +8,7 @@ import { InputCheckboxProps } from "@free/core"
 
 const defaultColor = color(theme.default_text)
 
-export const InputCheckbox: FC<InputCheckboxProps> = observer(
+export const InputCheckbox: React.FC<InputCheckboxProps> = observer(
   ({
     testID = "InputCheckbox",
     multi = true,

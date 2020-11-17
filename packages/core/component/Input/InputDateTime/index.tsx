@@ -1,10 +1,10 @@
-import React, { FC } from "react"
+import React from "react"
 import { DateTimePicker } from "./Raw"
 import { InputDateTimeProps } from "@free/core"
 import { DisplayError } from "../DisplayError"
 import { observer } from "mobx-react-lite"
 
-export const InputDateTime: FC<InputDateTimeProps> = observer(
+export const InputDateTime: React.FC<InputDateTimeProps> = observer(
   ({
     store,
     model = "data",

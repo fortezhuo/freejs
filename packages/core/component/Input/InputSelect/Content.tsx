@@ -1,4 +1,4 @@
-import React, { FC, useCallback } from "react"
+import React from "react"
 import { Button, H4 } from "../.."
 import { Display } from "./Display"
 import { View, StyleSheet, Platform } from "react-native"
@@ -6,16 +6,16 @@ import { observer } from "mobx-react-lite"
 import { theme } from "../../../config/theme"
 import { tw } from "@free/tailwind"
 
-export const Content: FC<any> = observer(({ state, children, menu }) => {
+export const Content: React.FC<any> = observer(({ state, children, menu }) => {
   const placeholder = `${
     state.placeholder.toLowerCase().indexOf("select") >= 0 ? "" : "Select "
   }${state.placeholder}`
-  const onCancel = useCallback(() => {
+  const onCancel = React.useCallback(() => {
     state.set({ _isMobileShow: false })
     menu.hide()
   }, [])
 
-  const onCommit = useCallback(() => {
+  const onCommit = React.useCallback(() => {
     state.onChange(state._temp)
     onCancel()
   }, [])

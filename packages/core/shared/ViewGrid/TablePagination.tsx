@@ -1,4 +1,4 @@
-import React, { FC, useCallback } from "react"
+import React from "react"
 import { View, StyleSheet } from "react-native"
 import { Text } from "../../component"
 import { observer } from "mobx-react-lite"
@@ -37,13 +37,13 @@ const pagination = (c: number, m: number) => {
   return rangeWithDots
 }
 
-export const TablePagination: FC<any> = observer(({ store, page }) => {
+export const TablePagination: React.FC<any> = observer(({ store, page }) => {
   const { index, limit, total, max, goto } = page
   const desc = `Showing ${(index - 1) * limit + 1} to ${
     index * limit < total ? index * limit : total
   } of ${total} entries`
 
-  const setPage = useCallback((i) => {
+  const setPage = React.useCallback((i) => {
     goto(i)
     store.setData({ page: i })
   }, [])

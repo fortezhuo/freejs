@@ -1,25 +1,17 @@
-import React, { useState, FC } from "react"
-import { View, StyleSheet, TouchableHighlight } from "react-native"
-import {
-  H4,
-  Text,
-  Layout,
-  Modal,
-  IconButton,
-  LayoutFull,
-} from "../../component"
-import { useHook } from "./hook"
+import React from "react"
+import { StyleSheet } from "react-native"
+import { Text, Layout, useStore } from "../../component"
 import { observer } from "mobx-react-lite"
 import { tw } from "@free/tailwind"
 
-const PageHome: FC<any> = observer(({ navigation }) => {
-  const store = useHook()
-  const [isModalVisible, setModalVisible] = useState(false)
+const PageHome: React.FC<any> = observer(({ navigation }) => {
+  const { app } = useStore()
+  const [isModalVisible, setModalVisible] = React.useState(false)
   const toggleModal = () => {
     setModalVisible(!isModalVisible)
   }
   return (
-    <Layout store={store}>
+    <Layout store={app}>
       <Text>TESTING</Text>
       <Text>T</Text>
       <Text>T</Text>
@@ -114,10 +106,6 @@ const PageHome: FC<any> = observer(({ navigation }) => {
       <Text>T</Text>
     </Layout>
   )
-})
-
-const styles = StyleSheet.create({
-  textTitle: tw("text-white"),
 })
 
 export default PageHome

@@ -1,4 +1,4 @@
-import React, { FC } from "react"
+import React from "react"
 import { Text, StyleSheet, View } from "react-native"
 import { IconButton, Col, Modal } from "../"
 import { tw } from "@free/tailwind"
@@ -6,7 +6,7 @@ import { observer } from "mobx-react-lite"
 import { useHook } from "./hook"
 import { theme } from "../../config/theme"
 
-export const Snackbar: FC<any> = observer(() => {
+export const Snackbar: React.FC<any> = observer(() => {
   const { hide, error } = useHook()
   const message = error
     ? (error as any).message
@@ -14,7 +14,7 @@ export const Snackbar: FC<any> = observer(() => {
       : null
     : null
   return (
-    <Modal visible={!!message} transparent>
+    <Modal isVisible={!!message}>
       <Col
         sm={11}
         style={StyleSheet.flatten([

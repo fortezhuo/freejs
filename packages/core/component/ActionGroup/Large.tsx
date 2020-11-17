@@ -1,11 +1,11 @@
-import React, { FC } from "react"
+import React from "react"
 import { Button } from ".."
 import { random } from "../../util/random"
 import { observer } from "mobx-react-lite"
 import { View, StyleSheet } from "react-native"
 import { tw } from "@free/tailwind"
 
-export const Large: FC<any> = observer(({ store, actions }) => {
+export const Large: React.FC<any> = observer(({ store, actions }) => {
   const isShow = actions.length != 0 && !store.app.dimension.isMobile
   return isShow ? (
     <View style={styles.rootAction}>

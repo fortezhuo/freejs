@@ -1,4 +1,4 @@
-import React, { FC, memo } from "react"
+import React from "react"
 import { devtools } from "../../util/devtools"
 import * as store from "../../store"
 
@@ -13,6 +13,6 @@ export const useStore = () => {
   return store
 }
 
-export const StoreProvider: FC = memo(({ children }) => {
+export const StoreProvider: React.FC = React.memo(({ children }) => {
   return <StoreContext.Provider value={store}>{children}</StoreContext.Provider>
 })

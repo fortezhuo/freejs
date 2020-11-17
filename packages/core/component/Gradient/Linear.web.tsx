@@ -1,7 +1,7 @@
-import React, { FC, useCallback } from "react"
+import React from "react"
 import { View, useWindowDimensions } from "react-native"
 
-export const LinearGradient: FC<any> = ({
+export const LinearGradient: React.FC<any> = ({
   start = {
     x: 0.5,
     y: 0,
@@ -22,7 +22,7 @@ export const LinearGradient: FC<any> = ({
 }) => {
   const { width, height } = useWindowDimensions()
 
-  const getColors = useCallback(
+  const getColors = React.useCallback(
     () =>
       colors
         .map((color: string, index: number) => {
@@ -37,7 +37,7 @@ export const LinearGradient: FC<any> = ({
     []
   )
 
-  const getAngle = useCallback(() => {
+  const getAngle = React.useCallback(() => {
     if (useAngle) {
       return angle + "deg"
     }

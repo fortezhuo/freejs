@@ -1,4 +1,4 @@
-import React, { FC, useCallback } from "react"
+import React from "react"
 import { useTable, usePagination, useRowSelect, useSortBy } from "react-table"
 import { random } from "../../util/random"
 import { View, StyleSheet, TouchableOpacity } from "react-native"
@@ -22,7 +22,7 @@ import { TablePagination } from "../../shared/ViewGrid/TablePagination"
 
 const defaultColor = color(theme.default_text)
 
-export const TableGrid: FC<any> = observer(
+export const TableGrid: React.FC<any> = observer(
   ({ store, data, actDelete, page }) => {
     const {
       columns,
@@ -67,7 +67,7 @@ export const TableGrid: FC<any> = observer(
                       const { key } = column.getHeaderProps(
                         column.getSortByToggleProps()
                       )
-                      const onPress = useCallback((e) => {
+                      const onPress = React.useCallback((e) => {
                         return column.canSort
                           ? column.toggleSortBy(undefined, true)
                           : {}

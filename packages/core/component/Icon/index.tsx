@@ -1,4 +1,4 @@
-import React, { FC } from "react"
+import React from "react"
 import FeatherIcon from "react-native-vector-icons/Feather"
 import { TouchableOpacity, View, Text, StyleSheet } from "react-native"
 import { Base } from "../Base"
@@ -11,7 +11,7 @@ import { tw } from "@free/tailwind"
 const disabledColor = color(theme.disabled_text)
 const iconColor = "white"
 
-export const Icon: FC<IconProps> = observer(
+export const Icon: React.FC<IconProps> = observer(
   ({ name, size = 24, color = iconColor }) => {
     return name ? (
       <FeatherIcon name={name} size={size} color={color} />
@@ -21,7 +21,7 @@ export const Icon: FC<IconProps> = observer(
   }
 )
 
-export const IconLabel: FC<IconLabelProps> = observer(
+export const IconLabel: React.FC<IconLabelProps> = observer(
   ({
     testID = "IconLabel",
     store,
@@ -48,7 +48,7 @@ export const IconLabel: FC<IconLabelProps> = observer(
   }
 )
 
-export const IconButton: FC<IconButtonProps> = observer(
+export const IconButton: React.FC<IconButtonProps> = observer(
   ({
     testID = "IconButton",
     store,
@@ -86,7 +86,7 @@ export const IconButton: FC<IconButtonProps> = observer(
   }
 )
 
-export const IconLink: FC<IconButtonProps> = observer(() => {
+export const IconLink: React.FC<IconButtonProps> = observer(() => {
   return <IconButton size={20} name="link" color={color(theme.primary)} />
 })
 

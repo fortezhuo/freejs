@@ -57,7 +57,10 @@ const Screens: React.FC<any> = ({
           const options: any = {
             title: route.title,
           }
-          if (route.component == "ViewGrid") {
+          if (
+            route.component == "ViewGrid" ||
+            route.component == "SettingTrash"
+          ) {
             options["headerTitle"] = () => <Header.InputSearch />
           }
           if (route.parent) {

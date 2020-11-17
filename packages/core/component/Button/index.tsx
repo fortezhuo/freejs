@@ -1,4 +1,4 @@
-import React, { FC } from "react"
+import React from "react"
 import { IconButton } from "../Icon"
 import { StyleSheet } from "react-native"
 import { observer } from "mobx-react-lite"
@@ -7,7 +7,7 @@ import { tw, border, text, color } from "@free/tailwind"
 import { isRGBLight } from "../../util/color"
 import { ButtonProps } from "@free/core"
 
-export const Button: FC<ButtonProps> = observer((props) => {
+export const Button: React.FC<ButtonProps> = observer((props) => {
   let {
     store = undefined,
     testID = "Button",

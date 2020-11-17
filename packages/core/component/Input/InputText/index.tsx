@@ -1,4 +1,4 @@
-import React, { FC } from "react"
+import React from "react"
 import { TextInput, StyleSheet } from "react-native"
 import { Base } from "../../Base"
 import { tw } from "@free/tailwind"
@@ -26,7 +26,7 @@ const helperProps = (props: InputTextProps) => {
   }
 }
 
-export const InputText: FC<InputTextProps> = observer((_props) => {
+export const InputText: React.FC<InputTextProps> = observer((_props) => {
   const props = helperProps(_props)
   return (
     <>

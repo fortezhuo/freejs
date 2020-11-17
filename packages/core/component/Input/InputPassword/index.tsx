@@ -1,4 +1,4 @@
-import React, { FC } from "react"
+import React from "react"
 import { TextInput, StyleSheet } from "react-native"
 import { Base } from "../../Base"
 import { DisplayError } from "../DisplayError"
@@ -31,7 +31,7 @@ const helperProps = (props: InputTextProps) => {
   }
 }
 
-const Eye: FC<any> = observer(({ state }) => {
+const Eye: React.FC<any> = observer(({ state }) => {
   return (
     <IconButton
       styleContainer={styles.eye}
@@ -43,7 +43,7 @@ const Eye: FC<any> = observer(({ state }) => {
   )
 })
 
-export const InputPassword: FC<InputTextProps> = observer((_props) => {
+export const InputPassword: React.FC<InputTextProps> = observer((_props) => {
   const props = helperProps(_props)
   const state = useLocalObservable(() => ({
     secure: true,

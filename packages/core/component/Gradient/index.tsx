@@ -1,9 +1,9 @@
-import React, { FC } from "react"
+import React from "react"
 import { LinearGradient } from "./Linear"
 import { color } from "@free/tailwind"
 import { GradientProps } from "@free/core"
 
-export const Gradient: FC<GradientProps> = ({
+export const Gradient: React.FC<GradientProps> = ({
   children,
   style,
   type = "horizontal",

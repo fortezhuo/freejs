@@ -1,7 +1,7 @@
-import { useEffect } from "react"
+import React from "react"
 
 export const useHook = (store: any) => {
-  useEffect(() => {
+  React.useEffect(() => {
     ;(async function () {
       if (store.onLoad) await store.onLoad()
     })()

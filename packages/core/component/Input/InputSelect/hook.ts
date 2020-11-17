@@ -1,4 +1,4 @@
-import { useEffect } from "react"
+import React from "react"
 import { Platform } from "react-native"
 import { useMenu, useDialog } from "../.."
 import { useLocalObservable } from "mobx-react-lite"
@@ -139,7 +139,7 @@ export const useHook = (refScroll: any, props: any) => {
     }
   })
 
-  useEffect(() => {
+  React.useEffect(() => {
     state.set({ _options, multi })
   }, [_options, multi])
 

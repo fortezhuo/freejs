@@ -1,4 +1,4 @@
-import React, { FC, useCallback } from "react"
+import React from "react"
 import { TouchableOpacity } from "react-native"
 import { observer } from "mobx-react-lite"
 import { useStore } from "../Store"
@@ -6,7 +6,7 @@ import { LinkProps } from "@free/core"
 
 const noop = () => {}
 
-export const Link: FC<LinkProps> = observer(
+export const Link: React.FC<LinkProps> = observer(
   ({
     href,
     target,
@@ -16,9 +16,9 @@ export const Link: FC<LinkProps> = observer(
     afterAction = noop,
   }) => {
     const { app } = useStore()
-    const onPress = useCallback(() => {
+    const onPress = React.useCallback(() => {
       beforeAction()
-      app.goto(href)
+      //      app.goto(href)
       afterAction()
     }, [href])
 

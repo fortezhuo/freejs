@@ -1,4 +1,4 @@
-import React, { FC } from "react"
+import React from "react"
 import { View, StyleSheet, Text } from "react-native"
 import { theme } from "../../config/theme"
 import { tw } from "@free/tailwind"
@@ -6,7 +6,7 @@ import { useHook } from "./hook"
 import { observer } from "mobx-react-lite"
 import { GridRowProps, GridColProps } from "@free/core"
 
-export const Row: FC<GridRowProps> = observer(
+export const Row: React.FC<GridRowProps> = observer(
   ({
     nowrap,
     smHidden,
@@ -38,7 +38,7 @@ export const Row: FC<GridRowProps> = observer(
   }
 )
 
-export const Col: FC<GridColProps> = observer(
+export const Col: React.FC<GridColProps> = observer(
   ({
     sm,
     smHidden,
@@ -77,7 +77,7 @@ export const Col: FC<GridColProps> = observer(
   }
 )
 
-export const Label: FC = observer(({ children }) => {
+export const Label: React.FC = observer(({ children }) => {
   return <Text style={styles.textLabel}>{children}</Text>
 })
 

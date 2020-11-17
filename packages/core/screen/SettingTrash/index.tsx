@@ -1,4 +1,4 @@
-import React, { FC } from "react"
+import React from "react"
 import { View, StyleSheet, Platform } from "react-native"
 import { tw } from "@free/tailwind"
 import { TableGrid } from "./TableGrid"
@@ -7,7 +7,7 @@ import { observer } from "mobx-react-lite"
 import { Layout, H3, ActionGroup, useDefaultColumn } from "../../component"
 import { theme } from "../../config/theme"
 
-const ViewGrid: FC = observer(() => {
+const ViewGrid: React.FC = observer(() => {
   const { store } = useHook()
   const actions = useActions(store)
   const [
@@ -30,7 +30,7 @@ const ViewGrid: FC = observer(() => {
       <Layout store={store} scroll={Platform.OS === "web"}>
         <View style={styles.viewGrid}>
           <View style={styles.viewTitle}>
-            <H3 style={styles.textTitle}></H3>
+            <H3 style={styles.textTitle}>Trash Management</H3>
             <ActionGroup.Large store={store} actions={actions} />
           </View>
           <View

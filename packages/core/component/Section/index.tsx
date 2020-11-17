@@ -1,4 +1,4 @@
-import React, { FC } from "react"
+import React from "react"
 import { View, TouchableOpacity, StyleSheet } from "react-native"
 import { theme } from "../../config/theme"
 import { Icon, H5 } from ".."
@@ -7,7 +7,7 @@ import { observer, useLocalObservable } from "mobx-react-lite"
 import { SectionProps } from "@free/core"
 
 const defaultColor = color(theme.disabled_text)
-export const Section: FC<SectionProps> = observer(
+export const Section: React.FC<SectionProps> = observer(
   ({ testID = "Section", label, show = true, children }) => {
     const state = useLocalObservable(() => ({
       isExpand: show,

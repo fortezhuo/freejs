@@ -1,4 +1,4 @@
-import React, { FC, useRef } from "react"
+import React from "react"
 import { View, StyleSheet } from "react-native"
 import { Modal, IconButton, useStore } from "../"
 import { observer, useLocalObservable } from "mobx-react-lite"
@@ -11,7 +11,7 @@ const SCREEN_INDENT = 2
 const noop = () => {}
 
 export const useMenu = () => {
-  const refContainer = useRef<View>(null)
+  const refContainer = React.useRef<View>(null)
   const state = useLocalObservable(() => ({
     isOpen: false,
     measure: {
@@ -62,7 +62,7 @@ export const useMenu = () => {
     state.setOpen(false)
   }
 
-  const Menu: FC<MenuProps> = observer(
+  const Menu: React.FC<MenuProps> = observer(
     ({
       testID = "Menu",
       anchor,
@@ -121,7 +121,7 @@ export const useMenu = () => {
     }
   )
 
-  const BindMenuItem: FC<MenuItemProps> = observer(
+  const BindMenuItem: React.FC<MenuItemProps> = observer(
     ({
       name,
       color = iconColor,
@@ -156,7 +156,7 @@ export const useMenu = () => {
   }
 }
 
-export const MenuItem: FC<MenuItemProps> = observer(
+export const MenuItem: React.FC<MenuItemProps> = observer(
   ({
     active,
     name,

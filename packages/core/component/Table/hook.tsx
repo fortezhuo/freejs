@@ -1,4 +1,4 @@
-import React, { useCallback } from "react"
+import React from "react"
 import { entries } from "mobx"
 import { Input, Text } from ".."
 import { CellText, CellDownload, CellLink, CellJSON } from "./"
@@ -11,7 +11,7 @@ const datetime = (datetime: any) =>
 
 export const useDefaultColumn = (store: any) => {
   const name = store.name
-  const onFilterSearch = useCallback(() => {
+  const onFilterSearch = React.useCallback(() => {
     const query = entries(store.temp)
       .filter((values) => values[1] !== "")
       .map((values) => ({

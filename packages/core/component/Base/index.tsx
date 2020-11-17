@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, FC } from "react"
+import React from "react"
 import {
   Animated,
   View,
@@ -16,9 +16,9 @@ const backgroundColor = color("bg-gray-300")
 const highlightColor = color("bg-gray-100")
 const speed = 800
 
-const Skeleton: FC<any> = ({ style }): JSX.Element => {
-  const animatedValue = useMemo(() => new Animated.Value(0), [])
-  const translateX = useMemo(
+const Skeleton: React.FC<any> = ({ style }): JSX.Element => {
+  const animatedValue = React.useMemo(() => new Animated.Value(0), [])
+  const translateX = React.useMemo(
     () =>
       animatedValue.interpolate({
         inputRange: [0, 1],
@@ -27,7 +27,7 @@ const Skeleton: FC<any> = ({ style }): JSX.Element => {
     [animatedValue]
   )
 
-  useEffect(() => {
+  React.useEffect(() => {
     const loop = Animated.loop(
       Animated.timing(animatedValue, {
         toValue: 1,
@@ -40,16 +40,16 @@ const Skeleton: FC<any> = ({ style }): JSX.Element => {
     return () => loop.stop()
   }, [animatedValue, speed])
 
-  const absoluteTranslateStyle = useMemo(
+  const absoluteTranslateStyle = React.useMemo(
     () => ({ ...StyleSheet.absoluteFillObject, transform: [{ translateX }] }),
     [translateX]
   )
-  const gradientColors = useMemo(
+  const gradientColors = React.useMemo(
     () => [backgroundColor, highlightColor, backgroundColor],
     [backgroundColor, highlightColor]
   )
 
-  const viewStyle = useMemo<ViewStyle>(
+  const viewStyle = React.useMemo<ViewStyle>(
     () => ({
       backgroundColor,
       overflow: "hidden",
@@ -73,7 +73,7 @@ const Skeleton: FC<any> = ({ style }): JSX.Element => {
   )
 }
 
-export const Base: FC<any> = ({ isLoading, style, children }) => {
+export const Base: React.FC<any> = ({ isLoading, style, children }) => {
   return (
     <View
       style={StyleSheet.flatten([

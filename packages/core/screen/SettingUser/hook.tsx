@@ -1,11 +1,11 @@
-import { useEffect, useMemo } from "react"
+import React from "react"
 import { useStore, useEvent } from "../../component"
 import { configACL as acl } from "@free/env"
 
 export const useHook = () => {
   const { user } = useStore()
   const event = useEvent(user)
-  const actions = useMemo(() => {
+  const actions = React.useMemo(() => {
     return [
       {
         icon: "save",
@@ -24,7 +24,7 @@ export const useHook = () => {
     ]
   }, [])
 
-  useEffect(() => {
+  React.useEffect(() => {
     user?.app?.set("isForm", true)
     user.setTemp({
       roles: Object.keys(acl).map((role: any) => ({

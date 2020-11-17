@@ -1,4 +1,4 @@
-import React, { FC, createRef } from "react"
+import React from "react"
 import {
   StyleSheet,
   View,
@@ -24,7 +24,7 @@ const datetime = (datetime: any) =>
 
 const defaultColor = color(theme.default_text)
 
-export const TableScroll: FC<TableProps> = ({
+export const TableScroll: React.FC<TableProps> = ({
   children,
   style,
   scroll,
@@ -39,7 +39,7 @@ export const TableScroll: FC<TableProps> = ({
   )
 }
 
-export const Table: FC<TableProps> = ({
+export const Table: React.FC<TableProps> = ({
   children,
   style,
   testID = "Table",
@@ -51,13 +51,13 @@ export const Table: FC<TableProps> = ({
   )
 }
 
-export const Header: FC<RowProps> = ({ children, style }) => {
+export const Header: React.FC<RowProps> = ({ children, style }) => {
   return (
     <Row style={StyleSheet.flatten([styles.viewHeader, style])}>{children}</Row>
   )
 }
 
-export const Row: FC<RowProps> = ({
+export const Row: React.FC<RowProps> = ({
   children,
   filter,
   dark,
@@ -79,7 +79,7 @@ export const Row: FC<RowProps> = ({
   )
 }
 
-export const Cell: FC<CellProps> = ({
+export const Cell: React.FC<CellProps> = ({
   children,
   style,
   filter,
@@ -99,7 +99,7 @@ export const Cell: FC<CellProps> = ({
   )
 }
 
-export const CellText: FC<CellProps> = ({
+export const CellText: React.FC<CellProps> = ({
   children,
   style,
   filter,
@@ -112,7 +112,11 @@ export const CellText: FC<CellProps> = ({
   )
 }
 
-export const CellLink: FC<CellProps> = ({ style, name = "link", link }) => {
+export const CellLink: React.FC<CellProps> = ({
+  style,
+  name = "link",
+  link,
+}) => {
   return (
     <Cell style={style} testID="CellLink">
       <Link href={link}>
@@ -122,7 +126,7 @@ export const CellLink: FC<CellProps> = ({ style, name = "link", link }) => {
   )
 }
 
-export const CellDownload: FC<CellProps> = ({
+export const CellDownload: React.FC<CellProps> = ({
   style,
   name = "download",
   onPress,
@@ -136,7 +140,7 @@ export const CellDownload: FC<CellProps> = ({
   )
 }
 
-export const CellJSON: FC<CellProps> = ({ style, children }) => {
+export const CellJSON: React.FC<CellProps> = ({ style, children }) => {
   const value: any = children
   return (
     <Cell style={StyleSheet.flatten([styles.cellJSON, style])}>
@@ -147,10 +151,10 @@ export const CellJSON: FC<CellProps> = ({ style, children }) => {
   )
 }
 
-export const RowMobile: FC<RowProps> = observer(
+export const RowMobile: React.FC<RowProps> = observer(
   ({ store, data, keys, dark, style, testID = "RowMobile", actDelete }) => {
     const path = data._id_link ? `${store.name}/${data._id_link}` : null
-    const ref = createRef<any>()
+    const ref = React.createRef<any>()
     const width = 88
     return (
       <Swipeable

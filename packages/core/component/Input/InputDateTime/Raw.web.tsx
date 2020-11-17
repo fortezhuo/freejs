@@ -1,7 +1,7 @@
-import React, { FC } from "react"
+import React from "react"
 import WebDateTimePicker from "react-flatpickr"
 
-export const DateTimePicker: FC<any> = ({
+export const DateTimePicker: React.FC<any> = ({
   value,
   type = "date",
   onChange,

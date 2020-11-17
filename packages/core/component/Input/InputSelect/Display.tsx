@@ -1,4 +1,4 @@
-import React, { FC, useCallback } from "react"
+import React from "react"
 import { Icon, IconButton, Text } from "../.."
 import { StyleSheet, View, TouchableOpacity } from "react-native"
 import { observer } from "mobx-react-lite"
@@ -9,8 +9,8 @@ import { random } from "../../../util/random"
 
 const defaultColor = color(theme.default_text)
 
-const Chip: FC<any> = observer(({ state, children }) => {
-  const onClear = useCallback((val) => state.onClear(val), [])
+const Chip: React.FC<any> = observer(({ state, children }) => {
+  const onClear = React.useCallback((val) => state.onClear(val), [])
   return (
     <View style={styles.viewChip}>
       <TouchableOpacity onPress={() => onClear(children)}>
@@ -21,7 +21,7 @@ const Chip: FC<any> = observer(({ state, children }) => {
   )
 })
 
-const Placeholder: FC<StateComponent> = observer(({ state }) => {
+const Placeholder: React.FC<StateComponent> = observer(({ state }) => {
   const style = state.multi ? { paddingHorizontal: 8 } : {}
   return (
     <Text style={StyleSheet.flatten([styles.textPlaceholder, style])}>
@@ -30,9 +30,9 @@ const Placeholder: FC<StateComponent> = observer(({ state }) => {
   )
 })
 
-const Clear: FC<StateComponent> = observer(({ state }) => {
+const Clear: React.FC<StateComponent> = observer(({ state }) => {
   const { multi, value } = state
-  const onClear = useCallback(() => {
+  const onClear = React.useCallback(() => {
     state.onChange(multi ? [] : "")
   }, [])
 
@@ -43,7 +43,7 @@ const Clear: FC<StateComponent> = observer(({ state }) => {
   )
 })
 
-export const Display: FC<StateComponent> = observer(({ state }) => {
+export const Display: React.FC<StateComponent> = observer(({ state }) => {
   const { multi, display } = state
   const isBlank = multi ? display.length == 0 : display === ""
 
