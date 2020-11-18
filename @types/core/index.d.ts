@@ -219,7 +219,7 @@ declare module "@free/core" {
 
   // Loader
   type LoaderProps = {
-    themeColor?: string
+    dark?: boolean
   }
 
   // Menu

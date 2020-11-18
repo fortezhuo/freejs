@@ -19,7 +19,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
       try {
         await app.checkAuth()
       } catch (e) {
-        console.log(e)
+        console.log("AUTH FAILED", e)
       }
     })()
   }, [app.auth])

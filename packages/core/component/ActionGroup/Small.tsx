@@ -12,13 +12,16 @@ export const Small: React.FC<any> = observer(({ store, actions }) => {
   actions = actions.filter((act: ObjectAny) => act.children !== "Delete")
   const isShow = actions.length != 0 && store.app.dimension.isMobile
 
-  return isShow ? (
+  return (
     <>
       <Button
         icon="zap"
         onPress={() => modalizeRef.current?.open()}
         store={store}
-        style={styles.single}
+        style={StyleSheet.flatten([
+          styles.single,
+          isShow ? {} : { width: 0, height: 0, opacity: 0 },
+        ])}
         type={"single_button_bg"}
       ></Button>
       <Modalize
@@ -55,8 +58,6 @@ export const Small: React.FC<any> = observer(({ store, actions }) => {
         </View>
       </Modalize>
     </>
-  ) : (
-    <View />
   )
 })
 

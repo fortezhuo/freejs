@@ -306,9 +306,9 @@ PODS:
     - React-Core
   - RNGestureHandler (1.8.0):
     - React
-  - RNReanimated (1.13.1):
-    - React
-  - RNScreens (2.14.0):
+  - RNReanimated (1.13.2):
+    - React-Core
+  - RNScreens (2.15.0):
     - React-Core
   - RNVectorIcons (7.1.0):
     - React
@@ -500,8 +500,8 @@ SPEC CHECKSUMS:
   RNCAsyncStorage: 05bae7ecfab1cbd5441993f1ca098f7c3b3f8d0e
   RNDateTimePicker: 3d1931e387248cb8f1d1d33740d4a1a82dfe622a
   RNGestureHandler: 7a5833d0f788dbd107fbb913e09aa0c1ff333c39
-  RNReanimated: dd8c286ab5dd4ba36d3a7fef8bff7e08711b5476
-  RNScreens: 2e278a90eb15092ed261d4f2271e3fc9b60d08d4
+  RNReanimated: e03f7425cb7a38dcf1b644d680d1bfc91c3337ad
+  RNScreens: 2ad555d4d9fa10b91bb765ca07fe9b29d59573f0
   RNVectorIcons: bc69e6a278b14842063605de32bec61f0b251a59
   Yoga: 7d13633d129fd179e01b8953d38d47be90db185a
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a

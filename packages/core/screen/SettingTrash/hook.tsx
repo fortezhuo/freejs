@@ -3,10 +3,29 @@ import { useStore, TableCell } from "../../component"
 import { TableCheckbox } from "../../shared/ViewGrid/TableCheckbox"
 import { get } from "../../request"
 
-export const useHook = () => {
+export const useTrash = () => {
   const { trash } = useStore()
-  const isMobile = trash.app?.dimension.isMobile
-  const [search, page, isFilter] = trash.getData("search", "page", "isFilter")
+
+  const actions = React.useMemo(
+    () => [
+      {
+        icon: "trash-2",
+        type: "danger_bg",
+        children: "Delete",
+        onPress: () => alert("Delete"),
+      },
+      {
+        icon: "search",
+        type: "primary_2_bg",
+        children: "Filter",
+        onPress: () => {
+          const isFilter = trash.data.get("isFilter") || false
+          trash.setData({ isFilter: !isFilter })
+        },
+      },
+    ],
+    []
+  )
 
   React.useEffect(() => {
     trash.setData({
@@ -18,74 +37,42 @@ export const useHook = () => {
     }
   }, [])
 
+  // While resize screen, loading true
   React.useEffect(() => {
-    ;(async () => {
-      await setCollection(name)
-    })()
-  }, [page, search])
+    trash.set("isLoading", true)
+    trash.setData({ isMobile: trash?.app?.dimension.isMobile })
+    setTimeout(() => {
+      trash.set("isLoading", false)
+    }, 1000)
+  }, [trash?.app?.dimension.isMobile])
 
-  React.useEffect(() => {
-    trash.setData({ isMobile })
-  }, [isMobile])
+  return { trash, actions }
+}
 
-  React.useEffect(() => {
-    if (!isFilter) {
-      trash.setData({
-        search: undefined,
-        page: 1,
-      })
-    }
-  }, [isFilter])
+export const useTableGrid = (store: any) => {
+  const [search, page = 1, isFilter, isMobile] = store.getData(
+    "search",
+    "page",
+    "isFilter",
+    "isMobile"
+  )
 
-  const setCollection = async (name: string) => {
+  const setCollection = React.useCallback(async () => {
     const params = { q: search, page }
     try {
-      trash.set("isLoading", true)
+      store.set("isUpdating", true)
       const { data } = await get(`/api/trash`, params)
-      trash.setData({
+      store.setData({
         collection: data.result,
         limit: data.limit,
         total: data.total,
         max: data.max,
       })
     } finally {
-      trash.set("isLoading", false)
+      store.set("isUpdating", false)
     }
-  }
+  }, [])
 
-  return { store: trash }
-}
-
-export const useActions = (store: any) => {
-  const isMobile = store?.app.dimension.isMobile
-  const isSearch = store.data.get("isSearch") || false
-  return React.useMemo(
-    () => [
-      {
-        icon: "trash-2",
-        type: "danger_bg",
-        children: "Delete",
-        onPress: () => alert("Delete"),
-        visible: true,
-      },
-      {
-        icon: "search",
-        type: "primary_2_bg",
-        children: "Filter",
-        disabled: isSearch,
-        onPress: () => {
-          const isFilter = store.data.get("isFilter") || false
-          store.setData({ isFilter: !isFilter })
-        },
-        visible: !isMobile,
-      },
-    ],
-    [isMobile, isSearch]
-  )
-}
-
-export const useColumns = (store: any) => {
-  const isMobile = store?.app.dimension.isMobile
   const _columns = React.useMemo(
     () => [
       {
@@ -145,7 +132,7 @@ export const useColumns = (store: any) => {
               }
         ),
 
-    [isMobile]
+    []
   )
 
   const keys = React.useMemo(() => {
@@ -163,9 +150,25 @@ export const useColumns = (store: any) => {
         })
     }
     return key
-  }, [isMobile])
+  }, [])
 
-  return { columns, keys }
+  // Collection
+  React.useEffect(() => {
+    ;(async () => {
+      await setCollection()
+    })()
+  }, [page, search])
+
+  React.useEffect(() => {
+    if (!isFilter) {
+      store.setData({
+        search: undefined,
+        page: 1,
+      })
+    }
+  }, [isFilter])
+
+  return { keys, columns }
 }
 
 export const useSelection = (hooks: any) => {

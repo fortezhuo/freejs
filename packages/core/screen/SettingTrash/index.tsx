@@ -2,67 +2,37 @@ import React from "react"
 import { View, StyleSheet, Platform } from "react-native"
 import { tw } from "@free/tailwind"
 import { TableGrid } from "./TableGrid"
-import { useHook, useActions, useColumns } from "./hook"
 import { observer } from "mobx-react-lite"
-import { Layout, H3, ActionGroup, useDefaultColumn } from "../../component"
+import { Layout, H3, ActionGroup, Loader } from "../../component"
 import { theme } from "../../config/theme"
+import { useTrash } from "./hook"
 
-const ViewGrid: React.FC = observer(() => {
-  const { store } = useHook()
-  const actions = useActions(store)
-  const [
-    name,
-    collection = [],
-    pageIndex,
-    limit,
-    total,
-    pageMax,
-  ] = store.getData("name", "collection", "page", "limit", "total", "max")
-
-  const isMobile = store.app?.dimension.isMobile
-  const isLoading = store.isLoading || name !== store.name
-  const isShowTable = store.data.get("isMobile") === isMobile
-  const columnsFormat = useDefaultColumn(store)
-  const { columns, keys } = useColumns(store)
+const SettingTrash: React.FC = observer(() => {
+  const { trash, actions } = useTrash()
 
   return (
     <>
-      <Layout store={store} scroll={Platform.OS === "web"}>
+      <Layout store={trash} scroll={Platform.OS === "web"}>
         <View style={styles.viewGrid}>
           <View style={styles.viewTitle}>
             <H3 style={styles.textTitle}>Trash Management</H3>
-            <ActionGroup.Large store={store} actions={actions} />
+            <ActionGroup.Large store={trash} actions={actions} />
           </View>
           <View
             style={StyleSheet.flatten([
               styles.viewTable,
-              { height: store.app?.dimension.height - 144 },
+              { height: trash.app?.dimension.height - 144 },
             ])}
           >
-            {isShowTable && (
-              <TableGrid
-                actDelete={actions[0]}
-                store={store}
-                data={{
-                  columns,
-                  columnsFormat,
-                  collection,
-                  keys,
-                  isMobile,
-                  isLoading,
-                }}
-                page={{
-                  index: pageIndex,
-                  limit: limit,
-                  total: total,
-                  max: pageMax,
-                }}
-              />
+            {trash.isLoading ? (
+              <Loader dark />
+            ) : (
+              <TableGrid store={trash} actions={actions} />
             )}
           </View>
         </View>
       </Layout>
-      <ActionGroup.Small store={store} actions={actions} />
+      <ActionGroup.Small store={trash} actions={actions} />
     </>
   )
 })
@@ -79,4 +49,4 @@ const styles = StyleSheet.create({
   rowMobile: tw("flex-col"),
 })
 
-export default ViewGrid
+export default SettingTrash
