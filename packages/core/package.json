@@ -27,7 +27,7 @@
     "mobx-react-lite": "^3.1.5",
     "react": "^16.14.0",
     "react-flatpickr": "^3.10.6",
-    "react-native-gesture-handler": "^1.8.0",
+    "react-native-gesture-handler": "github:software-mansion/react-native-gesture-handler#196782c740cde1464e4ce4f5f46bf2c756ecdc43",
     "react-native-linear-gradient": "^2.5.6",
     "react-native-modal": "^11.5.6",
     "react-native-modalize": "^2.0.6",

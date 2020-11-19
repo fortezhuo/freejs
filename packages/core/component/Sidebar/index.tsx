@@ -42,6 +42,7 @@ const Content: React.FC<any> = observer((props) => {
                       active={sub.component === activeName}
                       navigation={props.navigation}
                       component={sub.component}
+                      path={sub.path}
                       icon={sub.icon}
                     >
                       {sub.label}

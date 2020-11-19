@@ -49,6 +49,7 @@ declare module "@free/core" {
     active: boolean
     icon: string
     children: string
+    path: string
     component: string
     navigation: any
     onPress?: VoidFunction
@@ -838,6 +839,10 @@ declare module "react-native-gesture-handler/Swipeable" {
     openLeft: () => void
     openRight: () => void
   }
+}
+
+declare module "@react-navigation/native/lib/module" {
+  export type LinkingContext = any
 }
 
 declare module "react-native-gesture-handler/DrawerLayout" {

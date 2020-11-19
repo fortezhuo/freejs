@@ -1,7 +1,7 @@
 import React from "react"
 import { View, TouchableOpacity, StyleSheet, Animated } from "react-native"
 import { theme } from "../../config/theme"
-import { IconLabel, Icon } from ".."
+import { IconLabel, Icon, Link } from ".."
 import { tw, color } from "@free/tailwind"
 import { observer, useLocalObservable } from "mobx-react-lite"
 import { AccordionProps, AccordionItemProps } from "@free/core"
@@ -73,19 +73,9 @@ export const Accordion: React.FC<AccordionProps> = observer(
 )
 
 export const AccordionItem: React.FC<AccordionItemProps> = observer(
-  ({
-    testID = "AccordionItem",
-    active,
-    component,
-    icon,
-    navigation,
-    children,
-  }) => {
+  ({ testID = "AccordionItem", active, path, icon, children, navigation }) => {
     return (
-      <TouchableOpacity
-        testID={testID}
-        onPress={() => navigation.navigate(component)}
-      >
+      <Link navigation={navigation} testID={testID} path={path}>
         <IconLabel
           name={icon}
           size={20}
@@ -101,7 +91,7 @@ export const AccordionItem: React.FC<AccordionItemProps> = observer(
         >
           {children}
         </IconLabel>
-      </TouchableOpacity>
+      </Link>
     )
   }
 )

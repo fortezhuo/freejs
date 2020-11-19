@@ -35,7 +35,7 @@ export const TableGrid: React.FC<any> = observer(({ store, actions }) => {
   const { columns, keys } = useTableGrid(store)
   const columnsFormat = useDefaultColumn(store)
   const actionDelete = React.useMemo(() => {
-    actions.filter((action: any) => action.children === "Delete")[0]
+    return actions.filter((action: any) => action.children === "Delete")[0]
   }, [])
 
   return total ? (
@@ -83,88 +83,91 @@ const TableContent: React.FC<any> = observer(
     )
 
     return (
-      <TableWrapper style={styles.viewTable}>
-        {!isMobile &&
-          headerGroups.map((headerGroup: any) => {
-            const { key } = headerGroup.getHeaderGroupProps()
-            return (
-              <View key={key}>
-                <TableHeader>
-                  {headerGroup.headers.map((column: any) => {
-                    const { key } = column.getHeaderProps(
-                      column.getSortByToggleProps()
-                    )
-                    const onPress = React.useCallback((e) => {
-                      return column.canSort
-                        ? column.toggleSortBy(undefined, true)
-                        : {}
-                    }, [])
-                    return (
-                      <TouchableOpacity key={key} onPress={onPress}>
-                        <TableCell style={(column as any).style}>
-                          <Text>{column.render("Header")} </Text>
-                          {column.isSorted && (
-                            <Icon
-                              color={defaultColor}
-                              name={
-                                column.isSortedDesc
-                                  ? "chevron-down"
-                                  : "chevron-up"
-                              }
-                              size={16}
-                            />
-                          )}
-                        </TableCell>
-                      </TouchableOpacity>
-                    )
-                  })}
-                </TableHeader>
-                {isFilter && (
-                  <TableRow filter>
+      <>
+        <TablePagination store={store} page={{ ...page, goto: gotoPage }} />
+        <TableWrapper style={styles.viewTable}>
+          {!isMobile &&
+            headerGroups.map((headerGroup: any) => {
+              const { key } = headerGroup.getHeaderGroupProps()
+              return (
+                <View key={key}>
+                  <TableHeader>
                     {headerGroup.headers.map((column: any) => {
+                      const { key } = column.getHeaderProps(
+                        column.getSortByToggleProps()
+                      )
+                      const onPress = React.useCallback((e) => {
+                        return column.canSort
+                          ? column.toggleSortBy(undefined, true)
+                          : {}
+                      }, [])
                       return (
-                        <TableCell
-                          filter
-                          style={(column as any).style}
-                          key={"filter_" + random()}
-                        >
-                          {column.render("Filter")}
-                        </TableCell>
+                        <TouchableOpacity key={key} onPress={onPress}>
+                          <TableCell style={(column as any).style}>
+                            <Text>{column.render("Header")} </Text>
+                            {column.isSorted && (
+                              <Icon
+                                color={defaultColor}
+                                name={
+                                  column.isSortedDesc
+                                    ? "chevron-down"
+                                    : "chevron-up"
+                                }
+                                size={16}
+                              />
+                            )}
+                          </TableCell>
+                        </TouchableOpacity>
                       )
                     })}
-                  </TableRow>
-                )}
-              </View>
-            )
-          })}
-        {isUpdating ? (
-          <Loader dark />
-        ) : (
-          <FlatList
-            data={rows}
-            keyExtractor={(row: any) => row.id}
-            renderItem={({ item, index }: any) => {
-              prepareRow(item)
-              return isMobile ? (
-                <TableRowMobile
-                  store={store}
-                  actDelete={action}
-                  dark={index % 2}
-                  data={item.values}
-                  keys={keys}
-                />
-              ) : (
-                <TableRow dark={index % 2}>
-                  {item.cells.map((cell: any) => {
-                    const { key } = cell.getCellProps()
-                    return <View key={key}>{cell.render("Cell")}</View>
-                  })}
-                </TableRow>
+                  </TableHeader>
+                  {isFilter && (
+                    <TableRow filter>
+                      {headerGroup.headers.map((column: any) => {
+                        return (
+                          <TableCell
+                            filter
+                            style={(column as any).style}
+                            key={"filter_" + random()}
+                          >
+                            {column.render("Filter")}
+                          </TableCell>
+                        )
+                      })}
+                    </TableRow>
+                  )}
+                </View>
               )
-            }}
-          />
-        )}
-      </TableWrapper>
+            })}
+          {isUpdating ? (
+            <Loader dark />
+          ) : (
+            <FlatList
+              data={rows}
+              keyExtractor={(row: any) => row.id}
+              renderItem={({ item, index }: any) => {
+                prepareRow(item)
+                return isMobile ? (
+                  <TableRowMobile
+                    store={store}
+                    actDelete={action}
+                    dark={index % 2}
+                    data={item.values}
+                    keys={keys}
+                  />
+                ) : (
+                  <TableRow dark={index % 2}>
+                    {item.cells.map((cell: any) => {
+                      const { key } = cell.getCellProps()
+                      return <View key={key}>{cell.render("Cell")}</View>
+                    })}
+                  </TableRow>
+                )
+              }}
+            />
+          )}
+        </TableWrapper>
+      </>
     )
   }
 )

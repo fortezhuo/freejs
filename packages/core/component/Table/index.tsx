@@ -119,7 +119,7 @@ export const CellLink: React.FC<CellProps> = ({
 }) => {
   return (
     <Cell style={style} testID="CellLink">
-      <Link href={link}>
+      <Link path={link}>
         <Icon name={name} size={16} color={defaultColor} />
       </Link>
     </Cell>

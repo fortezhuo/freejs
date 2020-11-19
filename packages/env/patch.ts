@@ -1,5 +1,4 @@
 import fs from "fs"
-import { string } from "joi"
 import { resolve } from "path"
 
 // Patch Metro
@@ -38,24 +37,6 @@ Object.keys(patchIcon).forEach((key) => {
       encoding: "utf8",
     }
   )
-})
-
-// Patch React Gesture
-const patchRNGesture: { [key: string]: string } = {
-  "createHandler.js": `createHandler.js`,
-  "GestureHandler.js": `web/GestureHandler.js`,
-  "RNGestureHandlerModule.web.js": `RNGestureHandlerModule.web.js`,
-}
-
-Object.keys(patchRNGesture).forEach((key) => {
-  const content = fs.readFileSync(`./patches/RNGestureHandler/${key}`, "utf8")
-  const file = resolve(
-    appPath,
-    `./node_modules/react-native-gesture-handler/${patchRNGesture[key]}`
-  )
-  fs.writeFileSync(file, content, {
-    encoding: "utf8",
-  })
 })
 
 // Patch React Navigation

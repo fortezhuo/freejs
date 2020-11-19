@@ -1,29 +1,14 @@
 import React from "react"
 import { TouchableOpacity } from "react-native"
 import { observer } from "mobx-react-lite"
-import { useStore } from "../Store"
-import { LinkProps } from "@free/core"
+import { useLinkTo } from "@react-navigation/native"
+import { useNavigationLinkTo } from "./helper"
 
-const noop = () => {}
-
-export const Link: React.FC<LinkProps> = observer(
-  ({
-    href,
-    target,
-    disabled,
-    children,
-    beforeAction = noop,
-    afterAction = noop,
-  }) => {
-    const { app } = useStore()
-    const onPress = React.useCallback(() => {
-      beforeAction()
-      //      app.goto(href)
-      afterAction()
-    }, [href])
-
+export const Link: React.FC<any> = observer(
+  ({ target, url, disabled, navigation, children }) => {
+    const linkTo = navigation ? useNavigationLinkTo(navigation) : useLinkTo()
     return (
-      <TouchableOpacity disabled={disabled} onPress={onPress}>
+      <TouchableOpacity disabled={disabled} onPress={() => linkTo(url)}>
         {children}
       </TouchableOpacity>
     )

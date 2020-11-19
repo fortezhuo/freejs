@@ -1,35 +1,18 @@
 import React from "react"
 import { observer } from "mobx-react-lite"
-import { useStore } from "../Store"
-import { LinkProps } from "@free/core"
+import { useLinkTo } from "@react-navigation/native"
+import { useNavigationLinkTo } from "./helper"
 
-const noop = () => {}
-
-export const Link: React.FC<LinkProps> = observer(
-  ({
-    href,
-    target = "_self",
-    disabled,
-    children,
-    beforeAction = noop,
-    afterAction = noop,
-  }) => {
-    const { app } = useStore()
-    const onPress = React.useCallback(() => {
-      if (!disabled) {
-        beforeAction()
-        //        app.goto(href)
-        afterAction()
-      }
-    }, [href])
-
+export const Link: React.FC<any> = observer(
+  ({ target = "_self", path, disabled, navigation, children }) => {
+    const linkTo = navigation ? useNavigationLinkTo(navigation) : useLinkTo()
     return (
       <a
-        href={href}
+        href={path}
         target={target}
         onClick={(e) => {
           e.preventDefault()
-          onPress()
+          linkTo(path)
         }}
       >
         {children}
