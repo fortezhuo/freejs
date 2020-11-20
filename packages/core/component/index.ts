@@ -15,6 +15,7 @@ export { Layout, LayoutFull } from "./Layout"
 export { Link } from "./Link"
 export { Loader } from "./Loader"
 export { useMenu, MenuItem } from "./Menu"
+export { useMessage } from "./Message"
 export { Modal } from "./Modal"
 export { Section } from "./Section"
 export { Sidebar } from "./Sidebar"
@@ -28,6 +29,7 @@ export {
   CellText as TableCellText,
   Header as TableHeader,
   ModalJSON,
+  ModalFilter,
   useDefaultColumn,
 } from "./Table"
 export { Title } from "./Title"

@@ -6,83 +6,18 @@ import { get } from "../../request"
 export const useTrash = () => {
   const { trash } = useStore()
   trash.modalData = React.useRef(null)
-  const actions = React.useMemo(
+  trash.modalFilter = React.useRef(null)
+
+  const columns = React.useMemo(
     () => [
       {
-        icon: "trash-2",
-        type: "danger_bg",
-        children: "Delete",
-        onPress: () => alert("Delete"),
-      },
-      {
-        icon: "search",
-        type: "primary_2_bg",
-        children: "Filter",
-        onPress: () => {
-          const isFilter = trash.data.get("isFilter") || false
-          trash.setData({ isFilter: !isFilter })
-        },
-      },
-    ],
-    []
-  )
-
-  React.useEffect(() => {
-    trash.setData({
-      page: undefined,
-      search: undefined,
-    })
-    return () => {
-      trash.data.clear()
-    }
-  }, [])
-
-  // While resize screen, loading true
-  React.useEffect(() => {
-    trash.set("isLoading", true)
-    trash.setData({ isMobile: trash?.app?.dimension.isMobile })
-    setTimeout(() => {
-      trash.set("isLoading", false)
-    }, 1000)
-  }, [trash?.app?.dimension.isMobile])
-
-  return { trash, actions }
-}
-
-export const useTableGrid = (store: any) => {
-  const [search, page = 1, isFilter, isMobile] = store.getData(
-    "search",
-    "page",
-    "isFilter",
-    "isMobile"
-  )
-
-  const setCollection = React.useCallback(async () => {
-    const params = { q: search, page }
-    try {
-      store.set("isUpdating", true)
-      const { data } = await get(`/api/trash`, params)
-      store.setData({
-        collection: data.result,
-        limit: data.limit,
-        total: data.total,
-        max: data.max,
-      })
-    } finally {
-      store.set("isUpdating", false)
-    }
-  }, [])
-
-  const _columns = React.useMemo(
-    () => [
-      {
-        label: "Data",
+        label: "",
         name: "data",
         filter: false,
         type: "json",
         search: ["$text"],
-        style: { width: 100 },
-        isMobileVisible: true,
+        style: { width: 30 },
+        isMobileVisible: false,
       },
       {
         label: "Collection",
@@ -113,10 +48,84 @@ export const useTableGrid = (store: any) => {
     []
   )
 
+  const actions = React.useMemo(
+    () => [
+      {
+        icon: "trash-2",
+        type: "danger_bg",
+        children: "Delete",
+        onPress: () => alert("Delete"),
+      },
+      {
+        icon: "rotate-ccw",
+        type: "primary_2_bg",
+        children: "Restore",
+        onPress: () => {
+          trash.app?.message.show("Title", "Content ")
+          //          trash.modalFilter.current.open()
+        },
+      },
+      {
+        icon: "search",
+        type: "primary_2_bg",
+        children: "Filter",
+        onPress: () => {
+          trash.modalFilter.current.open()
+        },
+      },
+    ],
+    []
+  )
+
+  React.useEffect(() => {
+    trash.setData({
+      page: undefined,
+      search: undefined,
+    })
+    return () => {
+      trash.data.clear()
+    }
+  }, [])
+
+  // While resize screen, loading true
+  React.useEffect(() => {
+    trash.set("isLoading", true)
+    trash.setData({ isMobile: trash?.app?.dimension.isMobile })
+    setTimeout(() => {
+      trash.set("isLoading", false)
+    }, 1000)
+  }, [trash?.app?.dimension.isMobile])
+
+  return { trash, actions, columns }
+}
+
+export const useTableGrid = (store: any, _columns: any) => {
+  const [search, page = 1, isMobile] = store.getData(
+    "search",
+    "page",
+    "isMobile"
+  )
+
+  const setCollection = React.useCallback(async () => {
+    const params = { q: search, page }
+    try {
+      store.set("isUpdating", true)
+      const { data } = await get(`/api/trash`, params)
+      store.setData({
+        collection: data.result,
+        limit: data.limit,
+        total: data.total,
+        max: data.max,
+      })
+    } finally {
+      store.set("isUpdating", false)
+    }
+  }, [])
+
   const columns = React.useMemo(
     () =>
       _columns
-        .filter((col: any) => col.isMobileVisible)
+        .filter((col: any) => (isMobile ? col.isMobileVisible : true))
         .map((col: ObjectAny) =>
           isMobile
             ? {
@@ -158,15 +167,6 @@ export const useTableGrid = (store: any) => {
       await setCollection()
     })()
   }, [page, search])
-
-  React.useEffect(() => {
-    if (!isFilter) {
-      store.setData({
-        search: undefined,
-        page: 1,
-      })
-    }
-  }, [isFilter])
 
   return { keys, columns }
 }

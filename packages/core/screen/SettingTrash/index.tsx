@@ -8,14 +8,14 @@ import {
   H3,
   ActionGroup,
   Loader,
-  Table,
+  ModalFilter,
   ModalJSON,
 } from "../../component"
 import { theme } from "../../config/theme"
 import { useTrash } from "./hook"
 
 const SettingTrash: React.FC = observer(() => {
-  const { trash, actions } = useTrash()
+  const { trash, columns, actions } = useTrash()
 
   return (
     <>
@@ -34,12 +34,13 @@ const SettingTrash: React.FC = observer(() => {
             {trash.isLoading ? (
               <Loader dark />
             ) : (
-              <TableGrid store={trash} actions={actions} />
+              <TableGrid store={trash} columns={columns} actions={actions} />
             )}
           </View>
         </View>
       </Layout>
       <ModalJSON store={trash} />
+      <ModalFilter store={trash} />
       <ActionGroup.Small store={trash} actions={actions} />
     </>
   )

@@ -14,7 +14,6 @@ import {
 } from "../../component"
 import { useTableGrid, useSelection } from "./hook"
 import { useTable, usePagination, useRowSelect, useSortBy } from "react-table"
-import { random } from "../../util/random"
 import { FlatList } from "react-native-gesture-handler"
 import { observer } from "mobx-react-lite"
 import { theme } from "../../config/theme"
@@ -23,49 +22,49 @@ import { TablePagination } from "../../shared/ViewGrid/TablePagination"
 
 const defaultColor = color(theme.default_text)
 
-export const TableGrid: React.FC<any> = observer(({ store, actions }) => {
-  const [
-    isMobile,
-    collection = [],
-    pageIndex,
-    limit,
-    total,
-    pageMax,
-  ] = store.getData("isMobile", "collection", "page", "limit", "total", "max")
-  const { columns, keys } = useTableGrid(store)
-  const columnsFormat = useDefaultColumn(store)
-  const actionDelete = React.useMemo(() => {
-    return actions.filter((action: any) => action.children === "Delete")[0]
-  }, [])
+export const TableGrid: React.FC<any> = observer(
+  ({ store, columns, actions }) => {
+    const [
+      isMobile,
+      collection = [],
+      pageIndex,
+      limit,
+      total,
+      pageMax,
+    ] = store.getData("isMobile", "collection", "page", "limit", "total", "max")
+    const table: any = useTableGrid(store, columns)
+    const columnsFormat = useDefaultColumn(store)
+    const actionDelete = React.useMemo(() => {
+      return actions.filter((action: any) => action.children === "Delete")[0]
+    }, [])
 
-  return total ? (
-    <TableContent
-      store={store}
-      isMobile={isMobile}
-      isUpdating={store.isUpdating}
-      data={{
-        action: actionDelete,
-        columns,
-        columnsFormat,
-        collection,
-        keys,
-      }}
-      page={{
-        index: pageIndex,
-        limit: limit,
-        total: total,
-        max: pageMax,
-      }}
-    />
-  ) : (
-    <Loader dark />
-  )
-})
+    return total ? (
+      <TableContent
+        store={store}
+        isMobile={isMobile}
+        isUpdating={store.isUpdating}
+        data={{
+          ...table,
+          action: actionDelete,
+          columnsFormat,
+          collection,
+        }}
+        page={{
+          index: pageIndex,
+          limit: limit,
+          total: total,
+          max: pageMax,
+        }}
+      />
+    ) : (
+      <Loader dark />
+    )
+  }
+)
 
 const TableContent: React.FC<any> = observer(
   ({ store, isMobile, isUpdating, data, page }) => {
     const { columns, columnsFormat, collection, action, keys } = data
-    const isFilter = store.data.get("isFilter") || false
     const TableWrapper = isMobile || isUpdating ? Table : TableScroll
     const { headerGroups, prepareRow, page: rows, gotoPage }: any = useTable(
       {

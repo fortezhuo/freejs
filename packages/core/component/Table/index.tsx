@@ -9,7 +9,7 @@ import {
 } from "react-native"
 import { Modalize } from "react-native-modalize"
 import { TableProps, RowProps, CellProps } from "@free/core"
-import { Icon, IconLabel, Link, Button } from ".."
+import { IconButton, IconLabel, Icon, Link } from ".."
 import { random } from "../../util/random"
 import { tw, color } from "@free/tailwind"
 import { observer } from "mobx-react-lite"
@@ -17,6 +17,7 @@ import { theme } from "../../config/theme"
 import { RectButton } from "react-native-gesture-handler"
 import Swipeable from "react-native-gesture-handler/Swipeable"
 import dayjs from "dayjs"
+import { getDebugName } from "mobx"
 export { useDefaultColumn } from "./hook"
 
 const date = (date: any) => dayjs(date).format("DD MMM YYYY")
@@ -123,9 +124,12 @@ export const CellDownload: React.FC<CellProps> = ({
 }) => {
   return (
     <Cell style={style} testID="CellLink">
-      <TouchableOpacity onPress={onPress}>
-        <Icon name={name} size={16} color={defaultColor} />
-      </TouchableOpacity>
+      <IconButton
+        onPress={onPress}
+        name={name}
+        size={16}
+        color={defaultColor}
+      />
     </Cell>
   )
 }
@@ -138,9 +142,12 @@ export const CellJSON: React.FC<CellProps> = ({ store, style, children }) => {
 
   return (
     <Cell style={style}>
-      <TouchableOpacity onPress={onOpen}>
-        <Text>Show</Text>
-      </TouchableOpacity>
+      <IconButton
+        onPress={onOpen}
+        name="search"
+        size={16}
+        color={defaultColor}
+      />
     </Cell>
   )
 }
@@ -171,6 +178,14 @@ export const ModalJSON: React.FC<any> = observer(({ store }) => {
         showsVerticalScrollIndicator: false,
       }}
     ></Modalize>
+  )
+})
+
+export const ModalFilter: React.FC<any> = observer(({ store }) => {
+  return (
+    <Modalize ref={store.modalFilter} adjustToContentHeight>
+      <CellText>FILTER</CellText>
+    </Modalize>
   )
 })
 
