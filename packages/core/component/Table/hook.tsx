@@ -10,7 +10,7 @@ const datetime = (datetime: any) =>
   dayjs(datetime).format("DD MMM YYYY HH:mm:ss")
 
 export const useDefaultColumn = (store: any) => {
-  const name = store.name
+  /*
   const onFilterSearch = React.useCallback(() => {
     const query = entries(store.temp)
       .filter((values) => values[1] !== "")
@@ -23,31 +23,9 @@ export const useDefaultColumn = (store: any) => {
       page: 1,
     })
   }, [name])
+*/
 
   return {
-    Filter: (filter: any) => {
-      switch (filter.column.type) {
-        case "checkbox":
-          return null
-        case "link":
-          return null
-        case "download_log":
-          return null
-        case "date":
-          return null
-        case "datetime":
-          return null
-        default:
-          return (
-            <Input.Text
-              store={store}
-              name={filter.column.id}
-              model="temp"
-              onSubmitEditing={onFilterSearch}
-            />
-          )
-      }
-    },
     Cell: (cell: any) => {
       switch (cell.column.type) {
         case "link":
@@ -78,7 +56,11 @@ export const useDefaultColumn = (store: any) => {
             </CellText>
           )
         case "json":
-          return <CellJSON style={cell.column.style}>{cell.value}</CellJSON>
+          return (
+            <CellJSON store={store} style={cell.column.style}>
+              {cell.value}
+            </CellJSON>
+          )
         default:
           return <CellText style={cell.column.style}>{cell.value}</CellText>
       }

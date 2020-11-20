@@ -2,6 +2,12 @@ import React from "react"
 import { getStateFromPath, getActionFromState } from "@react-navigation/core"
 import { useNavigation } from "@react-navigation/native"
 import LinkingContext from "@react-navigation/native/lib/module/LinkingContext"
+import { words } from "../../config/linking"
+
+export const buildLink = (name: string, params: any) => {
+  const path = name ? name.replace(words, "").toLowerCase() : ""
+  return `/${path}${params ? "/" + params.id : ""}`
+}
 
 export const useNavigationLinkTo = function (navigation: any) {
   const linking = React.useContext(LinkingContext)

@@ -3,7 +3,14 @@ import { View, StyleSheet, Platform } from "react-native"
 import { tw } from "@free/tailwind"
 import { TableGrid } from "./TableGrid"
 import { observer } from "mobx-react-lite"
-import { Layout, H3, ActionGroup, Loader } from "../../component"
+import {
+  Layout,
+  H3,
+  ActionGroup,
+  Loader,
+  Table,
+  ModalJSON,
+} from "../../component"
 import { theme } from "../../config/theme"
 import { useTrash } from "./hook"
 
@@ -32,6 +39,7 @@ const SettingTrash: React.FC = observer(() => {
           </View>
         </View>
       </Layout>
+      <ModalJSON store={trash} />
       <ActionGroup.Small store={trash} actions={actions} />
     </>
   )

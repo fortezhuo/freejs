@@ -49,7 +49,6 @@ declare module "@free/core" {
     active: boolean
     icon: string
     children: string
-    path: string
     component: string
     navigation: any
     onPress?: VoidFunction
@@ -242,7 +241,8 @@ declare module "@free/core" {
   // Modal
   interface ModalProps {
     testID?: string
-    visible: boolean
+    isVisible: boolean
+    animationType?: "slide" | "fade" | "none" | undefined
     transparent?: boolean = false
     onShow?: VoidFunction
     onDismiss?: VoidFunction

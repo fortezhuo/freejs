@@ -15,7 +15,7 @@ export { Layout, LayoutFull } from "./Layout"
 export { Link } from "./Link"
 export { Loader } from "./Loader"
 export { useMenu, MenuItem } from "./Menu"
-export { default as Modal } from "react-native-modal"
+export { Modal } from "./Modal"
 export { Section } from "./Section"
 export { Sidebar } from "./Sidebar"
 export { Snackbar } from "./Snackbar"
@@ -27,6 +27,7 @@ export {
   Cell as TableCell,
   CellText as TableCellText,
   Header as TableHeader,
+  ModalJSON,
   useDefaultColumn,
 } from "./Table"
 export { Title } from "./Title"

@@ -73,9 +73,16 @@ export const Accordion: React.FC<AccordionProps> = observer(
 )
 
 export const AccordionItem: React.FC<AccordionItemProps> = observer(
-  ({ testID = "AccordionItem", active, path, icon, children, navigation }) => {
+  ({
+    testID = "AccordionItem",
+    active,
+    icon,
+    children,
+    navigation,
+    component,
+  }) => {
     return (
-      <Link navigation={navigation} testID={testID} path={path}>
+      <Link navigation={navigation} testID={testID} name={component}>
         <IconLabel
           name={icon}
           size={20}

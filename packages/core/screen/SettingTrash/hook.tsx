@@ -5,7 +5,7 @@ import { get } from "../../request"
 
 export const useTrash = () => {
   const { trash } = useStore()
-
+  trash.modalData = React.useRef(null)
   const actions = React.useMemo(
     () => [
       {
@@ -81,7 +81,7 @@ export const useTableGrid = (store: any) => {
         filter: false,
         type: "json",
         search: ["$text"],
-        style: { width: 300 },
+        style: { width: 100 },
         isMobileVisible: true,
       },
       {

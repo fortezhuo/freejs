@@ -50,7 +50,7 @@ const Screens: React.FC<any> = ({
           headerRight: () => <Header.MenuUser />,
         }}
       >
-        <Stack.Screen name="Home">
+        <Stack.Screen name="Index">
           {(props) => <screens.PageHome {...props} />}
         </Stack.Screen>
         {routes.map((route: any) => {

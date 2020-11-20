@@ -75,7 +75,7 @@ const Routes: React.FC<any> = observer(({ screens }) => {
       documentTitle={{
         formatter: (options, route: any) => {
           const separator =
-            route?.name.indexOf("Home") >= 0 ||
+            route?.name.indexOf("Index") >= 0 ||
             route?.name.indexOf("View") >= 0 ||
             route?.name.indexOf("SettingTrash") >= 0
               ? "::"

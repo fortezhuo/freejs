@@ -1,5 +1,5 @@
 import React from "react"
-import { View, StyleSheet } from "react-native"
+import { View, StyleSheet, KeyboardAvoidingView, Platform } from "react-native"
 import { Modal, MenuItem, Col } from "../"
 import { observer, useLocalObservable } from "mobx-react-lite"
 import { tw } from "@free/tailwind"
@@ -17,12 +17,13 @@ export const useDialog = () => {
     },
   }))
 
-  const show = () => {
+  const show = React.useCallback(() => {
     state.setOpen(true)
-  }
-  const hide = () => {
+  }, [])
+
+  const hide = React.useCallback(() => {
     state.setOpen(false)
-  }
+  }, [])
 
   const Dialog: React.FC<DialogProps> = observer(
     ({ testID = "Dialog", anchor, children, onShow, allowBackDrop = true }) => {
@@ -30,17 +31,19 @@ export const useDialog = () => {
         <View testID={testID} ref={refContainer} collapsable={false}>
           {anchor}
           <Modal
-            style={{ margin: 0 }}
-            avoidKeyboard={true}
-            backdropTransitionOutTiming={0}
             isVisible={state.isOpen}
-            onModalShow={onShow}
-            onBackButtonPress={allowBackDrop ? hide : noop}
+            onShow={onShow}
             onBackdropPress={allowBackDrop ? hide : noop}
           >
-            <Col sm={11} style={styles.viewChildren}>
-              {children}
-            </Col>
+            <KeyboardAvoidingView
+              behavior={Platform.OS === "ios" ? "padding" : undefined}
+              pointerEvents="box-none"
+              style={styles.viewKeyboard}
+            >
+              <Col sm={11} style={styles.viewChildren}>
+                {children}
+              </Col>
+            </KeyboardAvoidingView>
           </Modal>
         </View>
       )
@@ -83,5 +86,6 @@ export const useDialog = () => {
 }
 
 const styles = StyleSheet.create({
+  viewKeyboard: tw("flex-1 justify-center"),
   viewChildren: tw("self-center"),
 })

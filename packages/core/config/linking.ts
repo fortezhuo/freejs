@@ -1,5 +1,7 @@
 import { configApp } from "@free/env"
 
+export const words = /Setting|View/gi
+
 export const linking: any = {
   prefixes: [`${configApp.name}://`],
   config: {
@@ -9,7 +11,7 @@ export const linking: any = {
       Screens: {
         path: "",
         screens: {
-          Home: "index",
+          Index: "index",
           ViewSettingUser: "user",
           ViewSettingLog: "log",
           SettingTrash: "trash",

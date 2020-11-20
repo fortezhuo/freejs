@@ -113,21 +113,18 @@ export const getMenu: () => any[] = () => {
         {
           label: "Trash",
           icon: "trash-2",
-          path: "/trash",
           component: "SettingTrash",
           visible: true,
         },
         {
           label: "Log",
           icon: "archive",
-          path: "/log",
           component: "ViewSettingLog",
           visible: true,
         },
         {
           label: "User",
           icon: "user",
-          path: "/user",
           component: "ViewSettingUser",
           visible: true,
         },

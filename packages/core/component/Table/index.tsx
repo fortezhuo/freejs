@@ -7,15 +7,16 @@ import {
   Animated,
   TouchableOpacity,
 } from "react-native"
+import { Modalize } from "react-native-modalize"
 import { TableProps, RowProps, CellProps } from "@free/core"
-import { Icon, IconLabel, Link } from ".."
+import { Icon, IconLabel, Link, Button } from ".."
 import { random } from "../../util/random"
 import { tw, color } from "@free/tailwind"
 import { observer } from "mobx-react-lite"
 import { theme } from "../../config/theme"
-import dayjs from "dayjs"
 import { RectButton } from "react-native-gesture-handler"
 import Swipeable from "react-native-gesture-handler/Swipeable"
+import dayjs from "dayjs"
 export { useDefaultColumn } from "./hook"
 
 const date = (date: any) => dayjs(date).format("DD MMM YYYY")
@@ -59,7 +60,6 @@ export const Header: React.FC<RowProps> = ({ children, style }) => {
 
 export const Row: React.FC<RowProps> = ({
   children,
-  filter,
   dark,
   style,
   testID = "Row",
@@ -69,7 +69,6 @@ export const Row: React.FC<RowProps> = ({
       testID={testID}
       style={StyleSheet.flatten([
         styles.viewRow,
-        filter ? styles.rowFilter : {},
         dark ? styles.rowDark : {},
         style,
       ])}
@@ -82,18 +81,10 @@ export const Row: React.FC<RowProps> = ({
 export const Cell: React.FC<CellProps> = ({
   children,
   style,
-  filter,
   testID = "Cell",
 }) => {
   return (
-    <View
-      testID={testID}
-      style={StyleSheet.flatten([
-        styles.viewCell,
-        filter ? styles.cellFilter : {},
-        style,
-      ])}
-    >
+    <View testID={testID} style={StyleSheet.flatten([styles.viewCell, style])}>
       {children}
     </View>
   )
@@ -102,11 +93,10 @@ export const Cell: React.FC<CellProps> = ({
 export const CellText: React.FC<CellProps> = ({
   children,
   style,
-  filter,
   testID = "CellText",
 }) => {
   return (
-    <Cell style={style} filter={filter} testID={testID}>
+    <Cell style={style} testID={testID}>
       <Text style={styles.textCell}>{children}</Text>
     </Cell>
   )
@@ -140,16 +130,49 @@ export const CellDownload: React.FC<CellProps> = ({
   )
 }
 
-export const CellJSON: React.FC<CellProps> = ({ style, children }) => {
-  const value: any = children
+export const CellJSON: React.FC<CellProps> = ({ store, style, children }) => {
+  const onOpen = React.useCallback(() => {
+    store.temp.set("value", children)
+    store.modalData.current?.open()
+  }, [])
+
   return (
-    <Cell style={StyleSheet.flatten([styles.cellJSON, style])}>
-      {Object.keys(value).map((key) => {
-        return <Text key={"json_" + random()}>{key + " : " + value[key]}</Text>
-      })}
+    <Cell style={style}>
+      <TouchableOpacity onPress={onOpen}>
+        <Text>Show</Text>
+      </TouchableOpacity>
     </Cell>
   )
 }
+
+export const ModalJSON: React.FC<any> = observer(({ store }) => {
+  const value = store.temp.get("value") || {}
+  const data = Object.keys(value).map((key) => ({
+    key,
+    value: value[key],
+  }))
+  return (
+    <Modalize
+      ref={store.modalData}
+      adjustToContentHeight
+      flatListProps={{
+        data,
+        renderItem: ({ item, index }: any) => {
+          return (
+            <Row dark={index % 2}>
+              <View style={{ width: 100 }}>
+                <CellText>{item.key}</CellText>
+              </View>
+              <CellText>{item.value}</CellText>
+            </Row>
+          )
+        },
+        keyExtractor: (item) => item.key,
+        showsVerticalScrollIndicator: false,
+      }}
+    ></Modalize>
+  )
+})
 
 export const RowMobile: React.FC<RowProps> = observer(
   ({ store, data, keys, dark, style, testID = "RowMobile", actDelete }) => {
@@ -242,10 +265,8 @@ const styles = StyleSheet.create({
   viewRow: tw(`flex-row flex-no-wrap items-center`),
   viewCell: tw(`p-2 w-40 flex-grow flex-row`),
   rowDark: { backgroundColor: "rgba(0,0,0,0.08)" },
-  rowFilter: tw(`bg-red-200 h-12 items-center`),
   rowMobile: tw("flex-col p-2 items-start"),
   cellFilter: tw("p-0 pr-1"),
-  cellJSON: tw("flex-col"),
   cellDelete: tw("flex-1"),
   textCell: tw(theme.default_text),
   textCellSmall: tw(`${theme.default_text} text-sm`),

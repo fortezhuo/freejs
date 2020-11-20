@@ -94,15 +94,11 @@ export const useMenu = () => {
         <View testID={testID} ref={refContainer} collapsable={false}>
           {anchor}
           <Modal
-            animationIn="fadeIn"
-            animationOut="fadeOut"
-            backdropTransitionOutTiming={0}
-            style={{ margin: 0 }}
+            animationType="none"
+            transparent
             isVisible={state.isOpen}
-            onModalShow={onShow}
-            onBackButtonPress={allowBackDrop ? hide : noop}
+            onShow={onShow}
             onBackdropPress={allowBackDrop ? hide : noop}
-            backdropColor={"transparent"}
           >
             <View
               collapsable={false}
