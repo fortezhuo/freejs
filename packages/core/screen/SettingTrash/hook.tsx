@@ -54,15 +54,33 @@ export const useTrash = () => {
         icon: "trash-2",
         type: "danger_bg",
         children: "Delete",
-        onPress: () => alert("Delete"),
+        onPress: () =>
+          trash.app?.message.show({
+            title: "Delete",
+            message: "Do you want to delete",
+            actions: [
+              {
+                label: "Delete",
+                onPress: () => alert("Test"),
+              },
+            ],
+          }),
       },
       {
         icon: "rotate-ccw",
         type: "primary_2_bg",
         children: "Restore",
         onPress: () => {
-          trash.app?.message.show("Title", "Content ")
-          //          trash.modalFilter.current.open()
+          trash.app?.message.show({
+            title: "Restore",
+            message: "Do you want to restore",
+            actions: [
+              {
+                label: "Restore 1",
+                onPress: () => alert("Test"),
+              },
+            ],
+          })
         },
       },
       {

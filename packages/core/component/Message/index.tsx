@@ -1,31 +1,48 @@
 import React from "react"
 import { Modalize } from "react-native-modalize"
 import { Dimensions } from "react-native"
-import { observer, useLocalObservable } from "mobx-react-lite"
-import { Text, H5 } from ".."
+import { Text, H5, IconButton } from ".."
 
 export const useMessage = () => {
-  const ref = React.useRef<Modalize>(null)
-  const { height } = Dimensions.get("window")
-  const state = useLocalObservable(() => ({
+  const ref: any = React.useRef<Modalize>(null)
+  const refAction: any = React.useRef({})
+  const [state, setState] = React.useState({
     title: "",
-    content: "",
-    set(object: any) {
-      Object.keys(object).map((name) => {
-        ;(state as any)[name] = object[name]
-      })
-    },
-  }))
-  const show = React.useCallback((title, content) => {
-    state.set({ title, content })
-    ref.current?.open()
-  }, [])
+    message: "",
+    type: "",
+  })
 
-  const Message: React.FC<any> = observer(() => {
+  const { height } = Dimensions.get("window")
+
+  const show = function ({ title, message, type, ...props }: any) {
+    setState({ title, message, type })
+    refAction.current = props
+    ref.current.open()
+  }
+
+  const Message: React.FC<any> = () => {
     return (
       <Modalize
         ref={ref}
+        closeOnOverlayTap={false}
         withHandle={false}
+        withOverlay={true}
+        children={<Text>{state.message}</Text>}
+        HeaderComponent={() => <H5>{state.title}</H5>}
+        FooterComponent={() =>
+          (refAction.current.actions || []).map((action: any, i: number) => {
+            return (
+              <IconButton
+                styleContainer={{ backgroundColor: "red" }}
+                name={"home"}
+                key={"action_message_" + i}
+                onPress={action.onPress}
+              >
+                {action.label}
+              </IconButton>
+            )
+          })
+        }
         modalStyle={{
           marginHorizontal: 10,
           marginBottom: "auto",
@@ -33,12 +50,9 @@ export const useMessage = () => {
           borderBottomRightRadius: 12,
         }}
         modalHeight={height / 2}
-      >
-        <H5>{state.title}</H5>
-        <Text>{state.content}</Text>
-      </Modalize>
+      />
     )
-  })
+  }
 
   return { message: { show }, Message }
 }
