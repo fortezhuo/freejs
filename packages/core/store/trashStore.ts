@@ -1,8 +1,7 @@
 import { BaseStore } from "./baseStore"
 
 class TrashStore extends BaseStore {
-  modalFilter: any
-  modalData: any
+  bottomSheet: any
   search: string[] | undefined
   isLoading = true
 }

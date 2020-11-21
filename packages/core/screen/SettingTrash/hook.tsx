@@ -5,8 +5,7 @@ import { get } from "../../request"
 
 export const useTrash = () => {
   const { trash } = useStore()
-  trash.modalData = React.useRef(null)
-  trash.modalFilter = React.useRef(null)
+  trash.bottomSheet = React.useRef(null)
 
   const columns = React.useMemo(
     () => [
@@ -88,7 +87,7 @@ export const useTrash = () => {
         type: "primary_2_bg",
         children: "Filter",
         onPress: () => {
-          trash.modalFilter.current.open()
+          trash.bottomSheet.current.open()
         },
       },
     ],

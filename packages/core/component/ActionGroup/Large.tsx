@@ -6,8 +6,7 @@ import { View, StyleSheet } from "react-native"
 import { tw } from "@free/tailwind"
 
 export const Large: React.FC<any> = observer(({ store, actions }) => {
-  const isShow = actions.length != 0 && !store.app.dimension.isMobile
-  return isShow ? (
+  return (
     <View style={styles.rootAction}>
       {actions.map((prop: ObjectAny) => (
         <Button
@@ -18,7 +17,7 @@ export const Large: React.FC<any> = observer(({ store, actions }) => {
         />
       ))}
     </View>
-  ) : null
+  )
 })
 
 const styles = StyleSheet.create({

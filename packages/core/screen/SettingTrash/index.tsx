@@ -9,6 +9,14 @@ import { useTrash } from "./hook"
 
 const SettingTrash: React.FC = observer(() => {
   const { trash, columns, actions } = useTrash()
+  const isMobile = trash.app?.dimension.isMobile
+  const refActions: any = React.useRef(actions)
+
+  React.useEffect(() => {
+    refActions.current = actions.filter((action) =>
+      isMobile ? action.children !== "Delete" : true
+    )
+  }, [isMobile])
 
   return (
     <>
@@ -16,7 +24,7 @@ const SettingTrash: React.FC = observer(() => {
         <View style={styles.viewGrid}>
           <View style={styles.viewTitle}>
             <H3 style={styles.textTitle}>Trash Management</H3>
-            <ActionGroup.Large store={trash} actions={actions} />
+            <ActionGroup.Large store={trash} actions={refActions.current} />
           </View>
           <View
             style={StyleSheet.flatten([
@@ -33,7 +41,6 @@ const SettingTrash: React.FC = observer(() => {
         </View>
       </Layout>
       <Table.BottomSheet store={trash} />
-      <ActionGroup.Small store={trash} actions={actions} />
     </>
   )
 })
