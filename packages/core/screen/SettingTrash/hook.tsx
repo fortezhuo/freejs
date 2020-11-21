@@ -85,7 +85,7 @@ export const useTrash = () => {
       {
         icon: "search",
         type: "primary_2_bg",
-        children: "Filter",
+        children: "Search",
         onPress: () => {
           trash.bottomSheet.current.open()
         },

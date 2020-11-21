@@ -22,8 +22,7 @@ const SettingTrash: React.FC = observer(() => {
     <>
       <Layout store={trash} scroll={Platform.OS === "web"}>
         <View style={styles.viewGrid}>
-          <View style={styles.viewTitle}>
-            <H3 style={styles.textTitle}>Trash Management</H3>
+          <View style={styles.viewAction}>
             <ActionGroup.Large store={trash} actions={refActions.current} />
           </View>
           <View
@@ -47,7 +46,7 @@ const SettingTrash: React.FC = observer(() => {
 
 const styles = StyleSheet.create({
   viewGrid: tw("flex-1 flex-col"),
-  viewTitle: tw("flex-row justify-between items-center mb-2 h-10"),
+  viewAction: tw("flex-row justify-end items-center mb-2 h-10"),
   textTitle: tw("text-white"),
   viewTable: tw("flex-col bg-white rounded-lg p-2"),
   boxDelete: tw("flex-1"),
