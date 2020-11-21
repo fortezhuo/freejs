@@ -1,23 +1,15 @@
 import React from "react"
 import { StyleSheet, View } from "react-native"
 import { Modalize } from "react-native-modalize"
-
 import { observer } from "mobx-react-lite"
 import { Button } from ".."
 import { random } from "../../util/random"
 import { tw } from "@free/tailwind"
-import { useEffect } from "react"
 
 export const Small: React.FC<any> = observer(({ store, actions }) => {
   const modalizeRef = React.useRef<Modalize>(null)
   actions = actions.filter((act: ObjectAny) => act.children !== "Delete")
   const isShow = actions.length != 0 && store.app.dimension.isMobile
-
-  useEffect(() => {
-    if (!isShow) {
-      modalizeRef.current?.close()
-    }
-  }, [isShow])
 
   return (
     <>

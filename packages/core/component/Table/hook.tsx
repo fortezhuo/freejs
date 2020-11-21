@@ -1,13 +1,7 @@
 import React from "react"
-import { entries } from "mobx"
-import { Input, Text } from ".."
-import { CellText, CellDownload, CellLink, CellJSON } from "./"
-import { download } from "./helper"
+import { CellText, CellDownload, CellLink, CellJSON } from "./Cell"
+import { download, date, datetime } from "./helper"
 import dayjs from "dayjs"
-
-const date = (date: any) => dayjs(date).format("DD MMM YYYY")
-const datetime = (datetime: any) =>
-  dayjs(datetime).format("DD MMM YYYY HH:mm:ss")
 
 export const useDefaultColumn = (store: any) => {
   /*

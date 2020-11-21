@@ -1,5 +1,5 @@
 import React from "react"
-import { useStore, TableCell } from "../../component"
+import { useStore, Table } from "../../component"
 import { TableCheckbox } from "../../shared/ViewGrid/TableCheckbox"
 import { get } from "../../request"
 
@@ -199,9 +199,9 @@ export const useSelection = (hooks: any) => {
         return <TableCheckbox {...header.getToggleAllPageRowsSelectedProps()} />
       },
       Cell: (cell: any) => (
-        <TableCell style={cell.column.style}>
+        <Table.Cell style={cell.column.style}>
           <TableCheckbox {...cell.row.getToggleRowSelectedProps()} />
-        </TableCell>
+        </Table.Cell>
       ),
     },
     ...columns,

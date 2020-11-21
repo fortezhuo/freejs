@@ -1,17 +1,6 @@
 import React from "react"
 import { View, StyleSheet, TouchableOpacity } from "react-native"
-import {
-  useDefaultColumn,
-  Table,
-  TableScroll,
-  Icon,
-  Text,
-  TableRow,
-  TableRowMobile,
-  TableCell,
-  TableHeader,
-  Loader,
-} from "../../component"
+import { Table, Icon, Text, Loader } from "../../component"
 import { useTableGrid, useSelection } from "./hook"
 import { useTable, usePagination, useRowSelect, useSortBy } from "react-table"
 import { FlatList } from "react-native-gesture-handler"
@@ -33,7 +22,7 @@ export const TableGrid: React.FC<any> = observer(
       pageMax,
     ] = store.getData("isMobile", "collection", "page", "limit", "total", "max")
     const table: any = useTableGrid(store, columns)
-    const columnsFormat = useDefaultColumn(store)
+    const columnsFormat = Table.useDefaultColumn(store)
     const actionDelete = React.useMemo(() => {
       return actions.filter((action: any) => action.children === "Delete")[0]
     }, [])
@@ -65,7 +54,7 @@ export const TableGrid: React.FC<any> = observer(
 const TableContent: React.FC<any> = observer(
   ({ store, isMobile, isUpdating, data, page }) => {
     const { columns, columnsFormat, collection, action, keys } = data
-    const TableWrapper = isMobile || isUpdating ? Table : TableScroll
+    const TableWrapper = isMobile || isUpdating ? Table.Default : Table.Scroll
     const { headerGroups, prepareRow, page: rows, gotoPage }: any = useTable(
       {
         columns,
@@ -89,7 +78,7 @@ const TableContent: React.FC<any> = observer(
             headerGroups.map((headerGroup: any) => {
               const { key } = headerGroup.getHeaderGroupProps()
               return (
-                <TableHeader key={key}>
+                <Table.Header key={key}>
                   {headerGroup.headers.map((column: any) => {
                     const { key } = column.getHeaderProps(
                       column.getSortByToggleProps()
@@ -101,7 +90,7 @@ const TableContent: React.FC<any> = observer(
                     }, [])
                     return (
                       <TouchableOpacity key={key} onPress={onPress}>
-                        <TableCell style={(column as any).style}>
+                        <Table.Cell style={(column as any).style}>
                           <Text>{column.render("Header")} </Text>
                           {column.isSorted && (
                             <Icon
@@ -114,11 +103,11 @@ const TableContent: React.FC<any> = observer(
                               size={16}
                             />
                           )}
-                        </TableCell>
+                        </Table.Cell>
                       </TouchableOpacity>
                     )
                   })}
-                </TableHeader>
+                </Table.Header>
               )
             })}
           {isUpdating ? (
@@ -130,7 +119,7 @@ const TableContent: React.FC<any> = observer(
               renderItem={({ item, index }: any) => {
                 prepareRow(item)
                 return isMobile ? (
-                  <TableRowMobile
+                  <Table.RowMobile
                     store={store}
                     actDelete={action}
                     dark={index % 2}
@@ -138,12 +127,12 @@ const TableContent: React.FC<any> = observer(
                     keys={keys}
                   />
                 ) : (
-                  <TableRow dark={index % 2}>
+                  <Table.Row dark={index % 2}>
                     {item.cells.map((cell: any) => {
                       const { key } = cell.getCellProps()
                       return <View key={key}>{cell.render("Cell")}</View>
                     })}
-                  </TableRow>
+                  </Table.Row>
                 )
               }}
             />

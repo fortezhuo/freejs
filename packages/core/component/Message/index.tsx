@@ -2,35 +2,30 @@ import React from "react"
 import { Modalize } from "react-native-modalize"
 import { Dimensions } from "react-native"
 import { Text, H5, IconButton } from ".."
+import { useLocalObservable, observer } from "mobx-react-lite"
 
 export const useMessage = () => {
   const ref: any = React.useRef<Modalize>(null)
-  const refAction: any = React.useRef({})
-  const [state, setState] = React.useState({
-    title: "",
-    message: "",
-    type: "",
-  })
+  const refContent: any = React.useRef({})
 
   const { height } = Dimensions.get("window")
 
-  const show = function ({ title, message, type, ...props }: any) {
-    setState({ title, message, type })
-    refAction.current = props
+  const show = React.useCallback((props: any) => {
+    refContent.current = props
     ref.current.open()
-  }
+  }, [])
 
-  const Message: React.FC<any> = () => {
+  const Message: React.FC<any> = observer(() => {
     return (
       <Modalize
         ref={ref}
-        closeOnOverlayTap={false}
         withHandle={false}
+        panGestureEnabled={false}
         withOverlay={true}
-        children={<Text>{state.message}</Text>}
-        HeaderComponent={() => <H5>{state.title}</H5>}
+        customRenderer={<Text>{refContent.current.title}</Text>}
+        HeaderComponent={() => <H5>{refContent.current.title}</H5>}
         FooterComponent={() =>
-          (refAction.current.actions || []).map((action: any, i: number) => {
+          (refContent.current.actions || []).map((action: any, i: number) => {
             return (
               <IconButton
                 styleContainer={{ backgroundColor: "red" }}
@@ -46,13 +41,14 @@ export const useMessage = () => {
         modalStyle={{
           marginHorizontal: 10,
           marginBottom: "auto",
+          padding: 10,
           borderBottomLeftRadius: 12,
           borderBottomRightRadius: 12,
         }}
         modalHeight={height / 2}
       />
     )
-  }
+  })
 
   return { message: { show }, Message }
 }

@@ -20,18 +20,7 @@ export { Modal } from "./Modal"
 export { Section } from "./Section"
 export { Sidebar } from "./Sidebar"
 export { Snackbar } from "./Snackbar"
-export {
-  Table,
-  TableScroll,
-  Row as TableRow,
-  RowMobile as TableRowMobile,
-  Cell as TableCell,
-  CellText as TableCellText,
-  Header as TableHeader,
-  ModalJSON,
-  ModalFilter,
-  useDefaultColumn,
-} from "./Table"
+export * as Table from "./Table"
 export { Title } from "./Title"
 export { useStore } from "./Store"
 export { H1, H2, H3, H4, H5, Text } from "./Text"
