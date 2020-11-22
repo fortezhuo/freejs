@@ -1,7 +1,9 @@
-export * as ActionGroup from "./ActionGroup"
-export * as Input from "./Input"
-export * as Header from "./Header"
-export * as Table from "./Table"
+import * as ActionGroup from "./ActionGroup"
+import * as Input from "./Input"
+import * as Header from "./Header"
+import * as Table from "./Table"
+
+export { ActionGroup, Input, Header, Table }
 
 export { Accordion, AccordionItem } from "./Accordion"
 export { useEvent } from "./ActionGroup/hook"
