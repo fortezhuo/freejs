@@ -5,6 +5,7 @@ import { get } from "../../request"
 
 export const useTrash = () => {
   const { trash } = useStore()
+  const isMobile = trash.data.get("isMobile")
   trash.bottomSheet = React.useRef(null)
 
   const columns = React.useMemo(
@@ -54,7 +55,7 @@ export const useTrash = () => {
         type: "danger_bg",
         children: "Delete",
         onPress: () =>
-          trash.app?.message.show({
+          trash.app?.message.current.show({
             title: "Delete",
             message: "Do you want to delete",
             actions: [
@@ -70,7 +71,7 @@ export const useTrash = () => {
         type: "primary_2_bg",
         children: "Restore",
         onPress: () => {
-          trash.app?.message.show({
+          trash.app?.message.current.show({
             title: "Restore",
             message: "Do you want to restore",
             actions: [
@@ -106,11 +107,13 @@ export const useTrash = () => {
 
   // While resize screen, loading true
   React.useEffect(() => {
-    trash.set("isLoading", true)
-    trash.setData({ isMobile: trash?.app?.dimension.isMobile })
-    setTimeout(() => {
-      trash.set("isLoading", false)
-    }, 1000)
+    if (isMobile !== trash?.app?.dimension.isMobile) {
+      trash.set("isLoading", true)
+      trash.setData({ isMobile: trash?.app?.dimension.isMobile })
+      setTimeout(() => {
+        trash.set("isLoading", false)
+      }, 1000)
+    }
   }, [trash?.app?.dimension.isMobile])
 
   return { trash, actions, columns }
@@ -179,6 +182,7 @@ export const useTableGrid = (store: any, _columns: any) => {
   }, [])
 
   // Collection
+
   React.useEffect(() => {
     ;(async () => {
       await setCollection()

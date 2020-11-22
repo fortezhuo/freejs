@@ -4,7 +4,7 @@ import { SafeAreaProvider } from "react-native-safe-area-context"
 import { tw } from "@free/tailwind"
 import { theme } from "../../config/theme"
 import { StoreProvider } from "../Store"
-import { Gradient, useStore, useMessage } from "../"
+import { Gradient, useStore, Message } from "../"
 import { MainLayoutProps } from "@free/core"
 import { enableScreens } from "react-native-screens"
 import { useDimensions } from "./useDimensions"
@@ -13,11 +13,8 @@ enableScreens()
 
 const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   const { app } = useStore()
-  const { message, Message } = useMessage()
+  app.message = React.useRef(null)
   useDimensions()
-  React.useEffect(() => {
-    app.message = message
-  }, [])
   React.useEffect(() => {
     ;(async function () {
       try {
@@ -33,7 +30,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
     <Gradient colors={colors} style={styles.viewFlexTransparent}>
       <StatusBar barStyle="light-content" backgroundColor="transparent" />
       {children}
-      <Message />
+      <Message ref={app.message} />
     </Gradient>
   )
 }
