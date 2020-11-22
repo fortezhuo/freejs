@@ -27,7 +27,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
 
   const colors = [theme.primary_1_bg, theme.primary_2_bg]
   return (
-    <Gradient colors={colors} style={styles.viewFlexTransparent}>
+    <Gradient colors={colors} style={s.viewFlexTransparent}>
       <StatusBar barStyle="light-content" backgroundColor="transparent" />
       {children}
       <Message ref={app.message} />
@@ -47,6 +47,6 @@ export const AppLayout: React.FC = ({ children }) => {
 
 export default AppLayout
 
-const styles = StyleSheet.create({
+const s = StyleSheet.create({
   viewFlexTransparent: tw("flex-1 bg-transparent"),
 })

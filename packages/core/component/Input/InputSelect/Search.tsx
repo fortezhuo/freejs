@@ -64,7 +64,7 @@ export const Search: React.FC<Search> = observer(
         placeholder="Please type here ..."
         ref={refSearch}
         value={state.search}
-        style={styles.inputText}
+        style={s.inputText}
         onChangeText={onChange}
         onKeyPress={onKeyPress}
       />
@@ -72,7 +72,7 @@ export const Search: React.FC<Search> = observer(
   }
 )
 
-const styles = StyleSheet.create({
+const s = StyleSheet.create({
   inputText: tw(
     `w-full ${theme.default_bg} p-2 px-3 ${theme.default_border} border-b`
   ),

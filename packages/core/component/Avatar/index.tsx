@@ -10,17 +10,17 @@ export const Avatar: React.FC<any> = observer(
       <IconLabel
         size={size}
         name={name}
-        styleContainer={StyleSheet.create([styles.viewLogo, styleContainer])}
+        styleContainer={StyleSheet.create([s.viewLogo, styleContainer])}
         style={style}
       />
     ) : (
-      <View style={styles.viewLogo}>
+      <View style={s.viewLogo}>
         <Image source={source} style={style} />
       </View>
     )
   }
 )
 
-const styles = StyleSheet.create({
+const s = StyleSheet.create({
   viewLogo: tw("self-center rounded-full p-2"),
 })

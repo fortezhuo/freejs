@@ -15,15 +15,9 @@ export const Snackbar: React.FC<any> = observer(() => {
     : null
   return (
     <Modal isVisible={!!message}>
-      <Col
-        sm={11}
-        style={StyleSheet.flatten([
-          styles.viewSnackbar,
-          error ? styles.viewError : {},
-        ])}
-      >
-        <View style={styles.viewContent}>
-          <Text style={styles.textSnackbar}>{message}</Text>
+      <Col sm={11} style={[s.viewSnackbar, error ? s.viewError : {}]}>
+        <View style={s.viewContent}>
+          <Text style={s.textSnackbar}>{message}</Text>
         </View>
         <IconButton size={18} name="x" color="white" onPress={hide} />
       </Col>
@@ -31,7 +25,7 @@ export const Snackbar: React.FC<any> = observer(() => {
   )
 })
 
-const styles = StyleSheet.create({
+const s = StyleSheet.create({
   viewSnackbar: tw(
     `absolute p-3 bottom-0 mb-6 flex-row self-center items-center`
   ),

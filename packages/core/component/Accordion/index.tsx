@@ -40,15 +40,12 @@ export const Accordion: React.FC<AccordionProps> = observer(
             <IconLabel
               name={icon}
               color={state.isExpand ? activeColor : defaultColor}
-              style={StyleSheet.flatten([
-                styles.icon,
-                state.isExpand ? styles.iconExpand : {},
-              ])}
+              style={[styles.icon, state.isExpand ? styles.iconExpand : {}]}
               styleContainer={styles.viewIcon}
-              styleText={StyleSheet.flatten([
+              styleText={[
                 styles.textIcon,
                 { color: state.isExpand ? activeColor : defaultColor },
-              ])}
+              ]}
             >
               {label}
             </IconLabel>
@@ -58,12 +55,7 @@ export const Accordion: React.FC<AccordionProps> = observer(
               name={`chevron-${state.isExpand ? "up" : "down"}`}
             />
           </View>
-          <Animated.View
-            style={StyleSheet.flatten([
-              styles.viewChildren,
-              { height, opacity },
-            ])}
-          >
+          <Animated.View style={[styles.viewChildren, { height, opacity }]}>
             {children}
           </Animated.View>
         </View>
@@ -87,14 +79,14 @@ export const AccordionItem: React.FC<AccordionItemProps> = observer(
           name={icon}
           size={20}
           color={active ? activeColor : defaultColor}
-          styleContainer={StyleSheet.flatten([
+          styleContainer={[
             styles.viewIconItem,
             active ? styles.itemActive : {},
-          ])}
-          styleText={StyleSheet.flatten([
+          ]}
+          styleText={[
             styles.textIconItem,
             { color: active ? activeColor : defaultColor },
-          ])}
+          ]}
         >
           {children}
         </IconLabel>

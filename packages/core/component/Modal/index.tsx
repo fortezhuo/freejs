@@ -31,10 +31,7 @@ export const Modal: React.FC<ModalProps> = ({
       {onBackdropPress && (
         <TouchableWithoutFeedback onPress={onBackdropPress}>
           <View
-            style={StyleSheet.flatten([
-              styles.rootOverlay,
-              transparent ? {} : styles.overlayDark,
-            ])}
+            style={[s.rootOverlay, transparent ? {} : s.overlayDark]}
           ></View>
         </TouchableWithoutFeedback>
       )}
@@ -43,7 +40,7 @@ export const Modal: React.FC<ModalProps> = ({
   )
 }
 
-const styles = StyleSheet.create({
+const s = StyleSheet.create({
   rootOverlay: tw("absolute top-0 left-0 right-0 bottom-0 flex-1"),
   overlayDark: tw("bg-black-500"),
 })

@@ -12,22 +12,18 @@ const defaultColor = color(theme.default_text)
 const Chip: React.FC<any> = observer(({ state, children }) => {
   const onClear = React.useCallback((val) => state.onClear(val), [])
   return (
-    <View style={styles.viewChip}>
+    <View style={s.viewChip}>
       <TouchableOpacity onPress={() => onClear(children)}>
         <Icon name="x" size={16} color={defaultColor}></Icon>
       </TouchableOpacity>
-      <Text style={styles.textChip}>{children}</Text>
+      <Text style={s.textChip}>{children}</Text>
     </View>
   )
 })
 
 const Placeholder: React.FC<StateComponent> = observer(({ state }) => {
   const style = state.multi ? { paddingHorizontal: 8 } : {}
-  return (
-    <Text style={StyleSheet.flatten([styles.textPlaceholder, style])}>
-      {state.placeholder}
-    </Text>
-  )
+  return <Text style={[s.textPlaceholder, style]}>{state.placeholder}</Text>
 })
 
 const Clear: React.FC<StateComponent> = observer(({ state }) => {
@@ -48,13 +44,8 @@ export const Display: React.FC<StateComponent> = observer(({ state }) => {
   const isBlank = multi ? display.length == 0 : display === ""
 
   return (
-    <View
-      style={StyleSheet.flatten([
-        styles.viewDisplay,
-        multi ? styles.viewMulti : {},
-      ])}
-    >
-      <View style={styles.viewValue} testID="ViewValue">
+    <View style={[s.viewDisplay, multi ? s.viewMulti : {}]}>
+      <View style={s.viewValue} testID="ViewValue">
         {!isBlank ? (
           multi ? (
             display.map((_value: any) => (
@@ -63,7 +54,7 @@ export const Display: React.FC<StateComponent> = observer(({ state }) => {
               </Chip>
             ))
           ) : (
-            <Text style={styles.textSingle}>{display}</Text>
+            <Text style={s.textSingle}>{display}</Text>
           )
         ) : (
           <Placeholder state={state} />
@@ -74,7 +65,7 @@ export const Display: React.FC<StateComponent> = observer(({ state }) => {
   )
 })
 
-const styles = StyleSheet.create({
+const s = StyleSheet.create({
   viewDisplay: tw("flex-1 flex-row items-center mx-4"),
   viewMulti: tw("mt-1 ml-1 mb-1"),
   viewValue: tw("flex-1 flex-row flex-wrap"),

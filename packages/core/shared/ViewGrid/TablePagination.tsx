@@ -49,23 +49,18 @@ export const TablePagination: React.FC<any> = observer(({ store, page }) => {
   }, [])
 
   return (
-    <View style={styles.viewPage}>
+    <View style={s.viewPage}>
       {total ? (
         <>
           <Text>{desc}</Text>
-          <View style={styles.viewPageNumbers}>
+          <View style={s.viewPageNumbers}>
             {pagination(index, max).map((i: any) => (
               <TouchableOpacity
                 key={"page_" + random()}
                 disabled={i === "..." || i == page}
                 onPress={() => setPage(i)}
               >
-                <Text
-                  style={StyleSheet.flatten([
-                    styles.textPage,
-                    i == index ? styles.textPageActive : {},
-                  ])}
-                >
+                <Text style={[s.textPage, i == index ? s.textPageActive : {}]}>
                   {i}
                 </Text>
               </TouchableOpacity>
@@ -79,7 +74,7 @@ export const TablePagination: React.FC<any> = observer(({ store, page }) => {
   )
 })
 
-const styles = StyleSheet.create({
+const s = StyleSheet.create({
   viewPage: tw("flex-row justify-between items-center p-1 shadow-sm h-10"),
   viewPageNumbers: tw(
     "flex-row rounded-sm border-l border-t border-b border-gray-300"

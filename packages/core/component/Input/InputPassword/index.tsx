@@ -34,7 +34,7 @@ const helperProps = (props: InputTextProps) => {
 const Eye: React.FC<any> = observer(({ state }) => {
   return (
     <IconButton
-      styleContainer={styles.eye}
+      styleContainer={s.eye}
       color={color}
       size={16}
       name={state.secure ? "eye" : "eye-off"}
@@ -55,15 +55,12 @@ export const InputPassword: React.FC<InputTextProps> = observer((_props) => {
     <>
       <Base
         isLoading={_props.store.isLoading}
-        style={StyleSheet.flatten([
-          styles.viewInput,
-          props.disabled ? styles.viewDisabled : {},
-        ])}
+        style={[s.viewInput, props.disabled ? s.viewDisabled : {}]}
       >
         <TextInput
           secureTextEntry={state.secure}
           placeholderTextColor={tw("text-gray-600").color}
-          style={styles.inputPassword}
+          style={s.inputPassword}
           {...props}
         />
         <Eye state={state} />
@@ -73,7 +70,7 @@ export const InputPassword: React.FC<InputTextProps> = observer((_props) => {
   )
 })
 
-const styles: any = StyleSheet.create({
+const s: any = StyleSheet.create({
   viewInput: tw(
     `${theme.default_bg} ${theme.input_border} w-full h-10 flex-row items-center`
   ),

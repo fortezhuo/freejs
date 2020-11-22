@@ -7,7 +7,7 @@ import { observer } from "mobx-react-lite"
 import logo from "../../img/logo.png"
 
 const Logo: React.FC = () => {
-  return <Image source={logo} style={styles.imgTitle} />
+  return <Image source={logo} style={s.imgTitle} />
 }
 
 export const Title: React.FC<any> = observer(
@@ -19,10 +19,10 @@ export const Title: React.FC<any> = observer(
         disabled={disabled}
         onPress={() => navigation.navigate("Home")}
       >
-        <View style={styles.layoutTitle} testID={testID}>
+        <View style={s.layoutTitle} testID={testID}>
           <Logo />
-          <View style={styles.groupTitle}>
-            <Text style={styles.textTitle}>{configApp.displayName}</Text>
+          <View style={s.groupTitle}>
+            <Text style={s.textTitle}>{configApp.displayName}</Text>
           </View>
         </View>
       </TouchableOpacity>
@@ -30,7 +30,7 @@ export const Title: React.FC<any> = observer(
   }
 )
 
-const styles = StyleSheet.create({
+const s = StyleSheet.create({
   layoutTitle: tw("flex-row items-center p-4 pl-5"),
   imgTitle: tw("h-10 w-10 mr-3"),
   groupTitle: tw("flex-col"),

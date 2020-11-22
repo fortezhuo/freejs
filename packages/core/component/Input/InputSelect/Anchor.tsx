@@ -13,10 +13,7 @@ export const Anchor: React.FC<Anchor> = observer(({ state, menu }) => {
       <TouchableOpacity disabled={state.disabled} onPress={menu.show}>
         <Base
           isLoading={state.isLoading}
-          style={StyleSheet.flatten([
-            styles.viewInput,
-            state.disabled ? styles.viewDisabled : {},
-          ])}
+          style={[s.viewInput, state.disabled ? s.viewDisabled : {}]}
         >
           {!state._isMobileShow && <Display state={state} />}
         </Base>
@@ -26,7 +23,7 @@ export const Anchor: React.FC<Anchor> = observer(({ state, menu }) => {
   )
 })
 
-const styles = StyleSheet.create({
+const s = StyleSheet.create({
   viewInput: tw(
     `${theme.default_bg} ${theme.input_border} w-full h-10 flex-row`
   ),

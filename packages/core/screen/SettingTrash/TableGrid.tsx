@@ -73,7 +73,7 @@ const TableContent: React.FC<any> = observer(
     return (
       <>
         <TablePagination store={store} page={{ ...page, goto: gotoPage }} />
-        <TableWrapper style={styles.viewTable}>
+        <TableWrapper style={s.viewTable}>
           {!isMobile &&
             headerGroups.map((headerGroup: any) => {
               const { key } = headerGroup.getHeaderGroupProps()
@@ -143,6 +143,6 @@ const TableContent: React.FC<any> = observer(
   }
 )
 
-const styles = StyleSheet.create({
+const s = StyleSheet.create({
   viewTable: tw("flex-1"),
 })

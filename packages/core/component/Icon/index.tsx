@@ -67,14 +67,8 @@ export const IconButton: React.FC<IconButtonProps> = observer(
         <IconLabel
           store={store}
           style={style}
-          styleContainer={StyleSheet.flatten([
-            styleContainer,
-            disabled ? styles.viewDisabled : {},
-          ])}
-          styleText={StyleSheet.flatten([
-            styleText,
-            disabled ? styles.disabled_text : {},
-          ])}
+          styleContainer={[styleContainer, disabled ? s.viewDisabled : {}]}
+          styleText={[styleText, disabled ? s.disabled_text : {}]}
           name={name}
           size={size}
           color={disabled ? disabledColor : color}
@@ -90,7 +84,7 @@ export const IconLink: React.FC<IconButtonProps> = observer(() => {
   return <IconButton size={20} name="link" color={color(theme.primary)} />
 })
 
-const styles = StyleSheet.create({
+const s = StyleSheet.create({
   viewDisabled: tw(theme.disabled_bg),
   disabled_text: tw(theme.disabled_text),
 })

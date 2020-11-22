@@ -38,9 +38,9 @@ export const useDialog = () => {
             <KeyboardAvoidingView
               behavior={Platform.OS === "ios" ? "padding" : undefined}
               pointerEvents="box-none"
-              style={styles.viewKeyboard}
+              style={s.viewKeyboard}
             >
-              <Col sm={11} style={styles.viewChildren}>
+              <Col sm={11} style={s.viewChildren}>
                 {children}
               </Col>
             </KeyboardAvoidingView>
@@ -85,7 +85,7 @@ export const useDialog = () => {
   }
 }
 
-const styles = StyleSheet.create({
+const s = StyleSheet.create({
   viewKeyboard: tw("flex-1 justify-center"),
   viewChildren: tw("self-center"),
 })

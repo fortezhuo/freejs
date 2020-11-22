@@ -14,18 +14,18 @@ export const MenuUser: React.FC = observer(() => {
         testID="MenuUser"
         anchor={
           <IconButton
-            style={styles.iconMenuUser}
+            style={s.iconMenuUser}
             name={"user"}
             size={24}
             onPress={show}
           />
         }
       >
-        <View style={styles.viewMenu}>
-          <View style={styles.viewUser}>
-            <Text style={styles.textUser}>{app?.auth?.fullname}</Text>
+        <View style={s.viewMenu}>
+          <View style={s.viewUser}>
+            <Text style={s.textUser}>{app?.auth?.fullname}</Text>
           </View>
-          <View style={styles.viewChildren}>
+          <View style={s.viewChildren}>
             <MenuItem name="log-out" onPress={_debounce(app.logout, 300)}>
               Logout
             </MenuItem>
@@ -36,7 +36,7 @@ export const MenuUser: React.FC = observer(() => {
   )
 })
 
-const styles = StyleSheet.create({
+const s = StyleSheet.create({
   viewMenu: tw("mt-1 rounded-md bg-black-100", { padding: 2 }),
   viewUser: tw(`bg-gray-300 p-2 items-center`),
   viewChildren: tw(`bg-white rounded-b-md`),

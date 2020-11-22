@@ -31,17 +31,14 @@ export const InputSearch: React.FC = observer((_props) => {
   return name !== "log" ? (
     <Base
       isLoading={view.isLoading}
-      style={StyleSheet.flatten([
-        styles.viewInput,
-        isFilter ? styles.viewDisabled : {},
-      ])}
+      style={[s.viewInput, isFilter ? s.viewDisabled : {}]}
     >
       <TextInput
         value={text}
         editable={!isFilter}
         placeholder="Search ..."
         placeholderTextColor={tw("text-gray-600").color}
-        style={styles.inputText}
+        style={s.inputText}
         onChangeText={setText}
         onSubmitEditing={() => {
           view.setData({
@@ -55,7 +52,7 @@ export const InputSearch: React.FC = observer((_props) => {
   ) : null
 })
 
-const styles: any = StyleSheet.create({
+const s: any = StyleSheet.create({
   viewInput: tw(
     `${theme.default_bg} ${theme.input_border} w-full rounded-full h-12`
   ),

@@ -6,7 +6,7 @@ import { LoaderProps } from "@free/core"
 
 export const Loader: React.FC<LoaderProps> = ({ dark = false }) => {
   return (
-    <View style={styles.viewLoader}>
+    <View style={s.viewLoader}>
       <ActivityIndicator
         size="large"
         color={dark ? color(theme.disabled_bg) : "white"}
@@ -15,6 +15,6 @@ export const Loader: React.FC<LoaderProps> = ({ dark = false }) => {
   )
 }
 
-const styles = StyleSheet.create({
+const s = StyleSheet.create({
   viewLoader: tw("justify-center items-center flex-1"),
 })

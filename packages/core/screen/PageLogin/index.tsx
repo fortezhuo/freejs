@@ -13,10 +13,8 @@ const LoginButton: React.FC<any> = observer(({ store }) => {
     : [theme.primary_1_bg, theme.primary_2_bg]
   return (
     <TouchableOpacity disabled={store.isUpdating} onPress={store.login}>
-      <Gradient type="vertical" colors={colors} style={styles.buttonLogin}>
-        <Text
-          style={store.isUpdating ? styles.textLoginDisabled : styles.textLogin}
-        >
+      <Gradient type="vertical" colors={colors} style={s.buttonLogin}>
+        <Text style={store.isUpdating ? s.textLoginDisabled : s.textLogin}>
           LOGIN
         </Text>
       </Gradient>
@@ -32,10 +30,10 @@ const PageLogin: React.FC = observer(() => {
       store={store}
       style={{ justifyContent: "center", flexDirection: "column" }}
     >
-      <View style={styles.pageLogin} testID="PageLogin">
-        <Col sm={11} md={9} lg={4} xl={4} style={styles.boxLogin}>
-          <Avatar source={logo} style={styles.iconLogo} />
-          <View style={styles.boxInput}>
+      <View style={s.pageLogin} testID="PageLogin">
+        <Col sm={11} md={9} lg={4} xl={4} style={s.boxLogin}>
+          <Avatar source={logo} style={s.iconLogo} />
+          <View style={s.boxInput}>
             <Input.Text
               data-name="username"
               store={store}
@@ -60,7 +58,7 @@ const PageLogin: React.FC = observer(() => {
             <Input.DisplayError
               store={store}
               name="message"
-              style={styles.textError}
+              style={s.textError}
             />
             <LoginButton store={store} />
           </View>
@@ -70,7 +68,7 @@ const PageLogin: React.FC = observer(() => {
   )
 })
 
-const styles = StyleSheet.create({
+const s = StyleSheet.create({
   pageLogin: tw("flex-1 flex-col items-center justify-center"),
   boxLogin: tw("bg-white p-8 shadow-xl rounded-lg", {
     height: 400,

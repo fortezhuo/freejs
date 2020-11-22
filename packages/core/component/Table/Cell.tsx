@@ -13,7 +13,7 @@ export const Cell: React.FC<CellProps> = ({
   testID = "Cell",
 }) => {
   return (
-    <View testID={testID} style={StyleSheet.flatten([styles.viewCell, style])}>
+    <View testID={testID} style={[s.viewCell, style]}>
       {children}
     </View>
   )
@@ -26,7 +26,7 @@ export const CellText: React.FC<CellProps> = ({
 }) => {
   return (
     <Cell style={style} testID={testID}>
-      <Text style={styles.textCell}>{children}</Text>
+      <Text style={s.textCell}>{children}</Text>
     </Cell>
   )
 }
@@ -80,7 +80,7 @@ export const CellJSON: React.FC<CellProps> = ({ store, style, children }) => {
   )
 }
 
-const styles = StyleSheet.create({
+const s = StyleSheet.create({
   viewCell: tw(`p-2 w-40 flex-grow flex-row`),
   cellDelete: tw("flex-1"),
   textCell: tw(theme.default_text),

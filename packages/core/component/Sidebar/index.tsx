@@ -64,9 +64,9 @@ export const Sidebar: React.FC<any> = observer((props) => {
     <ImageBackground
       testID="Sidebar"
       source={imageSidebar}
-      style={styles.imageSidebar}
+      style={s.imageSidebar}
     >
-      <View style={styles.layoutSidebar}>
+      <View style={s.layoutSidebar}>
         <Title navigation={props.navigation} />
         <Content {...props} />
       </View>
@@ -74,7 +74,7 @@ export const Sidebar: React.FC<any> = observer((props) => {
   )
 })
 
-const styles = StyleSheet.create({
+const s = StyleSheet.create({
   layoutSidebar: tw(`bg-white-800 flex-1`),
   imageSidebar: tw(`flex-1`),
   rootContent: tw("flex-no-wrap p-1"),

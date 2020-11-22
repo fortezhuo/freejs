@@ -11,7 +11,7 @@ const Wrapper: React.FC<any> = observer((props) =>
   props.scroll ? (
     <KeyboardAwareScrollView>{props.children}</KeyboardAwareScrollView>
   ) : (
-    <View style={styles.viewWrapper}>{props.children}</View>
+    <View style={s.viewWrapper}>{props.children}</View>
   )
 )
 
@@ -20,9 +20,9 @@ export const LayoutFull: React.FC<LayoutProps> = observer(
     useHook(store)
     const colors = [theme.primary_1_bg, theme.primary_2_bg]
     return (
-      <Gradient colors={colors} style={styles.viewLayout}>
+      <Gradient colors={colors} style={s.viewLayout}>
         <Wrapper scroll={scroll}>
-          <View testID={testID} style={styles.viewLayout}>
+          <View testID={testID} style={s.viewLayout}>
             {children}
           </View>
         </Wrapper>
@@ -36,15 +36,12 @@ export const Layout: React.FC<LayoutProps> = observer(
     const isWeb = Platform.OS === "web"
     return (
       <LayoutFull scroll={scroll} store={store}>
-        <View style={styles.viewWrapper1}></View>
-        <View style={styles.viewWrapper2}>
-          <View style={styles.viewWrapper21}></View>
-          <View style={styles.viewWrapper22}></View>
+        <View style={s.viewWrapper1}></View>
+        <View style={s.viewWrapper2}>
+          <View style={s.viewWrapper21}></View>
+          <View style={s.viewWrapper22}></View>
         </View>
-        <View
-          style={StyleSheet.flatten([styles.viewChildren, style])}
-          testID={testID}
-        >
+        <View style={[s.viewChildren, style]} testID={testID}>
           {children}
           {store.isForm && isWeb && <View style={{ height: 150 }} />}
         </View>
@@ -53,7 +50,7 @@ export const Layout: React.FC<LayoutProps> = observer(
   }
 )
 
-const styles = StyleSheet.create({
+const s = StyleSheet.create({
   viewLayout: tw("flex-1"),
   viewTransparent: tw("flex-1"),
   viewWrapper: tw("flex-grow"),

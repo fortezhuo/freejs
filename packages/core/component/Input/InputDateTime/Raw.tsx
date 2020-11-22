@@ -27,18 +27,13 @@ export const DateTimePicker: React.FC<any> = ({
     <Menu
       anchor={
         <TouchableWithoutFeedback disabled={disabled} onPress={show}>
-          <View
-            style={StyleSheet.flatten([
-              styles.viewAnchor,
-              disabled ? styles.inputDisabled : {},
-            ])}
-          >
-            <Text style={styles.textAnchor}>{value ? format(value) : ""}</Text>
+          <View style={[s.viewAnchor, disabled ? s.inputDisabled : {}]}>
+            <Text style={s.textAnchor}>{value ? format(value) : ""}</Text>
           </View>
         </TouchableWithoutFeedback>
       }
     >
-      <View style={styles.viewDatePicker}>
+      <View style={s.viewDatePicker}>
         <RNDateTimePicker
           testID="dateTimePicker"
           value={date}
@@ -52,7 +47,7 @@ export const DateTimePicker: React.FC<any> = ({
   )
 }
 
-const styles = StyleSheet.create({
+const s = StyleSheet.create({
   viewDatePicker: tw(theme.default_bg),
   viewAnchor: tw(
     `${theme.input_border} ${theme.default_bg} p-2 w-full flex-row`

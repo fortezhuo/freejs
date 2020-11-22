@@ -17,24 +17,24 @@ export const Section: React.FC<SectionProps> = observer(
     }))
 
     return (
-      <View style={styles.rootSection} testID={testID}>
+      <View style={s.rootSection} testID={testID}>
         <TouchableOpacity onPress={state.toggle}>
-          <View style={styles.groupSection}>
+          <View style={s.groupSection}>
             <Icon
               color={defaultColor}
               size={20}
               name={`chevron-${state.isExpand ? "up" : "down"}`}
             />
-            <H5 style={styles.textSection}>{label}</H5>
+            <H5 style={s.textSection}>{label}</H5>
           </View>
         </TouchableOpacity>
-        {state.isExpand && <View style={styles.groupItem}>{children}</View>}
+        {state.isExpand && <View style={s.groupItem}>{children}</View>}
       </View>
     )
   }
 )
 
-const styles = StyleSheet.create({
+const s = StyleSheet.create({
   rootSection: tw(
     `flex-col shadow-md border-t border-gray-100 bg-white rounded-t-md my-1`
   ),

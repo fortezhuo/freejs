@@ -32,14 +32,11 @@ export const InputText: React.FC<InputTextProps> = observer((_props) => {
     <>
       <Base
         isLoading={_props.store.isLoading}
-        style={StyleSheet.flatten([
-          styles.viewInput,
-          props.disabled ? styles.viewDisabled : {},
-        ])}
+        style={[s.viewInput, props.disabled ? s.viewDisabled : {}]}
       >
         <TextInput
           placeholderTextColor={tw("text-gray-600").color}
-          style={styles.inputText}
+          style={s.inputText}
           {...props}
         />
       </Base>
@@ -48,7 +45,7 @@ export const InputText: React.FC<InputTextProps> = observer((_props) => {
   )
 })
 
-const styles: any = StyleSheet.create({
+const s: any = StyleSheet.create({
   viewInput: tw(`${theme.default_bg} ${theme.input_border} w-full h-10`),
   inputText: tw(`${theme.default_text} flex-1 mx-3`),
   viewDisabled: tw(theme.disabled_bg),

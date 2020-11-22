@@ -21,15 +21,12 @@ const SettingTrash: React.FC = observer(() => {
   return (
     <>
       <Layout store={trash} scroll={Platform.OS === "web"}>
-        <View style={styles.viewGrid}>
-          <View style={styles.viewAction}>
+        <View style={s.viewGrid}>
+          <View style={s.viewAction}>
             <ActionGroup.Large store={trash} actions={refActions.current} />
           </View>
           <View
-            style={StyleSheet.flatten([
-              styles.viewTable,
-              { height: trash.app?.dimension.height - 144 },
-            ])}
+            style={[s.viewTable, { height: trash.app?.dimension.height - 144 }]}
           >
             {trash.isLoading ? (
               <Loader dark />
@@ -44,7 +41,7 @@ const SettingTrash: React.FC = observer(() => {
   )
 })
 
-const styles = StyleSheet.create({
+const s = StyleSheet.create({
   viewGrid: tw("flex-1 flex-col"),
   viewAction: tw("flex-row justify-end items-center mb-2 h-10"),
   textTitle: tw("text-white"),

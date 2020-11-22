@@ -21,27 +21,20 @@ export const Content: React.FC<any> = observer(({ state, children, menu }) => {
   }, [])
 
   return (
-    <View
-      style={state.isMobile ? styles.viewMenuMobile : styles.viewMenuDesktop}
-    >
+    <View style={state.isMobile ? s.viewMenuMobile : s.viewMenuDesktop}>
       {state.isMobile && (
         <>
           <H4>{placeholder}</H4>
-          <View style={styles.viewInput}>
+          <View style={s.viewInput}>
             <Display state={state} />
           </View>
         </>
       )}
-      <View
-        style={StyleSheet.flatten([
-          styles.viewWrapper,
-          state.isMobile ? styles.viewWrapperMobile : {},
-        ])}
-      >
+      <View style={[s.viewWrapper, state.isMobile ? s.viewWrapperMobile : {}]}>
         {children}
       </View>
       {state.isMobile && (
-        <View style={styles.viewButton}>
+        <View style={s.viewButton}>
           <Button type={"primary_1_bg"} icon="check" onPress={onCommit}>
             OK
           </Button>
@@ -54,7 +47,7 @@ export const Content: React.FC<any> = observer(({ state, children, menu }) => {
   )
 })
 
-const styles = StyleSheet.create({
+const s = StyleSheet.create({
   viewButton: tw("flex-row justify-evenly self-end", { width: 200 }),
   viewMenuDesktop: {
     marginTop: 1,

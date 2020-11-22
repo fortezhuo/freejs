@@ -45,9 +45,9 @@ export const Button: React.FC<ButtonProps> = observer((props) => {
       store={store}
       testID={testID}
       disabled={disabled}
-      styleContainer={StyleSheet.flatten([styles.viewButton, bgColor, style])}
-      styleText={StyleSheet.flatten([styles.textButton, textColor, styleText])}
-      style={children ? styles.iconButton : {}}
+      styleContainer={[s.viewButton, bgColor, style]}
+      styleText={[s.textButton, textColor, styleText]}
+      style={children ? s.iconButton : {}}
       name={store?.isUpdating ? "loader" : icon}
       color={textColor.color}
       size={18}
@@ -58,7 +58,7 @@ export const Button: React.FC<ButtonProps> = observer((props) => {
   )
 })
 
-const styles: any = StyleSheet.create({
+const s: any = StyleSheet.create({
   viewButton: tw("p-2 flex-row justify-center items-center rounded-full", {
     minWidth: 36,
     height: 36,

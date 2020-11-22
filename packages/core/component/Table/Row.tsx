@@ -17,14 +17,7 @@ export const Row: React.FC<RowProps> = ({
   testID = "Row",
 }) => {
   return (
-    <View
-      testID={testID}
-      style={StyleSheet.flatten([
-        styles.viewRow,
-        dark ? styles.rowDark : {},
-        style,
-      ])}
-    >
+    <View testID={testID} style={[s.viewRow, dark ? s.rowDark : {}, style]}>
       {children}
     </View>
   )
@@ -61,9 +54,9 @@ export const RowMobile: React.FC<RowProps> = observer(
                 <Animated.View
                   style={{ flex: 1, transform: [{ translateX: trans }] }}
                 >
-                  <RectButton onPress={onDelete} style={styles.cellDelete}>
+                  <RectButton onPress={onDelete} style={s.cellDelete}>
                     <IconLabel
-                      styleContainer={styles.iconDelete}
+                      styleContainer={s.iconDelete}
                       name="trash-2"
                     ></IconLabel>
                   </RectButton>
@@ -80,12 +73,7 @@ export const RowMobile: React.FC<RowProps> = observer(
         >
           <View
             testID={testID}
-            style={StyleSheet.flatten([
-              styles.viewRow,
-              styles.rowMobile,
-              dark ? styles.rowDark : {},
-              style,
-            ])}
+            style={[s.viewRow, s.rowMobile, dark ? s.rowDark : {}, style]}
           >
             {Object.keys(data).map((key) => {
               if (key === "_id_link") return null
@@ -98,11 +86,7 @@ export const RowMobile: React.FC<RowProps> = observer(
                   value = date(value)
               }
               return key === "_id_link" ? null : (
-                <Text
-                  numberOfLines={1}
-                  style={styles.textCellSmall}
-                  key={random()}
-                >
+                <Text numberOfLines={1} style={s.textCellSmall} key={random()}>
                   {label + " : " + value}
                 </Text>
               )
@@ -115,12 +99,10 @@ export const RowMobile: React.FC<RowProps> = observer(
 )
 
 export const Header: React.FC<RowProps> = ({ children, style }) => {
-  return (
-    <Row style={StyleSheet.flatten([styles.viewHeader, style])}>{children}</Row>
-  )
+  return <Row style={[s.viewHeader, style]}>{children}</Row>
 }
 
-const styles = StyleSheet.create({
+const s = StyleSheet.create({
   viewHeader: tw(`h-12 shadow-md`),
   viewRow: tw(`flex-row flex-no-wrap items-center`),
   rowDark: { backgroundColor: "rgba(0,0,0,0.08)" },

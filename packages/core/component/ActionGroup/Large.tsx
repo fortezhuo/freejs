@@ -7,7 +7,7 @@ import { tw } from "@free/tailwind"
 
 export const Large: React.FC<any> = observer(({ store, actions }) => {
   return (
-    <View style={styles.rootAction}>
+    <View style={s.rootAction}>
       {actions.map((prop: ObjectAny) => (
         <Button
           key={"actlarge_" + random()}
@@ -20,6 +20,6 @@ export const Large: React.FC<any> = observer(({ store, actions }) => {
   )
 })
 
-const styles = StyleSheet.create({
+const s = StyleSheet.create({
   rootAction: tw("flex-row p-1"),
 })

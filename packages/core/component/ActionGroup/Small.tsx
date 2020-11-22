@@ -18,14 +18,14 @@ export const Small: React.FC<any> = observer(({ store, actions }) => {
           icon="zap"
           onPress={() => modalizeRef.current?.open()}
           store={store}
-          style={StyleSheet.flatten([styles.single])}
+          style={s.single}
           type={"single_button_bg"}
         ></Button>
       )}
       <Modalize
         ref={modalizeRef}
         adjustToContentHeight
-        modalStyle={styles.container}
+        modalStyle={s.container}
       >
         <View
           style={{
@@ -59,7 +59,7 @@ export const Small: React.FC<any> = observer(({ store, actions }) => {
   )
 })
 
-const styles = StyleSheet.create({
+const s = StyleSheet.create({
   container: tw("bg-gray-700"),
   header: tw("items-center"),
   single: tw("absolute bottom-0 right-0 mb-3 mr-3 shadow-md h-12", {

@@ -58,14 +58,14 @@ const Skeleton: React.FC<any> = ({ style }): JSX.Element => {
   )
 
   return (
-    <View style={styles.viewSkeleton}>
-      <View style={StyleSheet.flatten([style, styles.viewClear, viewStyle])}>
+    <View style={s.viewSkeleton}>
+      <View style={[style, s.viewClear, viewStyle]}>
         <Animated.View style={absoluteTranslateStyle}>
           <LinearGradient
             colors={gradientColors}
             start={GRADIENT_START}
             end={GRADIENT_END}
-            style={styles.gradient}
+            style={s.gradient}
           />
         </Animated.View>
       </View>
@@ -75,18 +75,13 @@ const Skeleton: React.FC<any> = ({ style }): JSX.Element => {
 
 export const Base: React.FC<any> = ({ isLoading, style, children }) => {
   return (
-    <View
-      style={StyleSheet.flatten([
-        style,
-        isLoading ? [styles.viewClear, styles.viewBase] : {},
-      ])}
-    >
+    <View style={[style, isLoading ? [s.viewClear, s.viewBase] : {}]}>
       {isLoading ? <Skeleton style={style} /> : children}
     </View>
   )
 }
 
-const styles = StyleSheet.create({
+const s = StyleSheet.create({
   viewBase: {
     minWidth: undefined,
     width: undefined,

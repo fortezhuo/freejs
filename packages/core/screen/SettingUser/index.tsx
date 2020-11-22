@@ -20,8 +20,8 @@ const SettingUser: React.FC = observer((props) => {
       <Layout
         store={user}
         stickyHeader={
-          <View style={styles.viewAction}>
-            <View style={styles.viewButton}>
+          <View style={s.viewAction}>
+            <View style={s.viewButton}>
               <ActionGroup.Large store={user} actions={actions} />
             </View>
           </View>
@@ -82,7 +82,7 @@ const SettingUser: React.FC = observer((props) => {
   )
 })
 
-const styles = StyleSheet.create({
+const s = StyleSheet.create({
   viewAction: tw("flex-row justify-between"),
   viewContent: tw("flex-col p-6 pt-0"),
   viewButton: tw("flex-row"),

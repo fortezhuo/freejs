@@ -11,9 +11,9 @@ export const Scroll: React.FC<TableProps> = ({
   testID = "Table",
 }) => {
   return (
-    <View testID={testID} style={StyleSheet.flatten([styles.viewTable, style])}>
+    <View testID={testID} style={[s.viewTable, style]}>
       <ScrollView horizontal scrollEnabled={scroll} testID="HorizontalScroll">
-        <View style={styles.viewTableChildren}>{children}</View>
+        <View style={s.viewTableChildren}>{children}</View>
       </ScrollView>
     </View>
   )
@@ -25,13 +25,13 @@ export const Default: React.FC<TableProps> = ({
   testID = "Table",
 }) => {
   return (
-    <View testID={testID} style={StyleSheet.flatten([styles.viewTable, style])}>
-      <View style={styles.viewTableChildren}>{children}</View>
+    <View testID={testID} style={[s.viewTable, style]}>
+      <View style={s.viewTableChildren}>{children}</View>
     </View>
   )
 }
 
-const styles = StyleSheet.create({
+const s = StyleSheet.create({
   viewTable: tw(`shadow-xl`),
   viewTableChildren: tw("flex-col flex-1"),
   viewHeader: tw(`h-12 shadow-md`),

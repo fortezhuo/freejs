@@ -23,14 +23,14 @@ export const Row: React.FC<GridRowProps> = observer(
     return isShow ? (
       <View
         {...rest}
-        style={StyleSheet.flatten([
+        style={[
           style,
-          styles.viewRow,
-          dark ? styles.viewRowDark : {},
+          s.viewRow,
+          dark ? s.viewRowDark : {},
           {
             flexWrap: nowrap ? "nowrap" : "wrap",
           },
-        ])}
+        ]}
       >
         {children}
       </View>
@@ -64,12 +64,12 @@ export const Col: React.FC<GridColProps> = observer(
     return isShow ? (
       <View
         {...rest}
-        style={StyleSheet.flatten([
-          styles.viewColumn,
-          light ? styles.viewColumnLight : {},
+        style={[
+          s.viewColumn,
+          light ? s.viewColumnLight : {},
           style,
           tw(`${width}`),
-        ])}
+        ]}
       >
         {children}
       </View>
@@ -78,10 +78,10 @@ export const Col: React.FC<GridColProps> = observer(
 )
 
 export const Label: React.FC = observer(({ children }) => {
-  return <Text style={styles.textLabel}>{children}</Text>
+  return <Text style={s.textLabel}>{children}</Text>
 })
 
-const styles = StyleSheet.create({
+const s = StyleSheet.create({
   viewRow: tw(`flex-row shadow-sm`, { margin: 1 }),
   viewRowDark: { backgroundColor: "rgba(0,0,0,0.05)" },
   viewColumn: tw("p-2 flex-col justify-center"),

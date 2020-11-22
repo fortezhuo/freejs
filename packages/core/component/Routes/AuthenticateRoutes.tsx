@@ -21,7 +21,7 @@ const Screens: React.FC<any> = ({
   style,
 }) => {
   return (
-    <Animated.View style={StyleSheet.flatten([styles.screenContainer, style])}>
+    <Animated.View style={[s.screenContainer, style]}>
       <Stack.Navigator
         screenOptions={{
           headerTintColor: "white",
@@ -33,7 +33,7 @@ const Screens: React.FC<any> = ({
             return isMobile ? (
               <IconButton
                 name={navigation.canGoBack() ? "chevron-left" : "menu"}
-                style={styles.headerLeft}
+                style={s.headerLeft}
                 onPress={() =>
                   navigation.canGoBack()
                     ? navigation.goBack()
@@ -61,7 +61,7 @@ const Screens: React.FC<any> = ({
               return (
                 <IconButton
                   name={"chevron-left"}
-                  style={styles.headerLeft}
+                  style={s.headerLeft}
                   onPress={() =>
                     navigation.canGoBack()
                       ? navigation.goBack()
@@ -128,7 +128,7 @@ export const AuthenticateRoutes = observer(({ screens, routes }: any) => {
   )
 })
 
-const styles = StyleSheet.create({
+const s = StyleSheet.create({
   headerLeft: tw(`ml-4`),
   headerTitle: tw("text-white"),
   screenContainer: tw("flex-1"),

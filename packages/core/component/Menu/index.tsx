@@ -102,11 +102,7 @@ export const useMenu = () => {
           >
             <View
               collapsable={false}
-              style={StyleSheet.flatten([
-                styles.viewChildren,
-                menuStyle,
-                style,
-              ])}
+              style={[s.viewChildren, menuStyle, style]}
               onLayout={onMenuLayout}
             >
               {children}
@@ -167,15 +163,11 @@ export const MenuItem: React.FC<MenuItemProps> = observer(
         onPress={() => {
           onPress()
         }}
-        styleContainer={StyleSheet.flatten([
-          styles.viewItem,
-          active ? styles.viewItemActive : {},
-          style,
-        ])}
+        styleContainer={[s.viewItem, active ? s.viewItemActive : {}, style]}
         name={name}
         color={color}
         size={18}
-        styleText={StyleSheet.flatten([styles.textItem, styleText])}
+        styleText={[s.textItem, styleText]}
       >
         {children}
       </IconButton>
@@ -183,7 +175,7 @@ export const MenuItem: React.FC<MenuItemProps> = observer(
   }
 )
 
-const styles = StyleSheet.create({
+const s = StyleSheet.create({
   viewChildren: tw("absolute bg-transparent"),
   viewItem: tw(`flex-1 flex-row p-2`),
   viewItemActive: tw("bg-black-100"),

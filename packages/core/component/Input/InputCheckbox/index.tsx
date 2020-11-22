@@ -42,7 +42,7 @@ export const InputCheckbox: React.FC<InputCheckboxProps> = observer(
       <IconButton
         testID={testID}
         disabled={disabled}
-        style={StyleSheet.flatten([styles.iconCheckbox, style])}
+        style={[s.iconCheckbox, style]}
         name={checked ? "check-square" : "square"}
         color={color || defaultColor}
         size={18}
@@ -54,6 +54,6 @@ export const InputCheckbox: React.FC<InputCheckboxProps> = observer(
   }
 )
 
-const styles = StyleSheet.create({
+const s = StyleSheet.create({
   iconCheckbox: { paddingTop: 1, ...tw("h-6") },
 })

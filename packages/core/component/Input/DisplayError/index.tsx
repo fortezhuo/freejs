@@ -8,15 +8,9 @@ import { theme } from "../../../config/theme"
 export const DisplayError: React.FC<any> = observer(({ name, style }) => {
   const { app } = useStore()
   const errorText = ((app?.error || {}) as any)[name]
-  return (
-    errorText && (
-      <Text style={StyleSheet.flatten([styles.textError, style])}>
-        * {errorText}
-      </Text>
-    )
-  )
+  return errorText && <Text style={[s.textError, style]}>* {errorText}</Text>
 })
 
-const styles = StyleSheet.create({
+const s = StyleSheet.create({
   textError: tw(`text-xs ${theme.danger_text}`),
 })
