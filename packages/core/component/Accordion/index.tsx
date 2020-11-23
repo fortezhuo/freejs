@@ -35,15 +35,15 @@ export const Accordion: React.FC<AccordionProps> = observer(
 
     return (
       <TouchableOpacity onPress={state.toggle}>
-        <View style={styles.viewAccordion} testID={testID}>
-          <View style={styles.viewWrapper}>
+        <View style={s.viewAccordion} testID={testID}>
+          <View style={s.viewWrapper}>
             <IconLabel
               name={icon}
               color={state.isExpand ? activeColor : defaultColor}
-              style={[styles.icon, state.isExpand ? styles.iconExpand : {}]}
-              styleContainer={styles.viewIcon}
+              style={[s.icon, state.isExpand ? s.iconExpand : {}]}
+              styleContainer={s.viewIcon}
               styleText={[
-                styles.textIcon,
+                s.textIcon,
                 { color: state.isExpand ? activeColor : defaultColor },
               ]}
             >
@@ -55,7 +55,7 @@ export const Accordion: React.FC<AccordionProps> = observer(
               name={`chevron-${state.isExpand ? "up" : "down"}`}
             />
           </View>
-          <Animated.View style={[styles.viewChildren, { height, opacity }]}>
+          <Animated.View style={[s.viewChildren, { height, opacity }]}>
             {children}
           </Animated.View>
         </View>
@@ -80,11 +80,11 @@ export const AccordionItem: React.FC<AccordionItemProps> = observer(
           size={20}
           color={active ? activeColor : defaultColor}
           styleContainer={[
-            styles.viewIconItem,
-            active ? styles.itemActive : {},
+            s.viewIconItem,
+            active ? s.itemActive : {},
           ]}
           styleText={[
-            styles.textIconItem,
+            s.textIconItem,
             { color: active ? activeColor : defaultColor },
           ]}
         >
@@ -95,7 +95,7 @@ export const AccordionItem: React.FC<AccordionItemProps> = observer(
   }
 )
 
-const styles = StyleSheet.create({
+const s = StyleSheet.create({
   viewAccordion: tw("flex-col z-10"),
   viewWrapper: tw(`flex-row px-4 py-3 items-center`),
   viewChildren: tw("flex-col flex-shrink z-0"),
