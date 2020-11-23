@@ -3,7 +3,7 @@ import * as req from "../request"
 import { acl } from "../util"
 
 class AppStore {
-  message: any
+  alert: any
 
   // observable
   auth: any = null

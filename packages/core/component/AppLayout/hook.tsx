@@ -5,11 +5,11 @@ import { useDimensions } from "./useDimensions"
 export const useHook = () => {
   useDimensions()
   const { app } = useStore()
-  const refMessage = React.useRef(null)
+  const refAlert = React.useRef(null)
 
   React.useEffect(() => {
-    if (refMessage.current) app.message = refMessage.current
-  }, [refMessage.current])
+    if (refAlert.current) app.alert = refAlert.current
+  }, [refAlert.current])
 
   React.useEffect(() => {
     ;(async function () {
@@ -21,5 +21,5 @@ export const useHook = () => {
     })()
   }, [app.auth])
 
-  return { refMessage, app }
+  return { refAlert, app }
 }

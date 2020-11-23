@@ -1,5 +1,6 @@
 import React from "react"
-import { View } from "react-native"
+import { View, StyleSheet } from "react-native"
+import { tw } from "@free/tailwind"
 import { observer } from "mobx-react-lite"
 import { Modalize } from "react-native-modalize"
 import { Table, Row, Col, Button, Text } from ".."
@@ -25,6 +26,8 @@ export const BottomSheet: React.FC<any> = observer(({ store }) => {
           </Table.Row>
         )
       },
+      ListHeaderComponent: () => <Text style={s.textHeader}>Contents</Text>,
+      ListFooterComponent: () => <View style={s.viewFooter} />,
       keyExtractor: (item: any) => item.key,
       showsVerticalScrollIndicator: false,
     }
@@ -71,4 +74,9 @@ export const BottomSheet: React.FC<any> = observer(({ store }) => {
       {...props}
     ></Modalize>
   )
+})
+
+const s = StyleSheet.create({
+  textHeader: tw("p-3 text-lg border-b border-gray-400"),
+  viewFooter: tw("h-6 border-gray-400 border-t"),
 })

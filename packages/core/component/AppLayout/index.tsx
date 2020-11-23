@@ -4,7 +4,7 @@ import { SafeAreaProvider } from "react-native-safe-area-context"
 import { tw } from "@free/tailwind"
 import { theme } from "../../config/theme"
 import { StoreProvider } from "../Store"
-import { Gradient, Message } from "../"
+import { Gradient, Alert } from "../"
 import { MainLayoutProps } from "@free/core"
 import { enableScreens } from "react-native-screens"
 import { useHook } from "./hook"
@@ -12,13 +12,13 @@ import { useHook } from "./hook"
 enableScreens()
 
 const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
-  const { refMessage } = useHook()
+  const { refAlert } = useHook()
   const colors = [theme.primary_1_bg, theme.primary_2_bg]
   return (
     <Gradient colors={colors} style={s.viewFlexTransparent}>
       <StatusBar barStyle="light-content" backgroundColor="transparent" />
       {children}
-      <Message ref={refMessage} />
+      <Alert ref={refAlert} />
     </Gradient>
   )
 }

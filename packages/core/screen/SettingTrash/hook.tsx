@@ -55,13 +55,24 @@ export const useTrash = () => {
         type: "danger_bg",
         children: "Delete",
         onPress: () =>
-          trash.app?.message.error({
-            title: "Delete",
-            message: "Do you want to delete",
+          trash.app?.alert.error({
+            title: "Confirmation",
+            message: "Do you want to delete these document(s) ?",
             actions: [
               {
-                label: "Delete",
-                onPress: () => alert("Test"),
+                label: "OK",
+                type: "primary_1",
+                onPress: () =>
+                  trash.app?.alert.info({
+                    title: "OK",
+                    message: "Document Deleted ",
+                    actions: [],
+                  }),
+              },
+              {
+                label: "Cancel",
+                type: "danger",
+                onPress: () => trash.app?.alert.close(),
               },
             ],
           }),
@@ -71,18 +82,24 @@ export const useTrash = () => {
         type: "primary_2_bg",
         children: "Restore",
         onPress: () => {
-          trash.app?.message.confirm({
-            title: "Restore",
-            message: "Do you want to restore",
+          trash.app?.alert.confirm({
+            title: "Confirmation",
+            message: "Do you want to restore these document(s) ?",
             actions: [
               {
-                label: "Restore 1",
+                label: "OK",
+                type: "primary_1",
                 onPress: () =>
-                  trash.app?.message.info({
+                  trash.app?.alert.info({
                     title: "OK",
                     message: "OK Restored",
                     actions: [],
                   }),
+              },
+              {
+                label: "Cancel",
+                type: "danger",
+                onPress: () => trash.app?.alert.close(),
               },
             ],
           })
