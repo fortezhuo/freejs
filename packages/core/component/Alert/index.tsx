@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
 } from "react-native"
 import { Modalize } from "react-native-modalize"
-import { H1, Text } from ".."
+import { Text } from ".."
 import { getScreenSize, random } from "../../util"
 import { tw } from "@free/tailwind"
 import { theme } from "../../config/theme"
@@ -16,22 +16,21 @@ import iconInfo from "../../img/info.png"
 import iconQuestion from "../../img/question.png"
 import iconError from "../../img/error.png"
 
+const defaultProps = {
+  title: "",
+  closeOutside: true,
+  fullScreen: false,
+  type: undefined,
+  message: "",
+  actions: [],
+}
+
 export const Alert: React.FC<any> = React.forwardRef((_props, ref) => {
   const refModalize = React.useRef<Modalize>(null)
-  const refProps = React.useRef({
-    title: "",
-    type: undefined,
-    message: "",
-    actions: [],
-  })
+  const refProps = React.useRef(defaultProps)
 
   const onClosed = React.useCallback(() => {
-    refProps.current = {
-      title: "",
-      type: undefined,
-      message: "",
-      actions: [],
-    }
+    refProps.current = defaultProps
   }, [])
 
   const { width } = useWindowDimensions()
@@ -45,7 +44,7 @@ export const Alert: React.FC<any> = React.forwardRef((_props, ref) => {
 
     setTimeout(
       () => {
-        refProps.current = props
+        refProps.current = { ...defaultProps, ...props }
         refModalize.current?.open()
       },
       hasPrevMessage ? 300 : 0
@@ -82,7 +81,7 @@ export const Alert: React.FC<any> = React.forwardRef((_props, ref) => {
     return (
       <>
         {logo && <Image source={logo} style={s.imgLogo} />}
-        <H1 style={s.textTitle}>{refProps.current.title}</H1>
+        <Text style={s.textTitle}>{refProps.current.title}</Text>
       </>
     )
   }, [])
@@ -130,35 +129,37 @@ export const Alert: React.FC<any> = React.forwardRef((_props, ref) => {
 
   return (
     <Modalize
+      adjustToContentHeight
       ref={refModalize}
       onClosed={onClosed}
       withHandle={false}
-      panGestureEnabled={false}
       withOverlay={true}
+      panGestureEnabled={false}
+      closeOnOverlayTap={refProps.current.closeOutside}
       customRenderer={body}
       HeaderComponent={header}
       FooterComponent={footer}
       modalStyle={[
         s.viewModal,
         {
-          width: screen !== "sm" ? 600 : width - 20,
+          width:
+            !refProps.current.fullScreen && screen !== "sm" ? 530 : width - 20,
         },
       ]}
-      modalHeight={350}
     />
   )
 })
 
 const s = StyleSheet.create({
-  imgLogo: { height: 128, width: 128, alignSelf: "center" },
-  textTitle: tw("text-center my-2"),
-  textMessage: tw("font-thin text-2xl text-center"),
-  viewBody: tw("flex-1 justify-center", { marginTop: -15 }),
-  viewModal: tw("self-center rounded-2xl p-3 pb-4 mx-8 items-center", {
+  imgLogo: tw("self-center mb-4 mt-3", { height: 88, width: 88 }),
+  textTitle: tw("text-center mb-4 text-3xl font-bold"),
+  textMessage: tw("text-lg text-center"),
+  viewBody: tw("flex-1 mb-8"),
+  viewModal: tw("self-center rounded-2xl p-5 mx-8 items-center", {
     marginBottom: "auto",
   }),
   viewFooter: tw("flex-row"),
-  buttonAction: tw("rounded-2xl bg-red-500 px-6 py-3 mx-2 items-center", {
+  buttonAction: tw("rounded-lg bg-red-500 px-6 py-3 mx-2 items-center", {
     minWidth: 100,
   }),
   textAction: tw("text-lg text-white"),
