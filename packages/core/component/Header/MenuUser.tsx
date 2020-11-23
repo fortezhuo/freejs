@@ -1,16 +1,16 @@
 import React from "react"
 import { StyleSheet, View, Text } from "react-native"
-import { useMenu, useStore, IconButton } from "../"
+import { useMenuDropdown, useStore, IconButton } from "../"
 import { tw } from "@free/tailwind"
 import { observer } from "mobx-react-lite"
 import _debounce from "lodash/debounce"
 
 export const MenuUser: React.FC = observer(() => {
-  const { show, Menu, MenuItem } = useMenu()
+  const { show, MenuDropdown, MenuItem } = useMenuDropdown()
   const { app } = useStore()
   return (
     app.auth && (
-      <Menu
+      <MenuDropdown
         testID="MenuUser"
         anchor={
           <IconButton
@@ -31,7 +31,7 @@ export const MenuUser: React.FC = observer(() => {
             </MenuItem>
           </View>
         </View>
-      </Menu>
+      </MenuDropdown>
     )
   )
 })

@@ -1,7 +1,7 @@
 import React from "react"
 import RNDateTimePicker from "@react-native-community/datetimepicker"
 import { theme } from "../../../config/theme"
-import { useMenu } from "../../Menu"
+import { useMenuDropdown } from "../../Menu"
 import { Text, StyleSheet, View, TouchableWithoutFeedback } from "react-native"
 import { tw } from "@free/tailwind"
 import dayjs from "dayjs"
@@ -13,7 +13,7 @@ export const DateTimePicker: React.FC<any> = ({
   onChange,
 }) => {
   const [date, setDate] = React.useState(new Date())
-  const { Menu, show, hide } = useMenu()
+  const { MenuDropdown, show, hide } = useMenuDropdown()
   const onChangeDate = (e: any, selectedDate: any) => {
     const currentDate = selectedDate || date
     setDate(currentDate)
@@ -24,7 +24,7 @@ export const DateTimePicker: React.FC<any> = ({
     dayjs(value).format(type ? "DD MMM YYYY" : "HH:mm")
 
   return (
-    <Menu
+    <MenuDropdown
       anchor={
         <TouchableWithoutFeedback disabled={disabled} onPress={show}>
           <View style={[s.viewAnchor, disabled ? s.inputDisabled : {}]}>
@@ -43,7 +43,7 @@ export const DateTimePicker: React.FC<any> = ({
           onChange={onChangeDate}
         />
       </View>
-    </Menu>
+    </MenuDropdown>
   )
 }
 

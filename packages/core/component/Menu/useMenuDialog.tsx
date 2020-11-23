@@ -1,6 +1,7 @@
 import React from "react"
 import { View, StyleSheet, KeyboardAvoidingView, Platform } from "react-native"
-import { Modal, MenuItem, Col } from "../"
+import { Modal, Col } from "../"
+import { MenuItem } from "./MenuItem"
 import { observer, useLocalObservable } from "mobx-react-lite"
 import { tw } from "@free/tailwind"
 import { MenuItemProps, DialogProps } from "@free/core"
@@ -8,7 +9,7 @@ import { MenuItemProps, DialogProps } from "@free/core"
 const { color: iconColor } = tw("text-gray-700")
 const noop = () => {}
 
-export const useDialog = () => {
+export const useMenuDialog = () => {
   const refContainer = React.useRef<View>(null)
   const state = useLocalObservable(() => ({
     isOpen: false,
@@ -25,7 +26,7 @@ export const useDialog = () => {
     state.setOpen(false)
   }, [])
 
-  const Dialog: React.FC<DialogProps> = observer(
+  const MenuDialog: React.FC<DialogProps> = observer(
     ({ testID = "Dialog", anchor, children, onShow, allowBackDrop = true }) => {
       return (
         <View testID={testID} ref={refContainer} collapsable={false}>
@@ -80,7 +81,7 @@ export const useDialog = () => {
   return {
     show,
     hide,
-    Dialog,
+    MenuDialog,
     MenuItem: BindMenuItem,
   }
 }

@@ -1,14 +1,14 @@
 import React from "react"
 import { Platform } from "react-native"
-import { useMenu, useDialog } from "../.."
+import { useMenuDropdown, useMenuDialog } from "../../Menu"
 import { useLocalObservable } from "mobx-react-lite"
 
 export const useWrapper = () => {
   const isMobile = Platform.OS !== "web"
-  const wrapper: any = isMobile ? useDialog() : useMenu()
+  const wrapper: any = isMobile ? useMenuDialog() : useMenuDropdown()
 
   return {
-    Wrapper: wrapper.Dialog ? wrapper.Dialog : wrapper.Menu,
+    Wrapper: wrapper.MenuDialog ? wrapper.MenuDialog : wrapper.MenuDropdown,
     show: wrapper.show,
     hide: wrapper.hide,
     isMobile,

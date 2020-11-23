@@ -3,6 +3,7 @@ import {
   View,
   StyleSheet,
   TouchableWithoutFeedback,
+  KeyboardAvoidingView,
   Modal as RNModal,
 } from "react-native"
 import { tw } from "@free/tailwind"
@@ -10,7 +11,7 @@ import { ModalProps } from "@free/core"
 
 export const Modal: React.FC<ModalProps> = ({
   isVisible,
-  animationType = "slide",
+  animationType = "fade",
   transparent = false,
   onShow = undefined,
   onDismiss = undefined,
@@ -35,7 +36,9 @@ export const Modal: React.FC<ModalProps> = ({
           ></View>
         </TouchableWithoutFeedback>
       )}
-      {children}
+      <KeyboardAvoidingView behavior={"padding"} style={{ flex: 1 }}>
+        {children}
+      </KeyboardAvoidingView>
     </RNModal>
   )
 }
