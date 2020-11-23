@@ -4,7 +4,7 @@ import { StyleSheet } from "react-native"
 import { observer } from "mobx-react-lite"
 import { theme } from "../../config/theme"
 import { tw, border, text, color } from "@free/tailwind"
-import { isRGBLight } from "../../util/color"
+import { isRGBLight } from "../../util"
 import { ButtonProps } from "@free/core"
 
 export const Button: React.FC<ButtonProps> = observer((props) => {

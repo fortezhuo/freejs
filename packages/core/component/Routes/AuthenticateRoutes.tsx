@@ -7,7 +7,7 @@ import { createStackNavigator } from "@react-navigation/stack"
 import { StyleSheet, Platform } from "react-native"
 import { Gradient, Header, IconButton, useStore, Sidebar } from ".."
 import { theme } from "../../config/theme"
-import { random } from "../../util/random"
+import { random } from "../../util"
 
 const Stack = createStackNavigator()
 const Drawer = createDrawerNavigator()

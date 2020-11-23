@@ -1,8 +1,8 @@
+import React from "react"
 import { useStore } from "../Store"
 import { useSafeAreaInsets } from "react-native-safe-area-context"
 import { Dimensions } from "react-native"
-import { getScreenSize } from "./helper"
-import React from "react"
+import { getScreenSize } from "../../util"
 
 export const useDimensions = () => {
   const { app } = useStore()

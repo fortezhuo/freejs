@@ -1,7 +1,7 @@
 import React from "react"
 import { ScrollView } from "react-native"
 import { MenuItem } from "../../Menu"
-import { random } from "../../../util/random"
+import { random } from "../../../util"
 import { observer } from "mobx-react-lite"
 import _escapeRegexp from "lodash/escapeRegExp"
 

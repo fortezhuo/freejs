@@ -1,6 +1,6 @@
 import { observable, action, makeObservable } from "mobx"
 import * as req from "../request"
-import { acl } from "../util/acl"
+import { acl } from "../util"
 
 class AppStore {
   message: any

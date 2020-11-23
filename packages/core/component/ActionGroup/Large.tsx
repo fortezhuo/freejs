@@ -1,6 +1,6 @@
 import React from "react"
 import { Button } from ".."
-import { random } from "../../util/random"
+import { random } from "../../util"
 import { observer } from "mobx-react-lite"
 import { View, StyleSheet } from "react-native"
 import { tw } from "@free/tailwind"

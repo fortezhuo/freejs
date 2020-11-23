@@ -55,7 +55,7 @@ export const useTrash = () => {
         type: "danger_bg",
         children: "Delete",
         onPress: () =>
-          trash.app?.message.current.show({
+          trash.app?.message.show({
             title: "Delete",
             message: "Do you want to delete",
             actions: [
@@ -71,7 +71,7 @@ export const useTrash = () => {
         type: "primary_2_bg",
         children: "Restore",
         onPress: () => {
-          trash.app?.message.current.show({
+          trash.app?.message.show({
             title: "Restore",
             message: "Do you want to restore",
             actions: [

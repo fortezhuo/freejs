@@ -5,7 +5,7 @@ import { observer } from "mobx-react-lite"
 import { tw, color } from "@free/tailwind"
 import { StateComponent } from "@free/core"
 import { theme } from "../../../config/theme"
-import { random } from "../../../util/random"
+import { random } from "../../../util"
 
 const defaultColor = color(theme.default_text)
 

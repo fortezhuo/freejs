@@ -3,7 +3,7 @@ import { StyleSheet, View } from "react-native"
 import { Modalize } from "react-native-modalize"
 import { observer } from "mobx-react-lite"
 import { Button } from ".."
-import { random } from "../../util/random"
+import { random } from "../../util"
 import { tw } from "@free/tailwind"
 
 export const Small: React.FC<any> = observer(({ store, actions }) => {

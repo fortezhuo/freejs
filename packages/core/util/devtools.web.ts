@@ -1,4 +1,4 @@
-import { getGlobal } from "../util/global"
+import { getGlobal } from "../util"
 import { toJS } from "mobx"
 
 export const devtools = (store: any) => {
