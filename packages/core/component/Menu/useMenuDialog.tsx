@@ -36,15 +36,9 @@ export const useMenuDialog = () => {
             onShow={onShow}
             onBackdropPress={allowBackDrop ? hide : noop}
           >
-            <KeyboardAvoidingView
-              behavior={Platform.OS === "ios" ? "padding" : undefined}
-              pointerEvents="box-none"
-              style={s.viewKeyboard}
-            >
-              <Col sm={11} style={s.viewChildren}>
-                {children}
-              </Col>
-            </KeyboardAvoidingView>
+            <Col sm={11} style={s.viewChildren}>
+              {children}
+            </Col>
           </Modal>
         </View>
       )
@@ -87,6 +81,5 @@ export const useMenuDialog = () => {
 }
 
 const s = StyleSheet.create({
-  viewKeyboard: tw("flex-1 justify-center"),
   viewChildren: tw("self-center"),
 })

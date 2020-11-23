@@ -2,6 +2,7 @@ import React from "react"
 import {
   View,
   StyleSheet,
+  Platform,
   TouchableWithoutFeedback,
   KeyboardAvoidingView,
   Modal as RNModal,
@@ -36,7 +37,11 @@ export const Modal: React.FC<ModalProps> = ({
           ></View>
         </TouchableWithoutFeedback>
       )}
-      <KeyboardAvoidingView behavior={"padding"} style={{ flex: 1 }}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : undefined}
+        pointerEvents="box-none"
+        style={s.viewKeyboardAvoid}
+      >
         {children}
       </KeyboardAvoidingView>
     </RNModal>
@@ -44,6 +49,7 @@ export const Modal: React.FC<ModalProps> = ({
 }
 
 const s = StyleSheet.create({
+  viewKeyboardAvoid: tw("flex-1 justify-center"),
   rootOverlay: tw("absolute top-0 left-0 right-0 bottom-0 flex-1"),
   overlayDark: tw("bg-black-500"),
 })
