@@ -2,7 +2,6 @@ import React from "react"
 import { configApp } from "@free/env"
 import { TouchableOpacity, View, Text, Image, StyleSheet } from "react-native"
 import { tw } from "@free/tailwind"
-import { useStore } from "../Store"
 import { observer } from "mobx-react-lite"
 import logo from "../../img/logo.png"
 
@@ -13,11 +12,10 @@ const Logo: React.FC = () => {
 export const Title: React.FC<any> = observer(
   ({ testID = "Title", navigation }) => {
     const disabled = false
-    const { app } = useStore()
     return (
       <TouchableOpacity
         disabled={disabled}
-        onPress={() => navigation.navigate("Home")}
+        onPress={() => navigation.navigate("Index")}
       >
         <View style={s.layoutTitle} testID={testID}>
           <Logo />

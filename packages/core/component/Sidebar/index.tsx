@@ -1,5 +1,6 @@
 import React from "react"
-import { View, StyleSheet, ImageBackground } from "react-native"
+import { StyleSheet, ImageBackground } from "react-native"
+import { SafeAreaView } from "react-native-safe-area-context"
 import { Accordion, AccordionItem, Title } from "../"
 import { observer } from "mobx-react-lite"
 import { getMenu } from "../../config/menu"
@@ -66,10 +67,10 @@ export const Sidebar: React.FC<any> = observer((props) => {
       source={imageSidebar}
       style={s.imageSidebar}
     >
-      <View style={s.layoutSidebar}>
+      <SafeAreaView style={s.layoutSidebar}>
         <Title navigation={props.navigation} />
         <Content {...props} />
-      </View>
+      </SafeAreaView>
     </ImageBackground>
   )
 })
