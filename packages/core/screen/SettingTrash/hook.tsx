@@ -110,7 +110,7 @@ export const useTrash = () => {
     ],
     []
   )
-
+  const refActions: any = React.useRef(actions)
   const setCollection = React.useCallback(async () => {
     const [page, search] = trash.getData("page", "search")
 
@@ -159,13 +159,17 @@ export const useTrash = () => {
     if (isReady && _isMobile !== isMobile) {
       trash.set("isLoading", true)
       trash.setData({ isMobile })
+
       setTimeout(() => {
         trash.set("isLoading", false)
       }, 1000)
     }
+    refActions.current = actions.filter((action) =>
+      isMobile ? action.children !== "Delete" : true
+    )
   }, [trash?.app?.dimension.isMobile])
 
-  return { trash, columns, actions }
+  return { trash, columns, actions, refActions }
 }
 
 export const useTableGrid = (store: any, _columns: any) => {

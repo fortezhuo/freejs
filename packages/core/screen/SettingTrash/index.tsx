@@ -8,8 +8,7 @@ import { theme } from "../../config/theme"
 import { useTrash } from "./hook"
 
 const SettingTrash = observer(() => {
-  const { trash, actions, columns } = useTrash()
-  const refActions: any = React.useRef(actions)
+  const { trash, actions, refActions, columns } = useTrash()
 
   return (
     <>
