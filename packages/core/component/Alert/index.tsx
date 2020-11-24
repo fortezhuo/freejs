@@ -154,11 +154,11 @@ const s = StyleSheet.create({
   imgLogo: tw("self-center mb-4 mt-3", { height: 88, width: 88 }),
   textTitle: tw("text-center mb-4 text-3xl font-bold"),
   textMessage: tw("text-lg text-center"),
-  viewBody: tw("flex-1 mb-8"),
+  viewBody: tw("mb-8"),
   viewModal: tw("self-center rounded-2xl p-5 mx-8 items-center", {
     marginBottom: "auto",
   }),
-  viewFooter: tw("flex-row"),
+  viewFooter: tw("flex-row mb-4"),
   buttonAction: tw("rounded-lg bg-red-500 px-6 py-3 mx-2 items-center", {
     minWidth: 100,
   }),

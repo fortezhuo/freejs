@@ -1,12 +1,13 @@
 import React from "react"
-import { useFocusEffect } from "@react-navigation/native"
 import { useStore, Table } from "../../component"
+import { TableCheckbox } from "../../shared/ViewGrid/TableCheckbox"
 import { get } from "../../request"
-import { random } from "../../util"
 
 export const useTrash = () => {
   const { trash } = useStore()
-  const isReady = !!trash.data.get("page")
+  const isMobile = trash.data.get("isMobile")
+  trash.bottomSheet = React.useRef(null)
+
   const columns = React.useMemo(
     () => [
       {
@@ -46,6 +47,7 @@ export const useTrash = () => {
     ],
     []
   )
+
   const actions = React.useMemo(
     () => [
       {
@@ -115,59 +117,118 @@ export const useTrash = () => {
     []
   )
 
-  const setCollection = React.useCallback(async () => {
-    const [page, search] = trash.getData("page", "search")
-
-    const params = { q: search, page }
-    try {
-      trash.set("isUpdating", true)
-      const { data } = await get(`/api/trash`, params)
-      trash.setData({
-        collection: data.result,
-        limit: data.limit,
-        total: data.total,
-        max: data.max,
-      })
-    } finally {
-      trash.set("isUpdating", false)
+  React.useEffect(() => {
+    trash.setData({
+      page: undefined,
+      search: undefined,
+    })
+    return () => {
+      trash.data.clear()
     }
   }, [])
 
-  useFocusEffect(
-    React.useCallback(() => {
-      if (!isReady) {
-        trash.setData({
-          isMobile: trash?.app?.dimension.isMobile,
-          page: 1,
-          search: undefined,
-        })
-      }
-
-      return () => {
-        trash.data.clear()
-      }
-    }, [])
-  )
-
+  // While resize screen, loading true
   React.useEffect(() => {
-    ;(async () => {
-      if (isReady) {
-        await setCollection()
-      }
-    })()
-  }, [trash.data.get("page"), trash.data.get("search")])
-
-  React.useEffect(() => {
-    const isMobile = trash?.app?.dimension.isMobile
-    const _isMobile = trash.data.get("isMobile")
-    if (isReady && _isMobile !== isMobile) {
+    if (isMobile !== trash?.app?.dimension.isMobile) {
       trash.set("isLoading", true)
-      trash.setData({ isMobile })
+      trash.setData({ isMobile: trash?.app?.dimension.isMobile })
       setTimeout(() => {
         trash.set("isLoading", false)
       }, 1000)
     }
   }, [trash?.app?.dimension.isMobile])
 
-  return { trash }
+  return { trash, actions, columns }
+}
+
+export const useTableGrid = (store: any, _columns: any) => {
+  const [search, page = 1, isMobile] = store.getData(
+    "search",
+    "page",
+    "isMobile"
+  )
+
+  const setCollection = React.useCallback(async () => {
+    const params = { q: search, page }
+    try {
+      store.set("isUpdating", true)
+      const { data } = await get(`/api/trash`, params)
+      store.setData({
+        collection: data.result,
+        limit: data.limit,
+        total: data.total,
+        max: data.max,
+      })
+    } finally {
+      store.set("isUpdating", false)
+    }
+  }, [])
+
+  const columns = React.useMemo(
+    () =>
+      _columns
+        .filter((col: any) => (isMobile ? col.isMobileVisible : true))
+        .map((col: ObjectAny) =>
+          isMobile
+            ? {
+                id: col.type ? `${col.name}_${col.type}` : col.name,
+                accessor: col.name,
+              }
+            : {
+                id: col.type ? `${col.name}_${col.type}` : col.name,
+                Header: col.label,
+                accessor: col.name,
+                style: col.style,
+                type: col.type,
+              }
+        ),
+
+    []
+  )
+
+  const keys = React.useMemo(() => {
+    const key: any = {}
+    if (isMobile) {
+      _columns
+        .filter((col: any) => col.isMobileVisible)
+        .forEach((col: any) => {
+          if (col.name !== "_id") {
+            key[col.type ? `${col.name}_${col.type}` : col.name] = {
+              label: col.label,
+              type: col.type,
+            }
+          }
+        })
+    }
+    return key
+  }, [])
+
+  // Collection
+
+  React.useEffect(() => {
+    ;(async () => {
+      await setCollection()
+    })()
+  }, [page, search])
+
+  return { keys, columns }
+}
+
+export const useSelection = (hooks: any) => {
+  return hooks.visibleColumns.push((columns: any) => [
+    {
+      id: "selection",
+      type: "checkbox",
+      style: { width: 36, maxWidth: 36, marginTop: 1 },
+      Header: (header: any) => {
+        return <TableCheckbox {...header.getToggleAllPageRowsSelectedProps()} />
+      },
+      Cell: (cell: any) => (
+        <Table.Cell style={cell.column.style}>
+          <TableCheckbox {...cell.row.getToggleRowSelectedProps()} />
+        </Table.Cell>
+      ),
+    },
+    ...columns,
+  ])
 }
