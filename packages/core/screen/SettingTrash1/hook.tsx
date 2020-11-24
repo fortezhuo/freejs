@@ -213,22 +213,3 @@ export const useTableGrid = (store: any, _columns: any) => {
 
   return { keys, columns }
 }
-
-export const useSelection = (hooks: any) => {
-  return hooks.visibleColumns.push((columns: any) => [
-    {
-      id: "selection",
-      type: "checkbox",
-      style: { width: 36, maxWidth: 36, marginTop: 1 },
-      Header: (header: any) => {
-        return <TableCheckbox {...header.getToggleAllPageRowsSelectedProps()} />
-      },
-      Cell: (cell: any) => (
-        <Table.Cell style={cell.column.style}>
-          <TableCheckbox {...cell.row.getToggleRowSelectedProps()} />
-        </Table.Cell>
-      ),
-    },
-    ...columns,
-  ])
-}

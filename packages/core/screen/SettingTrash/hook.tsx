@@ -1,8 +1,8 @@
 import React from "react"
 import { useFocusEffect } from "@react-navigation/native"
 import { useStore, Table } from "../../component"
+import { TableCheckbox } from "../../shared/ViewGrid/TableCheckbox"
 import { get } from "../../request"
-import { random } from "../../util"
 
 export const useTrash = () => {
   const { trash } = useStore()
@@ -169,5 +169,68 @@ export const useTrash = () => {
     }
   }, [trash?.app?.dimension.isMobile])
 
-  return { trash }
+  return { trash, columns, actions }
+}
+
+export const useTableGrid = (store: any, _columns: any) => {
+  const isMobile = store.data.get("isMobile")
+  const columns = React.useMemo(
+    () =>
+      _columns
+        .filter((col: any) => (isMobile ? col.isMobileVisible : true))
+        .map((col: ObjectAny) =>
+          isMobile
+            ? {
+                id: col.type ? `${col.name}_${col.type}` : col.name,
+                accessor: col.name,
+              }
+            : {
+                id: col.type ? `${col.name}_${col.type}` : col.name,
+                Header: col.label,
+                accessor: col.name,
+                style: col.style,
+                type: col.type,
+              }
+        ),
+
+    []
+  )
+
+  const keys = React.useMemo(() => {
+    const key: any = {}
+    if (isMobile) {
+      _columns
+        .filter((col: any) => col.isMobileVisible)
+        .forEach((col: any) => {
+          if (col.name !== "_id") {
+            key[col.type ? `${col.name}_${col.type}` : col.name] = {
+              label: col.label,
+              type: col.type,
+            }
+          }
+        })
+    }
+    return key
+  }, [])
+
+  return { columns, keys }
+}
+
+export const useSelection = (hooks: any) => {
+  return hooks.visibleColumns.push((columns: any) => [
+    {
+      id: "selection",
+      type: "checkbox",
+      style: { width: 36, maxWidth: 36, marginTop: 1 },
+      Header: (header: any) => {
+        return <TableCheckbox {...header.getToggleAllPageRowsSelectedProps()} />
+      },
+      Cell: (cell: any) => (
+        <Table.Cell style={cell.column.style}>
+          <TableCheckbox {...cell.row.getToggleRowSelectedProps()} />
+        </Table.Cell>
+      ),
+    },
+    ...columns,
+  ])
 }
