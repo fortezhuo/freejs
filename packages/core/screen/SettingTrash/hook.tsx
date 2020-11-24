@@ -16,7 +16,6 @@ export const useTrash = () => {
         type: "json",
         search: ["$text"],
         style: { width: 30 },
-        isMobileVisible: false,
       },
       {
         label: "Collection",
@@ -24,7 +23,6 @@ export const useTrash = () => {
         filter: true,
         search: ["_deletedFrom"],
         style: { width: 100 },
-        isMobileVisible: true,
       },
       {
         label: "Deleted By",
@@ -32,7 +30,6 @@ export const useTrash = () => {
         filter: true,
         search: ["_deletedBy"],
         style: { width: 150 },
-        isMobileVisible: true,
       },
       {
         label: "Deleted At",
@@ -41,7 +38,6 @@ export const useTrash = () => {
         type: "datetime",
         search: [],
         style: { width: 300 },
-        isMobileVisible: true,
       },
     ],
     []
@@ -108,7 +104,7 @@ export const useTrash = () => {
         type: "primary_2_bg",
         children: "Search",
         onPress: () => {
-          trash.bottomSheet.current.open()
+          trash.bottomSheet.open()
         },
       },
     ],
@@ -173,25 +169,23 @@ export const useTrash = () => {
 }
 
 export const useTableGrid = (store: any, _columns: any) => {
-  const isMobile = store.data.get("isMobile")
+  const isMobile = store.app.dimension.isMobile
   const columns = React.useMemo(
     () =>
-      _columns
-        .filter((col: any) => (isMobile ? col.isMobileVisible : true))
-        .map((col: ObjectAny) =>
-          isMobile
-            ? {
-                id: col.type ? `${col.name}_${col.type}` : col.name,
-                accessor: col.name,
-              }
-            : {
-                id: col.type ? `${col.name}_${col.type}` : col.name,
-                Header: col.label,
-                accessor: col.name,
-                style: col.style,
-                type: col.type,
-              }
-        ),
+      _columns.map((col: ObjectAny) =>
+        isMobile
+          ? {
+              id: col.type ? `${col.name}_${col.type}` : col.name,
+              accessor: col.name,
+            }
+          : {
+              id: col.type ? `${col.name}_${col.type}` : col.name,
+              Header: col.label,
+              accessor: col.name,
+              style: col.style,
+              type: col.type,
+            }
+      ),
 
     []
   )
@@ -199,17 +193,17 @@ export const useTableGrid = (store: any, _columns: any) => {
   const keys = React.useMemo(() => {
     const key: any = {}
     if (isMobile) {
-      _columns
-        .filter((col: any) => col.isMobileVisible)
-        .forEach((col: any) => {
-          if (col.name !== "_id") {
-            key[col.type ? `${col.name}_${col.type}` : col.name] = {
-              label: col.label,
-              type: col.type,
-            }
+      _columns.forEach((col: any) => {
+        if (col.name !== "_id") {
+          key[col.type ? `${col.name}_${col.type}` : col.name] = {
+            label: col.label,
+            type: col.type,
           }
-        })
+        }
+      })
     }
+
+    console.log("key", key)
     return key
   }, [])
 

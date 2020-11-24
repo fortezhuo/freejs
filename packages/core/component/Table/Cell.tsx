@@ -64,8 +64,8 @@ export const CellDownload: React.FC<CellProps> = ({
 
 export const CellJSON: React.FC<CellProps> = ({ store, style, children }) => {
   const onOpen = React.useCallback(() => {
-    store.temp.set("value", children)
-    store.bottomSheet.current?.open()
+    store.setTemp({ value: children })
+    store.bottomSheet.open()
   }, [])
 
   return (

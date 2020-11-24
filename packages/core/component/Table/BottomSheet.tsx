@@ -7,8 +7,20 @@ import { Table, Row, Col, Button, Text } from ".."
 import { useRoute } from "@react-navigation/native"
 
 export const BottomSheet: React.FC<any> = observer(({ store }) => {
-  const value = store.temp.get("value") || undefined
   const route = useRoute()
+  const refBottomSheet = React.useRef(null)
+  const value = store.temp.get("value") || undefined
+
+  React.useEffect(() => {
+    if (refBottomSheet.current) {
+      store.bottomSheet = refBottomSheet.current
+    }
+  }, [])
+
+  const onClosed = React.useCallback(() => {
+    store.setTemp({ value: undefined })
+  }, [])
+
   const renderFlatList = React.useCallback((value) => {
     const data = Object.keys(value).map((key) => ({
       key,
@@ -26,7 +38,7 @@ export const BottomSheet: React.FC<any> = observer(({ store }) => {
           </Table.Row>
         )
       },
-      ListHeaderComponent: () => <Text style={s.textHeader}>Contents</Text>,
+      ListHeaderComponent: () => <Text style={s.textHeader}>Content</Text>,
       ListFooterComponent: () => <View style={s.viewFooter} />,
       keyExtractor: (item: any) => item.key,
       showsVerticalScrollIndicator: false,
@@ -55,7 +67,7 @@ export const BottomSheet: React.FC<any> = observer(({ store }) => {
       <Button
         icon="search"
         style={{ margin: 10 }}
-        onPress={() => store.bottomSheet.current?.close()}
+        onPress={() => store.bottomSheet.close()}
         store={store}
         type={"single_button_bg"}
       >
@@ -67,10 +79,8 @@ export const BottomSheet: React.FC<any> = observer(({ store }) => {
   return (
     <Modalize
       adjustToContentHeight
-      onClosed={() => {
-        store.temp.set("value", undefined)
-      }}
-      ref={store.bottomSheet}
+      onClosed={onClosed}
+      ref={refBottomSheet}
       {...props}
     ></Modalize>
   )
