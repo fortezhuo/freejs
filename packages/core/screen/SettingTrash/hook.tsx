@@ -203,7 +203,6 @@ export const useTableGrid = (store: any, _columns: any) => {
       })
     }
 
-    console.log("key", key)
     return key
   }, [])
 

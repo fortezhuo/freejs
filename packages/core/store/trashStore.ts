@@ -19,7 +19,7 @@ class TrashStore extends BaseStore {
       this.set("isUpdating", true)
       if (id.length === 24) {
         const res = await req.get(`/api/trash/${id}`)
-        this.temp.set("value", res.data.result.data)
+        this.setTemp({ value: res.data.result.data })
       }
     } catch (err) {
       this.app?.setError(err)

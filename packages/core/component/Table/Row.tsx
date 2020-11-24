@@ -25,7 +25,18 @@ export const Row: React.FC<RowProps> = ({
 
 export const RowMobile: React.FC<RowProps> = observer(
   ({ store, data, keys, dark, style, testID = "RowMobile", actDelete }) => {
-    const path = data._id_link ? `${store.name}/${data._id_link}` : null
+    const onTap = React.useCallback(() => {
+      if (data._id_json) {
+        ;(async () => {
+          await store.loadData(data._id_json)
+          store.bottomSheet.open()
+        })()
+      } else {
+        const path = data._id_link ? `${store.name}/${data._id_link}` : null
+        if (path) store?.app.goto(path)
+      }
+    }, [])
+
     const ref = React.createRef<any>()
     const width = 88
     return (
@@ -66,17 +77,13 @@ export const RowMobile: React.FC<RowProps> = observer(
           )
         }}
       >
-        <RectButton
-          onPress={() => {
-            if (path) store?.app.goto(path)
-          }}
-        >
+        <RectButton onPress={onTap}>
           <View
             testID={testID}
             style={[s.viewRow, s.rowMobile, dark ? s.rowDark : {}, style]}
           >
             {Object.keys(data).map((key) => {
-              if (key === "_id_link") return null
+              if (key === "_id_link" || key === "_id_json") return null
               const label = keys[key].label
               let value = data[key]
               switch (keys[key].type) {
@@ -85,7 +92,7 @@ export const RowMobile: React.FC<RowProps> = observer(
                 case "date":
                   value = date(value)
               }
-              return key === "_id_link" ? null : (
+              return key === "_id_link" || key === "_id_json" ? null : (
                 <Text numberOfLines={1} style={s.textCellSmall} key={random()}>
                   {label + " : " + value}
                 </Text>
