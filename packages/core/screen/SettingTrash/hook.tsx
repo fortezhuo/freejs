@@ -11,7 +11,7 @@ export const useTrash = () => {
     () => [
       {
         label: "",
-        name: "data",
+        name: "_id",
         filter: false,
         type: "json",
         search: ["$text"],
@@ -114,7 +114,7 @@ export const useTrash = () => {
   const setCollection = React.useCallback(async () => {
     const [page, search] = trash.getData("page", "search")
 
-    const params = { q: search, page }
+    const params = { q: search, page, fields: "-data" }
     try {
       trash.set("isUpdating", true)
       const { data } = await get(`/api/trash`, params)

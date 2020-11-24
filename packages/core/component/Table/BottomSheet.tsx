@@ -28,6 +28,7 @@ export const BottomSheet: React.FC<any> = observer(({ store }) => {
     }))
     return {
       data,
+      stickyHeaderIndices: [0],
       renderItem: ({ item, index }: any) => {
         return (
           <Table.Row dark={index % 2}>
@@ -38,7 +39,11 @@ export const BottomSheet: React.FC<any> = observer(({ store }) => {
           </Table.Row>
         )
       },
-      ListHeaderComponent: () => <Text style={s.textHeader}>Content</Text>,
+      ListHeaderComponent: () => (
+        <View style={s.viewHeader}>
+          <Text style={s.textHeader}>Content</Text>
+        </View>
+      ),
       ListFooterComponent: () => <View style={s.viewFooter} />,
       keyExtractor: (item: any) => item.key,
       showsVerticalScrollIndicator: false,
@@ -87,6 +92,7 @@ export const BottomSheet: React.FC<any> = observer(({ store }) => {
 })
 
 const s = StyleSheet.create({
-  textHeader: tw("p-3 text-lg border-b border-gray-400"),
+  viewHeader: tw("p-3 border-b border-gray-400 bg-white rounded-t-2xl"),
+  textHeader: tw("text-lg"),
   viewFooter: tw("h-6 border-gray-400 border-t"),
 })
