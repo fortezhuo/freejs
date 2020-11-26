@@ -20,7 +20,7 @@ const SettingTrash = observer(() => {
           <View
             style={[s.viewTable, { height: trash.app?.dimension.height - 144 }]}
           >
-            {trash.isLoading ? (
+            {trash.isUpdating ? (
               <Loader dark />
             ) : (
               <TableGrid store={trash} columns={columns} actions={actions} />

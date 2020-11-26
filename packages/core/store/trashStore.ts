@@ -17,7 +17,7 @@ class TrashStore extends BaseStore {
   async loadData(params: any) {
     const { id } = params
     try {
-      this.set("isUpdating", true)
+      this.set("isLoading", true)
       if (id.length === 24) {
         const res = await req.GET(`/api/trash/${id}`)
         this.setTemp({ value: res.data.result.data })
@@ -25,35 +25,35 @@ class TrashStore extends BaseStore {
     } catch (err) {
       this.app?.setError(err)
     } finally {
-      this.set("isUpdating", false)
+      this.set("isLoading", false)
     }
   }
 
   async deleteDocument(params: any) {
     const { id } = params
     try {
-      this.set("isUpdating", true)
+      this.set("isLoading", true)
       if (id.length === 24) {
         return await req.DELETE(`/api/trash/${id}`)
       }
     } catch (err) {
       this.app?.setError(err)
     } finally {
-      this.set("isUpdating", false)
+      this.set("isLoading", false)
     }
   }
 
   async restoreDocument(params: any) {
     const { id } = params
     try {
-      this.set("isUpdating", true)
+      this.set("isLoading", true)
       if (id.length === 24) {
-        return await req.POST(`/api/trash/restore/${id}`, {})
+        return await req.POST(`/api/trash/${id}`, {})
       }
     } catch (err) {
       this.app?.setError(err)
     } finally {
-      this.set("isUpdating", false)
+      this.set("isLoading", false)
     }
   }
 }

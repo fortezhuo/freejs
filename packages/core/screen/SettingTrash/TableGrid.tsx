@@ -36,7 +36,7 @@ export const TableGrid: React.FC<any> = observer(
     return isMobile === _isMobile ? (
       <TableContent
         store={store}
-        isMobile={isMobile}
+        isMobile={_isMobile}
         isUpdating={store.isUpdating}
         data={{
           ...table,

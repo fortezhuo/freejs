@@ -119,7 +119,7 @@ export const useTrash = () => {
 
     const params = { q: search, page, fields: "-data" }
     try {
-      trash.set("isUpdating", true)
+      trash.set("isLoading", true)
       const { data } = await GET(`/api/trash`, params)
       trash.setData({
         collection: data.result,
@@ -128,7 +128,7 @@ export const useTrash = () => {
         max: data.max,
       })
     } finally {
-      trash.set("isUpdating", false)
+      trash.set("isLoading", false)
     }
   }, [])
 
@@ -160,11 +160,10 @@ export const useTrash = () => {
     const isMobile = trash?.app?.dimension.isMobile
     const _isMobile = trash.data.get("isMobile")
     if (isReady && _isMobile !== isMobile) {
-      trash.set("isLoading", true)
+      trash.set("isUpdating", true)
       trash.setData({ isMobile })
-
       setTimeout(() => {
-        trash.set("isLoading", false)
+        trash.set("isUpdating", false)
       }, 1000)
     }
     refActions.current = actions.filter((action) =>
