@@ -165,7 +165,9 @@ export const useTrash = () => {
       }, 1000)
     }
     refActions.current = actions.filter((action) =>
-      isMobile ? action.children !== "Delete" : true
+      isMobile
+        ? action.children !== "Delete" && action.children !== "Restore"
+        : true
     )
   }, [trash?.app?.dimension.isMobile])
 

@@ -23,9 +23,14 @@ export const TableGrid: React.FC<any> = observer(
     ] = store.getData("isMobile", "collection", "page", "limit", "total", "max")
     const table: any = useTableGrid(store, columns)
     const columnsFormat = Table.useDefaultColumn(store)
-    const actionDelete = React.useMemo(() => {
-      return actions.filter((action: any) => action.children === "Delete")[0]
-    }, [])
+    const swipeActions = React.useMemo(
+      () =>
+        actions.filter(
+          (action: any) =>
+            action.children === "Delete" || action.children === "Restore"
+        ),
+      []
+    )
 
     return total ? (
       <TableContent
@@ -34,7 +39,7 @@ export const TableGrid: React.FC<any> = observer(
         isUpdating={store.isUpdating}
         data={{
           ...table,
-          action: actionDelete,
+          actions: swipeActions,
           columnsFormat,
           collection,
         }}
@@ -53,7 +58,7 @@ export const TableGrid: React.FC<any> = observer(
 
 const TableContent: React.FC<any> = observer(
   ({ store, isMobile, isUpdating, data, page }) => {
-    const { columns, columnsFormat, collection, action, keys } = data
+    const { columns, columnsFormat, collection, actions, keys } = data
     const TableWrapper = isMobile || isUpdating ? Table.Default : Table.Scroll
     const { headerGroups, prepareRow, page: rows, gotoPage }: any = useTable(
       {
@@ -121,7 +126,8 @@ const TableContent: React.FC<any> = observer(
                 return isMobile ? (
                   <Table.RowMobile
                     store={store}
-                    actDelete={action}
+                    actionLeft={actions[1]}
+                    actionRight={actions[0]}
                     dark={index % 2}
                     data={item.values}
                     keys={keys}

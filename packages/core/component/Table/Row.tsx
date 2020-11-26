@@ -24,7 +24,16 @@ export const Row: React.FC<RowProps> = ({
 }
 
 export const RowMobile: React.FC<RowProps> = observer(
-  ({ store, data, keys, dark, style, testID = "RowMobile", actDelete }) => {
+  ({
+    store,
+    data,
+    keys,
+    dark,
+    style,
+    testID = "RowMobile",
+    actionLeft,
+    actionRight,
+  }) => {
     const onTap = React.useCallback(() => {
       if (data._id_json) {
         ;(async () => {
@@ -37,6 +46,68 @@ export const RowMobile: React.FC<RowProps> = observer(
       }
     }, [])
 
+    const renderLeftAction =
+      actionLeft &&
+      React.useCallback((progress: any) => {
+        const trans = progress.interpolate({
+          inputRange: [0, 1],
+          outputRange: [-width, 0],
+        })
+        const onPress = () => {
+          ref?.current.close()
+          actionLeft.onPress()
+        }
+        return (
+          <View
+            style={{
+              width,
+            }}
+          >
+            <Animated.View
+              style={{ flex: 1, transform: [{ translateX: trans }] }}
+            >
+              <RectButton onPress={onPress} style={s.cellDelete}>
+                <IconLabel
+                  styleContainer={[s.swipeButton, tw(theme[actionLeft.type])]}
+                  name={actionLeft.icon}
+                ></IconLabel>
+              </RectButton>
+            </Animated.View>
+          </View>
+        )
+      }, [])
+
+    const renderRightAction =
+      actionRight &&
+      React.useCallback((progress: any) => {
+        const trans = progress.interpolate({
+          inputRange: [0, 1],
+          outputRange: [width, 0],
+        })
+        const onPress = () => {
+          ref?.current.close()
+          actionRight.onPress()
+        }
+        return (
+          <View
+            style={{
+              width,
+            }}
+          >
+            <Animated.View
+              style={{ flex: 1, transform: [{ translateX: trans }] }}
+            >
+              <RectButton onPress={onPress} style={s.cellDelete}>
+                <IconLabel
+                  styleContainer={[s.swipeButton, tw(theme[actionRight.type])]}
+                  name={actionRight.icon}
+                ></IconLabel>
+              </RectButton>
+            </Animated.View>
+          </View>
+        )
+      }, [])
+
     const ref = React.createRef<any>()
     const width = 88
     return (
@@ -46,36 +117,8 @@ export const RowMobile: React.FC<RowProps> = observer(
         leftThreshold={30}
         rightThreshold={40}
         useNativeAnimations={false}
-        renderRightActions={(progress: any) => {
-          const trans = progress.interpolate({
-            inputRange: [0, 1],
-            outputRange: [width, 0],
-          })
-          const onDelete = () => {
-            ref?.current.close()
-            actDelete.onPress()
-          }
-          return (
-            actDelete && (
-              <View
-                style={{
-                  width,
-                }}
-              >
-                <Animated.View
-                  style={{ flex: 1, transform: [{ translateX: trans }] }}
-                >
-                  <RectButton onPress={onDelete} style={s.cellDelete}>
-                    <IconLabel
-                      styleContainer={s.iconDelete}
-                      name="trash-2"
-                    ></IconLabel>
-                  </RectButton>
-                </Animated.View>
-              </View>
-            )
-          )
-        }}
+        renderLeftActions={renderLeftAction}
+        renderRightActions={renderRightAction}
       >
         <RectButton onPress={onTap}>
           <View
@@ -116,7 +159,7 @@ const s = StyleSheet.create({
   rowMobile: tw("flex-col p-2 items-start"),
   textCellSmall: tw(`${theme.default_text} text-sm`),
   cellDelete: tw("flex-1"),
-  iconDelete: tw(
+  swipeButton: tw(
     `${theme.danger_bg} flex-row flex-1 justify-center items-center`
   ),
 })
