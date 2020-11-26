@@ -5,9 +5,9 @@ const user = new DatabaseService("user")
 
 export const userController = async (instance: Instance) => {
   user.bindInstance(instance)
-  instance.get("/user", user.findAll())
-  instance.get("/user/:q", user.findOne())
+  instance.post("/user/all", user.findAll())
+  instance.post("/user/:id", user.findOne())
   instance.post("/user", user.save())
-  instance.patch("/user/:q", user.save())
-  instance.delete("/user/:q", user.remove())
+  instance.patch("/user/:id", user.save())
+  instance.delete("/user/:id", user.remove())
 }

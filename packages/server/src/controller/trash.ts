@@ -5,7 +5,7 @@ const trash = new DatabaseService("trash")
 
 export const trashController = async (instance: Instance) => {
   trash.bindInstance(instance)
-  instance.get("/trash", trash.findAll())
-  instance.get("/trash/:q", trash.findOne())
-  instance.post("/trash/restore/:q", trash.restore())
+  instance.post("/trash/all", trash.findAll())
+  instance.post("/trash/restore", trash.restore())
+  instance.post("/trash/:id", trash.findOne())
 }

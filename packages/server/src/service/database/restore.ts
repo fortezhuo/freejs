@@ -9,7 +9,10 @@ export const restore = function (this: DatabaseService) {
       const trash = req.database.get("trash")
       const { q, option } = this.onRequestHandler(req)
       if (!q) throw new Exception(400, "Parameter not found")
-      const deleted = await trash.findOne(q)
+
+      const deleted = await trash.find(q)
+
+      /*
 
       if (deleted) {
         const collection = req.database.get(deleted._deletedFrom)
@@ -25,6 +28,7 @@ export const restore = function (this: DatabaseService) {
       } else {
         throw new Exception(400, "No data found")
       }
+      */
     } catch (err) {
       this.onErrorHandler(req, reply, err)
     }
