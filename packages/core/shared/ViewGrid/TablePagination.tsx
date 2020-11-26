@@ -50,26 +50,20 @@ export const TablePagination: React.FC<any> = observer(({ store, page }) => {
 
   return (
     <View style={s.viewPage}>
-      {total ? (
-        <>
-          <Text>{desc}</Text>
-          <View style={s.viewPageNumbers}>
-            {pagination(index, max).map((i: any) => (
-              <TouchableOpacity
-                key={"page_" + random()}
-                disabled={i === "..." || i == page}
-                onPress={() => setPage(i)}
-              >
-                <Text style={[s.textPage, i == index ? s.textPageActive : {}]}>
-                  {i}
-                </Text>
-              </TouchableOpacity>
-            ))}
-          </View>
-        </>
-      ) : (
-        <Text>No Data Found</Text>
-      )}
+      <Text>{desc}</Text>
+      <View style={s.viewPageNumbers}>
+        {pagination(index, max).map((i: any) => (
+          <TouchableOpacity
+            key={"page_" + random()}
+            disabled={i === "..." || i == page}
+            onPress={() => setPage(i)}
+          >
+            <Text style={[s.textPage, i == index ? s.textPageActive : {}]}>
+              {i}
+            </Text>
+          </TouchableOpacity>
+        ))}
+      </View>
     </View>
   )
 })

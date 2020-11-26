@@ -13,6 +13,7 @@ const defaultColor = color(theme.default_text)
 
 export const TableGrid: React.FC<any> = observer(
   ({ store, columns, actions }) => {
+    const _isMobile = store.app.dimension.isMobile
     const [
       isMobile,
       collection = [],
@@ -32,7 +33,7 @@ export const TableGrid: React.FC<any> = observer(
       []
     )
 
-    return total ? (
+    return isMobile === _isMobile ? (
       <TableContent
         store={store}
         isMobile={isMobile}
@@ -51,7 +52,7 @@ export const TableGrid: React.FC<any> = observer(
         }}
       />
     ) : (
-      <Loader dark />
+      <Loader />
     )
   }
 )

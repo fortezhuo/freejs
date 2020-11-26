@@ -2,7 +2,7 @@ import React from "react"
 import { useFocusEffect } from "@react-navigation/native"
 import { useStore, Table } from "../../component"
 import { TableCheckbox } from "../../shared/ViewGrid/TableCheckbox"
-import { get } from "../../request"
+import { GET } from "../../request"
 
 export const useTrash = () => {
   const { trash } = useStore()
@@ -48,7 +48,7 @@ export const useTrash = () => {
         icon: "trash-2",
         type: "danger_bg",
         children: "Delete",
-        onPress: () =>
+        onPress: (params: any) =>
           trash.app?.alert.error({
             title: "Confirmation",
             message: "Do you want to delete these document(s) ?",
@@ -75,7 +75,7 @@ export const useTrash = () => {
         icon: "rotate-ccw",
         type: "primary_2_bg",
         children: "Restore",
-        onPress: () => {
+        onPress: (params: any) => {
           trash.app?.alert.confirm({
             title: "Confirmation",
             message: "Do you want to restore these document(s) ?",
@@ -83,12 +83,15 @@ export const useTrash = () => {
               {
                 label: "OK",
                 type: "primary_1",
-                onPress: () =>
+                onPress: async () => {
+                  const res = await trash.restoreDocument(params)
+                  console.log(res)
                   trash.app?.alert.info({
                     title: "OK",
                     message: "OK Restored",
                     actions: [],
-                  }),
+                  })
+                },
               },
               {
                 label: "Cancel",
@@ -117,7 +120,7 @@ export const useTrash = () => {
     const params = { q: search, page, fields: "-data" }
     try {
       trash.set("isUpdating", true)
-      const { data } = await get(`/api/trash`, params)
+      const { data } = await GET(`/api/trash`, params)
       trash.setData({
         collection: data.result,
         limit: data.limit,

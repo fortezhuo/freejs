@@ -38,14 +38,14 @@ class AppStore {
   checkAuth = async () => {
     try {
       this.set("isLoading", true)
-      const res = await req.get("/api/auth")
+      const res = await req.GET("/api/auth")
       this.set("auth", res.data.result)
     } finally {
       this.set("isLoading", false)
     }
   }
   logout = async () => {
-    await req.get("/api/auth/logout")
+    await req.GET("/api/auth/logout")
     this.set("auth", undefined)
   }
 

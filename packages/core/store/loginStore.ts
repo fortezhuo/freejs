@@ -26,7 +26,7 @@ class LoginStore extends BaseStore {
         throw new Error("Please fill username, password and domain")
       }
 
-      const res = await req.post("/api/auth", { username, password, domain })
+      const res = await req.POST("/api/auth", { username, password, domain })
       this.app?.set("auth", res.data.result)
     } catch (err) {
       this.app?.setError(err)

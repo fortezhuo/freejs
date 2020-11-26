@@ -19,7 +19,7 @@ axios.interceptors.response.use(
   }
 )
 
-export const get = async function (url: string, param?: any) {
+export const GET = async function (url: string, param?: any) {
   return await axios({
     url,
     method: "GET",
@@ -27,12 +27,20 @@ export const get = async function (url: string, param?: any) {
   })
 }
 
-export const post = async function (url: string, data: any, param?: any) {
+export const POST = async function (url: string, data: any, param?: any) {
   return await axios({
     url,
     data,
     method: "POST",
     withCredentials: true,
+    params: { ...param },
+  })
+}
+
+export const DELETE = async function (url: string, param?: any) {
+  return await axios({
+    url,
+    method: "DELETE",
     params: { ...param },
   })
 }

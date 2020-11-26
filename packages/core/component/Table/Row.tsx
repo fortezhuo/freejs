@@ -34,6 +34,11 @@ export const RowMobile: React.FC<RowProps> = observer(
     actionLeft,
     actionRight,
   }) => {
+    const params = {
+      name: store.name,
+      id: data._id_json || data._id_link,
+    }
+
     const onTap = React.useCallback(() => {
       if (data._id_json) {
         ;(async () => {
@@ -55,7 +60,7 @@ export const RowMobile: React.FC<RowProps> = observer(
         })
         const onPress = () => {
           ref?.current.close()
-          actionLeft.onPress()
+          actionLeft.onPress(params)
         }
         return (
           <View
@@ -86,7 +91,7 @@ export const RowMobile: React.FC<RowProps> = observer(
         })
         const onPress = () => {
           ref?.current.close()
-          actionRight.onPress()
+          actionRight.onPress(params)
         }
         return (
           <View

@@ -21,7 +21,7 @@ class DocumentStore extends BaseStore {
   }
 
   get id() {
-    return this.app?.routerParams.id
+    return "" //this.app?.routerParams.id
   }
   async afterEdit() {}
   async afterLoad() {}
@@ -37,7 +37,7 @@ class DocumentStore extends BaseStore {
       this.set("isLoading", true)
       this.data.clear()
       if (this.id.length === 24) {
-        const res = await req.get(`/api/${this.name}/${this.id}`)
+        const res = await req.GET(`/api/${this.name}/${this.id}`)
         this.data.merge(res.data.result)
       }
     } catch (err) {
@@ -50,7 +50,7 @@ class DocumentStore extends BaseStore {
   async save() {
     try {
       this.set("isLoading", true)
-      await req.post(`/api/${this.name}`, this.toJSON(this.data))
+      await req.POST(`/api/${this.name}`, this.toJSON(this.data))
       return true
     } catch (err) {
       this.app?.setError(err)
