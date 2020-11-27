@@ -35,7 +35,7 @@ export class DatabaseService extends BaseService {
     const { params, body: rawBody } = req as {
       [key: string]: any
     }
-    const { _id, ...body } = rawBody || { _id: null }
+    const { _id, _params, ...body } = rawBody || { _id: null }
     let projection: { [key: string]: number } = {}
 
     let {
@@ -45,7 +45,7 @@ export class DatabaseService extends BaseService {
       fields = "",
       limit = 30,
       page = 1,
-    } = body.query ? body : {}
+    } = _params || {}
 
     limit = +`${limit}`
 
@@ -61,8 +61,6 @@ export class DatabaseService extends BaseService {
     })
 
     const q = params.id ? { _id: monkID(params.id) } : query
-
-    console.log("q", q)
 
     return {
       q,
