@@ -3,11 +3,12 @@ import { View, StyleSheet } from "react-native"
 import { tw } from "@free/tailwind"
 import { observer } from "mobx-react-lite"
 import { Modalize } from "react-native-modalize"
-import { Table, Row, Col, Button, Text } from ".."
+import { Table, Button, Text, Loader, Section, Input, Label } from ".."
 import { useRoute } from "@react-navigation/native"
 
 export const BottomSheet: React.FC<any> = observer(({ store }) => {
   const route = useRoute()
+  const [isOpen, setOpen] = React.useState(true)
   const refBottomSheet = React.useRef(null)
   const value = store.temp.get("value") || undefined
 
@@ -16,9 +17,9 @@ export const BottomSheet: React.FC<any> = observer(({ store }) => {
       store.bottomSheet = refBottomSheet.current
     }
   }, [])
-
   const onClosed = React.useCallback(() => {
     store.setTemp({ value: undefined })
+    setOpen(true)
   }, [])
 
   const renderFlatList = React.useCallback((value) => {
@@ -50,41 +51,165 @@ export const BottomSheet: React.FC<any> = observer(({ store }) => {
     }
   }, [])
 
-  const renderChildren = React.useMemo(() => {
-    return (
+  const Children: React.FC<any> = observer(() =>
+    store.isLoading ? (
+      <View style={s.viewLoader}>
+        <Loader dark />
+      </View>
+    ) : (
       <View>
-        <Row>
-          <Col md={2}>
-            <Text>{route.name}</Text>
-          </Col>
-        </Row>
+        <Section label="Search" show={isOpen}>
+          <View style={s.rowSearch}>
+            <Label>Keyword</Label>
+            <Input.Text
+              store={store}
+              model="temp"
+              name="fulltextsearch"
+              placeholder="Please type keyword ..."
+            />
+            <View style={s.viewButton}>
+              <Button
+                icon="search"
+                onPress={() => store.bottomSheet.close()}
+                store={store}
+                type={"single_button_bg"}
+              >
+                Search
+              </Button>
+              <Text style={s.textInfo}>* Slide up for advance search</Text>
+            </View>
+          </View>
+        </Section>
+        <Section label="Advance Search">
+          <View style={s.rowSearch}>
+            <Label>Collection</Label>
+            <Input.Text
+              store={store}
+              model="temp"
+              name="fulltextsearch"
+              placeholder="Please type keyword ..."
+            />
+            <Label>Collection</Label>
+            <Input.Text
+              store={store}
+              model="temp"
+              name="fulltextsearch"
+              placeholder="Please type keyword ..."
+            />
+            <Label>Collection</Label>
+            <Input.Text
+              store={store}
+              model="temp"
+              name="fulltextsearch"
+              placeholder="Please type keyword ..."
+            />
+            <Label>Collection</Label>
+            <Input.Text
+              store={store}
+              model="temp"
+              name="fulltextsearch"
+              placeholder="Please type keyword ..."
+            />
+            <Label>Collection</Label>
+            <Input.Text
+              store={store}
+              model="temp"
+              name="fulltextsearch"
+              placeholder="Please type keyword ..."
+            />
+            <Label>Collection</Label>
+            <Input.Text
+              store={store}
+              model="temp"
+              name="fulltextsearch"
+              placeholder="Please type keyword ..."
+            />
+            <Label>Collection</Label>
+            <Input.Text
+              store={store}
+              model="temp"
+              name="fulltextsearch"
+              placeholder="Please type keyword ..."
+            />
+            <Label>Collection</Label>
+            <Input.Text
+              store={store}
+              model="temp"
+              name="fulltextsearch"
+              placeholder="Please type keyword ..."
+            />
+            <Label>Collection</Label>
+            <Input.Text
+              store={store}
+              model="temp"
+              name="fulltextsearch"
+              placeholder="Please type keyword ..."
+            />
+            <Label>Collection</Label>
+            <Input.Text
+              store={store}
+              model="temp"
+              name="fulltextsearch"
+              placeholder="Please type keyword ..."
+            />
+            <Label>Collection</Label>
+            <Input.Text
+              store={store}
+              model="temp"
+              name="fulltextsearch"
+              placeholder="Please type keyword ..."
+            />
+            <Label>Collection</Label>
+            <Input.Text
+              store={store}
+              model="temp"
+              name="fulltextsearch"
+              placeholder="Please type keyword ..."
+            />
+            <Label>Deleted By</Label>
+            <Input.Text
+              store={store}
+              model="temp"
+              name="fulltextsearch"
+              placeholder="Please type keyword ..."
+            />
+            <Label>Deleted At</Label>
+            <Input.Text
+              store={store}
+              model="temp"
+              name="fulltextsearch"
+              placeholder="Please type keyword ..."
+            />
+            <View style={s.viewButton}>
+              <Button
+                icon="search"
+                onPress={() => store.bottomSheet.close()}
+                store={store}
+                type={"single_button_bg"}
+              >
+                Search
+              </Button>
+            </View>
+          </View>
+        </Section>
       </View>
     )
-  }, [route.name])
+  )
 
   const props: any = {
-    [value ? "flatListProps" : "children"]: value
-      ? renderFlatList(value)
-      : renderChildren,
-  }
-  if (!value) {
-    props["FooterComponent"] = () => (
-      <Button
-        icon="search"
-        style={{ margin: 10 }}
-        onPress={() => store.bottomSheet.close()}
-        store={store}
-        type={"single_button_bg"}
-      >
-        Search
-      </Button>
-    )
+    [value ? "flatListProps" : "children"]: value ? (
+      renderFlatList(value)
+    ) : (
+      <Children />
+    ),
   }
 
   return (
     <Modalize
-      adjustToContentHeight
+      modalTopOffset={80}
+      snapPoint={245}
       onClosed={onClosed}
+      onPositionChange={(position: string) => setOpen(position !== "top")}
       ref={refBottomSheet}
       {...props}
     ></Modalize>
@@ -93,6 +218,10 @@ export const BottomSheet: React.FC<any> = observer(({ store }) => {
 
 const s = StyleSheet.create({
   viewHeader: tw("p-3 border-b border-gray-400 bg-white rounded-t-2xl"),
+  viewButton: tw("mt-8 mb-2"),
   textHeader: tw("text-lg"),
   viewFooter: tw("h-6 border-gray-400 border-t"),
+  viewLoader: tw("items-center content-center", { height: 245 }),
+  rowSearch: tw("px-4 py-3"),
+  textInfo: tw("text-xs mr-1 my-1 font-thin text-red-700"),
 })

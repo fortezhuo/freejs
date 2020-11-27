@@ -42,7 +42,7 @@ export class DatabaseService extends BaseService {
       option = {},
       query = {},
       sort = {},
-      fields = "",
+      fields = [],
       limit = 30,
       page = 1,
     } = _params || {}
@@ -53,9 +53,7 @@ export class DatabaseService extends BaseService {
 
     ;(this.disableAuth
       ? []
-      : (fields === "" ? [] : fields.split(",")).concat(
-          this.auth?.fields[0] === "*" ? [] : this.auth?.fields
-        )
+      : fields.concat(this.auth?.fields[0] === "*" ? [] : this.auth?.fields)
     ).forEach((field: string) => {
       projection[field.replace("-", "")] = field.indexOf("-") >= 0 ? 0 : 1
     })

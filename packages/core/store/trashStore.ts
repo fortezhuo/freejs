@@ -19,7 +19,7 @@ class TrashStore extends BaseStore {
     try {
       this.set("isLoading", true)
       if (id.length === 24) {
-        const res = await req.GET(`/api/trash/${id}`)
+        const res = await req.POST(`/api/trash/${id}`, {})
         this.setTemp({ value: res.data.result.data })
       }
     } catch (err) {

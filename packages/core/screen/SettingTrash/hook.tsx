@@ -2,7 +2,7 @@ import React from "react"
 import { useFocusEffect } from "@react-navigation/native"
 import { useStore, Table } from "../../component"
 import { TableCheckbox } from "../../shared/ViewGrid/TableCheckbox"
-import { GET } from "../../request"
+import { POST } from "../../request"
 
 export const useTrash = () => {
   const { trash } = useStore()
@@ -116,11 +116,10 @@ export const useTrash = () => {
   const refActions: any = React.useRef(actions)
   const setCollection = React.useCallback(async () => {
     const [page, search] = trash.getData("page", "search")
-
-    const params = { q: search, page, fields: "-data" }
+    const _params = { query: search, page, fields: ["-data"] }
     try {
       trash.set("isLoading", true)
-      const { data } = await GET(`/api/trash`, params)
+      const { data } = await POST(`/api/trash/all`, { _params })
       trash.setData({
         collection: data.result,
         limit: data.limit,
