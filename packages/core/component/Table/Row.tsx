@@ -42,6 +42,7 @@ export const RowMobile: React.FC<RowProps> = observer(
     const onTap = React.useCallback(() => {
       if (data._id_json) {
         ;(async () => {
+          store.setData({ value: [] })
           await store.loadData({ id: data._id_json })
           store.bottomSheet.open()
         })()

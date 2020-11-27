@@ -7,113 +7,113 @@ import { POST } from "../../request"
 export const useTrash = () => {
   const { trash } = useStore()
   const isReady = !!trash.data.get("page")
-  const columns = React.useMemo(
-    () => [
-      {
-        label: "",
-        name: "_id",
-        filter: false,
-        type: "json",
-        search: ["$text"],
-        style: { width: 30 },
-      },
-      {
-        label: "Collection",
-        name: "_deletedFrom",
-        filter: true,
-        search: ["_deletedFrom"],
-        style: { width: 100 },
-      },
-      {
-        label: "Deleted By",
-        name: "_deletedBy",
-        filter: true,
-        search: ["_deletedBy"],
-        style: { width: 150 },
-      },
-      {
-        label: "Deleted At",
-        name: "_deletedAt",
-        filter: true,
-        type: "datetime",
-        search: [],
-        style: { width: 300 },
-      },
-    ],
-    []
-  )
-  const actions = React.useMemo(
-    () => [
-      {
-        icon: "trash-2",
-        type: "danger_bg",
-        children: "Delete",
-        onPress: (params: any) =>
-          trash.app?.alert.error({
-            title: "Confirmation",
-            message: "Do you want to delete these document(s) ?",
-            actions: [
-              {
-                label: "OK",
-                type: "primary_1",
-                onPress: () =>
-                  trash.app?.alert.info({
-                    title: "OK",
-                    message: "Document Deleted ",
-                    actions: [],
-                  }),
-              },
-              {
-                label: "Cancel",
-                type: "danger",
-                onPress: () => trash.app?.alert.close(),
-              },
-            ],
-          }),
-      },
-      {
-        icon: "rotate-ccw",
-        type: "primary_2_bg",
-        children: "Restore",
-        onPress: (params: any) => {
-          trash.app?.alert.confirm({
-            title: "Confirmation",
-            message: "Do you want to restore these document(s) ?",
-            actions: [
-              {
-                label: "OK",
-                type: "primary_1",
-                onPress: async () => {
-                  const res = await trash.restoreDocument(params)
-                  console.log(res)
-                  trash.app?.alert.info({
-                    title: "OK",
-                    message: "OK Restored",
-                    actions: [],
-                  })
+  const config = React.useMemo(
+    () => ({
+      search: ["$text"],
+      actions: [
+        {
+          icon: "trash-2",
+          type: "danger_bg",
+          children: "Delete",
+          onPress: (params: any) =>
+            trash.app?.alert.error({
+              title: "Confirmation",
+              message: "Do you want to delete these document(s) ?",
+              actions: [
+                {
+                  label: "OK",
+                  type: "primary_1",
+                  onPress: () =>
+                    trash.app?.alert.info({
+                      title: "OK",
+                      message: "Document Deleted ",
+                      actions: [],
+                    }),
                 },
-              },
-              {
-                label: "Cancel",
-                type: "danger",
-                onPress: () => trash.app?.alert.close(),
-              },
-            ],
-          })
+                {
+                  label: "Cancel",
+                  type: "danger",
+                  onPress: () => trash.app?.alert.close(),
+                },
+              ],
+            }),
         },
-      },
-      {
-        icon: "search",
-        type: "primary_2_bg",
-        children: "Search",
-        onPress: () => {
-          trash.bottomSheet.open()
+        {
+          icon: "rotate-ccw",
+          type: "primary_2_bg",
+          children: "Restore",
+          onPress: (params: any) => {
+            trash.app?.alert.confirm({
+              title: "Confirmation",
+              message: "Do you want to restore these document(s) ?",
+              actions: [
+                {
+                  label: "OK",
+                  type: "primary_1",
+                  onPress: async () => {
+                    const res = await trash.restoreDocument(params)
+                    console.log(res)
+                    trash.app?.alert.info({
+                      title: "OK",
+                      message: "OK Restored",
+                      actions: [],
+                    })
+                  },
+                },
+                {
+                  label: "Cancel",
+                  type: "danger",
+                  onPress: () => trash.app?.alert.close(),
+                },
+              ],
+            })
+          },
         },
-      },
-    ],
+        {
+          icon: "search",
+          type: "primary_2_bg",
+          children: "Search",
+          onPress: () => {
+            trash.bottomSheet.open()
+          },
+        },
+      ],
+      columns: [
+        {
+          label: "",
+          name: "_id",
+          filter: false,
+          type: "json",
+          search: ["$text"],
+          style: { width: 30 },
+        },
+        {
+          label: "Collection",
+          name: "_deletedFrom",
+          filter: true,
+          search: ["_deletedFrom"],
+          style: { width: 100 },
+        },
+        {
+          label: "Deleted By",
+          name: "_deletedBy",
+          filter: true,
+          search: ["_deletedBy"],
+          style: { width: 150 },
+        },
+        {
+          label: "Deleted At",
+          name: "_deletedAt",
+          filter: true,
+          type: "datetime",
+          search: ["_deletedAt"],
+          style: { width: 300 },
+        },
+      ],
+    }),
     []
   )
-  const refActions: any = React.useRef(actions)
+  const refActions: any = React.useRef(config.actions)
   const setCollection = React.useCallback(async () => {
     const [page, search] = trash.getData("page", "search")
     const _params = { query: search, page, fields: ["-data"] }
@@ -165,14 +165,14 @@ export const useTrash = () => {
         trash.set("isUpdating", false)
       }, 1000)
     }
-    refActions.current = actions.filter((action) =>
+    refActions.current = config.actions.filter((action) =>
       isMobile
         ? action.children !== "Delete" && action.children !== "Restore"
         : true
     )
   }, [trash?.app?.dimension.isMobile])
 
-  return { trash, columns, actions, refActions }
+  return { trash, config, refActions }
 }
 
 export const useTableGrid = (store: any, _columns: any) => {

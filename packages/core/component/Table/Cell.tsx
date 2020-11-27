@@ -64,6 +64,7 @@ export const CellDownload: React.FC<CellProps> = ({
 
 export const CellJSON: React.FC<CellProps> = ({ store, style, children }) => {
   const onOpen = React.useCallback(() => {
+    store.setData({ value: [] })
     ;(async () => {
       await store.loadData({ id: children })
     })()

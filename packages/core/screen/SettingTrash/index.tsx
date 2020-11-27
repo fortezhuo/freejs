@@ -8,8 +8,7 @@ import { theme } from "../../config/theme"
 import { useTrash } from "./hook"
 
 const SettingTrash = observer(() => {
-  const { trash, actions, refActions, columns } = useTrash()
-
+  const { trash, config, refActions } = useTrash()
   return (
     <>
       <Layout store={trash} scroll={Platform.OS === "web"}>
@@ -23,12 +22,12 @@ const SettingTrash = observer(() => {
             {trash.isUpdating ? (
               <Loader dark />
             ) : (
-              <TableGrid store={trash} columns={columns} actions={actions} />
+              <TableGrid store={trash} config={config} />
             )}
           </View>
         </View>
       </Layout>
-      <Table.BottomSheet store={trash} />
+      <Table.BottomSheet store={trash} config={config} />
     </>
   )
 })
