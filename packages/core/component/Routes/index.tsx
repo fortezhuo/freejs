@@ -48,7 +48,7 @@ const Routes: React.FC<any> = observer(({ screens }) => {
             ? {
                 name: `View${route.alias ? route.alias : route.name}`,
                 title: route.title,
-                component: "ViewGrid",
+                component: "ViewGrid", //`View${route.alias ? route.alias : route.name}`,
               }
             : []
           const child = route.child

@@ -2,7 +2,7 @@
 export const SettingLog = {
   name: "log",
   button: [],
-  column: [
+  columns: [
     {
       label: "",
       name: "name",
@@ -40,7 +40,7 @@ export const SettingUser = {
   name: "user",
   search: ["username", "fullname", "email"],
   button: ["new", "delete", "filter"],
-  column: [
+  columns: [
     {
       label: "",
       name: "_id",

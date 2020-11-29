@@ -33,6 +33,9 @@ export const ViewGrid = loadable(() => import("@free/core/screen/ViewGrid"), {
   fallback: <Loader />,
 })
 
+export const ViewSettingUser = () => <ViewGrid name={"ViewSettingUser"} />
+export const ViewSettingLog = () => <ViewGrid name={"ViewSettingLog"} />
+
 /*
 export const PageNotFound = loadable(
   () => import("@free/core/screen/PageNotFound"),

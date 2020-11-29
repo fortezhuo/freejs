@@ -4,8 +4,6 @@ import * as req from "../request"
 
 class TrashStore extends BaseStore {
   bottomSheet: any
-  search: string[] | undefined
-  name = "trash"
 
   constructor(app: AppStore) {
     super(app)

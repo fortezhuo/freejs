@@ -44,4 +44,4 @@ const s = StyleSheet.create({
   rowMobile: tw("flex-col"),
 })
 
-export default SettingTrash
+export default ViewGrid

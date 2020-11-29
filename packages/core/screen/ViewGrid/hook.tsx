@@ -1,15 +1,36 @@
 import React from "react"
-import { useFocusEffect } from "@react-navigation/native"
+import { useFocusEffect, useRoute } from "@react-navigation/native"
 import { useStore, Table } from "../../component"
+import * as listConfig from "./config"
 import { TableCheckbox } from "../../shared/ViewGrid/TableCheckbox"
 import { POST } from "../../request"
 
 export const useView = () => {
+  const route = useRoute()
   const { view } = useStore()
-  const isReady = !!view.data.get("page")
-  const config = React.useMemo(
-    () => ({
-      search: ["$text"],
+  const isReady = `View${view.data.get("name")}` === route.name
+
+  useFocusEffect(
+    React.useCallback(() => {
+      view.setData({ name: route.name.replace("View", "") })
+    }, [])
+  )
+
+  const config = React.useMemo(() => {
+    if (!isReady) {
+      return {
+        search: [],
+        actions: [],
+        columns: [],
+      }
+    }
+    const name: string = view.data.get("name")
+    const selected = (listConfig as any)[name]
+
+    return {
+      name: selected.name,
+      search: selected.search,
+      columns: selected.columns,
       actions: [
         {
           icon: "trash-2",
@@ -47,74 +68,45 @@ export const useView = () => {
           },
         },
       ],
-      columns: [
-        {
-          label: "",
-          name: "_id",
-          filter: false,
-          type: "json",
-          search: ["$text"],
-          style: { width: 30 },
-        },
-        {
-          label: "Collection",
-          name: "_deletedFrom",
-          filter: true,
-          search: ["_deletedFrom"],
-          style: { width: 100 },
-        },
-        {
-          label: "Deleted By",
-          name: "_deletedBy",
-          filter: true,
-          search: ["_deletedBy"],
-          style: { width: 150 },
-        },
-        {
-          label: "Deleted At",
-          name: "_deletedAt",
-          filter: true,
-          type: "datetime",
-          search: ["_deletedAt"],
-          style: { width: 300 },
-        },
-      ],
-    }),
-    []
-  )
+    }
+  }, [isReady])
+
   const refActions: any = React.useRef(config.actions)
   const setCollection = React.useCallback(async () => {
-    const [page, search] = view.getData("page", "search")
-    const _params = { query: search, page, fields: ["-data"] }
-    try {
-      view.set("isLoading", true)
-      const { data } = await POST(`/api/view/all`, { _params })
-      view.setData({
-        collection: data.result,
-        limit: data.limit,
-        total: data.total,
-        max: data.max,
-      })
-    } finally {
-      view.set("isLoading", false)
-    }
-  }, [])
-
-  useFocusEffect(
-    React.useCallback(() => {
-      if (!isReady) {
+    if (isReady) {
+      const [page, search] = view.getData("page", "search")
+      const _params = { query: search, page, fields: ["-data"] }
+      try {
+        view.set("isLoading", true)
+        const { data } = await POST(`/api/${config.name}/all`, { _params })
         view.setData({
-          isMobile: view?.app?.dimension.isMobile,
-          page: 1,
-          search: undefined,
+          collection: data.result,
+          limit: data.limit,
+          total: data.total,
+          max: data.max,
         })
+      } finally {
+        view.set("isLoading", false)
       }
+    }
+  }, [isReady])
 
-      return () => {
-        view.data.clear()
+  React.useEffect(() => {
+    const isMobile = view?.app?.dimension.isMobile
+    const _isMobile = view.data.get("isMobile")
+    if (isReady) {
+      if (_isMobile !== isMobile) {
+        view.set("isUpdating", true)
+        view.setData({ isMobile })
+        setTimeout(() => {
+          view.set("isUpdating", false)
+        }, 1000)
       }
-    }, [])
-  )
+      refActions.current = config.actions.filter((action) =>
+        isMobile ? action.children !== "Delete" : true
+      )
+    }
+  }, [view?.app?.dimension.isMobile, isReady])
 
   React.useEffect(() => {
     ;(async () => {
@@ -122,29 +114,15 @@ export const useView = () => {
         await setCollection()
       }
     })()
-  }, [view.data.get("page"), view.data.get("search")])
-
-  React.useEffect(() => {
-    const isMobile = view?.app?.dimension.isMobile
-    const _isMobile = view.data.get("isMobile")
-    if (isReady && _isMobile !== isMobile) {
-      view.set("isUpdating", true)
-      view.setData({ isMobile })
-      setTimeout(() => {
-        view.set("isUpdating", false)
-      }, 1000)
-    }
-    refActions.current = config.actions.filter((action) =>
-      isMobile
-        ? action.children !== "Delete" && action.children !== "Restore"
-        : true
-    )
-  }, [view?.app?.dimension.isMobile])
+  }, [view.data.get("page"), view.data.get("search"), isReady])
 
   return { view, config, refActions }
 }
 
 export const useTableGrid = (store: any, _columns: any) => {
+  const route = useRoute()
+  const isReady = `View${store.data.get("name")}` === route.name
+
   const isMobile = store.app.dimension.isMobile
   const columns = React.useMemo(
     () =>
@@ -163,7 +141,7 @@ export const useTableGrid = (store: any, _columns: any) => {
             }
       ),
 
-    []
+    [isReady]
   )
 
   const keys = React.useMemo(() => {
@@ -180,7 +158,7 @@ export const useTableGrid = (store: any, _columns: any) => {
     }
 
     return key
-  }, [])
+  }, [isReady])
 
   return { columns, keys }
 }
