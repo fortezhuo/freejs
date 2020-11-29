@@ -12,7 +12,18 @@ export const useView = () => {
 
   useFocusEffect(
     React.useCallback(() => {
-      view.setData({ name: route.name.replace("View", "") })
+      if (!isReady) {
+        view.set("isUpdating", true)
+        view.setData({
+          name: route.name.replace("View", ""),
+          isMobile: view?.app?.dimension.isMobile,
+          page: 1,
+          search: undefined,
+        })
+        setTimeout(() => {
+          view.set("isUpdating", false)
+        }, 100)
+      }
     }, [])
   )
 
