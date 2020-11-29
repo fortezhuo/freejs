@@ -5,6 +5,6 @@ export const logController = async (instance: FastifyInstance) => {
   const log = new LogService()
   log.bindInstance(instance)
 
-  instance.get("/log", log.readDir())
-  instance.get("/log/:name", log.download())
+  instance.post("/log/all", log.readDir())
+  instance.post("/log/:name", log.download())
 }

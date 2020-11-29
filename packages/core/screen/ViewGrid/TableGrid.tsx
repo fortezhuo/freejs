@@ -11,49 +11,53 @@ import { TablePagination } from "../../shared/ViewGrid/TablePagination"
 
 const defaultColor = color(theme.default_text)
 
-export const TableGrid: React.FC<any> = observer(
-  ({ store, columns, actions }) => {
-    const [
-      isMobile,
-      collection = [],
-      pageIndex,
-      limit,
-      total,
-      pageMax,
-    ] = store.getData("isMobile", "collection", "page", "limit", "total", "max")
-    const table: any = useTableGrid(store, columns)
-    const columnsFormat = Table.useDefaultColumn(store)
-    const actionDelete = React.useMemo(() => {
-      return actions.filter((action: any) => action.children === "Delete")[0]
-    }, [])
+export const TableGrid: React.FC<any> = observer(({ store, config }) => {
+  const _isMobile = store.app.dimension.isMobile
+  const [
+    isMobile,
+    collection = [],
+    pageIndex,
+    limit,
+    total,
+    pageMax,
+  ] = store.getData("isMobile", "collection", "page", "limit", "total", "max")
+  const table: any = useTableGrid(store, config.columns)
+  const columnsFormat = Table.useDefaultColumn(store)
+  const swipeActions = React.useMemo(
+    () =>
+      config.actions.filter(
+        (action: any) =>
+          action.children === "Delete" || action.children === "Restore"
+      ),
+    []
+  )
 
-    return total ? (
-      <TableContent
-        store={store}
-        isMobile={isMobile}
-        isUpdating={store.isUpdating}
-        data={{
-          ...table,
-          action: actionDelete,
-          columnsFormat,
-          collection,
-        }}
-        page={{
-          index: pageIndex,
-          limit: limit,
-          total: total,
-          max: pageMax,
-        }}
-      />
-    ) : (
-      <Loader dark />
-    )
-  }
-)
+  return isMobile === _isMobile ? (
+    <TableContent
+      store={store}
+      isMobile={_isMobile}
+      isUpdating={store.isUpdating}
+      data={{
+        ...table,
+        actions: swipeActions,
+        columnsFormat,
+        collection,
+      }}
+      page={{
+        index: pageIndex,
+        limit: limit,
+        total: total,
+        max: pageMax,
+      }}
+    />
+  ) : (
+    <Loader />
+  )
+})
 
 const TableContent: React.FC<any> = observer(
   ({ store, isMobile, isUpdating, data, page }) => {
-    const { columns, columnsFormat, collection, action, keys } = data
+    const { columns, columnsFormat, collection, actions, keys } = data
     const TableWrapper = isMobile || isUpdating ? Table.Default : Table.Scroll
     const { headerGroups, prepareRow, page: rows, gotoPage }: any = useTable(
       {
@@ -121,7 +125,8 @@ const TableContent: React.FC<any> = observer(
                 return isMobile ? (
                   <Table.RowMobile
                     store={store}
-                    actDelete={action}
+                    actionLeft={actions[1]}
+                    actionRight={actions[0]}
                     dark={index % 2}
                     data={item.values}
                     keys={keys}
