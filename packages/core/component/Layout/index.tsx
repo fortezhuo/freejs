@@ -33,6 +33,7 @@ export const LayoutFull: React.FC<LayoutProps> = observer(
 
 export const Layout: React.FC<LayoutProps> = observer(
   ({ testID = "Layout", children, scroll, store, style }) => {
+    const isWeb = Platform.OS === "web"
     return (
       <LayoutFull scroll={scroll} store={store}>
         <View style={s.viewWrapper1}></View>
@@ -42,7 +43,7 @@ export const Layout: React.FC<LayoutProps> = observer(
         </View>
         <View style={[s.viewChildren, style]} testID={testID}>
           {children}
-          <View testID="Buffer" style={{ height: 150 }} />
+          {isWeb && <View testID="Buffer" style={{ height: 150 }} />}
         </View>
       </LayoutFull>
     )
