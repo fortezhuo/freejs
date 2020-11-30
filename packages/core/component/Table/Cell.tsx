@@ -31,15 +31,11 @@ export const CellText: React.FC<CellProps> = ({
   )
 }
 
-export const CellLink: React.FC<CellProps> = ({
-  style,
-  name = "link",
-  link,
-}) => {
+export const CellLink: React.FC<CellProps> = ({ style, name, params = {} }) => {
   return (
     <Cell style={style} testID="CellLink">
-      <Link path={link}>
-        <Icon name={name} size={16} color={defaultColor} />
+      <Link name={name} params={params}>
+        <Icon name={"link"} size={16} color={defaultColor} />
       </Link>
     </Cell>
   )

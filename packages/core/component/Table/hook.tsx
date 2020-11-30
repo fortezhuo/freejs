@@ -1,24 +1,8 @@
 import React from "react"
 import { CellText, CellDownload, CellLink, CellJSON } from "./Cell"
 import { download, date, datetime } from "./helper"
-import dayjs from "dayjs"
 
 export const useDefaultColumn = (store: any) => {
-  /*
-  const onFilterSearch = React.useCallback(() => {
-    const query = entries(store.temp)
-      .filter((values) => values[1] !== "")
-      .map((values) => ({
-        [values[0]]: { $regex: values[1].replace(" ", "|"), $options: "i" },
-      }))
-
-    store.setData({
-      search: query.length === 0 ? undefined : JSON.stringify({ $and: query }),
-      page: 1,
-    })
-  }, [name])
-*/
-
   return {
     Cell: (cell: any) => {
       switch (cell.column.type) {
@@ -26,7 +10,8 @@ export const useDefaultColumn = (store: any) => {
           return (
             <CellLink
               store={store}
-              link={`${store.name}/${cell.value}`}
+              name={store.data.get("route")}
+              params={{ id: cell.value }}
               style={cell.column.style}
             />
           )
@@ -35,7 +20,7 @@ export const useDefaultColumn = (store: any) => {
             <CellDownload
               style={cell.column.style}
               onPress={() => {
-                download(`/api/${store.name}`, cell.value)
+                download(`/api/${store.data.get("name")}`, cell.value)
               }}
             />
           )

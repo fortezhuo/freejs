@@ -1,13 +1,16 @@
 import { BaseStore, action, makeObservable } from "./baseStore"
 import * as req from "../request"
 import { AppStore } from "./appStore"
+import { observable } from "mobx"
 
 class DocumentStore extends BaseStore {
   name: string | undefined
+  id: string = ""
 
   constructor(app: AppStore) {
     super(app)
     makeObservable(this, {
+      id: observable,
       afterEdit: action,
       afterLoad: action,
       beforeEdit: action,
@@ -19,9 +22,6 @@ class DocumentStore extends BaseStore {
     })
   }
 
-  get id() {
-    return "" //this.app?.routerParams.id
-  }
   async afterEdit() {}
   async afterLoad() {}
   async beforeEdit() {}
@@ -36,7 +36,7 @@ class DocumentStore extends BaseStore {
       this.set("isLoading", true)
       this.data.clear()
       if (this.id.length === 24) {
-        const res = await req.GET(`/api/${this.name}/${this.id}`)
+        const res = await req.POST(`/api/${this.name}/${this.id}`, {})
         this.data.merge(res.data.result)
       }
     } catch (err) {

@@ -31,7 +31,6 @@ export const useView = () => {
           name: selected.name,
           fields: selected.fields,
           isMobile: view?.app?.dimension.isMobile,
-          collection: undefined,
           selected: undefined,
           search: undefined,
           isRefresh: undefined,
