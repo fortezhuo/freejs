@@ -1,7 +1,47 @@
+// Setting Trash
+export const SettingTrash = {
+  name: "trash",
+  search: ["$text"],
+  actions: ["Restore", "Delete", "Search"],
+  columns: [
+    {
+      label: "",
+      name: "_id",
+      filter: false,
+      type: "json",
+      search: ["$text"],
+      style: { width: 30 },
+    },
+    {
+      label: "Collection",
+      name: "_deletedFrom",
+      filter: true,
+      search: ["_deletedFrom"],
+      style: { width: 100 },
+    },
+    {
+      label: "Deleted By",
+      name: "_deletedBy",
+      filter: true,
+      search: ["_deletedBy"],
+      style: { width: 150 },
+    },
+    {
+      label: "Deleted At",
+      name: "_deletedAt",
+      filter: true,
+      type: "datetime",
+      search: ["_deletedAt"],
+      style: { width: 300 },
+    },
+  ],
+}
+
 // Setting Log
 export const SettingLog = {
   name: "log",
-  button: [],
+  search: [],
+  actions: [],
   columns: [
     {
       label: "",
@@ -39,7 +79,7 @@ export const SettingLog = {
 export const SettingUser = {
   name: "user",
   search: ["username", "fullname", "email"],
-  button: ["new", "delete", "filter"],
+  actions: ["New", "Delete", "Search"],
   columns: [
     {
       label: "",

@@ -2,22 +2,32 @@ import React from "react"
 import { useFocusEffect, useRoute } from "@react-navigation/native"
 import { useStore, Table } from "../../component"
 import * as listConfig from "./config"
+import * as action from "./action"
 import { TableCheckbox } from "../../shared/ViewGrid/TableCheckbox"
 import { POST } from "../../request"
 
-export const useActions = () => {}
-
 export const useView = () => {
-  const route = useRoute()
   const { view } = useStore()
-  const isReady = `View${view.data.get("name")}` === route.name
+  const route = useRoute()
+  const isReady = `View${view.data.get("route")}` === route.name
+  const actions = React.useMemo(() => {
+    return [
+      action.addNew(view),
+      action.addDelete(view),
+      action.addRestore(view),
+      action.addSearch(view),
+    ]
+  }, [])
 
   useFocusEffect(
     React.useCallback(() => {
       if (!isReady) {
         view.set("isUpdating", true)
+        const routeName = route.name.replace("View", "")
+        const selected = (listConfig as any)[routeName]
         view.setData({
-          name: route.name.replace("View", ""),
+          route: routeName,
+          name: selected.name,
           isMobile: view?.app?.dimension.isMobile,
           page: 1,
           search: undefined,
@@ -37,61 +47,26 @@ export const useView = () => {
         columns: [],
       }
     }
-    const name: string = view.data.get("name")
-    const selected = (listConfig as any)[name]
+    const route = view.data.get("route")
+    const selected = (listConfig as any)[route]
 
     return {
-      name: selected.name,
       search: selected.search,
       columns: selected.columns,
-      actions: [
-        {
-          icon: "trash-2",
-          type: "danger_bg",
-          children: "Delete",
-          onPress: (params: any) =>
-            view.app?.alert.error({
-              title: "Confirmation",
-              message: "Do you want to delete these document(s) ?",
-              actions: [
-                {
-                  label: "OK",
-                  type: "primary_1",
-                  onPress: () =>
-                    view.app?.alert.info({
-                      title: "OK",
-                      message: "Document Deleted ",
-                      actions: [],
-                    }),
-                },
-                {
-                  label: "Cancel",
-                  type: "danger",
-                  onPress: () => view.app?.alert.close(),
-                },
-              ],
-            }),
-        },
-        {
-          icon: "search",
-          type: "primary_2_bg",
-          children: "Search",
-          onPress: () => {
-            view.bottomSheet.open()
-          },
-        },
-      ],
+      actions: actions.filter(
+        (action: any) => selected.actions.indexOf(action.children) >= 0
+      ),
     }
   }, [isReady])
 
   const refActions: any = React.useRef(config.actions)
   const setCollection = React.useCallback(async () => {
     if (isReady) {
-      const [page, search] = view.getData("page", "search")
+      const [name, page, search] = view.getData("name", "page", "search")
       const _params = { query: search, page, fields: ["-data"] }
       try {
         view.set("isLoading", true)
-        const { data } = await POST(`/api/${config.name}/all`, { _params })
+        const { data } = await POST(`/api/${name}/all`, { _params })
         view.setData({
           collection: data.result,
           limit: data.limit,
@@ -115,8 +90,10 @@ export const useView = () => {
           view.set("isUpdating", false)
         }, 300)
       }
-      refActions.current = config.actions.filter((action) =>
-        isMobile ? action.children !== "Delete" : true
+      refActions.current = config.actions.filter((action: any) =>
+        isMobile
+          ? action.children !== "Delete" && action.children !== "Restore"
+          : true
       )
     }
   }, [view?.app?.dimension.isMobile, isReady])
@@ -134,7 +111,7 @@ export const useView = () => {
 
 export const useTableGrid = (store: any, _columns: any) => {
   const route = useRoute()
-  const isReady = `View${store.data.get("name")}` === route.name
+  const isReady = `View${store.data.get("route")}` === route.name
 
   const isMobile = store.app.dimension.isMobile
   const columns = React.useMemo(

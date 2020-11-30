@@ -6,8 +6,8 @@ const getSetting: (visible: boolean) => Route[] = (visible) => {
     {
       name: "SettingTrash",
       title: "Trash Management",
-      view: false,
-      child: true,
+      view: true,
+      child: false,
       visible: visible,
     },
     {

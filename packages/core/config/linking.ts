@@ -14,7 +14,7 @@ export const linking: any = {
           Index: "index",
           ViewSettingUser: "user",
           ViewSettingLog: "log",
-          SettingTrash: "trash",
+          ViewSettingTrash: "trash",
           SettingUser: "user/:id",
         },
       },
