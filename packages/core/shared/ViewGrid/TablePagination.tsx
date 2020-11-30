@@ -48,7 +48,7 @@ export const TablePagination: React.FC<any> = observer(({ store, page }) => {
     store.setData({ page: i })
   }, [])
 
-  return (
+  return total ? (
     <View style={s.viewPage}>
       <Text>{desc}</Text>
       <View style={s.viewPageNumbers}>
@@ -65,6 +65,8 @@ export const TablePagination: React.FC<any> = observer(({ store, page }) => {
         ))}
       </View>
     </View>
+  ) : (
+    <></>
   )
 })
 

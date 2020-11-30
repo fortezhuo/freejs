@@ -163,7 +163,7 @@ export const useTrash = () => {
       trash.setData({ isMobile })
       setTimeout(() => {
         trash.set("isUpdating", false)
-      }, 1000)
+      }, 300)
     }
     refActions.current = config.actions.filter((action) =>
       isMobile

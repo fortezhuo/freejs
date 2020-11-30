@@ -27,7 +27,7 @@ const ViewGrid = observer(() => {
           </View>
         </View>
       </Layout>
-      <Table.BottomSheet store={view} config={config} />
+      {!view.isUpdating && <Table.BottomSheet store={view} config={config} />}
     </>
   )
 })

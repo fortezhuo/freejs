@@ -5,6 +5,8 @@ import * as listConfig from "./config"
 import { TableCheckbox } from "../../shared/ViewGrid/TableCheckbox"
 import { POST } from "../../request"
 
+export const useActions = () => {}
+
 export const useView = () => {
   const route = useRoute()
   const { view } = useStore()
@@ -22,7 +24,7 @@ export const useView = () => {
         })
         setTimeout(() => {
           view.set("isUpdating", false)
-        }, 100)
+        }, 300)
       }
     }, [])
   )
@@ -111,7 +113,7 @@ export const useView = () => {
         view.setData({ isMobile })
         setTimeout(() => {
           view.set("isUpdating", false)
-        }, 1000)
+        }, 300)
       }
       refActions.current = config.actions.filter((action) =>
         isMobile ? action.children !== "Delete" : true
