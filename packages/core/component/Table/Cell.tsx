@@ -62,11 +62,15 @@ export const CellDownload: React.FC<CellProps> = ({
   )
 }
 
-export const CellJSON: React.FC<CellProps> = ({ store, style, children }) => {
+export const CellJSON: React.FC<CellProps> = ({
+  store,
+  style,
+  children: id,
+}) => {
   const onOpen = React.useCallback(() => {
     store.setData({ value: [] })
     ;(async () => {
-      await store.loadData({ id: children })
+      await store.loadData(id)
     })()
 
     store.bottomSheet.open()

@@ -36,12 +36,12 @@ class ViewStore extends BaseStore {
       const _params = { query: { _id: { $in: selectedIds } } }
       try {
         this.set("isLoading", true)
-        this.setData({ isRefresh: true, selected: undefined })
         return await req.DELETE(`/api/${name}`, { _params })
       } catch (err) {
         this.app?.setError(err)
       } finally {
         this.set("isLoading", false)
+        this.setData({ isRefresh: true, selected: undefined, page: 1 })
       }
     }
   }
@@ -54,12 +54,12 @@ class ViewStore extends BaseStore {
       const _params = { query: { _id: { $in: selectedIds } } }
       try {
         this.set("isLoading", true)
-        this.setData({ isRefresh: true, selected: undefined })
         return await req.POST(`/api/${name}/restore`, { _params })
       } catch (err) {
         this.app?.setError(err)
       } finally {
         this.set("isLoading", false)
+        this.setData({ isRefresh: true, selected: undefined, page: 1 })
       }
     }
   }

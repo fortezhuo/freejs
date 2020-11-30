@@ -110,16 +110,19 @@ export const useView = () => {
 
   React.useEffect(() => {
     ;(async () => {
-      if (isReady || !!view.data.get("isRefresh")) {
+      if (isReady) {
         await setCollection()
       }
     })()
-  }, [
-    view.data.get("page"),
-    view.data.get("search"),
-    view.data.get("isRefresh"),
-    isReady,
-  ])
+  }, [view.data.get("page"), view.data.get("search"), isReady])
+
+  React.useEffect(() => {
+    ;(async () => {
+      if (!!view.data.get("isRefresh")) {
+        await setCollection()
+      }
+    })()
+  }, [view.data.get("isRefresh")])
 
   return { view, config, refActions }
 }
