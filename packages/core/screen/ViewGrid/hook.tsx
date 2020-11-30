@@ -10,7 +10,6 @@ export const useView = () => {
   const { view } = useStore()
   const navRoute = useRoute()
   const isReady = view.data.get("route") === navRoute.name
-  const isLocked = view.getData("isLocked") || false
 
   const actions = React.useMemo(() => {
     return [
@@ -25,12 +24,12 @@ export const useView = () => {
     React.useCallback(() => {
       if (!isReady) {
         view.set("isUpdating", true)
-        const [page, search] = view.getData("page", "search")
+        const [page = 1, search] = view.getTemp("page", "search")
         const routeName = navRoute.name
         const selected = (listConfig as any)[routeName]
         view.setData({
-          page: isLocked ? page : 1,
-          search: isLocked ? search : undefined,
+          page,
+          search,
           route: routeName,
           name: selected.name,
           fields: selected.fields,
@@ -38,8 +37,8 @@ export const useView = () => {
           collection: undefined,
           selected: undefined,
           isRefresh: undefined,
-          isLocked: undefined,
         })
+        view.temp.clear()
         setTimeout(() => {
           view.set("isUpdating", false)
         }, 300)
@@ -47,7 +46,9 @@ export const useView = () => {
 
       return () => {
         if (navRoute.name === view.data.get("route")) {
-          view.setData({ route: "OpenChild", isLocked: true })
+          const [page, search] = view.getData("page", "search")
+          view.setData({ route: "OpenChild" })
+          view.setTemp({ page, search })
         }
       }
     }, [])
