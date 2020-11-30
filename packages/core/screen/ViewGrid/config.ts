@@ -1,5 +1,5 @@
 // Setting Trash
-export const SettingTrash = {
+export const ViewSettingTrash = {
   name: "trash",
   fields: ["-data"],
   search: ["$text"],
@@ -39,7 +39,7 @@ export const SettingTrash = {
 }
 
 // Setting Log
-export const SettingLog = {
+export const ViewSettingLog = {
   name: "log",
   fields: [],
   search: [],
@@ -78,7 +78,7 @@ export const SettingLog = {
 }
 
 // Setting user
-export const SettingUser = {
+export const ViewSettingUser = {
   name: "user",
   search: ["username", "fullname", "email"],
   fields: [],

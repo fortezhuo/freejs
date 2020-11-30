@@ -8,8 +8,10 @@ import { POST } from "../../request"
 
 export const useView = () => {
   const { view } = useStore()
-  const route = useRoute()
-  const isReady = `View${view.data.get("route")}` === route.name
+  const navRoute = useRoute()
+  const isReady = view.data.get("route") === navRoute.name
+  const isLocked = view.getData("isLocked") || false
+
   const actions = React.useMemo(() => {
     return [
       action.addNew(view),
@@ -23,21 +25,30 @@ export const useView = () => {
     React.useCallback(() => {
       if (!isReady) {
         view.set("isUpdating", true)
-        const routeName = route.name.replace("View", "")
+        const [page, search] = view.getData("page", "search")
+        const routeName = navRoute.name
         const selected = (listConfig as any)[routeName]
         view.setData({
-          page: 1,
+          page: isLocked ? page : 1,
+          search: isLocked ? search : undefined,
           route: routeName,
           name: selected.name,
           fields: selected.fields,
           isMobile: view?.app?.dimension.isMobile,
+          collection: undefined,
           selected: undefined,
-          search: undefined,
           isRefresh: undefined,
+          isLocked: undefined,
         })
         setTimeout(() => {
           view.set("isUpdating", false)
         }, 300)
+      }
+
+      return () => {
+        if (navRoute.name === view.data.get("route")) {
+          view.setData({ route: "OpenChild", isLocked: true })
+        }
       }
     }, [])
   )

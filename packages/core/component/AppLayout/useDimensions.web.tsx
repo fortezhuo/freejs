@@ -31,9 +31,9 @@ export const useDimensions = () => {
       user.style.display = title.indexOf("::") < 0 ? "none" : "flex"
 
       setTimeout(() => {
-        const buffer: any = document.querySelector('div[data-testid="Buffer"]')
-        buffer.style.display = title.indexOf("::") > 0 ? "none" : "flex"
-      }, 300)
+        //        const buffer: any = document.querySelector('div[data-testid="Buffer"]')
+        //        buffer.style.display = title.indexOf("::") > 0 ? "none" : "flex"
+      }, 500)
     }
   }, [])
 
