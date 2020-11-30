@@ -7,7 +7,7 @@ export const addDelete = (store: any) => ({
   icon: "trash-2",
   type: "danger_bg",
   children: "Delete",
-  onPress: (params: any) =>
+  onPress: ({ id }: any) =>
     store.app?.alert.error({
       title: "Confirmation",
       message: "Do you want to delete these document(s) ?",
@@ -15,12 +15,14 @@ export const addDelete = (store: any) => ({
         {
           label: "OK",
           type: "primary_1",
-          onPress: () =>
+          onPress: async () => {
+            const res = await store.deleteDocument(id)
             store.app?.alert.info({
               title: "OK",
               message: "Document Deleted ",
               actions: [],
-            }),
+            })
+          },
         },
         {
           label: "Cancel",
@@ -35,7 +37,7 @@ export const addRestore = (store: any) => ({
   icon: "rotate-ccw",
   type: "primary_2_bg",
   children: "Restore",
-  onPress: (params: any) => {
+  onPress: ({ id }: any) =>
     store.app?.alert.confirm({
       title: "Confirmation",
       message: "Do you want to restore these document(s) ?",
@@ -44,8 +46,7 @@ export const addRestore = (store: any) => ({
           label: "OK",
           type: "primary_1",
           onPress: async () => {
-            const res = await store.restoreDocument(params)
-            console.log(res)
+            const res = await store.restoreDocument(id)
             store.app?.alert.info({
               title: "OK",
               message: "OK Restored",
@@ -59,8 +60,7 @@ export const addRestore = (store: any) => ({
           onPress: () => store.app?.alert.close(),
         },
       ],
-    })
-  },
+    }),
 })
 export const addSearch = (store: any) => ({
   icon: "search",

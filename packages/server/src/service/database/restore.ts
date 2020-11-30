@@ -1,3 +1,4 @@
+import { id as monkID } from "monk"
 import { Request, Reply } from "@free/server"
 import { Exception } from "../../util/exception"
 import { DatabaseService } from "."
@@ -7,28 +8,37 @@ export const restore = function (this: DatabaseService) {
     reply.statusCode = 200
     try {
       const trash = req.database.get("trash")
-      const { q, option } = this.onRequestHandler(req)
+      const { q } = this.onRequestHandler(req)
       if (!q) throw new Exception(400, "Parameter not found")
+      const query = this.disableAuth
+        ? q
+        : {
+            _docAuthors: { $exists: true, $in: this.auth?.context.list },
+            ...q,
+          }
 
-      const deleted = await trash.find(q)
+      let result = []
+      const queue = await trash.find(query, {})
 
-      /*
-
-      if (deleted) {
-        const collection = req.database.get(deleted._deletedFrom)
-        if (await collection.insert(deleted.data)) {
-          await trash.remove(q, option)
-          reply.send({
-            success: true,
-            result: deleted.data,
-          })
-        } else {
-          throw new Exception(400, "Restore failed")
+      if (queue) {
+        for await (let selected of queue) {
+          const collection = req.database.get(selected._deletedFrom)
+          if (await collection.insert(selected.data)) {
+            if (await trash.remove({ _id: monkID(selected._id) })) {
+              result.push(selected._id)
+            }
+          } else {
+            throw new Exception(400, "Restore failed")
+          }
         }
+
+        reply.send({
+          success: true,
+          result: result,
+        })
       } else {
         throw new Exception(400, "No data found")
       }
-      */
     } catch (err) {
       this.onErrorHandler(req, reply, err)
     }

@@ -2,7 +2,13 @@ import React from "react"
 import { View, StyleSheet, TouchableOpacity } from "react-native"
 import { Table, Icon, Text, Loader } from "../../component"
 import { useTableGrid, useSelection } from "./hook"
-import { useTable, usePagination, useRowSelect, useSortBy } from "react-table"
+import {
+  useTable,
+  usePagination,
+  useRowSelect,
+  useSortBy,
+  useMountedLayoutEffect,
+} from "react-table"
 import { FlatList } from "react-native-gesture-handler"
 import { observer } from "mobx-react-lite"
 import { theme } from "../../config/theme"
@@ -59,7 +65,13 @@ const TableContent: React.FC<any> = observer(
   ({ store, isMobile, isUpdating, data, page }) => {
     const { columns, columnsFormat, collection, actions, keys } = data
     const TableWrapper = isMobile || isUpdating ? Table.Default : Table.Scroll
-    const { headerGroups, prepareRow, page: rows, gotoPage }: any = useTable(
+    const {
+      headerGroups,
+      prepareRow,
+      selectedFlatRows,
+      page: rows,
+      gotoPage,
+    }: any = useTable(
       {
         columns,
         data: collection,
@@ -73,6 +85,12 @@ const TableContent: React.FC<any> = observer(
       useRowSelect,
       useSelection
     )
+
+    useMountedLayoutEffect(() => {
+      store.setData({
+        selected: selectedFlatRows.map((row: any) => row.original._id),
+      })
+    }, [selectedFlatRows])
 
     return (
       <>

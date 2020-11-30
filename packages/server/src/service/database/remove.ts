@@ -1,3 +1,4 @@
+import { id as monkID } from "monk"
 import { Request, Reply } from "@free/server"
 import { Exception } from "../../util/exception"
 import { DatabaseService } from "."
@@ -8,10 +9,9 @@ export const remove = function (this: DatabaseService) {
     try {
       const collection = req.database.get(this.name)
       const trash = req.database.get("trash")
-
       await trash.createIndex({ "$**": "text" })
 
-      const { q, option } = this.onRequestHandler(req)
+      const { q } = this.onRequestHandler(req)
       if (!q) throw new Exception(400, "Parameter not found")
 
       const query = this.disableAuth
@@ -22,29 +22,34 @@ export const remove = function (this: DatabaseService) {
           }
 
       let data
-      const wantDelete = await collection.findOne(query, {})
+      let result = []
+      const queue = await collection.find(query, {})
+      if (queue) {
+        for await (let selected of queue) {
+          data = {
+            data: selected,
+            _deletedAt: new Date(),
+            _deletedBy: this.auth?.username,
+            _deletedFrom: this.name,
+            _docAuthors: ["Admin"],
+            _docReaders: ["Admin"],
+          }
 
-      if (wantDelete) {
-        data = {
-          data: wantDelete,
-          _deletedAt: new Date(),
-          _deletedBy: this.auth?.username,
-          _deletedFrom: this.name,
-          _docAuthors: ["Admin"],
-          _docReaders: ["Admin"],
+          if (await trash.insert(data)) {
+            if (await collection.remove({ _id: monkID(selected._id) })) {
+              result.push(selected._id)
+            }
+          } else {
+            throw new Exception(400, "Move to Trash failed")
+          }
         }
-      } else {
-        throw new Exception(400, "No data found")
-      }
 
-      if (await trash.insert(data)) {
-        const result = await collection.remove(query, option)
         reply.send({
           success: true,
-          result,
+          result: result,
         })
       } else {
-        throw new Exception(400, "Move to Trash failed")
+        throw new Exception(400, "No data found")
       }
     } catch (err) {
       this.onErrorHandler(req, reply, err)

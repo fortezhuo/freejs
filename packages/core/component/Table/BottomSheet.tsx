@@ -139,7 +139,7 @@ export const BottomSheet: React.FC<any> = observer(({ store, config }) => {
                 store={store}
                 type={"disabled_bg"}
               >
-                Cancel
+                Reset
               </Button>
             </View>
           </View>

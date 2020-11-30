@@ -37,9 +37,10 @@ export const POST = async function (url: string, data: any, param?: any) {
   })
 }
 
-export const DELETE = async function (url: string, param?: any) {
+export const DELETE = async function (url: string, data: any, param?: any) {
   return await axios({
     url,
+    data,
     method: "DELETE",
     params: { ...param },
   })

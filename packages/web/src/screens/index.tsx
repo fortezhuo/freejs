@@ -20,14 +20,6 @@ export const SettingUser = loadable(
   }
 )
 
-export const SettingTrash = loadable(
-  () => import("@free/core/screen/SettingTrash"),
-  {
-    ssr: true,
-    fallback: <Loader />,
-  }
-)
-
 export const ViewGrid = loadable(() => import("@free/core/screen/ViewGrid"), {
   ssr: true,
   fallback: <Loader />,

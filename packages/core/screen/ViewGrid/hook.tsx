@@ -26,11 +26,15 @@ export const useView = () => {
         const routeName = route.name.replace("View", "")
         const selected = (listConfig as any)[routeName]
         view.setData({
+          page: 1,
           route: routeName,
           name: selected.name,
+          fields: selected.fields,
           isMobile: view?.app?.dimension.isMobile,
-          page: 1,
+          collection: undefined,
+          selected: undefined,
           search: undefined,
+          isRefresh: undefined,
         })
         setTimeout(() => {
           view.set("isUpdating", false)
@@ -62,8 +66,13 @@ export const useView = () => {
   const refActions: any = React.useRef(config.actions)
   const setCollection = React.useCallback(async () => {
     if (isReady) {
-      const [name, page, search] = view.getData("name", "page", "search")
-      const _params = { query: search, page, fields: ["-data"] }
+      const [name, fields, page, search] = view.getData(
+        "name",
+        "fields",
+        "page",
+        "search"
+      )
+      const _params = { query: search, page, fields }
       try {
         view.set("isLoading", true)
         const { data } = await POST(`/api/${name}/all`, { _params })
@@ -72,6 +81,7 @@ export const useView = () => {
           limit: data.limit,
           total: data.total,
           max: data.max,
+          isRefresh: undefined,
         })
       } finally {
         view.set("isLoading", false)
@@ -100,11 +110,16 @@ export const useView = () => {
 
   React.useEffect(() => {
     ;(async () => {
-      if (isReady) {
+      if (isReady || !!view.data.get("isRefresh")) {
         await setCollection()
       }
     })()
-  }, [view.data.get("page"), view.data.get("search"), isReady])
+  }, [
+    view.data.get("page"),
+    view.data.get("search"),
+    view.data.get("isRefresh"),
+    isReady,
+  ])
 
   return { view, config, refActions }
 }

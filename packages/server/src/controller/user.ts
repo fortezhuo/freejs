@@ -8,6 +8,6 @@ export const userController = async (instance: Instance) => {
   instance.post("/user/all", user.findAll())
   instance.post("/user/:id", user.findOne())
   instance.post("/user", user.save())
+  instance.delete("/user", user.remove())
   instance.patch("/user/:id", user.save())
-  instance.delete("/user/:id", user.remove())
 }

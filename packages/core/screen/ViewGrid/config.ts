@@ -1,6 +1,7 @@
 // Setting Trash
 export const SettingTrash = {
   name: "trash",
+  fields: ["-data"],
   search: ["$text"],
   actions: ["Restore", "Delete", "Search"],
   columns: [
@@ -40,6 +41,7 @@ export const SettingTrash = {
 // Setting Log
 export const SettingLog = {
   name: "log",
+  fields: [],
   search: [],
   actions: [],
   columns: [
@@ -79,6 +81,7 @@ export const SettingLog = {
 export const SettingUser = {
   name: "user",
   search: ["username", "fullname", "email"],
+  fields: [],
   actions: ["New", "Delete", "Search"],
   columns: [
     {

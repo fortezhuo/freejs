@@ -13,49 +13,54 @@ class ViewStore extends BaseStore {
     })
   }
 
-  async loadData(params: any) {
+  async loadData(id: string) {
     const name = this.data.get("name")
-    const { id } = params
-    try {
-      this.set("isLoading", true)
-      if (id.length === 24) {
+    if (id.length === 24) {
+      try {
+        this.set("isLoading", true)
         const res = await req.POST(`/api/${name}/${id}`, {})
         this.setTemp({ value: res.data.result.data })
+      } catch (err) {
+        this.app?.setError(err)
+      } finally {
+        this.set("isLoading", false)
       }
-    } catch (err) {
-      this.app?.setError(err)
-    } finally {
-      this.set("isLoading", false)
     }
   }
 
-  async deleteDocument(params: any) {
-    const name = this.data.get("name")
-    const { id } = params
-    try {
-      this.set("isLoading", true)
-      if (id.length === 24) {
-        return await req.DELETE(`/api/${name}/${id}`)
+  async deleteDocument(id: string) {
+    const [name, selected] = this.getData("name", "selected")
+    const selectedIds = id ? [id] : selected || []
+
+    if (selectedIds.length != 0) {
+      const _params = { query: { _id: { $in: selectedIds } } }
+      try {
+        this.set("isLoading", true)
+        this.setData({ isRefresh: true, selected: undefined })
+        return await req.DELETE(`/api/${name}`, { _params })
+      } catch (err) {
+        this.app?.setError(err)
+      } finally {
+        this.set("isLoading", false)
       }
-    } catch (err) {
-      this.app?.setError(err)
-    } finally {
-      this.set("isLoading", false)
     }
   }
 
-  async restoreDocument(params: any) {
-    const name = this.data.get("name")
-    const { id } = params
-    try {
-      this.set("isLoading", true)
-      if (id.length === 24) {
-        return await req.POST(`/api/${name}/${id}`, {})
+  async restoreDocument(id: string) {
+    const [name, selected] = this.getData("name", "selected")
+    const selectedIds = id ? [id] : selected
+
+    if (selectedIds.length != 0) {
+      const _params = { query: { _id: { $in: selectedIds } } }
+      try {
+        this.set("isLoading", true)
+        this.setData({ isRefresh: true, selected: undefined })
+        return await req.POST(`/api/${name}/restore`, { _params })
+      } catch (err) {
+        this.app?.setError(err)
+      } finally {
+        this.set("isLoading", false)
       }
-    } catch (err) {
-      this.app?.setError(err)
-    } finally {
-      this.set("isLoading", false)
     }
   }
 }
