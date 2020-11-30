@@ -76,8 +76,7 @@ const Routes: React.FC<any> = observer(({ screens }) => {
         formatter: (options, route: any) => {
           const separator =
             route?.name.indexOf("Index") >= 0 ||
-            route?.name.indexOf("View") >= 0 ||
-            route?.name.indexOf("SettingTrash") >= 0
+            route?.name.indexOf("View") >= 0
               ? "::"
               : "-"
           return `${options?.title ?? route?.name} ${separator} ${

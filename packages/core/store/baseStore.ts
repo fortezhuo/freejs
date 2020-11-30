@@ -2,8 +2,6 @@ import { observable, makeObservable, action, ObservableMap, toJS } from "mobx"
 import { AppStore } from "./appStore"
 
 class BaseStore {
-  isForm: boolean | undefined = false
-  title: string | undefined
   app: AppStore | undefined = undefined
   data = new ObservableMap()
   temp = new ObservableMap()

@@ -3,7 +3,6 @@ import * as req from "../request"
 import { AppStore } from "./appStore"
 
 class DocumentStore extends BaseStore {
-  isForm = true
   name: string | undefined
 
   constructor(app: AppStore) {

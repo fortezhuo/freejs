@@ -10,7 +10,6 @@ class AppStore {
   dimension: ObjectAny = {}
   error = undefined
   fatalError = undefined
-  isForm?: boolean = false
   isLoading = false
 
   constructor() {
@@ -18,7 +17,6 @@ class AppStore {
       auth: observable,
       error: observable,
       fatalError: observable,
-      isForm: observable,
       isLoading: observable,
       dimension: observable,
       can: action,
