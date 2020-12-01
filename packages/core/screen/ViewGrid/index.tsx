@@ -7,8 +7,9 @@ import { Layout, ActionGroup, Loader, Table } from "../../component"
 import { theme } from "../../config/theme"
 import { useView } from "./hook"
 
-const ViewGrid = observer(() => {
+const ViewGrid: React.FC<any> = observer(({ navigation }) => {
   const { view, config, refActions } = useView()
+
   return (
     <>
       <Layout store={view} scroll={Platform.OS === "web"}>

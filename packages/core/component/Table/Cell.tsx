@@ -1,5 +1,6 @@
 import React from "react"
-import { Link, Icon, IconButton } from ".."
+import { Icon, IconButton } from ".."
+import { Link } from "./helper"
 import { View, StyleSheet, Text } from "react-native"
 import { theme } from "../../config/theme"
 import { tw, color } from "@free/tailwind"
@@ -36,10 +37,15 @@ export const CellText: React.FC<CellProps> = ({
   )
 }
 
-export const CellLink: React.FC<CellProps> = ({ style, name, params = {} }) => {
+export const CellLink: React.FC<CellProps> = ({
+  store,
+  style,
+  name,
+  params = {},
+}) => {
   return (
     <Cell style={style} testID="CellLink">
-      <Link name={name} params={params}>
+      <Link store={store} name={name} params={params}>
         <Icon name={"link"} size={16} color={defaultColor} />
       </Link>
     </Cell>

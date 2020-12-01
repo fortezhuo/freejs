@@ -1,6 +1,7 @@
 import React from "react"
 import { StyleSheet, View, Animated } from "react-native"
 import { RectButton } from "react-native-gesture-handler"
+import { useNavigation } from "@react-navigation/native"
 import Swipeable from "react-native-gesture-handler/Swipeable"
 import { IconLabel } from ".."
 import { observer } from "mobx-react-lite"
@@ -25,7 +26,6 @@ export const RowData: React.FC<RowProps> = observer(
   ({
     store,
     data,
-    keys,
     children,
     dark,
     isMobile,
@@ -38,6 +38,9 @@ export const RowData: React.FC<RowProps> = observer(
       name: store.name,
       id: data._id_json || data._id_link,
     }
+    const navigation = useNavigation()
+    const ref = React.createRef<any>()
+    const width = 88
 
     const onTap = React.useCallback(() => {
       if (!isMobile) return null
@@ -45,12 +48,17 @@ export const RowData: React.FC<RowProps> = observer(
       if (data._id_json) {
         ;(async () => {
           store.setData({ value: [] })
-          await store.loadData({ id: data._id_json })
+          await store.loadData(data._id_json)
           store.bottomSheet.open()
         })()
       } else {
-        const path = data._id_link ? `${store.name}/${data._id_link}` : null
-        if (path) store?.app.goto(path)
+        try {
+          store.set("isUpdating", true)
+          const route = store.data.get("route").replace("View", "")
+          navigation.navigate(route, { id: data._id_link })
+        } finally {
+          store.set("isUpdating", false)
+        }
       }
     }, [isMobile])
 
@@ -116,8 +124,6 @@ export const RowData: React.FC<RowProps> = observer(
         )
       }, [])
 
-    const ref = React.createRef<any>()
-    const width = 88
     return (
       <Swipeable
         ref={ref}

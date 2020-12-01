@@ -4,6 +4,7 @@ import * as req from "../request"
 
 class ViewStore extends BaseStore {
   bottomSheet: any
+  navigation: any
   constructor(app: AppStore) {
     super(app)
     makeObservable(this, {

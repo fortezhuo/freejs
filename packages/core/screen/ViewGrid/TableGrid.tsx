@@ -151,8 +151,8 @@ const TableContent: React.FC<any> = observer(
                     store={store}
                     data={item.values}
                     isMobile={isMobile}
-                    actionLeft={isMobile && actions[1]}
-                    actionRight={isMobile && actions[0]}
+                    actionLeft={actions[1]}
+                    actionRight={actions[0]}
                     dark={index % 2}
                   >
                     {item.cells.map((cell: any, i: number) => {

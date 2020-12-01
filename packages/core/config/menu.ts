@@ -1,7 +1,7 @@
 import { Menu } from "@free/core"
 import { app } from "../store"
 
-export const getMenu: () => any[] = () => {
+export const getMenu: () => Menu[] = () => {
   const canProfile = app.can("read", "profile")
   const canSetting = app.can("read", "setting")
   return [

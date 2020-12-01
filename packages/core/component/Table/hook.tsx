@@ -18,7 +18,7 @@ export const useDefaultColumn = (store: any, isMobile: boolean, keys: any) => {
           return (
             <CellLink
               store={store}
-              name={store.data.get("route")}
+              name={store.data.get("route").replace("View", "")}
               params={{ id: cell.value }}
               style={cell.column.style}
             />

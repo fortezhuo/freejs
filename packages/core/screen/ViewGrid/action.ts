@@ -22,6 +22,7 @@ export const addNew = (store: any) => ({
   icon: "file",
   type: "primary_2_bg",
   children: "New",
+  onPress: async ({ id }: any) => {},
 })
 
 export const addDelete = (store: any) => ({
