@@ -16,7 +16,12 @@ import { tw, color } from "@free/tailwind"
 import { TablePagination } from "../../shared/ViewGrid/TablePagination"
 
 const defaultColor = color(theme.default_text)
-const colMobileHidden = ["_id_link", "selection", "_id_json", "download_log"]
+const colMobileHidden = [
+  "_id_link",
+  "selection",
+  "_id_json",
+  "name_download_log",
+]
 
 export const TableGrid: React.FC<any> = observer(({ store, config }) => {
   const _isMobile = store.app.dimension.isMobile

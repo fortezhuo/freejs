@@ -6,7 +6,12 @@ export const useDefaultColumn = (store: any, isMobile: boolean, keys: any) => {
   return {
     Cell: (cell: any) => {
       const name = cell?.column?.id || undefined
-      const prefix = isMobile && name ? `${keys[name].label} : ` : ""
+      const prefix =
+        isMobile &&
+        name.indexOf("name_download_log") < 0 &&
+        name.indexOf("_id") < 0
+          ? `${keys[name].label} : `
+          : ""
 
       switch (cell.column.type) {
         case "link":
