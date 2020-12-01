@@ -50,14 +50,12 @@ export const ViewSettingLog = {
       name: "name",
       type: "download_log",
       style: { width: 36, maxWidth: 36 },
-      isMobileVisible: false,
     },
     {
       label: "Log",
       name: "name",
       type: "string",
       style: { width: 150 },
-      isMobileVisible: true,
     },
     {
       label: "Size",
@@ -65,14 +63,12 @@ export const ViewSettingLog = {
       filter: false,
       search: ["size"],
       style: { width: 150 },
-      isMobileVisible: true,
     },
     {
       label: "Last Modified",
       name: "mtime",
       style: { width: 200 },
       type: "datetime",
-      isMobileVisible: true,
     },
   ],
 }
@@ -90,7 +86,6 @@ export const ViewSettingUser = {
       type: "link",
       path: "user",
       style: { width: 36, maxWidth: 36, marginTop: 1 },
-      isMobileVisible: true,
     },
     {
       label: "User Name",
@@ -98,7 +93,6 @@ export const ViewSettingUser = {
       filter: true,
       search: ["username"],
       style: { width: 150 },
-      isMobileVisible: true,
     },
     {
       label: "Full Name",
@@ -106,7 +100,6 @@ export const ViewSettingUser = {
       filter: true,
       search: ["fullname"],
       style: { width: 300 },
-      isMobileVisible: true,
     },
     {
       label: "Email",
@@ -114,7 +107,6 @@ export const ViewSettingUser = {
       filter: true,
       search: ["email"],
       style: { width: 300 },
-      isMobileVisible: true,
     },
     {
       label: "Roles",
@@ -122,7 +114,6 @@ export const ViewSettingUser = {
       filter: true,
       search: ["roles"],
       style: { width: 200 },
-      isMobileVisible: true,
     },
     {
       label: "Updated At",
@@ -130,14 +121,12 @@ export const ViewSettingUser = {
       type: "datetime",
       filter: false,
       style: { width: 200 },
-      isMobileVisible: true,
     },
     {
       label: "Updated By",
       name: "_updatedBy",
       filter: ["_updatedBy"],
       style: { width: 200 },
-      isMobileVisible: true,
     },
   ],
 }

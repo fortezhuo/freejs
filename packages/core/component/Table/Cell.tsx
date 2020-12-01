@@ -8,25 +8,30 @@ import { CellProps } from "@free/core"
 const defaultColor = color(theme.default_text)
 
 export const Cell: React.FC<CellProps> = ({
+  isMobile,
   children,
   style,
   testID = "Cell",
 }) => {
   return (
-    <View testID={testID} style={[s.viewCell, style]}>
+    <View
+      testID={testID}
+      style={[s.viewCell, isMobile ? s.viewCellSmall : {}, style]}
+    >
       {children}
     </View>
   )
 }
 
 export const CellText: React.FC<CellProps> = ({
+  isMobile,
   children,
   style,
   testID = "CellText",
 }) => {
   return (
-    <Cell style={style} testID={testID}>
-      <Text style={s.textCell}>{children}</Text>
+    <Cell isMobile={isMobile} style={style} testID={testID}>
+      <Text style={isMobile ? s.textCellSmall : s.textCell}>{children}</Text>
     </Cell>
   )
 }
@@ -85,7 +90,9 @@ export const CellJSON: React.FC<CellProps> = ({
 }
 
 const s = StyleSheet.create({
+  viewCellSmall: tw("p-0"),
   viewCell: tw(`p-2 w-40 flex-grow flex-row`),
   cellDelete: tw("flex-1"),
   textCell: tw(theme.default_text),
+  textCellSmall: tw(`${theme.default_text} text-sm`),
 })

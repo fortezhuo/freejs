@@ -23,12 +23,14 @@ export const Row: React.FC<RowProps> = ({
   )
 }
 
-export const RowMobile: React.FC<RowProps> = observer(
+export const RowData: React.FC<RowProps> = observer(
   ({
     store,
     data,
     keys,
+    children,
     dark,
+    isMobile,
     style,
     testID = "RowMobile",
     actionLeft,
@@ -40,6 +42,8 @@ export const RowMobile: React.FC<RowProps> = observer(
     }
 
     const onTap = React.useCallback(() => {
+      if (!isMobile) return null
+
       if (data._id_json) {
         ;(async () => {
           store.setData({ value: [] })
@@ -50,11 +54,13 @@ export const RowMobile: React.FC<RowProps> = observer(
         const path = data._id_link ? `${store.name}/${data._id_link}` : null
         if (path) store?.app.goto(path)
       }
-    }, [])
+    }, [isMobile])
 
     const renderLeftAction =
       actionLeft &&
       React.useCallback((progress: any) => {
+        if (!isMobile) return null
+
         const trans = progress.interpolate({
           inputRange: [0, 1],
           outputRange: [-width, 0],
@@ -86,6 +92,8 @@ export const RowMobile: React.FC<RowProps> = observer(
     const renderRightAction =
       actionRight &&
       React.useCallback((progress: any) => {
+        if (!isMobile) return null
+
         const trans = progress.interpolate({
           inputRange: [0, 1],
           outputRange: [width, 0],
@@ -129,23 +137,15 @@ export const RowMobile: React.FC<RowProps> = observer(
         <RectButton onPress={onTap}>
           <View
             testID={testID}
-            style={[s.viewRow, s.rowMobile, dark ? s.rowDark : {}, style]}
+            style={[
+              s.viewRow,
+              dark ? s.rowDark : {},
+              isMobile ? s.rowMobile : {},
+              style,
+            ]}
           >
-            {Object.keys(data).map((key) => {
-              if (key === "_id_link" || key === "_id_json") return null
-              const label = keys[key].label
-              let value = data[key]
-              switch (keys[key].type) {
-                case "datetime":
-                  value = datetime(value)
-                case "date":
-                  value = date(value)
-              }
-              return key === "_id_link" || key === "_id_json" ? null : (
-                <Text numberOfLines={1} style={s.textCellSmall} key={random()}>
-                  {label + " : " + value}
-                </Text>
-              )
+            {React.Children.map(children, (child: any) => {
+              return React.cloneElement(child, { isMobile })
             })}
           </View>
         </RectButton>

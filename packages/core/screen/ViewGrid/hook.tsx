@@ -140,41 +140,30 @@ export const useView = () => {
 
 export const useTableGrid = (store: any, _columns: any) => {
   const route = useRoute()
-  const isReady = `View${store.data.get("route")}` === route.name
-
-  const isMobile = store.app.dimension.isMobile
+  const isReady = `${store.data.get("route")}` === route.name
   const columns = React.useMemo(
     () =>
-      _columns.map((col: ObjectAny) =>
-        isMobile
-          ? {
-              id: col.type ? `${col.name}_${col.type}` : col.name,
-              accessor: col.name,
-            }
-          : {
-              id: col.type ? `${col.name}_${col.type}` : col.name,
-              Header: col.label,
-              accessor: col.name,
-              style: col.style,
-              type: col.type,
-            }
-      ),
+      _columns.map((col: ObjectAny) => ({
+        id: col.type ? `${col.name}_${col.type}` : col.name,
+        Header: col.label,
+        accessor: col.name,
+        style: col.style,
+        type: col.type,
+      })),
 
     [isReady]
   )
 
   const keys = React.useMemo(() => {
     const key: any = {}
-    if (isMobile) {
-      _columns.forEach((col: any) => {
-        if (col.name !== "_id") {
-          key[col.type ? `${col.name}_${col.type}` : col.name] = {
-            label: col.label,
-            type: col.type,
-          }
+    _columns.forEach((col: any) => {
+      if (col.name !== "_id") {
+        key[col.type ? `${col.name}_${col.type}` : col.name] = {
+          label: col.label,
+          type: col.type,
         }
-      })
-    }
+      }
+    })
 
     return key
   }, [isReady])

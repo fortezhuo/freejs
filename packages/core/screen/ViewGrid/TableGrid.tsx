@@ -42,7 +42,7 @@ export const TableGrid: React.FC<any> = observer(({ store, config }) => {
     <TableContent
       store={store}
       isMobile={_isMobile}
-      isUpdating={store.isUpdating}
+      isLoading={store.isLoading}
       data={{
         ...table,
         actions: swipeActions,
@@ -62,9 +62,9 @@ export const TableGrid: React.FC<any> = observer(({ store, config }) => {
 })
 
 const TableContent: React.FC<any> = observer(
-  ({ store, isMobile, isUpdating, data, page }) => {
+  ({ store, isMobile, isLoading, data, page }) => {
     const { columns, columnsFormat, collection, actions, keys } = data
-    const TableWrapper = isMobile || isUpdating ? Table.Default : Table.Scroll
+    const TableWrapper = isMobile || isLoading ? Table.Default : Table.Scroll
     const {
       headerGroups,
       prepareRow,
@@ -96,43 +96,43 @@ const TableContent: React.FC<any> = observer(
       <>
         <TablePagination store={store} page={{ ...page, goto: gotoPage }} />
         <TableWrapper style={s.viewTable}>
-          {!isMobile &&
-            headerGroups.map((headerGroup: any) => {
-              const { key } = headerGroup.getHeaderGroupProps()
-              return (
-                <Table.Header key={key}>
-                  {headerGroup.headers.map((column: any) => {
-                    const { key } = column.getHeaderProps(
-                      column.getSortByToggleProps()
-                    )
-                    const onPress = React.useCallback((e) => {
-                      return column.canSort
-                        ? column.toggleSortBy(undefined, true)
-                        : {}
-                    }, [])
-                    return (
-                      <TouchableOpacity key={key} onPress={onPress}>
-                        <Table.Cell style={(column as any).style}>
-                          <Text>{column.render("Header")} </Text>
-                          {column.isSorted && (
-                            <Icon
-                              color={defaultColor}
-                              name={
-                                column.isSortedDesc
-                                  ? "chevron-down"
-                                  : "chevron-up"
-                              }
-                              size={16}
-                            />
-                          )}
-                        </Table.Cell>
-                      </TouchableOpacity>
-                    )
-                  })}
-                </Table.Header>
-              )
-            })}
-          {isUpdating ? (
+          {headerGroups.map((headerGroup: any) => {
+            const { key } = headerGroup.getHeaderGroupProps()
+            const style = isMobile ? { height: 0, opacity: 0 } : {}
+            return (
+              <Table.Header key={key} style={style}>
+                {headerGroup.headers.map((column: any) => {
+                  const { key } = column.getHeaderProps(
+                    column.getSortByToggleProps()
+                  )
+                  const onPress = React.useCallback((e) => {
+                    return column.canSort
+                      ? column.toggleSortBy(undefined, true)
+                      : {}
+                  }, [])
+                  return (
+                    <TouchableOpacity key={key} onPress={onPress}>
+                      <Table.Cell style={(column as any).style}>
+                        <Text>{column.render("Header")}</Text>
+                        {column.isSorted && (
+                          <Icon
+                            color={defaultColor}
+                            name={
+                              column.isSortedDesc
+                                ? "chevron-down"
+                                : "chevron-up"
+                            }
+                            size={16}
+                          />
+                        )}
+                      </Table.Cell>
+                    </TouchableOpacity>
+                  )
+                })}
+              </Table.Header>
+            )
+          })}
+          {isLoading ? (
             <Loader dark />
           ) : (
             <FlatList
@@ -140,22 +140,29 @@ const TableContent: React.FC<any> = observer(
               keyExtractor={(row: any) => row.id}
               renderItem={({ item, index }: any) => {
                 prepareRow(item)
-                return isMobile ? (
-                  <Table.RowMobile
+                return (
+                  <Table.RowData
                     store={store}
+                    data={item.values}
+                    isMobile={isMobile}
                     actionLeft={actions[1]}
                     actionRight={actions[0]}
                     dark={index % 2}
-                    data={item.values}
                     keys={keys}
-                  />
-                ) : (
-                  <Table.Row dark={index % 2}>
-                    {item.cells.map((cell: any) => {
+                  >
+                    {item.cells.map((cell: any, i: number) => {
                       const { key } = cell.getCellProps()
-                      return <View key={key}>{cell.render("Cell")}</View>
+                      const isHide =
+                        isMobile &&
+                        (cell.column.id === "_id_link" ||
+                          cell.column.id === "selection")
+                      return (
+                        <View key={key}>
+                          {isHide ? <></> : cell.render("Cell")}
+                        </View>
+                      )
                     })}
-                  </Table.Row>
+                  </Table.RowData>
                 )
               }}
             />
