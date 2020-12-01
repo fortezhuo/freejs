@@ -43,7 +43,6 @@ export const Layout: React.FC<LayoutProps> = observer(
         </View>
         <View style={[s.viewChildren, style]} testID={testID}>
           {children}
-          {isWeb && <View testID="Buffer" style={{ height: 150 }} />}
         </View>
       </LayoutFull>
     )

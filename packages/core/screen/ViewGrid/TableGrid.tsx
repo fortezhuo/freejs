@@ -57,7 +57,7 @@ export const TableGrid: React.FC<any> = observer(({ store, config }) => {
       }}
     />
   ) : (
-    <Loader />
+    <Loader dark />
   )
 })
 

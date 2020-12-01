@@ -41,7 +41,7 @@ export const useView = () => {
         view.temp.clear()
         setTimeout(() => {
           view.set("isUpdating", false)
-        }, 300)
+        }, 1000)
       }
 
       return () => {
@@ -109,7 +109,7 @@ export const useView = () => {
         view.setData({ isMobile })
         setTimeout(() => {
           view.set("isUpdating", false)
-        }, 300)
+        }, 1000)
       }
       refActions.current = config.actions.filter((action: any) =>
         isMobile
