@@ -2,9 +2,12 @@ import React from "react"
 import { CellText, CellDownload, CellLink, CellJSON } from "./Cell"
 import { download, date, datetime } from "./helper"
 
-export const useDefaultColumn = (store: any) => {
+export const useDefaultColumn = (store: any, isMobile: boolean, keys: any) => {
   return {
     Cell: (cell: any) => {
+      const name = cell?.column?.id || undefined
+      const prefix = isMobile && name ? `${keys[name].label} : ` : ""
+
       switch (cell.column.type) {
         case "link":
           return (
@@ -26,12 +29,14 @@ export const useDefaultColumn = (store: any) => {
           )
         case "date":
           return (
-            <CellText style={cell.column.style}>{date(cell.value)}</CellText>
+            <CellText isMobile={isMobile} style={cell.column.style}>
+              {prefix + date(cell.value)}
+            </CellText>
           )
         case "datetime":
           return (
-            <CellText style={cell.column.style}>
-              {datetime(cell.value)}
+            <CellText isMobile={isMobile} style={cell.column.style}>
+              {prefix + datetime(cell.value)}
             </CellText>
           )
         case "json":
@@ -41,7 +46,11 @@ export const useDefaultColumn = (store: any) => {
             </CellJSON>
           )
         default:
-          return <CellText style={cell.column.style}>{cell.value}</CellText>
+          return (
+            <CellText isMobile={isMobile} style={cell.column.style}>
+              {prefix + cell.value}
+            </CellText>
+          )
       }
     },
   }

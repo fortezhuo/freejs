@@ -16,7 +16,7 @@ export const Cell: React.FC<CellProps> = ({
   return (
     <View
       testID={testID}
-      style={[s.viewCell, isMobile ? s.viewCellSmall : {}, style]}
+      style={[s.viewCell, style, isMobile ? s.viewCellSmall : {}]}
     >
       {children}
     </View>
@@ -90,7 +90,7 @@ export const CellJSON: React.FC<CellProps> = ({
 }
 
 const s = StyleSheet.create({
-  viewCellSmall: tw("p-0"),
+  viewCellSmall: tw("p-0 w-full"),
   viewCell: tw(`p-2 w-40 flex-grow flex-row`),
   cellDelete: tw("flex-1"),
   textCell: tw(theme.default_text),

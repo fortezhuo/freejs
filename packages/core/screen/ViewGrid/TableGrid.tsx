@@ -16,6 +16,7 @@ import { tw, color } from "@free/tailwind"
 import { TablePagination } from "../../shared/ViewGrid/TablePagination"
 
 const defaultColor = color(theme.default_text)
+const colMobileHidden = ["_id_link", "selection", "_id_json", "download_log"]
 
 export const TableGrid: React.FC<any> = observer(({ store, config }) => {
   const _isMobile = store.app.dimension.isMobile
@@ -28,7 +29,7 @@ export const TableGrid: React.FC<any> = observer(({ store, config }) => {
     pageMax,
   ] = store.getData("isMobile", "collection", "page", "limit", "total", "max")
   const table: any = useTableGrid(store, config.columns)
-  const columnsFormat = Table.useDefaultColumn(store)
+  const columnsFormat = Table.useDefaultColumn(store, _isMobile, table.keys)
   const swipeActions = React.useMemo(
     () =>
       config.actions.filter(
@@ -63,7 +64,7 @@ export const TableGrid: React.FC<any> = observer(({ store, config }) => {
 
 const TableContent: React.FC<any> = observer(
   ({ store, isMobile, isLoading, data, page }) => {
-    const { columns, columnsFormat, collection, actions, keys } = data
+    const { columns, columnsFormat, collection, actions } = data
     const TableWrapper = isMobile || isLoading ? Table.Default : Table.Scroll
     const {
       headerGroups,
@@ -145,17 +146,14 @@ const TableContent: React.FC<any> = observer(
                     store={store}
                     data={item.values}
                     isMobile={isMobile}
-                    actionLeft={actions[1]}
-                    actionRight={actions[0]}
+                    actionLeft={isMobile && actions[1]}
+                    actionRight={isMobile && actions[0]}
                     dark={index % 2}
-                    keys={keys}
                   >
                     {item.cells.map((cell: any, i: number) => {
                       const { key } = cell.getCellProps()
                       const isHide =
-                        isMobile &&
-                        (cell.column.id === "_id_link" ||
-                          cell.column.id === "selection")
+                        isMobile && colMobileHidden.indexOf(cell.column.id) >= 0
                       return (
                         <View key={key}>
                           {isHide ? <></> : cell.render("Cell")}

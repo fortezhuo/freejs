@@ -1,14 +1,12 @@
 import React from "react"
-import { StyleSheet, View, Text, Animated } from "react-native"
+import { StyleSheet, View, Animated } from "react-native"
 import { RectButton } from "react-native-gesture-handler"
 import Swipeable from "react-native-gesture-handler/Swipeable"
 import { IconLabel } from ".."
 import { observer } from "mobx-react-lite"
-import { random } from "../../util"
 import { theme } from "../../config/theme"
 import { tw } from "@free/tailwind"
 import { RowProps } from "@free/core"
-import { date, datetime } from "./helper"
 
 export const Row: React.FC<RowProps> = ({
   children,
@@ -59,8 +57,6 @@ export const RowData: React.FC<RowProps> = observer(
     const renderLeftAction =
       actionLeft &&
       React.useCallback((progress: any) => {
-        if (!isMobile) return null
-
         const trans = progress.interpolate({
           inputRange: [0, 1],
           outputRange: [-width, 0],
@@ -92,8 +88,6 @@ export const RowData: React.FC<RowProps> = observer(
     const renderRightAction =
       actionRight &&
       React.useCallback((progress: any) => {
-        if (!isMobile) return null
-
         const trans = progress.interpolate({
           inputRange: [0, 1],
           outputRange: [width, 0],
