@@ -6,7 +6,12 @@ const Stack = createStackNavigator()
 
 export const AnonymousRoutes = observer(({ screens }: any) => {
   return (
-    <Stack.Navigator headerMode="none">
+    <Stack.Navigator
+      headerMode="none"
+      screenOptions={{
+        cardStyle: { backgroundColor: "transparent" },
+      }}
+    >
       <Stack.Screen name="Login" component={screens.PageLogin}></Stack.Screen>
     </Stack.Navigator>
   )
