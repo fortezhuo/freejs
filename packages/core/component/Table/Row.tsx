@@ -22,6 +22,120 @@ export const Row: React.FC<RowProps> = ({
   )
 }
 
+const Wrapper: React.FC<any> = observer(
+  ({ store, data, isMobile, actionLeft, actionRight, children }) => {
+    if (!isMobile) return children
+
+    const params = {
+      name: store.name,
+      id: data._id_json || data._id_link,
+    }
+    const ref = React.createRef<any>()
+    const navigation = useNavigation()
+    const width = 88
+    const onTap = React.useCallback(() => {
+      if (!isMobile) return null
+
+      if (data._id_json) {
+        ;(async () => {
+          store.setData({ value: [] })
+          await store.loadData(data._id_json)
+          store.bottomSheet.open()
+        })()
+      } else {
+        store.set("isUpdating", true)
+        const route = store.data.get("route").replace("View", "")
+        navigation.navigate(route, { id: data._id_link })
+      }
+    }, [isMobile])
+
+    const renderLeftAction =
+      actionLeft &&
+      React.useCallback(
+        (progress: any) => {
+          const trans = progress.interpolate({
+            inputRange: [0, 1],
+            outputRange: [-width, 0],
+          })
+          const onPress = () => {
+            ref?.current.close()
+            actionLeft.onPress(params)
+          }
+          return (
+            <View
+              style={{
+                width,
+              }}
+            >
+              <Animated.View
+                style={{ flex: 1, transform: [{ translateX: trans }] }}
+              >
+                <RectButton onPress={onPress} style={s.cellDelete}>
+                  <IconLabel
+                    styleContainer={[s.swipeButton, tw(theme[actionLeft.type])]}
+                    name={actionLeft.icon}
+                  ></IconLabel>
+                </RectButton>
+              </Animated.View>
+            </View>
+          )
+        },
+        [isMobile]
+      )
+
+    const renderRightAction =
+      actionRight &&
+      React.useCallback(
+        (progress: any) => {
+          const trans = progress.interpolate({
+            inputRange: [0, 1],
+            outputRange: [width, 0],
+          })
+          const onPress = () => {
+            ref?.current.close()
+            actionRight.onPress(params)
+          }
+          return (
+            <View
+              style={{
+                width,
+              }}
+            >
+              <Animated.View
+                style={{ flex: 1, transform: [{ translateX: trans }] }}
+              >
+                <RectButton onPress={onPress} style={s.cellDelete}>
+                  <IconLabel
+                    styleContainer={[
+                      s.swipeButton,
+                      tw(theme[actionRight.type]),
+                    ]}
+                    name={actionRight.icon}
+                  ></IconLabel>
+                </RectButton>
+              </Animated.View>
+            </View>
+          )
+        },
+        [isMobile]
+      )
+
+    return (
+      <Swipeable
+        ref={ref}
+        friction={2}
+        leftThreshold={30}
+        rightThreshold={30}
+        useNativeAnimations={false}
+        renderLeftActions={renderLeftAction}
+        renderRightActions={renderRightAction}
+      >
+        <RectButton onPress={onTap}>{children}</RectButton>
+      </Swipeable>
+    )
+  }
+)
+
 export const RowData: React.FC<RowProps> = observer(
   ({
     store,
@@ -34,122 +148,27 @@ export const RowData: React.FC<RowProps> = observer(
     actionLeft,
     actionRight,
   }) => {
-    const params = {
-      name: store.name,
-      id: data._id_json || data._id_link,
-    }
-    const navigation = useNavigation()
-    const ref = React.createRef<any>()
-    const width = 88
-
-    const onTap = React.useCallback(() => {
-      if (!isMobile) return null
-
-      if (data._id_json) {
-        ;(async () => {
-          store.setData({ value: [] })
-          await store.loadData(data._id_json)
-          store.bottomSheet.open()
-        })()
-      } else {
-        try {
-          store.set("isUpdating", true)
-          const route = store.data.get("route").replace("View", "")
-          navigation.navigate(route, { id: data._id_link })
-        } finally {
-          store.set("isUpdating", false)
-        }
-      }
-    }, [isMobile])
-
-    const renderLeftAction =
-      actionLeft &&
-      React.useCallback((progress: any) => {
-        const trans = progress.interpolate({
-          inputRange: [0, 1],
-          outputRange: [-width, 0],
-        })
-        const onPress = () => {
-          ref?.current.close()
-          actionLeft.onPress(params)
-        }
-        return (
-          <View
-            style={{
-              width,
-            }}
-          >
-            <Animated.View
-              style={{ flex: 1, transform: [{ translateX: trans }] }}
-            >
-              <RectButton onPress={onPress} style={s.cellDelete}>
-                <IconLabel
-                  styleContainer={[s.swipeButton, tw(theme[actionLeft.type])]}
-                  name={actionLeft.icon}
-                ></IconLabel>
-              </RectButton>
-            </Animated.View>
-          </View>
-        )
-      }, [])
-
-    const renderRightAction =
-      actionRight &&
-      React.useCallback((progress: any) => {
-        const trans = progress.interpolate({
-          inputRange: [0, 1],
-          outputRange: [width, 0],
-        })
-        const onPress = () => {
-          ref?.current.close()
-          actionRight.onPress(params)
-        }
-        return (
-          <View
-            style={{
-              width,
-            }}
-          >
-            <Animated.View
-              style={{ flex: 1, transform: [{ translateX: trans }] }}
-            >
-              <RectButton onPress={onPress} style={s.cellDelete}>
-                <IconLabel
-                  styleContainer={[s.swipeButton, tw(theme[actionRight.type])]}
-                  name={actionRight.icon}
-                ></IconLabel>
-              </RectButton>
-            </Animated.View>
-          </View>
-        )
-      }, [])
-
     return (
-      <Swipeable
-        ref={ref}
-        friction={2}
-        leftThreshold={30}
-        rightThreshold={40}
-        useNativeAnimations={false}
-        renderLeftActions={renderLeftAction}
-        renderRightActions={renderRightAction}
+      <Wrapper
+        store={store}
+        isMobile={isMobile}
+        actionLeft={actionLeft}
+        actionRight={actionRight}
+        data={data}
       >
-        <RectButton onPress={onTap}>
-          <View
-            testID={testID}
-            style={[
-              s.viewRow,
-              dark ? s.rowDark : {},
-              isMobile ? s.rowMobile : {},
-              style,
-            ]}
-          >
-            {React.Children.map(children, (child: any) => {
-              return React.cloneElement(child, { isMobile })
-            })}
-          </View>
-        </RectButton>
-      </Swipeable>
+        <View
+          testID={testID}
+          style={[
+            isMobile ? s.rowMobile : s.viewRow,
+            dark ? s.rowDark : {},
+            style,
+          ]}
+        >
+          {React.Children.map(children, (child: any) => {
+            return React.cloneElement(child, { isMobile })
+          })}
+        </View>
+      </Wrapper>
     )
   }
 )
@@ -162,7 +181,7 @@ const s = StyleSheet.create({
   viewHeader: tw(`h-12 shadow-md`),
   viewRow: tw(`flex-row flex-no-wrap items-center`),
   rowDark: { backgroundColor: "rgba(0,0,0,0.08)" },
-  rowMobile: tw("flex-col p-2 items-start"),
+  rowMobile: tw("flex-col p-2"),
   textCellSmall: tw(`${theme.default_text} text-sm`),
   cellDelete: tw("flex-1"),
   swipeButton: tw(

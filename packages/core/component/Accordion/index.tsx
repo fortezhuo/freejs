@@ -79,10 +79,7 @@ export const AccordionItem: React.FC<AccordionItemProps> = observer(
           name={icon}
           size={20}
           color={active ? activeColor : defaultColor}
-          styleContainer={[
-            s.viewIconItem,
-            active ? s.itemActive : {},
-          ]}
+          styleContainer={s.viewIconItem}
           styleText={[
             s.textIconItem,
             { color: active ? activeColor : defaultColor },
@@ -103,7 +100,6 @@ const s = StyleSheet.create({
   viewIconItem: tw(`flex-row px-4 py-3 pl-10 items-center`),
   icon: tw("p-2 shadow-md bg-white rounded"),
   iconExpand: tw(theme.accordion_icon_active_border),
-  itemActive: { backgroundColor: "rgba(0,0,0,0.03)" },
   textIconItem: tw(`px-2`),
   textIcon: tw(`px-2`),
 })

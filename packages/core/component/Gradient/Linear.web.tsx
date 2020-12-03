@@ -34,7 +34,7 @@ export const LinearGradient: React.FC<any> = ({
           return color + locationStyle
         })
         .join(","),
-    []
+    [colors]
   )
 
   const getAngle = React.useCallback(() => {

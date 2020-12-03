@@ -1,13 +1,34 @@
 import React from "react"
-import { StyleSheet, ImageBackground } from "react-native"
+import { StyleSheet, View, Text, Image, ScrollView } from "react-native"
 import { SafeAreaView } from "react-native-safe-area-context"
-import { Accordion, AccordionItem, Title } from "../"
+import { Accordion, AccordionItem, Link, Gradient } from "../"
 import { observer } from "mobx-react-lite"
 import { getMenu } from "../../config/menu"
 import { random } from "../../util"
-import { DrawerContentScrollView } from "@react-navigation/drawer"
 import { tw } from "@free/tailwind"
-import imageSidebar from "../../img/sidebar.jpg"
+import { configApp } from "@free/env"
+import logo from "../../img/logo.png"
+
+const colors = ["bg-gray-300", "bg-gray-300", "bg-gray-300", "bg-gray-500"]
+
+const Logo: React.FC = () => {
+  return <Image source={logo} style={s.imgTitle} />
+}
+
+export const Title: React.FC<any> = observer(
+  ({ testID = "Title", navigation }) => {
+    return (
+      <Link navigation={navigation} testID={testID} name={"Index"}>
+        <View style={s.layoutTitle}>
+          <Logo />
+          <View style={s.groupTitle}>
+            <Text style={s.textTitle}>{configApp.displayName}</Text>
+          </View>
+        </View>
+      </Link>
+    )
+  }
+)
 
 const Content: React.FC<any> = observer((props) => {
   const allowedMenu = getMenu().filter((menu) => menu.visible)
@@ -16,11 +37,8 @@ const Content: React.FC<any> = observer((props) => {
       .name
 
   return (
-    <DrawerContentScrollView
-      {...props}
-      scrollEnabled={true}
-      contentContainerStyle={{ flex: 1 }}
-    >
+    <ScrollView {...props} scrollEnabled={true} stickyHeaderIndices={[0]}>
+      <Title navigation={props.navigation} />
       {allowedMenu.map((menu) => {
         const active = menu.children
           ? menu.children.filter((sub: any) => sub.component === activeName)
@@ -52,31 +70,27 @@ const Content: React.FC<any> = observer((props) => {
           </Accordion>
         )
       })}
-    </DrawerContentScrollView>
+    </ScrollView>
   )
 })
 
 export const Sidebar: React.FC<any> = observer((props) => {
-  React.useEffect(() => {
-    props.setProgress(props.progress)
-  }, [props.progress])
-
   return (
-    <ImageBackground
-      testID="Sidebar"
-      source={imageSidebar}
-      style={s.imageSidebar}
-    >
-      <SafeAreaView style={s.layoutSidebar}>
-        <Title navigation={props.navigation} />
+    <Gradient type="vertical" colors={colors} style={{ flex: 1 }}>
+      <SafeAreaView style={s.layoutSidebar} testID="Sidebar">
         <Content {...props} />
       </SafeAreaView>
-    </ImageBackground>
+    </Gradient>
   )
 })
 
 const s = StyleSheet.create({
-  layoutSidebar: tw(`bg-white-800 flex-1`),
+  layoutSidebar: tw(`flex-1`),
   imageSidebar: tw(`flex-1`),
   rootContent: tw("flex-no-wrap p-1"),
+  layoutTitle: tw(`${colors[0]} flex-row items-center pt-3 pb-4 pl-5`),
+  imgTitle: tw("h-10 w-10 mr-3"),
+  groupTitle: tw("flex-col"),
+  textTitle: tw(`text-xl`),
+  textSubTitle: tw(`text-xs`),
 })

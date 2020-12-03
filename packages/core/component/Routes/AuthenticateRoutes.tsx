@@ -1,10 +1,9 @@
 import React from "react"
-import Animated from "react-native-reanimated"
 import { createDrawerNavigator } from "@react-navigation/drawer"
 import { tw } from "@free/tailwind"
 import { observer } from "mobx-react-lite"
 import { createStackNavigator } from "@react-navigation/stack"
-import { StyleSheet, Platform } from "react-native"
+import { StyleSheet, Platform, View } from "react-native"
 import { Gradient, Header, IconButton, useStore, Sidebar } from ".."
 import { theme } from "../../config/theme"
 import { random } from "../../util"
@@ -13,15 +12,9 @@ const Stack = createStackNavigator()
 const Drawer = createDrawerNavigator()
 const colors = [theme.primary_1_bg, theme.primary_2_bg]
 
-const Screens: React.FC<any> = ({
-  navigation,
-  screens,
-  routes,
-  isMobile,
-  style,
-}) => {
+const Screens: React.FC<any> = ({ navigation, screens, routes, isMobile }) => {
   return (
-    <Animated.View style={[s.screenContainer, style]}>
+    <View style={[s.screenContainer]}>
       <Stack.Navigator
         screenOptions={{
           headerTintColor: "white",
@@ -82,22 +75,12 @@ const Screens: React.FC<any> = ({
           )
         })}
       </Stack.Navigator>
-    </Animated.View>
+    </View>
   )
 }
 
 export const AuthenticateRoutes = observer(({ screens, routes }: any) => {
   const { app } = useStore()
-  const [progress, setProgress] = React.useState(new Animated.Value(0))
-  const scale = Animated.interpolate(progress, {
-    inputRange: [0, 1],
-    outputRange: [1, 0.8],
-  })
-  const animatedStyle = {
-    overflow: (progress as any)._value === 1 ? "hidden" : "scroll",
-    transform: [{ scale }],
-  }
-
   const isMobile = app.dimension.isMobile
   const options =
     Platform.OS === "web"
@@ -105,12 +88,11 @@ export const AuthenticateRoutes = observer(({ screens, routes }: any) => {
       : {
           headerShown: false,
         }
-
   return (
     <Drawer.Navigator
       drawerType={isMobile ? "slide" : "permanent"}
       drawerContent={(props) => {
-        return <Sidebar {...props} setProgress={setProgress} />
+        return <Sidebar {...props} />
       }}
     >
       <Drawer.Screen name="Screens" options={options}>
@@ -120,7 +102,6 @@ export const AuthenticateRoutes = observer(({ screens, routes }: any) => {
             isMobile={isMobile}
             routes={routes}
             screens={screens}
-            style={isMobile ? animatedStyle : {}}
           />
         )}
       </Drawer.Screen>

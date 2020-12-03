@@ -200,11 +200,10 @@ declare module "@free/core" {
   // Layout
   interface LayoutProps extends ViewProps {
     testID?: string
-    animation?: string
-    isLoading?: boolean
     store?: any
     scroll?: boolean
-    stickyHeader?: ReactNode
+    stickyLeft?: ReactNode
+    stickyRight?: ReactNode
   }
 
   // Link
@@ -629,37 +628,21 @@ declare module "react-native-gesture-handler" {
 
   /* GESTURE HANDLERS CLASSES */
 
-  export class NativeViewGestureHandler extends React.Component<
-    NativeViewGestureHandlerProperties
-  > {}
+  export class NativeViewGestureHandler extends React.Component<NativeViewGestureHandlerProperties> {}
 
-  export class TapGestureHandler extends React.Component<
-    TapGestureHandlerProperties
-  > {}
+  export class TapGestureHandler extends React.Component<TapGestureHandlerProperties> {}
 
-  export class LongPressGestureHandler extends React.Component<
-    LongPressGestureHandlerProperties
-  > {}
+  export class LongPressGestureHandler extends React.Component<LongPressGestureHandlerProperties> {}
 
-  export class PanGestureHandler extends React.Component<
-    PanGestureHandlerProperties
-  > {}
+  export class PanGestureHandler extends React.Component<PanGestureHandlerProperties> {}
 
-  export class PinchGestureHandler extends React.Component<
-    PinchGestureHandlerProperties
-  > {}
+  export class PinchGestureHandler extends React.Component<PinchGestureHandlerProperties> {}
 
-  export class RotationGestureHandler extends React.Component<
-    RotationGestureHandlerProperties
-  > {}
+  export class RotationGestureHandler extends React.Component<RotationGestureHandlerProperties> {}
 
-  export class FlingGestureHandler extends React.Component<
-    FlingGestureHandlerProperties
-  > {}
+  export class FlingGestureHandler extends React.Component<FlingGestureHandlerProperties> {}
 
-  export class ForceTouchGestureHandler extends React.Component<
-    ForceTouchGestureHandlerProperties
-  > {}
+  export class ForceTouchGestureHandler extends React.Component<ForceTouchGestureHandlerProperties> {}
 
   /* BUTTONS PROPERTIES */
 
@@ -695,9 +678,7 @@ declare module "react-native-gesture-handler" {
 
   export class RectButton extends React.Component<RectButtonProperties> {}
 
-  export class BorderlessButton extends React.Component<
-    BorderlessButtonProperties
-  > {}
+  export class BorderlessButton extends React.Component<BorderlessButtonProperties> {}
 
   export interface ContainedTouchableProperties {
     containerStyle?: StyleProp<ViewStyle>
@@ -893,9 +874,7 @@ declare module "react-native-gesture-handler/DrawerLayout" {
     velocity?: number
   }
 
-  export default class DrawerLayout extends React.Component<
-    DrawerLayoutProperties
-  > {
+  export default class DrawerLayout extends React.Component<DrawerLayoutProperties> {
     openDrawer: (options?: DrawerMovementOptionType) => void
     closeDrawer: (options?: DrawerMovementOptionType) => void
   }

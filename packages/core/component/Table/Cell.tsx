@@ -1,6 +1,5 @@
 import React from "react"
-import { Icon, IconButton } from ".."
-import { Link } from "./helper"
+import { Icon, IconButton, Link } from ".."
 import { View, StyleSheet, Text } from "react-native"
 import { theme } from "../../config/theme"
 import { tw, color } from "@free/tailwind"

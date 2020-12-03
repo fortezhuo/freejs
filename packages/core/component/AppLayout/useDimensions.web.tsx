@@ -26,8 +26,7 @@ export const useDimensions = () => {
       const user: any = document.querySelector('div[data-testid="MenuUser"]')
       const sidebar: any = document.querySelector('div[data-testid="Sidebar"]')
         ?.parentNode?.parentNode
-
-      sidebar.style.display = title.indexOf("::") < 0 ? "none" : "flex"
+      sidebar.style.width = title.indexOf("::") < 0 ? "0px" : "280px"
       user.style.display = title.indexOf("::") < 0 ? "none" : "flex"
     }
   }, [])
