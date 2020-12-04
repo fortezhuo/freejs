@@ -1,19 +1,9 @@
 import React from "react"
 import { observer } from "mobx-react-lite"
 import { buildLink } from "./helper"
-import { useNavigation } from "@react-navigation/native"
 
 export const Link: React.FC<any> = observer(
-  ({
-    target = "_self",
-    name,
-    params,
-    store,
-    disabled,
-    navigation,
-    children,
-  }) => {
-    navigation = navigation ? navigation : useNavigation()
+  ({ target = "_self", name, params, disabled, navigation, children }) => {
     const path = buildLink(name, params)
 
     return (
@@ -30,12 +20,7 @@ export const Link: React.FC<any> = observer(
         target={target}
         onClick={(e) => {
           e.preventDefault()
-          if (store) {
-            store.set("isUpdating", true)
-            navigation.navigate(name, params)
-          } else {
-            navigation.navigate(name, params)
-          }
+          navigation.navigate(name, params)
         }}
       >
         {children}

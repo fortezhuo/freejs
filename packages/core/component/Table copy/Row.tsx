@@ -1,6 +1,7 @@
 import React from "react"
 import { StyleSheet, View, Animated } from "react-native"
 import { RectButton } from "react-native-gesture-handler"
+import { useNavigation } from "@react-navigation/native"
 import Swipeable from "react-native-gesture-handler/Swipeable"
 import { IconLabel } from ".."
 import { observer } from "mobx-react-lite"
@@ -22,15 +23,7 @@ export const Row: React.FC<RowProps> = ({
 }
 
 const Wrapper: React.FC<any> = observer(
-  ({
-    store,
-    navigation,
-    data,
-    isMobile,
-    actionLeft,
-    actionRight,
-    children,
-  }) => {
+  ({ store, data, isMobile, actionLeft, actionRight, children }) => {
     if (!isMobile) return children
 
     const params = {
@@ -38,6 +31,7 @@ const Wrapper: React.FC<any> = observer(
       id: data._id_json || data._id_link,
     }
     const ref = React.createRef<any>()
+    const navigation = useNavigation()
     const width = 88
     const onTap = React.useCallback(() => {
       if (!isMobile) return null
@@ -143,20 +137,38 @@ const Wrapper: React.FC<any> = observer(
 )
 
 export const RowData: React.FC<RowProps> = observer(
-  ({ children, dark, isMobile, style, testID = "RowMobile" }) => {
+  ({
+    store,
+    data,
+    children,
+    dark,
+    isMobile,
+    style,
+    testID = "RowMobile",
+    actionLeft,
+    actionRight,
+  }) => {
     return (
-      <View
-        testID={testID}
-        style={[
-          isMobile ? s.rowMobile : s.viewRow,
-          dark ? s.rowDark : {},
-          style,
-        ]}
+      <Wrapper
+        store={store}
+        isMobile={isMobile}
+        actionLeft={actionLeft}
+        actionRight={actionRight}
+        data={data}
       >
-        {React.Children.map(children, (child: any) => {
-          return React.cloneElement(child, { isMobile })
-        })}
-      </View>
+        <View
+          testID={testID}
+          style={[
+            isMobile ? s.rowMobile : s.viewRow,
+            dark ? s.rowDark : {},
+            style,
+          ]}
+        >
+          {React.Children.map(children, (child: any) => {
+            return React.cloneElement(child, { isMobile })
+          })}
+        </View>
+      </Wrapper>
     )
   }
 )

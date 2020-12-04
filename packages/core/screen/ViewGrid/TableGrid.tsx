@@ -9,6 +9,7 @@ import {
   useSortBy,
   useMountedLayoutEffect,
 } from "react-table"
+import { useNavigation } from "@react-navigation/native"
 import { FlatList } from "react-native-gesture-handler"
 import { observer } from "mobx-react-lite"
 import { theme } from "../../config/theme"
@@ -33,8 +34,14 @@ export const TableGrid: React.FC<any> = observer(({ store, config }) => {
     total,
     pageMax,
   ] = store.getData("isMobile", "collection", "page", "limit", "total", "max")
+  const navigation = useNavigation()
   const table: any = useTableGrid(store, config.columns)
-  const columnsFormat = Table.useDefaultColumn(store, _isMobile, table.keys)
+  const columnsFormat = Table.useDefaultColumn(
+    store,
+    _isMobile,
+    navigation,
+    table.keys
+  )
   const swipeActions = React.useMemo(
     () =>
       config.actions.filter(
