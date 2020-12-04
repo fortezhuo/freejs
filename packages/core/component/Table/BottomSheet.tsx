@@ -4,11 +4,9 @@ import { tw } from "@free/tailwind"
 import { observer } from "mobx-react-lite"
 import { Modalize } from "react-native-modalize"
 import { Table, Button, Text, Loader, Section, Input, Label } from ".."
-import { useRoute } from "@react-navigation/native"
 import { random } from "../../util"
 
 export const BottomSheet: React.FC<any> = observer(({ store, config }) => {
-  const route = useRoute()
   const [isOpen, setOpen] = React.useState(true)
   const refBottomSheet = React.useRef(null)
   const value = store.temp.get("value") || undefined
@@ -21,7 +19,7 @@ export const BottomSheet: React.FC<any> = observer(({ store, config }) => {
         name: column.type === "json" ? "$text" : column.name,
       })),
     }),
-    [route.name]
+    [config.search, config.columns]
   )
 
   const onClosed = React.useCallback(() => {
@@ -64,34 +62,32 @@ export const BottomSheet: React.FC<any> = observer(({ store, config }) => {
     }
   }, [])
 
-  const buildFullText = React.useCallback(
-    (text: string) => {
-      if (configSearch.simple[0] === "$text") {
-        return { $text: { $search: text } }
-      } else {
-        text = text.replace(" ", "|")
-        return text === ""
-          ? undefined
-          : {
-              $or: (configSearch.simple || []).map((field: string) => ({
-                [field]: { $regex: text, $options: "i" },
-              })),
-            }
-      }
-    },
-    [route.name]
-  )
-
   const onClearSearch = React.useCallback(() => {
     store.setData({ search: undefined })
     store.bottomSheet.close()
   }, [])
 
   const onFullTextSearch = React.useCallback(() => {
-    const fulltext = store.temp.get("fulltextsearch")
-    store.setData({ search: buildFullText(fulltext) })
+    let text = store.temp.get("fulltextsearch")
+    let search: any
+
+    if (configSearch.simple[0] === "$text") {
+      search = { $text: { $search: text } }
+    } else {
+      text = text.replace(" ", "|")
+      search =
+        text === ""
+          ? undefined
+          : {
+              $or: (configSearch.simple || []).map((field: string) => ({
+                [field]: { $regex: text, $options: "i" },
+              })),
+            }
+    }
+
+    store.setData({ search })
     store.bottomSheet.close()
-  }, [])
+  }, [configSearch.simple])
 
   const onAdvanceSearch = React.useCallback(() => {
     let build: any = {}
@@ -106,7 +102,7 @@ export const BottomSheet: React.FC<any> = observer(({ store, config }) => {
     })
     store.setData({ search: build })
     store.bottomSheet.close()
-  }, [route.name])
+  }, [configSearch.advance])
 
   const Children: React.FC<any> = observer(() =>
     store.isLoading ? (
