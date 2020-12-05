@@ -1,24 +1,145 @@
 import React from "react"
-import { useFocusEffect, useRoute } from "@react-navigation/native"
+import {
+  useFocusEffect,
+  useRoute,
+  useNavigation,
+} from "@react-navigation/native"
 import { useStore, Table } from "../../component"
 import * as listConfig from "./config"
-import * as action from "./action"
+
 import { TableCheckbox } from "../../shared/ViewGrid/TableCheckbox"
 import { POST } from "../../request"
+import { useMemo } from "react"
+
+const validateNotEmpty = (store: any, id: string = "") =>
+  new Promise((resolve) => {
+    const selected = store.data.get("selected") || []
+    if (selected.length == 0 && id === "") {
+      store.app?.alert.error({
+        title: "Attention",
+        message: "No document selected",
+        actions: [
+          {
+            label: "OK",
+            type: "danger",
+            onPress: () => store.app?.alert.close(),
+          },
+        ],
+      })
+    } else {
+      resolve(true)
+    }
+  })
+
+const useAction = (view: any) => {
+  const navigation = useNavigation()
+
+  return useMemo(() => {
+    const NEW = {
+      icon: "file",
+      type: "primary_2_bg",
+      children: "New",
+      onPress: async () => {
+        const route = view.data.get("route").replace("View", "")
+        navigation.navigate(route, { id: "new" })
+      },
+    }
+
+    const DELETE = {
+      icon: "trash-2",
+      type: "danger_bg",
+      children: "Delete",
+      onPress: async ({ id }: any) => {
+        if (await validateNotEmpty(view, id)) {
+          view.app?.alert.confirm({
+            title: "Confirmation",
+            message: "Do you want to delete these document(s) ?",
+            actions: [
+              {
+                label: "OK",
+                type: "primary_1",
+                onPress: async () => {
+                  await view.deleteDocument(id)
+                  view.app?.alert.info({
+                    title: "Information",
+                    message: "Document Deleted ",
+                    actions: [
+                      {
+                        label: "OK",
+                        type: "primary_2",
+                        onPress: () => view.app?.alert.close(),
+                      },
+                    ],
+                  })
+                },
+              },
+              {
+                label: "Cancel",
+                type: "danger",
+                onPress: () => view.app?.alert.close(),
+              },
+            ],
+          })
+        }
+      },
+    }
+
+    const RESTORE = {
+      icon: "rotate-ccw",
+      type: "primary_2_bg",
+      children: "Restore",
+      onPress: async ({ id }: any) => {
+        if (await validateNotEmpty(view, id)) {
+          view.app?.alert.confirm({
+            title: "Confirmation",
+            message: "Do you want to restore these document(s) ?",
+            actions: [
+              {
+                label: "OK",
+                type: "primary_1",
+                onPress: async () => {
+                  await view.restoreDocument(id)
+                  view.app?.alert.info({
+                    title: "Information",
+                    message: "OK Restored",
+                    actions: [
+                      {
+                        label: "OK",
+                        type: "primary_2",
+                        onPress: () => view.app?.alert.close(),
+                      },
+                    ],
+                  })
+                },
+              },
+              {
+                label: "Cancel",
+                type: "danger",
+                onPress: () => view.app?.alert.close(),
+              },
+            ],
+          })
+        }
+      },
+    }
+    const SEARCH = {
+      icon: "search",
+      type: "primary_2_bg",
+      children: "Search",
+      onPress: () => {
+        view.bottomSheet.open()
+      },
+    }
+
+    return [NEW, DELETE, RESTORE, SEARCH]
+  }, [])
+}
 
 export const useView = () => {
   const { view } = useStore()
   const navRoute = useRoute()
+  const actions = useAction(view)
   const isReady = view.data.get("route") === navRoute.name
-
-  const actions = React.useMemo(() => {
-    return [
-      action.addNew(view),
-      action.addDelete(view),
-      action.addRestore(view),
-      action.addSearch(view),
-    ]
-  }, [])
 
   useFocusEffect(
     React.useCallback(() => {
@@ -41,7 +162,7 @@ export const useView = () => {
         view.temp.clear()
         setTimeout(() => {
           view.set("isUpdating", false)
-        }, 300)
+        }, 100)
       }
 
       return () => {
@@ -127,7 +248,7 @@ export const useView = () => {
         view.setData({ isMobile })
         setTimeout(() => {
           view.set("isUpdating", false)
-        }, 300)
+        }, 100)
       }
       refActions.current = config.actions.filter((action: any) =>
         isMobile
