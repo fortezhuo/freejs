@@ -30,11 +30,12 @@ class DocumentStore extends BaseStore {
     this.isLoading = false
     this.isUpdating = false
     this.data.clear()
+    this.app?.clearError()
   }
   async onLoad() {
     try {
+      this.clear()
       this.set("isLoading", true)
-      this.data.clear()
       if (this.id.length === 24) {
         const res = await req.POST(`/api/find/${this.name}/${this.id}`, {})
         this.data.merge(res.data.result)

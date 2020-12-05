@@ -21,7 +21,7 @@ const SettingUser: React.FC = observer((props) => {
         store={user}
         stickyLeft={
           <View style={s.viewButton}>
-            <ActionGroup.Large store={user} actions={actions} />
+            <ActionGroup.Large store={user} actions={actions} isMobileHidden />
           </View>
         }
       >

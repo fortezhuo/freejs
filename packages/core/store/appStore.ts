@@ -21,6 +21,7 @@ class AppStore {
       dimension: observable,
       can: action,
       checkAuth: action,
+      clearError: action,
       logout: action,
       set: action,
       setError: action,
@@ -41,6 +42,10 @@ class AppStore {
     } finally {
       this.set("isLoading", false)
     }
+  }
+  clearError = () => {
+    this.set("error", undefined)
+    this.set("fatalError", undefined)
   }
   logout = async () => {
     await req.GET("/api/auth/logout")
