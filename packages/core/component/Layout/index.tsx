@@ -64,7 +64,7 @@ export const Layout: React.FC<LayoutProps> = observer(
 
 const s = StyleSheet.create({
   viewLayout: tw("flex-1"),
-  viewAction: tw("flex-row justify-between px-4 pb-1"),
+  viewAction: tw("flex-row justify-between px-4 pb-1", { height: 48 }),
   viewWrapper1: tw("h-1 absolute"),
   viewWrapper2: tw("w-full h-full absolute flex-1"),
   viewWrapper21: tw("h-20 bg-transparent"),

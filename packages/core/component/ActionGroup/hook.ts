@@ -1,13 +1,15 @@
 import { useCallback } from "react"
+import { useNavigation } from "@react-navigation/native"
 
 export const useEvent = (store: any) => {
+  const navigation = useNavigation()
   const save = useCallback(async () => {
     if (await store.save()) {
-      store.app.goback()
+      navigation.goBack()
     }
   }, [])
   const close = useCallback(() => {
-    store.app.goback()
+    navigation.goBack()
   }, [])
 
   return {

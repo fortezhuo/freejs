@@ -26,21 +26,30 @@ export const remove = function (this: DatabaseService) {
       const queue = await collection.find(query, {})
       if (queue) {
         for await (let selected of queue) {
-          data = {
-            data: selected,
-            _deletedAt: new Date(),
-            _deletedBy: this.auth?.username,
-            _deletedFrom: this.name,
-            _docAuthors: ["Admin"],
-            _docReaders: ["Admin"],
-          }
+          data =
+            this.name === "trash"
+              ? undefined
+              : {
+                  data: selected,
+                  _deletedAt: new Date(),
+                  _deletedBy: this.auth?.username,
+                  _deletedFrom: this.name,
+                  _docAuthors: ["Admin"],
+                  _docReaders: ["Admin"],
+                }
 
-          if (await trash.insert(data)) {
+          if (data) {
+            if (await trash.insert(data)) {
+              if (await collection.remove({ _id: monkID(selected._id) })) {
+                result.push(selected._id)
+              }
+            } else {
+              throw new Exception(400, "Move to Trash failed")
+            }
+          } else {
             if (await collection.remove({ _id: monkID(selected._id) })) {
               result.push(selected._id)
             }
-          } else {
-            throw new Exception(400, "Move to Trash failed")
           }
         }
 

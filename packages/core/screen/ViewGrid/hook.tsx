@@ -104,7 +104,7 @@ export const useView = () => {
       const _params = { query: search, page, fields }
       try {
         view.set("isLoading", true)
-        const { data } = await POST(`/api/${name}/all`, { _params })
+        const { data } = await POST(`/api/find/${name}`, { _params })
         view.setData({
           collection: data.result,
           limit: data.limit,

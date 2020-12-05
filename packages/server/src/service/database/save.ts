@@ -57,7 +57,7 @@ const update = async function (auth: any, collection: any, handler: any) {
   if (!q) throw new Exception(400, "Parameter not found")
 
   const query = {
-    authors: { $exists: true, $in: auth.context.list },
+    _docAuthors: { $exists: true, $in: auth.context.list },
     ...q,
   }
 

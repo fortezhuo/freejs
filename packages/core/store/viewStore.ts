@@ -19,7 +19,7 @@ class ViewStore extends BaseStore {
     if (id.length === 24) {
       try {
         this.set("isLoading", true)
-        const res = await req.POST(`/api/${name}/${id}`, {})
+        const res = await req.POST(`/api/find/${name}/${id}`, {})
         this.setTemp({ value: res.data.result.data })
       } catch (err) {
         this.app?.setError(err)

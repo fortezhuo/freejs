@@ -29,7 +29,7 @@ const ViewGrid: React.FC<any> = observer(() => {
           )}
         </View>
       </Layout>
-      <Table.BottomSheet store={view} config={config} />
+      {!view.isUpdating && <Table.BottomSheet store={view} config={config} />}
     </>
   )
 })

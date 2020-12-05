@@ -36,7 +36,7 @@ class DocumentStore extends BaseStore {
       this.set("isLoading", true)
       this.data.clear()
       if (this.id.length === 24) {
-        const res = await req.POST(`/api/${this.name}/${this.id}`, {})
+        const res = await req.POST(`/api/find/${this.name}/${this.id}`, {})
         this.data.merge(res.data.result)
       }
     } catch (err) {
@@ -47,9 +47,14 @@ class DocumentStore extends BaseStore {
   }
   onEdit() {}
   async save() {
+    const isUpdate = this.id.length === 24
+    const method = isUpdate ? "PATCH" : "POST"
     try {
       this.set("isLoading", true)
-      await req.POST(`/api/${this.name}`, this.toJSON(this.data))
+      await req[method](
+        `/api/${this.name}${isUpdate ? `/${this.id}` : ""}`,
+        this.toJSON(this.data)
+      )
       return true
     } catch (err) {
       this.app?.setError(err)

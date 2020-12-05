@@ -4,11 +4,11 @@ export { Joi }
 export const createSchema = (schema: any) => {
   return Joi.object({
     ...schema,
-    _createdAt: Joi.date().timestamp(),
+    _createdAt: Joi.date().iso(),
     _createdBy: Joi.string(),
     _docAuthors: Joi.array(),
     _docReaders: Joi.array(),
-    _updatedAt: Joi.date().timestamp(),
+    _updatedAt: Joi.date().iso(),
     _updatedBy: Joi.string(),
   })
 }

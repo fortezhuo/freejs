@@ -37,6 +37,16 @@ export const POST = async function (url: string, data: any, param?: any) {
   })
 }
 
+export const PATCH = async function (url: string, data: any, param?: any) {
+  return await axios({
+    url,
+    data,
+    method: "PATCH",
+    withCredentials: true,
+    params: { ...param },
+  })
+}
+
 export const DELETE = async function (url: string, data: any, param?: any) {
   return await axios({
     url,

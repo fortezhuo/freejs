@@ -146,8 +146,6 @@ export const BottomSheet: React.FC<any> = observer(({ store, config }) => {
         <Section label="Advance Search">
           <View style={s.rowSearch}>
             {configSearch.advance.map((column: any) => {
-              console.log(column)
-
               return (
                 <View key={"search_" + random()}>
                   <Label>{column.label}</Label>
