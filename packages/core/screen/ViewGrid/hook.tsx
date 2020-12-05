@@ -67,8 +67,9 @@ export const useView = () => {
     const selected = (listConfig as any)[route]
     const keys: any = {}
     selected.columns.forEach((col: any) => {
-      if (col.name !== "_id") {
+      if (col.type !== "link") {
         keys[col.type ? `${col.name}_${col.type}` : col.name] = {
+          name: col.name,
           label: col.label,
           type: col.type,
         }

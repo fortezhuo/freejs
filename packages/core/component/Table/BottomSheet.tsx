@@ -11,16 +11,19 @@ export const BottomSheet: React.FC<any> = observer(({ store, config }) => {
   const refBottomSheet = React.useRef(null)
   const value = store.temp.get("value") || undefined
 
-  const configSearch = React.useMemo(
-    () => ({
-      simple: config.search,
-      advance: config.columns.map((column: any) => ({
-        label: column.type === "json" ? "Data" : column.label,
-        name: column.type === "json" ? "$text" : column.name,
-      })),
-    }),
-    [config.search, config.columns]
-  )
+  const configSearch = React.useMemo(() => {
+    const { search, keys } = config
+    return {
+      simple: search,
+      advance: Object.keys(keys).map((val: any) => {
+        const column = keys[val]
+        return {
+          label: column.type === "json" ? "Data" : column.label,
+          name: column.type === "json" ? "$text" : column.name,
+        }
+      }),
+    }
+  }, [config.search, Object.keys(config.keys)])
 
   const onClosed = React.useCallback(() => {
     store.setTemp({ value: undefined })
@@ -143,6 +146,8 @@ export const BottomSheet: React.FC<any> = observer(({ store, config }) => {
         <Section label="Advance Search">
           <View style={s.rowSearch}>
             {configSearch.advance.map((column: any) => {
+              console.log(column)
+
               return (
                 <View key={"search_" + random()}>
                   <Label>{column.label}</Label>
