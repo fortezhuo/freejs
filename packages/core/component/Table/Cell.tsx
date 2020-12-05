@@ -1,15 +1,13 @@
 import React from "react"
-import { Icon, IconButton, Link } from ".."
+import { Icon, IconButton, Link, LinkNav } from ".."
 import { View, StyleSheet, Text } from "react-native"
 import { theme } from "../../config/theme"
 import { tw, color } from "@free/tailwind"
 import { CellProps } from "@free/core"
-import { useNavigation } from "@react-navigation/native"
 
 const defaultColor = color(theme.default_text)
 
 export const Cell: React.FC<CellProps> = ({
-  navigation,
   isMobile,
   children,
   style,
@@ -38,19 +36,12 @@ export const CellText: React.FC<CellProps> = ({
   )
 }
 
-export const CellLink: React.FC<CellProps> = ({
-  navigation,
-  style,
-  name,
-  params = {},
-}) => {
-  console.log(navigation)
-
+export const CellLink: React.FC<CellProps> = ({ style, name, params = {} }) => {
   return (
     <Cell style={style} testID="CellLink">
-      <Link navigation={navigation} name={name} params={params}>
+      <LinkNav name={name} params={params}>
         <Icon name={"link"} size={16} color={defaultColor} />
-      </Link>
+      </LinkNav>
     </Cell>
   )
 }

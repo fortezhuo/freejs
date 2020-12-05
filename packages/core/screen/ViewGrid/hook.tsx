@@ -60,14 +60,31 @@ export const useView = () => {
         search: [],
         actions: [],
         columns: [],
+        keys: [],
       }
     }
     const route = view.data.get("route")
     const selected = (listConfig as any)[route]
+    const keys: any = {}
+    selected.columns.forEach((col: any) => {
+      if (col.name !== "_id") {
+        keys[col.type ? `${col.name}_${col.type}` : col.name] = {
+          label: col.label,
+          type: col.type,
+        }
+      }
+    })
 
     return {
       search: selected.search,
-      columns: selected.columns,
+      columns: selected.columns.map((col: ObjectAny) => ({
+        id: col.type ? `${col.name}_${col.type}` : col.name,
+        Header: col.label,
+        accessor: col.name,
+        style: col.style,
+        type: col.type,
+      })),
+      keys,
       actions: actions.filter(
         (action: any) => selected.actions.indexOf(action.children) >= 0
       ),
@@ -136,39 +153,6 @@ export const useView = () => {
   }, [view.data.get("isRefresh")])
 
   return { view, config, refActions }
-}
-
-export const useTableGrid = (store: any, _columns: any) => {
-  const route = useRoute()
-  const isReady = `${store.data.get("route")}` === route.name
-  const columns = React.useMemo(
-    () =>
-      _columns.map((col: ObjectAny) => ({
-        id: col.type ? `${col.name}_${col.type}` : col.name,
-        Header: col.label,
-        accessor: col.name,
-        style: col.style,
-        type: col.type,
-      })),
-
-    [isReady]
-  )
-
-  const keys = React.useMemo(() => {
-    const key: any = {}
-    _columns.forEach((col: any) => {
-      if (col.name !== "_id") {
-        key[col.type ? `${col.name}_${col.type}` : col.name] = {
-          label: col.label,
-          type: col.type,
-        }
-      }
-    })
-
-    return key
-  }, [isReady])
-
-  return { columns, keys }
 }
 
 export const useSelection = (hooks: any) => {

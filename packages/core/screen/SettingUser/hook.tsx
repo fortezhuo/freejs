@@ -14,13 +14,6 @@ export const useHook = () => {
         onPress: async () => await event.save(),
         visible: true,
       },
-      {
-        icon: "log-out",
-        type: "danger_bg",
-        children: "Close",
-        onPress: event.close,
-        visible: true,
-      },
     ]
   }, [])
 

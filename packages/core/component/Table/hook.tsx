@@ -2,12 +2,7 @@ import React from "react"
 import { CellText, CellDownload, CellLink, CellJSON } from "./Cell"
 import { download, date, datetime } from "./helper"
 
-export const useDefaultColumn = (
-  store: any,
-  isMobile: boolean,
-  navigation: any,
-  keys: any
-) => {
+export const useDefaultColumn = (store: any, isMobile: boolean, keys: any) => {
   return {
     Cell: (cell: any) => {
       const name = cell?.column?.id || undefined
@@ -22,7 +17,6 @@ export const useDefaultColumn = (
         case "link":
           return (
             <CellLink
-              navigation={navigation}
               name={store.data.get("route").replace("View", "")}
               params={{ id: cell.value }}
               style={cell.column.style}

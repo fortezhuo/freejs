@@ -1,7 +1,7 @@
 import React from "react"
 import { View, StyleSheet, TouchableOpacity } from "react-native"
 import { Table, Icon, Text, Loader } from "../../component"
-import { useTableGrid, useSelection } from "./hook"
+import { useSelection } from "./hook"
 import {
   useTable,
   usePagination,
@@ -9,7 +9,6 @@ import {
   useSortBy,
   useMountedLayoutEffect,
 } from "react-table"
-import { useNavigation } from "@react-navigation/native"
 import { FlatList } from "react-native-gesture-handler"
 import { observer } from "mobx-react-lite"
 import { theme } from "../../config/theme"
@@ -24,6 +23,26 @@ const colMobileHidden = [
   "name_download_log",
 ]
 
+const TableHeaderCell: React.FC<any> = ({ column }) => {
+  const onPress = React.useCallback((e) => {
+    return column.canSort ? column.toggleSortBy(undefined, true) : {}
+  }, [])
+  return (
+    <TouchableOpacity onPress={onPress}>
+      <Table.Cell style={(column as any).style}>
+        <Text>{column.render("Header")}</Text>
+        {column.isSorted && (
+          <Icon
+            color={defaultColor}
+            name={column.isSortedDesc ? "chevron-down" : "chevron-up"}
+            size={16}
+          />
+        )}
+      </Table.Cell>
+    </TouchableOpacity>
+  )
+}
+
 export const TableGrid: React.FC<any> = observer(({ store, config }) => {
   const _isMobile = store.app.dimension.isMobile
   const [
@@ -34,14 +53,7 @@ export const TableGrid: React.FC<any> = observer(({ store, config }) => {
     total,
     pageMax,
   ] = store.getData("isMobile", "collection", "page", "limit", "total", "max")
-  const navigation = useNavigation()
-  const table: any = useTableGrid(store, config.columns)
-  const columnsFormat = Table.useDefaultColumn(
-    store,
-    _isMobile,
-    navigation,
-    table.keys
-  )
+  const columnsFormat = Table.useDefaultColumn(store, _isMobile, config.keys)
   const swipeActions = React.useMemo(
     () =>
       config.actions.filter(
@@ -57,7 +69,7 @@ export const TableGrid: React.FC<any> = observer(({ store, config }) => {
       isMobile={_isMobile}
       isLoading={store.isLoading}
       data={{
-        ...table,
+        columns: config.columns,
         actions: swipeActions,
         columnsFormat,
         collection,
@@ -74,114 +86,97 @@ export const TableGrid: React.FC<any> = observer(({ store, config }) => {
   )
 })
 
-const TableContent: React.FC<any> = observer(
-  ({ store, isMobile, isLoading, data, page }) => {
-    const { columns, columnsFormat, collection, actions } = data
-    const TableWrapper = isMobile || isLoading ? Table.Default : Table.Scroll
-    const {
-      headerGroups,
-      prepareRow,
-      selectedFlatRows,
-      page: rows,
-      gotoPage,
-    }: any = useTable(
-      {
-        columns,
-        data: collection,
-        initialState: { pageIndex: 1 },
-        manualPagination: true,
-        defaultColumn: columnsFormat,
-        pageCount: page.max,
-      } as any,
-      useSortBy,
-      usePagination,
-      useRowSelect,
-      useSelection
-    )
+const TableContent: React.FC<any> = ({
+  store,
+  isMobile,
+  isLoading,
+  data,
+  page,
+}) => {
+  const { columns, columnsFormat, collection, actions } = data
+  const TableWrapper = isMobile || isLoading ? Table.Default : Table.Scroll
+  const {
+    headerGroups,
+    prepareRow,
+    selectedFlatRows,
+    page: rows,
+    gotoPage,
+  }: any = useTable(
+    {
+      columns,
+      data: collection,
+      initialState: { pageIndex: 1 },
+      manualPagination: true,
+      defaultColumn: columnsFormat,
+      pageCount: page.max,
+    } as any,
+    useSortBy,
+    usePagination,
+    useRowSelect,
+    useSelection
+  )
 
-    useMountedLayoutEffect(() => {
-      store.setData({
-        selected: selectedFlatRows.map((row: any) => row.original._id),
-      })
-    }, [selectedFlatRows])
+  useMountedLayoutEffect(() => {
+    store.setData({
+      selected: selectedFlatRows.map((row: any) => row.original._id),
+    })
+  }, [selectedFlatRows])
 
-    return (
-      <>
-        <TablePagination store={store} page={{ ...page, goto: gotoPage }} />
-        <TableWrapper style={s.viewTable}>
-          {headerGroups.map((headerGroup: any) => {
-            const { key } = headerGroup.getHeaderGroupProps()
-            const style = isMobile ? { height: 0, opacity: 0 } : {}
-            return (
-              <Table.Header key={key} style={style}>
-                {headerGroup.headers.map((column: any) => {
-                  const { key } = column.getHeaderProps(
-                    column.getSortByToggleProps()
-                  )
-                  const onPress = React.useCallback((e) => {
-                    return column.canSort
-                      ? column.toggleSortBy(undefined, true)
-                      : {}
-                  }, [])
-                  return (
-                    <TouchableOpacity key={key} onPress={onPress}>
-                      <Table.Cell style={(column as any).style}>
-                        <Text>{column.render("Header")}</Text>
-                        {column.isSorted && (
-                          <Icon
-                            color={defaultColor}
-                            name={
-                              column.isSortedDesc
-                                ? "chevron-down"
-                                : "chevron-up"
-                            }
-                            size={16}
-                          />
-                        )}
-                      </Table.Cell>
-                    </TouchableOpacity>
-                  )
-                })}
-              </Table.Header>
-            )
-          })}
-          {isLoading ? (
-            <Loader dark />
-          ) : (
-            <FlatList
-              data={rows}
-              keyExtractor={(row: any) => row.id}
-              renderItem={({ item, index }: any) => {
-                prepareRow(item)
-                return (
-                  <Table.RowData
-                    store={store}
-                    data={item.values}
-                    isMobile={isMobile}
-                    actionLeft={isMobile && actions[1]}
-                    actionRight={isMobile && actions[0]}
-                    dark={index % 2}
-                  >
-                    {item.cells.map((cell: any, i: number) => {
-                      const { key } = cell.getCellProps()
-                      const isHide =
-                        isMobile && colMobileHidden.indexOf(cell.column.id) >= 0
-                      return (
-                        <View key={key}>
-                          {isHide ? <></> : cell.render("Cell")}
-                        </View>
-                      )
-                    })}
-                  </Table.RowData>
+  return (
+    <>
+      <TablePagination store={store} page={{ ...page, goto: gotoPage }} />
+      <TableWrapper style={s.viewTable}>
+        {headerGroups.map((headerGroup: any) => {
+          const { key } = headerGroup.getHeaderGroupProps()
+          const style = isMobile ? { height: 0, opacity: 0 } : {}
+          return (
+            <Table.Header key={key} style={style}>
+              {headerGroup.headers.map((column: any) => {
+                const { key } = column.getHeaderProps(
+                  column.getSortByToggleProps()
                 )
-              }}
-            />
-          )}
-        </TableWrapper>
-      </>
-    )
-  }
-)
+                return <TableHeaderCell key={key} column={column} />
+              })}
+            </Table.Header>
+          )
+        })}
+
+        {isLoading ? (
+          <Loader dark />
+        ) : (
+          <FlatList
+            data={rows}
+            keyExtractor={(row: any) => row.id}
+            renderItem={({ item, index }: any) => {
+              prepareRow(item)
+              return (
+                <Table.RowData
+                  store={store}
+                  data={item.values}
+                  isMobile={isMobile}
+                  actionLeft={isMobile && actions[1]}
+                  actionRight={isMobile && actions[0]}
+                  dark={index % 2}
+                >
+                  {item.cells.map((cell: any, i: number) => {
+                    const { key } = cell.getCellProps()
+                    const isHide =
+                      isMobile && colMobileHidden.indexOf(cell.column.id) >= 0
+                    return (
+                      <View key={key}>
+                        {isHide ? <></> : cell.render("Cell")}
+                      </View>
+                    )
+                  })}
+                </Table.RowData>
+              )
+            }}
+          />
+        )}
+      </TableWrapper>
+    </>
+  )
+}
 
 const s = StyleSheet.create({
   viewTable: tw("flex-1"),

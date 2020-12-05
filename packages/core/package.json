@@ -25,6 +25,7 @@
     "axios": "^0.21.0",
     "mobx": "^6.0.1",
     "mobx-react-lite": "^3.1.5",
+    "namor": "^2.0.2",
     "react": "^16.14.0",
     "react-flatpickr": "^3.10.6",
     "react-native-gesture-handler": "^1.9.0",
