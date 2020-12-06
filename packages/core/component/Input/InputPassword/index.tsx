@@ -65,7 +65,7 @@ export const InputPassword: React.FC<InputTextProps> = observer((_props) => {
         />
         <Eye state={state} />
       </Base>
-      <DisplayError name={props.name} />
+      <DisplayError store={_props.store} name={props.name} />
     </>
   )
 })

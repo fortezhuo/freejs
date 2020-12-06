@@ -8,7 +8,6 @@ import { useStore, Table } from "../../component"
 import * as listConfig from "./config"
 
 import { TableCheckbox } from "../../shared/ViewGrid/TableCheckbox"
-import { POST } from "../../request"
 import { useMemo } from "react"
 
 const validateNotEmpty = (store: any, id: string = "") =>
@@ -148,6 +147,7 @@ export const useView = () => {
         const [page = 1, search] = view.getTemp("page", "search")
         const routeName = navRoute.name
         const selected = (listConfig as any)[routeName]
+        view.clearError()
         view.setData({
           page,
           search,
@@ -214,30 +214,6 @@ export const useView = () => {
   }, [isReady])
 
   const refActions: any = React.useRef(config.actions)
-  const setCollection = React.useCallback(async () => {
-    if (isReady) {
-      const [name, fields, page, search] = view.getData(
-        "name",
-        "fields",
-        "page",
-        "search"
-      )
-      const _params = { query: search, page, fields }
-      try {
-        view.set("isLoading", true)
-        const { data } = await POST(`/api/find/${name}`, { _params })
-        view.setData({
-          collection: data.result,
-          limit: data.limit,
-          total: data.total,
-          max: data.max,
-          isRefresh: undefined,
-        })
-      } finally {
-        view.set("isLoading", false)
-      }
-    }
-  }, [isReady])
 
   React.useEffect(() => {
     const isMobile = view?.app?.dimension.isMobile
@@ -261,7 +237,7 @@ export const useView = () => {
   React.useEffect(() => {
     ;(async () => {
       if (isReady) {
-        await setCollection()
+        await view.loadCollection()
       }
     })()
   }, [view.data.get("page"), view.data.get("search"), isReady])
@@ -269,7 +245,7 @@ export const useView = () => {
   React.useEffect(() => {
     ;(async () => {
       if (!!view.data.get("isRefresh")) {
-        await setCollection()
+        await view.loadCollection
       }
     })()
   }, [view.data.get("isRefresh")])

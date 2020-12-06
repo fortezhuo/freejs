@@ -30,7 +30,7 @@ export const InputDateTime: React.FC<InputDateTimeProps> = observer(
           value={value || new Date()}
           onChange={onChangeDateTime}
         />
-        <DisplayError name={name} />
+        <DisplayError store={store} name={name} />
       </>
     )
   }

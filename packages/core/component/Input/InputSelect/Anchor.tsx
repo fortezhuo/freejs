@@ -18,7 +18,7 @@ export const Anchor: React.FC<Anchor> = observer(({ state, menu }) => {
           {!state._isMobileShow && <Display state={state} />}
         </Base>
       </TouchableOpacity>
-      <DisplayError name={state.name} />
+      <DisplayError store={state._store} name={state.name} />
     </>
   )
 })

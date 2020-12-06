@@ -26,9 +26,6 @@ export const useHook = () => {
           label: role,
         })),
       })
-      return () => {
-        user.clear()
-      }
     }, [])
   )
 

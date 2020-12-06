@@ -35,6 +35,7 @@ export const useHook = (refScroll: any, props: any) => {
       _options,
       _temp: undefined,
       _isMobileShow: false,
+      _store: store,
       model,
       creatable,
       placeholder,

@@ -30,7 +30,7 @@ class DocumentStore extends BaseStore {
     this.isLoading = false
     this.isUpdating = false
     this.data.clear()
-    this.app?.clearError()
+    this.clearError()
   }
   async onLoad() {
     try {
@@ -41,7 +41,7 @@ class DocumentStore extends BaseStore {
         this.data.merge(res.data.result)
       }
     } catch (err) {
-      this.app?.setError(err)
+      this.setError(err)
     } finally {
       this.set("isLoading", false)
     }
@@ -58,7 +58,7 @@ class DocumentStore extends BaseStore {
       )
       return true
     } catch (err) {
-      this.app?.setError(err)
+      this.setError(err)
     } finally {
       this.set("isLoading", false)
     }

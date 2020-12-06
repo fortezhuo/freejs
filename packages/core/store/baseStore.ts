@@ -5,6 +5,8 @@ class BaseStore {
   app: AppStore | undefined = undefined
   data = new ObservableMap()
   temp = new ObservableMap()
+  error = undefined
+  fatalError = undefined
   isLoading = false
   isUpdating = false
 
@@ -12,19 +14,26 @@ class BaseStore {
     this.app = app
     makeObservable(this, {
       data: observable,
+      error: observable,
+      fatalError: observable,
+      isLoading: observable,
+      isUpdating: observable,
       temp: observable,
+      clearError: action,
       setData: action,
       setTemp: action,
       set: action,
-      isLoading: observable,
-      isUpdating: observable,
+      setError: action,
     })
   }
 
   toJSON(map: ObservableMap) {
     return Object.fromEntries(toJS(map))
   }
-
+  clearError = () => {
+    this.set("error", undefined)
+    this.set("fatalError", undefined)
+  }
   getData(...args: string[]) {
     return args.map((v) => this.data.get(v))
   }
@@ -43,6 +52,18 @@ class BaseStore {
   }
   set(name: string, value: any) {
     ;(this as any)[name] = value
+  }
+  setError = (err: any) => {
+    if (err.status && err.status === 500) {
+      this.fatalError = err
+    } else {
+      const error = err.data ? err.data : err
+      if (error.message.indexOf("Validation Error") >= 0) {
+        this.error = error.errors
+      } else {
+        this.error = error
+      }
+    }
   }
 }
 

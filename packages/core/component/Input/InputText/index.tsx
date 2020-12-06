@@ -40,7 +40,7 @@ export const InputText: React.FC<InputTextProps> = observer((_props) => {
           {...props}
         />
       </Base>
-      <DisplayError name={props.name} />
+      <DisplayError store={_props.store} name={props.name} />
     </>
   )
 })
