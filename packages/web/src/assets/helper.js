@@ -15,9 +15,31 @@ if (typeof window != "undefined") {
     `%cPlease type syntax "forte" on browser console / inspect element for more information`,
     "color: grey; font-size:11px;"
   )
-  window.onkeydown = function (e) {
-    if (e.keyCode == 8 && e.target == document.body) e.preventDefault()
+  function captureBackspace(e) {
+    var rx = /INPUT|SELECT|TEXTAREA/i
+
+    if (e.which == 8) {
+      // 8 == backspace
+      if (e.target.getAttribute("contenteditable") !== null) return
+
+      if (
+        !rx.test(e.target.tagName) ||
+        e.target.disabled ||
+        e.target.readOnly
+      ) {
+        e.preventDefault()
+      }
+    }
   }
+
+  if (window.addEventListener)
+    window.addEventListener("keydown", captureBackspace, true)
+  else if (document.attachEvent)
+    document.attachEvent("onkeydown", captureBackspace)
+  else
+    document.addEventListener("keydown", captureBackspace, true)
+
+    //
   ;(function () {
     if (typeof window.CustomEvent === "function") return false // If not IE
     function CustomEvent(event, params) {
@@ -33,7 +55,6 @@ if (typeof window != "undefined") {
     }
     window.CustomEvent = CustomEvent
   })()
-
   ;(function () {
     history.pushState = (function (f) {
       return function pushState() {

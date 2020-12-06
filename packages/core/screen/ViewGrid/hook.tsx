@@ -8,6 +8,7 @@ import { useStore, Table } from "../../component"
 import * as listConfig from "./config"
 
 import { TableCheckbox } from "../../shared/ViewGrid/TableCheckbox"
+import { POST } from "../../request"
 import { useMemo } from "react"
 
 const validateNotEmpty = (store: any, id: string = "") =>
@@ -59,17 +60,7 @@ const useAction = (view: any) => {
                 type: "primary_1",
                 onPress: async () => {
                   await view.deleteDocument(id)
-                  view.app?.alert.info({
-                    title: "Information",
-                    message: "Document Deleted ",
-                    actions: [
-                      {
-                        label: "OK",
-                        type: "primary_2",
-                        onPress: () => view.app?.alert.close(),
-                      },
-                    ],
-                  })
+                  view.app?.alert.close()
                 },
               },
               {
@@ -98,17 +89,7 @@ const useAction = (view: any) => {
                 type: "primary_1",
                 onPress: async () => {
                   await view.restoreDocument(id)
-                  view.app?.alert.info({
-                    title: "Information",
-                    message: "OK Restored",
-                    actions: [
-                      {
-                        label: "OK",
-                        type: "primary_2",
-                        onPress: () => view.app?.alert.close(),
-                      },
-                    ],
-                  })
+                  view.app?.alert.close()
                 },
               },
               {
@@ -214,6 +195,30 @@ export const useView = () => {
   }, [isReady])
 
   const refActions: any = React.useRef(config.actions)
+  const setCollection = React.useCallback(async () => {
+    if (isReady) {
+      const [name, fields, page, search] = view.getData(
+        "name",
+        "fields",
+        "page",
+        "search"
+      )
+      const _params = { query: search, page, fields }
+      try {
+        view.set("isLoading", true)
+        const { data } = await POST(`/api/find/${name}`, { _params })
+        view.setData({
+          collection: data.result,
+          limit: data.limit,
+          total: data.total,
+          max: data.max,
+          isRefresh: undefined,
+        })
+      } finally {
+        view.set("isLoading", false)
+      }
+    }
+  }, [isReady])
 
   React.useEffect(() => {
     const isMobile = view?.app?.dimension.isMobile
@@ -237,7 +242,7 @@ export const useView = () => {
   React.useEffect(() => {
     ;(async () => {
       if (isReady) {
-        await view.loadCollection()
+        await setCollection()
       }
     })()
   }, [view.data.get("page"), view.data.get("search"), isReady])
@@ -245,7 +250,7 @@ export const useView = () => {
   React.useEffect(() => {
     ;(async () => {
       if (!!view.data.get("isRefresh")) {
-        await view.loadCollection
+        await setCollection()
       }
     })()
   }, [view.data.get("isRefresh")])

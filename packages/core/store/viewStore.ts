@@ -10,7 +10,6 @@ class ViewStore extends BaseStore {
     makeObservable(this, {
       deleteDocument: action,
       loadData: action,
-      loadCollection: action,
       restoreDocument: action,
     })
   }
@@ -27,29 +26,6 @@ class ViewStore extends BaseStore {
       } finally {
         this.set("isLoading", false)
       }
-    }
-  }
-
-  async loadCollection() {
-    const [name, fields, page, search] = this.getData(
-      "name",
-      "fields",
-      "page",
-      "search"
-    )
-    const _params = { query: search, page, fields }
-    try {
-      this.set("isLoading", true)
-      const { data } = await req.POST(`/api/find/${name}`, { _params })
-      this.setData({
-        collection: data.result,
-        limit: data.limit,
-        total: data.total,
-        max: data.max,
-        isRefresh: undefined,
-      })
-    } finally {
-      this.set("isLoading", false)
     }
   }
 

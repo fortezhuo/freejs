@@ -70,6 +70,7 @@ const Content: React.FC<any> = observer((props) => {
           </Accordion>
         )
       })}
+      <View style={{ height: 100 }} />
     </ScrollView>
   )
 })
