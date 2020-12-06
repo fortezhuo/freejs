@@ -58,6 +58,20 @@ export class DatabaseService extends BaseService {
       projection[field.replace("-", "")] = field.indexOf("-") >= 0 ? 0 : 1
     })
 
+    if (query._helper) {
+      const { _helper } = query
+      Object.keys(_helper).forEach((key: string) => {
+        if (key === "date") {
+          _helper[key].forEach((field: string) => {
+            Object.keys(query[field]).forEach((operator: string) => {
+              query[field][operator] = new Date(query[field][operator])
+            })
+          })
+        }
+      })
+      delete query._helper
+    }
+
     const q = params.id ? { _id: monkID(params.id) } : query
 
     return {

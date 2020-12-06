@@ -6,7 +6,6 @@ class BaseStore {
   data = new ObservableMap()
   temp = new ObservableMap()
   error = undefined
-  fatalError = undefined
   isLoading = false
   isUpdating = false
 
@@ -15,7 +14,6 @@ class BaseStore {
     makeObservable(this, {
       data: observable,
       error: observable,
-      fatalError: observable,
       isLoading: observable,
       isUpdating: observable,
       temp: observable,
@@ -32,7 +30,6 @@ class BaseStore {
   }
   clearError = () => {
     this.set("error", undefined)
-    this.set("fatalError", undefined)
   }
   getData(...args: string[]) {
     return args.map((v) => this.data.get(v))
@@ -55,7 +52,7 @@ class BaseStore {
   }
   setError = (err: any) => {
     if (err.status && err.status === 500) {
-      this.fatalError = err
+      this?.app?.set("fatalError", err)
     } else {
       const error = err.data ? err.data : err
       if (error.message.indexOf("Validation Error") >= 0) {

@@ -9,13 +9,17 @@ import { DisplayError } from "../DisplayError"
 
 const helperProps = (props: InputTextProps) => {
   const { store, model = "data", name, disabled, onChange, ...rest } = props
+  const setValue = React.useCallback(
+    (args: any) => {
+      model === "data" ? store.setData(args) : store.setTemp(args)
+    },
+    [model]
+  )
 
   return {
     name,
     value: store[model].get(name) || "",
     onChangeText: async (text: string) => {
-      const setValue = (args: any) =>
-        model === "data" ? store.setData(args) : store.setTemp(args)
       setValue({ [name]: text })
       if (onChange) {
         await onChange()

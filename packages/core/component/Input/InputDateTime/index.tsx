@@ -11,11 +11,21 @@ export const InputDateTime: React.FC<InputDateTimeProps> = observer(
     name,
     onChange,
     type = "date",
+    placeholder = "Select Date",
     disabled: _disabled,
+    style,
   }) => {
     const value = store[model].get(name)
+
+    const setValue = React.useCallback(
+      (args: any) => {
+        model === "data" ? store.setData(args) : store.setTemp(args)
+      },
+      [model]
+    )
+
     const onChangeDateTime = async (value: any) => {
-      store[model].set(name, value)
+      setValue({ [name]: value[0] })
       if (onChange) {
         await onChange()
       }
@@ -27,8 +37,10 @@ export const InputDateTime: React.FC<InputDateTimeProps> = observer(
         <DateTimePicker
           type={type}
           disabled={disabled}
-          value={value || new Date()}
+          value={value}
+          placeholder={placeholder}
           onChange={onChangeDateTime}
+          style={style}
         />
         <DisplayError store={store} name={name} />
       </>

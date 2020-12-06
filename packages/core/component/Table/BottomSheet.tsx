@@ -5,6 +5,7 @@ import { observer } from "mobx-react-lite"
 import { Modalize } from "react-native-modalize"
 import { Table, Button, Text, Loader, Section, Input, Label } from ".."
 import { random } from "../../util"
+import { date } from "./helper"
 
 export const BottomSheet: React.FC<any> = observer(({ store, config }) => {
   const [isOpen, setOpen] = React.useState(true)
@@ -20,6 +21,7 @@ export const BottomSheet: React.FC<any> = observer(({ store, config }) => {
         return {
           label: column.type === "json" ? "Data" : column.label,
           name: column.type === "json" ? "$text" : column.name,
+          type: column.type,
         }
       }),
     }
@@ -93,14 +95,29 @@ export const BottomSheet: React.FC<any> = observer(({ store, config }) => {
   }, [configSearch.simple])
 
   const onAdvanceSearch = React.useCallback(() => {
-    let build: any = {}
+    let build: any = { _helper: { date: [] } }
     ;(configSearch.advance || []).forEach((column: any) => {
-      const text = store.temp.get(column.name)
-      if (text) {
-        build[column.name] =
-          column.name === "$text"
-            ? { $search: text }
-            : { $regex: text.replace(" ", "|"), $options: "i" }
+      const type = column.type || "text"
+      if (type === "text") {
+        const text = store.temp.get(column.name)
+        if (text) {
+          build[column.name] =
+            column.name === "$text"
+              ? { $search: text }
+              : { $regex: text.replace(" ", "|"), $options: "i" }
+        }
+      }
+
+      if (type.indexOf("date") >= 0) {
+        const start = store.temp.get("start_" + column.name)
+        const end = store.temp.get("end_" + column.name)
+        if (!!start && !!end) {
+          build._helper.date = build._helper.date.concat([column.name])
+          build[column.name] = {
+            $lte: `${date(end)} 23:59:59`,
+            $gte: `${date(start)} 00:00:00`,
+          }
+        }
       }
     })
     store.setData({ search: build })
@@ -146,15 +163,45 @@ export const BottomSheet: React.FC<any> = observer(({ store, config }) => {
         <Section label="Advance Search">
           <View style={s.rowSearch}>
             {configSearch.advance.map((column: any) => {
+              const type = column.type || "text"
               return (
                 <View key={"search_" + random()}>
                   <Label>{column.label}</Label>
-                  <Input.Text
-                    store={store}
-                    model="temp"
-                    name={column.name}
-                    placeholder={"Fill " + column.label}
-                  />
+                  {type == "text" && (
+                    <Input.Text
+                      store={store}
+                      model="temp"
+                      name={column.name}
+                      placeholder={"Fill " + column.label}
+                    />
+                  )}
+                  {type.indexOf("date") >= 0 && (
+                    <View style={s.viewStartEnd}>
+                      <Input.DateTime
+                        store={store}
+                        model="temp"
+                        placeholder={"Start " + column.label}
+                        name={"start_" + column.name}
+                      />
+                      <View style={{ width: 10 }} />
+                      <Input.DateTime
+                        store={store}
+                        model="temp"
+                        placeholder={"End " + column.label}
+                        name={"end_" + column.name}
+                      />
+                    </View>
+                  )}
+                  {(type == "number" || type == "decimal") && (
+                    <View style={{ flexDirection: "row" }}>
+                      <Input.Text
+                        store={store}
+                        model="temp"
+                        name={column.name}
+                        placeholder={"Fill " + column.label}
+                      />
+                    </View>
+                  )}
                 </View>
               )
             })}
@@ -174,7 +221,7 @@ export const BottomSheet: React.FC<any> = observer(({ store, config }) => {
                 store={store}
                 type={"disabled_bg"}
               >
-                Cancel
+                Reset
               </Button>
             </View>
           </View>
@@ -206,6 +253,7 @@ export const BottomSheet: React.FC<any> = observer(({ store, config }) => {
 const s = StyleSheet.create({
   viewHeader: tw("p-3 border-b border-gray-400 bg-white rounded-t-2xl"),
   viewButton: tw("mt-8 mb-2 h-20 justify-between"),
+  viewStartEnd: tw("flex-row justify-between"),
   textHeader: tw("text-lg"),
   viewFooter: tw("h-6 border-gray-400 border-t"),
   viewLoader: tw("items-center content-center", { height: 245 }),

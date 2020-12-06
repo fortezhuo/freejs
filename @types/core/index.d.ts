@@ -180,6 +180,8 @@ declare module "@free/core" {
     onChange?: VoidFunction
     type?: string
     disabled?: boolean
+    placeholder?: string
+    style?: any
   }
 
   interface InputSelectProps {
