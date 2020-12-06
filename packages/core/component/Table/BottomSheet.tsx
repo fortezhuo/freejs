@@ -98,7 +98,8 @@ export const BottomSheet: React.FC<any> = observer(({ store, config }) => {
     let build: any = { _helper: { date: [] } }
     ;(configSearch.advance || []).forEach((column: any) => {
       const type = column.type || "text"
-      if (type === "text") {
+
+      if (type === "text" || type === "json") {
         const text = store.temp.get(column.name)
         if (text) {
           build[column.name] =
@@ -167,7 +168,7 @@ export const BottomSheet: React.FC<any> = observer(({ store, config }) => {
               return (
                 <View key={"search_" + random()}>
                   <Label>{column.label}</Label>
-                  {type == "text" && (
+                  {(type == "text" || type === "json") && (
                     <Input.Text
                       store={store}
                       model="temp"
