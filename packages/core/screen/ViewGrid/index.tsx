@@ -9,10 +9,10 @@ import { useView } from "./hook"
 
 const ViewGrid: React.FC<any> = observer(() => {
   const { view, config, refActions } = useView()
-
   return (
     <>
       <Layout
+        transparent
         store={view}
         scroll={Platform.OS === "web"}
         stickyRight={

@@ -11,7 +11,7 @@ const PageHome: React.FC<any> = observer(({ navigation }) => {
     setModalVisible(!isModalVisible)
   }
   return (
-    <Layout store={app}>
+    <Layout transparent store={app}>
       <Text>TESTING</Text>
       <Text>T</Text>
       <Text>T</Text>

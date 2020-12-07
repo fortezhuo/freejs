@@ -1,5 +1,5 @@
 import React from "react"
-import { View, StyleSheet, ScrollView } from "react-native"
+import { View, StyleSheet } from "react-native"
 import { theme } from "../../config/theme"
 import { Gradient, KeyboardAwareScrollView } from "../"
 import { tw } from "@free/tailwind"
@@ -17,16 +17,33 @@ const Wrapper: React.FC<any> = observer((props) =>
   )
 )
 
+const GradientWrapper: React.FC<any> = ({ transparent, children }) => {
+  const colors = [theme.primary_1_bg, theme.primary_2_bg]
+  return transparent ? (
+    <View style={s.viewTransparent}>{children}</View>
+  ) : (
+    <Gradient colors={colors} style={s.viewLayout}>
+      {children}
+    </Gradient>
+  )
+}
+
 export const LayoutFull: React.FC<LayoutProps> = observer(
-  ({ testID = "LayoutFull", children, scroll = true, store }) => {
+  ({
+    testID = "LayoutFull",
+    children,
+    scroll = true,
+    transparent = false,
+    store,
+  }) => {
     useHook(store)
-    const colors = [theme.primary_1_bg, theme.primary_2_bg]
+
     return (
-      <Gradient colors={colors} style={s.viewLayout}>
+      <GradientWrapper transparent={transparent}>
         <Wrapper testID={testID} scroll={scroll}>
           {children}
         </Wrapper>
-      </Gradient>
+      </GradientWrapper>
     )
   }
 )
@@ -37,12 +54,13 @@ export const Layout: React.FC<LayoutProps> = observer(
     children,
     stickyLeft,
     stickyRight,
+    transparent = false,
     scroll = true,
     store,
     style,
   }) => {
     return (
-      <LayoutFull scroll={false} store={store}>
+      <LayoutFull transparent={transparent} scroll={false} store={store}>
         <View style={s.viewWrapper1}></View>
         <View style={s.viewWrapper2}>
           <View style={s.viewWrapper21}></View>
@@ -64,6 +82,7 @@ export const Layout: React.FC<LayoutProps> = observer(
 
 const s = StyleSheet.create({
   viewLayout: tw("flex-1"),
+  viewTransparent: tw("flex-1 bg-transparent"),
   viewAction: tw("flex-row justify-between px-4 pb-1", { height: 48 }),
   viewWrapper1: tw("h-1 absolute"),
   viewWrapper2: tw("w-full h-full absolute flex-1"),

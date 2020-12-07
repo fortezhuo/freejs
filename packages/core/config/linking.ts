@@ -5,19 +5,19 @@ export const words = /Setting|View/gi
 export const linking: any = {
   prefixes: [`${configApp.name}://`],
   config: {
-    initialRouteName: "Home",
+    initialRouteName: "Index",
     screens: {
       Login: "login",
-      Screens: {
+      Drawer: {
         path: "",
         screens: {
           Index: "index",
           ViewSettingUser: "user",
           ViewSettingLog: "log",
           ViewSettingTrash: "trash",
-          SettingUser: "user/:id",
         },
       },
+      SettingUser: "user/:id",
     },
   },
 }

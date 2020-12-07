@@ -20,17 +20,6 @@ export const useDimensions = () => {
     })
   }, [])
 
-  const detectTitleChange = React.useCallback(() => {
-    const title = document.title
-    if (title.indexOf("Login") < 0) {
-      const user: any = document.querySelector('div[data-testid="MenuUser"]')
-      const sidebar: any = document.querySelector('div[data-testid="Sidebar"]')
-        ?.parentNode?.parentNode
-      sidebar.style.width = title.indexOf("::") < 0 ? "0px" : "280px"
-      user.style.display = title.indexOf("::") < 0 ? "none" : "flex"
-    }
-  }, [])
-
   React.useEffect(() => {
     updateDimensions(Dimensions.get("window"))
     const handleChange = function ({ window }: any) {
@@ -39,13 +28,6 @@ export const useDimensions = () => {
     Dimensions.addEventListener("change", handleChange)
     return () => {
       Dimensions.removeEventListener("change", handleChange)
-    }
-  }, [])
-
-  React.useEffect(() => {
-    window.addEventListener("locationchange", detectTitleChange)
-    return () => {
-      window.removeEventListener("locationchange", detectTitleChange)
     }
   }, [])
 }

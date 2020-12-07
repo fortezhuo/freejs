@@ -202,6 +202,7 @@ declare module "@free/core" {
   // Layout
   interface LayoutProps extends ViewProps {
     testID?: string
+    transparent?: boolean
     store?: any
     scroll?: boolean
     stickyLeft?: ReactNode

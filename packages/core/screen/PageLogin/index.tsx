@@ -25,7 +25,7 @@ const LoginButton: React.FC<any> = observer(({ store }) => {
 const PageLogin: React.FC = observer(() => {
   const store = useHook()
   return (
-    <LayoutFull store={store} style={s.layoutLogin}>
+    <LayoutFull transparent store={store} style={s.layoutLogin}>
       <View style={s.pageLogin} testID="PageLogin">
         <Col sm={11} md={9} lg={4} xl={4} style={s.boxLogin}>
           <Avatar source={logo} style={s.iconLogo} />
