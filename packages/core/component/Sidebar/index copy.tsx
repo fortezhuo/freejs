@@ -1,6 +1,5 @@
 import React from "react"
 import { StyleSheet, View, Text, Image, ScrollView } from "react-native"
-import { DrawerItem } from "@react-navigation/drawer"
 import { SafeAreaView } from "react-native-safe-area-context"
 import { Accordion, AccordionItem, Link, Gradient } from "../"
 import { observer } from "mobx-react-lite"
@@ -33,7 +32,11 @@ export const Title: React.FC<any> = observer(
 
 const Content: React.FC<any> = observer((props) => {
   const allowedMenu = getMenu().filter((menu) => menu.visible)
-  const activeName = props.state.routeNames[props.state.index]
+  console.log(props.state)
+
+  const activeName =
+    props.state.routes[0].state?.routes[props.state.routes[0].state.index || 0]
+      .name
 
   return (
     <ScrollView {...props} scrollEnabled={true} stickyHeaderIndices={[0]}>

@@ -39,9 +39,10 @@ const RowMobile: React.FC<any> = observer(
           store.bottomSheet.open()
         })()
       } else {
-        store.set("isUpdating", true)
         const route = store.data.get("route").replace("View", "")
-        navigation.navigate(route, { id: data._id_link })
+        if (route !== "SettingLog") {
+          navigation.navigate(route, { id: data._id_link })
+        }
       }
     }, [])
 
