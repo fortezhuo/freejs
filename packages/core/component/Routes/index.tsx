@@ -2,7 +2,6 @@ import React from "react"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { configApp } from "@free/env"
 import { Loader, useStore, Gradient, IconButton } from ".."
-import { linking } from "../../config/linking"
 import {
   NavigationContainer,
   NavigationContainerRef,
@@ -34,15 +33,17 @@ const Routes: React.FC<any> = observer(({ screens }) => {
     let child: any = []
 
     getRoute(app.auth && app).forEach((route: any) => {
-      if (route.view) {
+      if (!!route.view) {
         view.push({
+          path: route.view,
           name: `View${route.alias ? route.alias : route.name}`,
           title: route.title,
           component: "ViewGrid",
         })
       }
-      if (route.child) {
+      if (!!route.child) {
         child.push({
+          path: route.child,
           name: `${route.alias ? route.alias : route.name}`,
           title: route.title,
           component: route.name,
@@ -54,6 +55,32 @@ const Routes: React.FC<any> = observer(({ screens }) => {
     })
 
     return { view, child }
+  }, [app.auth])
+
+  const linking = React.useMemo(() => {
+    const drawer: any = { Index: "index" }
+    const child: any = {}
+    routes.view.forEach((route: any) => {
+      drawer[route.name] = route.path
+    })
+    routes.child.forEach((route: any) => {
+      child[route.name] = route.path
+    })
+
+    return {
+      prefixes: [`${configApp.name}://`],
+      config: {
+        initialRouteName: "Index",
+        screens: {
+          Login: "login",
+          Drawer: {
+            path: "",
+            screens: drawer,
+          },
+          ...child,
+        },
+      },
+    }
   }, [app.auth])
 
   React.useEffect(() => {
@@ -86,14 +113,7 @@ const Routes: React.FC<any> = observer(({ screens }) => {
       linking={linking}
       documentTitle={{
         formatter: (options, route: any) => {
-          const separator =
-            route?.name.indexOf("Index") >= 0 ||
-            route?.name.indexOf("View") >= 0
-              ? "::"
-              : "-"
-          return `${options?.title ?? route?.name} ${separator} ${
-            configApp.displayName
-          }`
+          return `${options?.title ?? route?.name} :: ${configApp.displayName}`
         },
       }}
     >

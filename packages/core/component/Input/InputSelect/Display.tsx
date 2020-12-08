@@ -27,12 +27,12 @@ const Placeholder: React.FC<StateComponent> = observer(({ state }) => {
 })
 
 const Clear: React.FC<StateComponent> = observer(({ state }) => {
-  const { multi, value } = state
+  const { multi, value, clearable } = state
   const onClear = React.useCallback(() => {
     state.onChange(multi ? [] : "")
   }, [])
 
-  return (multi ? value.length == 0 : value === "") ? (
+  return !clearable || (multi ? value.length == 0 : value === "") ? (
     <View />
   ) : (
     <IconButton color={defaultColor} name="x" size={16} onPress={onClear} />
@@ -40,11 +40,17 @@ const Clear: React.FC<StateComponent> = observer(({ state }) => {
 })
 
 export const Display: React.FC<StateComponent> = observer(({ state }) => {
-  const { multi, display } = state
+  const { multi, display, searchable } = state
   const isBlank = multi ? display.length == 0 : display === ""
 
   return (
-    <View style={[s.viewDisplay, multi ? s.viewMulti : {}]}>
+    <View
+      style={[
+        s.viewDisplay,
+        searchable ? {} : s.viewCompact,
+        multi ? s.viewMulti : {},
+      ]}
+    >
       <View style={s.viewValue} testID="ViewValue">
         {!isBlank ? (
           multi ? (
@@ -67,6 +73,7 @@ export const Display: React.FC<StateComponent> = observer(({ state }) => {
 
 const s = StyleSheet.create({
   viewDisplay: tw("flex-1 flex-row items-center mx-4"),
+  viewCompact: tw("mx-3"),
   viewMulti: tw("mt-1 ml-1 mb-1"),
   viewValue: tw("flex-1 flex-row flex-wrap"),
   textSingle: tw(`flex-grow ${theme.default_text}`),

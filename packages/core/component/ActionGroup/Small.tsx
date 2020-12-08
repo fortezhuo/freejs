@@ -29,8 +29,9 @@ export const Small: React.FC<any> = observer(({ store, actions }) => {
       >
         <View
           style={{
-            height: actions.length * 44 + 54,
-            marginHorizontal: 6,
+            height: actions.length * 44 + 60,
+            margin: 10,
+            marginBottom: 20,
             justifyContent: "space-evenly",
             flexDirection: "column",
           }}
@@ -60,7 +61,7 @@ export const Small: React.FC<any> = observer(({ store, actions }) => {
 })
 
 const s = StyleSheet.create({
-  container: tw("bg-gray-700"),
+  container: tw("bg-black-100"),
   header: tw("items-center"),
   single: tw("absolute bottom-0 right-0 mb-3 mr-3 shadow-md h-12", {
     minWidth: 50,

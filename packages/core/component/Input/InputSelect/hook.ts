@@ -3,9 +3,9 @@ import { Platform } from "react-native"
 import { useMenuDropdown, useMenuDialog } from "../../Menu"
 import { useLocalObservable } from "mobx-react-lite"
 
-export const useWrapper = () => {
+export const useWrapper = (isCompact: boolean) => {
   const isMobile = Platform.OS !== "web"
-  const wrapper: any = isMobile ? useMenuDialog() : useMenuDropdown()
+  const wrapper: any = isMobile ? useMenuDialog() : useMenuDropdown(isCompact)
 
   return {
     Wrapper: wrapper.MenuDialog ? wrapper.MenuDialog : wrapper.MenuDropdown,
@@ -18,6 +18,8 @@ export const useWrapper = () => {
 export const useHook = (refScroll: any, props: any) => {
   const {
     creatable = false,
+    clearable = true,
+    searchable = true,
     options: _options,
     disabled: _disabled,
     onChange: _onChange,
@@ -28,6 +30,7 @@ export const useHook = (refScroll: any, props: any) => {
     keyLabel = "label",
     store,
     name,
+    style,
     multi,
   } = props
   const state = useLocalObservable(() => {
@@ -37,13 +40,16 @@ export const useHook = (refScroll: any, props: any) => {
       _isMobileShow: false,
       _store: store,
       model,
+      clearable,
       creatable,
+      searchable,
       placeholder,
       name,
       isMobile: Platform.OS !== "web",
       multi,
       keyValue,
       keyLabel,
+      style,
       singleValue,
       search: "",
       set(args: { [key: string]: any }) {
@@ -127,6 +133,7 @@ export const useHook = (refScroll: any, props: any) => {
       get display() {
         const { keyLabel, multi, _isMobileShow } = state
         let _value = _isMobileShow ? state._temp : state.value
+
         return multi
           ? _value.map((v: any) => v[keyLabel])
           : _value[keyLabel] || ""

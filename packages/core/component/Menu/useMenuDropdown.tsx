@@ -11,7 +11,7 @@ const { color: iconColor } = tw("text-gray-700")
 const SCREEN_INDENT = 2
 const noop = () => {}
 
-export const useMenuDropdown = () => {
+export const useMenuDropdown = (isCompact: boolean = false) => {
   const refContainer = React.useRef<View>(null)
   const state = useLocalObservable(() => ({
     isOpen: false,
@@ -34,7 +34,11 @@ export const useMenuDropdown = () => {
   const onMenuLayout = (e: any) => {
     const { width, height } = e.nativeEvent.layout
     state.setMeasure({
-      menuWidth: Math.max(tw("w-48").width, width, state.measure.anchorWidth),
+      menuWidth: Math.max(
+        isCompact ? 0 : tw("w-48").width,
+        width,
+        state.measure.anchorWidth
+      ),
       menuHeight: height,
     })
   }
@@ -151,7 +155,4 @@ export const useMenuDropdown = () => {
 
 const s = StyleSheet.create({
   viewChildren: tw("absolute bg-transparent"),
-  viewItem: tw(`flex-1 flex-row p-2`),
-  viewItemActive: tw("bg-black-100"),
-  textItem: tw(`${theme.default_text} leading-5 mx-2`),
 })

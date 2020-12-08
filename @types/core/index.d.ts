@@ -186,9 +186,12 @@ declare module "@free/core" {
 
   interface InputSelectProps {
     creatable?: boolean
+    clearable?: boolean
+    searchable?: boolean
     options?: []
     model?: string
     store: any
+    style?: any
     name: string
     multi?: boolean
     onChange?: VoidFunction

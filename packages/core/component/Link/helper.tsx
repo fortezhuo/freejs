@@ -1,4 +1,4 @@
-import { words } from "../../config/linking"
+const words = /Setting|View/gi
 
 export const buildLink = (name: string, params: any) => {
   const path = name ? name.replace(words, "").toLowerCase() : ""

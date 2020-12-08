@@ -13,7 +13,11 @@ export const Anchor: React.FC<Anchor> = observer(({ state, menu }) => {
       <TouchableOpacity disabled={state.disabled} onPress={menu.show}>
         <Base
           isLoading={state.isLoading}
-          style={[s.viewInput, state.disabled ? s.viewDisabled : {}]}
+          style={[
+            s.viewInput,
+            state.disabled ? s.viewDisabled : {},
+            state.style,
+          ]}
         >
           {!state._isMobileShow && <Display state={state} />}
         </Base>

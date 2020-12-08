@@ -11,8 +11,8 @@ import { InputSelectProps } from "@free/core"
 export const InputSelect: React.FC<InputSelectProps> = observer((props) => {
   const refSearch = React.useRef<TextInput>(null)
   const refScroll = React.useRef<ScrollView>(null)
-  const { Wrapper, hide, show } = useWrapper()
   const state = useHook(refScroll, props)
+  const { Wrapper, hide, show } = useWrapper(!state.searchable)
 
   return (
     <Wrapper
@@ -24,7 +24,9 @@ export const InputSelect: React.FC<InputSelectProps> = observer((props) => {
       anchor={<Anchor state={state} menu={{ show }} />}
     >
       <Content state={state} menu={{ hide }}>
-        <Search refSearch={refSearch} state={state} menu={{ hide }} />
+        {state.searchable && (
+          <Search refSearch={refSearch} state={state} menu={{ hide }} />
+        )}
         <Options refScroll={refScroll} state={state} menu={{ show, hide }} />
       </Content>
     </Wrapper>

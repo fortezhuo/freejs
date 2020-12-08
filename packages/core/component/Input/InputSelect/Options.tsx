@@ -1,5 +1,6 @@
 import React from "react"
 import { ScrollView } from "react-native"
+import { tw } from "@free/tailwind"
 import { MenuItem } from "../../Menu"
 import { random } from "../../../util"
 import { observer } from "mobx-react-lite"
@@ -31,6 +32,7 @@ export const Options: React.FC<Options> = observer(
           <ScrollView ref={refScroll} keyboardShouldPersistTaps="handled">
             {options.map((opt: any, i: number) => (
               <MenuItem
+                style={state.searchable ? {} : tw("p-1")}
                 key={"option_" + random()}
                 active={i === state.index}
                 onPress={() => {

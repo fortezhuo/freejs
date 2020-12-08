@@ -125,13 +125,18 @@ export const useView = () => {
     React.useCallback(() => {
       if (!isReady) {
         view.set("isUpdating", true)
-        const [page = 1, search] = view.getTemp("page", "search")
+        const [page = 1, search, limit = "30"] = view.getTemp(
+          "page",
+          "search",
+          "limit"
+        )
         const routeName = navRoute.name
         const selected = (listConfig as any)[routeName]
         view.clearError()
         view.setData({
           page,
           search,
+          limit,
           route: routeName,
           name: selected.name,
           fields: selected.fields,
@@ -148,9 +153,9 @@ export const useView = () => {
 
       return () => {
         if (navRoute.name === view.data.get("route")) {
-          const [page, search] = view.getData("page", "search")
+          const [page, search, limit] = view.getData("page", "search", "limit")
           view.setData({ route: "OpenChild" })
-          view.setTemp({ page, search })
+          view.setTemp({ page, search, limit })
         }
       }
     }, [])
@@ -197,19 +202,19 @@ export const useView = () => {
   const refActions: any = React.useRef(config.actions)
   const setCollection = React.useCallback(async () => {
     if (isReady) {
-      const [name, fields, page, search] = view.getData(
+      const [name, fields, page, limit, search] = view.getData(
         "name",
         "fields",
         "page",
+        "limit",
         "search"
       )
-      const _params = { query: search, page, fields }
+      const _params = { query: search, page, limit: +limit, fields }
       try {
         view.set("isLoading", true)
         const { data } = await POST(`/api/find/${name}`, { _params })
         view.setData({
           collection: data.result,
-          limit: data.limit,
           total: data.total,
           max: data.max,
           isRefresh: undefined,
@@ -245,7 +250,12 @@ export const useView = () => {
         await setCollection()
       }
     })()
-  }, [view.data.get("page"), view.data.get("search"), isReady])
+  }, [
+    view.data.get("page"),
+    view.data.get("search"),
+    view.data.get("limit"),
+    isReady,
+  ])
 
   React.useEffect(() => {
     ;(async () => {
