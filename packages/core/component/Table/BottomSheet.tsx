@@ -6,6 +6,7 @@ import { Modalize } from "react-native-modalize"
 import { Table, Button, Text, Loader, Section, Input, Label } from ".."
 import { random } from "../../util"
 import { date } from "./helper"
+import { useFocusEffect } from "@react-navigation/native"
 
 export const BottomSheet: React.FC<any> = observer(({ store, config }) => {
   const [isOpen, setOpen] = React.useState(true)
@@ -32,11 +33,16 @@ export const BottomSheet: React.FC<any> = observer(({ store, config }) => {
     setOpen(true)
   }, [])
 
-  React.useEffect(() => {
-    if (refBottomSheet.current) {
-      store.bottomSheet = refBottomSheet.current
-    }
-  }, [])
+  useFocusEffect(
+    React.useCallback(() => {
+      if (refBottomSheet.current) {
+        store.bottomSheet = refBottomSheet.current
+      }
+      return () => {
+        store.bottomSheet = undefined
+      }
+    }, [refBottomSheet.current])
+  )
 
   const renderFlatList = React.useCallback((value) => {
     const data = Object.keys(value).map((key) => ({
