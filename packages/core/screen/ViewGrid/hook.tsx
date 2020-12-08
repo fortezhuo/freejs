@@ -125,12 +125,21 @@ export const useView = () => {
     React.useCallback(() => {
       if (!isReady) {
         view.set("isUpdating", true)
-        const [page = 1, search, limit = "30"] = view.getTemp(
+        const routeName = navRoute.name
+        let [page = 1, search, limit = "30", last] = view.getTemp(
           "page",
           "search",
-          "limit"
+          "limit",
+          "last"
         )
-        const routeName = navRoute.name
+
+        // Reset
+        if (last !== routeName) {
+          page = 1
+          limit = "30"
+          search = undefined
+        }
+
         const selected = (listConfig as any)[routeName]
         view.clearError()
         view.setData({
@@ -153,9 +162,14 @@ export const useView = () => {
 
       return () => {
         if (navRoute.name === view.data.get("route")) {
-          const [page, search, limit] = view.getData("page", "search", "limit")
-          view.setData({ route: "OpenChild" })
-          view.setTemp({ page, search, limit })
+          const [page, search, limit, route] = view.getData(
+            "page",
+            "search",
+            "limit",
+            "route"
+          )
+          view.setData({ route: undefined })
+          view.setTemp({ page, search, limit, last: route })
         }
       }
     }, [])
