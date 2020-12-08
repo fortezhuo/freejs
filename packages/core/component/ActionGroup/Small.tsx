@@ -29,7 +29,7 @@ export const Small: React.FC<any> = observer(({ store, actions }) => {
       >
         <View
           style={{
-            height: actions.length * 44 + 60,
+            height: actions.length * 44 + 44,
             margin: 10,
             marginBottom: 20,
             justifyContent: "space-evenly",
@@ -38,7 +38,7 @@ export const Small: React.FC<any> = observer(({ store, actions }) => {
         >
           {actions.map(({ icon, type, ...prop }: ObjectAny) => (
             <Button
-              type={"transparent_bg"}
+              type={type}
               style={{ borderRadius: 10 }}
               {...prop}
               key={"act_" + random()}
@@ -46,9 +46,8 @@ export const Small: React.FC<any> = observer(({ store, actions }) => {
             />
           ))}
           <Button
-            type={"transparent_bg"}
+            type={"danger_bg"}
             style={{ borderRadius: 10, marginTop: 10 }}
-            styleText={{ color: "red" }}
             store={store}
             onPress={() => modalizeRef.current?.close()}
           >
@@ -61,7 +60,7 @@ export const Small: React.FC<any> = observer(({ store, actions }) => {
 })
 
 const s = StyleSheet.create({
-  container: tw("bg-black-100"),
+  container: tw("bg-white"),
   header: tw("items-center"),
   single: tw("absolute bottom-0 right-0 mb-3 mr-3 shadow-md h-12", {
     minWidth: 50,

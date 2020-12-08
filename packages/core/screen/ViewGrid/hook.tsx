@@ -6,7 +6,6 @@ import {
 } from "@react-navigation/native"
 import { useStore, Table } from "../../component"
 import * as listConfig from "./config"
-
 import { TableCheckbox } from "../../shared/ViewGrid/TableCheckbox"
 import { POST } from "../../request"
 import { useMemo } from "react"
