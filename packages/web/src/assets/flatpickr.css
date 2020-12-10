@@ -795,7 +795,6 @@ span.flatpickr-weekday {
   padding-left: 12px;
   padding-right: 12px;
   height: 38px;
-  width: 100%;
 }
 .flatpickr-freejs:disabled {
   background-color: #cbd5e0;

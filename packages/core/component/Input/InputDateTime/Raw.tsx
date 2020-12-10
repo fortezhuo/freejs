@@ -4,7 +4,7 @@ import { theme } from "../../../config/theme"
 import { useMenuDropdown } from "../../Menu"
 import { Text, StyleSheet, View, TouchableWithoutFeedback } from "react-native"
 import { tw } from "@free/tailwind"
-import dayjs from "dayjs"
+import { formatDate, formatTime } from "../../../util"
 
 export const DateTimePicker: React.FC<any> = ({
   value,
@@ -20,8 +20,9 @@ export const DateTimePicker: React.FC<any> = ({
     onChange(currentDate)
     hide()
   }
-  const format = (value: any) =>
-    dayjs(value).format(type ? "DD MMM YYYY" : "HH:mm")
+  const format = (value: any) => {
+    return type ? formatDate(value) : formatTime(type)
+  }
 
   return (
     <MenuDropdown

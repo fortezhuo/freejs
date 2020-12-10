@@ -19,7 +19,7 @@ export const Small: React.FC<any> = observer(({ store, actions }) => {
           onPress={() => modalizeRef.current?.open()}
           store={store}
           style={s.single}
-          type={"single_button_bg"}
+          type={"danger_bg"}
         ></Button>
       )}
       <Modalize
@@ -46,7 +46,7 @@ export const Small: React.FC<any> = observer(({ store, actions }) => {
             />
           ))}
           <Button
-            type={"danger_bg"}
+            type={"disabled_bg"}
             style={{ borderRadius: 10, marginTop: 10 }}
             store={store}
             onPress={() => modalizeRef.current?.close()}

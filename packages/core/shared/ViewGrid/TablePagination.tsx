@@ -1,17 +1,15 @@
 import React from "react"
 import { View, StyleSheet } from "react-native"
-import { Text, Input, Loader } from "../../component"
+import { Text, Input } from "../../component"
 import { observer } from "mobx-react-lite"
 import { random } from "../../util"
 import { tw } from "@free/tailwind"
 import { TouchableOpacity } from "react-native-gesture-handler"
 
-const limitOptions: any = [10, 20, 30, 40, 50, 60, 70, 80].map(
-  (opt: number) => ({
-    value: `${opt}`,
-    label: `${opt}`,
-  })
-)
+const limitOptions: any = [10, 30, 60, 90].map((opt: number) => ({
+  value: `${opt}`,
+  label: `${opt}`,
+}))
 
 const pagination = (c: number, m: number) => {
   let current = c,

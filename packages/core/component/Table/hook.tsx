@@ -1,6 +1,7 @@
 import React from "react"
 import { CellText, CellDownload, CellLink, CellJSON } from "./Cell"
-import { download, date, datetime } from "./helper"
+import { download } from "./helper"
+import { formatDate, formatDateTime } from "../../util"
 
 export const useDefaultColumn = (store: any, isMobile: boolean, keys: any) => {
   return {
@@ -34,13 +35,13 @@ export const useDefaultColumn = (store: any, isMobile: boolean, keys: any) => {
         case "date":
           return (
             <CellText isMobile={isMobile} style={cell.column.style}>
-              {prefix + date(cell.value)}
+              {prefix + formatDate(cell.value)}
             </CellText>
           )
         case "datetime":
           return (
             <CellText isMobile={isMobile} style={cell.column.style}>
-              {prefix + datetime(cell.value)}
+              {prefix + formatDateTime(cell.value)}
             </CellText>
           )
         case "json":

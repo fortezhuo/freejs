@@ -32,7 +32,6 @@ theme = {
   accordion_icon_active_bg: "bg-pink-600",
   input_border: `border rounded-lg ${theme.default_border}`,
   input_error_bg: "bg-red-200",
-  single_button_bg: theme.danger_bg,
 }
 
 export { theme }

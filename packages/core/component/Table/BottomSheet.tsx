@@ -3,13 +3,25 @@ import { View, StyleSheet } from "react-native"
 import { tw } from "@free/tailwind"
 import { observer } from "mobx-react-lite"
 import { Modalize } from "react-native-modalize"
-import { Table, Button, Text, Loader, Section, Input, Label } from ".."
-import { random } from "../../util"
-import { date } from "./helper"
+import { Table, Button, Text, Loader, Input, Label } from ".."
+import {
+  random,
+  formatDateTime,
+  formatDate,
+  isDateString,
+  isArray,
+} from "../../util"
 import { useFocusEffect } from "@react-navigation/native"
 
+const format = (value: any) => {
+  let _value = value
+  if (isArray(value)) _value = value.join(",")
+  if (isDateString(value)) _value = formatDateTime(value)
+  return _value
+}
+
 export const BottomSheet: React.FC<any> = observer(({ store, config }) => {
-  const [isOpen, setOpen] = React.useState(true)
+  const [isSimple, setSimple] = React.useState(true)
   const refBottomSheet = React.useRef(null)
   const value = store.temp.get("value") || undefined
 
@@ -30,7 +42,7 @@ export const BottomSheet: React.FC<any> = observer(({ store, config }) => {
 
   const onClosed = React.useCallback(() => {
     store.setTemp({ value: undefined })
-    setOpen(true)
+    setSimple(true)
   }, [])
 
   useFocusEffect(
@@ -58,7 +70,7 @@ export const BottomSheet: React.FC<any> = observer(({ store, config }) => {
             <View style={{ width: 100 }}>
               <Table.CellText>{item.key}</Table.CellText>
             </View>
-            <Table.CellText>{item.value}</Table.CellText>
+            <Table.CellText>{format(item.value)}</Table.CellText>
           </Table.Row>
         )
       },
@@ -121,8 +133,8 @@ export const BottomSheet: React.FC<any> = observer(({ store, config }) => {
         if (!!start && !!end) {
           build._helper.date = build._helper.date.concat([column.name])
           build[column.name] = {
-            $lte: `${date(end)} 23:59:59`,
-            $gte: `${date(start)} 00:00:00`,
+            $lte: `${formatDate(end)} 23:59:59`,
+            $gte: `${formatDate(start)} 00:00:00`,
           }
         }
       }
@@ -131,118 +143,127 @@ export const BottomSheet: React.FC<any> = observer(({ store, config }) => {
     store.bottomSheet.close()
   }, [configSearch.advance])
 
-  const Children: React.FC<any> = observer(() =>
-    store.isLoading ? (
-      <View style={s.viewLoader}>
-        <Loader dark />
+  const Header: React.FC<any> = () => {
+    return (
+      <View style={s.viewHeader} key={"scroll_" + random()}>
+        <View style={{ flex: 1 }}>
+          <Button
+            type={isSimple ? "danger_bg" : "disabled_bg"}
+            store={store}
+            onPress={() => setSimple(true)}
+          >
+            Simple Search
+          </Button>
+        </View>
+        <View style={{ width: 10 }} />
+        <View style={{ flex: 1 }}>
+          <Button
+            type={!isSimple ? "danger_bg" : "disabled_bg"}
+            store={store}
+            onPress={() => setSimple(false)}
+          >
+            Advance Search
+          </Button>
+        </View>
       </View>
-    ) : (
-      <View>
-        <Section label="Search" show={isOpen}>
-          <View style={s.rowSearch}>
-            <Label>Keyword</Label>
-            <Input.Text
-              store={store}
-              model="temp"
-              name="fulltextsearch"
-              placeholder="Please type keyword ..."
-            />
-            <View style={s.viewButton}>
-              <Button
-                icon="search"
-                onPress={onFullTextSearch}
-                store={store}
-                type={"single_button_bg"}
-              >
-                Search
-              </Button>
-              <Button
-                icon="x"
-                onPress={onClearSearch}
-                store={store}
-                type={"disabled_bg"}
-              >
-                Reset
-              </Button>
-            </View>
-          </View>
-        </Section>
-        <Section label="Advance Search">
-          <View style={s.rowSearch}>
-            {configSearch.advance.map((column: any) => {
-              const type = column.type || "text"
-              return (
-                <View key={"search_" + random()}>
-                  <Label>{column.label}</Label>
-                  {(type == "text" || type === "json") && (
+    )
+  }
+
+  const Footer: React.FC<any> = ({ onPress, onClearSearch }) => (
+    <View style={s.viewButton}>
+      <Button icon="search" onPress={onPress} store={store} type={"danger_bg"}>
+        Search
+      </Button>
+      <Button
+        icon="x"
+        onPress={onClearSearch}
+        store={store}
+        type={"disabled_bg"}
+      >
+        Reset
+      </Button>
+    </View>
+  )
+
+  const children = store.isLoading ? (
+    <View style={s.viewLoader}>
+      <Loader dark />
+    </View>
+  ) : (
+    [
+      isSimple && (
+        <View style={s.rowSearch} key={"scroll_" + random()}>
+          <Label>Keyword</Label>
+          <Input.Text
+            store={store}
+            model="temp"
+            name="fulltextsearch"
+            placeholder="Please type keyword ..."
+          />
+          <Footer onPress={onFullTextSearch} onClearSearch={onClearSearch} />
+        </View>
+      ),
+      !isSimple && (
+        <View style={s.rowSearch} key={"scroll_" + random()}>
+          {configSearch.advance.map((column: any) => {
+            const type = column.type || "text"
+            return (
+              <View key={"search_" + random()}>
+                <Label>{column.label}</Label>
+                {(type == "text" || type === "json") && (
+                  <Input.Text
+                    store={store}
+                    model="temp"
+                    name={column.name}
+                    placeholder={"Fill " + column.label}
+                  />
+                )}
+                {type.indexOf("date") >= 0 && (
+                  <>
+                    <Input.DateTime
+                      store={store}
+                      model="temp"
+                      placeholder={"Start " + column.label}
+                      name={"start_" + column.name}
+                    />
+                    <View style={{ height: 3 }} />
+                    <Input.DateTime
+                      store={store}
+                      model="temp"
+                      placeholder={"End " + column.label}
+                      name={"end_" + column.name}
+                    />
+                  </>
+                )}
+                {(type == "number" || type == "decimal") && (
+                  <View style={{ flexDirection: "row" }}>
                     <Input.Text
                       store={store}
                       model="temp"
                       name={column.name}
                       placeholder={"Fill " + column.label}
                     />
-                  )}
-                  {type.indexOf("date") >= 0 && (
-                    <View style={s.viewStartEnd}>
-                      <Input.DateTime
-                        store={store}
-                        model="temp"
-                        placeholder={"Start " + column.label}
-                        name={"start_" + column.name}
-                      />
-                      <View style={{ width: 10 }} />
-                      <Input.DateTime
-                        store={store}
-                        model="temp"
-                        placeholder={"End " + column.label}
-                        name={"end_" + column.name}
-                      />
-                    </View>
-                  )}
-                  {(type == "number" || type == "decimal") && (
-                    <View style={{ flexDirection: "row" }}>
-                      <Input.Text
-                        store={store}
-                        model="temp"
-                        name={column.name}
-                        placeholder={"Fill " + column.label}
-                      />
-                    </View>
-                  )}
-                </View>
-              )
-            })}
-
-            <View style={s.viewButton}>
-              <Button
-                icon="search"
-                onPress={onAdvanceSearch}
-                store={store}
-                type={"single_button_bg"}
-              >
-                Advance Search
-              </Button>
-              <Button
-                icon="x"
-                onPress={onClearSearch}
-                store={store}
-                type={"disabled_bg"}
-              >
-                Reset
-              </Button>
-            </View>
-          </View>
-        </Section>
-      </View>
-    )
+                  </View>
+                )}
+              </View>
+            )
+          })}
+        </View>
+      ),
+    ]
   )
 
   const props: any = {
-    [value ? "flatListProps" : "children"]: value ? (
-      renderFlatList(value)
-    ) : (
-      <Children />
-    ),
+    HeaderComponent: value ? undefined : <Header />,
+    FooterComponent:
+      value || isSimple ? undefined : (
+        <View style={tw("mx-4")}>
+          <Footer onPress={onAdvanceSearch} onClearSearch={onClearSearch} />
+        </View>
+      ),
+    [value ? "flatListProps" : "children"]: value
+      ? renderFlatList(value)
+      : children,
   }
 
   return (
@@ -250,7 +271,6 @@ export const BottomSheet: React.FC<any> = observer(({ store, config }) => {
       modalTopOffset={80}
       snapPoint={265}
       onClosed={onClosed}
-      onPositionChange={(position: string) => setOpen(position !== "top")}
       ref={refBottomSheet}
       {...props}
     ></Modalize>
@@ -258,7 +278,9 @@ export const BottomSheet: React.FC<any> = observer(({ store, config }) => {
 })
 
 const s = StyleSheet.create({
-  viewHeader: tw("p-3 border-b border-gray-400 bg-white rounded-t-2xl"),
+  viewHeader: tw(
+    "p-3 border-b border-gray-400 bg-white flex-row rounded-t-2xl justify-between"
+  ),
   viewButton: tw("mt-8 mb-2 h-20 justify-between"),
   viewStartEnd: tw("flex-row justify-between"),
   textHeader: tw("text-lg"),
