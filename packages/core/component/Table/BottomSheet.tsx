@@ -22,7 +22,7 @@ const format = (value: any) => {
 
 export const BottomSheet: React.FC<any> = observer(({ store, config }) => {
   const [isSimple, setSimple] = React.useState(true)
-  const refBottomSheet = React.useRef(null)
+  const refBottomSheet = React.useRef<Modalize>(null)
   const value = store.temp.get("value") || undefined
 
   const configSearch = React.useMemo(() => {
@@ -38,7 +38,7 @@ export const BottomSheet: React.FC<any> = observer(({ store, config }) => {
         }
       }),
     }
-  }, [config.search, Object.keys(config.keys)])
+  }, [config.search, config.keys])
 
   const onClosed = React.useCallback(() => {
     store.setTemp({ value: undefined })
@@ -51,9 +51,10 @@ export const BottomSheet: React.FC<any> = observer(({ store, config }) => {
         store.bottomSheet = refBottomSheet.current
       }
       return () => {
+        refBottomSheet.current?.close()
         store.bottomSheet = undefined
       }
-    }, [refBottomSheet.current])
+    }, [config.keys])
   )
 
   const renderFlatList = React.useCallback((value) => {
@@ -144,13 +145,23 @@ export const BottomSheet: React.FC<any> = observer(({ store, config }) => {
   }, [configSearch.advance])
 
   const Header: React.FC<any> = () => {
+    const onTapSimple = React.useCallback(() => {
+      setSimple(true)
+      refBottomSheet.current?.open("default")
+    }, [])
+
+    const onTapAdvance = React.useCallback(() => {
+      setSimple(false)
+      refBottomSheet.current?.open("top")
+    }, [])
+
     return (
       <View style={s.viewHeader} key={"scroll_" + random()}>
         <View style={{ flex: 1 }}>
           <Button
             type={isSimple ? "danger_bg" : "disabled_bg"}
             store={store}
-            onPress={() => setSimple(true)}
+            onPress={onTapSimple}
           >
             Simple Search
           </Button>
@@ -160,7 +171,7 @@ export const BottomSheet: React.FC<any> = observer(({ store, config }) => {
           <Button
             type={!isSimple ? "danger_bg" : "disabled_bg"}
             store={store}
-            onPress={() => setSimple(false)}
+            onPress={onTapAdvance}
           >
             Advance Search
           </Button>
