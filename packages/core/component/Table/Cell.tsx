@@ -7,21 +7,23 @@ import { CellProps } from "@free/core"
 
 const defaultColor = color(theme.default_text)
 
-export const Cell: React.FC<CellProps> = ({
-  isMobile,
-  children,
-  style,
-  testID = "Cell",
-}) => {
-  return (
-    <View
-      testID={testID}
-      style={[s.viewCell, style, isMobile ? s.viewCellSmall : {}]}
-    >
-      {children}
-    </View>
-  )
+function compare(prev: any, next: any) {
+  return prev.children === next.children
 }
+
+export const Cell: React.FC<CellProps> = React.memo(
+  ({ isMobile, children, style, testID = "Cell" }) => {
+    return (
+      <View
+        testID={testID}
+        style={[s.viewCell, style, isMobile ? s.viewCellSmall : {}]}
+      >
+        {children}
+      </View>
+    )
+  },
+  compare
+)
 
 export const CellText: React.FC<CellProps> = ({
   isMobile,

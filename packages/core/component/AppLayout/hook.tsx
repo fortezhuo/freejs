@@ -1,25 +1,26 @@
 import React from "react"
-import { useStore } from "../"
-import { useDimensions } from "./useDimensions"
+import {
+  useSafeAreaFrame,
+  useSafeAreaInsets,
+} from "react-native-safe-area-context"
+import { getScreenSize } from "../../util"
+import { useApp } from "../../state/app"
 
-export const useHook = () => {
-  useDimensions()
-  const { app } = useStore()
-  const refAlert = React.useRef(null)
+export const useAppLayout = () => {
+  const insets = useSafeAreaInsets()
+  const app = useApp()
+  const { width, height } = useSafeAreaFrame()
 
   React.useEffect(() => {
-    if (refAlert.current) app.alert = refAlert.current
-  }, [refAlert.current])
+    const screen = getScreenSize(width)
+    app.setTemp({
+      isMobile: screen !== "xl" && screen !== "lg",
+      width: width - insets.left - insets.right,
+      height: height - insets.top - insets.bottom,
+      insets,
+      screen,
+    })
+  }, [width, height])
 
-  React.useEffect(() => {
-    ;(async function () {
-      try {
-        await app.checkAuth()
-      } catch (e) {
-        console.log("AUTH FAILED", e)
-      }
-    })()
-  }, [app.auth])
-
-  return { refAlert, app }
+  return app
 }

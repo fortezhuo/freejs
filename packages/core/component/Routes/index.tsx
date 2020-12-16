@@ -1,7 +1,7 @@
 import React from "react"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { configApp } from "@free/env"
-import { Loader, useStore, Gradient, IconButton } from ".."
+import { Loader, Gradient, IconButton } from ".."
 import {
   NavigationContainer,
   NavigationContainerRef,
@@ -12,8 +12,8 @@ import { getRoute } from "@free/core/config/route"
 import { createStackNavigator } from "@react-navigation/stack"
 import { DrawerScreen } from "./DrawerScreen"
 import { tw } from "@free/tailwind"
+import { useApp } from "../../state/app"
 import { random } from "../../util"
-
 import { theme } from "../../config/theme"
 
 const colors = [theme.primary_1_bg, theme.primary_2_bg]
@@ -22,17 +22,17 @@ const Stack = createStackNavigator()
 const NAVIGATION_PERSISTENCE_KEY = `${configApp.name.toUpperCase()}_STATE`
 
 const Routes: React.FC<any> = observer(({ screens }) => {
-  const { app } = useStore()
+  const app = useApp()
   const [isReady, setIsReady] = React.useState(Platform.OS === "web")
   const [initialState, setInitialState] = React.useState()
-  const isMobile = app.dimension.isMobile
+  const isMobile = app.temp.isMobile
   const refNavigation = React.useRef<NavigationContainerRef>(null)
 
   const routes = React.useMemo(() => {
     let view: any = []
     let child: any = []
-
-    getRoute(app.auth && app).forEach((route: any) => {
+    const authRoutes = !!app.data.auth?.username ? getRoute(app) : []
+    authRoutes.forEach((route: any) => {
       if (!!route.view) {
         view.push({
           path: route.view,
@@ -55,7 +55,7 @@ const Routes: React.FC<any> = observer(({ screens }) => {
     })
 
     return { view, child }
-  }, [app.auth])
+  }, [app.data.auth?.username])
 
   const linking = React.useMemo(() => {
     const drawer: any = { Index: "index" }
@@ -134,7 +134,7 @@ const Routes: React.FC<any> = observer(({ screens }) => {
           },
         }}
       >
-        {app.auth ? (
+        {app.data.auth.username ? (
           <>
             <Stack.Screen
               name="Drawer"

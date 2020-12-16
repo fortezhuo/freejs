@@ -1,17 +1,16 @@
 import React from "react"
-import { useStore } from "../Store"
 import { useSafeAreaInsets } from "react-native-safe-area-context"
 import { Dimensions } from "react-native"
 import { getScreenSize } from "../../util"
+import { useApp } from "../../state/app"
 
-export const useDimensions = () => {
-  const { app } = useStore()
+export const useAppLayout = () => {
+  const app = useApp()
   const insets = useSafeAreaInsets()
-
   const updateDimensions = React.useCallback((window: any) => {
     const { width, height } = window
     const screen = getScreenSize(width)
-    app.set("dimension", {
+    app.setTemp({
       isMobile: screen !== "xl" && screen !== "lg",
       width: width - insets.left - insets.right,
       height: height - insets.top - insets.bottom,
@@ -30,4 +29,6 @@ export const useDimensions = () => {
       Dimensions.removeEventListener("change", handleChange)
     }
   }, [])
+
+  return app
 }

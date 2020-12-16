@@ -1,5 +1,5 @@
 import React from "react"
-import { View, useWindowDimensions } from "react-native"
+import { View, Dimensions } from "react-native"
 
 export const LinearGradient: React.FC<any> = ({
   start = {
@@ -20,7 +20,7 @@ export const LinearGradient: React.FC<any> = ({
   testID,
   ...props
 }) => {
-  const { width, height } = useWindowDimensions()
+  const { width, height } = Dimensions.get("window")
 
   const getColors = React.useCallback(
     () =>

@@ -95,33 +95,6 @@ declare module "@free/core" {
     colors: string[]
   }
 
-  // GridRow
-  type GridRowProps = {
-    nowrap?: boolean
-    dark?: boolean
-    smHidden?: boolean
-    mdHidden?: boolean
-    lgHidden?: boolean
-    xlHidden?: boolean
-    children: ReactNode
-    style?: any
-  }
-
-  // Col
-  type GridColProps = {
-    light?: boolean
-    sm?: number
-    smHidden?: boolean
-    md?: number
-    mdHidden?: boolean
-    lg?: number
-    lgHidden?: boolean
-    xl?: number
-    xlHidden?: boolean
-    style?: any
-    children?: any
-  }
-
   // Icon
   interface IconProps {
     testID?: string
@@ -136,7 +109,7 @@ declare module "@free/core" {
     style?: any
     styleContainer?: any
     styleText?: any
-    children?: string
+    children?: any
   }
 
   interface IconButtonProps extends IconLabelProps {
@@ -149,6 +122,7 @@ declare module "@free/core" {
     type?: string
     outline?: boolean
     icon?: string
+    onClear?: VoidFunction
   }
 
   // Input

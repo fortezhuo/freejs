@@ -1,5 +1,4 @@
 import { Route } from "@free/core"
-import { AppStore } from "../store/appStore"
 
 const getSetting: (visible: boolean) => Route[] = (visible) => {
   return [
@@ -31,11 +30,9 @@ const getProfile: (visible: boolean) => Route[] = (visible) => {
   return []
 }
 
-export const getRoute: (app: AppStore | undefined) => Route[] = (app) => {
-  if (!app) return []
-
-  const canSetting: boolean = app?.can("read", "setting")
-  const canProfile: boolean = app?.can("read", "profile")
+export const getRoute: (app: any) => Route[] = (app) => {
+  const canSetting: boolean = app.can("read", "setting")
+  const canProfile: boolean = app.can("read", "profile")
   const route: Route[] = []
   return route
     .concat(getSetting(canSetting))

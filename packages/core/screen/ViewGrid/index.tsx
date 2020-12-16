@@ -1,37 +1,16 @@
 import React from "react"
-import { View, StyleSheet, Platform } from "react-native"
+import { View, StyleSheet } from "react-native"
 import { tw } from "@free/tailwind"
 import { TableGrid } from "./TableGrid"
-import { observer } from "mobx-react-lite"
-import { Layout, ActionGroup, Loader, Table } from "../../component"
+import { Loader } from "../../component"
 import { theme } from "../../config/theme"
-import { useView } from "./hook"
+import { useViewGrid, withView } from "./hook"
+const ViewGrid: React.FC<any> = withView(() => {
+  const view = useViewGrid()
 
-const ViewGrid: React.FC<any> = observer(() => {
-  const { view, config, refActions } = useView()
-  return (
-    <>
-      <Layout
-        transparent
-        store={view}
-        scroll={Platform.OS === "web"}
-        stickyRight={
-          <ActionGroup.Large store={view} actions={refActions.current} />
-        }
-      >
-        <View
-          style={[s.viewTable, { height: view.app?.dimension.height - 144 }]}
-        >
-          {view.isUpdating ? (
-            <Loader dark />
-          ) : (
-            <TableGrid store={view} config={config} />
-          )}
-        </View>
-      </Layout>
-      <Table.BottomSheet store={view} config={config} />
-    </>
-  )
+  console.log(view)
+
+  return <View style={[s.viewTable, { height: 500 }]}></View>
 })
 
 const s = StyleSheet.create({

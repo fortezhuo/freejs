@@ -1,68 +1,95 @@
 import React from "react"
 import { Input, LayoutFull, Col, Gradient, Avatar } from "../../component"
 import { View, StyleSheet, Text, TouchableOpacity } from "react-native"
+import { useForm, Controller } from "react-hook-form"
 import { theme } from "../../config/theme"
 import { tw } from "@free/tailwind"
-import { observer } from "mobx-react-lite"
-import { useHook } from "./hook"
+import { useApp } from "../../state/app"
 import logo from "../../img/logo.png"
+import { POST } from "../../request"
 
-const LoginButton: React.FC<any> = observer(({ store }) => {
-  const colors = store.isUpdating
+const LoginButton: React.FC<any> = ({ isUpdating, onPress }) => {
+  const colors = isUpdating
     ? [theme.disabled_bg, theme.disabled_bg]
     : [theme.primary_1_bg, theme.primary_2_bg]
   return (
-    <TouchableOpacity disabled={store.isUpdating} onPress={store.login}>
+    <TouchableOpacity disabled={isUpdating} onPress={onPress}>
       <Gradient type="vertical" colors={colors} style={s.buttonLogin}>
-        <Text style={store.isUpdating ? s.textLoginDisabled : s.textLogin}>
+        <Text style={isUpdating ? s.textLoginDisabled : s.textLogin}>
           LOGIN
         </Text>
       </Gradient>
     </TouchableOpacity>
   )
-})
+}
 
-const PageLogin: React.FC = observer(() => {
-  const store = useHook()
+const PageLogin: React.FC = () => {
+  const { control, handleSubmit, errors } = useForm()
+  const app = useApp()
+
+  const onSubmit = React.useCallback(async (data: any) => {
+    try {
+      const { username, password, domain } = data
+      app.setTemp({ isUpdating: true })
+      const res = await POST("/api/auth", { username, password, domain })
+      app.setData({ auth: res.data.result })
+    } catch (err) {
+      app.setError(err)
+    } finally {
+      app.setTemp({ isUpdating: false })
+    }
+  }, [])
+
   return (
-    <LayoutFull transparent store={store} style={s.layoutLogin}>
+    <LayoutFull transparent>
       <View style={s.pageLogin} testID="PageLogin">
         <Col sm={11} md={9} lg={4} xl={4} style={s.boxLogin}>
           <Avatar source={logo} style={s.iconLogo} />
           <View style={s.boxInput}>
-            <Input.Text
-              data-name="username"
-              store={store}
+            <Controller
+              control={control}
+              render={({ onChange, value }) => (
+                <Input.Text
+                  placeholder="Username"
+                  autoCapitalize="none"
+                  onChangeText={onChange}
+                  value={value}
+                />
+              )}
               name="username"
-              placeholder="Username"
-              autoCapitalize="none"
+              defaultValue=""
             />
-            <Input.Password
-              store={store}
-              data-name="password"
+            <Controller
+              control={control}
+              render={({ onChange, value }) => (
+                <Input.Text
+                  placeholder="Password"
+                  onChangeText={onChange}
+                  value={value}
+                />
+              )}
               name="password"
-              placeholder="Password"
-              autoCapitalize="none"
+              defaultValue=""
             />
-            <Input.Select
-              store={store}
-              data-name="domain"
+            <Controller
+              control={control}
+              render={({ onChange, value }) => (
+                <Input.Text
+                  placeholder="Domain"
+                  onChangeText={onChange}
+                  value={value}
+                />
+              )}
               name="domain"
-              placeholder="Domain"
-              options={store.temp.get("domain") || []}
+              defaultValue=""
             />
-            <Input.DisplayError
-              store={store}
-              name="message"
-              style={s.textError}
-            />
-            <LoginButton store={store} />
           </View>
+          <LoginButton onPress={handleSubmit(onSubmit)} />
         </Col>
       </View>
     </LayoutFull>
   )
-})
+}
 
 const s = StyleSheet.create({
   layoutLogin: tw("justify-center flex-col"),

@@ -9,18 +9,15 @@ import { RowProps } from "@free/core"
 import { useNavigation } from "@react-navigation/native"
 import Swipeable from "react-native-gesture-handler/Swipeable"
 
-export const Row: React.FC<RowProps> = ({
-  children,
-  dark,
-  style,
-  testID = "Row",
-}) => {
-  return (
-    <View testID={testID} style={[s.viewRow, dark ? s.rowDark : {}, style]}>
-      {children}
-    </View>
-  )
-}
+export const Row: React.FC<RowProps> = React.memo(
+  ({ children, dark, style, testID = "Row" }) => {
+    return (
+      <View testID={testID} style={[s.viewRow, dark ? s.rowDark : {}, style]}>
+        {children}
+      </View>
+    )
+  }
+)
 
 const RowMobile: React.FC<any> = observer(
   ({ store, data, actionLeft, actionRight, children, dark, style }) => {
@@ -126,33 +123,31 @@ const RowMobile: React.FC<any> = observer(
   }
 )
 
-export const RowData: React.FC<any> = observer(
-  ({
-    store,
-    data,
-    actionLeft,
-    actionRight,
-    children,
-    dark,
-    isMobile,
-    style,
-  }) => {
-    const Wrapper: any = isMobile ? RowMobile : Row
+export const RowData: React.FC<any> = ({
+  store,
+  data,
+  actionLeft,
+  actionRight,
+  children,
+  dark,
+  isMobile,
+  style,
+}) => {
+  const Wrapper: any = isMobile ? RowMobile : Row
 
-    return (
-      <Wrapper
-        dark={dark}
-        style={style}
-        store={store}
-        data={data}
-        actionLeft={actionLeft}
-        actionRight={actionRight}
-      >
-        {children}
-      </Wrapper>
-    )
-  }
-)
+  return (
+    <Wrapper
+      dark={dark}
+      style={style}
+      store={store}
+      data={data}
+      actionLeft={actionLeft}
+      actionRight={actionRight}
+    >
+      {children}
+    </Wrapper>
+  )
+}
 
 export const Header: React.FC<RowProps> = ({ children, style }) => {
   return <Row style={[s.viewHeader, style]}>{children}</Row>

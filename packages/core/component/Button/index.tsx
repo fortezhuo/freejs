@@ -1,6 +1,6 @@
 import React from "react"
-import { IconButton } from "../Icon"
-import { StyleSheet } from "react-native"
+import { IconButton, Icon, Text } from "../"
+import { StyleSheet, TouchableOpacity, View } from "react-native"
 import { observer } from "mobx-react-lite"
 import { theme } from "../../config/theme"
 import { tw, border, text, color } from "@free/tailwind"
@@ -19,6 +19,7 @@ export const Button: React.FC<ButtonProps> = observer((props) => {
     styleText,
     disabled,
     onPress = undefined,
+    onClear = undefined,
   } = props
 
   const theme_bg = type === "transparent_bg" ? "bg-white" : theme[type]
@@ -46,14 +47,20 @@ export const Button: React.FC<ButtonProps> = observer((props) => {
       testID={testID}
       disabled={disabled}
       styleContainer={[s.viewButton, bgColor, style]}
-      styleText={[s.textButton, textColor, styleText]}
       style={children ? s.iconButton : {}}
       name={store?.isUpdating ? "loader" : icon}
       color={textColor.color}
       size={18}
       onPress={onPress}
     >
-      {children}
+      <View style={s.viewGroup}>
+        <Text style={[textColor, styleText]}>{children}</Text>
+        {onClear && (
+          <TouchableOpacity style={s.iconButton} onPress={onClear}>
+            <Icon name="x" size={18} />
+          </TouchableOpacity>
+        )}
+      </View>
     </IconButton>
   )
 })
@@ -63,6 +70,6 @@ const s: any = StyleSheet.create({
     minWidth: 36,
     height: 36,
   }),
-  iconButton: tw("ml-2"),
-  textButton: tw("mx-2 leading-5"),
+  viewGroup: tw("pl-1 mr-1 flex-row items-center"),
+  iconButton: tw("pl-2"),
 })

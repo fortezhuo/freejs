@@ -1,4 +1,5 @@
-import { useStore } from "../Store"
+import React from "react"
+import { useApp } from "../../state/app"
 
 const isHiddenByScreen = (screen?: string, props?: ObjectAny) => {
   switch (screen) {
@@ -51,10 +52,14 @@ const getWidthByScreen = (screen?: string, props?: ObjectAny) => {
 }
 
 export const useHook = () => {
-  const { app } = useStore()
-  const isHidden = (props: ObjectAny) =>
-    isHiddenByScreen(app.dimension.screen, props)
-  const getWidth = (props: ObjectAny) =>
-    getWidthByScreen(app.dimension.screen, props)
+  const { temp } = useApp()
+  const isHidden = React.useCallback(
+    (props: ObjectAny) => isHiddenByScreen(temp.screen, props),
+    [temp.screen]
+  )
+  const getWidth = React.useCallback(
+    (props: ObjectAny) => getWidthByScreen(temp.screen, props),
+    [temp.screen]
+  )
   return { isHidden, getWidth }
 }

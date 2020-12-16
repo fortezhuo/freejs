@@ -4,20 +4,35 @@ import { theme } from "../../config/theme"
 import { Gradient, KeyboardAwareScrollView } from "../"
 import { tw } from "@free/tailwind"
 import { LayoutProps } from "@free/core"
-import { useHook } from "./hook"
-import { observer } from "mobx-react-lite"
 
-const Wrapper: React.FC<any> = observer((props) =>
-  props.scroll ? (
-    <KeyboardAwareScrollView testID={props.testID}>
-      {props.children}
+interface Wrapper {
+  scroll?: boolean
+  testID?: string
+  children: React.ReactNode
+}
+
+const Wrapper: React.FC<Wrapper> = ({
+  scroll = true,
+  testID = undefined,
+  children,
+}) => {
+  if (!scroll) return <>{children}</>
+  return (
+    <KeyboardAwareScrollView testID={testID}>
+      {children}
     </KeyboardAwareScrollView>
-  ) : (
-    props.children
   )
-)
+}
 
-const GradientWrapper: React.FC<any> = ({ transparent, children }) => {
+interface GradientWrapper {
+  transparent?: boolean
+  children: React.ReactNode
+}
+
+const GradientWrapper: React.FC<GradientWrapper> = ({
+  transparent,
+  children,
+}) => {
   const colors = [theme.primary_1_bg, theme.primary_2_bg]
   return transparent ? (
     <View style={s.viewTransparent}>{children}</View>
@@ -28,57 +43,62 @@ const GradientWrapper: React.FC<any> = ({ transparent, children }) => {
   )
 }
 
-export const LayoutFull: React.FC<LayoutProps> = observer(
-  ({
-    testID = "LayoutFull",
-    children,
-    scroll = true,
-    transparent = false,
-    store,
-  }) => {
-    useHook(store)
+interface LayoutFull {
+  testID?: string
+  children: React.ReactNode
+  scroll?: boolean
+  transparent?: boolean
+}
 
-    return (
-      <GradientWrapper transparent={transparent}>
-        <Wrapper testID={testID} scroll={scroll}>
+export const LayoutFull: React.FC<LayoutFull> = ({
+  testID = "LayoutFull",
+  children,
+  scroll = true,
+  transparent = false,
+}) => {
+  return (
+    <GradientWrapper transparent={transparent}>
+      <Wrapper testID={testID} scroll={scroll}>
+        {children}
+      </Wrapper>
+    </GradientWrapper>
+  )
+}
+
+interface Layout extends LayoutFull {
+  stickyLeft?: React.ReactNode
+  stickyRight?: React.ReactNode
+  style?: any
+}
+
+export const Layout: React.FC<Layout> = ({
+  testID = "Layout",
+  children,
+  stickyLeft,
+  stickyRight,
+  transparent = false,
+  scroll = true,
+  style,
+}) => {
+  return (
+    <LayoutFull transparent={transparent} scroll={false}>
+      <View style={s.viewWrapper1}></View>
+      <View style={s.viewWrapper2}>
+        <View style={s.viewWrapper21}></View>
+        <View style={s.viewWrapper22}></View>
+      </View>
+      <View style={s.viewAction}>
+        {stickyLeft || <View></View>}
+        {stickyRight}
+      </View>
+      <Wrapper scroll={scroll}>
+        <View style={[s.viewChildren, style]} testID={testID}>
           {children}
-        </Wrapper>
-      </GradientWrapper>
-    )
-  }
-)
-
-export const Layout: React.FC<LayoutProps> = observer(
-  ({
-    testID = "Layout",
-    children,
-    stickyLeft,
-    stickyRight,
-    transparent = false,
-    scroll = true,
-    store,
-    style,
-  }) => {
-    return (
-      <LayoutFull transparent={transparent} scroll={false} store={store}>
-        <View style={s.viewWrapper1}></View>
-        <View style={s.viewWrapper2}>
-          <View style={s.viewWrapper21}></View>
-          <View style={s.viewWrapper22}></View>
         </View>
-        <View style={s.viewAction}>
-          {stickyLeft || <View></View>}
-          {stickyRight}
-        </View>
-        <Wrapper scroll={scroll}>
-          <View style={[s.viewChildren, style]} testID={testID}>
-            {children}
-          </View>
-        </Wrapper>
-      </LayoutFull>
-    )
-  }
-)
+      </Wrapper>
+    </LayoutFull>
+  )
+}
 
 const s = StyleSheet.create({
   viewLayout: tw("flex-1"),
