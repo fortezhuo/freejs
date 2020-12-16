@@ -7,7 +7,6 @@ import {
   NavigationContainerRef,
 } from "@react-navigation/native"
 import { Platform, Linking, StyleSheet } from "react-native"
-import { observer } from "mobx-react-lite"
 import { getRoute } from "@free/core/config/route"
 import { createStackNavigator } from "@react-navigation/stack"
 import { DrawerScreen } from "./DrawerScreen"
@@ -21,7 +20,7 @@ const colors = [theme.primary_1_bg, theme.primary_2_bg]
 const Stack = createStackNavigator()
 const NAVIGATION_PERSISTENCE_KEY = `${configApp.name.toUpperCase()}_STATE`
 
-const Routes: React.FC<any> = observer(({ screens }) => {
+const Routes: React.FC<any> = ({ screens }) => {
   const app = useApp()
   const [isReady, setIsReady] = React.useState(Platform.OS === "web")
   const [initialState, setInitialState] = React.useState()
@@ -31,7 +30,7 @@ const Routes: React.FC<any> = observer(({ screens }) => {
   const routes = React.useMemo(() => {
     let view: any = []
     let child: any = []
-    const authRoutes = !!app.data.auth?.username ? getRoute(app) : []
+    const authRoutes = !!app.data?.auth?.username ? getRoute(app) : []
     authRoutes.forEach((route: any) => {
       if (!!route.view) {
         view.push({
@@ -55,7 +54,7 @@ const Routes: React.FC<any> = observer(({ screens }) => {
     })
 
     return { view, child }
-  }, [app.data.auth?.username])
+  }, [app.data?.auth?.username])
 
   const linking = React.useMemo(() => {
     const drawer: any = { Index: "index" }
@@ -134,7 +133,7 @@ const Routes: React.FC<any> = observer(({ screens }) => {
           },
         }}
       >
-        {app.data.auth.username ? (
+        {app.data?.auth?.username ? (
           <>
             <Stack.Screen
               name="Drawer"
@@ -202,7 +201,7 @@ const Routes: React.FC<any> = observer(({ screens }) => {
       </Stack.Navigator>
     </NavigationContainer>
   )
-})
+}
 
 const s = StyleSheet.create({
   headerLeft: tw(`ml-4`),

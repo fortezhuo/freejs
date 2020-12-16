@@ -8,7 +8,7 @@ import { Table } from "../../component"
 import * as listConfig from "./config"
 import { TableCheckbox } from "../../shared/ViewGrid/TableCheckbox"
 import { POST } from "../../request"
-export { withView, useView } from "../../store"
+export { withView, useView } from "../../state/view"
 
 const validateNotEmpty = (store: any, id: string = "") =>
   new Promise((resolve) => {

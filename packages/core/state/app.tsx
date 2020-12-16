@@ -41,10 +41,28 @@ const useHook = () => {
         .on(resource)
       return granted
     },
-    [app.data.auth?.username]
+    [app.data?.auth?.username]
   )
 
-  return { ...app, can, refAlert }
+  const login = React.useCallback(async (data) => {
+    try {
+      app.setError({})
+      app.setTemp({ isUpdating: true })
+      const res = await req.POST("/api/auth", { ...data })
+      app.setData({ auth: res.data.result })
+    } catch (err) {
+      app.setError(err)
+    } finally {
+      app.setTemp({ isUpdating: false })
+    }
+  }, [])
+
+  const logout = React.useCallback(async () => {
+    await req.GET("/api/auth/logout")
+    app.setData({ auth: undefined })
+  }, [app.data?.auth?.username])
+
+  return { ...app, can, login, logout, refAlert }
 }
 
 export const [withApp, useApp] = createContext("App", {}, useHook)

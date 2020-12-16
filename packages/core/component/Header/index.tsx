@@ -1,40 +1,40 @@
 import React from "react"
 import { StyleSheet, View, Text } from "react-native"
-import { useMenuDropdown, useStore, IconButton } from "../"
+import { useMenuDropdown, IconButton } from "../"
 import { tw } from "@free/tailwind"
-import { observer } from "mobx-react-lite"
+import { useApp } from "../../state/app"
 import _debounce from "lodash/debounce"
 
-export const MenuUser: React.FC = observer(() => {
+export const MenuUser: React.FC = () => {
   const { show, MenuDropdown, MenuItem } = useMenuDropdown()
-  const { app } = useStore()
-  return (
-    app.auth && (
-      <MenuDropdown
-        testID="MenuUser"
-        anchor={
-          <IconButton
-            style={s.iconMenuUser}
-            name={"user"}
-            size={24}
-            onPress={show}
-          />
-        }
-      >
-        <View style={s.viewMenu}>
-          <View style={s.viewUser}>
-            <Text style={s.textUser}>{app?.auth?.fullname}</Text>
-          </View>
-          <View style={s.viewChildren}>
-            <MenuItem name="log-out" onPress={_debounce(app.logout, 300)}>
-              Logout
-            </MenuItem>
-          </View>
+  const app = useApp()
+  return !!app.data?.auth?.username ? (
+    <MenuDropdown
+      testID="MenuUser"
+      anchor={
+        <IconButton
+          style={s.iconMenuUser}
+          name={"user"}
+          size={24}
+          onPress={show}
+        />
+      }
+    >
+      <View style={s.viewMenu}>
+        <View style={s.viewUser}>
+          <Text style={s.textUser}>{app?.auth?.fullname}</Text>
         </View>
-      </MenuDropdown>
-    )
+        <View style={s.viewChildren}>
+          <MenuItem name="log-out" onPress={_debounce(app.logout, 300)}>
+            Logout
+          </MenuItem>
+        </View>
+      </View>
+    </MenuDropdown>
+  ) : (
+    <></>
   )
-})
+}
 
 const s = StyleSheet.create({
   viewMenu: tw("mt-1 rounded-md bg-black-100", { padding: 2 }),

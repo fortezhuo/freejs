@@ -1,11 +1,10 @@
 import React from "react"
 import { StyleSheet, View, Text, Image, ScrollView } from "react-native"
-import { DrawerItem } from "@react-navigation/drawer"
 import { SafeAreaView } from "react-native-safe-area-context"
 import { Accordion, AccordionItem, Link, Gradient } from "../"
-import { observer } from "mobx-react-lite"
 import { getMenu } from "../../config/menu"
 import { random } from "../../util"
+import { useApp } from "../../state/app"
 import { tw } from "@free/tailwind"
 import { configApp } from "@free/env"
 import logo from "../../img/logo.png"
@@ -16,24 +15,27 @@ const Logo: React.FC = () => {
   return <Image source={logo} style={s.imgTitle} />
 }
 
-export const Title: React.FC<any> = observer(
-  ({ testID = "Title", navigation }) => {
-    return (
-      <Link navigation={navigation} testID={testID} name={"Index"}>
-        <View style={s.layoutTitle}>
-          <Logo />
-          <View style={s.groupTitle}>
-            <Text style={s.textTitle}>{configApp.displayName}</Text>
-          </View>
+export const Title: React.FC<any> = ({ testID = "Title", navigation }) => {
+  return (
+    <Link navigation={navigation} testID={testID} name={"Index"}>
+      <View style={s.layoutTitle}>
+        <Logo />
+        <View style={s.groupTitle}>
+          <Text style={s.textTitle}>{configApp.displayName}</Text>
         </View>
-      </Link>
-    )
-  }
-)
+      </View>
+    </Link>
+  )
+}
 
-const Content: React.FC<any> = observer((props) => {
-  const allowedMenu = getMenu().filter((menu) => menu.visible)
+const Content: React.FC<any> = (props) => {
+  const app = useApp()
   const activeName = props.state.routeNames[props.state.index]
+
+  const allowedMenu = React.useMemo(
+    () => getMenu(app).filter((menu) => menu.visible),
+    [app.data?.auth?.username]
+  )
 
   return (
     <ScrollView {...props} scrollEnabled={true} stickyHeaderIndices={[0]}>
@@ -72,9 +74,9 @@ const Content: React.FC<any> = observer((props) => {
       <View style={{ height: 100 }} />
     </ScrollView>
   )
-})
+}
 
-export const Sidebar: React.FC<any> = observer((props) => {
+export const Sidebar: React.FC<any> = (props) => {
   return (
     <Gradient type="vertical" colors={colors} style={{ flex: 1 }}>
       <SafeAreaView style={s.layoutSidebar} testID="Sidebar">
@@ -82,7 +84,7 @@ export const Sidebar: React.FC<any> = observer((props) => {
       </SafeAreaView>
     </Gradient>
   )
-})
+}
 
 const s = StyleSheet.create({
   layoutSidebar: tw(`flex-1`),
