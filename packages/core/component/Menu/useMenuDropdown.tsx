@@ -26,13 +26,12 @@ export const useMenuDropdown = (isCompact: boolean = false) => {
     anchor,
     style,
     children,
-    onShow,
     allowBackDrop = true,
   }) => {
     const app = useApp()
     const [layout, setLayout] = React.useState<ObjectAny>({
-      menuWidth: 0,
-      menuHeight: 0,
+      width: 0,
+      height: 0,
     })
     const [measure, setMeasure] = React.useState<ObjectAny>({
       top: 0,
@@ -42,20 +41,20 @@ export const useMenuDropdown = (isCompact: boolean = false) => {
     })
     const refContainer = React.useRef<View>(null)
 
-    const onMenuLayout = React.useCallback((e: any) => {
+    const onLayout = React.useCallback((e: any) => {
       const { width, height } = e.nativeEvent.layout
       setLayout({
-        menuWidth: Math.max(
+        width: Math.max(
           isCompact ? 0 : tw("w-48").width,
           width,
           measure.anchorWidth
         ),
-        menuHeight: height,
+        height,
       })
     }, [])
 
     React.useEffect(() => {
-      if (refContainer.current && isOpen) {
+      if (isOpen) {
         refContainer.current?.measureInWindow(
           (
             left: number,
@@ -72,13 +71,13 @@ export const useMenuDropdown = (isCompact: boolean = false) => {
           }
         )
       }
-    }, [])
+    }, [app.temp.screen])
 
-    const { anchorHeight } = measure
-    let { left, top } = measure
+    const { width } = layout
+    let { left, top, anchorHeight } = measure
 
-    if (left > app.temp.width - layout.menuWidth - SCREEN_INDENT) {
-      left = app.temp.width - SCREEN_INDENT - layout.menuWidth
+    if (left > app.temp.width - width - SCREEN_INDENT) {
+      left = app.temp.width - SCREEN_INDENT - width
     } else if (left < SCREEN_INDENT) {
       left = SCREEN_INDENT
     }
@@ -86,7 +85,7 @@ export const useMenuDropdown = (isCompact: boolean = false) => {
     top += anchorHeight
 
     const menuStyle = {
-      width: layout.menuWidth,
+      width,
       left,
       top,
     }
@@ -98,13 +97,12 @@ export const useMenuDropdown = (isCompact: boolean = false) => {
           animationType="none"
           transparent
           isVisible={isOpen}
-          onShow={onShow}
           onBackdropPress={allowBackDrop ? hide : noop}
         >
           <View
             collapsable={false}
             style={[s.viewChildren, menuStyle, style]}
-            onLayout={onMenuLayout}
+            onLayout={onLayout}
           >
             {children}
           </View>
