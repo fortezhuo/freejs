@@ -9,15 +9,15 @@
   "devDependencies": {
     "@types/react": "^16.9.56",
     "@types/react-flatpickr": "^3.8.1",
-    "@types/react-native": "^0.63.37",
+    "@types/react-native": "^0.63.41",
     "@types/react-native-vector-icons": "^6.4.5",
-    "@types/react-table": "^7.0.25"
+    "@types/react-table": "^7.0.26"
   },
   "dependencies": {
     "@free/env": "1.0.0",
     "@free/tailwind": "1.0.0",
     "@react-native-async-storage/async-storage": "^1.13.2",
-    "@react-native-community/datetimepicker": "^3.0.6",
+    "@react-native-community/datetimepicker": "^3.0.8",
     "@react-native-community/masked-view": "^0.1.10",
     "@react-navigation/drawer": "^5.11.4",
     "@react-navigation/native": "^5.8.10",
@@ -35,7 +35,7 @@
     "react-native-modalize": "2.0.8",
     "react-native-reanimated": "^1.13.2",
     "react-native-safe-area-context": "^3.1.9",
-    "react-native-screens": "^2.15.0",
+    "react-native-screens": "^2.16.1",
     "react-native-vector-icons": "7.1.0",
     "react-table": "^7.6.2"
   }

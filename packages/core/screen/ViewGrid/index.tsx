@@ -4,11 +4,9 @@ import { tw } from "@free/tailwind"
 import { TableGrid } from "./TableGrid"
 import { Loader } from "../../component"
 import { theme } from "../../config/theme"
-import { useViewGrid, withView } from "./hook"
+import { useView, withView } from "../../state/view"
 const ViewGrid: React.FC<any> = withView(() => {
-  const view = useViewGrid()
-
-  console.log(view)
+  const view = useView()
 
   return <View style={[s.viewTable, { height: 500 }]}></View>
 })

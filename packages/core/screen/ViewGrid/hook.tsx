@@ -8,7 +8,8 @@ import { Table } from "../../component"
 import * as listConfig from "./config"
 import { TableCheckbox } from "../../shared/ViewGrid/TableCheckbox"
 import { POST } from "../../request"
-export { withView, useView } from "../../state/view"
+import { useView } from "../../state/view"
+import { useApp } from "../../state/app"
 
 const validateNotEmpty = (store: any, id: string = "") =>
   new Promise((resolve) => {
@@ -31,6 +32,7 @@ const validateNotEmpty = (store: any, id: string = "") =>
   })
 
 const useAction = () => {
+  const { refAlert } = useApp()
   const { data, setData } = useView()
   const navigation = useNavigation()
 
@@ -51,8 +53,7 @@ const useAction = () => {
       children: "Delete",
       onPress: async ({ id }: any) => {
         if (await validateNotEmpty(null, id)) {
-          /*
-          view.app?.alert.confirm({
+          refAlert.current.confirm({
             title: "Confirmation",
             message: "Do you want to delete these document(s) ?",
             actions: [
@@ -60,18 +61,17 @@ const useAction = () => {
                 label: "OK",
                 type: "primary_1",
                 onPress: async () => {
-                  await view.deleteDocument(id)
-                  view.app?.alert.close()
+                  //                  await view.deleteDocument(id)
+                  refAlert.current.close()
                 },
               },
               {
                 label: "Cancel",
                 type: "danger",
-                onPress: () => view.app?.alert.close(),
+                onPress: () => refAlert.current.close(),
               },
             ],
           })
-          */
         }
       },
     }
@@ -82,8 +82,7 @@ const useAction = () => {
       children: "Restore",
       onPress: async ({ id }: any) => {
         if (await validateNotEmpty(null, id)) {
-          /*
-          view.app?.alert.confirm({
+          refAlert.current.confirm({
             title: "Confirmation",
             message: "Do you want to restore these document(s) ?",
             actions: [
@@ -91,18 +90,17 @@ const useAction = () => {
                 label: "OK",
                 type: "primary_1",
                 onPress: async () => {
-                  await view.restoreDocument(id)
-                  view.app?.alert.close()
+                  //                  await view.restoreDocument(id)
+                  refAlert.current.close()
                 },
               },
               {
                 label: "Cancel",
                 type: "danger",
-                onPress: () => view.app?.alert.close(),
+                onPress: () => refAlert.current.close(),
               },
             ],
           })
-          */
         }
       },
     }
@@ -123,6 +121,7 @@ const useAction = () => {
 }
 
 export const useViewGrid = () => {
+  const app = useApp()
   const { data, setData, temp, setTemp } = useView()
   const navRoute = useRoute()
   const actions = useAction()
@@ -150,7 +149,7 @@ export const useViewGrid = () => {
           route: routeName,
           name: selected.name,
           fields: selected.fields,
-          isMobile: false, //view?.app?.dimension.isMobile,
+          isMobile: app.data.isMobile,
           collection: undefined,
           selected: undefined,
           isRefresh: undefined,
