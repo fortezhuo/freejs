@@ -2,7 +2,7 @@ import React from "react"
 import constate from "constate"
 import _isEmpty from "lodash/isEmpty"
 
-export const createState = (init: ObjectAny) =>
+export const useState = (init: ObjectAny) =>
   React.useReducer((prev: ObjectAny, _next: ObjectAny) => {
     let { __isReset, ...next } = _next
     __isReset = !!__isReset ? __isReset : _isEmpty(next)
@@ -10,9 +10,9 @@ export const createState = (init: ObjectAny) =>
   }, init)
 
 export const useDefaultState = ({ initData, initTemp }: any) => {
-  const [data = {}, setData] = createState(initData)
-  const [temp = {}, setTemp] = createState(initTemp)
-  const [error = {}, setError] = createState({})
+  const [data = {}, setData] = useState(initData)
+  const [temp = {}, setTemp] = useState(initTemp)
+  const [error = {}, setError] = useState({})
 
   return {
     data,

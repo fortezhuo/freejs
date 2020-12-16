@@ -5,34 +5,34 @@ import { tw } from "@free/tailwind"
 import { useApp } from "../../state/app"
 import _debounce from "lodash/debounce"
 
-export const MenuUser: React.FC = () => {
+export const MenuUser: React.ReactNode = () => {
   const { show, MenuDropdown, MenuItem } = useMenuDropdown()
   const app = useApp()
-  return !!app.data?.auth?.username ? (
-    <MenuDropdown
-      testID="MenuUser"
-      anchor={
-        <IconButton
-          style={s.iconMenuUser}
-          name={"user"}
-          size={24}
-          onPress={show}
-        />
-      }
-    >
-      <View style={s.viewMenu}>
-        <View style={s.viewUser}>
-          <Text style={s.textUser}>{app?.auth?.fullname}</Text>
+  return (
+    app.data?.auth?.username && (
+      <MenuDropdown
+        testID="MenuUser"
+        anchor={
+          <IconButton
+            style={s.iconMenuUser}
+            name={"user"}
+            size={24}
+            onPress={show}
+          />
+        }
+      >
+        <View style={s.viewMenu}>
+          <View style={s.viewUser}>
+            <Text style={s.textUser}>{app.data?.auth?.fullname}</Text>
+          </View>
+          <View style={s.viewChildren}>
+            <MenuItem name="log-out" onPress={_debounce(app.logout, 300)}>
+              Logout
+            </MenuItem>
+          </View>
         </View>
-        <View style={s.viewChildren}>
-          <MenuItem name="log-out" onPress={_debounce(app.logout, 300)}>
-            Logout
-          </MenuItem>
-        </View>
-      </View>
-    </MenuDropdown>
-  ) : (
-    <></>
+      </MenuDropdown>
+    )
   )
 }
 
