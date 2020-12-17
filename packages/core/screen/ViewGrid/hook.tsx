@@ -226,7 +226,6 @@ export const useActions = (refBottomSheet: any) => {
   React.useEffect(() => {
     if (config?.name) {
       const isMobile = app.temp.isMobile
-      /*
       const _isMobile = view.data.isMobile
       if (_isMobile !== isMobile) {
         view.setTemp({ isUpdating: true })
@@ -235,7 +234,7 @@ export const useActions = (refBottomSheet: any) => {
           view.setTemp({ isUpdating: false })
         }, 100)
       }
-      */
+
       view.setData({ isMobile })
       refActions.current = actions.filter(
         (action: any) =>

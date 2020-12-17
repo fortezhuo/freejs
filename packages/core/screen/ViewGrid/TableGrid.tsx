@@ -14,6 +14,7 @@ import { theme } from "../../config/theme"
 import { tw, color } from "@free/tailwind"
 import { TablePagination } from "../../shared/ViewGrid/TablePagination"
 import { useView, useDefaultColumn, useColumns } from "./hook"
+import { useApp } from "../../state"
 
 const defaultColor = color(theme.default_text)
 const colMobileHidden = [
@@ -44,9 +45,11 @@ const TableHeaderCell: React.FC<any> = ({ column }) => {
 }
 
 export const TableGrid: React.FC<any> = ({ actions }) => {
+  const app = useApp()
   const view = useView()
   const columnsFormat = useDefaultColumn()
   const columns = useColumns()
+  const _isMobile = app.temp.isMobile
   const {
     isMobile,
     collection = [],
@@ -69,7 +72,7 @@ export const TableGrid: React.FC<any> = ({ actions }) => {
     })
   }, [])
 
-  return (
+  return isMobile === _isMobile ? (
     <TableContent
       isMobile={isMobile}
       isLoading={view.temp.isLoading}
@@ -87,6 +90,8 @@ export const TableGrid: React.FC<any> = ({ actions }) => {
         max: pageMax,
       }}
     />
+  ) : (
+    <Loader dark />
   )
 }
 
@@ -121,13 +126,14 @@ const TableContent: React.FC<any> = ({
     useSelection
   )
 
+  /*
   useMountedLayoutEffect(() => {
     onSelect(selectedFlatRows)
   }, [selectedFlatRows])
 
+  */
   return (
     <>
-      <TablePagination store={store} page={{ ...page, goto: gotoPage }} />
       <TableWrapper style={s.viewTable}>
         {headerGroups.map((headerGroup: any) => {
           const { key } = headerGroup.getHeaderGroupProps()
