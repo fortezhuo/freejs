@@ -1,5 +1,5 @@
 import React from "react"
-import { useApp } from "../../state/app"
+import { useApp } from "../../state"
 
 const isHiddenByScreen = (screen?: string, props?: ObjectAny) => {
   switch (screen) {

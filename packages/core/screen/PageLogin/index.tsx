@@ -4,7 +4,7 @@ import { View, StyleSheet, Text, TouchableOpacity } from "react-native"
 import { useForm, Controller } from "react-hook-form"
 import { theme } from "../../config/theme"
 import { tw } from "@free/tailwind"
-import { useApp } from "../../state/app"
+import { useApp } from "../../state"
 import logo from "../../img/logo.png"
 import { POST } from "../../request"
 

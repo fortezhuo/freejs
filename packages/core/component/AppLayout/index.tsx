@@ -5,7 +5,7 @@ import { tw } from "@free/tailwind"
 import { theme } from "../../config/theme"
 import { Gradient, Alert } from "../"
 import { enableScreens } from "react-native-screens"
-import { withApp } from "../../state/app"
+import { withApp } from "../../state"
 import { useAppLayout } from "./hook"
 
 enableScreens()

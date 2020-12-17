@@ -1,14 +1,32 @@
 import React from "react"
-import { View, StyleSheet } from "react-native"
+import { View, StyleSheet, Platform, Text } from "react-native"
 import { tw } from "@free/tailwind"
 import { TableGrid } from "./TableGrid"
-import { Loader } from "../../component"
+import { Loader, ActionGroup, Layout } from "../../component"
 import { theme } from "../../config/theme"
-import { useView, withView } from "../../state/view"
-const ViewGrid: React.FC<any> = withView(() => {
-  const view = useView()
+import { useView, useActions, withView } from "./hook"
+import { BottomSheet } from "./BottomSheet"
 
-  return <View style={[s.viewTable, { height: 500 }]}></View>
+const ViewGrid: React.FC<any> = withView(() => {
+  const { refBottomSheet, ...view } = useView()
+  const actions = useActions(refBottomSheet)
+  const isReady = !!view.data?.config?.name
+  const { height } = view.temp
+
+  return (
+    <>
+      <Layout
+        transparent
+        scroll={Platform.OS === "web"}
+        stickyRight={<ActionGroup.Large actions={actions} />}
+      >
+        <View style={[s.viewTable, { height }]}>
+          {!isReady ? <Loader dark /> : <TableGrid actions={actions} />}
+        </View>
+      </Layout>
+      {isReady && <BottomSheet refBind={refBottomSheet} />}
+    </>
+  )
 })
 
 const s = StyleSheet.create({

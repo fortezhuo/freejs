@@ -11,7 +11,7 @@ import { getRoute } from "@free/core/config/route"
 import { createStackNavigator } from "@react-navigation/stack"
 import { DrawerScreen } from "./DrawerScreen"
 import { tw } from "@free/tailwind"
-import { useApp } from "../../state/app"
+import { useApp } from "../../state"
 import { random } from "../../util"
 import { theme } from "../../config/theme"
 
@@ -80,7 +80,7 @@ const Routes: React.FC<any> = ({ screens }) => {
         },
       },
     }
-  }, [app.auth])
+  }, [app.data?.auth?.username])
 
   React.useEffect(() => {
     const restoreState = async () => {
@@ -104,12 +104,16 @@ const Routes: React.FC<any> = ({ screens }) => {
     restoreState()
   }, [])
 
-  return !isReady || app.isLoading ? (
+  return !isReady || app.temp.isLoading ? (
     <Loader />
   ) : (
     <NavigationContainer
       ref={refNavigation}
       linking={linking}
+      initialState={initialState}
+      onStateChange={(state) =>
+        AsyncStorage.setItem(NAVIGATION_PERSISTENCE_KEY, JSON.stringify(state))
+      }
       documentTitle={{
         formatter: (options, route: any) => {
           return `${options?.title ?? route?.name} :: ${configApp.displayName}`

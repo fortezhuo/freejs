@@ -4,7 +4,7 @@ import {
   useSafeAreaInsets,
 } from "react-native-safe-area-context"
 import { getScreenSize } from "../../util"
-import { useApp } from "../../state/app"
+import { useApp } from "../../state"
 
 export const useAppLayout = () => {
   const insets = useSafeAreaInsets()

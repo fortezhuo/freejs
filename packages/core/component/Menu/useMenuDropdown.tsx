@@ -4,7 +4,7 @@ import { Modal } from "../"
 import { MenuItem } from "./MenuItem"
 import { tw } from "@free/tailwind"
 import { MenuProps, MenuItemProps } from "@free/core"
-import { useApp } from "../../state/app"
+import { useApp } from "../../state"
 
 const { color: iconColor } = tw("text-gray-700")
 const SCREEN_INDENT = 2

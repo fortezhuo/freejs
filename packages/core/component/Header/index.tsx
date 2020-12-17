@@ -2,7 +2,7 @@ import React from "react"
 import { StyleSheet, View, Text } from "react-native"
 import { useMenuDropdown, IconButton } from "../"
 import { tw } from "@free/tailwind"
-import { useApp } from "../../state/app"
+import { useApp } from "../../state"
 import _debounce from "lodash/debounce"
 
 export const MenuUser: React.ReactNode = () => {

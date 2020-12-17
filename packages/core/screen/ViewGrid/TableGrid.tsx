@@ -10,10 +10,10 @@ import {
   useMountedLayoutEffect,
 } from "react-table"
 import { FlatList } from "react-native-gesture-handler"
-import { observer } from "mobx-react-lite"
 import { theme } from "../../config/theme"
 import { tw, color } from "@free/tailwind"
 import { TablePagination } from "../../shared/ViewGrid/TablePagination"
+import { useView, useDefaultColumn, useColumns } from "./hook"
 
 const defaultColor = color(theme.default_text)
 const colMobileHidden = [
@@ -43,33 +43,39 @@ const TableHeaderCell: React.FC<any> = ({ column }) => {
   )
 }
 
-export const TableGrid: React.FC<any> = observer(({ store, config }) => {
-  const _isMobile = store.app.dimension.isMobile
-  const [
+export const TableGrid: React.FC<any> = ({ actions }) => {
+  const view = useView()
+  const columnsFormat = useDefaultColumn()
+  const columns = useColumns()
+  const {
     isMobile,
     collection = [],
     pageIndex,
     limit,
     total,
     pageMax,
-  ] = store.getData("isMobile", "collection", "page", "limit", "total", "max")
-  const columnsFormat = Table.useDefaultColumn(store, _isMobile, config.keys)
+  } = view.data
   const swipeActions = React.useMemo(
     () =>
-      config.actions.filter(
+      actions.filter(
         (action: any) =>
           action.children === "Delete" || action.children === "Restore"
       ),
     []
   )
+  const onSelect = React.useCallback((selectedFlatRows) => {
+    view.setData({
+      selected: selectedFlatRows.map((row: any) => row.original._id),
+    })
+  }, [])
 
-  return isMobile === _isMobile ? (
+  return (
     <TableContent
-      store={store}
-      isMobile={_isMobile}
-      isLoading={store.isLoading}
+      isMobile={isMobile}
+      isLoading={view.temp.isLoading}
+      onSelect={onSelect}
       data={{
-        columns: config.columns,
+        columns,
         actions: swipeActions,
         columnsFormat,
         collection,
@@ -81,10 +87,8 @@ export const TableGrid: React.FC<any> = observer(({ store, config }) => {
         max: pageMax,
       }}
     />
-  ) : (
-    <Loader dark />
   )
-})
+}
 
 const TableContent: React.FC<any> = ({
   store,
@@ -92,6 +96,7 @@ const TableContent: React.FC<any> = ({
   isLoading,
   data,
   page,
+  onSelect,
 }) => {
   const { columns, columnsFormat, collection, actions } = data
   const TableWrapper = isMobile || isLoading ? Table.Default : Table.Scroll
@@ -117,9 +122,7 @@ const TableContent: React.FC<any> = ({
   )
 
   useMountedLayoutEffect(() => {
-    store.setData({
-      selected: selectedFlatRows.map((row: any) => row.original._id),
-    })
+    onSelect(selectedFlatRows)
   }, [selectedFlatRows])
 
   return (

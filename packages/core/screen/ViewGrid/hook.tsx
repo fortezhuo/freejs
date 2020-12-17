@@ -1,547 +1,24 @@
 import React from "react"
-import {
-  useFocusEffect,
-  useRoute,
-  useNavigation,
-} from "@react-navigation/native"
-import { Table } from "../../component"
+import { useDefaultState, createContext, useApp } from "../../state"
 import * as listConfig from "./config"
+import { POST, DELETE } from "../../request"
+import { Table } from "../../component"
+import {
+  CellText,
+  CellDownload,
+  CellLink,
+  CellJSON,
+} from "../../component/Table/Cell"
+import { download } from "./helper"
+import { formatDate, formatDateTime } from "../../util"
+import { Modalize } from "react-native-modalize"
+
 import { TableCheckbox } from "../../shared/ViewGrid/TableCheckbox"
-import { POST } from "../../request"
-import { useView } from "../../state/view"
-import { useApp } from "../../state/app"
-
-const validateNotEmpty = (store: any, id: string = "") =>
-  new Promise((resolve) => {
-    const selected = store.data.get("selected") || []
-    if (selected.length == 0 && id === "") {
-      store.app?.alert.error({
-        title: "Attention",
-        message: "No document selected",
-        actions: [
-          {
-            label: "OK",
-            type: "danger",
-            onPress: () => store.app?.alert.close(),
-          },
-        ],
-      })
-    } else {
-      resolve(true)
-    }
-  })
-
-const useAction = () => {
-  const { refAlert } = useApp()
-  const { data, setData } = useView()
-  const navigation = useNavigation()
-
-  return React.useMemo(() => {
-    const NEW = {
-      icon: "file",
-      type: "primary_2_bg",
-      children: "New",
-      onPress: async () => {
-        const route = data.route.replace("View", "")
-        navigation.navigate(route, { id: "new" })
-      },
-    }
-
-    const DELETE = {
-      icon: "trash-2",
-      type: "danger_bg",
-      children: "Delete",
-      onPress: async ({ id }: any) => {
-        if (await validateNotEmpty(null, id)) {
-          refAlert.current.confirm({
-            title: "Confirmation",
-            message: "Do you want to delete these document(s) ?",
-            actions: [
-              {
-                label: "OK",
-                type: "primary_1",
-                onPress: async () => {
-                  //                  await view.deleteDocument(id)
-                  refAlert.current.close()
-                },
-              },
-              {
-                label: "Cancel",
-                type: "danger",
-                onPress: () => refAlert.current.close(),
-              },
-            ],
-          })
-        }
-      },
-    }
-
-    const RESTORE = {
-      icon: "rotate-ccw",
-      type: "primary_2_bg",
-      children: "Restore",
-      onPress: async ({ id }: any) => {
-        if (await validateNotEmpty(null, id)) {
-          refAlert.current.confirm({
-            title: "Confirmation",
-            message: "Do you want to restore these document(s) ?",
-            actions: [
-              {
-                label: "OK",
-                type: "primary_1",
-                onPress: async () => {
-                  //                  await view.restoreDocument(id)
-                  refAlert.current.close()
-                },
-              },
-              {
-                label: "Cancel",
-                type: "danger",
-                onPress: () => refAlert.current.close(),
-              },
-            ],
-          })
-        }
-      },
-    }
-    const SEARCH = {
-      icon: "search",
-      type: "primary_2_bg",
-      children: "Search",
-      onPress: () => {
-        //        view.bottomSheet.open()
-      },
-      onClear: () => {
-        setData({ search: undefined })
-      },
-    }
-
-    return [NEW, DELETE, RESTORE, SEARCH]
-  }, [])
-}
-
-export const useViewGrid = () => {
-  const app = useApp()
-  const { data, setData, temp, setTemp } = useView()
-  const navRoute = useRoute()
-  const actions = useAction()
-  const isReady = data.route === navRoute.name
-
-  useFocusEffect(
-    React.useCallback(() => {
-      if (!isReady) {
-        setTemp({ isUpdating: true })
-        const routeName = navRoute.name
-        let { page = 1, search, limit = "30", last } = temp
-
-        // Reset
-        if (last !== routeName) {
-          page = 1
-          limit = "30"
-          search = undefined
-        }
-
-        const selected = (listConfig as any)[routeName]
-        setData({
-          page,
-          search,
-          limit,
-          route: routeName,
-          name: selected.name,
-          fields: selected.fields,
-          isMobile: app.data.isMobile,
-          collection: undefined,
-          selected: undefined,
-          isRefresh: undefined,
-        })
-        setTimeout(() => {
-          setTemp({ __isReset: true, isUpdating: false })
-        }, 100)
-      }
-
-      return () => {
-        if (navRoute.name === data.route) {
-          const { page, search, limit, route } = data
-
-          setData({ route: undefined })
-          setTemp({ page, search, limit, last: route })
-        }
-      }
-    }, [])
-  )
-
-  const config = React.useMemo(() => {
-    if (!isReady) {
-      return {
-        search: [],
-        actions: [],
-        columns: [],
-        keys: [],
-      }
-    }
-    const { route } = data
-    const selected = (listConfig as any)[route]
-    const keys: any = {}
-    selected.columns.forEach((col: any) => {
-      if (col.type !== "link") {
-        keys[col.type ? `${col.name}_${col.type}` : col.name] = {
-          name: col.name,
-          label: col.label,
-          type: col.type,
-        }
-      }
-    })
-
-    return {
-      search: selected.search,
-      columns: selected.columns.map((col: ObjectAny) => ({
-        id: col.type ? `${col.name}_${col.type}` : col.name,
-        Header: col.label,
-        accessor: col.name,
-        style: col.style,
-        type: col.type,
-      })),
-      keys,
-      //      actions: actions.filter(
-      //        (action: any) => selected.actions.indexOf(action.children) >= 0
-      //      ),
-    }
-  }, [isReady])
-
-  const refActions: any = React.useRef(config.actions)
-  const setCollection = React.useCallback(async () => {
-    if (isReady) {
-      const { name, fields, page, limit, search } = data
-      const _params = { query: search, page, limit: +limit, fields }
-      try {
-        setTemp({ isLoading: true })
-        const res = await POST(`/api/find/${name}`, { _params })
-        setData({
-          collection: res.data.result,
-          total: res.data.total,
-          max: res.data.max,
-          isRefresh: undefined,
-        })
-      } finally {
-        setTemp({ isLoading: false })
-      }
-    }
-  }, [isReady])
-
-  React.useEffect(() => {
-    //    const isMobile = view?.app?.dimension.isMobile
-    const isMobile = false
-    const _isMobile = data.isMobile
-    if (isReady) {
-      if (_isMobile !== isMobile) {
-        setTemp({ isUpdating: true })
-        setData({ isMobile })
-        setTimeout(() => {
-          setTemp({ isUpdating: false })
-        }, 100)
-      }
-      /*
-      refActions.current = config.actions.filter((action: any) =>
-        isMobile
-          ? action.children !== "Delete" && action.children !== "Restore"
-          : true
-      )
-      */
-    }
-  }, [/*view?.app?.dimension.isMobile, */ isReady])
-
-  React.useEffect(() => {
-    ;(async () => {
-      if (isReady) {
-        await setCollection()
-      }
-    })()
-  }, [data.page, data.search, data.limit, isReady])
-
-  React.useEffect(() => {
-    ;(async () => {
-      if (!!data.isRefresh) {
-        await setCollection()
-      }
-    })()
-  }, [data.isRefresh])
-
-  return { data, setData, temp, setTemp, config, refActions }
-}
-
-/*
-const validateNotEmpty = (store: any, id: string = "") =>
-  new Promise((resolve) => {
-    const selected = store.data.get("selected") || []
-    if (selected.length == 0 && id === "") {
-      store.app?.alert.error({
-        title: "Attention",
-        message: "No document selected",
-        actions: [
-          {
-            label: "OK",
-            type: "danger",
-            onPress: () => store.app?.alert.close(),
-          },
-        ],
-      })
-    } else {
-      resolve(true)
-    }
-  })
-
-const useAction = (view: any) => {
-  const navigation = useNavigation()
-
-  return useMemo(() => {
-    const NEW = {
-      icon: "file",
-      type: "primary_2_bg",
-      children: "New",
-      onPress: async () => {
-        const route = view.data.get("route").replace("View", "")
-        navigation.navigate(route, { id: "new" })
-      },
-    }
-
-    const DELETE = {
-      icon: "trash-2",
-      type: "danger_bg",
-      children: "Delete",
-      onPress: async ({ id }: any) => {
-        if (await validateNotEmpty(view, id)) {
-          view.app?.alert.confirm({
-            title: "Confirmation",
-            message: "Do you want to delete these document(s) ?",
-            actions: [
-              {
-                label: "OK",
-                type: "primary_1",
-                onPress: async () => {
-                  await view.deleteDocument(id)
-                  view.app?.alert.close()
-                },
-              },
-              {
-                label: "Cancel",
-                type: "danger",
-                onPress: () => view.app?.alert.close(),
-              },
-            ],
-          })
-        }
-      },
-    }
-
-    const RESTORE = {
-      icon: "rotate-ccw",
-      type: "primary_2_bg",
-      children: "Restore",
-      onPress: async ({ id }: any) => {
-        if (await validateNotEmpty(view, id)) {
-          view.app?.alert.confirm({
-            title: "Confirmation",
-            message: "Do you want to restore these document(s) ?",
-            actions: [
-              {
-                label: "OK",
-                type: "primary_1",
-                onPress: async () => {
-                  await view.restoreDocument(id)
-                  view.app?.alert.close()
-                },
-              },
-              {
-                label: "Cancel",
-                type: "danger",
-                onPress: () => view.app?.alert.close(),
-              },
-            ],
-          })
-        }
-      },
-    }
-    const SEARCH = {
-      icon: "search",
-      type: "primary_2_bg",
-      children: "Search",
-      onPress: () => {
-        view.bottomSheet.open()
-      },
-      onClear: () => {
-        view.setData({ search: undefined })
-      },
-    }
-
-    return [NEW, DELETE, RESTORE, SEARCH]
-  }, [])
-}
-
-export const useView = () => {
-  const navRoute = useRoute()
-  const actions = useAction(view)
-  const isReady = view.data.get("route") === navRoute.name
-
-  useFocusEffect(
-    React.useCallback(() => {
-      if (!isReady) {
-        view.set("isUpdating", true)
-        const routeName = navRoute.name
-        let [page = 1, search, limit = "30", last] = view.getTemp(
-          "page",
-          "search",
-          "limit",
-          "last"
-        )
-
-        // Reset
-        if (last !== routeName) {
-          page = 1
-          limit = "30"
-          search = undefined
-        }
-
-        const selected = (listConfig as any)[routeName]
-        view.clearError()
-        view.setData({
-          page,
-          search,
-          limit,
-          route: routeName,
-          name: selected.name,
-          fields: selected.fields,
-          isMobile: view?.app?.dimension.isMobile,
-          collection: undefined,
-          selected: undefined,
-          isRefresh: undefined,
-        })
-        view.temp.clear()
-        setTimeout(() => {
-          view.set("isUpdating", false)
-        }, 100)
-      }
-
-      return () => {
-        if (navRoute.name === view.data.get("route")) {
-          const [page, search, limit, route] = view.getData(
-            "page",
-            "search",
-            "limit",
-            "route"
-          )
-          view.setData({ route: undefined })
-          view.setTemp({ page, search, limit, last: route })
-        }
-      }
-    }, [])
-  )
-
-  const config = React.useMemo(() => {
-    if (!isReady) {
-      return {
-        search: [],
-        actions: [],
-        columns: [],
-        keys: [],
-      }
-    }
-    const route = view.data.get("route")
-    const selected = (listConfig as any)[route]
-    const keys: any = {}
-    selected.columns.forEach((col: any) => {
-      if (col.type !== "link") {
-        keys[col.type ? `${col.name}_${col.type}` : col.name] = {
-          name: col.name,
-          label: col.label,
-          type: col.type,
-        }
-      }
-    })
-
-    return {
-      search: selected.search,
-      columns: selected.columns.map((col: ObjectAny) => ({
-        id: col.type ? `${col.name}_${col.type}` : col.name,
-        Header: col.label,
-        accessor: col.name,
-        style: col.style,
-        type: col.type,
-      })),
-      keys,
-      actions: actions.filter(
-        (action: any) => selected.actions.indexOf(action.children) >= 0
-      ),
-    }
-  }, [isReady])
-
-  const refActions: any = React.useRef(config.actions)
-  const setCollection = React.useCallback(async () => {
-    if (isReady) {
-      const [name, fields, page, limit, search] = view.getData(
-        "name",
-        "fields",
-        "page",
-        "limit",
-        "search"
-      )
-      const _params = { query: search, page, limit: +limit, fields }
-      try {
-        view.set("isLoading", true)
-        const { data } = await POST(`/api/find/${name}`, { _params })
-        view.setData({
-          collection: data.result,
-          total: data.total,
-          max: data.max,
-          isRefresh: undefined,
-        })
-      } finally {
-        view.set("isLoading", false)
-      }
-    }
-  }, [isReady])
-
-  React.useEffect(() => {
-    const isMobile = view?.app?.dimension.isMobile
-    const _isMobile = view.data.get("isMobile")
-    if (isReady) {
-      if (_isMobile !== isMobile) {
-        view.set("isUpdating", true)
-        view.setData({ isMobile })
-        setTimeout(() => {
-          view.set("isUpdating", false)
-        }, 100)
-      }
-      refActions.current = config.actions.filter((action: any) =>
-        isMobile
-          ? action.children !== "Delete" && action.children !== "Restore"
-          : true
-      )
-    }
-  }, [view?.app?.dimension.isMobile, isReady])
-
-  React.useEffect(() => {
-    ;(async () => {
-      if (isReady) {
-        await setCollection()
-      }
-    })()
-  }, [
-    view.data.get("page"),
-    view.data.get("search"),
-    view.data.get("limit"),
-    isReady,
-  ])
-
-  React.useEffect(() => {
-    ;(async () => {
-      if (!!view.data.get("isRefresh")) {
-        await setCollection()
-      }
-    })()
-  }, [view.data.get("isRefresh")])
-
-  return { view, config, refActions }
-}
+import {
+  useNavigation,
+  useRoute,
+  useFocusEffect,
+} from "@react-navigation/native"
 
 export const useSelection = (hooks: any) => {
   return hooks.visibleColumns.push((columns: any) => [
@@ -562,4 +39,389 @@ export const useSelection = (hooks: any) => {
   ])
 }
 
-*/
+export const useDefaultColumn = () => {
+  const { refBottomSheet, ...view } = useView()
+  const { keys, isMobile, config, route } = view.data
+
+  const onOpenJSON = React.useCallback(
+    (id) => {
+      ;(async () => {
+        await view.loadData(id)
+      })()
+
+      refBottomSheet.current.open()
+    },
+    [config.name]
+  )
+
+  return {
+    Cell: (cell: any) => {
+      const name = cell?.column?.id || undefined
+      const prefix =
+        isMobile &&
+        name.indexOf("name_download_log") < 0 &&
+        name.indexOf("_id") < 0
+          ? `${keys[name].label} : `
+          : ""
+
+      switch (cell.column.type) {
+        case "link":
+          return (
+            <CellLink
+              name={route.replace("View", "")}
+              params={{ id: cell.value }}
+              style={cell.column.style}
+            />
+          )
+        case "download_log":
+          return (
+            <CellDownload
+              style={cell.column.style}
+              onPress={() => {
+                download(`/api/${config.name}`, cell.value)
+              }}
+            />
+          )
+        case "date":
+          return (
+            <CellText isMobile={isMobile} style={cell.column.style}>
+              {prefix + formatDate(cell.value)}
+            </CellText>
+          )
+        case "datetime":
+          return (
+            <CellText isMobile={isMobile} style={cell.column.style}>
+              {prefix + formatDateTime(cell.value)}
+            </CellText>
+          )
+        case "json":
+          return (
+            <CellJSON
+              style={cell.column.style}
+              onPress={() => onOpenJSON(cell.value)}
+            />
+          )
+        default:
+          return (
+            <CellText isMobile={isMobile} style={cell.column.style}>
+              {prefix + cell.value}
+            </CellText>
+          )
+      }
+    },
+  }
+}
+
+const validateNotEmpty = ({ selected, id, refAlert }: any) =>
+  new Promise((resolve) => {
+    if (selected.length == 0 && !id) {
+      refAlert.current.error({
+        title: "Attention",
+        message: "No document selected",
+        actions: [
+          {
+            label: "OK",
+            type: "danger",
+            onPress: () => refAlert.current.close(),
+          },
+        ],
+      })
+    } else {
+      resolve(true)
+    }
+  })
+
+export const useActions = (refBottomSheet: any) => {
+  const view = useView()
+  const {
+    data: { config, route, selected = [] },
+  } = view
+  const { refAlert, ...app } = useApp()
+  const refActions = React.useRef<any>([])
+  const navigation = useNavigation()
+  const actions = React.useMemo(() => {
+    if (!config?.name) return []
+
+    const NEW = {
+      icon: "file",
+      type: "primary_2_bg",
+      children: "New",
+      onPress: async () => {
+        navigation.navigate(route.replace("View", ""), { id: "new" })
+      },
+    }
+
+    const DELETE = {
+      icon: "trash-2",
+      type: "danger_bg",
+      children: "Delete",
+      onPress: async ({ id }: any) => {
+        if (await validateNotEmpty({ selected, id, refAlert })) {
+          refAlert.current.confirm({
+            title: "Confirmation",
+            message: "Do you want to delete these document(s) ?",
+            actions: [
+              {
+                label: "OK",
+                type: "primary_1",
+                onPress: async () => {
+                  await view.deleteDocument(id)
+                  refAlert.current.close()
+                },
+              },
+              {
+                label: "Cancel",
+                type: "danger",
+                onPress: () => refAlert.current.close(),
+              },
+            ],
+          })
+        }
+      },
+    }
+
+    const RESTORE = {
+      icon: "rotate-ccw",
+      type: "primary_2_bg",
+      children: "Restore",
+      onPress: async ({ id }: any) => {
+        if (await validateNotEmpty({ selected, id, refAlert })) {
+          refAlert.current.confirm({
+            title: "Confirmation",
+            message: "Do you want to restore these document(s) ?",
+            actions: [
+              {
+                label: "OK",
+                type: "primary_1",
+                onPress: async () => {
+                  await view.restoreDocument(id)
+                  refAlert.current.close()
+                },
+              },
+              {
+                label: "Cancel",
+                type: "danger",
+                onPress: () => refAlert.current.close(),
+              },
+            ],
+          })
+        }
+      },
+    }
+    const SEARCH = {
+      icon: "search",
+      type: "primary_2_bg",
+      children: "Search",
+      onPress: () => {
+        refBottomSheet.current?.open()
+      },
+      onClear: () => {
+        view.setData({ search: undefined })
+      },
+    }
+
+    return [NEW, DELETE, RESTORE, SEARCH]
+  }, [config?.name])
+
+  React.useEffect(() => {
+    if (config?.name) {
+      const isMobile = app.temp.isMobile
+      /*
+      const _isMobile = view.data.isMobile
+      if (_isMobile !== isMobile) {
+        view.setTemp({ isUpdating: true })
+        view.setData({ isMobile })
+        setTimeout(() => {
+          view.setTemp({ isUpdating: false })
+        }, 100)
+      }
+      */
+      view.setData({ isMobile })
+      refActions.current = actions.filter(
+        (action: any) =>
+          config?.actions.indexOf(action.children) >= 0 &&
+          (isMobile
+            ? action.children !== "Delete" && action.children !== "Restore"
+            : true)
+      )
+    }
+  }, [app.temp.isMobile, config?.name])
+
+  return refActions.current
+}
+
+export const useColumns = () => {
+  const view = useView()
+  const { config } = view.data
+
+  return React.useMemo(
+    () =>
+      config.columns.map((col: ObjectAny) => ({
+        id: col.type ? `${col.name}_${col.type}` : col.name,
+        Header: col.label,
+        accessor: col.name,
+        style: col.style,
+        type: col.type,
+      })),
+    [config.name]
+  )
+}
+
+const useHook = () => {
+  const { refAlert, ...app } = useApp()
+  const refBottomSheet = React.useRef<Modalize>(null)
+  const navRoute = useRoute()
+  const view = useDefaultState({})
+  const isReady = view.data.route === navRoute.name
+
+  useFocusEffect(
+    React.useCallback(() => {
+      if (!isReady) {
+        view.setTemp({ isUpdating: true })
+        const routeName = navRoute.name
+        const selected = (listConfig as any)[routeName]
+        let keys: any = {}
+        let { page = 1, search, limit = "30", last } = view.temp
+
+        // Reset
+        if (last !== routeName) {
+          page = 1
+          limit = "30"
+          search = undefined
+        }
+
+        selected.columns.forEach((col: any) => {
+          if (col.type !== "link") {
+            keys[col.type ? `${col.name}_${col.type}` : col.name] = {
+              name: col.name,
+              label: col.label,
+              type: col.type,
+            }
+          }
+        })
+
+        view.setData({
+          config: { ...selected, keys },
+          page,
+          search,
+          limit,
+          route: routeName,
+          isMobile: app.data.isMobile,
+          collection: undefined,
+          selected: undefined,
+          isRefresh: undefined,
+        })
+        setTimeout(() => {
+          view.setTemp({
+            __isReset: true,
+            height: app.temp.height - 144,
+            isUpdating: false,
+          })
+        }, 100)
+      }
+
+      return () => {
+        if (navRoute.name === view.data.route) {
+          const { page, search, limit, route } = view.data
+          view.setData({ route: undefined })
+          view.setTemp({ page, search, limit, last: route })
+        }
+      }
+    }, [])
+  )
+
+  const setCollection = React.useCallback(async () => {
+    if (isReady) {
+      const { config, page, limit, search } = view.data
+      const _params = {
+        query: search,
+        page,
+        limit: +limit,
+        fields: config.fields,
+      }
+      try {
+        view.setTemp({ isLoading: true })
+        const res = await POST(`/api/find/${config.name}`, { _params })
+        view.setData({
+          collection: res.data.result,
+          total: res.data.total,
+          max: res.data.max,
+          isRefresh: undefined,
+        })
+      } finally {
+        view.setTemp({ isLoading: false })
+      }
+    }
+  }, [isReady])
+
+  React.useEffect(() => {
+    ;(async () => {
+      if (isReady) {
+        await setCollection()
+      }
+    })()
+  }, [view.data.page, view.data.search, view.data.limit, isReady])
+
+  React.useEffect(() => {
+    ;(async () => {
+      if (!!view.data.isRefresh) {
+        await setCollection()
+      }
+    })()
+  }, [view.data.isRefresh])
+
+  const loadData = React.useCallback(async (id: string) => {
+    const { name } = view.data
+    if (id.length === 24) {
+      try {
+        view.setTemp({ isLoading: true })
+        const res = await POST(`/api/find/${name}/${id}`, {})
+        view.setTemp({ value: res.data.result.data })
+      } catch (err) {
+        view.setError(err)
+      } finally {
+        view.setTemp({ isLoading: false })
+      }
+    }
+  }, [])
+
+  const deleteDocument = React.useCallback(async (id: string) => {
+    const { name, selected } = view.data
+    const selectedIds = id ? [id] : selected || []
+
+    if (selectedIds.length != 0) {
+      const _params = { query: { _id: { $in: selectedIds } } }
+      try {
+        view.setTemp({ isLoading: true })
+        return await DELETE(`/api/${name}`, { _params })
+      } catch (err) {
+        view.setError(err)
+      } finally {
+        view.setTemp({ isLoading: false })
+        view.setData({ isRefresh: true, selected: undefined, page: 1 })
+      }
+    }
+  }, [])
+
+  const restoreDocument = React.useCallback(async (id: string) => {
+    const { name, selected } = view.data
+    const selectedIds = id ? [id] : selected
+
+    if (selectedIds.length != 0) {
+      const _params = { query: { _id: { $in: selectedIds } } }
+      try {
+        view.setTemp({ isLoading: true })
+        return await POST(`/api/${name}/restore`, { _params })
+      } catch (err) {
+        view.setError(err)
+      } finally {
+        view.setTemp({ isLoading: false })
+        view.setData({ isRefresh: true, selected: undefined, page: 1 })
+      }
+    }
+  }, [])
+
+  return { ...view, restoreDocument, loadData, deleteDocument, refBottomSheet }
+}
+
+export const [withView, useView] = createContext("View", {}, useHook)

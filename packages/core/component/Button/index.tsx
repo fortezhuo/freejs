@@ -1,24 +1,36 @@
 import React from "react"
-import { IconButton, Icon, Text } from "../"
+import { Icon, Text } from "../"
 import { StyleSheet, TouchableOpacity, View } from "react-native"
-import { observer } from "mobx-react-lite"
 import { theme } from "../../config/theme"
 import { tw, border, text, color } from "@free/tailwind"
 import { isRGBLight } from "../../util"
-import { ButtonProps } from "@free/core"
 
-export const Button: React.FC<ButtonProps> = observer((props) => {
+const noop = () => {}
+
+interface Button {
+  testID?: string
+  type?: string
+  isLoading?: boolean
+  outline?: boolean
+  children?: string
+  icon?: string
+  style?: any
+  disabled?: boolean
+  onPress?: VoidFunction
+  onClear?: VoidFunction
+}
+
+export const Button: React.FC<Button> = (props) => {
   let {
-    store = undefined,
     testID = "Button",
     type = "transparent_bg",
+    isLoading,
     outline,
     children,
     icon,
     style,
-    styleText,
     disabled,
-    onPress = undefined,
+    onPress = noop,
     onClear = undefined,
   } = props
 
@@ -39,31 +51,28 @@ export const Button: React.FC<ButtonProps> = observer((props) => {
       : "text-white"
   )
 
-  disabled = disabled || store?.isUpdating
-
   return (
-    <IconButton
-      store={store}
-      testID={testID}
-      disabled={disabled}
-      styleContainer={[s.viewButton, bgColor, style]}
-      style={children ? s.iconButton : {}}
-      name={store?.isUpdating ? "loader" : icon}
-      color={textColor.color}
-      size={18}
-      onPress={onPress}
-    >
-      <View style={s.viewGroup}>
-        <Text style={[textColor, styleText]}>{children}</Text>
+    <TouchableOpacity disabled={disabled} onPress={onPress}>
+      <View style={[s.viewButton, bgColor, style]} testID={testID}>
+        {icon && (
+          <View style={s.iconButton}>
+            <Icon
+              name={isLoading ? "loader" : icon}
+              size={18}
+              color={textColor.color}
+            />
+          </View>
+        )}
+        <Text style={textColor}>{children}</Text>
         {onClear && (
           <TouchableOpacity style={s.iconButton} onPress={onClear}>
             <Icon name="x" size={18} />
           </TouchableOpacity>
         )}
       </View>
-    </IconButton>
+    </TouchableOpacity>
   )
-})
+}
 
 const s: any = StyleSheet.create({
   viewButton: tw("p-2 flex-row justify-center items-center rounded-full", {
@@ -71,5 +80,5 @@ const s: any = StyleSheet.create({
     height: 36,
   }),
   viewGroup: tw("pl-1 mr-1 flex-row items-center"),
-  iconButton: tw("pl-2"),
+  iconButton: tw("px-1"),
 })

@@ -1,5 +1,3 @@
 export { Default, Scroll } from "./Table"
 export { Row, RowData, Header } from "./Row"
 export { Cell, CellText } from "./Cell"
-export { BottomSheet } from "./BottomSheet"
-export { useDefaultColumn } from "./hook"

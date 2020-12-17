@@ -2,7 +2,7 @@ import React from "react"
 import { useSafeAreaInsets } from "react-native-safe-area-context"
 import { Dimensions } from "react-native"
 import { getScreenSize } from "../../util"
-import { useApp } from "../../state/app"
+import { useApp } from "../../state"
 
 export const useAppLayout = () => {
   const app = useApp()

@@ -1,31 +1,38 @@
 import React from "react"
-import { Icon, IconButton, Link, LinkNav } from ".."
+import { Icon, IconButton, Link } from ".."
 import { View, StyleSheet, Text } from "react-native"
 import { theme } from "../../config/theme"
 import { tw, color } from "@free/tailwind"
-import { CellProps } from "@free/core"
 
 const defaultColor = color(theme.default_text)
 
-function compare(prev: any, next: any) {
-  return prev.children === next.children
+interface Cell {
+  isMobile?: boolean
+  children?: React.ReactNode
+  name?: string
+  params?: any
+  style?: any
+  testID?: string
+  onPress?: any
 }
 
-export const Cell: React.FC<CellProps> = React.memo(
-  ({ isMobile, children, style, testID = "Cell" }) => {
-    return (
-      <View
-        testID={testID}
-        style={[s.viewCell, style, isMobile ? s.viewCellSmall : {}]}
-      >
-        {children}
-      </View>
-    )
-  },
-  compare
-)
+export const Cell: React.FC<Cell> = ({
+  isMobile,
+  children,
+  style,
+  testID = "Cell",
+}) => {
+  return (
+    <View
+      testID={testID}
+      style={[s.viewCell, style, isMobile ? s.viewCellSmall : {}]}
+    >
+      {children}
+    </View>
+  )
+}
 
-export const CellText: React.FC<CellProps> = ({
+export const CellText: React.FC<Cell> = ({
   isMobile,
   children,
   style,
@@ -38,17 +45,17 @@ export const CellText: React.FC<CellProps> = ({
   )
 }
 
-export const CellLink: React.FC<CellProps> = ({ style, name, params = {} }) => {
+export const CellLink: React.FC<Cell> = ({ style, name, params = {} }) => {
   return (
     <Cell style={style} testID="CellLink">
-      <LinkNav name={name} params={params}>
+      <Link name={name} params={params}>
         <Icon name={"link"} size={16} color={defaultColor} />
-      </LinkNav>
+      </Link>
     </Cell>
   )
 }
 
-export const CellDownload: React.FC<CellProps> = ({
+export const CellDownload: React.FC<Cell> = ({
   style,
   name = "download",
   onPress,
@@ -65,24 +72,11 @@ export const CellDownload: React.FC<CellProps> = ({
   )
 }
 
-export const CellJSON: React.FC<CellProps> = ({
-  store,
-  style,
-  children: id,
-}) => {
-  const onOpen = React.useCallback(() => {
-    store.setData({ value: [] })
-    ;(async () => {
-      await store.loadData(id)
-    })()
-
-    store.bottomSheet.open()
-  }, [])
-
+export const CellJSON: React.FC<Cell> = ({ style, children: id }) => {
   return (
     <Cell style={style}>
       <IconButton
-        onPress={onOpen}
+        onPress={() => {}}
         name="search"
         size={16}
         color={defaultColor}

@@ -1,9 +1,8 @@
 import React from "react"
 import { View, StyleSheet } from "react-native"
 import { tw } from "@free/tailwind"
-import { observer } from "mobx-react-lite"
 import { Modalize } from "react-native-modalize"
-import { Table, Button, Text, Loader, Input, Label } from ".."
+import { Table, Button, Text, Loader, Input, Label } from "../../component"
 import {
   random,
   formatDateTime,
@@ -11,7 +10,7 @@ import {
   isDateString,
   isArray,
 } from "../../util"
-import { useFocusEffect } from "@react-navigation/native"
+import { useView } from "./hook"
 
 const format = (value: any) => {
   let _value = value
@@ -20,13 +19,17 @@ const format = (value: any) => {
   return _value
 }
 
-export const BottomSheet: React.FC<any> = observer(({ store, config }) => {
+export const BottomSheet: React.FC<{ refBind: any }> = ({ refBind }) => {
   const [isSimple, setSimple] = React.useState(true)
-  const refBottomSheet = React.useRef<Modalize>(null)
-  const value = store.temp.get("value") || undefined
+  const {
+    data: { config },
+    ...view
+  } = useView()
+  const { value = undefined } = view.temp
 
   const configSearch = React.useMemo(() => {
     const { search, keys } = config
+
     return {
       simple: search,
       advance: Object.keys(keys).map((val: any) => {
@@ -38,24 +41,12 @@ export const BottomSheet: React.FC<any> = observer(({ store, config }) => {
         }
       }),
     }
-  }, [config.search, config.keys])
+  }, [config.name])
 
   const onClosed = React.useCallback(() => {
-    store.setTemp({ value: undefined })
+    view.setTemp({ value: undefined })
     setSimple(true)
   }, [])
-
-  useFocusEffect(
-    React.useCallback(() => {
-      if (refBottomSheet.current) {
-        store.bottomSheet = refBottomSheet.current
-      }
-      return () => {
-        refBottomSheet.current?.close()
-        store.bottomSheet = undefined
-      }
-    }, [config.keys])
-  )
 
   const renderFlatList = React.useCallback((value) => {
     const data = Object.keys(value).map((key) => ({
@@ -87,12 +78,12 @@ export const BottomSheet: React.FC<any> = observer(({ store, config }) => {
   }, [])
 
   const onClearSearch = React.useCallback(() => {
-    store.setData({ search: undefined })
-    store.bottomSheet.close()
+    view.setData({ search: undefined })
+    refBind.current.close()
   }, [])
 
   const onFullTextSearch = React.useCallback(() => {
-    let text = store.temp.get("fulltextsearch")
+    let text = view.temp.fulltextsearch
     let search: any
 
     if (configSearch.simple[0] === "$text") {
@@ -109,9 +100,9 @@ export const BottomSheet: React.FC<any> = observer(({ store, config }) => {
             }
     }
 
-    store.setData({ search })
-    store.bottomSheet.close()
-  }, [configSearch.simple])
+    view.setData({ search })
+    refBind.current.close()
+  }, [config.name])
 
   const onAdvanceSearch = React.useCallback(() => {
     let build: any = { _helper: { date: [] } }
@@ -119,7 +110,7 @@ export const BottomSheet: React.FC<any> = observer(({ store, config }) => {
       const type = column.type || "text"
 
       if (type === "text" || type === "json") {
-        const text = store.temp.get(column.name)
+        const text = view.temp[column.name]
         if (text) {
           build[column.name] =
             column.name === "$text"
@@ -129,8 +120,8 @@ export const BottomSheet: React.FC<any> = observer(({ store, config }) => {
       }
 
       if (type.indexOf("date") >= 0) {
-        const start = store.temp.get("start_" + column.name)
-        const end = store.temp.get("end_" + column.name)
+        const start = view.temp["start_" + column.name]
+        const end = view.temp["end_" + column.name]
         if (!!start && !!end) {
           build._helper.date = build._helper.date.concat([column.name])
           build[column.name] = {
@@ -140,19 +131,19 @@ export const BottomSheet: React.FC<any> = observer(({ store, config }) => {
         }
       }
     })
-    store.setData({ search: build })
-    store.bottomSheet.close()
-  }, [configSearch.advance])
+    view.setData({ search: build })
+    refBind.current.close()
+  }, [config.name])
 
   const Header: React.FC<any> = () => {
     const onTapSimple = React.useCallback(() => {
       setSimple(true)
-      refBottomSheet.current?.open("default")
+      refBind.current.open("default")
     }, [])
 
     const onTapAdvance = React.useCallback(() => {
       setSimple(false)
-      refBottomSheet.current?.open("top")
+      refBind.current.open("top")
     }, [])
 
     return (
@@ -160,7 +151,6 @@ export const BottomSheet: React.FC<any> = observer(({ store, config }) => {
         <View style={{ flex: 1 }}>
           <Button
             type={isSimple ? "danger_bg" : "disabled_bg"}
-            store={store}
             onPress={onTapSimple}
           >
             Simple Search
@@ -170,7 +160,6 @@ export const BottomSheet: React.FC<any> = observer(({ store, config }) => {
         <View style={{ flex: 1 }}>
           <Button
             type={!isSimple ? "danger_bg" : "disabled_bg"}
-            store={store}
             onPress={onTapAdvance}
           >
             Advance Search
@@ -182,21 +171,16 @@ export const BottomSheet: React.FC<any> = observer(({ store, config }) => {
 
   const Footer: React.FC<any> = ({ onPress, onClearSearch }) => (
     <View style={s.viewButton}>
-      <Button icon="search" onPress={onPress} store={store} type={"danger_bg"}>
+      <Button icon="search" onPress={onPress} type={"danger_bg"}>
         Search
       </Button>
-      <Button
-        icon="x"
-        onPress={onClearSearch}
-        store={store}
-        type={"disabled_bg"}
-      >
+      <Button icon="x" onPress={onClearSearch} type={"disabled_bg"}>
         Reset
       </Button>
     </View>
   )
 
-  const children = store.isLoading ? (
+  const children = view.temp.isLoading ? (
     <View style={s.viewLoader}>
       <Loader dark />
     </View>
@@ -206,7 +190,6 @@ export const BottomSheet: React.FC<any> = observer(({ store, config }) => {
         <View style={s.rowSearch} key={"scroll_" + random()}>
           <Label>Keyword</Label>
           <Input.Text
-            store={store}
             model="temp"
             name="fulltextsearch"
             placeholder="Please type keyword ..."
@@ -223,7 +206,6 @@ export const BottomSheet: React.FC<any> = observer(({ store, config }) => {
                 <Label>{column.label}</Label>
                 {(type == "text" || type === "json") && (
                   <Input.Text
-                    store={store}
                     model="temp"
                     name={column.name}
                     placeholder={"Fill " + column.label}
@@ -231,25 +213,24 @@ export const BottomSheet: React.FC<any> = observer(({ store, config }) => {
                 )}
                 {type.indexOf("date") >= 0 && (
                   <>
+                    {/** 
                     <Input.DateTime
-                      store={store}
                       model="temp"
                       placeholder={"Start " + column.label}
                       name={"start_" + column.name}
                     />
                     <View style={{ height: 3 }} />
                     <Input.DateTime
-                      store={store}
                       model="temp"
                       placeholder={"End " + column.label}
                       name={"end_" + column.name}
                     />
+                  */}
                   </>
                 )}
                 {(type == "number" || type == "decimal") && (
                   <View style={{ flexDirection: "row" }}>
                     <Input.Text
-                      store={store}
                       model="temp"
                       name={column.name}
                       placeholder={"Fill " + column.label}
@@ -282,11 +263,11 @@ export const BottomSheet: React.FC<any> = observer(({ store, config }) => {
       modalTopOffset={80}
       snapPoint={265}
       onClosed={onClosed}
-      ref={refBottomSheet}
+      ref={refBind}
       {...props}
     ></Modalize>
   )
-})
+}
 
 const s = StyleSheet.create({
   viewHeader: tw(
