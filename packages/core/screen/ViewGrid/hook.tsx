@@ -267,71 +267,59 @@ export const useColumns = () => {
 }
 
 const useHook = () => {
+  const view = useDefaultState({})
+  const navRoute = useRoute()
+  const routeName = navRoute.name
   const { refAlert, ...app } = useApp()
   const refBottomSheet = React.useRef<Modalize>(null)
-  const navRoute = useRoute()
-  const view = useDefaultState({})
-  const isReady = view.data.route === navRoute.name
+
+  React.useEffect(() => {
+    view.setTemp({ height: app.temp.height - 144 })
+  }, [])
 
   useFocusEffect(
     React.useCallback(() => {
-      if (!isReady) {
-        view.setTemp({ isUpdating: true })
-        const routeName = navRoute.name
-        const selected = (listConfig as any)[routeName]
-        let keys: any = {}
-        let { page = 1, search, limit = "30", last } = view.temp
+      const selected = (listConfig as any)[routeName]
+      let keys: any = {}
+      let { page = 1, search, limit = "30", last } = view.temp
 
-        // Reset
-        if (last !== routeName) {
-          page = 1
-          limit = "30"
-          search = undefined
-        }
-
-        selected.columns.forEach((col: any) => {
-          if (col.type !== "link") {
-            keys[col.type ? `${col.name}_${col.type}` : col.name] = {
-              name: col.name,
-              label: col.label,
-              type: col.type,
-            }
-          }
-        })
-
-        view.setData({
-          config: { ...selected, keys },
-          page,
-          search,
-          limit,
-          route: routeName,
-          isMobile: app.data.isMobile,
-          collection: undefined,
-          selected: undefined,
-          isRefresh: undefined,
-        })
-        setTimeout(() => {
-          view.setTemp({
-            __isReset: true,
-            height: app.temp.height - 144,
-            isUpdating: false,
-          })
-        }, 100)
+      if (last !== routeName) {
+        page = 1
+        limit = "30"
+        search = undefined
       }
 
-      return () => {
-        if (navRoute.name === view.data.route) {
-          const { page, search, limit, route } = view.data
-          view.setData({ route: undefined })
-          view.setTemp({ page, search, limit, last: route })
+      selected.columns.forEach((col: any) => {
+        if (col.type !== "link") {
+          keys[col.type ? `${col.name}_${col.type}` : col.name] = {
+            name: col.name,
+            label: col.label,
+            type: col.type,
+          }
         }
+      })
+
+      view.setData({
+        config: { ...selected, keys },
+        page,
+        search,
+        limit,
+        route: routeName,
+        isMobile: app.data.isMobile,
+        isRefresh: undefined,
+      })
+
+      return () => {
+        const { page, search, limit, route } = view.data
+        view.setTemp({ page, search, limit, last: route })
+        view.setData({ config: undefined, collection: undefined })
       }
     }, [])
   )
 
   const setCollection = React.useCallback(async () => {
-    if (isReady) {
-      const { config, page, limit, search } = view.data
+    const { config, page, limit, search } = view.data
+    if (config?.name) {
       const _params = {
         query: search,
         page,
@@ -351,15 +339,18 @@ const useHook = () => {
         view.setTemp({ isLoading: false })
       }
     }
-  }, [isReady])
+  }, [view.data?.config?.name])
 
   React.useEffect(() => {
     ;(async () => {
-      if (isReady) {
-        await setCollection()
-      }
+      await setCollection()
     })()
-  }, [view.data.page, view.data.search, view.data.limit, isReady])
+  }, [
+    view.data.page,
+    view.data.search,
+    view.data.limit,
+    view.data?.config?.name,
+  ])
 
   React.useEffect(() => {
     ;(async () => {

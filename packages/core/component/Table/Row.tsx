@@ -19,109 +19,110 @@ export const Row: React.FC<RowProps> = React.memo(
   }
 )
 
-const RowMobile: React.FC<any> = observer(
-  ({ store, data, actionLeft, actionRight, children, dark, style }) => {
-    const params = {
-      name: store.name,
-      id: data._id_json || data._id_link,
-    }
-    const ref = React.createRef<any>()
-    const navigation = useNavigation()
-    const width = 88
-    const onTap = React.useCallback(() => {
-      if (data._id_json) {
-        ;(async () => {
-          store.setData({ value: [] })
-          await store.loadData(data._id_json)
-          store.bottomSheet.open()
-        })()
-      } else {
-        const route = store.data.get("route").replace("View", "")
-        if (route !== "SettingLog") {
-          navigation.navigate(route, { id: data._id_link })
-        }
-      }
-    }, [])
-
-    const renderLeftAction = React.useCallback((progress: any) => {
-      const trans = progress.interpolate({
-        inputRange: [0, 1],
-        outputRange: [-width, 0],
-      })
-      const onPress = () => {
-        ref?.current.close()
-        actionLeft.onPress(params)
-      }
-      return (
-        <View
-          style={{
-            width,
-          }}
-        >
-          <Animated.View
-            style={{ flex: 1, transform: [{ translateX: trans }] }}
-          >
-            <RectButton onPress={onPress} style={s.cellDelete}>
-              <IconLabel
-                styleContainer={[s.swipeButton, tw(theme[actionLeft.type])]}
-                name={actionLeft.icon}
-              ></IconLabel>
-            </RectButton>
-          </Animated.View>
-        </View>
-      )
-    }, [])
-
-    const renderRightAction = React.useCallback((progress: any) => {
-      const trans = progress.interpolate({
-        inputRange: [0, 1],
-        outputRange: [width, 0],
-      })
-      const onPress = () => {
-        ref?.current.close()
-        actionRight.onPress(params)
-      }
-      return (
-        <View
-          style={{
-            width,
-          }}
-        >
-          <Animated.View
-            style={{ flex: 1, transform: [{ translateX: trans }] }}
-          >
-            <RectButton onPress={onPress} style={s.cellDelete}>
-              <IconLabel
-                styleContainer={[s.swipeButton, tw(theme[actionRight.type])]}
-                name={actionRight.icon}
-              ></IconLabel>
-            </RectButton>
-          </Animated.View>
-        </View>
-      )
-    }, [])
-
-    return (
-      <Swipeable
-        ref={ref}
-        friction={2}
-        leftThreshold={30}
-        rightThreshold={30}
-        useNativeAnimations={false}
-        renderLeftActions={actionLeft && renderLeftAction}
-        renderRightActions={actionRight && renderRightAction}
-      >
-        <RectButton onPress={onTap}>
-          <View style={[s.rowMobile, dark ? s.rowDark : {}, style]}>
-            {React.Children.map(children, (child: any) => {
-              return React.cloneElement(child, { isMobile: true })
-            })}
-          </View>
-        </RectButton>
-      </Swipeable>
-    )
+const RowMobile: React.FC<any> = ({
+  data,
+  actionLeft,
+  actionRight,
+  children,
+  dark,
+  style,
+}) => {
+  const params = {
+    name: store.name,
+    id: data._id_json || data._id_link,
   }
-)
+  const ref = React.createRef<any>()
+  const navigation = useNavigation()
+  const width = 88
+  const onTap = React.useCallback(() => {
+    if (data._id_json) {
+      ;(async () => {
+        store.setData({ value: [] })
+        await store.loadData(data._id_json)
+        store.bottomSheet.open()
+      })()
+    } else {
+      const route = store.data.get("route").replace("View", "")
+      if (route !== "SettingLog") {
+        navigation.navigate(route, { id: data._id_link })
+      }
+    }
+  }, [])
+
+  const renderLeftAction = React.useCallback((progress: any) => {
+    const trans = progress.interpolate({
+      inputRange: [0, 1],
+      outputRange: [-width, 0],
+    })
+    const onPress = () => {
+      ref?.current.close()
+      actionLeft.onPress(params)
+    }
+    return (
+      <View
+        style={{
+          width,
+        }}
+      >
+        <Animated.View style={{ flex: 1, transform: [{ translateX: trans }] }}>
+          <RectButton onPress={onPress} style={s.cellDelete}>
+            <IconLabel
+              styleContainer={[s.swipeButton, tw(theme[actionLeft.type])]}
+              name={actionLeft.icon}
+            ></IconLabel>
+          </RectButton>
+        </Animated.View>
+      </View>
+    )
+  }, [])
+
+  const renderRightAction = React.useCallback((progress: any) => {
+    const trans = progress.interpolate({
+      inputRange: [0, 1],
+      outputRange: [width, 0],
+    })
+    const onPress = () => {
+      ref?.current.close()
+      actionRight.onPress(params)
+    }
+    return (
+      <View
+        style={{
+          width,
+        }}
+      >
+        <Animated.View style={{ flex: 1, transform: [{ translateX: trans }] }}>
+          <RectButton onPress={onPress} style={s.cellDelete}>
+            <IconLabel
+              styleContainer={[s.swipeButton, tw(theme[actionRight.type])]}
+              name={actionRight.icon}
+            ></IconLabel>
+          </RectButton>
+        </Animated.View>
+      </View>
+    )
+  }, [])
+
+  return (
+    <Swipeable
+      ref={ref}
+      friction={2}
+      leftThreshold={30}
+      rightThreshold={30}
+      useNativeAnimations={false}
+      renderLeftActions={actionLeft && renderLeftAction}
+      renderRightActions={actionRight && renderRightAction}
+    >
+      <RectButton onPress={onTap}>
+        <View style={[s.rowMobile, dark ? s.rowDark : {}, style]}>
+          {React.Children.map(children, (child: any) => {
+            return React.cloneElement(child, { isMobile: true })
+          })}
+        </View>
+      </RectButton>
+    </Swipeable>
+  )
+}
 
 export const RowData: React.FC<any> = ({
   store,
