@@ -2,22 +2,24 @@ import React from "react"
 import { StyleSheet, View, Animated } from "react-native"
 import { RectButton } from "react-native-gesture-handler"
 import { IconLabel } from ".."
-import { observer } from "mobx-react-lite"
 import { theme } from "../../config/theme"
 import { tw } from "@free/tailwind"
 import { RowProps } from "@free/core"
 import { useNavigation } from "@react-navigation/native"
 import Swipeable from "react-native-gesture-handler/Swipeable"
 
-export const Row: React.FC<RowProps> = React.memo(
-  ({ children, dark, style, testID = "Row" }) => {
-    return (
-      <View testID={testID} style={[s.viewRow, dark ? s.rowDark : {}, style]}>
-        {children}
-      </View>
-    )
-  }
-)
+export const Row: React.FC<RowProps> = ({
+  children,
+  dark,
+  style,
+  testID = "Row",
+}) => {
+  return (
+    <View testID={testID} style={[s.viewRow, dark ? s.rowDark : {}, style]}>
+      {children}
+    </View>
+  )
+}
 
 const RowMobile: React.FC<any> = ({
   data,

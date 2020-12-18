@@ -306,13 +306,14 @@ const useHook = () => {
         limit,
         route: routeName,
         isMobile: app.data.isMobile,
+        collection: undefined,
         isRefresh: undefined,
       })
 
       return () => {
         const { page, search, limit, route } = view.data
         view.setTemp({ page, search, limit, last: route })
-        view.setData({ config: undefined, collection: undefined })
+        view.setData({ config: undefined })
       }
     }, [])
   )

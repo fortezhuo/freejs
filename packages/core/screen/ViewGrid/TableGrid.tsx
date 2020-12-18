@@ -131,58 +131,60 @@ const TableContent: React.FC<any> = ({
 
   */
   return (
-    <TableWrapper style={s.viewTable}>
-      {headerGroups.map((headerGroup: any) => {
-        const { key } = headerGroup.getHeaderGroupProps()
-        const style = isMobile ? { height: 0, opacity: 0 } : {}
-        return (
-          <Table.Header key={key} style={style}>
-            {headerGroup.headers.map((column: any) => {
-              const { key } = column.getHeaderProps(
-                column.getSortByToggleProps()
-              )
-              return <TableHeaderCell key={key} column={column} />
-            })}
-          </Table.Header>
-        )
-      })}
+    <>
+      <TableWrapper style={s.viewTable}>
+        {headerGroups.map((headerGroup: any) => {
+          const { key } = headerGroup.getHeaderGroupProps()
+          const style = isMobile ? { height: 0, opacity: 0 } : {}
+          return (
+            <Table.Header key={key} style={style}>
+              {headerGroup.headers.map((column: any) => {
+                const { key } = column.getHeaderProps(
+                  column.getSortByToggleProps()
+                )
+                return <TableHeaderCell key={key} column={column} />
+              })}
+            </Table.Header>
+          )
+        })}
 
-      {isLoading ? (
-        <Loader dark />
-      ) : (
-        <FlatList
-          data={rows}
-          keyExtractor={(row: any) => row.id}
-          renderItem={({ item, index }: any) => {
-            prepareRow(item)
-            return (
-              <Table.RowData
-                store={store}
-                data={item.values}
-                isMobile={isMobile}
-                actionLeft={isMobile && actions[1]}
-                actionRight={isMobile && actions[0]}
-                dark={index % 2}
-              >
-                {item.cells.map((cell: any, i: number) => {
-                  const { key } = cell.getCellProps()
-                  const isHide =
-                    isMobile && colMobileHidden.indexOf(cell.column.id) >= 0
-                  return (
-                    <View key={key}>
-                      {isHide ? <></> : cell.render("Cell")}
-                    </View>
-                  )
-                })}
-              </Table.RowData>
-            )
-          }}
-        />
-      )}
-    </TableWrapper>
+        {isLoading ? (
+          <Loader dark />
+        ) : (
+          <FlatList
+            data={rows}
+            keyExtractor={(row: any) => row.id}
+            renderItem={({ item, index }: any) => {
+              prepareRow(item)
+              return (
+                <Table.RowData
+                  store={store}
+                  data={item.values}
+                  isMobile={isMobile}
+                  actionLeft={isMobile && actions[1]}
+                  actionRight={isMobile && actions[0]}
+                  dark={index % 2}
+                >
+                  {item.cells.map((cell: any, i: number) => {
+                    const { key } = cell.getCellProps()
+                    const isHide =
+                      isMobile && colMobileHidden.indexOf(cell.column.id) >= 0
+                    return (
+                      <View key={key}>
+                        {isHide ? <></> : cell.render("Cell")}
+                      </View>
+                    )
+                  })}
+                </Table.RowData>
+              )
+            }}
+          />
+        )}
+      </TableWrapper>
+    </>
   )
 }
 
 const s = StyleSheet.create({
-  viewTable: tw("flex-1 flex-grow"),
+  viewTable: tw("flex-1"),
 })
