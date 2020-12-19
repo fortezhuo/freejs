@@ -42,7 +42,7 @@ const pagination = (c: number, m: number) => {
   return rangeWithDots
 }
 
-export const TablePagination: React.FC<any> = observer(({ store, page }) => {
+export const TablePagination: React.FC<any> = ({ page }) => {
   const { index, total, max, goto } = page
 
   const setPage = React.useCallback((i) => {
@@ -92,7 +92,7 @@ export const TablePagination: React.FC<any> = observer(({ store, page }) => {
   ) : (
     <></>
   )
-})
+}
 
 const s = StyleSheet.create({
   viewPage: tw("flex-row justify-between items-center p-1 shadow-sm h-10"),
