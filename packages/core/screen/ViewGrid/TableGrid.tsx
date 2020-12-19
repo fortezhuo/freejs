@@ -15,6 +15,7 @@ import { tw, color } from "@free/tailwind"
 import { TablePagination } from "../../shared/ViewGrid/TablePagination"
 import { useView, useDefaultColumn, useColumns } from "./hook"
 import { useApp } from "../../state"
+import _diff from "lodash/difference"
 
 const defaultColor = color(theme.default_text)
 const colMobileHidden = [
@@ -25,28 +26,40 @@ const colMobileHidden = [
 ]
 
 const TableHeaderCell: React.FC<any> = ({ column }) => {
-  const onPress = React.useCallback((e) => {
-    return column.canSort ? column.toggleSortBy(undefined, true) : {}
-  }, [])
+  const Title = () =>
+    React.useMemo(
+      () =>
+        typeof column.render("Header") === "string" ? (
+          <TouchableOpacity
+            onPress={(e) => {
+              return column.canSort ? column.toggleSortBy(undefined, true) : {}
+            }}
+          >
+            <Text>{column.render("Header")}</Text>
+          </TouchableOpacity>
+        ) : (
+          column.render("Header")
+        ),
+      []
+    )
+
   return (
-    <TouchableOpacity onPress={onPress}>
-      <Table.Cell style={(column as any).style}>
-        <Text>{column.render("Header")}</Text>
-        {column.isSorted && (
-          <Icon
-            color={defaultColor}
-            name={column.isSortedDesc ? "chevron-down" : "chevron-up"}
-            size={16}
-          />
-        )}
-      </Table.Cell>
-    </TouchableOpacity>
+    <Table.Cell style={(column as any).style}>
+      <Title />
+      {column.isSorted && (
+        <Icon
+          color={defaultColor}
+          name={column.isSortedDesc ? "chevron-down" : "chevron-up"}
+          size={16}
+        />
+      )}
+    </Table.Cell>
   )
 }
 
 export const TableGrid: React.FC<any> = ({ actions }) => {
   const app = useApp()
-  const view = useView()
+  const { refSelected, ...view } = useView()
   const columnsFormat = useDefaultColumn()
   const columns = useColumns()
   const _isMobile = app.temp.isMobile
@@ -58,6 +71,7 @@ export const TableGrid: React.FC<any> = ({ actions }) => {
     total,
     pageMax,
   } = view.data
+
   const swipeActions = React.useMemo(
     () =>
       actions.filter(
@@ -66,17 +80,14 @@ export const TableGrid: React.FC<any> = ({ actions }) => {
       ),
     []
   )
-  const onSelect = React.useCallback((selectedFlatRows) => {
-    view.setData({
-      selected: selectedFlatRows.map((row: any) => row.original._id),
-    })
-  }, [])
 
   return (
     <TableContent
       isMobile={isMobile}
-      isLoading={view.temp.isLoading}
-      onSelect={onSelect}
+      isLoading={
+        view.temp.isLoading || view.temp.isUpdating || isMobile !== _isMobile
+      }
+      refSelected={refSelected}
       data={{
         columns,
         actions: swipeActions,
@@ -99,7 +110,7 @@ const TableContent: React.FC<any> = ({
   isLoading,
   data,
   page,
-  onSelect,
+  refSelected,
 }) => {
   const { columns, columnsFormat, collection, actions } = data
   const TableWrapper = isMobile || isLoading ? Table.Default : Table.Scroll
@@ -124,12 +135,11 @@ const TableContent: React.FC<any> = ({
     useSelection
   )
 
-  /*
   useMountedLayoutEffect(() => {
-    onSelect(selectedFlatRows)
-  }, [selectedFlatRows])
+    if (!isLoading)
+      refSelected.current = selectedFlatRows.map((row: any) => row.original._id)
+  }, [selectedFlatRows, isLoading])
 
-  */
   return (
     <>
       <TableWrapper style={s.viewTable}>

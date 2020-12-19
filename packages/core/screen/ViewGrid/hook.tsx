@@ -132,9 +132,9 @@ const validateNotEmpty = ({ selected, id, refAlert }: any) =>
   })
 
 export const useActions = (refBottomSheet: any) => {
-  const view = useView()
+  const { refSelected, ...view } = useView()
   const {
-    data: { config, route, selected = [] },
+    data: { config, route },
   } = view
   const { refAlert, ...app } = useApp()
   const refActions = React.useRef<any>([])
@@ -156,6 +156,7 @@ export const useActions = (refBottomSheet: any) => {
       type: "danger_bg",
       children: "Delete",
       onPress: async ({ id }: any) => {
+        const selected = refSelected.current
         if (await validateNotEmpty({ selected, id, refAlert })) {
           refAlert.current.confirm({
             title: "Confirmation",
@@ -185,6 +186,8 @@ export const useActions = (refBottomSheet: any) => {
       type: "primary_2_bg",
       children: "Restore",
       onPress: async ({ id }: any) => {
+        const selected = refSelected.current
+
         if (await validateNotEmpty({ selected, id, refAlert })) {
           refAlert.current.confirm({
             title: "Confirmation",
@@ -271,6 +274,7 @@ const useHook = () => {
   const navRoute = useRoute()
   const routeName = navRoute.name
   const { refAlert, ...app } = useApp()
+  const refSelected = React.useRef([])
   const refBottomSheet = React.useRef<Modalize>(null)
 
   React.useEffect(() => {
@@ -361,58 +365,74 @@ const useHook = () => {
     })()
   }, [view.data.isRefresh])
 
-  const loadData = React.useCallback(async (id: string) => {
-    const { name } = view.data
-    if (id.length === 24) {
-      try {
-        view.setTemp({ isLoading: true })
-        const res = await POST(`/api/find/${name}/${id}`, {})
-        view.setTemp({ value: res.data.result.data })
-      } catch (err) {
-        view.setError(err)
-      } finally {
-        view.setTemp({ isLoading: false })
+  const loadData = React.useCallback(
+    async (id: string) => {
+      const { name } = view.data?.config
+      if (id.length === 24) {
+        try {
+          view.setTemp({ isLoading: true })
+          const res = await POST(`/api/find/${name}/${id}`, {})
+          view.setTemp({ value: res.data.result.data })
+        } catch (err) {
+          view.setError(err)
+        } finally {
+          view.setTemp({ isLoading: false })
+        }
       }
-    }
-  }, [])
+    },
+    [view.data?.config?.name]
+  )
 
-  const deleteDocument = React.useCallback(async (id: string) => {
-    const { name, selected } = view.data
-    const selectedIds = id ? [id] : selected || []
+  const deleteDocument = React.useCallback(
+    async (id: string) => {
+      const { name } = view.data?.config
+      const selectedIds = id ? [id] : refSelected.current || []
 
-    if (selectedIds.length != 0) {
-      const _params = { query: { _id: { $in: selectedIds } } }
-      try {
-        view.setTemp({ isLoading: true })
-        return await DELETE(`/api/${name}`, { _params })
-      } catch (err) {
-        view.setError(err)
-      } finally {
-        view.setTemp({ isLoading: false })
-        view.setData({ isRefresh: true, selected: undefined, page: 1 })
+      if (selectedIds.length != 0) {
+        const _params = { query: { _id: { $in: selectedIds } } }
+        try {
+          view.setTemp({ isLoading: true })
+          return await DELETE(`/api/${name}`, { _params })
+        } catch (err) {
+          view.setError(err)
+        } finally {
+          view.setTemp({ isLoading: false })
+          view.setData({ isRefresh: true, selected: undefined, page: 1 })
+        }
       }
-    }
-  }, [])
+    },
+    [view.data?.config?.name]
+  )
 
-  const restoreDocument = React.useCallback(async (id: string) => {
-    const { name, selected } = view.data
-    const selectedIds = id ? [id] : selected
+  const restoreDocument = React.useCallback(
+    async (id: string) => {
+      const { name } = view.data?.config
+      const selectedIds = id ? [id] : refSelected.current || []
 
-    if (selectedIds.length != 0) {
-      const _params = { query: { _id: { $in: selectedIds } } }
-      try {
-        view.setTemp({ isLoading: true })
-        return await POST(`/api/${name}/restore`, { _params })
-      } catch (err) {
-        view.setError(err)
-      } finally {
-        view.setTemp({ isLoading: false })
-        view.setData({ isRefresh: true, selected: undefined, page: 1 })
+      if (selectedIds.length != 0) {
+        const _params = { query: { _id: { $in: selectedIds } } }
+        try {
+          view.setTemp({ isLoading: true })
+          return await POST(`/api/${name}/restore`, { _params })
+        } catch (err) {
+          view.setError(err)
+        } finally {
+          view.setTemp({ isLoading: false })
+          view.setData({ isRefresh: true, selected: undefined, page: 1 })
+        }
       }
-    }
-  }, [])
+    },
+    [view.data?.config?.name]
+  )
 
-  return { ...view, restoreDocument, loadData, deleteDocument, refBottomSheet }
+  return {
+    ...view,
+    restoreDocument,
+    loadData,
+    deleteDocument,
+    refBottomSheet,
+    refSelected,
+  }
 }
 
 export const [withView, useView] = createContext("View", {}, useHook)
