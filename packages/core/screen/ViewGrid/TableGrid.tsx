@@ -12,8 +12,8 @@ import {
 import { FlatList } from "react-native-gesture-handler"
 import { theme } from "../../config/theme"
 import { tw, color } from "@free/tailwind"
-import { TablePagination } from "../../shared/ViewGrid/TablePagination"
-import { useView, useDefaultColumn, useColumns } from "./hook"
+import { TablePagination } from "./TablePagination"
+import { useView, useColumns } from "./hook"
 import { useApp } from "../../state"
 import _diff from "lodash/difference"
 
@@ -60,17 +60,9 @@ const TableHeaderCell: React.FC<any> = ({ column }) => {
 export const TableGrid: React.FC<any> = ({ actions }) => {
   const app = useApp()
   const { refSelected, ...view } = useView()
-  const columnsFormat = useDefaultColumn()
   const columns = useColumns()
   const _isMobile = app.temp.isMobile
-  const {
-    isMobile,
-    collection = [],
-    pageIndex,
-    limit,
-    total,
-    pageMax,
-  } = view.data
+  const { isMobile, collection = [], max } = view.data
 
   const swipeActions = React.useMemo(
     () =>
@@ -91,14 +83,8 @@ export const TableGrid: React.FC<any> = ({ actions }) => {
       data={{
         columns,
         actions: swipeActions,
-        columnsFormat,
         collection,
-      }}
-      page={{
-        index: pageIndex,
-        limit: limit,
-        total: total,
-        max: pageMax,
+        max,
       }}
     />
   )
@@ -109,7 +95,6 @@ const TableContent: React.FC<any> = ({
   isMobile,
   isLoading,
   data,
-  page,
   refSelected,
 }) => {
   const { columns, columnsFormat, collection, actions } = data
@@ -127,7 +112,7 @@ const TableContent: React.FC<any> = ({
       initialState: { pageIndex: 1 },
       manualPagination: true,
       defaultColumn: columnsFormat,
-      pageCount: page.max,
+      pageCount: data.max,
     } as any,
     useSortBy,
     usePagination,
@@ -142,6 +127,7 @@ const TableContent: React.FC<any> = ({
 
   return (
     <>
+      <TablePagination {...gotoPage} />
       <TableWrapper style={s.viewTable}>
         {headerGroups.map((headerGroup: any) => {
           const { key } = headerGroup.getHeaderGroupProps()

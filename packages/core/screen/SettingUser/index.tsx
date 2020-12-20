@@ -18,7 +18,6 @@ const SettingUser: React.FC = observer((props) => {
   return (
     <>
       <Layout
-        store={user}
         stickyLeft={
           <View style={s.viewButton}>
             <ActionGroup.Large store={user} actions={actions} isMobileHidden />
@@ -31,11 +30,7 @@ const SettingUser: React.FC = observer((props) => {
               <Label>User Name</Label>
             </Col>
             <Col light md={10}>
-              <Input.Text
-                store={user}
-                name="username"
-                placeholder="User Name"
-              />
+              <Input.RawText name="username" placeholder="User Name" />
             </Col>
           </Row>
           <Row dark>
@@ -43,11 +38,7 @@ const SettingUser: React.FC = observer((props) => {
               <Label>Full Name</Label>
             </Col>
             <Col light md={10}>
-              <Input.Text
-                store={user}
-                name="fullname"
-                placeholder="Full Name"
-              />
+              <Input.RawText name="fullname" placeholder="Full Name" />
             </Col>
           </Row>
           <Row dark>
@@ -55,7 +46,7 @@ const SettingUser: React.FC = observer((props) => {
               <Label>Email</Label>
             </Col>
             <Col light md={10}>
-              <Input.Text store={user} name="email" placeholder="Email" />
+              <Input.RawText store={user} name="email" placeholder="Email" />
             </Col>
           </Row>
           <Row dark>

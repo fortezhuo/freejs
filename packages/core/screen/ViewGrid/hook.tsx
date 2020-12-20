@@ -13,7 +13,7 @@ import { download } from "./helper"
 import { formatDate, formatDateTime } from "../../util"
 import { Modalize } from "react-native-modalize"
 
-import { TableCheckbox } from "../../shared/ViewGrid/TableCheckbox"
+import { TableCheckbox } from "./TableCheckbox"
 import {
   useNavigation,
   useRoute,
@@ -37,79 +37,6 @@ export const useSelection = (hooks: any) => {
     },
     ...columns,
   ])
-}
-
-export const useDefaultColumn = () => {
-  const { refBottomSheet, ...view } = useView()
-  const { keys, isMobile, config, route } = view.data
-
-  const onOpenJSON = React.useCallback(
-    (id) => {
-      ;(async () => {
-        await view.loadData(id)
-      })()
-
-      refBottomSheet.current.open()
-    },
-    [config.name]
-  )
-
-  return {
-    Cell: (cell: any) => {
-      const name = cell?.column?.id || undefined
-      const prefix =
-        isMobile &&
-        name.indexOf("name_download_log") < 0 &&
-        name.indexOf("_id") < 0
-          ? `${keys[name].label} : `
-          : ""
-
-      switch (cell.column.type) {
-        case "link":
-          return (
-            <CellLink
-              name={route.replace("View", "")}
-              params={{ id: cell.value }}
-              style={cell.column.style}
-            />
-          )
-        case "download_log":
-          return (
-            <CellDownload
-              style={cell.column.style}
-              onPress={() => {
-                download(`/api/${config.name}`, cell.value)
-              }}
-            />
-          )
-        case "date":
-          return (
-            <CellText isMobile={isMobile} style={cell.column.style}>
-              {prefix + formatDate(cell.value)}
-            </CellText>
-          )
-        case "datetime":
-          return (
-            <CellText isMobile={isMobile} style={cell.column.style}>
-              {prefix + formatDateTime(cell.value)}
-            </CellText>
-          )
-        case "json":
-          return (
-            <CellJSON
-              style={cell.column.style}
-              onPress={() => onOpenJSON(cell.value)}
-            />
-          )
-        default:
-          return (
-            <CellText isMobile={isMobile} style={cell.column.style}>
-              {prefix + cell.value}
-            </CellText>
-          )
-      }
-    },
-  }
 }
 
 const validateNotEmpty = ({ selected, id, refAlert }: any) =>
@@ -253,8 +180,19 @@ export const useActions = (refBottomSheet: any) => {
 }
 
 export const useColumns = () => {
-  const view = useView()
-  const { config } = view.data
+  const { refBottomSheet, ...view } = useView()
+  const { keys, isMobile, config, route } = view.data
+
+  const onOpenJSON = React.useCallback(
+    (id) => {
+      ;(async () => {
+        await view.loadData(id)
+      })()
+
+      refBottomSheet.current.open()
+    },
+    [config.name]
+  )
 
   return React.useMemo(
     () =>
@@ -263,7 +201,60 @@ export const useColumns = () => {
         Header: col.label,
         accessor: col.name,
         style: col.style,
-        type: col.type,
+        Cell: (cell: any) => {
+          const name = cell?.column?.id || undefined
+          const prefix =
+            isMobile &&
+            name.indexOf("name_download_log") < 0 &&
+            name.indexOf("_id") < 0
+              ? `${keys[name].label} : `
+              : ""
+
+          switch (col.type) {
+            case "link":
+              return (
+                <CellLink
+                  name={route.replace("View", "")}
+                  params={{ id: cell.value }}
+                  style={cell.column.style}
+                />
+              )
+            case "download_log":
+              return (
+                <CellDownload
+                  style={cell.column.style}
+                  onPress={() => {
+                    download(`/api/${config.name}`, cell.value)
+                  }}
+                />
+              )
+            case "date":
+              return (
+                <CellText isMobile={isMobile} style={cell.column.style}>
+                  {prefix + formatDate(cell.value)}
+                </CellText>
+              )
+            case "datetime":
+              return (
+                <CellText isMobile={isMobile} style={cell.column.style}>
+                  {prefix + formatDateTime(cell.value)}
+                </CellText>
+              )
+            case "json":
+              return (
+                <CellJSON
+                  style={cell.column.style}
+                  onPress={() => onOpenJSON(cell.value)}
+                />
+              )
+            default:
+              return (
+                <CellText isMobile={isMobile} style={cell.column.style}>
+                  {prefix + cell.value}
+                </CellText>
+              )
+          }
+        },
       })),
     [config.name]
   )

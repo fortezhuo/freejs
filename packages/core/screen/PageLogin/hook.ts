@@ -6,7 +6,7 @@ import { POST } from "../../request"
 import { configLDAP as ldap } from "@free/env"
 
 export const useHook = () => {
-  const form = useForm()
+  const form = useForm({ criteriaMode: "all" })
   const app = useApp()
 
   React.useEffect(() => {

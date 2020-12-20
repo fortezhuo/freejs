@@ -1,14 +1,32 @@
 import React from "react"
-import { TextInput, StyleSheet } from "react-native"
+import { TextInput, StyleSheet, TextInputProps } from "react-native"
 import { Base } from "../../Base"
 import { tw } from "@free/tailwind"
 import { theme } from "../../../config/theme"
 import { DisplayError } from "../DisplayError"
 import { useController } from "react-hook-form"
 
-export const InputTextRaw: React.FC<any> = (props) => {
+interface InputTextProps extends TextInputProps {
+  isLoading?: boolean
+  disabled?: boolean
+}
+
+interface FormInputTextProps extends InputTextProps {
+  control?: any
+  name: string
+  rules?: any
+  defaultValue?: any
+}
+
+export const InputTextRaw: React.FC<InputTextProps> = ({
+  isLoading,
+  ...props
+}) => {
   return (
-    <Base style={[s.viewInput, props.disabled ? s.viewDisabled : {}]}>
+    <Base
+      isLoading={isLoading}
+      style={[s.viewInput, props.disabled ? s.viewDisabled : {}]}
+    >
       <TextInput
         placeholderTextColor={tw("text-gray-600").color}
         style={s.inputText}
@@ -18,15 +36,16 @@ export const InputTextRaw: React.FC<any> = (props) => {
   )
 }
 
-export const InputText: React.FC<any> = ({
+export const InputText: React.FC<FormInputTextProps> = ({
   control,
   name,
   rules,
-  defaultValue,
+  defaultValue = "",
   ...props
 }) => {
   const {
     field: { ref, onChange, value, ...inputProps },
+    meta: { invalid },
   } = useController({
     name,
     control,
@@ -37,6 +56,7 @@ export const InputText: React.FC<any> = ({
   return (
     <>
       <InputTextRaw onChangeText={onChange} value={value} {...props} />
+      <DisplayError error={invalid} />
     </>
   )
 }

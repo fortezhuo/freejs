@@ -1,10 +1,9 @@
 import React from "react"
-import { View, StyleSheet } from "react-native"
+import { View, StyleSheet, TouchableOpacity } from "react-native"
 import { Text, Input } from "../../component"
-import { observer } from "mobx-react-lite"
 import { random } from "../../util"
 import { tw } from "@free/tailwind"
-import { TouchableOpacity } from "react-native-gesture-handler"
+import { useView } from "./hook"
 
 const limitOptions: any = [10, 30, 60, 90].map((opt: number) => ({
   value: `${opt}`,
@@ -42,24 +41,26 @@ const pagination = (c: number, m: number) => {
   return rangeWithDots
 }
 
-export const TablePagination: React.FC<any> = ({ page }) => {
-  const { index, total, max, goto } = page
+export const TablePagination: React.FC<any> = ({ gotoPage }) => {
+  const view = useView()
+  const { page, total, max } = view.data
 
   const setPage = React.useCallback((i) => {
-    goto(i)
-    store.setData({ page: i })
+    gotoPage(i)
+    view.setData({ page: i })
   }, [])
 
   const reset = React.useCallback(() => {
-    store.setData({ page: 1 })
+    view.setData({ page: 1 })
   }, [])
 
   return total ? (
     <View style={s.viewPage}>
       <View style={s.viewPaging}>
-        {!store.isLoading && (
+        {!view.temp.isLoading && (
           <>
             <Text>Show</Text>
+            {/*
             <Input.Select
               style={s.boxPaging}
               clearable={false}
@@ -71,18 +72,19 @@ export const TablePagination: React.FC<any> = ({ page }) => {
               options={limitOptions}
               onChange={reset}
             />
+            */}
             <Text>entries</Text>
           </>
         )}
       </View>
       <View style={s.viewPageNumbers}>
-        {pagination(index, max).map((i: any) => (
+        {pagination(page, max).map((i: any) => (
           <TouchableOpacity
             key={"page_" + random()}
             disabled={i === "..." || i == page}
             onPress={() => setPage(i)}
           >
-            <Text style={[s.textPage, i == index ? s.textPageActive : {}]}>
+            <Text style={[s.textPage, i == page ? s.textPageActive : {}]}>
               {i}
             </Text>
           </TouchableOpacity>

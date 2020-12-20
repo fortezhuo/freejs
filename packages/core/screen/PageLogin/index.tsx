@@ -40,12 +40,18 @@ const PageLogin: React.FC = () => {
               placeholder="Username"
               autoCapitalize="none"
               name="username"
+              rules={{
+                required: "Please fill Username",
+              }}
             />
-            <Input.Text
+            <Input.Password
               disabled={temp.isUpdating}
               control={control}
               name="password"
               placeholder="Password"
+              rules={{
+                required: "Please fill Password",
+              }}
             />
             <Input.Text
               disabled={temp.isUpdating}
