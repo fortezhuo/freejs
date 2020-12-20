@@ -1,5 +1,5 @@
 import React from "react"
-import { Icon, Text } from "../"
+import { Icon, Text, Base } from "../"
 import { StyleSheet, TouchableOpacity, View } from "react-native"
 import { theme } from "../../config/theme"
 import { tw, border, text, color } from "@free/tailwind"
@@ -37,14 +37,18 @@ export const Button: React.FC<Button> = (props) => {
   const theme_bg = type === "transparent_bg" ? "bg-white" : theme[type]
 
   const bgColor = tw(
-    outline
+    isLoading || disabled
+      ? theme.disabled_bg
+      : outline
       ? `border border-solid ${
           isRGBLight(color(theme_bg)) ? "border-gray-700" : border(theme_bg)
         }`
       : theme_bg
   )
   const textColor = tw(
-    outline
+    isLoading || disabled
+      ? theme.disabled_text
+      : outline
       ? text(isRGBLight(color(theme_bg)) ? "bg-gray-700" : theme_bg)
       : isRGBLight(color(theme_bg))
       ? "text-gray-700"
@@ -52,8 +56,12 @@ export const Button: React.FC<Button> = (props) => {
   )
 
   return (
-    <TouchableOpacity disabled={disabled} onPress={onPress}>
-      <View style={[s.viewButton, bgColor, style]} testID={testID}>
+    <TouchableOpacity disabled={disabled || isLoading} onPress={onPress}>
+      <Base
+        isLoading={isLoading}
+        style={[s.viewButton, bgColor, style]}
+        testID={testID}
+      >
         {icon && (
           <View style={s.iconButton}>
             <Icon
@@ -65,11 +73,15 @@ export const Button: React.FC<Button> = (props) => {
         )}
         <Text style={textColor}>{children}</Text>
         {onClear && (
-          <TouchableOpacity style={s.iconButton} onPress={onClear}>
-            <Icon name="x" size={18} />
+          <TouchableOpacity
+            disabled={disabled || isLoading}
+            style={s.iconButton}
+            onPress={onClear}
+          >
+            <Icon name="x" size={18} color={textColor.color} />
           </TouchableOpacity>
         )}
-      </View>
+      </Base>
     </TouchableOpacity>
   )
 }

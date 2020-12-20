@@ -11,14 +11,19 @@ const ViewGrid: React.FC<any> = withView(() => {
   const { refBottomSheet, ...view } = useView()
   const actions = useActions(refBottomSheet)
   const isReady = !!view.data?.config?.name
-  const { height } = view.temp
+  const { height, isLoading, isUpdating } = view.temp
 
   return (
     <>
       <Layout
         transparent
         scroll={Platform.OS === "web"}
-        stickyRight={<ActionGroup.Large actions={actions} />}
+        stickyRight={
+          <ActionGroup.Large
+            actions={actions}
+            isLoading={isLoading || isUpdating}
+          />
+        }
       >
         <View style={[s.viewTable, { height }]}>
           {!isReady ? <Loader dark /> : <TableGrid actions={actions} />}
