@@ -1,14 +1,17 @@
 import React from "react"
 import { Input, LayoutFull, Col, Gradient, Avatar } from "../../component"
 import { View, StyleSheet, Text, TouchableOpacity } from "react-native"
-import { useForm, Controller } from "react-hook-form"
 import { theme } from "../../config/theme"
 import { tw } from "@free/tailwind"
-import { useApp } from "../../state"
+import { useHook } from "./hook"
 import logo from "../../img/logo.png"
-import { POST } from "../../request"
 
-const LoginButton: React.FC<any> = ({ isUpdating, onPress }) => {
+interface LoginButton {
+  isUpdating?: boolean
+  onPress: VoidFunction
+}
+
+const LoginButton: React.FC<LoginButton> = ({ isUpdating, onPress }) => {
   const colors = isUpdating
     ? [theme.disabled_bg, theme.disabled_bg]
     : [theme.primary_1_bg, theme.primary_2_bg]
@@ -24,67 +27,34 @@ const LoginButton: React.FC<any> = ({ isUpdating, onPress }) => {
 }
 
 const PageLogin: React.FC = () => {
-  const { control, handleSubmit, errors } = useForm()
-  const app = useApp()
-
-  const onSubmit = React.useCallback(async (data: any) => {
-    try {
-      const { username, password, domain } = data
-      app.setTemp({ isUpdating: true })
-      const res = await POST("/api/auth", { username, password, domain })
-      app.setData({ auth: res.data.result })
-    } catch (err) {
-      app.setError(err)
-    } finally {
-      app.setTemp({ isUpdating: false })
-    }
-  }, [])
-
+  const { control, temp, onSubmit } = useHook()
   return (
     <LayoutFull transparent>
       <View style={s.pageLogin} testID="PageLogin">
         <Col sm={11} md={9} lg={4} xl={4} style={s.boxLogin}>
           <Avatar source={logo} style={s.iconLogo} />
           <View style={s.boxInput}>
-            <Controller
+            <Input.Text
+              disabled={temp.isUpdating}
               control={control}
-              render={({ onChange, value }) => (
-                <Input.Text
-                  placeholder="Username"
-                  autoCapitalize="none"
-                  onChangeText={onChange}
-                  value={value}
-                />
-              )}
+              placeholder="Username"
+              autoCapitalize="none"
               name="username"
-              defaultValue=""
             />
-            <Controller
+            <Input.Text
+              disabled={temp.isUpdating}
               control={control}
-              render={({ onChange, value }) => (
-                <Input.Text
-                  placeholder="Password"
-                  onChangeText={onChange}
-                  value={value}
-                />
-              )}
               name="password"
-              defaultValue=""
+              placeholder="Password"
             />
-            <Controller
+            <Input.Text
+              disabled={temp.isUpdating}
               control={control}
-              render={({ onChange, value }) => (
-                <Input.Text
-                  placeholder="Domain"
-                  onChangeText={onChange}
-                  value={value}
-                />
-              )}
               name="domain"
-              defaultValue=""
+              placeholder="Domain"
             />
+            <LoginButton isUpdating={temp.isUpdating} onPress={onSubmit} />
           </View>
-          <LoginButton onPress={handleSubmit(onSubmit)} />
         </Col>
       </View>
     </LayoutFull>

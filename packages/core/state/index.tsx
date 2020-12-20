@@ -1,7 +1,6 @@
 import React from "react"
 import * as req from "../request"
 import { acl } from "../util"
-import { configLDAP as ldap } from "@free/env"
 import { useDefaultState, createContext } from "./hook"
 import _isEmpty from "lodash/isEmpty"
 
@@ -16,10 +15,6 @@ const useHook = () => {
       ;(async function () {
         try {
           app.setTemp({
-            domain: ldap.map((l: any) => ({
-              value: l.domain,
-              label: l.domain,
-            })),
             isLoading: true,
           })
           const res = await req.GET("/api/auth")
