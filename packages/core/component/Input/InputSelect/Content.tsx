@@ -1,39 +1,33 @@
 import React from "react"
 import { Button, H4 } from "../.."
 import { Display } from "./Display"
-import { View, StyleSheet, Platform } from "react-native"
-import { observer } from "mobx-react-lite"
+import { View, StyleSheet } from "react-native"
 import { theme } from "../../../config/theme"
 import { tw } from "@free/tailwind"
 
-export const Content: React.FC<any> = observer(({ state, children, menu }) => {
-  const placeholder = `${
-    state.placeholder.toLowerCase().indexOf("select") >= 0 ? "" : "Select "
-  }${state.placeholder}`
-  const onCancel = React.useCallback(() => {
-    state.set({ _isMobileShow: false })
-    menu.hide()
-  }, [])
-
-  const onCommit = React.useCallback(() => {
-    state.onChange(state._temp)
-    onCancel()
-  }, [])
-
+export const Content: React.FC<any> = (props) => {
+  const {
+    placeholder,
+    onCancel,
+    onCommit,
+    isMobile,
+    getDisplayProps,
+    children,
+  } = props
   return (
-    <View style={state.isMobile ? s.viewMenuMobile : s.viewMenuDesktop}>
-      {state.isMobile && (
+    <View style={isMobile ? s.viewMenuMobile : s.viewMenuDesktop}>
+      {isMobile && (
         <>
           <H4>{placeholder}</H4>
           <View style={s.viewInput}>
-            <Display state={state} />
+            <Display {...getDisplayProps()} />
           </View>
         </>
       )}
-      <View style={[s.viewWrapper, state.isMobile ? s.viewWrapperMobile : {}]}>
+      <View style={[s.viewWrapper, isMobile ? s.viewWrapperMobile : {}]}>
         {children}
       </View>
-      {state.isMobile && (
+      {isMobile && (
         <View style={s.viewButton}>
           <Button type={"primary_1_bg"} icon="check" onPress={onCommit}>
             OK
@@ -45,7 +39,7 @@ export const Content: React.FC<any> = observer(({ state, children, menu }) => {
       )}
     </View>
   )
-})
+}
 
 const s = StyleSheet.create({
   viewButton: tw("flex-row justify-evenly self-end", { width: 200 }),

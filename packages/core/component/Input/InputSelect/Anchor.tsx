@@ -1,31 +1,32 @@
 import React from "react"
 import { Display } from "./Display"
 import { Base } from "../../Base"
-import { DisplayError } from "../DisplayError"
-import { TouchableOpacity, StyleSheet } from "react-native"
+import { TouchableOpacity, StyleSheet, View } from "react-native"
 import { tw } from "@free/tailwind"
-import { observer } from "mobx-react-lite"
 import { theme } from "../../../config/theme"
 
-export const Anchor: React.FC<Anchor> = observer(({ state, menu }) => {
+export const Anchor: React.FC<any> = (props) => {
+  const {
+    hide,
+    show,
+    style,
+    isLoading,
+    disabled,
+    isMobile,
+    getDisplayProps,
+  } = props
+
   return (
-    <>
-      <TouchableOpacity disabled={state.disabled} onPress={menu.show}>
-        <Base
-          isLoading={state.isLoading}
-          style={[
-            s.viewInput,
-            state.disabled ? s.viewDisabled : {},
-            state.style,
-          ]}
-        >
-          {!state._isMobileShow && <Display state={state} />}
-        </Base>
-      </TouchableOpacity>
-      <DisplayError store={state._store} name={state.name} />
-    </>
+    <TouchableOpacity disabled={disabled} onPress={show}>
+      <Base
+        isLoading={isLoading}
+        style={[s.viewInput, disabled ? s.viewDisabled : {}, style]}
+      >
+        {!isMobile && <Display {...getDisplayProps()} />}
+      </Base>
+    </TouchableOpacity>
   )
-})
+}
 
 const s = StyleSheet.create({
   viewInput: tw(

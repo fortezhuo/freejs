@@ -53,11 +53,12 @@ const PageLogin: React.FC = () => {
                 required: "Please fill Password",
               }}
             />
-            <Input.Text
+            <Input.Select
               disabled={temp.isUpdating}
               control={control}
               name="domain"
               placeholder="Domain"
+              options={temp.domain}
             />
             <LoginButton isUpdating={temp.isUpdating} onPress={onSubmit} />
           </View>

@@ -6,9 +6,11 @@ import { tw, color } from "@free/tailwind"
 import { StateComponent } from "@free/core"
 import { theme } from "../../../config/theme"
 import { random } from "../../../util"
+import { useSelect } from "./hook"
 
 const defaultColor = color(theme.default_text)
 
+/*
 const Chip: React.FC<any> = observer(({ state, children }) => {
   const onClear = React.useCallback((val) => state.onClear(val), [])
   return (
@@ -26,7 +28,10 @@ const Placeholder: React.FC<StateComponent> = observer(({ state }) => {
   return <Text style={[s.textPlaceholder, style]}>{state.placeholder}</Text>
 })
 
-const Clear: React.FC<StateComponent> = observer(({ state }) => {
+*/
+const Clear: React.FC = () => {
+  return <View />
+  /*
   const { multi, value, clearable } = state
   const onClear = React.useCallback(() => {
     state.onChange(multi ? [] : "")
@@ -37,11 +42,12 @@ const Clear: React.FC<StateComponent> = observer(({ state }) => {
   ) : (
     <IconButton color={defaultColor} name="x" size={16} onPress={onClear} />
   )
-})
+  */
+}
 
-export const Display: React.FC<StateComponent> = observer(({ state }) => {
-  const { multi, display, searchable } = state
-  const isBlank = multi ? display.length == 0 : display === ""
+export const Display: React.FC<any> = (props) => {
+  const { searchable, multi, disabled, isLoading, isMobile } = props
+  const isBlank = false //refProps.current.multi ? display.length == 0 : display === ""
 
   return (
     <View
@@ -51,8 +57,14 @@ export const Display: React.FC<StateComponent> = observer(({ state }) => {
         multi ? s.viewMulti : {},
       ]}
     >
-      <View style={s.viewValue} testID="ViewValue">
-        {!isBlank ? (
+      <View style={s.viewValue} testID="ViewValue"></View>
+      {!(disabled || isMobile) && <Clear />}
+    </View>
+  )
+}
+
+/*
+ {!isBlank ? (
           multi ? (
             display.map((_value: any) => (
               <Chip state={state} key={"chip_" + random()}>
@@ -65,11 +77,7 @@ export const Display: React.FC<StateComponent> = observer(({ state }) => {
         ) : (
           <Placeholder state={state} />
         )}
-      </View>
-      {!(state.disabled || state._isMobileShow) && <Clear state={state} />}
-    </View>
-  )
-})
+        */
 
 const s = StyleSheet.create({
   viewDisplay: tw("flex-1 flex-row items-center mx-4"),

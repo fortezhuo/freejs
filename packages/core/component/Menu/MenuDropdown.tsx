@@ -1,35 +1,41 @@
 import React from "react"
 import { View, StyleSheet } from "react-native"
 import { Modal } from "../"
-import { MenuItem } from "./MenuItem"
 import { tw } from "@free/tailwind"
-import { MenuProps, MenuItemProps } from "@free/core"
 import { useApp } from "../../state"
 
 const { color: iconColor } = tw("text-gray-700")
 const SCREEN_INDENT = 2
 const noop = () => {}
 
-export const useMenuDropdown = (isCompact: boolean = false) => {
-  const [isOpen, setOpen] = React.useState(false)
-
-  const show = React.useCallback(() => {
-    setOpen(true)
-  }, [])
-
-  const hide = React.useCallback(() => {
-    setOpen(false)
-  }, [])
-
-  const MenuDropdown: React.FC<MenuProps> = ({
-    testID = "Menu",
-    anchor,
-    style,
-    children,
-    onShow = noop,
-    allowBackDrop = true,
-  }) => {
+export const MenuDropdown: React.FC<any> = React.forwardRef(
+  (
+    {
+      isCompact = false,
+      testID = "Menu",
+      anchor,
+      style,
+      children,
+      onShow = noop,
+      allowBackDrop = true,
+    },
+    ref
+  ) => {
     const app = useApp()
+    const [isOpen, setOpen] = React.useState(false)
+
+    const open = React.useCallback(() => {
+      setOpen(true)
+    }, [])
+    const hide = React.useCallback(() => {
+      setOpen(false)
+    }, [])
+
+    React.useImperativeHandle(ref, () => ({
+      open,
+      hide,
+    }))
+
     const [layout, setLayout] = React.useState<ObjectAny>({
       width: 0,
       height: 0,
@@ -76,7 +82,7 @@ export const useMenuDropdown = (isCompact: boolean = false) => {
           }
         )
       }
-    }, [app.temp.screen])
+    }, [app.temp.screen, isOpen])
 
     const { width } = layout
     let { left, top, anchorHeight } = measure
@@ -116,39 +122,7 @@ export const useMenuDropdown = (isCompact: boolean = false) => {
       </View>
     )
   }
-
-  const BindMenuItem: React.FC<MenuItemProps> = ({
-    name,
-    color = iconColor,
-    children,
-    onPress = noop,
-    styleText,
-    style,
-  }) => {
-    return (
-      <MenuItem
-        onPress={() => {
-          onPress()
-          hide()
-        }}
-        styleContainer={style}
-        name={name}
-        color={color}
-        size={18}
-        styleText={styleText}
-      >
-        {children}
-      </MenuItem>
-    )
-  }
-
-  return {
-    show,
-    hide,
-    MenuDropdown,
-    MenuItem: BindMenuItem,
-  }
-}
+)
 
 const s = StyleSheet.create({
   viewChildren: tw("absolute bg-transparent"),

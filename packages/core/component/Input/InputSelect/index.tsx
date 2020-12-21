@@ -1,34 +1,97 @@
 import React from "react"
-import { useWrapper, useHook } from "./hook"
+import { useSelect } from "./hook"
 import { Search } from "./Search"
 import { Options } from "./Options"
 import { Anchor } from "./Anchor"
 import { Content } from "./Content"
+import { DisplayError } from "../DisplayError"
+import { MenuDropdown } from "../../Menu"
+import { useController } from "react-hook-form"
 import { TextInput, ScrollView, Platform } from "react-native"
-import { observer } from "mobx-react-lite"
-import { InputSelectProps } from "@free/core"
 
-export const InputSelect: React.FC<InputSelectProps> = observer((props) => {
+export const InputSelectRaw: React.FC<any> = ({
+  isLoading = false,
+  disabled = false,
+  searchable = true,
+  creatable = false,
+  placeholder = "Select ...",
+  keyLabel = "label",
+  keyValue = "value",
+  multi = false,
+  options = [],
+  value,
+  onChange,
+  style,
+}) => {
+  const refWrapper = React.useRef(null)
   const refSearch = React.useRef<TextInput>(null)
   const refScroll = React.useRef<ScrollView>(null)
-  const state = useHook(refScroll, props)
-  const { Wrapper, hide, show } = useWrapper(!state.searchable)
+
+  const {
+    getAnchorProps,
+    getWrapperProps,
+    getContentProps,
+    getSearchProps,
+    getOptionsProps,
+  } = useSelect({
+    isLoading,
+    disabled,
+    searchable,
+    creatable,
+    placeholder,
+    multi,
+    keyLabel,
+    keyValue,
+    options,
+    value,
+    onChange,
+    style,
+    refSearch,
+    refWrapper,
+    refScroll,
+  })
 
   return (
-    <Wrapper
-      allowBackDrop={Platform.OS === "web"}
-      onShow={() => {
-        state.onShow()
-        refSearch.current?.focus()
-      }}
-      anchor={<Anchor state={state} menu={{ show }} />}
+    <MenuDropdown
+      ref={refWrapper}
+      isCompact={!searchable}
+      anchor={<Anchor {...getAnchorProps()} />}
     >
-      <Content state={state} menu={{ hide }}>
-        {state.searchable && (
-          <Search refSearch={refSearch} state={state} menu={{ hide }} />
-        )}
-        <Options refScroll={refScroll} state={state} menu={{ show, hide }} />
+      <Content {...getContentProps()}>
+        {searchable && <Search refSearch={refSearch} {...getSearchProps()} />}
+        <Options {...getOptionsProps()} />
       </Content>
-    </Wrapper>
+    </MenuDropdown>
   )
-})
+}
+
+export const InputSelect: React.FC<any> = ({
+  control,
+  name,
+  rules,
+  defaultValue,
+  multi = false,
+  ...props
+}) => {
+  defaultValue = defaultValue ? defaultValue : multi ? [] : ""
+
+  const {
+    field: { ref, onChange, value, ...inputProps },
+    meta: { invalid },
+  } = useController({
+    name,
+    control,
+    rules,
+    defaultValue,
+  })
+  return (
+    <>
+      <InputSelectRaw onChangeText={onChange} value={value} {...props} />
+      <DisplayError error={invalid} />
+    </>
+  )
+}
+
+/*
+ 
+      */
