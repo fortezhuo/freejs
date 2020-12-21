@@ -99,6 +99,7 @@ export const MenuDropdown: React.FC<any> = React.forwardRef(
       width,
       left,
       top,
+      opacity: top == 0 ? 0 : 1,
     }
 
     return (

@@ -1,7 +1,10 @@
 import React from "react"
-import { Platform } from "react-native"
+import {
+  Platform,
+  NativeSyntheticEvent,
+  TextInputKeyPressEventData,
+} from "react-native"
 
-import { useMenuDropdown, useMenuDialog } from "../../Menu"
 import { useState } from "../../../state/hook"
 
 export const useSelect = (props: any) => {
@@ -24,7 +27,7 @@ export const useSelect = (props: any) => {
   } = props
 
   const isMobile = false
-  const [state, setState] = useState({})
+  const [state, setState] = useState({ search: "" })
 
   const show = React.useCallback(() => {
     refWrapper.current.open()
@@ -34,23 +37,51 @@ export const useSelect = (props: any) => {
     refWrapper.current.hide()
   }, [refWrapper.current])
 
+  React.useEffect(() => {
+    if (!!state.search) {
+      const display: any = []
+      const { search } = state
+      const filterOptions = options.filter((opt: any) => {
+        const regex = new RegExp(search, "i")
+        return regex.test(opt[keyLabel]) && display.indexOf(opt[keyLabel]) < 0
+      })
+      const newOptions =
+        filterOptions.length === 0 &&
+        creatable &&
+        display.indexOf(search) < 0 &&
+        search !== ""
+          ? [{ [keyLabel]: search, [keyValue]: search, __creatable: true }]
+          : []
+
+      setState({ options: filterOptions.concat(newOptions) })
+    } else {
+      setState({ options })
+    }
+  }, [state.search])
+
+  React.useEffect(() => {
+    setState({ options })
+  }, [setState, options])
+
   // SEARCH
 
   const onChangeSearch = React.useCallback(
     (search) => {
-      setState({ search })
+      setState({ search, index: 1 })
     },
     [setState]
   )
 
-  const onChangeIndex = React.useCallback((index: number) => {
-    if (
-      (state.index <= 0 && index === -1) ||
-      (state.index >= state.options.length - 1 && index === +1)
-    )
-      return
-    setState({ index: state.index + index })
-  }, [])
+  const onChangeIndex = React.useCallback(
+    (i: number) => {
+      const { options = [], index = 0 } = state
+      if ((index <= 0 && i === -1) || (index >= options.length - 1 && i === +1))
+        return
+      console.log(index + i)
+      setState({ index: index + i })
+    },
+    [setState, state.index, state.options, state.search]
+  )
 
   const onEnter = React.useCallback(async () => {
     const { options, index } = state
@@ -59,21 +90,29 @@ export const useSelect = (props: any) => {
   }, [])
 
   const onBackSpace = React.useCallback(async () => {
+    /*    
     let { value } = state
     value.pop()
     await state.onChange(value)
+    */
   }, [])
 
-  const getWrapperProps = () => {
-    return {
-      onShow: () => {
-        setTimeout(() => {
-          refSearch.current?.focus()
-        }, 100)
-      },
-      allowBackDrop: !isMobile,
-    }
-  }
+  const onKeyPress =
+    Platform.OS !== "web"
+      ? undefined
+      : (e: NativeSyntheticEvent<TextInputKeyPressEventData>) => {
+          const { key } = e.nativeEvent
+          if (key == "ArrowUp" || key == "ArrowDown") {
+            onChangeIndex(key == "ArrowUp" ? -1 : 1)
+          } else if (key == "Escape") {
+            hide()
+          } else if (key == "Backspace" && multi && state.search == "") {
+            onBackSpace()
+          } else if (key == "Enter") {
+            onEnter()
+            hide()
+          }
+        }
 
   const getAnchorProps = React.useCallback(() => {
     return {
@@ -94,6 +133,7 @@ export const useSelect = (props: any) => {
     return {
       hide,
       onChangeText: onChangeSearch,
+      onKeyPress,
       value: state.search,
     }
   }
@@ -114,14 +154,14 @@ export const useSelect = (props: any) => {
 
   const getOptionsProps = () => {
     return {
-      options,
       hide,
       refScroll,
-      refSearch,
       searchable,
+      options: state.options,
       creatable,
       isMobile,
       keyLabel,
+      keyValue,
       index: state.index || 0,
     }
   }
@@ -131,7 +171,6 @@ export const useSelect = (props: any) => {
     setState,
     refSearch,
     getAnchorProps,
-    getWrapperProps,
     getContentProps,
     getSearchProps,
     getOptionsProps,

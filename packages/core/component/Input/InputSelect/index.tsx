@@ -7,7 +7,7 @@ import { Content } from "./Content"
 import { DisplayError } from "../DisplayError"
 import { MenuDropdown } from "../../Menu"
 import { useController } from "react-hook-form"
-import { TextInput, ScrollView, Platform } from "react-native"
+import { TextInput, ScrollView } from "react-native"
 
 export const InputSelectRaw: React.FC<any> = ({
   isLoading = false,
@@ -29,7 +29,6 @@ export const InputSelectRaw: React.FC<any> = ({
 
   const {
     getAnchorProps,
-    getWrapperProps,
     getContentProps,
     getSearchProps,
     getOptionsProps,
@@ -55,12 +54,19 @@ export const InputSelectRaw: React.FC<any> = ({
     <MenuDropdown
       ref={refWrapper}
       isCompact={!searchable}
+      onShow={() => {
+        setTimeout(() => {
+          refSearch.current?.focus()
+        }, 100)
+      }}
       anchor={<Anchor {...getAnchorProps()} />}
     >
-      <Content {...getContentProps()}>
-        {searchable && <Search refSearch={refSearch} {...getSearchProps()} />}
-        <Options {...getOptionsProps()} />
-      </Content>
+      {(!isLoading || !disabled) && (
+        <Content {...getContentProps()}>
+          {searchable && <Search refSearch={refSearch} {...getSearchProps()} />}
+          <Options {...getOptionsProps()} />
+        </Content>
+      )}
     </MenuDropdown>
   )
 }
