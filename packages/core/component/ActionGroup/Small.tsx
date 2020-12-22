@@ -1,12 +1,11 @@
 import React from "react"
 import { StyleSheet, View } from "react-native"
 import { Modalize } from "react-native-modalize"
-import { observer } from "mobx-react-lite"
 import { Button } from ".."
 import { random } from "../../util"
 import { tw } from "@free/tailwind"
 
-export const Small: React.FC<any> = observer(({ store, actions }) => {
+export const Small: React.FC<any> = ({ store, actions }) => {
   const modalizeRef = React.useRef<Modalize>(null)
   actions = actions.filter((act: ObjectAny) => act.children !== "Delete")
   const isShow = actions.length != 0 && store.app.dimension.isMobile
@@ -17,7 +16,6 @@ export const Small: React.FC<any> = observer(({ store, actions }) => {
         <Button
           icon="zap"
           onPress={() => modalizeRef.current?.open()}
-          store={store}
           style={s.single}
           type={"danger_bg"}
         ></Button>
@@ -42,13 +40,11 @@ export const Small: React.FC<any> = observer(({ store, actions }) => {
               style={{ borderRadius: 10 }}
               {...prop}
               key={"act_" + random()}
-              store={store}
             />
           ))}
           <Button
             type={"disabled_bg"}
             style={{ borderRadius: 10, marginTop: 10 }}
-            store={store}
             onPress={() => modalizeRef.current?.close()}
           >
             Close
@@ -57,7 +53,7 @@ export const Small: React.FC<any> = observer(({ store, actions }) => {
       </Modalize>
     </>
   )
-})
+}
 
 const s = StyleSheet.create({
   container: tw("bg-white"),

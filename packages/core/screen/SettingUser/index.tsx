@@ -76,7 +76,7 @@ const SettingUser: React.FC = (props) => {
                 creatable
                 multi
                 placeholder="Roles"
-                options={[]}
+                options={temp.roles}
               />
             </Col>
           </Row>

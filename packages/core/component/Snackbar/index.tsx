@@ -2,11 +2,10 @@ import React from "react"
 import { Text, StyleSheet, View } from "react-native"
 import { IconButton, Col, Modal } from "../"
 import { tw } from "@free/tailwind"
-import { observer } from "mobx-react-lite"
 import { useHook } from "./hook"
 import { theme } from "../../config/theme"
 
-export const Snackbar: React.FC<any> = observer(() => {
+export const Snackbar: React.FC<any> = () => {
   const { hide, error } = useHook()
   const message = error
     ? (error as any).message
@@ -23,7 +22,7 @@ export const Snackbar: React.FC<any> = observer(() => {
       </Col>
     </Modal>
   )
-})
+}
 
 const s = StyleSheet.create({
   viewSnackbar: tw(

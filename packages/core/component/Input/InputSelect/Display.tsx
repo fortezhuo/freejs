@@ -1,9 +1,7 @@
 import React from "react"
 import { Icon, IconButton, Text } from "../.."
 import { StyleSheet, View, TouchableOpacity } from "react-native"
-import { observer } from "mobx-react-lite"
 import { tw, color } from "@free/tailwind"
-import { StateComponent } from "@free/core"
 import { theme } from "../../../config/theme"
 import { random } from "../../../util"
 

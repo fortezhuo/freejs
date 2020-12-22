@@ -2,7 +2,6 @@ import React from "react"
 import { View, StyleSheet, KeyboardAvoidingView, Platform } from "react-native"
 import { Modal, Col } from "../"
 import { MenuItem } from "./MenuItem"
-import { observer, useLocalObservable } from "mobx-react-lite"
 import { tw } from "@free/tailwind"
 import { MenuItemProps, DialogProps } from "@free/core"
 
@@ -11,12 +10,12 @@ const noop = () => {}
 
 export const useMenuDialog = () => {
   const refContainer = React.useRef<View>(null)
-  const state = useLocalObservable(() => ({
+  const state = {
     isOpen: false,
     setOpen(isOpen: boolean) {
       state.isOpen = isOpen
     },
-  }))
+  }
 
   const show = React.useCallback(() => {
     state.setOpen(true)
@@ -26,51 +25,53 @@ export const useMenuDialog = () => {
     state.setOpen(false)
   }, [])
 
-  const MenuDialog: React.FC<DialogProps> = observer(
-    ({ testID = "Dialog", anchor, children, onShow, allowBackDrop = true }) => {
-      return (
-        <View testID={testID} ref={refContainer} collapsable={false}>
-          {anchor}
-          <Modal
-            isVisible={state.isOpen}
-            onShow={onShow}
-            onBackdropPress={allowBackDrop ? hide : noop}
-          >
-            <Col sm={11} style={s.viewChildren}>
-              {children}
-            </Col>
-          </Modal>
-        </View>
-      )
-    }
-  )
-
-  const BindMenuItem: React.FC<MenuItemProps> = observer(
-    ({
-      name,
-      color = iconColor,
-      children,
-      onPress = noop,
-      styleText,
-      style,
-    }) => {
-      return (
-        <MenuItem
-          onPress={() => {
-            onPress()
-            hide()
-          }}
-          styleContainer={style}
-          name={name}
-          color={color}
-          size={18}
-          styleText={styleText}
+  const MenuDialog: React.FC<DialogProps> = ({
+    testID = "Dialog",
+    anchor,
+    children,
+    onShow,
+    allowBackDrop = true,
+  }) => {
+    return (
+      <View testID={testID} ref={refContainer} collapsable={false}>
+        {anchor}
+        <Modal
+          isVisible={state.isOpen}
+          onShow={onShow}
+          onBackdropPress={allowBackDrop ? hide : noop}
         >
-          {children}
-        </MenuItem>
-      )
-    }
-  )
+          <Col sm={11} style={s.viewChildren}>
+            {children}
+          </Col>
+        </Modal>
+      </View>
+    )
+  }
+
+  const BindMenuItem: React.FC<MenuItemProps> = ({
+    name,
+    color = iconColor,
+    children,
+    onPress = noop,
+    styleText,
+    style,
+  }) => {
+    return (
+      <MenuItem
+        onPress={() => {
+          onPress()
+          hide()
+        }}
+        styleContainer={style}
+        name={name}
+        color={color}
+        size={18}
+        styleText={styleText}
+      >
+        {children}
+      </MenuItem>
+    )
+  }
 
   return {
     show,
