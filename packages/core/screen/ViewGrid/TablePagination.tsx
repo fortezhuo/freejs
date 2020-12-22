@@ -44,7 +44,7 @@ const pagination = (c: number, m: number) => {
 export const TablePagination: React.FC = () => {
   const view = useView()
   const { isUpdating, isLoading } = view.temp
-  const { page, total, max, limit } = view.data
+  const { page, total, max, limit = "30" } = view.data
 
   const setPage = React.useCallback((i) => {
     view.setData({ page: i })

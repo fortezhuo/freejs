@@ -40,47 +40,35 @@ export const useSelect = (props: any) => {
   }, [refWrapper.current])
 
   // OPTIONS
-
-  React.useEffect(() => {
-    if (!!state.search) {
-      const display: any = []
-      const { search } = state
-      const filterOptions = options.filter((opt: any) => {
-        const regex = new RegExp(search, "i")
-        return regex.test(opt[keyLabel]) && display.indexOf(opt[keyLabel]) < 0
-      })
-      const newOptions =
-        filterOptions.length === 0 &&
-        creatable &&
-        display.indexOf(search) < 0 &&
-        search !== ""
-          ? [{ [keyLabel]: search, [keyValue]: search, __creatable: true }]
-          : []
-
-      setState({ options: filterOptions.concat(newOptions) })
-    } else {
-      setState({ options })
-    }
-  }, [state.search])
-
   React.useEffect(() => {
     let display = options.filter((option: any) =>
       multi
         ? (value || []).indexOf(option[keyValue]) >= 0
         : option[keyValue] === value || ""
     )
-
     display = multi ? display : display[0] || ""
-
     setState({ display })
   }, [value])
 
   React.useEffect(() => {
-    setState({ options })
-  }, [setState, options])
+    let { search = "" } = state
+    const _value = multi ? value : [value]
+    const filterOptions = options.filter((opt: any) => {
+      const regex = new RegExp(search, "i")
+      return regex.test(opt[keyLabel]) && _value.indexOf(opt[keyValue]) < 0
+    })
+    const newOptions =
+      filterOptions.length === 0 &&
+      creatable &&
+      _value.indexOf(search) < 0 &&
+      search !== ""
+        ? [{ [keyLabel]: search, [keyValue]: search, __creatable: true }]
+        : []
+
+    setState({ options: filterOptions.concat(newOptions) })
+  }, [state.search, value, options])
 
   // INPUT SEARCH
-
   const onChangeSearch = React.useCallback(
     (search) => {
       setState({ search, index: 1 })

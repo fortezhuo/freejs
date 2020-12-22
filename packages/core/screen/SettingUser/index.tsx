@@ -1,5 +1,4 @@
 import React from "react"
-import { observer } from "mobx-react-lite"
 import {
   Layout,
   Section,
@@ -12,15 +11,16 @@ import {
 import { View, StyleSheet } from "react-native"
 import { useHook } from "./hook"
 import { tw } from "@free/tailwind"
+import { template } from "lodash"
 
-const SettingUser: React.FC = observer((props) => {
-  const { user, actions } = useHook()
+const SettingUser: React.FC = (props) => {
+  const { control, temp, ...user } = useHook()
   return (
     <>
       <Layout
         stickyLeft={
           <View style={s.viewButton}>
-            <ActionGroup.Large store={user} actions={actions} isMobileHidden />
+            <ActionGroup.Large actions={[]} />
           </View>
         }
       >
@@ -30,7 +30,12 @@ const SettingUser: React.FC = observer((props) => {
               <Label>User Name</Label>
             </Col>
             <Col light md={10}>
-              <Input.RawText name="username" placeholder="User Name" />
+              <Input.Text
+                control={control}
+                name="username"
+                placeholder="User Name"
+                isLoading={temp.isLoading}
+              />
             </Col>
           </Row>
           <Row dark>
@@ -38,7 +43,12 @@ const SettingUser: React.FC = observer((props) => {
               <Label>Full Name</Label>
             </Col>
             <Col light md={10}>
-              <Input.RawText name="fullname" placeholder="Full Name" />
+              <Input.Text
+                control={control}
+                name="fullname"
+                placeholder="Full Name"
+                isLoading={temp.isLoading}
+              />
             </Col>
           </Row>
           <Row dark>
@@ -46,7 +56,12 @@ const SettingUser: React.FC = observer((props) => {
               <Label>Email</Label>
             </Col>
             <Col light md={10}>
-              <Input.RawText store={user} name="email" placeholder="Email" />
+              <Input.Text
+                isLoading={temp.isLoading}
+                control={control}
+                name="email"
+                placeholder="Email"
+              />
             </Col>
           </Row>
           <Row dark>
@@ -55,21 +70,22 @@ const SettingUser: React.FC = observer((props) => {
             </Col>
             <Col light md={10}>
               <Input.Select
-                store={user}
+                isLoading={temp.isLoading}
+                control={control}
                 name="roles"
                 creatable
                 multi
                 placeholder="Roles"
-                options={user.temp.get("roles") || []}
+                options={[]}
               />
             </Col>
           </Row>
         </Section>
       </Layout>
-      <ActionGroup.Small store={user} actions={actions} />
+      <ActionGroup.Small actions={[]} />
     </>
   )
-})
+}
 
 const s = StyleSheet.create({
   viewContent: tw("flex-col p-6 pt-0"),

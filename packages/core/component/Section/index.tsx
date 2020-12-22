@@ -3,36 +3,38 @@ import { View, TouchableOpacity, StyleSheet } from "react-native"
 import { theme } from "../../config/theme"
 import { Icon, H5 } from ".."
 import { tw, color } from "@free/tailwind"
-import { observer, useLocalObservable } from "mobx-react-lite"
 import { SectionProps } from "@free/core"
+import { Wrapper } from "./Wrapper"
 
 const defaultColor = color(theme.disabled_text)
-export const Section: React.FC<SectionProps> = observer(
-  ({ testID = "Section", label, show = true, children }) => {
-    const state = useLocalObservable(() => ({
-      isExpand: show,
-      toggle() {
-        state.isExpand = !state.isExpand
-      },
-    }))
+export const Section: React.FC<SectionProps> = ({
+  testID = "Section",
+  label,
+  show = true,
+  children,
+}) => {
+  const [isExpand, setExpand] = React.useState(show)
+  const Title = () =>
+    React.useMemo(() => <H5 style={s.textSection}>{label}</H5>, [])
 
-    return (
-      <View style={s.rootSection} testID={testID}>
-        <TouchableOpacity onPress={state.toggle}>
-          <View style={s.groupSection}>
-            <Icon
-              color={defaultColor}
-              size={20}
-              name={`chevron-${state.isExpand ? "up" : "down"}`}
-            />
-            <H5 style={s.textSection}>{label}</H5>
-          </View>
-        </TouchableOpacity>
-        {state.isExpand && <View style={s.groupItem}>{children}</View>}
-      </View>
-    )
-  }
-)
+  return (
+    <View style={s.rootSection} testID={testID}>
+      <TouchableOpacity onPress={() => setExpand(isExpand ? false : true)}>
+        <View style={s.groupSection}>
+          <Icon
+            color={defaultColor}
+            size={20}
+            name={`chevron-${isExpand ? "up" : "down"}`}
+          />
+          <Title />
+        </View>
+      </TouchableOpacity>
+      <Wrapper {...{ isExpand }} style={s.groupItem}>
+        {children}
+      </Wrapper>
+    </View>
+  )
+}
 
 const s = StyleSheet.create({
   rootSection: tw(

@@ -15,7 +15,6 @@ export const Options: React.FC<any> = (props) => {
     isMobile,
     index,
     onSelect,
-    value,
   } = props
 
   return (
