@@ -53,11 +53,7 @@ export const MenuDropdown: React.FC<any> = React.forwardRef(
         const { width, height } = e.nativeEvent.layout
 
         setLayout({
-          width: Math.max(
-            isCompact ? 0 : tw("w-48").width,
-            width,
-            measure.anchorWidth
-          ),
+          width: Math.max(tw("w-48").width, width, measure.anchorWidth),
           height,
         })
       },
@@ -96,7 +92,7 @@ export const MenuDropdown: React.FC<any> = React.forwardRef(
     top += anchorHeight
 
     const menuStyle = {
-      width,
+      width: isCompact ? undefined : width,
       left,
       top,
       opacity: top == 0 ? 0 : 1,

@@ -3,7 +3,10 @@ export {
   InputPassword as Password,
   InputPasswordRaw as RawPassword,
 } from "./InputPassword"
-export { InputSelect as Select } from "./InputSelect"
+export {
+  InputSelect as Select,
+  InputSelectRaw as RawSelect,
+} from "./InputSelect"
 export { InputCheckbox as Checkbox } from "./InputCheckbox"
 export { InputDateTime as DateTime } from "./InputDateTime"
 export { DisplayError } from "./DisplayError"

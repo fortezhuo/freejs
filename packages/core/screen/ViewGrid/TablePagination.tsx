@@ -41,41 +41,36 @@ const pagination = (c: number, m: number) => {
   return rangeWithDots
 }
 
-export const TablePagination: React.FC<any> = ({ gotoPage }) => {
+export const TablePagination: React.FC = () => {
   const view = useView()
-  const { page, total, max } = view.data
+  const { isUpdating, isLoading } = view.temp
+  const { page, total, max, limit } = view.data
 
   const setPage = React.useCallback((i) => {
-    gotoPage(i)
     view.setData({ page: i })
   }, [])
 
-  const reset = React.useCallback(() => {
-    view.setData({ page: 1 })
+  const onChange = React.useCallback((value) => {
+    view.setData({ page: 1, limit: value })
   }, [])
 
   return total ? (
     <View style={s.viewPage}>
       <View style={s.viewPaging}>
-        {!view.temp.isLoading && (
-          <>
-            <Text>Show</Text>
-            {/*
-            <Input.Select
-              style={s.boxPaging}
-              clearable={false}
-              searchable={false}
-              data-name="limit"
-              name="limit"
-              placeholder="Limit"
-              store={store}
-              options={limitOptions}
-              onChange={reset}
-            />
-            */}
-            <Text>entries</Text>
-          </>
-        )}
+        <>
+          <Text>Show</Text>
+          <Input.RawSelect
+            disabled={isUpdating || isLoading}
+            style={s.boxPaging}
+            value={limit}
+            clearable={false}
+            searchable={false}
+            placeholder="Limit"
+            options={limitOptions}
+            onChange={onChange}
+          />
+          <Text>entries</Text>
+        </>
       </View>
       <View style={s.viewPageNumbers}>
         {pagination(page, max).map((i: any) => (

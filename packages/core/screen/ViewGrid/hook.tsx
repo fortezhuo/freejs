@@ -335,7 +335,12 @@ const useHook = () => {
         view.setTemp({ isLoading: false })
       }
     }
-  }, [view.data?.config?.name])
+  }, [
+    view.data?.config?.name,
+    view.data?.limit,
+    view.data?.page,
+    view.data?.search,
+  ])
 
   React.useEffect(() => {
     ;(async () => {

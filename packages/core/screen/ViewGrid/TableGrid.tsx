@@ -127,7 +127,7 @@ const TableContent: React.FC<any> = ({
 
   return (
     <>
-      <TablePagination {...gotoPage} />
+      <TablePagination />
       <TableWrapper style={s.viewTable}>
         {headerGroups.map((headerGroup: any) => {
           const { key } = headerGroup.getHeaderGroupProps()

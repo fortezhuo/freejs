@@ -101,8 +101,10 @@ export const useSelect = (props: any) => {
   const onEnter = React.useCallback(() => {
     const { options = [], index = 0 } = state
     const option = index < options.length ? options[index] : undefined
-    onSelect(option)
-  }, [])
+    if (option) {
+      onSelect(option)
+    }
+  }, [state.index, state.options])
 
   const onBackSpace = React.useCallback(() => {
     if (multi) {
