@@ -14,6 +14,7 @@ export const InputSelectRaw: React.FC<any> = ({
   disabled = false,
   searchable = true,
   creatable = false,
+  clearable = false,
   placeholder = "Select ...",
   keyLabel = "label",
   keyValue = "value",
@@ -37,6 +38,7 @@ export const InputSelectRaw: React.FC<any> = ({
     disabled,
     searchable,
     creatable,
+    clearable,
     placeholder,
     multi,
     keyLabel,
@@ -92,7 +94,7 @@ export const InputSelect: React.FC<any> = ({
   })
   return (
     <>
-      <InputSelectRaw onChangeText={onChange} value={value} {...props} />
+      <InputSelectRaw {...{ onChange, value, ...props }} />
       <DisplayError error={invalid} />
     </>
   )

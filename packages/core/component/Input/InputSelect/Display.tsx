@@ -6,48 +6,48 @@ import { tw, color } from "@free/tailwind"
 import { StateComponent } from "@free/core"
 import { theme } from "../../../config/theme"
 import { random } from "../../../util"
-import { useSelect } from "./hook"
 
 const defaultColor = color(theme.default_text)
 
-/*
-const Chip: React.FC<any> = observer(({ state, children }) => {
-  const onClear = React.useCallback((val) => state.onClear(val), [])
+const Chip: React.FC<any> = ({ onClearChip, children }) => {
   return (
     <View style={s.viewChip}>
-      <TouchableOpacity onPress={() => onClear(children)}>
+      <TouchableOpacity onPress={() => onClearChip(children)}>
         <Icon name="x" size={16} color={defaultColor}></Icon>
       </TouchableOpacity>
       <Text style={s.textChip}>{children}</Text>
     </View>
   )
-})
+}
 
-const Placeholder: React.FC<StateComponent> = observer(({ state }) => {
-  const style = state.multi ? { paddingHorizontal: 8 } : {}
-  return <Text style={[s.textPlaceholder, style]}>{state.placeholder}</Text>
-})
+const Placeholder: React.FC<any> = ({ placeholder, multi }) => {
+  const style = multi ? { paddingHorizontal: 8 } : {}
+  return <Text style={[s.textPlaceholder, style]}>{placeholder}</Text>
+}
 
-*/
-const Clear: React.FC = () => {
-  return <View />
-  /*
-  const { multi, value, clearable } = state
-  const onClear = React.useCallback(() => {
-    state.onChange(multi ? [] : "")
-  }, [])
-
+const Clear: React.FC<any> = ({ onClear, multi, value, clearable }) => {
   return !clearable || (multi ? value.length == 0 : value === "") ? (
     <View />
   ) : (
     <IconButton color={defaultColor} name="x" size={16} onPress={onClear} />
   )
-  */
 }
 
 export const Display: React.FC<any> = (props) => {
-  const { searchable, multi, disabled, isLoading, isMobile } = props
-  const isBlank = false //refProps.current.multi ? display.length == 0 : display === ""
+  const {
+    searchable,
+    multi,
+    keyLabel,
+    disabled,
+    value,
+    display,
+    clearable,
+    onClearChip,
+    onClear,
+    placeholder,
+  } = props
+
+  const isBlank = !display
 
   return (
     <View
@@ -57,27 +57,25 @@ export const Display: React.FC<any> = (props) => {
         multi ? s.viewMulti : {},
       ]}
     >
-      <View style={s.viewValue} testID="ViewValue"></View>
-      {!(disabled || isMobile) && <Clear />}
-    </View>
-  )
-}
-
-/*
- {!isBlank ? (
+      <View style={s.viewValue} testID="ViewValue">
+        {!isBlank ? (
           multi ? (
             display.map((_value: any) => (
-              <Chip state={state} key={"chip_" + random()}>
+              <Chip key={"chip_" + random()} {...{ onClearChip }}>
                 {_value}
               </Chip>
             ))
           ) : (
-            <Text style={s.textSingle}>{display}</Text>
+            <Text style={s.textSingle}>{display[keyLabel]}</Text>
           )
         ) : (
-          <Placeholder state={state} />
+          <Placeholder multi={multi}>{placeholder}</Placeholder>
         )}
-        */
+      </View>
+      {!disabled && <Clear {...{ onClear, multi, value, clearable }} />}
+    </View>
+  )
+}
 
 const s = StyleSheet.create({
   viewDisplay: tw("flex-1 flex-row items-center mx-4"),

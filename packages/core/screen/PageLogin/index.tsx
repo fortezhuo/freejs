@@ -59,6 +59,9 @@ const PageLogin: React.FC = () => {
               name="domain"
               placeholder="Domain"
               options={temp.domain}
+              rules={{
+                required: "Please fill Password",
+              }}
             />
             <LoginButton isUpdating={temp.isUpdating} onPress={onSubmit} />
           </View>

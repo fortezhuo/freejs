@@ -11,6 +11,7 @@ export const useSelect = (props: any) => {
   const {
     multi,
     creatable,
+    clearable,
     searchable,
     value,
     placeholder,
@@ -29,6 +30,7 @@ export const useSelect = (props: any) => {
   const isMobile = false
   const [state, setState] = useState({ search: "" })
 
+  // MODAL
   const show = React.useCallback(() => {
     refWrapper.current.open()
   }, [refWrapper.current])
@@ -36,6 +38,8 @@ export const useSelect = (props: any) => {
   const hide = React.useCallback(() => {
     refWrapper.current.hide()
   }, [refWrapper.current])
+
+  // OPTIONS
 
   React.useEffect(() => {
     if (!!state.search) {
@@ -60,10 +64,22 @@ export const useSelect = (props: any) => {
   }, [state.search])
 
   React.useEffect(() => {
+    let display = options.filter((option: any) =>
+      multi
+        ? (value || []).indexOf(option[keyValue]) >= 0
+        : option[keyValue] === value || ""
+    )
+
+    display = multi ? display : display[0] || ""
+
+    setState({ display })
+  }, [value])
+
+  React.useEffect(() => {
     setState({ options })
   }, [setState, options])
 
-  // SEARCH
+  // INPUT SEARCH
 
   const onChangeSearch = React.useCallback(
     (search) => {
@@ -77,25 +93,24 @@ export const useSelect = (props: any) => {
       const { options = [], index = 0 } = state
       if ((index <= 0 && i === -1) || (index >= options.length - 1 && i === +1))
         return
-      console.log(index + i)
       setState({ index: index + i })
     },
     [setState, state.index, state.options, state.search]
   )
 
-  const onEnter = React.useCallback(async () => {
-    const { options, index } = state
+  const onEnter = React.useCallback(() => {
+    const { options = [], index = 0 } = state
     const option = index < options.length ? options[index] : undefined
-    //    await state.onSelect(option)
+    onSelect(option)
   }, [])
 
-  const onBackSpace = React.useCallback(async () => {
-    /*    
-    let { value } = state
-    value.pop()
-    await state.onChange(value)
-    */
-  }, [])
+  const onBackSpace = React.useCallback(() => {
+    if (multi) {
+      let newValue = value
+      newValue.pop()
+      onChange(value)
+    }
+  }, [value])
 
   const onKeyPress =
     Platform.OS !== "web"
@@ -114,7 +129,30 @@ export const useSelect = (props: any) => {
           }
         }
 
-  const getAnchorProps = React.useCallback(() => {
+  // DISPLAY
+
+  const onClear = React.useCallback(() => {
+    onChange(multi ? [] : "")
+  }, [])
+
+  const onClearChip = React.useCallback(
+    (option) => {
+      let popValue = (value || []).filter((v: string) => {
+        option[keyValue] !== v
+      })
+      onChange(popValue)
+    },
+    [value]
+  )
+
+  const onSelect = React.useCallback(
+    (option) => {
+      onChange(option[keyValue])
+    },
+    [onChange]
+  )
+
+  const getAnchorProps = () => {
     return {
       show,
       style,
@@ -123,11 +161,22 @@ export const useSelect = (props: any) => {
       disabled,
       getDisplayProps,
     }
-  }, [style, isLoading, disabled, isMobile])
+  }
 
-  const getDisplayProps = React.useCallback(() => {
-    return {}
-  }, [])
+  const getDisplayProps = () => {
+    return {
+      onClear,
+      searchable,
+      multi,
+      disabled,
+      keyLabel,
+      display: state.display,
+      onClearChip,
+      placeholder,
+      value,
+      clearable,
+    }
+  }
 
   const getSearchProps = () => {
     return {
@@ -155,6 +204,8 @@ export const useSelect = (props: any) => {
   const getOptionsProps = () => {
     return {
       hide,
+      value,
+      onSelect,
       refScroll,
       searchable,
       options: state.options,
