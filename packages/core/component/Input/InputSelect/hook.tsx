@@ -14,7 +14,7 @@ export const useSelect = (props: any) => {
     clearable,
     searchable,
     value,
-    placeholder,
+    placeholder = "Select ...",
     onChange,
     keyLabel,
     keyValue,
@@ -28,7 +28,7 @@ export const useSelect = (props: any) => {
   } = props
 
   const isMobile = false
-  const [state, setState] = useState({ search: "" })
+  const [state, setState] = useState({})
 
   // MODAL
   const show = React.useCallback(() => {
@@ -39,7 +39,6 @@ export const useSelect = (props: any) => {
     refWrapper.current.hide()
   }, [refWrapper.current])
 
-  // OPTIONS
   React.useEffect(() => {
     let display = options.filter((option: any) =>
       multi
@@ -48,30 +47,45 @@ export const useSelect = (props: any) => {
     )
     display = multi ? display : display[0] || ""
     setState({ display })
-  }, [value])
+  }, [options, isLoading])
 
   React.useEffect(() => {
-    let { search = "" } = state
-    const _value = multi ? value : [value]
+    const { search = "", display = [] } = state
+    const displayValue = multi
+      ? display.map(({ [keyValue]: v }: any) => v)
+      : display[keyValue] || ""
+
     const filterOptions = options.filter((opt: any) => {
       const regex = new RegExp(search, "i")
-      return regex.test(opt[keyLabel]) && _value.indexOf(opt[keyValue]) < 0
+      return (
+        regex.test(opt[keyLabel]) && displayValue.indexOf(opt[keyValue]) < 0
+      )
     })
     const newOptions =
       filterOptions.length === 0 &&
       creatable &&
-      _value.indexOf(search) < 0 &&
+      displayValue.indexOf(search) < 0 &&
       search !== ""
         ? [{ [keyLabel]: search, [keyValue]: search, __creatable: true }]
         : []
 
     setState({ options: filterOptions.concat(newOptions) })
-  }, [state.search, value, options])
+  }, [state.search, state.display, options])
+
+  React.useEffect(() => {
+    const { display } = state
+    if (!!display) {
+      const value = multi
+        ? display.map(({ [keyValue]: v }: any) => v)
+        : display[keyValue]
+      onChange(value)
+    }
+  }, [state.display])
 
   // INPUT SEARCH
   const onChangeSearch = React.useCallback(
     (search) => {
-      setState({ search, index: 1 })
+      setState({ search, index: 0 })
     },
     [setState]
   )
@@ -96,11 +110,19 @@ export const useSelect = (props: any) => {
 
   const onBackSpace = React.useCallback(() => {
     if (multi) {
-      let newValue = value
-      newValue.pop()
-      onChange(value)
+      setState({ display: state.display.slice(0, -1), index: 0 })
     }
-  }, [value])
+  }, [state.display, setState])
+
+  const onSelect = React.useCallback(
+    (option) => {
+      setState({
+        display: multi ? state.display.concat(option) : option,
+        index: 0,
+      })
+    },
+    [state.display, setState]
+  )
 
   const onKeyPress =
     Platform.OS !== "web"
@@ -111,7 +133,7 @@ export const useSelect = (props: any) => {
             onChangeIndex(key == "ArrowUp" ? -1 : 1)
           } else if (key == "Escape") {
             hide()
-          } else if (key == "Backspace" && multi && state.search == "") {
+          } else if (key == "Backspace" && multi && !state.search) {
             onBackSpace()
           } else if (key == "Enter") {
             onEnter()
@@ -122,24 +144,18 @@ export const useSelect = (props: any) => {
   // DISPLAY
 
   const onClear = React.useCallback(() => {
-    onChange(multi ? [] : "")
-  }, [])
+    setState({ display: multi ? [] : {} })
+  }, [state.display, setState])
 
   const onClearChip = React.useCallback(
     (option) => {
-      let popValue = (value || []).filter((v: string) => {
-        option[keyValue] !== v
+      setState({
+        display: state.display.filter(
+          ({ [keyValue]: value }: any) => value !== option[keyValue]
+        ),
       })
-      onChange(popValue)
     },
-    [value]
-  )
-
-  const onSelect = React.useCallback(
-    (option) => {
-      onChange(option[keyValue])
-    },
-    [onChange]
+    [state.display, setState]
   )
 
   const getAnchorProps = () => {
@@ -173,23 +189,23 @@ export const useSelect = (props: any) => {
       hide,
       onChangeText: onChangeSearch,
       onKeyPress,
-      value: state.search,
+      value: state.search || "",
     }
   }
 
-  const getContentProps = React.useCallback(() => {
+  const getContentProps = () => {
     return {
       isMobile,
       placeholder: `${
         placeholder.toLowerCase().indexOf("select") >= 0 ? "" : "Select "
-      }${state.placeholder}`,
+      }${placeholder}`,
       onCancel: hide,
       onCommit: () => {
         hide()
       },
       getDisplayProps,
     }
-  }, [])
+  }
 
   const getOptionsProps = () => {
     return {

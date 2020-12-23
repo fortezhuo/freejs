@@ -7,10 +7,13 @@ import { random } from "../../../util"
 
 const defaultColor = color(theme.default_text)
 
-const Chip: React.FC<any> = ({ onClearChip, children }) => {
+const Chip: React.FC<{
+  onPress: any
+  children: React.ReactNode
+}> = ({ onPress, children }) => {
   return (
     <View style={s.viewChip}>
-      <TouchableOpacity onPress={() => onClearChip(children)}>
+      <TouchableOpacity {...{ onPress }}>
         <Icon name="x" size={16} color={defaultColor}></Icon>
       </TouchableOpacity>
       <Text style={s.textChip}>{children}</Text>
@@ -18,9 +21,12 @@ const Chip: React.FC<any> = ({ onClearChip, children }) => {
   )
 }
 
-const Placeholder: React.FC<any> = ({ placeholder, multi }) => {
+const Placeholder: React.FC<{ children: React.ReactNode; multi?: boolean }> = ({
+  children,
+  multi,
+}) => {
   const style = multi ? { paddingHorizontal: 8 } : {}
-  return <Text style={[s.textPlaceholder, style]}>{placeholder}</Text>
+  return <Text style={[s.textPlaceholder, style]}>{children}</Text>
 }
 
 const Clear: React.FC<any> = ({ onClear, multi, value, clearable }) => {
@@ -45,7 +51,7 @@ export const Display: React.FC<any> = (props) => {
     placeholder,
   } = props
 
-  const isBlank = !display
+  const isBlank = !display || display.length == 0
 
   return (
     <View
@@ -58,9 +64,12 @@ export const Display: React.FC<any> = (props) => {
       <View style={s.viewValue} testID="ViewValue">
         {!isBlank ? (
           multi ? (
-            display.map((_value: any) => (
-              <Chip key={"chip_" + random()} {...{ onClearChip }}>
-                {_value}
+            display.map((opt: any) => (
+              <Chip
+                key={"chip_" + random()}
+                {...{ onPress: () => onClearChip(opt) }}
+              >
+                {opt[keyLabel]}
               </Chip>
             ))
           ) : (

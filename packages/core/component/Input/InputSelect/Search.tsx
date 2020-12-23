@@ -18,7 +18,6 @@ export const Search: React.FC<any> = (props) => {
       placeholder="Please type here ..."
       style={s.inputText}
       {...rest}
-      //      onKeyPress={onKeyPress}
     />
   )
 }

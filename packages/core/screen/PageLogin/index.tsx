@@ -27,7 +27,7 @@ const LoginButton: React.FC<LoginButton> = ({ isUpdating, onPress }) => {
 }
 
 const PageLogin: React.FC = () => {
-  const { control, temp, onSubmit } = useHook()
+  const { control, temp, onSubmit, error } = useHook()
   return (
     <LayoutFull transparent>
       <View style={s.pageLogin} testID="PageLogin">
@@ -64,6 +64,9 @@ const PageLogin: React.FC = () => {
               }}
             />
             <LoginButton isUpdating={temp.isUpdating} onPress={onSubmit} />
+            <View style={tw("items-end mr-4")}>
+              <Input.DisplayError error={error} />
+            </View>
           </View>
         </Col>
       </View>

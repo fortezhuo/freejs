@@ -23,11 +23,12 @@ export const useHook = () => {
     React.useCallback(async (data: any) => {
       try {
         const { username, password, domain } = data
+        app.setError({})
         app.setTemp({ isUpdating: true })
         const res = await POST("/api/auth", { username, password, domain })
         app.setData({ auth: res.data.result })
       } catch (err) {
-        app.setError(err)
+        app.setError(err.data ? err.data : err)
       } finally {
         app.setTemp({ isUpdating: false })
       }

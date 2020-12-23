@@ -78,7 +78,7 @@ export const InputSelect: React.FC<any> = ({
   name,
   rules,
   defaultValue,
-  multi = false,
+  multi,
   ...props
 }) => {
   defaultValue = defaultValue ? defaultValue : multi ? [] : ""
@@ -94,12 +94,8 @@ export const InputSelect: React.FC<any> = ({
   })
   return (
     <>
-      <InputSelectRaw {...{ onChange, value, ...props }} />
+      <InputSelectRaw {...{ onChange, value, multi, ...props }} />
       <DisplayError error={invalid} />
     </>
   )
 }
-
-/*
- 
-      */
