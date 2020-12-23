@@ -3,12 +3,14 @@ import { StyleSheet, View } from "react-native"
 import { Modalize } from "react-native-modalize"
 import { Button } from ".."
 import { random } from "../../util"
+import { useApp } from "../../state"
 import { tw } from "@free/tailwind"
 
-export const Small: React.FC<any> = ({ store, actions }) => {
+export const Small: React.FC<any> = ({ actions, isLoading }) => {
+  const app = useApp()
   const modalizeRef = React.useRef<Modalize>(null)
   actions = actions.filter((act: ObjectAny) => act.children !== "Delete")
-  const isShow = actions.length != 0 && store.app.dimension.isMobile
+  const isShow = actions.length != 0 && app.temp.isMobile
 
   return (
     <>
@@ -43,6 +45,7 @@ export const Small: React.FC<any> = ({ store, actions }) => {
             />
           ))}
           <Button
+            isLoading={isLoading}
             type={"disabled_bg"}
             style={{ borderRadius: 10, marginTop: 10 }}
             onPress={() => modalizeRef.current?.close()}

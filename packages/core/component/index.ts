@@ -6,7 +6,6 @@ import * as Table from "./Table"
 export { ActionGroup, Input, Header, Table }
 
 export { Accordion, AccordionItem } from "./Accordion"
-export { useEvent } from "./ActionGroup/hook"
 export { Alert } from "./Alert"
 export { Avatar } from "./Avatar"
 export { Base } from "./Base"

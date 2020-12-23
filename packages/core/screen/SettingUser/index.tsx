@@ -11,16 +11,15 @@ import {
 import { View, StyleSheet } from "react-native"
 import { useHook } from "./hook"
 import { tw } from "@free/tailwind"
-import { template } from "lodash"
 
 const SettingUser: React.FC = (props) => {
-  const { control, temp, ...user } = useHook()
+  const { control, temp, actions, ...user } = useHook()
   return (
     <>
       <Layout
         stickyLeft={
           <View style={s.viewButton}>
-            <ActionGroup.Large actions={[]} />
+            <ActionGroup.Large actions={actions} />
           </View>
         }
       >
