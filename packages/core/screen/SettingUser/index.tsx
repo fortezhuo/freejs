@@ -34,6 +34,7 @@ const SettingUser: React.FC = (props) => {
                 name="username"
                 placeholder="User Name"
                 isLoading={temp.isLoading}
+                rules={{ required: "User Name is mandatory" }}
               />
             </Col>
           </Row>
@@ -47,6 +48,7 @@ const SettingUser: React.FC = (props) => {
                 name="fullname"
                 placeholder="Full Name"
                 isLoading={temp.isLoading}
+                rules={{ required: "Full Name is mandatory" }}
               />
             </Col>
           </Row>
@@ -60,6 +62,13 @@ const SettingUser: React.FC = (props) => {
                 control={control}
                 name="email"
                 placeholder="Email"
+                rules={{
+                  required: "Email is mandatory",
+                  pattern: {
+                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                    message: "Invalid Email",
+                  },
+                }}
               />
             </Col>
           </Row>
@@ -81,7 +90,7 @@ const SettingUser: React.FC = (props) => {
           </Row>
         </Section>
       </Layout>
-      <ActionGroup.Small actions={[]} />
+      <ActionGroup.Small actions={actions} />
     </>
   )
 }

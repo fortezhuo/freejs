@@ -8,8 +8,10 @@ import {
 } from "@react-navigation/native"
 import { asyncForEach } from "../../util"
 import * as req from "../../request"
+import { getGlobal } from "../../util"
 
 export const useDocument = (name: string) => {
+  const global = getGlobal()
   const navigation = useNavigation()
   const form = useForm({ criteriaMode: "all" })
   const route = useRoute()
@@ -21,7 +23,6 @@ export const useDocument = (name: string) => {
   }, [])
 
   const save = React.useCallback(async (data: any) => {
-    console.log("masuk")
     const isUpdate = id.length === 24
     const method = isUpdate ? "PATCH" : "POST"
     try {
@@ -30,7 +31,6 @@ export const useDocument = (name: string) => {
       await req[method](`/api/${name}${isUpdate ? `/${id}` : ""}`, data)
       return true
     } catch (err) {
-      //this.setError(err)
     } finally {
       setTemp({ isLoading: false })
     }

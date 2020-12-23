@@ -4,7 +4,6 @@ import { theme } from "../../config/theme"
 import { Icon, H5 } from ".."
 import { tw, color } from "@free/tailwind"
 import { SectionProps } from "@free/core"
-import { Wrapper } from "./Wrapper"
 
 const defaultColor = color(theme.disabled_text)
 export const Section: React.FC<SectionProps> = ({
@@ -29,9 +28,14 @@ export const Section: React.FC<SectionProps> = ({
           <Title />
         </View>
       </TouchableOpacity>
-      <Wrapper {...{ isExpand }} style={s.groupItem}>
+      <View
+        style={[
+          s.groupItem,
+          isExpand ? { height: undefined } : { height: 0, opacity: 0 },
+        ]}
+      >
         {children}
-      </Wrapper>
+      </View>
     </View>
   )
 }

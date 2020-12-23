@@ -6,9 +6,7 @@ export const useHook = () => {
   const user = useDocument("user")
   React.useEffect(() => {
     user.refFunction.current = {
-      onBeforeSave: async (data) => {
-        console.log("data", data)
-      },
+      onBeforeSave: async (data) => {},
     }
   }, [])
   React.useEffect(() => {
