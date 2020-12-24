@@ -1,5 +1,5 @@
 import { AccessControl } from "role-acl"
-import { configACL } from "@free/env"
+import { configACL, configApp } from "@free/env"
 import dayjs from "dayjs"
 import _isArray from "lodash/isArray"
 
@@ -17,6 +17,15 @@ export const getGlobal = function () {
   return (function (global) {
     return global
   })(new Function("return this;")())
+}
+
+export const registerForteApp = function (cb: any) {
+  const global = getGlobal()
+  const name = `${configApp.name}`
+  let { [name]: app } = global.forte || {}
+  global.forte = {
+    [name]: { ...app, ...cb },
+  }
 }
 
 export const getScreenSize = (width: number) => {

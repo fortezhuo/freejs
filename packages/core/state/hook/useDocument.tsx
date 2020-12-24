@@ -6,12 +6,12 @@ import {
   useFocusEffect,
   useNavigation,
 } from "@react-navigation/native"
+import { Platform } from "react-native"
 import { asyncForEach } from "../../util"
 import * as req from "../../request"
-import { getGlobal } from "../../util"
+import { registerForteApp } from "../../util"
 
 export const useDocument = (name: string) => {
-  const global = getGlobal()
   const navigation = useNavigation()
   const form = useForm({ criteriaMode: "all" })
   const route = useRoute()
@@ -58,6 +58,12 @@ export const useDocument = (name: string) => {
       onLoad()
     }, [])
   )
+
+  React.useEffect(() => {
+    if (Platform.OS == "web") {
+      registerForteApp({ [name]: form.getValues })
+    }
+  }, [])
 
   return { ...form, refFunction, close, save, temp, setTemp }
 }

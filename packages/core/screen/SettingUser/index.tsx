@@ -85,6 +85,10 @@ const SettingUser: React.FC = (props) => {
                 multi
                 placeholder="Roles"
                 options={temp.roles}
+                rules={{
+                  validate: (value: any) =>
+                    value.length == 0 ? "Roles is mandatory" : undefined,
+                }}
               />
             </Col>
           </Row>
