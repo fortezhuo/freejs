@@ -92,10 +92,6 @@ export const TableGrid: React.FC<any> = React.memo(({ actions }) => {
   )
 })
 
-const TableCell: React.FC<any> = React.memo(({ cell, key, isHide }) => {
-  return <View key={key}>{isHide ? <></> : cell.render("Cell")}</View>
-})
-
 const TableContent: React.FC<any> = ({
   isMobile,
   isLoading,
