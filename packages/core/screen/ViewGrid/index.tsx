@@ -26,10 +26,14 @@ const ViewGrid: React.FC<any> = withView(() => {
         }
       >
         <View style={[s.viewTable, { height }]}>
-          {!isReady ? <Loader dark /> : <TableGrid actions={actions} />}
+          {!isReady ? (
+            <Loader dark />
+          ) : (
+            <TableGrid view={view} actions={actions} />
+          )}
         </View>
       </Layout>
-      {isReady && <BottomSheet refBind={refBottomSheet} />}
+      {isReady && <BottomSheet refBind={refBottomSheet} view={view} />}
     </>
   )
 })

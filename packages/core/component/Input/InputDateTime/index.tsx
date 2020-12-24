@@ -1,46 +1,66 @@
 import React from "react"
 import { DateTimePicker } from "./Raw"
-import { InputDateTimeProps } from "@free/core"
 import { DisplayError } from "../DisplayError"
+import { useController } from "react-hook-form"
 
-export const InputDateTime: React.FC<InputDateTimeProps> = ({
-  store,
-  model = "data",
-  name,
-  onChange,
+interface InputRawDateTime {
+  disabled?: boolean
+  type?: string
+  placeholder?: string
+  value: any
+  onChange: any
+  style?: any
+}
+
+interface FormInputRawDateTime {
+  control: any
+  name: string
+  rules?: any
+  style?: any
+  type?: string
+  disabled?: boolean
+  placeholder?: string
+}
+
+export const InputRawDateTime: React.FC<InputRawDateTime> = ({
+  disabled,
   type = "date",
   placeholder = "Select Date",
-  disabled: _disabled,
+  value,
+  onChange,
   style,
 }) => {
-  const value = store[model].get(name)
-
-  const setValue = React.useCallback(
-    (args: any) => {
-      model === "data" ? store.setData(args) : store.setTemp(args)
-    },
-    [model]
+  return (
+    <DateTimePicker
+      type={type}
+      disabled={disabled}
+      value={value}
+      placeholder={placeholder}
+      onChange={onChange}
+      style={style}
+    />
   )
+}
 
-  const onChangeDateTime = async (value: any) => {
-    setValue({ [name]: value[0] })
-    if (onChange) {
-      await onChange()
-    }
-  }
-  const disabled = _disabled || store.isUpdating
+export const InputDateTime: React.FC<FormInputRawDateTime> = ({
+  control,
+  name,
+  rules,
+  ...props
+}) => {
+  const {
+    field: { ref, onChange, value, ...inputProps },
+    meta: { invalid },
+  } = useController({
+    name,
+    control,
+    rules,
+  })
 
   return (
     <>
-      <DateTimePicker
-        type={type}
-        disabled={disabled}
-        value={value}
-        placeholder={placeholder}
-        onChange={onChangeDateTime}
-        style={style}
-      />
+      <InputRawDateTime onChange={onChange} value={value} {...props} />
+      <DisplayError error={invalid} />
     </>
   )
 }
-//      <DisplayError name={name} />

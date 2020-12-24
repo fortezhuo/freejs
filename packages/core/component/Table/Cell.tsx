@@ -1,6 +1,6 @@
 import React from "react"
-import { Icon, IconButton, Link } from ".."
-import { View, StyleSheet, Text } from "react-native"
+import { Icon, Link } from ".."
+import { View, StyleSheet, Text, TouchableOpacity } from "react-native"
 import { theme } from "../../config/theme"
 import { tw, color } from "@free/tailwind"
 
@@ -9,11 +9,18 @@ const defaultColor = color(theme.default_text)
 interface Cell {
   isMobile?: boolean
   children?: React.ReactNode
-  name?: string
-  params?: any
   style?: any
   testID?: string
   onPress?: any
+}
+
+interface CellLink extends Cell {
+  name?: string
+  params?: any
+}
+
+interface CellPressable extends Cell {
+  icon?: string
 }
 
 export const Cell: React.FC<Cell> = ({
@@ -45,7 +52,7 @@ export const CellText: React.FC<Cell> = ({
   )
 }
 
-export const CellLink: React.FC<Cell> = ({ style, name, params = {} }) => {
+export const CellLink: React.FC<CellLink> = ({ style, name, params = {} }) => {
   return (
     <Cell style={style} testID="CellLink">
       <Link name={name} params={params}>
@@ -55,32 +62,16 @@ export const CellLink: React.FC<Cell> = ({ style, name, params = {} }) => {
   )
 }
 
-export const CellDownload: React.FC<Cell> = ({
+export const CellPressable: React.FC<CellPressable> = ({
   style,
-  name = "download",
+  icon,
   onPress,
 }) => {
   return (
     <Cell style={style} testID="CellLink">
-      <IconButton
-        onPress={onPress}
-        name={name}
-        size={16}
-        color={defaultColor}
-      />
-    </Cell>
-  )
-}
-
-export const CellJSON: React.FC<Cell> = ({ style, children: id }) => {
-  return (
-    <Cell style={style}>
-      <IconButton
-        onPress={() => {}}
-        name="search"
-        size={16}
-        color={defaultColor}
-      />
+      <TouchableOpacity onPress={onPress}>
+        <Icon name={icon} size={16} color={defaultColor} />
+      </TouchableOpacity>
     </Cell>
   )
 }

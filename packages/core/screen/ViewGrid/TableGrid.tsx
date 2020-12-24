@@ -16,6 +16,7 @@ import { TablePagination } from "./TablePagination"
 import { useView, useColumns } from "./hook"
 import { useApp } from "../../state"
 import _diff from "lodash/difference"
+import { random } from "../../util"
 
 const defaultColor = color(theme.default_text)
 const colMobileHidden = [
@@ -57,11 +58,12 @@ const TableHeaderCell: React.FC<any> = ({ column }) => {
   )
 }
 
-export const TableGrid: React.FC<any> = ({ actions }) => {
+export const TableGrid: React.FC<any> = React.memo(({ actions }) => {
   const app = useApp()
-  const { refSelected, ...view } = useView()
+  const view = useView()
   const columns = useColumns()
   const _isMobile = app.temp.isMobile
+  const { refSelected } = view
   const { isMobile, collection = [], max } = view.data
 
   const swipeActions = React.useMemo(
@@ -88,10 +90,13 @@ export const TableGrid: React.FC<any> = ({ actions }) => {
       }}
     />
   )
-}
+})
+
+const TableCell: React.FC<any> = React.memo(({ cell, key, isHide }) => {
+  return <View key={key}>{isHide ? <></> : cell.render("Cell")}</View>
+})
 
 const TableContent: React.FC<any> = ({
-  store,
   isMobile,
   isLoading,
   data,
@@ -104,7 +109,6 @@ const TableContent: React.FC<any> = ({
     prepareRow,
     selectedFlatRows,
     page: rows,
-    gotoPage,
   }: any = useTable(
     {
       columns,
@@ -130,15 +134,13 @@ const TableContent: React.FC<any> = ({
       <TablePagination />
       <TableWrapper style={s.viewTable}>
         {headerGroups.map((headerGroup: any) => {
-          const { key } = headerGroup.getHeaderGroupProps()
           const style = isMobile ? { height: 0, opacity: 0 } : {}
           return (
-            <Table.Header key={key} style={style}>
+            <Table.Header key={"header_" + random()} style={style}>
               {headerGroup.headers.map((column: any) => {
-                const { key } = column.getHeaderProps(
-                  column.getSortByToggleProps()
+                return (
+                  <TableHeaderCell key={"header_" + random()} column={column} />
                 )
-                return <TableHeaderCell key={key} column={column} />
               })}
             </Table.Header>
           )
@@ -154,7 +156,6 @@ const TableContent: React.FC<any> = ({
               prepareRow(item)
               return (
                 <Table.RowData
-                  store={store}
                   data={item.values}
                   isMobile={isMobile}
                   actionLeft={isMobile && actions[1]}
@@ -162,11 +163,10 @@ const TableContent: React.FC<any> = ({
                   dark={index % 2}
                 >
                   {item.cells.map((cell: any, i: number) => {
-                    const { key } = cell.getCellProps()
                     const isHide =
                       isMobile && colMobileHidden.indexOf(cell.column.id) >= 0
                     return (
-                      <View key={key}>
+                      <View key={"cell_" + random()}>
                         {isHide ? <></> : cell.render("Cell")}
                       </View>
                     )

@@ -57,20 +57,18 @@ export const TablePagination: React.FC = () => {
   return total ? (
     <View style={s.viewPage}>
       <View style={s.viewPaging}>
-        <>
-          <Text>Show</Text>
-          <Input.RawSelect
-            disabled={isUpdating || isLoading}
-            style={s.boxPaging}
-            value={limit}
-            clearable={false}
-            searchable={false}
-            placeholder="Limit"
-            options={limitOptions}
-            onChange={onChange}
-          />
-          <Text>entries</Text>
-        </>
+        <Text>Show</Text>
+        <Input.RawSelect
+          disabled={isUpdating || isLoading}
+          style={s.boxPaging}
+          value={limit}
+          clearable={false}
+          searchable={false}
+          placeholder="Limit"
+          options={limitOptions}
+          onChange={onChange}
+        />
+        <Text>entries</Text>
       </View>
       <View style={s.viewPageNumbers}>
         {pagination(page, max).map((i: any) => (

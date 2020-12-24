@@ -13,7 +13,7 @@ import { useHook } from "./hook"
 import { tw } from "@free/tailwind"
 
 const SettingUser: React.FC = (props) => {
-  const { control, temp, actions, ...user } = useHook()
+  const { control, temp, actions } = useHook()
   return (
     <>
       <Layout

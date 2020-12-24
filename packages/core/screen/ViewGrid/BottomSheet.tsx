@@ -10,7 +10,7 @@ import {
   isDateString,
   isArray,
 } from "../../util"
-import { useView } from "./hook"
+import { useForm } from "react-hook-form"
 
 const format = (value: any) => {
   let _value = value
@@ -19,12 +19,16 @@ const format = (value: any) => {
   return _value
 }
 
-export const BottomSheet: React.FC<{ refBind: any }> = ({ refBind }) => {
+export const BottomSheet: React.FC<{ refBind: any; view: any }> = ({
+  refBind,
+  view,
+}) => {
+  const { control, handleSubmit } = useForm()
+  const [fulltextsearch, setFullText] = React.useState("")
   const [isSimple, setSimple] = React.useState(true)
   const {
     data: { config },
-    ...view
-  } = useView()
+  } = view
   const { value = undefined } = view.temp
 
   const configSearch = React.useMemo(() => {
@@ -44,9 +48,11 @@ export const BottomSheet: React.FC<{ refBind: any }> = ({ refBind }) => {
   }, [config.name])
 
   const onClosed = React.useCallback(() => {
-    view.setTemp({ value: undefined })
+    if (!!view.temp.value) {
+      view.setTemp({ value: undefined })
+    }
     setSimple(true)
-  }, [])
+  }, [view.temp.value])
 
   const renderFlatList = React.useCallback((value) => {
     const data = Object.keys(value).map((key) => ({
@@ -83,7 +89,7 @@ export const BottomSheet: React.FC<{ refBind: any }> = ({ refBind }) => {
   }, [])
 
   const onFullTextSearch = React.useCallback(() => {
-    let text = view.temp.fulltextsearch
+    let text = fulltextsearch
     let search: any
 
     if (configSearch.simple[0] === "$text") {
@@ -104,36 +110,44 @@ export const BottomSheet: React.FC<{ refBind: any }> = ({ refBind }) => {
     refBind.current.close()
   }, [config.name])
 
-  const onAdvanceSearch = React.useCallback(() => {
-    let build: any = { _helper: { date: [] } }
-    ;(configSearch.advance || []).forEach((column: any) => {
-      const type = column.type || "text"
+  const onAdvanceSearch = handleSubmit(
+    React.useCallback(
+      (data: any) => {
+        let build: any = { _helper: { date: [] } }
+        ;(configSearch.advance || []).forEach((column: any) => {
+          const type = column.type || "text"
 
-      if (type === "text" || type === "json") {
-        const text = view.temp[column.name]
-        if (text) {
-          build[column.name] =
-            column.name === "$text"
-              ? { $search: text }
-              : { $regex: text.replace(" ", "|"), $options: "i" }
-        }
-      }
-
-      if (type.indexOf("date") >= 0) {
-        const start = view.temp["start_" + column.name]
-        const end = view.temp["end_" + column.name]
-        if (!!start && !!end) {
-          build._helper.date = build._helper.date.concat([column.name])
-          build[column.name] = {
-            $lte: `${formatDate(end)} 23:59:59`,
-            $gte: `${formatDate(start)} 00:00:00`,
+          if (type === "text" || type === "json") {
+            const text = data[column.name]
+            if (text) {
+              build[column.name] =
+                column.name === "$text"
+                  ? { $search: text }
+                  : { $regex: text.replace(" ", "|"), $options: "i" }
+            }
           }
-        }
-      }
-    })
-    view.setData({ search: build })
-    refBind.current.close()
-  }, [config.name])
+
+          if (type.indexOf("date") >= 0) {
+            const start = data["start_" + column.name]
+            const end = data["end_" + column.name]
+            if (!!start && !!end) {
+              build._helper.date = build._helper.date.concat([column.name])
+              build[column.name] = {
+                $lte: `${formatDate(end)} 23:59:59`,
+                $gte: `${formatDate(start)} 00:00:00`,
+              }
+            }
+          }
+        })
+
+        console.log("build", build)
+
+        //        view.setData({ search: build })
+        refBind.current.close()
+      },
+      [config.name]
+    )
+  )
 
   const Header: React.FC<any> = () => {
     const onTapSimple = React.useCallback(() => {
@@ -189,9 +203,9 @@ export const BottomSheet: React.FC<{ refBind: any }> = ({ refBind }) => {
       isSimple && (
         <View style={s.rowSearch} key={"scroll_" + random()}>
           <Label>Keyword</Label>
-          <Input.Text
-            model="temp"
-            name="fulltextsearch"
+          <Input.RawText
+            value={fulltextsearch}
+            onChangeText={setFullText}
             placeholder="Please type keyword ..."
           />
           <Footer onPress={onFullTextSearch} onClearSearch={onClearSearch} />
@@ -206,32 +220,30 @@ export const BottomSheet: React.FC<{ refBind: any }> = ({ refBind }) => {
                 <Label>{column.label}</Label>
                 {(type == "text" || type === "json") && (
                   <Input.Text
-                    model="temp"
+                    control={control}
                     name={column.name}
                     placeholder={"Fill " + column.label}
                   />
                 )}
                 {type.indexOf("date") >= 0 && (
                   <>
-                    {/** 
                     <Input.DateTime
-                      model="temp"
+                      control={control}
                       placeholder={"Start " + column.label}
                       name={"start_" + column.name}
                     />
                     <View style={{ height: 3 }} />
                     <Input.DateTime
-                      model="temp"
+                      control={control}
                       placeholder={"End " + column.label}
                       name={"end_" + column.name}
                     />
-                  */}
                   </>
                 )}
                 {(type == "number" || type == "decimal") && (
                   <View style={{ flexDirection: "row" }}>
                     <Input.Text
-                      model="temp"
+                      control={control}
                       name={column.name}
                       placeholder={"Fill " + column.label}
                     />

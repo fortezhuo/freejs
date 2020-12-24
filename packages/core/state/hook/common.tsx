@@ -2,12 +2,13 @@ import React from "react"
 import constate from "constate"
 import _isEmpty from "lodash/isEmpty"
 
-export const useState = (init: ObjectAny) =>
-  React.useReducer((prev: ObjectAny, _next: ObjectAny) => {
-    let { __isReset, ...next } = _next
-    __isReset = !!__isReset ? __isReset : _isEmpty(next)
-    return __isReset ? next : { ...prev, ...next }
-  }, init)
+const merge = (prev: ObjectAny, _next: ObjectAny) => {
+  let { __isReset, ...next } = _next
+  __isReset = !!__isReset ? __isReset : _isEmpty(next)
+  return __isReset ? next : { ...prev, ...next }
+}
+
+export const useState = (init: ObjectAny) => React.useReducer(merge, init)
 
 export const useDefaultState = ({ initData, initTemp }: any) => {
   const [data = {}, setData] = useState(initData)

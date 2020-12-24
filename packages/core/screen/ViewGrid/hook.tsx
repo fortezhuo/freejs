@@ -3,12 +3,7 @@ import { useDefaultState, createContext, useApp } from "../../state"
 import * as listConfig from "./config"
 import { POST, DELETE } from "../../request"
 import { Table } from "../../component"
-import {
-  CellText,
-  CellDownload,
-  CellLink,
-  CellJSON,
-} from "../../component/Table/Cell"
+import { CellText, CellLink, CellPressable } from "../../component/Table/Cell"
 import { download } from "./helper"
 import { formatDate, formatDateTime } from "../../util"
 import { Modalize } from "react-native-modalize"
@@ -186,10 +181,12 @@ export const useColumns = () => {
   const onOpenJSON = React.useCallback(
     (id) => {
       ;(async () => {
-        await view.loadData(id)
+        try {
+          await view.loadData(id)
+        } finally {
+          refBottomSheet.current.open()
+        }
       })()
-
-      refBottomSheet.current.open()
     },
     [config.name]
   )
@@ -221,7 +218,8 @@ export const useColumns = () => {
               )
             case "download_log":
               return (
-                <CellDownload
+                <CellPressable
+                  icon="download"
                   style={cell.column.style}
                   onPress={() => {
                     download(`/api/${config.name}`, cell.value)
@@ -242,7 +240,8 @@ export const useColumns = () => {
               )
             case "json":
               return (
-                <CellJSON
+                <CellPressable
+                  icon="search"
                   style={cell.column.style}
                   onPress={() => onOpenJSON(cell.value)}
                 />
