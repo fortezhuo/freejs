@@ -1,36 +1,39 @@
 import React from "react"
-import { StyleSheet, Platform } from "react-native"
+import { View, StyleSheet, Platform, Text } from "react-native"
 import { tw } from "@free/tailwind"
 import { TableGrid } from "./TableGrid"
-import { ActionGroup, Layout } from "../../component"
+import { Loader, ActionGroup, Layout } from "../../component"
 import { theme } from "../../config/theme"
 import { useView, useActions, withView } from "./hook"
 import { BottomSheet } from "./BottomSheet"
 
-const ActionButton = () => {
+const ViewGrid: React.FC<any> = withView(() => {
   const { refBottomSheet, ...view } = useView()
   const actions = useActions(refBottomSheet)
-  const { isLoading, isUpdating } = view.temp
   const isReady = !!view.data?.config?.name
-  return (
-    <ActionGroup.Large
-      actions={actions}
-      isLoading={isLoading || isUpdating || !isReady}
-    />
-  )
-}
+  const { height, isLoading, isUpdating } = view.temp
 
-const ViewGrid: React.FC<any> = withView(() => {
   return (
     <>
       <Layout
         transparent
         scroll={Platform.OS === "web"}
-        stickyRight={<ActionButton />}
+        stickyRight={
+          <ActionGroup.Large
+            actions={actions}
+            isLoading={isLoading || isUpdating}
+          />
+        }
       >
-        <TableGrid />
+        <View style={[s.viewTable, { height }]}>
+          {!isReady ? (
+            <Loader dark />
+          ) : (
+            <TableGrid view={view} actions={actions} />
+          )}
+        </View>
       </Layout>
-      <BottomSheet />
+      {isReady && <BottomSheet refBind={refBottomSheet} view={view} />}
     </>
   )
 })

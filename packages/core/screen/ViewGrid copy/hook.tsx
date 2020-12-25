@@ -176,7 +176,7 @@ export const useActions = (refBottomSheet: any) => {
 
 export const useColumns = () => {
   const { refBottomSheet, ...view } = useView()
-  const { keys, isMobile, config = {}, route } = view.data
+  const { keys, isMobile, config, route } = view.data
 
   const onOpenJSON = React.useCallback(
     (id) => {
@@ -188,12 +188,12 @@ export const useColumns = () => {
         }
       })()
     },
-    [config?.name]
+    [config.name]
   )
 
   return React.useMemo(
     () =>
-      (config?.columns || []).map((col: ObjectAny) => ({
+      config.columns.map((col: ObjectAny) => ({
         id: col.type ? `${col.name}_${col.type}` : col.name,
         Header: col.label,
         accessor: col.name,
@@ -255,7 +255,7 @@ export const useColumns = () => {
           }
         },
       })),
-    [config?.name]
+    [config.name]
   )
 }
 
@@ -266,6 +266,10 @@ const useHook = () => {
   const { refAlert, ...app } = useApp()
   const refSelected = React.useRef([])
   const refBottomSheet = React.useRef<Modalize>(null)
+
+  React.useEffect(() => {
+    view.setTemp({ height: app.temp.height - 144 })
+  }, [])
 
   useFocusEffect(
     React.useCallback(() => {

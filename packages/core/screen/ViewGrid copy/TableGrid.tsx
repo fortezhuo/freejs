@@ -13,7 +13,7 @@ import { FlatList } from "react-native-gesture-handler"
 import { theme } from "../../config/theme"
 import { tw, color } from "@free/tailwind"
 import { TablePagination } from "./TablePagination"
-import { useView, useColumns, useActions } from "./hook"
+import { useView, useColumns } from "./hook"
 import { useApp } from "../../state"
 import _diff from "lodash/difference"
 import { random } from "../../util"
@@ -58,14 +58,13 @@ const TableHeaderCell: React.FC<any> = ({ column }) => {
   )
 }
 
-export const TableGrid: React.FC<any> = React.memo(() => {
+export const TableGrid: React.FC<any> = React.memo(({ actions }) => {
   const app = useApp()
-  const { refBottomSheet, refSelected, ...view } = useView()
-  const { isMobile, collection = [], max } = view.data
-  const _isMobile = app.temp.isMobile
-  const isReady = !!view.data?.config?.name
+  const view = useView()
   const columns = useColumns()
-  const actions = useActions(refBottomSheet)
+  const _isMobile = app.temp.isMobile
+  const { refSelected } = view
+  const { isMobile, collection = [], max } = view.data
 
   const swipeActions = React.useMemo(
     () =>
@@ -77,27 +76,19 @@ export const TableGrid: React.FC<any> = React.memo(() => {
   )
 
   return (
-    <View style={[s.viewLayout, { height: app.temp.height - 144 }]}>
-      {!isReady ? (
-        <Loader dark />
-      ) : (
-        <TableContent
-          isMobile={isMobile}
-          isLoading={
-            view.temp.isLoading ||
-            view.temp.isUpdating ||
-            isMobile !== _isMobile
-          }
-          refSelected={refSelected}
-          data={{
-            columns,
-            actions: swipeActions,
-            collection,
-            max,
-          }}
-        />
-      )}
-    </View>
+    <TableContent
+      isMobile={isMobile}
+      isLoading={
+        view.temp.isLoading || view.temp.isUpdating || isMobile !== _isMobile
+      }
+      refSelected={refSelected}
+      data={{
+        columns,
+        actions: swipeActions,
+        collection,
+        max,
+      }}
+    />
   )
 })
 
@@ -187,6 +178,5 @@ const TableContent: React.FC<any> = ({
 }
 
 const s = StyleSheet.create({
-  viewLayout: tw("flex-col bg-white rounded-lg p-2"),
   viewTable: tw("flex-1"),
 })
