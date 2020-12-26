@@ -6,9 +6,10 @@ import { ActionGroup, Layout } from "../../component"
 import { theme } from "../../config/theme"
 import { useView, useActions, withView } from "./hook"
 import { BottomSheet } from "./BottomSheet"
+import { Modalize } from "react-native-modalize"
 
-const ActionButton = () => {
-  const { refBottomSheet, ...view } = useView()
+const ActionButton = ({ refBottomSheet }: any) => {
+  const view = useView()
   const actions = useActions(refBottomSheet)
   const { isLoading, isUpdating } = view.temp
   const isReady = !!view.data?.config?.name
@@ -21,16 +22,19 @@ const ActionButton = () => {
 }
 
 const ViewGrid: React.FC<any> = withView(() => {
+  const refBottomSheet = React.useRef<Modalize>(null)
+  const [content, setContent] = React.useState<ObjectAny | undefined>(undefined)
+
   return (
     <>
       <Layout
         transparent
         scroll={Platform.OS === "web"}
-        stickyRight={<ActionButton />}
+        stickyRight={<ActionButton {...{ refBottomSheet }} />}
       >
-        <TableGrid />
+        <TableGrid {...{ refBottomSheet, setContent }} />
       </Layout>
-      <BottomSheet />
+      <BottomSheet {...{ refBottomSheet, content, setContent }} />
     </>
   )
 })

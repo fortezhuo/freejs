@@ -6,7 +6,6 @@ import { Table } from "../../component"
 import { CellText, CellLink, CellPressable } from "../../component/Table/Cell"
 import { download } from "./helper"
 import { formatDate, formatDateTime } from "../../util"
-import { Modalize } from "react-native-modalize"
 
 import { TableCheckbox } from "./TableCheckbox"
 import {
@@ -174,22 +173,25 @@ export const useActions = (refBottomSheet: any) => {
   return refActions.current
 }
 
-export const useColumns = () => {
-  const { refBottomSheet, ...view } = useView()
+export const useColumns = ({ refBottomSheet, setContent }: any) => {
+  const view = useView()
   const { keys, isMobile, config = {}, route } = view.data
 
-  const onOpenJSON = React.useCallback(
-    (id) => {
-      ;(async () => {
-        try {
-          await view.loadData(id)
-        } finally {
-          refBottomSheet.current.open()
+  const onOpenJSON = React.useCallback((id) => {
+    ;(async () => {
+      try {
+        if (id.length !== 24) {
+          throw new Error("Invalid ID")
         }
-      })()
-    },
-    [config?.name]
-  )
+        const res = await POST(`/api/find/trash/${id}`, {})
+        setContent(res.data.result.data)
+      } catch (err) {
+        view.setError(err)
+      } finally {
+        refBottomSheet.current.open()
+      }
+    })()
+  }, [])
 
   return React.useMemo(
     () =>
@@ -265,7 +267,6 @@ const useHook = () => {
   const routeName = navRoute.name
   const { refAlert, ...app } = useApp()
   const refSelected = React.useRef([])
-  const refBottomSheet = React.useRef<Modalize>(null)
 
   useFocusEffect(
     React.useCallback(() => {
@@ -356,24 +357,6 @@ const useHook = () => {
     })()
   }, [view.data.isRefresh])
 
-  const loadData = React.useCallback(
-    async (id: string) => {
-      const { name } = view.data?.config
-      if (id.length === 24) {
-        try {
-          view.setTemp({ isLoading: true })
-          const res = await POST(`/api/find/${name}/${id}`, {})
-          view.setTemp({ value: res.data.result.data })
-        } catch (err) {
-          view.setError(err)
-        } finally {
-          view.setTemp({ isLoading: false })
-        }
-      }
-    },
-    [view.data?.config?.name]
-  )
-
   const deleteDocument = React.useCallback(
     async (id: string) => {
       const { name } = view.data?.config
@@ -416,13 +399,28 @@ const useHook = () => {
     [view.data?.config?.name]
   )
 
+  const configSearch = React.useMemo(() => {
+    const { search = [], keys = [] } = view.data?.config || {}
+
+    return {
+      simple: search,
+      advance: Object.keys(keys).map((val: any) => {
+        const column = keys[val]
+        return {
+          label: column.type === "json" ? "Data" : column.label,
+          name: column.type === "json" ? "$text" : column.name,
+          type: column.type,
+        }
+      }),
+    }
+  }, [view.data?.config?.name])
+
   return {
     ...view,
     restoreDocument,
-    loadData,
     deleteDocument,
-    refBottomSheet,
     refSelected,
+    configSearch,
   }
 }
 

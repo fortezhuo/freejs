@@ -58,48 +58,50 @@ const TableHeaderCell: React.FC<any> = ({ column }) => {
   )
 }
 
-export const TableGrid: React.FC<any> = React.memo(() => {
-  const app = useApp()
-  const { refBottomSheet, refSelected, ...view } = useView()
-  const { isMobile, collection = [], max } = view.data
-  const _isMobile = app.temp.isMobile
-  const isReady = !!view.data?.config?.name
-  const columns = useColumns()
-  const actions = useActions(refBottomSheet)
+export const TableGrid: React.FC<any> = React.memo(
+  ({ refBottomSheet, setContent }) => {
+    const app = useApp()
+    const { refSelected, ...view } = useView()
+    const { isMobile, collection = [], max } = view.data
+    const _isMobile = app.temp.isMobile
+    const isReady = !!view.data?.config?.name
+    const columns = useColumns({ refBottomSheet, setContent })
+    const actions = useActions(refBottomSheet)
 
-  const swipeActions = React.useMemo(
-    () =>
-      actions.filter(
-        (action: any) =>
-          action.children === "Delete" || action.children === "Restore"
-      ),
-    []
-  )
+    const swipeActions = React.useMemo(
+      () =>
+        actions.filter(
+          (action: any) =>
+            action.children === "Delete" || action.children === "Restore"
+        ),
+      []
+    )
 
-  return (
-    <View style={[s.viewLayout, { height: app.temp.height - 144 }]}>
-      {!isReady ? (
-        <Loader dark />
-      ) : (
-        <TableContent
-          isMobile={isMobile}
-          isLoading={
-            view.temp.isLoading ||
-            view.temp.isUpdating ||
-            isMobile !== _isMobile
-          }
-          refSelected={refSelected}
-          data={{
-            columns,
-            actions: swipeActions,
-            collection,
-            max,
-          }}
-        />
-      )}
-    </View>
-  )
-})
+    return (
+      <View style={[s.viewLayout, { height: app.temp.height - 144 }]}>
+        {!isReady ? (
+          <Loader dark />
+        ) : (
+          <TableContent
+            isMobile={isMobile}
+            isLoading={
+              view.temp.isLoading ||
+              view.temp.isUpdating ||
+              isMobile !== _isMobile
+            }
+            refSelected={refSelected}
+            data={{
+              columns,
+              actions: swipeActions,
+              collection,
+              max,
+            }}
+          />
+        )}
+      </View>
+    )
+  }
+)
 
 const TableContent: React.FC<any> = ({
   isMobile,
