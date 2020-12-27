@@ -13,9 +13,9 @@ import { FlatList } from "react-native-gesture-handler"
 import { theme } from "../../config/theme"
 import { tw, color } from "@free/tailwind"
 import { TablePagination } from "./TablePagination"
+import { TableRow } from "./TableRow"
 import { useView, useColumns, useActions } from "./hook"
 import { useApp } from "../../state"
-import _diff from "lodash/difference"
 import { random } from "../../util"
 
 const defaultColor = color(theme.default_text)
@@ -62,7 +62,7 @@ export const TableGrid: React.FC<any> = React.memo(
   ({ refBottomSheet, setContent }) => {
     const app = useApp()
     const { refSelected, ...view } = useView()
-    const { isMobile, collection = [], max } = view.data
+    const { isMobile, collection = [], config, max } = view.data
     const _isMobile = app.temp.isMobile
     const isReady = !!view.data?.config?.name
     const columns = useColumns({ refBottomSheet, setContent })
@@ -90,6 +90,8 @@ export const TableGrid: React.FC<any> = React.memo(
               isMobile !== _isMobile
             }
             refSelected={refSelected}
+            setContent={setContent}
+            name={config.name}
             data={{
               columns,
               actions: swipeActions,
@@ -107,6 +109,7 @@ const TableContent: React.FC<any> = ({
   isMobile,
   isLoading,
   data,
+  name,
   refSelected,
 }) => {
   const { columns, columnsFormat, collection, actions } = data
@@ -162,7 +165,8 @@ const TableContent: React.FC<any> = ({
             renderItem={({ item, index }: any) => {
               prepareRow(item)
               return (
-                <Table.RowData
+                <TableRow
+                  name={name}
                   data={item.values}
                   isMobile={isMobile}
                   actionLeft={isMobile && actions[1]}
@@ -178,7 +182,7 @@ const TableContent: React.FC<any> = ({
                       </View>
                     )
                   })}
-                </Table.RowData>
+                </TableRow>
               )
             }}
           />

@@ -4,41 +4,43 @@ import { tw } from "@free/tailwind"
 import { Button } from "../../../component/Button"
 import { random } from "../../../util"
 
-export const Header: React.FC<any> = React.memo(
-  ({ isSimple, setSimple, refBottomSheet }) => {
-    const onTapSimple = React.useCallback(() => {
-      setSimple(true)
-      refBottomSheet.current.open("default")
-    }, [])
+export const Header: React.FC<{
+  isSimple: boolean
+  setSimple: any
+  refBottomSheet: any
+}> = React.memo(({ isSimple, setSimple, refBottomSheet }) => {
+  const onTapSimple = React.useCallback(() => {
+    setSimple(true)
+    refBottomSheet.current.open("default")
+  }, [])
 
-    const onTapAdvance = React.useCallback(() => {
-      setSimple(false)
-      refBottomSheet.current.open("top")
-    }, [])
+  const onTapAdvance = React.useCallback(() => {
+    setSimple(false)
+    refBottomSheet.current.open("top")
+  }, [])
 
-    return (
-      <View style={s.viewHeader} key={"scroll_" + random()}>
-        <View style={{ flex: 1 }}>
-          <Button
-            type={isSimple ? "danger_bg" : "disabled_bg"}
-            onPress={onTapSimple}
-          >
-            Simple Search
-          </Button>
-        </View>
-        <View style={{ width: 10 }} />
-        <View style={{ flex: 1 }}>
-          <Button
-            type={!isSimple ? "danger_bg" : "disabled_bg"}
-            onPress={onTapAdvance}
-          >
-            Advance Search
-          </Button>
-        </View>
+  return (
+    <View style={s.viewHeader} key={"scroll_" + random()}>
+      <View style={{ flex: 1 }}>
+        <Button
+          type={isSimple ? "danger_bg" : "disabled_bg"}
+          onPress={onTapSimple}
+        >
+          Simple Search
+        </Button>
       </View>
-    )
-  }
-)
+      <View style={{ width: 10 }} />
+      <View style={{ flex: 1 }}>
+        <Button
+          type={!isSimple ? "danger_bg" : "disabled_bg"}
+          onPress={onTapAdvance}
+        >
+          Advance Search
+        </Button>
+      </View>
+    </View>
+  )
+})
 
 const s = StyleSheet.create({
   viewHeader: tw(
