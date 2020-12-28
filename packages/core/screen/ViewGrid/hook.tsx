@@ -6,6 +6,7 @@ import { Table } from "../../component"
 import { CellText, CellLink, CellPressable } from "../../component/Table/Cell"
 import { download } from "./helper"
 import { formatDate, formatDateTime } from "../../util"
+import { Modalize } from "react-native-modalize"
 
 import { TableCheckbox } from "./TableCheckbox"
 import {
@@ -59,6 +60,7 @@ export const useActions = (refBottomSheet: any) => {
   } = view
   const { refAlert, ...app } = useApp()
   const refActions = React.useRef<any>([])
+  const refSwipeActions = React.useRef<any>([])
   const navigation = useNavigation()
   const actions = React.useMemo(() => {
     if (!config?.name) return []
@@ -152,30 +154,40 @@ export const useActions = (refBottomSheet: any) => {
       const isMobile = app.temp.isMobile
       const _isMobile = view.data.isMobile
       if (_isMobile !== isMobile) {
-        view.setTemp({ isUpdating: true })
+        view.setState({ isUpdating: true })
         view.setData({ isMobile })
         setTimeout(() => {
-          view.setTemp({ isUpdating: false })
+          view.setState({ isUpdating: false })
         }, 100)
       }
 
       view.setData({ isMobile })
-      refActions.current = actions.filter(
-        (action: any) =>
-          config?.actions.indexOf(action.children) >= 0 &&
-          (isMobile
-            ? action.children !== "Delete" && action.children !== "Restore"
-            : true)
-      )
+
+      refActions.current = []
+      refSwipeActions.current = []
+
+      actions.forEach((action) => {
+        if (config?.actions.indexOf(action.children) >= 0) {
+          if (isMobile) {
+            if (action.children !== "Delete" && action.children !== "Restore") {
+              refActions.current.push(action)
+            } else {
+              refSwipeActions.current.push(action)
+            }
+          } else {
+            refActions.current.push(action)
+          }
+        }
+      })
     }
   }, [app.temp.isMobile, config?.name])
 
-  return refActions.current
+  return { actions: refActions.current, swipeActions: refSwipeActions.current }
 }
 
 export const useColumns = ({ refBottomSheet, setContent }: any) => {
   const view = useView()
-  const { keys, isMobile, config = {}, route } = view.data
+  const { isMobile, config = {}, route } = view.data
 
   const onOpenJSON = React.useCallback((id) => {
     ;(async () => {
@@ -206,7 +218,7 @@ export const useColumns = ({ refBottomSheet, setContent }: any) => {
             isMobile &&
             name.indexOf("name_download_log") < 0 &&
             name.indexOf("_id") < 0
-              ? `${keys[name].label} : `
+              ? `${config.keys[name].label} : `
               : ""
 
           switch (col.type) {
@@ -257,7 +269,7 @@ export const useColumns = ({ refBottomSheet, setContent }: any) => {
           }
         },
       })),
-    [config?.name]
+    [config?.name, isMobile]
   )
 }
 
@@ -267,6 +279,7 @@ const useHook = () => {
   const routeName = navRoute.name
   const { refAlert, ...app } = useApp()
   const refSelected = React.useRef([])
+  const refBottomSheet = React.useRef<Modalize>(null)
 
   useFocusEffect(
     React.useCallback(() => {
@@ -319,7 +332,7 @@ const useHook = () => {
         fields: config.fields,
       }
       try {
-        view.setTemp({ isLoading: true })
+        view.setState({ isLoading: true })
         const res = await POST(`/api/find/${config.name}`, { _params })
         view.setData({
           collection: res.data.result,
@@ -328,7 +341,7 @@ const useHook = () => {
           isRefresh: undefined,
         })
       } finally {
-        view.setTemp({ isLoading: false })
+        view.setState({ isLoading: false })
       }
     }
   }, [
@@ -365,12 +378,12 @@ const useHook = () => {
       if (selectedIds.length != 0) {
         const _params = { query: { _id: { $in: selectedIds } } }
         try {
-          view.setTemp({ isLoading: true })
+          view.setState({ isLoading: true })
           return await DELETE(`/api/${name}`, { _params })
         } catch (err) {
           view.setError(err)
         } finally {
-          view.setTemp({ isLoading: false })
+          view.setState({ isLoading: false })
           view.setData({ isRefresh: true, selected: undefined, page: 1 })
         }
       }
@@ -386,12 +399,12 @@ const useHook = () => {
       if (selectedIds.length != 0) {
         const _params = { query: { _id: { $in: selectedIds } } }
         try {
-          view.setTemp({ isLoading: true })
+          view.setState({ isLoading: true })
           return await POST(`/api/${name}/restore`, { _params })
         } catch (err) {
           view.setError(err)
         } finally {
-          view.setTemp({ isLoading: false })
+          view.setState({ isLoading: false })
           view.setData({ isRefresh: true, selected: undefined, page: 1 })
         }
       }
@@ -420,6 +433,7 @@ const useHook = () => {
     restoreDocument,
     deleteDocument,
     refSelected,
+    refBottomSheet,
     configSearch,
   }
 }

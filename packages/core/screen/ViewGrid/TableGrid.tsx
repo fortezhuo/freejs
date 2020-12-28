@@ -58,58 +58,46 @@ const TableHeaderCell: React.FC<any> = ({ column }) => {
   )
 }
 
-export const TableGrid: React.FC<any> = React.memo(
-  ({ refBottomSheet, setContent }) => {
-    const app = useApp()
-    const { refSelected, ...view } = useView()
-    const { isMobile, collection = [], config, max } = view.data
-    const _isMobile = app.temp.isMobile
-    const isReady = !!view.data?.config?.name
-    const columns = useColumns({ refBottomSheet, setContent })
-    const actions = useActions(refBottomSheet)
+export const TableGrid: React.FC<any> = React.memo(({ setContent }) => {
+  const app = useApp()
+  const { refSelected, refBottomSheet, ...view } = useView()
+  const { isMobile, collection = [], max } = view.data
+  const _isMobile = app.temp.isMobile
+  const isReady = !!view.data?.config?.name
+  const isLoading =
+    view.state.isLoading || view.state.isUpdating || isMobile !== _isMobile
+  const columns = useColumns({ refBottomSheet, setContent })
+  const { swipeActions } = useActions(refBottomSheet)
 
-    const swipeActions = React.useMemo(
-      () =>
-        actions.filter(
-          (action: any) =>
-            action.children === "Delete" || action.children === "Restore"
-        ),
-      []
-    )
-
-    return (
-      <View style={[s.viewLayout, { height: app.temp.height - 144 }]}>
-        {!isReady ? (
-          <Loader dark />
-        ) : (
-          <TableContent
-            isMobile={isMobile}
-            isLoading={
-              view.temp.isLoading ||
-              view.temp.isUpdating ||
-              isMobile !== _isMobile
-            }
-            refSelected={refSelected}
-            setContent={setContent}
-            name={config.name}
-            data={{
+  return (
+    <View style={[s.viewLayout, { height: app.temp.height - 144 }]}>
+      {!isReady ? (
+        <Loader dark />
+      ) : (
+        <TableContent
+          {...{
+            isMobile,
+            isLoading,
+            refSelected,
+            setContent,
+            data: {
               columns,
               actions: swipeActions,
               collection,
               max,
-            }}
-          />
-        )}
-      </View>
-    )
-  }
-)
+            },
+          }}
+        />
+      )}
+    </View>
+  )
+})
 
 const TableContent: React.FC<any> = ({
   isMobile,
   isLoading,
   data,
-  name,
+  setContent,
   refSelected,
 }) => {
   const { columns, columnsFormat, collection, actions } = data
@@ -166,12 +154,14 @@ const TableContent: React.FC<any> = ({
               prepareRow(item)
               return (
                 <TableRow
-                  name={name}
-                  data={item.values}
-                  isMobile={isMobile}
-                  actionLeft={isMobile && actions[1]}
-                  actionRight={isMobile && actions[0]}
-                  dark={index % 2}
+                  {...{
+                    isMobile,
+                    setContent,
+                    dark: index % 2,
+                    data: item.values,
+                    actionLeft: isMobile && actions[1],
+                    actionRight: isMobile && actions[0],
+                  }}
                 >
                   {item.cells.map((cell: any, i: number) => {
                     const isHide =

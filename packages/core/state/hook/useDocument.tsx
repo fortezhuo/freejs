@@ -16,6 +16,7 @@ export const useDocument = (name: string) => {
   const form = useForm({ criteriaMode: "all" })
   const route = useRoute()
   const [temp, setTemp] = useState({})
+  const [state, setState] = useState({})
   const id = (route?.params as any).id
   const refFunction = React.useRef({ onBeforeSave: async (data: any) => {} })
   const close = React.useCallback(() => {
@@ -26,13 +27,13 @@ export const useDocument = (name: string) => {
     const isUpdate = id.length === 24
     const method = isUpdate ? "PATCH" : "POST"
     try {
-      setTemp({ isLoading: true })
+      setState({ isLoading: true })
       await refFunction.current.onBeforeSave(data)
       await req[method](`/api/${name}${isUpdate ? `/${id}` : ""}`, data)
       return true
     } catch (err) {
     } finally {
-      setTemp({ isLoading: false })
+      setState({ isLoading: false })
     }
   }, [])
 
@@ -41,7 +42,7 @@ export const useDocument = (name: string) => {
       const onLoad = async function () {
         try {
           form.reset()
-          setTemp({ isLoading: true })
+          setState({ isLoading: true })
           if (id.length === 24) {
             const {
               data: { result },
@@ -52,7 +53,7 @@ export const useDocument = (name: string) => {
           }
         } catch (err) {
         } finally {
-          setTemp({ isLoading: false })
+          setState({ isLoading: false })
         }
       }
       onLoad()
@@ -65,5 +66,5 @@ export const useDocument = (name: string) => {
     }
   }, [])
 
-  return { ...form, refFunction, close, save, temp, setTemp }
+  return { ...form, refFunction, close, save, temp, setTemp, state, setState }
 }

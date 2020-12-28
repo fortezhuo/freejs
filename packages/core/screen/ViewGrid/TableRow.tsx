@@ -1,36 +1,36 @@
 import React from "react"
 import { StyleSheet, View, Animated } from "react-native"
 import { RectButton } from "react-native-gesture-handler"
-import { Icon, Row } from "../../component"
+import { Icon, Table } from "../../component"
 import { theme } from "../../config/theme"
 import { tw } from "@free/tailwind"
-import { RowProps } from "@free/core"
+import { useView } from "./hook"
+import { POST } from "../../request"
 import { useNavigation } from "@react-navigation/native"
 import Swipeable from "react-native-gesture-handler/Swipeable"
 
 const RowMobile: React.FC<any> = ({
-  name,
   data,
   actionLeft,
   actionRight,
+  setContent,
   children,
   dark,
   style,
 }) => {
+  const width = 88
+  const { refBottomSheet, ...view } = useView()
+  const ref = React.createRef<any>()
+  const navigation = useNavigation()
   const params = {
     id: data._id_json || data._id_link,
   }
-  const ref = React.createRef<any>()
-  const navigation = useNavigation()
-  const width = 88
+
   const onTap = React.useCallback(() => {
-    if (data._id_json !== 24) {
+    if (!!data._id_json) {
       ;(async () => {
         try {
-          if (id.length !== 24) {
-            throw new Error("Invalid ID")
-          }
-          const res = await POST(`/api/find/trash/${id}`, {})
+          const res = await POST(`/api/find/trash/${data._id_json}`, {})
           setContent(res.data.result.data)
         } catch (err) {
           view.setError(err)
@@ -38,72 +38,75 @@ const RowMobile: React.FC<any> = ({
           refBottomSheet.current.open()
         }
       })()
-      ;(async () => {
-        store.setData({ value: [] })
-        await store.loadData(data._id_json)
-        store.bottomSheet.open()
-      })()
     } else {
-      const route = store.data.get("route").replace("View", "")
+      const route = view.data.route.replace("View", "")
       if (route !== "SettingLog") {
         navigation.navigate(route, { id: data._id_link })
       }
     }
-  }, [])
+  }, [data._id_json, data._id_link])
 
-  const renderLeftAction = React.useCallback((progress: any) => {
-    const trans = progress.interpolate({
-      inputRange: [0, 1],
-      outputRange: [-width, 0],
-    })
-    const onPress = () => {
-      ref?.current.close()
-      actionLeft.onPress(params)
-    }
-    return (
-      <View
-        style={{
-          width,
-        }}
-      >
-        <Animated.View style={{ flex: 1, transform: [{ translateX: trans }] }}>
-          <RectButton onPress={onPress} style={s.cellDelete}>
-            <IconLabel
-              styleContainer={[s.swipeButton, tw(theme[actionLeft.type])]}
-              name={actionLeft.icon}
-            ></IconLabel>
-          </RectButton>
-        </Animated.View>
-      </View>
-    )
-  }, [])
+  const renderLeftAction = React.useCallback(
+    (progress: any) => {
+      const trans = progress.interpolate({
+        inputRange: [0, 1],
+        outputRange: [-width, 0],
+      })
+      const onPress = () => {
+        ref?.current.close()
+        actionLeft.onPress(params)
+      }
+      return (
+        <View
+          style={{
+            width,
+          }}
+        >
+          <Animated.View
+            style={{ flex: 1, transform: [{ translateX: trans }] }}
+          >
+            <RectButton onPress={onPress} style={s.cellDelete}>
+              <View style={[s.swipeButton, tw(theme[actionLeft.type])]}>
+                <Icon name={actionLeft.icon} />
+              </View>
+            </RectButton>
+          </Animated.View>
+        </View>
+      )
+    },
+    [ref.current]
+  )
 
-  const renderRightAction = React.useCallback((progress: any) => {
-    const trans = progress.interpolate({
-      inputRange: [0, 1],
-      outputRange: [width, 0],
-    })
-    const onPress = () => {
-      ref?.current.close()
-      actionRight.onPress(params)
-    }
-    return (
-      <View
-        style={{
-          width,
-        }}
-      >
-        <Animated.View style={{ flex: 1, transform: [{ translateX: trans }] }}>
-          <RectButton onPress={onPress} style={s.cellDelete}>
-            <IconLabel
-              styleContainer={[s.swipeButton, tw(theme[actionRight.type])]}
-              name={actionRight.icon}
-            ></IconLabel>
-          </RectButton>
-        </Animated.View>
-      </View>
-    )
-  }, [])
+  const renderRightAction = React.useCallback(
+    (progress: any) => {
+      const trans = progress.interpolate({
+        inputRange: [0, 1],
+        outputRange: [width, 0],
+      })
+      const onPress = () => {
+        ref?.current.close()
+        actionRight.onPress(params)
+      }
+      return (
+        <View
+          style={{
+            width,
+          }}
+        >
+          <Animated.View
+            style={{ flex: 1, transform: [{ translateX: trans }] }}
+          >
+            <RectButton onPress={onPress} style={s.cellDelete}>
+              <View style={[s.swipeButton, tw(theme[actionRight.type])]}>
+                <Icon name={actionRight.icon} />
+              </View>
+            </RectButton>
+          </Animated.View>
+        </View>
+      )
+    },
+    [ref.current]
+  )
 
   return (
     <Swipeable
@@ -127,24 +130,20 @@ const RowMobile: React.FC<any> = ({
 }
 
 export const TableRow: React.FC<any> = ({
-  name,
   data,
   actionLeft,
   actionRight,
+  refBottomSheet,
   children,
   dark,
   isMobile,
   style,
 }) => {
-  const Wrapper: any = Row
+  const Wrapper: any = isMobile ? RowMobile : Table.Row
 
   return (
     <Wrapper
-      dark={dark}
-      style={style}
-      data={data}
-      actionLeft={actionLeft}
-      actionRight={actionRight}
+      {...{ dark, name, style, data, actionLeft, actionRight, refBottomSheet }}
     >
       {children}
     </Wrapper>

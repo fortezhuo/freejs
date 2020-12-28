@@ -24,13 +24,13 @@ export const useHook = () => {
       try {
         const { username, password, domain } = data
         app.setError({})
-        app.setTemp({ isUpdating: true })
+        app.setState({ isUpdating: true })
         const res = await POST("/api/auth", { username, password, domain })
         app.setData({ auth: res.data.result })
       } catch (err) {
         app.setError(err.data ? err.data : err)
       } finally {
-        app.setTemp({ isUpdating: false })
+        app.setState({ isUpdating: false })
       }
     }, [])
   )

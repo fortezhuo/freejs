@@ -104,7 +104,7 @@ const Routes: React.FC<any> = ({ screens }) => {
     restoreState()
   }, [])
 
-  return !isReady || app.temp.isLoading ? (
+  return !isReady || app.state.isLoading ? (
     <Loader />
   ) : (
     <NavigationContainer

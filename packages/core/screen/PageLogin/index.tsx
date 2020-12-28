@@ -27,7 +27,7 @@ const LoginButton: React.FC<LoginButton> = ({ isUpdating, onPress }) => {
 }
 
 const PageLogin: React.FC = () => {
-  const { control, temp, onSubmit, error } = useHook()
+  const { control, state, temp, onSubmit, error } = useHook()
   return (
     <LayoutFull transparent>
       <View style={s.pageLogin} testID="PageLogin">
@@ -35,7 +35,7 @@ const PageLogin: React.FC = () => {
           <Avatar source={logo} style={s.iconLogo} />
           <View style={s.boxInput}>
             <Input.Text
-              disabled={temp.isUpdating}
+              disabled={state.isUpdating}
               control={control}
               placeholder="Username"
               autoCapitalize="none"
@@ -45,7 +45,7 @@ const PageLogin: React.FC = () => {
               }}
             />
             <Input.Password
-              disabled={temp.isUpdating}
+              disabled={state.isUpdating}
               control={control}
               name="password"
               placeholder="Password"
@@ -54,7 +54,7 @@ const PageLogin: React.FC = () => {
               }}
             />
             <Input.Select
-              disabled={temp.isUpdating}
+              disabled={state.isUpdating}
               control={control}
               name="domain"
               placeholder="Domain"
@@ -63,7 +63,7 @@ const PageLogin: React.FC = () => {
                 required: "Please fill Password",
               }}
             />
-            <LoginButton isUpdating={temp.isUpdating} onPress={onSubmit} />
+            <LoginButton isUpdating={state.isUpdating} onPress={onSubmit} />
             <View style={tw("items-end mr-4")}>
               <Input.DisplayError error={error} />
             </View>

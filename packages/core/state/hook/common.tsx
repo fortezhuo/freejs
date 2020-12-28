@@ -11,11 +11,14 @@ const merge = (prev: ObjectAny, _next: ObjectAny) => {
 export const useState = (init: ObjectAny) => React.useReducer(merge, init)
 
 export const useDefaultState = ({ initData, initTemp }: any) => {
+  const [state = {}, setState] = useState({})
   const [data = {}, setData] = useState(initData)
   const [temp = {}, setTemp] = useState(initTemp)
   const [error = {}, setError] = useState({})
 
   return {
+    state,
+    setState,
     data,
     setData,
     temp,

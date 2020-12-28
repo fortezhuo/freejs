@@ -13,7 +13,7 @@ import { useHook } from "./hook"
 import { tw } from "@free/tailwind"
 
 const SettingUser: React.FC = (props) => {
-  const { control, temp, actions } = useHook()
+  const { control, temp, state, actions } = useHook()
   return (
     <>
       <Layout
@@ -33,7 +33,7 @@ const SettingUser: React.FC = (props) => {
                 control={control}
                 name="username"
                 placeholder="User Name"
-                isLoading={temp.isLoading}
+                isLoading={state.isLoading}
                 rules={{ required: "User Name is mandatory" }}
               />
             </Col>
@@ -47,7 +47,7 @@ const SettingUser: React.FC = (props) => {
                 control={control}
                 name="fullname"
                 placeholder="Full Name"
-                isLoading={temp.isLoading}
+                isLoading={state.isLoading}
                 rules={{ required: "Full Name is mandatory" }}
               />
             </Col>
@@ -58,7 +58,7 @@ const SettingUser: React.FC = (props) => {
             </Col>
             <Col light md={10}>
               <Input.Text
-                isLoading={temp.isLoading}
+                isLoading={state.isLoading}
                 control={control}
                 name="email"
                 placeholder="Email"
@@ -78,7 +78,7 @@ const SettingUser: React.FC = (props) => {
             </Col>
             <Col light md={10}>
               <Input.Select
-                isLoading={temp.isLoading}
+                isLoading={state.isLoading}
                 control={control}
                 name="roles"
                 creatable

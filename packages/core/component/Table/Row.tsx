@@ -25,10 +25,6 @@ const s = StyleSheet.create({
   viewHeader: tw(`h-12 shadow-md`),
   viewRow: tw(`flex-row flex-no-wrap items-center`),
   rowDark: { backgroundColor: "rgba(0,0,0,0.08)" },
-  rowMobile: tw("flex-col p-2"),
   textCellSmall: tw(`${theme.default_text} text-sm`),
   cellDelete: tw("flex-1"),
-  swipeButton: tw(
-    `${theme.danger_bg} flex-row flex-1 justify-center items-center`
-  ),
 })

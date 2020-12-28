@@ -14,7 +14,7 @@ const useHook = () => {
     if (!app.data.auth?.username) {
       ;(async function () {
         try {
-          app.setTemp({
+          app.setState({
             isLoading: true,
           })
           const res = await req.GET("/api/auth")
@@ -22,7 +22,7 @@ const useHook = () => {
         } catch (e) {
           console.log("AUTH FAILED", e)
         } finally {
-          app.setTemp({ isLoading: false })
+          app.setState({ isLoading: false })
         }
       })()
     }
@@ -45,13 +45,13 @@ const useHook = () => {
   const login = React.useCallback(async (data) => {
     try {
       app.setError({})
-      app.setTemp({ isUpdating: true })
+      app.setState({ isUpdating: true })
       const res = await req.POST("/api/auth", { ...data })
       app.setData({ auth: res.data.result })
     } catch (err) {
       app.setError(err)
     } finally {
-      app.setTemp({ isUpdating: false })
+      app.setState({ isUpdating: false })
     }
   }, [])
 
