@@ -7,7 +7,6 @@ export {
   InputSelect as Select,
   InputSelectRaw as RawSelect,
 } from "./InputSelect"
-export { InputCheckbox as Checkbox } from "./InputCheckbox"
 export {
   InputRawDateTime as RawDateTime,
   InputDateTime as DateTime,

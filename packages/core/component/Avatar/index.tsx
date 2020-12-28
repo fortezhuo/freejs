@@ -1,6 +1,6 @@
 import React from "react"
 import { View, Image, StyleSheet } from "react-native"
-import { IconLabel } from "../Icon"
+import { Icon } from "../Icon"
 import { tw } from "@free/tailwind"
 
 export const Avatar: React.FC<any> = ({
@@ -11,12 +11,9 @@ export const Avatar: React.FC<any> = ({
   size = 24,
 }) => {
   return name ? (
-    <IconLabel
-      size={size}
-      name={name}
-      styleContainer={StyleSheet.create([s.viewLogo, styleContainer])}
-      style={style}
-    />
+    <View style={[s.viewLogo, styleContainer, style]}>
+      <Icon size={size} name={name} />
+    </View>
   ) : (
     <View style={s.viewLogo}>
       <Image source={source} style={style} />

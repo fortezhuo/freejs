@@ -5,7 +5,7 @@ import { Options } from "./Options"
 import { Anchor } from "./Anchor"
 import { Content } from "./Content"
 import { DisplayError } from "../DisplayError"
-import { MenuDropdown } from "../../Menu"
+import { MenuDropdown, MenuDialog } from "../../Menu"
 import { useController } from "react-hook-form"
 import { TextInput, ScrollView } from "react-native"
 
@@ -29,6 +29,7 @@ export const InputSelectRaw: React.FC<any> = ({
   const refScroll = React.useRef<ScrollView>(null)
 
   const {
+    isMobile,
     getAnchorProps,
     getContentProps,
     getSearchProps,
@@ -51,9 +52,10 @@ export const InputSelectRaw: React.FC<any> = ({
     refWrapper,
     refScroll,
   })
+  const Wrapper = isMobile ? MenuDialog : MenuDropdown
 
   return (
-    <MenuDropdown
+    <Wrapper
       ref={refWrapper}
       isCompact={!searchable}
       onShow={() => {
@@ -69,7 +71,7 @@ export const InputSelectRaw: React.FC<any> = ({
           <Options {...getOptionsProps()} />
         </Content>
       )}
-    </MenuDropdown>
+    </Wrapper>
   )
 }
 
@@ -84,7 +86,7 @@ export const InputSelect: React.FC<any> = ({
   defaultValue = defaultValue ? defaultValue : multi ? [] : ""
 
   const {
-    field: { ref, onChange, value, ...inputProps },
+    field: { onChange, value },
     meta: { invalid },
   } = useController({
     name,

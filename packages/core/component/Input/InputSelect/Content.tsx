@@ -20,7 +20,7 @@ export const Content: React.FC<any> = (props) => {
         <>
           <H4>{placeholder}</H4>
           <View style={s.viewInput}>
-            <Display {...getDisplayProps()} />
+            <Display {...{ ...getDisplayProps(), clearable: false }} />
           </View>
         </>
       )}

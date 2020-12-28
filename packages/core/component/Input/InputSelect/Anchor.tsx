@@ -22,7 +22,7 @@ export const Anchor: React.FC<any> = (props) => {
         isLoading={isLoading}
         style={[s.viewInput, disabled ? s.viewDisabled : {}, style]}
       >
-        {!isMobile && <Display {...getDisplayProps()} />}
+        <Display {...getDisplayProps()} />
       </Base>
     </TouchableOpacity>
   )

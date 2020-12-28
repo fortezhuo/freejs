@@ -4,7 +4,6 @@ import { Modal } from "../"
 import { tw } from "@free/tailwind"
 import { useApp } from "../../state"
 
-const { color: iconColor } = tw("text-gray-700")
 const SCREEN_INDENT = 2
 const noop = () => {}
 

@@ -1,5 +1,5 @@
 import React from "react"
-import { Icon, IconButton, Text } from "../.."
+import { Icon, Text } from "../.."
 import { StyleSheet, View, TouchableOpacity } from "react-native"
 import { tw, color } from "@free/tailwind"
 import { theme } from "../../../config/theme"
@@ -33,7 +33,9 @@ const Clear: React.FC<any> = ({ onClear, multi, value, clearable }) => {
   return !clearable || (multi ? value.length == 0 : value === "") ? (
     <View />
   ) : (
-    <IconButton color={defaultColor} name="x" size={16} onPress={onClear} />
+    <TouchableOpacity onPress={onClear}>
+      <Icon color={defaultColor} name="x" size={16} />
+    </TouchableOpacity>
   )
 }
 

@@ -8,7 +8,11 @@ interface DisplayError {
 }
 
 export const DisplayError: React.FC<DisplayError> = ({ error }) => {
-  return error ? <Text style={[s.textError]}>* {error.message}</Text> : <></>
+  return error && error.message ? (
+    <Text style={[s.textError]}>* {error.message}</Text>
+  ) : (
+    <></>
+  )
 }
 
 const s = StyleSheet.create({

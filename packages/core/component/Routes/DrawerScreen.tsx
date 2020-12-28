@@ -1,11 +1,12 @@
 import React from "react"
-import { IconButton, Sidebar, Header, Gradient } from ".."
+import { Icon, Sidebar, Gradient } from ".."
 import { DrawerActions } from "@react-navigation/native"
-import { StyleSheet } from "react-native"
+import { StyleSheet, TouchableOpacity, View } from "react-native"
 import { createDrawerNavigator } from "@react-navigation/drawer"
 import { tw } from "@free/tailwind"
 import { random } from "../../util"
 import { theme } from "../../config/theme"
+import { MenuUser } from "./MenuUser"
 const colors = [theme.primary_1_bg, theme.primary_2_bg]
 
 const Drawer = createDrawerNavigator()
@@ -29,16 +30,18 @@ export const DrawerScreen: React.FC<any> = ({
           },
           headerLeft: () => {
             return isMobile ? (
-              <IconButton
-                name={"menu"}
-                style={s.headerLeft}
+              <TouchableOpacity
                 onPress={() =>
                   navigation.dispatch(DrawerActions.toggleDrawer())
                 }
-              />
+              >
+                <View style={s.headerLeft}>
+                  <Icon name="menu" />
+                </View>
+              </TouchableOpacity>
             ) : undefined
           },
-          headerRight: () => <Header.MenuUser />,
+          headerRight: () => <MenuUser />,
           headerTintColor: "white",
           headerTitleStyle: {
             fontSize: 24,

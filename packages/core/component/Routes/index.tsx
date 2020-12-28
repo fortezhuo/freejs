@@ -1,12 +1,18 @@
 import React from "react"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { configApp } from "@free/env"
-import { Loader, Gradient, IconButton } from ".."
+import { Loader, Gradient, Icon } from ".."
 import {
   NavigationContainer,
   NavigationContainerRef,
 } from "@react-navigation/native"
-import { Platform, Linking, StyleSheet } from "react-native"
+import {
+  Platform,
+  Linking,
+  StyleSheet,
+  View,
+  TouchableOpacity,
+} from "react-native"
 import { getRoute } from "@free/core/config/route"
 import { createStackNavigator } from "@react-navigation/stack"
 import { DrawerScreen } from "./DrawerScreen"
@@ -171,9 +177,7 @@ const Routes: React.FC<any> = ({ screens }) => {
                     headerLeft: route.parent
                       ? () => {
                           return (
-                            <IconButton
-                              name={"chevron-left"}
-                              style={s.headerLeft}
+                            <TouchableOpacity
                               onPress={() => {
                                 refNavigation.current?.canGoBack()
                                   ? refNavigation.current?.goBack()
@@ -181,7 +185,11 @@ const Routes: React.FC<any> = ({ screens }) => {
                                       screen: route.parent,
                                     })
                               }}
-                            />
+                            >
+                              <View style={s.headerLeft}>
+                                <Icon name={"chevron-left"} />
+                              </View>
+                            </TouchableOpacity>
                           )
                         }
                       : undefined,

@@ -1,14 +1,21 @@
 import React from "react"
-import { StyleSheet } from "react-native"
-import { MenuItemProps } from "@free/core"
-import { IconButton } from "../"
+import { StyleSheet, View, TouchableOpacity, Text } from "react-native"
+import { Icon } from "../"
 import { tw } from "@free/tailwind"
 import { theme } from "../../config/theme"
 
 const { color: iconColor } = tw("text-gray-700")
 const noop = () => {}
 
-export const MenuItem: React.FC<MenuItemProps> = ({
+export const MenuItem: React.FC<{
+  active?: boolean
+  name: string
+  color?: string
+  onPress?: VoidFunction
+  styleText?: any
+  style?: any
+  children: string
+}> = ({
   active,
   name,
   color = iconColor,
@@ -18,18 +25,12 @@ export const MenuItem: React.FC<MenuItemProps> = ({
   style,
 }) => {
   return (
-    <IconButton
-      onPress={() => {
-        onPress()
-      }}
-      styleContainer={[s.viewItem, active ? s.viewItemActive : {}, style]}
-      name={name}
-      color={color}
-      size={18}
-      styleText={[s.textItem, styleText]}
-    >
-      {children}
-    </IconButton>
+    <TouchableOpacity onPress={onPress}>
+      <View style={[s.viewItem, active ? s.viewItemActive : {}, style]}>
+        <Icon name={name} color={color} size={18} />
+        <Text style={[s.textItem, styleText]}>{children}</Text>
+      </View>
+    </TouchableOpacity>
   )
 }
 

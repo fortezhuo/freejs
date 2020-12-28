@@ -54,6 +54,7 @@ const PageLogin: React.FC = () => {
               }}
             />
             <Input.Select
+              clearable={true}
               disabled={state.isUpdating}
               control={control}
               name="domain"

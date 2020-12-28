@@ -27,7 +27,7 @@ export const useSelect = (props: any) => {
     refWrapper,
   } = props
 
-  const isMobile = false
+  const isMobile = true //Platform.OS !== "web"
   const [state, setState] = useState({})
 
   // MODAL
@@ -224,6 +224,7 @@ export const useSelect = (props: any) => {
   }
 
   return {
+    isMobile,
     state,
     setState,
     refSearch,

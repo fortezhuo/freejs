@@ -1,24 +1,24 @@
 import React from "react"
-import { StyleSheet, View, Text } from "react-native"
-import { useMenuDropdown, IconButton } from "../"
+import { StyleSheet, View, Text, TouchableOpacity } from "react-native"
+import { MenuDropdown, MenuItem, Icon } from "../"
 import { tw } from "@free/tailwind"
 import { useApp } from "../../state"
 import _debounce from "lodash/debounce"
 
-export const MenuUser: React.ReactNode = () => {
-  const { show, MenuDropdown, MenuItem } = useMenuDropdown()
+export const MenuUser = () => {
   const app = useApp()
+  const ref = React.useRef<any>(null)
   return (
     app.data?.auth?.username && (
       <MenuDropdown
+        ref={ref}
         testID="MenuUser"
         anchor={
-          <IconButton
-            style={s.iconMenuUser}
-            name={"user"}
-            size={24}
-            onPress={show}
-          />
+          <TouchableOpacity onPress={() => ref.current?.open()}>
+            <View style={s.iconMenuUser}>
+              <Icon name={"user"} size={24} />
+            </View>
+          </TouchableOpacity>
         }
       >
         <View style={s.viewMenu}>
