@@ -29,6 +29,7 @@ export const useSelect = (props: any) => {
 
   const isMobile = true //Platform.OS !== "web"
   const [state, setState] = useState({})
+  const [last, setLast] = useState({})
 
   // MODAL
   const show = React.useCallback(() => {
@@ -47,6 +48,12 @@ export const useSelect = (props: any) => {
     )
     display = multi ? display : display[0] || ""
     setState({ display })
+    if (isMobile) {
+      setLast({
+        value,
+        display,
+      })
+    }
   }, [options, isLoading])
 
   React.useEffect(() => {
@@ -78,9 +85,11 @@ export const useSelect = (props: any) => {
       const value = multi
         ? display.map(({ [keyValue]: v }: any) => v)
         : display[keyValue]
-      onChange(value)
+      if (!isMobile) {
+        onChange(value)
+      }
     }
-  }, [state.display])
+  }, [state.display, isMobile])
 
   // INPUT SEARCH
   const onChangeSearch = React.useCallback(
@@ -199,8 +208,16 @@ export const useSelect = (props: any) => {
       placeholder: `${
         placeholder.toLowerCase().indexOf("select") >= 0 ? "" : "Select "
       }${placeholder}`,
-      onCancel: hide,
+      onCancel: () => {
+        setState({ display: last.display })
+        hide()
+      },
       onCommit: () => {
+        const value = multi
+          ? state.display.map(({ [keyValue]: v }: any) => v)
+          : state.display[keyValue]
+        setLast({ value, display: state.display })
+        onChange(value)
         hide()
       },
       getDisplayProps,
