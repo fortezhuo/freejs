@@ -7,7 +7,7 @@ const { createTransport } = nodemailer
 
 export const mail = fp(
   async (instance: FastifyInstance, opts: any, next: any) => {
-    let transporter = null
+    let transporter: any = null
     try {
       transporter = createTransport(configMail)
       instance.log.info(
@@ -16,7 +16,12 @@ export const mail = fp(
     } catch (err) {
       return err
     }
-    instance.decorateRequest("mail", transporter)
+    instance.decorateRequest("mail", null)
+    instance.addHook("onRequest", (req: any, reply, next) => {
+      req.mail = transporter
+      next()
+    })
+
     instance.addHook("onClose", (instance: any, done) => {
       instance.mail.close(done)
     })
