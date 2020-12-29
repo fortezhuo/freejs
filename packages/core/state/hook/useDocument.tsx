@@ -32,8 +32,8 @@ export const useDocument = (name: string) => {
     if (Platform.OS == "web") {
       registerForteApp({ [name]: form.getValues })
     }
+    form.reset()
     return () => {
-      form.reset()
       refMounted.current = false
     }
   }, [])
