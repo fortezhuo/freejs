@@ -1,4 +1,14 @@
-import { Menu } from "@free/core"
+interface SubMenu {
+  label: string
+  icon: string
+  path?: string
+  visible: boolean
+}
+
+interface Menu extends SubMenu {
+  children: SubMenu[]
+}
+
 export const getMenu: (app: any) => Menu[] = (app) => {
   const canProfile = app.can("read", "profile")
   const canSetting = app.can("read", "setting")
@@ -65,39 +75,9 @@ export const getMenu: (app: any) => Menu[] = (app) => {
       visible: canProfile,
       children: [
         {
-          label: "Profile 1",
+          label: "Workflow",
           icon: "list",
-          path: "/view/1",
-          visible: true,
-        },
-        {
-          label: "Profile 2",
-          icon: "list",
-          path: "/view/2",
-          visible: true,
-        },
-        {
-          label: "Profile 3",
-          icon: "list",
-          path: "/view/3",
-          visible: true,
-        },
-        {
-          label: "Profile 4",
-          icon: "list",
-          path: "/view/4",
-          visible: true,
-        },
-        {
-          label: "Profile 5",
-          icon: "list",
-          path: "/view/5",
-          visible: true,
-        },
-        {
-          label: "Profile 6",
-          icon: "list",
-          path: "/view/6",
+          component: "ViewProfileWorkflow",
           visible: true,
         },
       ],

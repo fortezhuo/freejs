@@ -1,3 +1,40 @@
+// Profile Workflow
+export const ViewProfileWorkflow = {
+  name: "workflow",
+  search: ["parameter", "fullname", "email"],
+  fields: [],
+  actions: ["New", "Delete", "Search"],
+  columns: [
+    {
+      label: "",
+      name: "_id",
+      type: "link",
+      style: { width: 36, maxWidth: 36, marginTop: 1 },
+    },
+    {
+      label: "Parameter",
+      name: "parameter",
+      filter: true,
+      search: ["parameter"],
+      style: { width: 150 },
+    },
+    {
+      label: "Status",
+      name: "status",
+      filter: true,
+      search: ["status"],
+      style: { width: 300 },
+    },
+    {
+      label: "Completed Status",
+      name: "completedStatus",
+      filter: true,
+      search: ["completedStatus"],
+      style: { width: 300 },
+    },
+  ],
+}
+
 // Setting Trash
 export const ViewSettingTrash = {
   name: "trash",
@@ -11,21 +48,21 @@ export const ViewSettingTrash = {
       filter: false,
       type: "json",
       search: ["$text"],
-      style: { width: 30 },
+      style: { width: 30, flexGrow: 0 },
     },
     {
       label: "Collection",
       name: "_deletedFrom",
       filter: true,
       search: ["_deletedFrom"],
-      style: { width: 100 },
+      style: { width: 200, flexGrow: 0 },
     },
     {
       label: "Deleted By",
       name: "_deletedBy",
       filter: true,
       search: ["_deletedBy"],
-      style: { width: 150 },
+      style: { width: 200, flexGrow: 0 },
     },
     {
       label: "Deleted At",
@@ -84,7 +121,6 @@ export const ViewSettingUser = {
       label: "",
       name: "_id",
       type: "link",
-      path: "user",
       style: { width: 36, maxWidth: 36, marginTop: 1 },
     },
     {

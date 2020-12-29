@@ -1,5 +1,3 @@
-import { Config } from "@free/core"
-
 /* Banpu */
 /*
 Purple : bg-purple-800
@@ -11,7 +9,7 @@ Gray   : bg-gray-400
 Black  : bg-gray-900
 */
 
-let theme: Config = {
+let theme: JSONObject = {
   primary_1_bg: "bg-purple-800",
   primary_2_bg: "bg-blue-400",
   danger_bg: "bg-pink-800",

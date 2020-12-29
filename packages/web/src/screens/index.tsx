@@ -7,6 +7,16 @@ export const PageHome = loadable(() => import("@free/core/screen/PageHome"), {
   fallback: <Loader />,
 })
 
+export const Page500 = loadable(() => import("@free/core/screen/Page500"), {
+  ssr: true,
+  fallback: <Loader />,
+})
+
+export const Page404 = loadable(() => import("@free/core/screen/Page404"), {
+  ssr: true,
+  fallback: <Loader />,
+})
+
 export const PageLogin = loadable(() => import("@free/core/screen/PageLogin"), {
   ssr: true,
   fallback: <Loader />,
@@ -14,6 +24,14 @@ export const PageLogin = loadable(() => import("@free/core/screen/PageLogin"), {
 
 export const SettingUser = loadable(
   () => import("@free/core/screen/SettingUser"),
+  {
+    ssr: true,
+    fallback: <Loader />,
+  }
+)
+
+export const ProfileWorkflow = loadable(
+  () => import("@free/core/screen/ProfileWorkflow"),
   {
     ssr: true,
     fallback: <Loader />,

@@ -12,8 +12,9 @@ import { View, StyleSheet } from "react-native"
 import { useHook } from "./hook"
 import { tw } from "@free/tailwind"
 
-const SettingUser: React.FC = (props) => {
-  const { control, temp, state, actions } = useHook()
+const ProfileWorkflow: React.FC = (props) => {
+  const { control, state, temp, actions } = useHook()
+
   return (
     <>
       <Layout
@@ -23,72 +24,76 @@ const SettingUser: React.FC = (props) => {
           </View>
         }
       >
-        <Section label="User Information">
+        <Section label="Workflow">
           <Row dark>
             <Col md={2}>
-              <Label>User Name</Label>
+              <Label>Parameter</Label>
             </Col>
             <Col light md={10}>
               <Input.Text
                 control={control}
-                name="username"
-                placeholder="User Name"
+                name="parameter"
+                placeholder="Parameter"
                 isLoading={state.isLoading}
-                //                rules={{ required: "User Name is mandatory" }}
+                rules={{ required: "Parameter is mandatory" }}
               />
             </Col>
           </Row>
           <Row dark>
             <Col md={2}>
-              <Label>Full Name</Label>
-            </Col>
-            <Col light md={10}>
-              <Input.Text
-                control={control}
-                name="fullname"
-                placeholder="Full Name"
-                isLoading={state.isLoading}
-                rules={{ required: "Full Name is mandatory" }}
-              />
-            </Col>
-          </Row>
-          <Row dark>
-            <Col md={2}>
-              <Label>Email</Label>
-            </Col>
-            <Col light md={10}>
-              <Input.Text
-                isLoading={state.isLoading}
-                control={control}
-                name="email"
-                placeholder="Email"
-                rules={{
-                  required: "Email is mandatory",
-                  pattern: {
-                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                    message: "Invalid Email",
-                  },
-                }}
-              />
-            </Col>
-          </Row>
-          <Row dark>
-            <Col md={2}>
-              <Label>Roles</Label>
+              <Label>Status</Label>
             </Col>
             <Col light md={10}>
               <Input.Select
-                isLoading={state.isLoading}
                 control={control}
-                name="roles"
-                creatable
-                multi
-                placeholder="Roles"
-                options={temp.roles}
-                rules={{
-                  validate: (value: any) =>
-                    value.length == 0 ? "Roles is mandatory" : undefined,
-                }}
+                name="status"
+                placeholder="Status"
+                isLoading={state.isLoading}
+                rules={{ required: "Status is mandatory" }}
+                options={temp.status}
+              />
+            </Col>
+          </Row>
+          <Row dark>
+            <Col md={2}>
+              <Label>Parameter</Label>
+            </Col>
+            <Col light md={10}>
+              <Input.Text
+                control={control}
+                name="completedStatus"
+                placeholder="Completed Status"
+                isLoading={state.isLoading}
+                rules={{ required: "Completed Status is mandatory" }}
+              />
+            </Col>
+          </Row>
+          <Row dark>
+            <Col md={2}>
+              <Label>Reset Child while Revised</Label>
+            </Col>
+            <Col light md={10}>
+              <Input.Select
+                control={control}
+                name="reviseResetChild"
+                placeholder="Reset Child"
+                isLoading={state.isLoading}
+                rules={{ required: "Reset Child is mandatory" }}
+                options={temp.reviseResetChild}
+              />
+            </Col>
+          </Row>
+          <Row dark>
+            <Col md={2}>
+              <Label>Submitter Field</Label>
+            </Col>
+            <Col light md={10}>
+              <Input.Text
+                control={control}
+                name="submitterField"
+                placeholder="Submitter Field"
+                isLoading={state.isLoading}
+                rules={{ required: "Submitter Field is mandatory" }}
               />
             </Col>
           </Row>
@@ -105,4 +110,4 @@ const s = StyleSheet.create({
   textStatus: tw("text-white"),
 })
 
-export default SettingUser
+export default ProfileWorkflow

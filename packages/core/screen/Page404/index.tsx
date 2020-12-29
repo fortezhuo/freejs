@@ -2,12 +2,12 @@ import React from "react"
 
 import { Text, Layout } from "../../component"
 
-const PageHome: React.FC<any> = ({ navigation }) => {
+const Page404: React.FC<any> = ({ navigation }) => {
   return (
     <Layout transparent>
-      <Text>INDEX</Text>
+      <Text>ERROR 404</Text>
     </Layout>
   )
 }
 
-export default PageHome
+export default Page404

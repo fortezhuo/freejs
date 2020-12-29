@@ -83,6 +83,8 @@ const Routes: React.FC<any> = ({ screens }) => {
             screens: drawer,
           },
           ...child,
+          Error: "error",
+          "404": "*",
         },
       },
     }
@@ -167,7 +169,6 @@ const Routes: React.FC<any> = ({ screens }) => {
                 />
               )}
             </Stack.Screen>
-
             {routes.child.map((route: any) => {
               return (
                 <Stack.Screen
@@ -200,6 +201,12 @@ const Routes: React.FC<any> = ({ screens }) => {
                 />
               )
             })}
+            <Stack.Screen name="Error" component={screens.Page500} />
+            <Stack.Screen
+              options={{ title: "Not Found" }}
+              name="404"
+              component={screens.Page404}
+            />
           </>
         ) : (
           <Stack.Screen

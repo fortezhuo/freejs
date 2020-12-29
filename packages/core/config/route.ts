@@ -1,4 +1,10 @@
-import { Route } from "@free/core"
+interface Route {
+  name: string
+  title: string
+  view: string | boolean
+  child: string | boolean
+  visible: boolean
+}
 
 const getSetting: (visible: boolean) => Route[] = (visible) => {
   return [
@@ -27,7 +33,15 @@ const getSetting: (visible: boolean) => Route[] = (visible) => {
 }
 
 const getProfile: (visible: boolean) => Route[] = (visible) => {
-  return []
+  return [
+    {
+      name: "ProfileWorkflow",
+      title: "Profile Workflow",
+      view: "workflow",
+      child: "workflow/:id",
+      visible: visible,
+    },
+  ]
 }
 
 export const getRoute: (app: any) => Route[] = (app) => {
