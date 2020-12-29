@@ -33,6 +33,7 @@ export const useDocument = (name: string) => {
       registerForteApp({ [name]: form.getValues })
     }
     return () => {
+      form.reset()
       refMounted.current = false
     }
   }, [])
@@ -48,11 +49,16 @@ export const useDocument = (name: string) => {
       if (refMounted.current) {
         handleLoad()
       } else {
-        form.reset()
         refMounted.current = true
       }
     }, [refMounted.current])
   )
+
+  const setData = React.useCallback((data: JSONObject) => {
+    Object.keys(data).forEach((key: string) => {
+      form.setValue(key, data[key])
+    })
+  }, [])
 
   const handleError = React.useCallback((err: any) => {
     const {
@@ -91,7 +97,11 @@ export const useDocument = (name: string) => {
   }, [])
 
   const close = React.useCallback(() => {
-    navigation.goBack()
+    if (navigation.canGoBack()) {
+      navigation.goBack()
+    } else {
+      navigation.navigate("Drawer", { screen: `View${route.name}` })
+    }
   }, [])
 
   const save = React.useCallback(async (data: any) => {
@@ -109,5 +119,15 @@ export const useDocument = (name: string) => {
     }
   }, [])
 
-  return { ...form, refFunction, close, save, temp, setTemp, state, setState }
+  return {
+    ...form,
+    refFunction,
+    close,
+    save,
+    temp,
+    setTemp,
+    state,
+    setState,
+    setData,
+  }
 }

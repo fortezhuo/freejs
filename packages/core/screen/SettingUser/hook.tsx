@@ -3,9 +3,9 @@ import { configACL as acl } from "@free/env"
 import { useDocument } from "../../state/hook"
 
 export const useHook = () => {
-  const user = useDocument("user")
+  const document = useDocument("user")
   React.useEffect(() => {
-    user.setTemp({
+    document.setTemp({
       roles: Object.keys(acl).map((role: any) => ({
         value: role,
         label: role,
@@ -19,14 +19,14 @@ export const useHook = () => {
         icon: "save",
         type: "primary_1_bg",
         children: "Save",
-        onPress: user.handleSubmit(async (data) => {
-          if (await user.save(data)) {
-            user.close()
+        onPress: document.handleSubmit(async (data) => {
+          if (await document.save(data)) {
+            document.close()
           }
         }),
       },
     ]
   }, [])
 
-  return { ...user, actions }
+  return { ...document, actions }
 }

@@ -2,17 +2,19 @@ import React from "react"
 import { useDocument } from "../../state/hook"
 
 export const useHook = () => {
-  const { refFunction, ...workflow } = useDocument("workflow")
+  const { refFunction, ...document } = useDocument("workflow")
 
   React.useEffect(() => {
     refFunction.current.onLoad = async function () {
-      workflow.setValue("status", "Active")
-      workflow.setValue("completedStatus", "Approved")
-      workflow.setValue("reviseResetChild", "No")
-      workflow.setValue("submitterField", "creator")
+      document.setData({
+        status: "Active",
+        completedStatus: "Approved",
+        reviseResetChild: "No",
+        submitterField: "creator",
+      })
     }
 
-    workflow.setTemp({
+    document.setTemp({
       status: ["Active", "Inactive"].map((v) => ({ value: v, label: v })),
       reviseResetChild: ["Yes", "No"].map((v) => ({ value: v, label: v })),
     })
@@ -24,14 +26,14 @@ export const useHook = () => {
         icon: "save",
         type: "primary_1_bg",
         children: "Save",
-        onPress: workflow.handleSubmit(async (data) => {
-          if (await workflow.save(data)) {
-            workflow.close()
+        onPress: document.handleSubmit(async (data) => {
+          if (await document.save(data)) {
+            document.close()
           }
         }),
       },
     ]
   }, [])
 
-  return { ...workflow, actions }
+  return { ...document, actions }
 }

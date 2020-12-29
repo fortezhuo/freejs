@@ -56,7 +56,7 @@ const ProfileWorkflow: React.FC = (props) => {
           </Row>
           <Row dark>
             <Col md={2}>
-              <Label>Parameter</Label>
+              <Label>Completed Status</Label>
             </Col>
             <Col light md={10}>
               <Input.Text
