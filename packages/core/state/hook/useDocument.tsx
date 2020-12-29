@@ -12,32 +12,49 @@ import { registerForteApp } from "../../util"
 import { useApp } from "../../state"
 import * as req from "../../request"
 
-const defaultCallback = {
+const initCallback = {
   onLoad: async function () {},
   onBeforeSave: async function (data: any) {},
 }
 
-export const useDocument = (name: string, initCallback?: JSONObject) => {
+export const useDocument = (name: string) => {
   const app = useApp()
   const navigation = useNavigation()
   const form = useForm({ criteriaMode: "all" })
   const route = useRoute()
-  const [isFirst, setFirst] = React.useState(false)
   const [temp, setTemp] = useState({})
   const [state, setState] = useState({})
   const id = (route?.params as any).id
+  const refMounted = React.useRef<boolean>(false)
+  const refFunction = React.useRef<JSONObject>(initCallback)
 
-  const f = React.useMemo(() => {
-    const cb: JSONObject = { ...defaultCallback, ...initCallback }
-    let bindCB: JSONObject = {}
-    Object.keys(cb).forEach((key) => {
-      bindCB[key] = cb[key].bind({ app, navigation, form, route })
-    })
-
-    return bindCB
+  React.useEffect(() => {
+    if (Platform.OS == "web") {
+      registerForteApp({ [name]: form.getValues })
+    }
+    return () => {
+      refMounted.current = false
+    }
   }, [])
 
-  const handleError = (err: any) => {
+  React.useEffect(() => {
+    if (!!app.error.message) {
+      navigation.navigate("Error")
+    }
+  }, [app.error.message])
+
+  useFocusEffect(
+    React.useCallback(() => {
+      if (refMounted.current) {
+        handleLoad()
+      } else {
+        form.reset()
+        refMounted.current = true
+      }
+    }, [refMounted.current])
+  )
+
+  const handleError = React.useCallback((err: any) => {
     const {
       data: { errors, message, stack },
       status,
@@ -52,7 +69,26 @@ export const useDocument = (name: string, initCallback?: JSONObject) => {
     if (status === 500) {
       app.setError({ message, stack })
     }
-  }
+  }, [])
+
+  const handleLoad = React.useCallback(async () => {
+    try {
+      setState({ isLoading: true })
+      if (id.length === 24) {
+        const {
+          data: { result },
+        } = await req.POST(`/api/find/${name}/${id}`, {})
+        await asyncForEach(Object.keys(result), async (key: string) => {
+          form.setValue(key, result[key])
+        })
+      }
+      await refFunction.current.onLoad()
+    } catch (err) {
+      handleError(err)
+    } finally {
+      setState({ isLoading: false })
+    }
+  }, [])
 
   const close = React.useCallback(() => {
     navigation.goBack()
@@ -63,7 +99,7 @@ export const useDocument = (name: string, initCallback?: JSONObject) => {
     const method = isUpdate ? "PATCH" : "POST"
     try {
       setState({ isLoading: true })
-      await f.onBeforeSave(data)
+      await refFunction.current.onBeforeSave(data)
       await req[method](`/api/${name}${isUpdate ? `/${id}` : ""}`, data)
       return true
     } catch (err) {
@@ -73,49 +109,5 @@ export const useDocument = (name: string, initCallback?: JSONObject) => {
     }
   }, [])
 
-  useFocusEffect(
-    React.useCallback(() => {
-      const onLoad = async function () {
-        try {
-          if (isFirst) {
-            form.reset()
-          } else {
-            setState({ isLoading: true })
-            if (id.length === 24) {
-              const {
-                data: { result },
-              } = await req.POST(`/api/find/${name}/${id}`, {})
-              await asyncForEach(Object.keys(result), async (key: string) => {
-                form.setValue(key, result[key])
-              })
-            }
-            await f.onLoad()
-          }
-        } catch (err) {
-          handleError(err)
-        } finally {
-          setState({ isLoading: false })
-        }
-      }
-      onLoad()
-
-      return () => {
-        setFirst(false)
-      }
-    }, [isFirst])
-  )
-
-  React.useEffect(() => {
-    if (Platform.OS == "web") {
-      registerForteApp({ [name]: form.getValues })
-    }
-  }, [])
-
-  React.useEffect(() => {
-    if (!!app.error.message) {
-      navigation.navigate("Error")
-    }
-  }, [app.error.message])
-
-  return { ...form, close, save, temp, setTemp, state, setState }
+  return { ...form, refFunction, close, save, temp, setTemp, state, setState }
 }

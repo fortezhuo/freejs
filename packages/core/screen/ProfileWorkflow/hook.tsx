@@ -1,23 +1,17 @@
 import React from "react"
 import { useDocument } from "../../state/hook"
 
-const onLoad = async function (this: any) {
-  this.form.setValue("parameter", "Active")
-  this.form.setValue("status", "Active")
-  this.form.setValue("completedStatus", "Approved")
-  this.form.setValue("reviseResetChild", "No")
-  this.form.setValue("submitterField", "creator")
-}
-
-const onBeforeSave = async function (this: any, data: any) {
-  console.log("this", this)
-  console.log(data)
-}
-
 export const useHook = () => {
-  const workflow = useDocument("workflow", { onLoad })
+  const { refFunction, ...workflow } = useDocument("workflow")
 
   React.useEffect(() => {
+    refFunction.current.onLoad = async function () {
+      workflow.setValue("status", "Active")
+      workflow.setValue("completedStatus", "Approved")
+      workflow.setValue("reviseResetChild", "No")
+      workflow.setValue("submitterField", "creator")
+    }
+
     workflow.setTemp({
       status: ["Active", "Inactive"].map((v) => ({ value: v, label: v })),
       reviseResetChild: ["Yes", "No"].map((v) => ({ value: v, label: v })),
