@@ -68,7 +68,7 @@ export const LayoutFull: React.FC<LayoutFull> = ({
 interface Layout extends LayoutFull {
   stickyLeft?: React.ReactNode
   stickyRight?: React.ReactNode
-  style?: any
+  style?: JSONObject
 }
 
 export const Layout: React.FC<Layout> = ({

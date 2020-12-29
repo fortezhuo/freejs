@@ -12,7 +12,7 @@ interface Row {
   lgHidden?: boolean
   xlHidden?: boolean
   children: React.ReactNode
-  style?: any
+  style?: JSONObject
 }
 
 // Col
@@ -26,7 +26,7 @@ interface Col {
   lgHidden?: boolean
   xl?: number
   xlHidden?: boolean
-  style?: any
+  style?: JSONObject
   children?: any
 }
 

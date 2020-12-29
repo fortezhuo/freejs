@@ -6,7 +6,7 @@ import { tw } from "@free/tailwind"
 interface Row {
   children: React.ReactNode
   dark?: boolean | number
-  style?: any
+  style?: JSONObject
   testID?: string
 }
 

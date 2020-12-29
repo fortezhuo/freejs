@@ -207,7 +207,7 @@ export const useColumns = ({ refBottomSheet, setContent }: any) => {
 
   return React.useMemo(
     () =>
-      (config?.columns || []).map((col: ObjectAny) => ({
+      (config?.columns || []).map((col: JSONObject) => ({
         id: col.type ? `${col.name}_${col.type}` : col.name,
         Header: col.label,
         accessor: col.name,

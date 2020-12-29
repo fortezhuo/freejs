@@ -14,7 +14,7 @@ interface Button {
   outline?: boolean
   children?: string
   icon?: string
-  style?: any
+  style?: JSONObject
   disabled?: boolean
   onPress?: VoidFunction
   onClear?: VoidFunction

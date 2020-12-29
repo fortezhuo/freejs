@@ -9,14 +9,14 @@ interface InputRawDateTime {
   placeholder?: string
   value: any
   onChange: any
-  style?: any
+  style?: JSONObject
 }
 
 interface FormInputRawDateTime {
   control: any
   name: string
   rules?: any
-  style?: any
+  style?: JSONObject
   type?: string
   disabled?: boolean
   placeholder?: string

@@ -9,7 +9,7 @@ const defaultColor = color(theme.default_text)
 interface Cell {
   isMobile?: boolean
   children?: React.ReactNode
-  style?: any
+  style?: JSONObject
   testID?: string
   onPress?: any
 }

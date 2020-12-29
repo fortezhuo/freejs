@@ -13,7 +13,7 @@ export const MenuItem: React.FC<{
   color?: string
   onPress?: VoidFunction
   styleText?: any
-  style?: any
+  style?: JSONObject
   children: string
 }> = ({
   active,

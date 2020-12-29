@@ -8,7 +8,7 @@ export class BaseService {
   public name: string
   public disableAuth: boolean
   protected instance: Instance | undefined
-  public auth: ObjectAny | undefined
+  public auth: JSONObject | undefined
   constructor(name: string) {
     this.name = name
     this.instance = undefined

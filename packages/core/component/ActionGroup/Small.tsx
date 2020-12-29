@@ -6,10 +6,13 @@ import { random } from "../../util"
 import { useApp } from "../../state"
 import { tw } from "@free/tailwind"
 
-export const Small: React.FC<any> = ({ actions, isLoading }) => {
+export const Small: React.FC<{
+  actions: JSONObject[]
+  isLoading?: boolean
+}> = ({ actions, isLoading }) => {
   const app = useApp()
   const modalizeRef = React.useRef<Modalize>(null)
-  actions = actions.filter((act: ObjectAny) => act.children !== "Delete")
+  actions = actions.filter((act) => act.children !== "Delete")
   const isShow = actions.length != 0 && app.temp.isMobile
 
   return (
@@ -36,7 +39,7 @@ export const Small: React.FC<any> = ({ actions, isLoading }) => {
             flexDirection: "column",
           }}
         >
-          {actions.map(({ icon, type, ...prop }: ObjectAny) => (
+          {actions.map(({ icon, type, ...prop }: JSONObject) => (
             <Button
               type={type}
               style={{ borderRadius: 10 }}

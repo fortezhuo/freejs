@@ -35,11 +35,11 @@ export const MenuDropdown: React.FC<any> = React.forwardRef(
       hide,
     }))
 
-    const [layout, setLayout] = React.useState<ObjectAny>({
+    const [layout, setLayout] = React.useState<JSONObject>({
       width: 0,
       height: 0,
     })
-    const [measure, setMeasure] = React.useState<ObjectAny>({
+    const [measure, setMeasure] = React.useState<JSONObject>({
       top: 0,
       left: 0,
       anchorWidth: 0,

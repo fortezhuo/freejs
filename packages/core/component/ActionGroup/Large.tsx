@@ -4,11 +4,14 @@ import { random } from "../../util"
 import { View, StyleSheet } from "react-native"
 import { tw } from "@free/tailwind"
 
-export const Large: React.FC<any> = ({ actions, isLoading }) => {
+export const Large: React.FC<{
+  actions: JSONObject[]
+  isLoading?: boolean
+}> = ({ actions, isLoading }) => {
   return (
     <View style={s.viewAction}>
       <View style={s.groupAction}>
-        {actions.map((prop: ObjectAny) => (
+        {actions.map((prop) => (
           <Button
             key={"actlarge_" + random()}
             {...{ isLoading, ...prop }}

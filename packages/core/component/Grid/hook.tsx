@@ -1,7 +1,7 @@
 import React from "react"
 import { useApp } from "../../state"
 
-const isHiddenByScreen = (screen?: string, props?: ObjectAny) => {
+const isHiddenByScreen = (screen?: string, props?: JSONObject) => {
   switch (screen) {
     case "sm":
       return !!props?.smHidden
@@ -14,7 +14,7 @@ const isHiddenByScreen = (screen?: string, props?: ObjectAny) => {
   }
 }
 
-const getWidthByScreen = (screen?: string, props?: ObjectAny) => {
+const getWidthByScreen = (screen?: string, props?: JSONObject) => {
   let width = ``
   switch (screen) {
     case "sm":
@@ -54,11 +54,11 @@ const getWidthByScreen = (screen?: string, props?: ObjectAny) => {
 export const useHook = () => {
   const { temp } = useApp()
   const isHidden = React.useCallback(
-    (props: ObjectAny) => isHiddenByScreen(temp.screen, props),
+    (props: JSONObject) => isHiddenByScreen(temp.screen, props),
     [temp.screen]
   )
   const getWidth = React.useCallback(
-    (props: ObjectAny) => getWidthByScreen(temp.screen, props),
+    (props: JSONObject) => getWidthByScreen(temp.screen, props),
     [temp.screen]
   )
   return { isHidden, getWidth }

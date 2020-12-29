@@ -1,5 +1,5 @@
 type VoidFunction = (...args) => void
-type ObjectAny = {
+type JSONObject = {
   [key: string]: any
 }
 

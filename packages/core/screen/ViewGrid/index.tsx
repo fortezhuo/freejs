@@ -9,7 +9,7 @@ import { BottomSheet } from "./BottomSheet"
 import { TableAction } from "./TableAction"
 
 const ViewGrid: React.FC<any> = withView(() => {
-  const [content, setContent] = React.useState<ObjectAny | undefined>(undefined)
+  const [content, setContent] = React.useState<Object | undefined>(undefined)
 
   return (
     <>
