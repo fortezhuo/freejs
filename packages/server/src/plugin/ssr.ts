@@ -30,10 +30,13 @@ export const ssr = fp(async (instance) => {
             const { default: NodeApp } = nodeExtractor.requireEntrypoint()
             const webExtractor = new ChunkExtractor({ statsFile: webStats })
             const jsx = webExtractor.collectChunks(
-              React.createElement(NodeApp as React.ComponentType<App>, {
-                location: req.raw.url,
-                context: {},
-              })
+              React.createElement(
+                NodeApp as React.ComponentType<{ location: any; context: any }>,
+                {
+                  location: req.raw.url,
+                  context: {},
+                }
+              )
             )
             const html = renderToString(jsx)
             reply.type("text/html")

@@ -2,9 +2,15 @@ import React from "react"
 import { StyleSheet, View } from "react-native"
 import { theme } from "../../config/theme"
 import { tw } from "@free/tailwind"
-import { RowProps } from "@free/core"
 
-export const Row: React.FC<RowProps> = ({
+interface Row {
+  children: React.ReactNode
+  dark?: boolean | number
+  style?: any
+  testID?: string
+}
+
+export const Row: React.FC<Row> = ({
   children,
   dark,
   style,
@@ -17,7 +23,7 @@ export const Row: React.FC<RowProps> = ({
   )
 }
 
-export const Header: React.FC<RowProps> = ({ children, style }) => {
+export const Header: React.FC<Row> = ({ children, style }) => {
   return <Row style={[s.viewHeader, style]}>{children}</Row>
 }
 

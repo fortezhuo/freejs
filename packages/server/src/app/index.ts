@@ -3,9 +3,8 @@ import { Server, IncomingMessage, ServerResponse } from "http"
 import { loadBanner } from "./misc"
 import { all } from "../plugin"
 import { configApp, configServer } from "@free/env"
-import { Boot } from "@free/server"
 
-export const boot: Boot = async () => {
+export const boot = async () => {
   const isProd = process.env.NODE_ENV === "production"
   const isDevMobile = process.env.MOBILE === "development"
   const app: FastifyInstance<Server, IncomingMessage, ServerResponse> = fastify(

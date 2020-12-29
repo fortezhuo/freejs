@@ -33,7 +33,7 @@ export const BottomSheet: React.FC<any> = React.memo(
         stickyHeaderIndices: [0],
         renderItem: ({ item, index }: any) => {
           return (
-            <Table.Row dark={index % 2}>
+            <Table.Row dark={index % 2 == 0}>
               <View style={{ width: 100 }}>
                 <Table.CellText>{item.key}</Table.CellText>
               </View>

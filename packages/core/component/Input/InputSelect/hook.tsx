@@ -27,7 +27,7 @@ export const useSelect = (props: any) => {
     refWrapper,
   } = props
 
-  const isMobile = true //Platform.OS !== "web"
+  const isMobile = Platform.OS !== "web"
   const [state, setState] = useState({})
   const [last, setLast] = useState({})
 

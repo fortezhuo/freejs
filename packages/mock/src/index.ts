@@ -53,7 +53,7 @@ smtpServer.on("error", (err) => {
   console.log(err)
 })
 
-ldapServer.bind(userDN, function (req: Any, res: Any, next: Any) {
+ldapServer.bind(userDN, function (req: any, res: any, next: any) {
   if (req.credentials !== userCredential) {
     return next(new ldap.InvalidCredentialsError("Invalid Username / Password"))
   }
@@ -62,7 +62,7 @@ ldapServer.bind(userDN, function (req: Any, res: Any, next: Any) {
   return next()
 })
 
-ldapServer.search(configLDAP.base, function (req: Any, res: Any) {
+ldapServer.search(configLDAP.base, function (req: any, res: any) {
   const fetchUser = database.filter((obj) => req.filter.matches(obj.attributes))
   res.send(fetchUser.length != 0 ? fetchUser[0] : null)
   res.end()

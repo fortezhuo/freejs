@@ -1,4 +1,9 @@
-import { LDAPData } from "@free/mock"
+type LDAPData = {
+  dn: string
+  attributes: {
+    [key: string]: string
+  }
+}
 
 export const database: Array<LDAPData> = [
   {
