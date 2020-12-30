@@ -34,6 +34,7 @@ export const useDocument = (name: string) => {
     }
     form.reset()
     return () => {
+      form.reset()
       refMounted.current = false
     }
   }, [])
@@ -54,8 +55,8 @@ export const useDocument = (name: string) => {
     }, [refMounted.current])
   )
 
-  const setData = React.useCallback((data: JSONObject) => {
-    Object.keys(data).forEach((key: string) => {
+  const setData = React.useCallback(async (data: JSONObject) => {
+    await asyncForEach(Object.keys(data), async (key: string) => {
       form.setValue(key, data[key])
     })
   }, [])
@@ -84,9 +85,7 @@ export const useDocument = (name: string) => {
         const {
           data: { result },
         } = await req.POST(`/api/find/${name}/${id}`, {})
-        await asyncForEach(Object.keys(result), async (key: string) => {
-          form.setValue(key, result[key])
-        })
+        await setData(result)
       }
       await refFunction.current.onLoad()
     } catch (err) {

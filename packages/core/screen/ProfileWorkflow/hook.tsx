@@ -11,6 +11,7 @@ export const useHook = () => {
         completedStatus: "Approved",
         reviseResetChild: "No",
         submitterField: "creator",
+        maxApprover: 0,
       })
     }
 

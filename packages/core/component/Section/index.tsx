@@ -3,15 +3,15 @@ import { View, TouchableOpacity, StyleSheet } from "react-native"
 import { theme } from "../../config/theme"
 import { Icon, H5 } from ".."
 import { tw, color } from "@free/tailwind"
-import { SectionProps } from "@free/core"
 
 const defaultColor = color(theme.disabled_text)
-export const Section: React.FC<SectionProps> = ({
-  testID = "Section",
-  label,
-  show = true,
-  children,
-}) => {
+export const Section: React.FC<{
+  testID?: string
+  label: string
+  show?: boolean
+  children: React.ReactNode
+  right?: React.ReactNode
+}> = ({ testID = "Section", label, show = true, children, right }) => {
   const [isExpand, setExpand] = React.useState(show)
   const Title = () =>
     React.useMemo(() => <H5 style={s.textSection}>{label}</H5>, [])
@@ -26,6 +26,7 @@ export const Section: React.FC<SectionProps> = ({
             name={`chevron-${isExpand ? "up" : "down"}`}
           />
           <Title />
+          {right}
         </View>
       </TouchableOpacity>
       <View
@@ -47,5 +48,5 @@ const s = StyleSheet.create({
   groupSection: tw(`flex-row z-10 p-3 items-center border-b border-gray-400`),
   groupLabel: tw("flex-grow flex-row items-center"),
   groupItem: tw(`bg-white flex-col`),
-  textSection: tw(`px-2 ${theme.disabled_text}`),
+  textSection: tw(`px-2 ${theme.disabled_text} flex-grow`),
 })
