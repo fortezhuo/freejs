@@ -57,3 +57,10 @@ export const formatDate = (value: any) => dayjs(value).format("DD MMM YYYY")
 export const formatTime = (value: any) => dayjs(value).format("HH:mm")
 export const formatDateTime = (value: any) =>
   dayjs(value).format("DD MMM YYYY HH:mm:ss")
+export const formatString = (value: any) => {
+  return isArray(value)
+    ? typeof value[0] === "string" || typeof value[0] === "undefined"
+      ? JSON.stringify(value)
+      : JSON.stringify(value, null, 2)
+    : value
+}

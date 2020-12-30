@@ -12,7 +12,12 @@ import { Footer } from "./Footer"
 
 const format = (value: any) => {
   let _value = value
-  if (isArray(value)) _value = value.join(",")
+  if (isArray(value))
+    _value =
+      typeof value[0] === "string" || typeof value[0] === "undefined"
+        ? JSON.stringify(value)
+        : JSON.stringify(value, null, 2)
+
   if (isDateString(value)) _value = formatDateTime(value)
   return _value
 }
@@ -34,7 +39,7 @@ export const BottomSheet: React.FC<any> = React.memo(
         renderItem: ({ item, index }: any) => {
           return (
             <Table.Row dark={index % 2 == 0}>
-              <View style={{ width: 100 }}>
+              <View style={{ width: 200 }}>
                 <Table.CellText>{item.key}</Table.CellText>
               </View>
               <Table.CellText>{format(item.value)}</Table.CellText>

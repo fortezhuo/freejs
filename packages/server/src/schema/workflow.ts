@@ -6,5 +6,6 @@ export const workflow = createSchema({
   completedStatus: Joi.string().required(),
   reviseResetChild: Joi.string().required(),
   submitterField: Joi.string().required(),
+  maxApprover: Joi.number().required(),
   workflow: Joi.array(),
 })

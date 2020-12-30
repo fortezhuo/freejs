@@ -6,13 +6,15 @@ export const useHook = () => {
 
   React.useEffect(() => {
     refFunction.current.onLoad = async function () {
-      document.setData({
-        status: "Active",
-        completedStatus: "Approved",
-        reviseResetChild: "No",
-        submitterField: "creator",
-        maxApprover: 0,
-      })
+      if (document.getId() === "new") {
+        document.setData({
+          status: "Active",
+          completedStatus: "Approved",
+          reviseResetChild: "No",
+          submitterField: "creator",
+          maxApprover: 0,
+        })
+      }
     }
 
     document.setTemp({

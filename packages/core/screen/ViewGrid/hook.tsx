@@ -5,7 +5,7 @@ import { POST, DELETE } from "../../request"
 import { Table } from "../../component"
 import { CellText, CellLink, CellPressable } from "../../component/Table/Cell"
 import { download } from "./helper"
-import { formatDate, formatDateTime } from "../../util"
+import { formatDate, formatDateTime, formatString } from "../../util"
 import { Modalize } from "react-native-modalize"
 
 import { TableCheckbox } from "./TableCheckbox"
@@ -263,7 +263,7 @@ export const useColumns = ({ refBottomSheet, setContent }: any) => {
             default:
               return (
                 <CellText isMobile={isMobile} style={cell.column.style}>
-                  {prefix + cell.value}
+                  {prefix + formatString(cell.value)}
                 </CellText>
               )
           }

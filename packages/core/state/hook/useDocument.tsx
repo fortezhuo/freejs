@@ -55,6 +55,8 @@ export const useDocument = (name: string) => {
     }, [refMounted.current])
   )
 
+  const getId = React.useCallback(() => id, [])
+
   const setData = React.useCallback(async (data: JSONObject) => {
     await asyncForEach(Object.keys(data), async (key: string) => {
       form.setValue(key, data[key])
@@ -62,10 +64,9 @@ export const useDocument = (name: string) => {
   }, [])
 
   const handleError = React.useCallback((err: any) => {
-    const {
-      data: { errors, message, stack },
-      status,
-    } = err
+    const { data, status } = err
+    const { errors, message, stack } = data || {}
+
     // Validation
     if (message.indexOf("Validation Error") >= 0) {
       Object.keys(errors).forEach((key: string) => {
@@ -128,5 +129,6 @@ export const useDocument = (name: string) => {
     state,
     setState,
     setData,
+    getId,
   }
 }

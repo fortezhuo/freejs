@@ -110,7 +110,7 @@ const ProfileWorkflow: React.FC = (props) => {
                 placeholder="Max Approver"
                 keyboardType="number-pad"
                 isLoading={state.isLoading}
-                disabled
+                editable={false}
               />
             </Col>
           </Row>
