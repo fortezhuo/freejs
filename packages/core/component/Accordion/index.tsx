@@ -1,7 +1,6 @@
 import React from "react"
 import { TouchableOpacity } from "react-native"
 import { Link } from ".."
-import { AccordionItemProps } from "@free/core"
 import { Wrapper } from "./Wrapper"
 import { SubTitle, Title } from "./Title"
 
@@ -33,7 +32,16 @@ export const Accordion: React.FC<Accordion> = ({
   )
 }
 
-export const AccordionItem: React.FC<AccordionItemProps> = ({
+interface AccordionItem {
+  testID?: string
+  active?: boolean
+  icon: string
+  children?: string
+  navigation: any
+  component: string
+}
+
+export const AccordionItem: React.FC<AccordionItem> = ({
   testID = "AccordionItem",
   active,
   icon,

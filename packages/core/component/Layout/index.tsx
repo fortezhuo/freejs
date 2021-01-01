@@ -3,7 +3,6 @@ import { View, StyleSheet } from "react-native"
 import { theme } from "../../config/theme"
 import { Gradient, KeyboardAwareScrollView } from "../"
 import { tw } from "@free/tailwind"
-import { LayoutProps } from "@free/core"
 
 interface Wrapper {
   scroll?: boolean

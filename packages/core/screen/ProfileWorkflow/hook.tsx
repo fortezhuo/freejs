@@ -7,7 +7,7 @@ export const useHook = () => {
   React.useEffect(() => {
     refFunction.current.onLoad = async function () {
       if (document.getId() === "new") {
-        document.setData({
+        await document.setData({
           status: "Active",
           completedStatus: "Approved",
           reviseResetChild: "No",

@@ -2,9 +2,8 @@ import React from "react"
 import { ActivityIndicator, View, StyleSheet } from "react-native"
 import { theme } from "../../config/theme"
 import { tw, color } from "@free/tailwind"
-import { LoaderProps } from "@free/core"
 
-export const Loader: React.FC<LoaderProps> = ({ dark = false }) => {
+export const Loader: React.FC<{ dark?: boolean }> = ({ dark = false }) => {
   return (
     <View style={s.viewLoader}>
       <ActivityIndicator

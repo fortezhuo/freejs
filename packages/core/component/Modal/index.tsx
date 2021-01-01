@@ -8,9 +8,19 @@ import {
   Modal as RNModal,
 } from "react-native"
 import { tw } from "@free/tailwind"
-import { ModalProps } from "@free/core"
 
-export const Modal: React.FC<ModalProps> = ({
+interface Modal {
+  isVisible: boolean
+  animationType?: "fade" | "none" | "slide"
+  transparent?: boolean
+  onShow?: VoidFunction
+  onDismiss?: VoidFunction
+  onRequestClose?: VoidFunction
+  onBackdropPress?: VoidFunction
+  children: React.ReactNode
+}
+
+export const Modal: React.FC<Modal> = ({
   isVisible,
   animationType = "fade",
   transparent = false,

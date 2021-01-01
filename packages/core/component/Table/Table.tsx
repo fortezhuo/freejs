@@ -1,10 +1,19 @@
 import React from "react"
 import { View, ScrollView, StyleSheet } from "react-native"
-import { TableProps } from "@free/core"
 import { tw } from "@free/tailwind"
 import { theme } from "../../config/theme"
 
-export const Scroll: React.FC<TableProps> = ({
+interface TableDefault {
+  children?: React.ReactNode
+  style?: JSONObject
+  testID?: string
+}
+
+interface TableScroll extends TableDefault {
+  scroll?: boolean
+}
+
+export const Scroll: React.FC<TableScroll> = ({
   children,
   style,
   scroll,
@@ -19,7 +28,7 @@ export const Scroll: React.FC<TableProps> = ({
   )
 }
 
-export const Default: React.FC<TableProps> = ({
+export const Default: React.FC<TableDefault> = ({
   children,
   style,
   testID = "Table",

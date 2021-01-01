@@ -14,7 +14,14 @@ import * as req from "../../request"
 
 const initCallback = {
   onLoad: async function () {},
+  onEdit: async function () {},
   onBeforeSave: async function (data: any) {},
+  onAfterSave: async function (data: any) {},
+  onBeforeCalculate: async function (data: any) {},
+  onAfterCalculate: async function (data: any) {},
+  onBeforeProcess: async function (data: any) {},
+  onAfterProcess: async function (data: any) {},
+  onDestroy: function () {},
 }
 
 export const useDocument = (name: string) => {
@@ -35,6 +42,7 @@ export const useDocument = (name: string) => {
     form.reset()
     return () => {
       form.reset()
+      refFunction.current.onDestroy()
       refMounted.current = false
     }
   }, [])
@@ -111,6 +119,7 @@ export const useDocument = (name: string) => {
       setState({ isLoading: true })
       await refFunction.current.onBeforeSave(data)
       await req[method](`/api/${name}${isUpdate ? `/${id}` : ""}`, data)
+      await refFunction.current.onAfterSave(data)
       return true
     } catch (err) {
       return handleError(err)
@@ -122,6 +131,7 @@ export const useDocument = (name: string) => {
   return {
     ...form,
     refFunction,
+    handleError,
     close,
     save,
     temp,
