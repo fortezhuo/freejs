@@ -2,8 +2,6 @@ const role = {
   grants: [
     { resource: "create", action: ["*"] },
     { resource: "view", action: ["*"] },
-    { resource: "profile", action: ["*"] },
-    { resource: "setting", action: ["*"] },
     {
       resource: "workflow",
       action: ["read"],
