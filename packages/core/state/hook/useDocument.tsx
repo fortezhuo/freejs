@@ -81,6 +81,21 @@ export const useDocument = (name: string) => {
         form.setError(key, { type: "server", message: errors[key] })
       })
     }
+
+    if (status === 403) {
+      app.refAlert.current.error({
+        title: "Attention",
+        message,
+        actions: [
+          {
+            label: "OK",
+            type: "danger",
+            onPress: () => app.refAlert.current.close(),
+          },
+        ],
+      })
+    }
+
     // Error 500
     if (status === 500) {
       app.setError({ message, stack })

@@ -61,7 +61,7 @@ const update = async function (auth: any, collection: any, handler: any) {
     ...q,
   }
 
-  return await collection.update(
+  const result = await collection.update(
     query,
     {
       $set: {
@@ -80,4 +80,14 @@ const update = async function (auth: any, collection: any, handler: any) {
     },
     option
   )
+
+  if (result.n > 0 && result.nModified > 0 && result.ok > 0) {
+    return result
+  } else {
+    throw new Exception(
+      403,
+      "You don't have access to update this document",
+      result
+    )
+  }
 }

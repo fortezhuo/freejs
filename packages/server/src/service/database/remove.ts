@@ -13,6 +13,7 @@ export const remove = function (this: DatabaseService) {
 
       const { q } = this.onRequestHandler(req)
       if (!q) throw new Exception(400, "Parameter not found")
+      const ids = q._id.$in
 
       const query = this.disableAuth
         ? q
@@ -22,7 +23,7 @@ export const remove = function (this: DatabaseService) {
           }
 
       let data
-      let result = []
+      let result: string[] = []
       const queue = await collection.find(query, {})
       if (queue) {
         for await (let selected of queue) {
@@ -51,6 +52,12 @@ export const remove = function (this: DatabaseService) {
               result.push(selected._id)
             }
           }
+        }
+
+        if (ids.length !== result.length) {
+          throw new Exception(403, "Failed to delete some documents", {
+            failed: ids.filter((id: string) => result.indexOf(id) < 0),
+          })
         }
 
         reply.send({

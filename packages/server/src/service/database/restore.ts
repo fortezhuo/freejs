@@ -10,6 +10,8 @@ export const restore = function (this: DatabaseService) {
       const trash = req.database.get("trash")
       const { q } = this.onRequestHandler(req)
       if (!q) throw new Exception(400, "Parameter not found")
+      const ids = q._id.$in
+
       const query = this.disableAuth
         ? q
         : {
@@ -17,7 +19,7 @@ export const restore = function (this: DatabaseService) {
             ...q,
           }
 
-      let result = []
+      let result: string[] = []
       const queue = await trash.find(query, {})
 
       if (queue) {
@@ -30,6 +32,12 @@ export const restore = function (this: DatabaseService) {
           } else {
             throw new Exception(400, "Restore failed")
           }
+        }
+
+        if (ids.length !== result.length) {
+          throw new Exception(403, "Failed to restore some documents", {
+            failed: ids.filter((id: string) => result.indexOf(id) < 0),
+          })
         }
 
         reply.send({

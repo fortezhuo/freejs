@@ -20,6 +20,7 @@ const ProfileWorkflow: React.FC = (props) => {
   return (
     <>
       <Layout
+        document={document}
         stickyLeft={
           <View style={s.viewButton}>
             <ActionGroup.Large actions={actions} />

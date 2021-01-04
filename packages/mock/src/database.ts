@@ -16,6 +16,15 @@ export const database: Array<LDAPData> = [
     },
   },
   {
+    dn: "cn=rockman,dc=ROCKMAN,dc=COM",
+    attributes: {
+      cn: "rockman",
+      sAMAccountName: "rockman",
+      displayName: "Rockman",
+      mail: "forte@rockman.com",
+    },
+  },
+  {
     dn: "cn=user_one,dc=ROCKMAN,dc=COM",
     attributes: {
       cn: "user_one",

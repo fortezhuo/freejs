@@ -15,6 +15,35 @@ import {
   useFocusEffect,
 } from "@react-navigation/native"
 
+const useAlert = () => {
+  const app = useApp()
+  const handleError = React.useCallback((err: any) => {
+    const { data, status } = err
+    const { message, stack } = data || {}
+
+    if (status === 403) {
+      app.refAlert.current.error({
+        title: "Attention",
+        message,
+        actions: [
+          {
+            label: "OK",
+            type: "danger",
+            onPress: () => app.refAlert.current.close(),
+          },
+        ],
+      })
+    }
+
+    // Error 500
+    if (status === 500) {
+      app.setError({ message, stack })
+    }
+  }, [])
+
+  return { ...app, handleError }
+}
+
 export const useSelection = (hooks: any) => {
   return hooks.visibleColumns.push((columns: any) => [
     {
@@ -89,8 +118,7 @@ export const useActions = (refBottomSheet: any) => {
                 label: "OK",
                 type: "primary_1",
                 onPress: async () => {
-                  await view.deleteDocument(id)
-                  refAlert.current.close()
+                  if (await view.deleteDocument(id)) refAlert.current.close()
                 },
               },
               {
@@ -120,8 +148,7 @@ export const useActions = (refBottomSheet: any) => {
                 label: "OK",
                 type: "primary_1",
                 onPress: async () => {
-                  await view.restoreDocument(id)
-                  refAlert.current.close()
+                  if (await view.restoreDocument(id)) refAlert.current.close()
                 },
               },
               {
@@ -187,6 +214,7 @@ export const useActions = (refBottomSheet: any) => {
 
 export const useColumns = ({ refBottomSheet, setContent }: any) => {
   const view = useView()
+  const { handleError } = useAlert()
   const { isMobile, config = {}, route } = view.data
 
   const onOpenJSON = React.useCallback((id) => {
@@ -198,7 +226,7 @@ export const useColumns = ({ refBottomSheet, setContent }: any) => {
         const res = await POST(`/api/find/trash/${id}`, {})
         setContent(res.data.result.data)
       } catch (err) {
-        view.setError(err)
+        handleError(err)
       } finally {
         refBottomSheet.current.open()
       }
@@ -277,7 +305,7 @@ const useHook = () => {
   const view = useDefaultState({})
   const navRoute = useRoute()
   const routeName = navRoute.name
-  const { refAlert, ...app } = useApp()
+  const { refAlert, handleError, ...app } = useAlert()
   const refSelected = React.useRef([])
   const refBottomSheet = React.useRef<Modalize>(null)
 
@@ -340,6 +368,8 @@ const useHook = () => {
           max: res.data.max,
           isRefresh: undefined,
         })
+      } catch (err) {
+        handleError(err)
       } finally {
         view.setState({ isLoading: false })
       }
@@ -379,9 +409,10 @@ const useHook = () => {
         const _params = { query: { _id: { $in: selectedIds } } }
         try {
           view.setState({ isLoading: true })
-          return await DELETE(`/api/${name}`, { _params })
+          await DELETE(`/api/${name}`, { _params })
+          return true
         } catch (err) {
-          view.setError(err)
+          handleError(err)
         } finally {
           view.setState({ isLoading: false })
           view.setData({ isRefresh: true, selected: undefined, page: 1 })
@@ -400,9 +431,10 @@ const useHook = () => {
         const _params = { query: { _id: { $in: selectedIds } } }
         try {
           view.setState({ isLoading: true })
-          return await POST(`/api/${name}/restore`, { _params })
+          await POST(`/api/${name}/restore`, { _params })
+          return true
         } catch (err) {
-          view.setError(err)
+          handleError(err)
         } finally {
           view.setState({ isLoading: false })
           view.setData({ isRefresh: true, selected: undefined, page: 1 })

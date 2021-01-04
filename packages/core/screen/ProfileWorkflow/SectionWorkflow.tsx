@@ -4,6 +4,15 @@ import { useWatch } from "react-hook-form"
 import { View, StyleSheet } from "react-native"
 import { tw } from "@free/tailwind"
 
+const wf = [
+  { value: "status", label: "Status", width: 12 },
+  { value: "field", label: "Field", width: 6 },
+  { value: "stamp", label: "Stamp", width: 2 },
+  { value: "title", label: "Title", width: 2 },
+  { value: "back", label: "Back Level", width: 1 },
+  { value: "to", label: "To Level", width: 1 },
+]
+
 export const SectionWorkflow: React.FC<any> = React.memo(
   ({ document, isLoading }) => {
     const handleAdd = React.useCallback(() => {
@@ -65,33 +74,18 @@ const BoxWorkflow: React.FC<any> = React.memo(
             onPress={() => handleRemove(i)}
           />
         </View>
-        <Row dark>
-          <Col md={2}>
-            <Label>Status</Label>
-          </Col>
-          <Col light md={10}>
-            <Input.Text
-              control={document.control}
-              name={`workflow[${i}].status`}
-              placeholder="Status"
-              isLoading={isLoading}
-              rules={{ required: "Status is mandatory" }}
-            />
-          </Col>
-        </Row>
-        <Row dark>
-          <Col md={2}>
-            <Label>Field</Label>
-          </Col>
-          <Col light md={10}>
-            <Input.Text
-              control={document.control}
-              name={`workflow[${i}].field`}
-              placeholder="Field"
-              isLoading={isLoading}
-              rules={{ required: "Field is mandatory" }}
-            />
-          </Col>
+        <Row>
+          {wf.map((o: JSONObject, j: number) => (
+            <Col light md={o.width} key={"wf_" + j}>
+              <Label>{o.label}</Label>
+              <Input.Text
+                control={document.control}
+                name={`workflow[${i}].${o.value}`}
+                isLoading={isLoading}
+                rules={{ required: `${o.label} is mandatory` }}
+              />
+            </Col>
+          ))}
         </Row>
       </View>
     )

@@ -1,8 +1,25 @@
 import React from "react"
-import { View, StyleSheet } from "react-native"
+import { View, StyleSheet, TextInput } from "react-native"
 import { theme } from "../../config/theme"
 import { Gradient, KeyboardAwareScrollView } from "../"
 import { tw } from "@free/tailwind"
+import { useController } from "react-hook-form"
+
+const HiddenInput: React.FC<{ name: string; control: any }> = ({
+  name,
+  control,
+}) => {
+  const {
+    field: { ref, onChange, value, ...inputProps },
+    meta: { invalid },
+  } = useController({
+    name,
+    control,
+    defaultValue: ["*"],
+  })
+
+  return <TextInput onChangeText={onChange} value={value} />
+}
 
 interface Wrapper {
   scroll?: boolean
@@ -68,6 +85,7 @@ interface Layout extends LayoutFull {
   stickyLeft?: React.ReactNode
   stickyRight?: React.ReactNode
   style?: JSONObject
+  document?: any
 }
 
 export const Layout: React.FC<Layout> = ({
@@ -77,6 +95,7 @@ export const Layout: React.FC<Layout> = ({
   stickyRight,
   transparent = false,
   scroll = true,
+  document,
   style,
 }) => {
   return (
@@ -95,6 +114,12 @@ export const Layout: React.FC<Layout> = ({
           {children}
         </View>
       </Wrapper>
+      {document && (
+        <View style={s.viewHidden}>
+          <HiddenInput name="_docAuthors" control={document.control} />
+          <HiddenInput name="_docReaders" control={document.control} />
+        </View>
+      )}
     </LayoutFull>
   )
 }
@@ -109,4 +134,5 @@ const s = StyleSheet.create({
   viewWrapper22: tw("flex-1 bg-gray-200"),
   viewHeader: tw("px-6 pb-3"),
   viewChildren: tw("p-5 pt-0"),
+  viewHidden: tw("opacity-0 h-0"),
 })
