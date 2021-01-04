@@ -17,6 +17,7 @@ import {
 
 const useAlert = () => {
   const app = useApp()
+  const navigation = useNavigation()
   const handleError = React.useCallback((err: any) => {
     const { data, status } = err
     const { message, stack } = data || {}
@@ -29,7 +30,12 @@ const useAlert = () => {
           {
             label: "OK",
             type: "danger",
-            onPress: () => app.refAlert.current.close(),
+            onPress: () => {
+              app.refAlert.current.close()
+              if (message.indexOf("Insufficient") >= 0) {
+                navigation.navigate("Index")
+              }
+            },
           },
         ],
       })

@@ -1,7 +1,7 @@
-const common = require("./common")
-
+const user = require("./user").grants
 const role = {
-  grants: common.user.concat(common.dbadmin).concat([
+  grants: user.concat([
+    { resource: "profile", action: ["*"] },
     {
       resource: "workflow",
       action: ["*"],

@@ -20,7 +20,7 @@ interface CellLink extends Cell {
 }
 
 interface CellPressable extends Cell {
-  icon?: string
+  icon: string
 }
 
 export const Cell: React.FC<Cell> = ({
@@ -78,7 +78,7 @@ export const CellPressable: React.FC<CellPressable> = ({
 
 const s = StyleSheet.create({
   viewCellSmall: tw("p-0 w-full"),
-  viewCell: tw(`p-2 w-40 flex-grow flex-row`),
+  viewCell: tw(`p-2 w-40 flex-row`),
   cellDelete: tw("flex-1"),
   textCell: tw(theme.default_text),
   textCellSmall: tw(`${theme.default_text} text-sm`),

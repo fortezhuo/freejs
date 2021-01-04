@@ -3,8 +3,17 @@ import { configACL as acl } from "@free/env"
 import { useDocument } from "../../state/hook"
 
 export const useHook = () => {
-  const document = useDocument("user")
+  const { refFunction, ...document } = useDocument("user")
+
   React.useEffect(() => {
+    refFunction.current.onLoad = async function () {
+      if (document.getId() === "new") {
+        await document.setData({
+          _docAuthors: ["Admin"],
+        })
+      }
+    }
+
     document.setTemp({
       roles: Object.keys(acl).map((role: any) => ({
         value: role,

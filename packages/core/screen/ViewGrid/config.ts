@@ -9,7 +9,7 @@ export const ViewProfileWorkflow = {
       label: "",
       name: "_id",
       type: "link",
-      style: { width: 36, maxWidth: 36, marginTop: 1 },
+      style: { width: 36 },
     },
     {
       label: "Parameter",
@@ -48,21 +48,21 @@ export const ViewSettingTrash = {
       filter: false,
       type: "json",
       search: ["$text"],
-      style: { width: 30, flexGrow: 0 },
+      style: { width: 30 },
     },
     {
       label: "Collection",
       name: "_deletedFrom",
       filter: true,
       search: ["_deletedFrom"],
-      style: { width: 200, flexGrow: 0 },
+      style: { width: 200 },
     },
     {
       label: "Deleted By",
       name: "_deletedBy",
       filter: true,
       search: ["_deletedBy"],
-      style: { width: 200, flexGrow: 0 },
+      style: { width: 200 },
     },
     {
       label: "Deleted At",
@@ -86,7 +86,7 @@ export const ViewSettingLog = {
       label: "",
       name: "name",
       type: "download_log",
-      style: { width: 36, maxWidth: 36 },
+      style: { width: 36 },
     },
     {
       label: "Log",
@@ -121,7 +121,7 @@ export const ViewSettingUser = {
       label: "",
       name: "_id",
       type: "link",
-      style: { width: 36, maxWidth: 36, marginTop: 1 },
+      style: { width: 36 },
     },
     {
       label: "User Name",

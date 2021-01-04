@@ -1,23 +1,21 @@
-const common = require("./common")
+const dbadmin = require("./dbadmin").grants
 
 const role = {
-  grants: common.user
-    .concat(common.dbadmin)
-    .concat(common.admin)
-    .concat([
-      {
-        resource: "trash",
-        action: ["*"],
-      },
-      {
-        resource: "log",
-        action: ["*"],
-      },
-      {
-        resource: "user",
-        action: ["*"],
-      },
-    ]),
+  grants: dbadmin.concat([
+    { resource: "setting", action: ["*"] },
+    {
+      resource: "trash",
+      action: ["*"],
+    },
+    {
+      resource: "log",
+      action: ["*"],
+    },
+    {
+      resource: "user",
+      action: ["*"],
+    },
+  ]),
 }
 
 module.exports = role

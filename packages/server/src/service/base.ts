@@ -1,5 +1,6 @@
 import { Instance, Request, Reply } from "@free/server"
 import { Exception } from "../util/exception"
+import _upperFirst from "lodash/upperFirst"
 
 const isDev = process.env.NODE_ENV !== "production"
 const disableAuth = process.env.DISABLE_AUTH === "true"
@@ -33,7 +34,8 @@ export class BaseService {
       }
       method = method.toUpperCase()
       const action =
-        method === "GET"
+        (method === "GET" || method === "POST") &&
+        (req.raw.url || "").indexOf("find") >= 0
           ? "read"
           : method === "POST"
           ? "create"
@@ -53,7 +55,9 @@ export class BaseService {
       if (!permission.granted)
         throw new Exception(
           403,
-          `Insufficient ${roles} access to ${action} this ${resource}`
+          `Insufficient "${roles}" access to ${action} "${_upperFirst(
+            resource
+          )}" collection`
         )
       this.auth = {
         username,

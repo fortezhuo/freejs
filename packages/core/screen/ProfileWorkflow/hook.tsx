@@ -13,7 +13,7 @@ export const useHook = () => {
           reviseResetChild: "No",
           submitterField: "creator",
           maxApprover: 0,
-          _docAuthors: ["Admin"],
+          _docAuthors: ["Admin", "DBAdmin"],
         })
       }
     }

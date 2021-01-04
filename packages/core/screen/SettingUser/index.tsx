@@ -13,10 +13,11 @@ import { useHook } from "./hook"
 import { tw } from "@free/tailwind"
 
 const SettingUser: React.FC = (props) => {
-  const { control, temp, state, actions } = useHook()
+  const { temp, state, actions, ...document } = useHook()
   return (
     <>
       <Layout
+        document={document}
         stickyLeft={
           <View style={s.viewButton}>
             <ActionGroup.Large actions={actions} />
@@ -30,11 +31,11 @@ const SettingUser: React.FC = (props) => {
             </Col>
             <Col light md={10}>
               <Input.Text
-                control={control}
+                control={document.control}
                 name="username"
                 placeholder="User Name"
                 isLoading={state.isLoading}
-                //                rules={{ required: "User Name is mandatory" }}
+                rules={{ required: "User Name is mandatory" }}
               />
             </Col>
           </Row>
@@ -44,7 +45,7 @@ const SettingUser: React.FC = (props) => {
             </Col>
             <Col light md={10}>
               <Input.Text
-                control={control}
+                control={document.control}
                 name="fullname"
                 placeholder="Full Name"
                 isLoading={state.isLoading}
@@ -59,7 +60,7 @@ const SettingUser: React.FC = (props) => {
             <Col light md={10}>
               <Input.Text
                 isLoading={state.isLoading}
-                control={control}
+                control={document.control}
                 name="email"
                 placeholder="Email"
                 rules={{
@@ -79,7 +80,7 @@ const SettingUser: React.FC = (props) => {
             <Col light md={10}>
               <Input.Select
                 isLoading={state.isLoading}
-                control={control}
+                control={document.control}
                 name="roles"
                 creatable
                 multi
