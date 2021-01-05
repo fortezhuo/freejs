@@ -115,7 +115,7 @@ export const useDocument = (name: string) => {
     } catch (err) {
       handleError(err)
     } finally {
-      setState({ isLoading: false })
+      setState({ isLoading: false, isEditable: app.can("update", name) })
     }
   }, [])
 
@@ -143,6 +143,10 @@ export const useDocument = (name: string) => {
     }
   }, [])
 
+  const getStateProps = React.useCallback(() => {
+    return { isLoading: state.isLoading, isEditable: state.isEditable }
+  }, [state.isLoading, state.isEditable])
+
   return {
     ...form,
     refFunction,
@@ -152,6 +156,7 @@ export const useDocument = (name: string) => {
     temp,
     setTemp,
     state,
+    getStateProps,
     setState,
     setData,
     getId,

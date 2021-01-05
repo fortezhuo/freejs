@@ -8,6 +8,7 @@ import { useController } from "react-hook-form"
 
 interface InputTextProps extends TextInputProps {
   isLoading?: boolean
+  isEditable?: boolean
   disabled?: boolean
 }
 
@@ -55,7 +56,12 @@ export const InputText: React.FC<FormInputTextProps> = ({
 
   return (
     <>
-      <InputTextRaw onChangeText={onChange} value={value} {...props} />
+      <InputTextRaw
+        editable={props.isEditable}
+        onChangeText={onChange}
+        value={value}
+        {...props}
+      />
       <DisplayError error={invalid} />
     </>
   )

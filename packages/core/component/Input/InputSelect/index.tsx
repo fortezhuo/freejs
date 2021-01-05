@@ -11,6 +11,7 @@ import { TextInput, ScrollView } from "react-native"
 
 export const InputSelectRaw: React.FC<any> = ({
   isLoading = false,
+  isEditable = true,
   disabled = false,
   searchable = true,
   creatable = false,
@@ -36,6 +37,7 @@ export const InputSelectRaw: React.FC<any> = ({
     getOptionsProps,
   } = useSelect({
     isLoading,
+    isEditable,
     disabled,
     searchable,
     creatable,

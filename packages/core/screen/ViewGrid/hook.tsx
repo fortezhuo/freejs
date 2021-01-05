@@ -93,6 +93,7 @@ export const useActions = (refBottomSheet: any) => {
   const {
     data: { config, route },
   } = view
+
   const { refAlert, ...app } = useApp()
   const refActions = React.useRef<any>([])
   const refSwipeActions = React.useRef<any>([])
@@ -104,6 +105,7 @@ export const useActions = (refBottomSheet: any) => {
       icon: "file",
       type: "primary_2_bg",
       children: "New",
+      visible: app.can("create", config.name),
       onPress: async () => {
         navigation.navigate(route.replace("View", ""), { id: "new" })
       },
@@ -113,6 +115,7 @@ export const useActions = (refBottomSheet: any) => {
       icon: "trash-2",
       type: "danger_bg",
       children: "Delete",
+      visible: app.can("delete", config.name),
       onPress: async ({ id }: any) => {
         const selected = refSelected.current
         if (await validateNotEmpty({ selected, id, refAlert })) {
@@ -142,6 +145,7 @@ export const useActions = (refBottomSheet: any) => {
       icon: "rotate-ccw",
       type: "primary_2_bg",
       children: "Restore",
+      visible: app.can("delete", config.name),
       onPress: async ({ id }: any) => {
         const selected = refSelected.current
 
@@ -171,6 +175,7 @@ export const useActions = (refBottomSheet: any) => {
       icon: "search",
       type: "primary_2_bg",
       children: "Search",
+      visible: true,
       onPress: () => {
         refBottomSheet.current?.open()
       },
@@ -199,8 +204,8 @@ export const useActions = (refBottomSheet: any) => {
       refActions.current = []
       refSwipeActions.current = []
 
-      actions.forEach((action) => {
-        if (config?.actions.indexOf(action.children) >= 0) {
+      actions.forEach((action: JSONObject) => {
+        if (config?.actions.indexOf(action.children) >= 0 && action.visible) {
           if (isMobile) {
             if (action.children !== "Delete" && action.children !== "Restore") {
               refActions.current.push(action)

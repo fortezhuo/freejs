@@ -1,14 +1,10 @@
 import { configACL } from "."
-import { AccessControl } from "role-acl"
+import { RBAC } from "@free/rbac"
 
-const acl = new AccessControl(configACL)
-let test: any
+const rbac = new RBAC(configACL)
 
-console.log("acl", acl)
-test = acl
-  .can("User")
-  .context({ readers: "hedi" })
-  .execute("read")
-  .sync()
-  .on("user")
-console.log("User read user", test)
+rbac.register(["User"], { list: {} })
+console.log("read user", rbac.can("read", "user"))
+console.log("read workflow", rbac.can("read", "user"))
+console.log("read trash", rbac.can("read", "trash"))
+console.log("read log", rbac.can("read", "log"))

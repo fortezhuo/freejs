@@ -1,12 +1,10 @@
-const user = require("./user").grants
-const role = {
-  grants: user.concat([
-    { resource: "profile", action: ["*"] },
-    {
-      resource: "workflow",
-      action: ["*"],
-    },
-  ]),
-}
+const user = require("./user")
+const role = user.concat([
+  { target: "profile", action: ["*"] },
+  {
+    target: "workflow",
+    action: ["*"],
+  },
+])
 
 module.exports = role

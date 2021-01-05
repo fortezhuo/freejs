@@ -13,6 +13,7 @@ export const useSelect = (props: any) => {
     creatable,
     clearable,
     searchable,
+    isEditable,
     value,
     placeholder = "Select ...",
     onChange,
@@ -172,6 +173,7 @@ export const useSelect = (props: any) => {
       show,
       style,
       isLoading,
+      isEditable,
       isMobile,
       disabled,
       getDisplayProps,
@@ -190,6 +192,7 @@ export const useSelect = (props: any) => {
       placeholder,
       value,
       clearable,
+      isEditable,
     }
   }
 

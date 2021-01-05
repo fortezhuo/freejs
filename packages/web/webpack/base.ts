@@ -19,6 +19,7 @@ const appDirectory = fs.realpathSync(process.cwd())
 const babelLoaderInclude = [
   resolvePath("src"),
   resolvePath("../core"),
+  resolvePath("../rbac"),
   resolvePath("../tailwind"),
 ]
 

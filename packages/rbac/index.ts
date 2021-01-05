@@ -1,8 +1,9 @@
 import _flatten from "lodash/flattenDeep"
 
-class RBAC {
+export class RBAC {
   protected rawOptions: JSONObject[] | undefined
   protected options: JSONObject[] | undefined
+  protected context: JSONObject | undefined
 
   constructor(options?: JSONObject) {
     this.rawOptions = this.flatten(options)
@@ -22,10 +23,11 @@ class RBAC {
       })
     )
   }
-  register = (roles: string[]) => {
+  register = (roles: string[], context: JSONObject) => {
     this.options = this.rawOptions?.filter(
       (opt: JSONObject) => roles.indexOf(opt.role) >= 0
     )
+    this.context = context
   }
 
   can = (action: string, target: string) => {
@@ -35,8 +37,8 @@ class RBAC {
         opt.target === target
     )
 
-    return access.length == 0 ? { granted: false } : { granted: true, access }
+    return access.length == 0
+      ? { granted: false }
+      : { granted: true, access: access[0], context: this.context }
   }
 }
-
-export default RBAC

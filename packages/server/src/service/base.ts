@@ -63,8 +63,8 @@ export class BaseService {
         username,
         roles,
         resource,
-        fields: permission.attributes,
-        context: permission._.context,
+        fields: permission.access.fields || [],
+        context: permission.context,
       }
     }
   }

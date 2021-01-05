@@ -25,13 +25,12 @@ export const login = function (this: BaseService) {
   }
 }
 
-const can = (roles: any, context: any) =>
-  function (action: string, resource: string) {
-    return !roles
-      ? { granted: false }
-      : acl.can(roles).context(context).execute(action).sync().on(resource)
+const can = (roles: any, context: any) => {
+  acl.register(roles, context)
+  return function (action: string, target: string) {
+    return !roles ? { granted: false } : acl.can(action, target)
   }
-
+}
 const authenticate = async (req: Request) => {
   let data = null
   const collection = req.database.get("user")

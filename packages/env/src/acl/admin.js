@@ -1,21 +1,19 @@
-const dbadmin = require("./dbadmin").grants
+const dbadmin = require("./dbadmin")
 
-const role = {
-  grants: dbadmin.concat([
-    { resource: "setting", action: ["*"] },
-    {
-      resource: "trash",
-      action: ["*"],
-    },
-    {
-      resource: "log",
-      action: ["*"],
-    },
-    {
-      resource: "user",
-      action: ["*"],
-    },
-  ]),
-}
+const role = dbadmin.concat([
+  { target: "setting", action: ["*"] },
+  {
+    target: "trash",
+    action: ["*"],
+  },
+  {
+    target: "log",
+    action: ["*"],
+  },
+  {
+    target: "user",
+    action: ["*"],
+  },
+])
 
 module.exports = role

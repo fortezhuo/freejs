@@ -9,13 +9,16 @@ const defaultColor = color(theme.default_text)
 
 const Chip: React.FC<{
   onPress: any
+  isEditable?: boolean
   children: React.ReactNode
-}> = ({ onPress, children }) => {
+}> = ({ onPress, children, isEditable }) => {
   return (
     <View style={s.viewChip}>
-      <TouchableOpacity {...{ onPress }}>
-        <Icon name="x" size={16} color={defaultColor}></Icon>
-      </TouchableOpacity>
+      {isEditable && (
+        <TouchableOpacity {...{ onPress }}>
+          <Icon name="x" size={16} color={defaultColor}></Icon>
+        </TouchableOpacity>
+      )}
       <Text style={s.textChip}>{children}</Text>
     </View>
   )
@@ -42,6 +45,7 @@ const Clear: React.FC<any> = ({ onClear, multi, value, clearable }) => {
 export const Display: React.FC<any> = (props) => {
   const {
     searchable,
+    isEditable,
     multi,
     keyLabel,
     disabled,
@@ -69,7 +73,7 @@ export const Display: React.FC<any> = (props) => {
             display.map((opt: any) => (
               <Chip
                 key={"chip_" + random()}
-                {...{ onPress: () => onClearChip(opt) }}
+                {...{ onPress: () => onClearChip(opt), isEditable }}
               >
                 {opt[keyLabel]}
               </Chip>
@@ -81,7 +85,9 @@ export const Display: React.FC<any> = (props) => {
           <Placeholder multi={multi}>{placeholder}</Placeholder>
         )}
       </View>
-      {!disabled && <Clear {...{ onClear, multi, value, clearable }} />}
+      {!disabled && isEditable && (
+        <Clear {...{ onClear, multi, value, clearable }} />
+      )}
     </View>
   )
 }

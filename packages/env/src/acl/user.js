@@ -1,18 +1,15 @@
-const role = {
-  grants: [
-    { resource: "create", action: ["*"] },
-    { resource: "view", action: ["*"] },
-    {
-      resource: "workflow",
-      action: ["read"],
-      attributes: ["*"],
-    },
-    {
-      resource: "user",
-      action: ["read"],
-      attributes: ["*"],
-    },
-  ],
-}
+const role = [
+  { target: "create", action: ["*"] },
+  { target: "view", action: ["*"] },
+  { target: "setting", action: ["*"] },
+  {
+    target: "workflow",
+    action: ["read"],
+  },
+  {
+    target: "user",
+    action: ["read"],
+  },
+]
 
 module.exports = role

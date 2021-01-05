@@ -12,8 +12,10 @@ import { View, StyleSheet } from "react-native"
 import { useHook } from "./hook"
 import { tw } from "@free/tailwind"
 
-const SettingUser: React.FC = (props) => {
-  const { temp, state, actions, ...document } = useHook()
+const SettingUser: React.FC = () => {
+  const { temp, getStateProps, actions, ...document } = useHook()
+  const props = getStateProps()
+
   return (
     <>
       <Layout
@@ -34,8 +36,8 @@ const SettingUser: React.FC = (props) => {
                 control={document.control}
                 name="username"
                 placeholder="User Name"
-                isLoading={state.isLoading}
                 rules={{ required: "User Name is mandatory" }}
+                {...props}
               />
             </Col>
           </Row>
@@ -48,8 +50,8 @@ const SettingUser: React.FC = (props) => {
                 control={document.control}
                 name="fullname"
                 placeholder="Full Name"
-                isLoading={state.isLoading}
                 rules={{ required: "Full Name is mandatory" }}
+                {...props}
               />
             </Col>
           </Row>
@@ -59,7 +61,6 @@ const SettingUser: React.FC = (props) => {
             </Col>
             <Col light md={10}>
               <Input.Text
-                isLoading={state.isLoading}
                 control={document.control}
                 name="email"
                 placeholder="Email"
@@ -70,6 +71,7 @@ const SettingUser: React.FC = (props) => {
                     message: "Invalid Email",
                   },
                 }}
+                {...props}
               />
             </Col>
           </Row>
@@ -79,7 +81,6 @@ const SettingUser: React.FC = (props) => {
             </Col>
             <Col light md={10}>
               <Input.Select
-                isLoading={state.isLoading}
                 control={document.control}
                 name="roles"
                 creatable
@@ -90,6 +91,7 @@ const SettingUser: React.FC = (props) => {
                   validate: (value: any) =>
                     value.length == 0 ? "Roles is mandatory" : undefined,
                 }}
+                {...props}
               />
             </Col>
           </Row>

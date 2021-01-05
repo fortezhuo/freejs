@@ -51,12 +51,11 @@ export class DatabaseService extends BaseService {
 
     const skip = (page - 1) * limit
 
-    ;(this.disableAuth
-      ? []
-      : fields.concat(this.auth?.fields[0] === "*" ? [] : this.auth?.fields)
-    ).forEach((field: string) => {
-      projection[field.replace("-", "")] = field.indexOf("-") >= 0 ? 0 : 1
-    })
+    ;(this.disableAuth ? [] : fields.concat(this.auth?.fields)).forEach(
+      (field: string) => {
+        projection[field.replace("-", "")] = field.indexOf("-") >= 0 ? 0 : 1
+      }
+    )
 
     if (query._helper) {
       const { _helper } = query

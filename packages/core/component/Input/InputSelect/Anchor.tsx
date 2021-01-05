@@ -7,17 +7,16 @@ import { theme } from "../../../config/theme"
 
 export const Anchor: React.FC<any> = (props) => {
   const {
-    hide,
     show,
     style,
     isLoading,
+    isEditable,
     disabled,
-    isMobile,
     getDisplayProps,
   } = props
 
   return (
-    <TouchableOpacity disabled={disabled} onPress={show}>
+    <TouchableOpacity disabled={disabled || !isEditable} onPress={show}>
       <Base
         isLoading={isLoading}
         style={[s.viewInput, disabled ? s.viewDisabled : {}, style]}

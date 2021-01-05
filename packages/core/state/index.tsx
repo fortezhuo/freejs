@@ -29,14 +29,11 @@ const useHook = () => {
   }, [app.data.auth?.username])
 
   const can = React.useCallback(
-    (action: string, resource: string) => {
+    (action: string, target: string) => {
       const roles = app.data.auth?.roles
       if (!roles) return false
-      const { granted }: any = acl
-        .can(roles)
-        .execute(action)
-        .sync()
-        .on(resource)
+      acl.register(roles, {})
+      const { granted }: any = acl.can(action, target)
       return granted
     },
     [app.data?.auth?.username]

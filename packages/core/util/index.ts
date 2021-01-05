@@ -1,11 +1,11 @@
-import { AccessControl } from "role-acl"
+import { RBAC } from "@free/rbac"
 import { configACL, configApp } from "@free/env"
 import dayjs from "dayjs"
 import _isArray from "lodash/isArray"
 
 const regexDate = /^\d{4}-\d{2}-\d{2}/
 
-export const acl = new AccessControl(configACL)
+export const acl = new RBAC(configACL)
 
 export const asyncForEach = async (array: any[], callback: any) => {
   for (let i = 0; i < array.length; i++) {
