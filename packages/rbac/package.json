@@ -1,0 +1,12 @@
+{
+  "name": "@free/rbac",
+  "version": "1.0.0",
+  "description": "Simple RBAC",
+  "prettier": {
+    "semi": false
+  },
+  "private": true,
+  "scripts": {
+    "test": "ts-node test.ts"
+  }
+}
