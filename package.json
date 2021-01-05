@@ -34,8 +34,7 @@
     "ipad": "yarn workspace @free/mobile ipad",
     "test:role": "yarn workspace @free/env test-role",
     "install:free": "yarn install && yarn postinstall && yarn install:pod",
-    "install:pod": "yarn workspace @free/mobile link-ios",
-    "postinstall": "yarn workspace @free/env clear-error"
+    "install:pod": "yarn workspace @free/mobile link-ios"
   },
   "repository": {
     "type": "git",
