@@ -1,7 +1,7 @@
 {
   "name": "@free/rbac",
   "version": "1.0.0",
-  "description": "Simple RBAC",
+  "description": "Free Simple RBAC",
   "prettier": {
     "semi": false
   },

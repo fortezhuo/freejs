@@ -143,7 +143,7 @@ export const TableRow: React.FC<any> = ({
 
   return (
     <Wrapper
-      {...{ dark, name, style, data, actionLeft, actionRight, refBottomSheet }}
+      {...{ dark, style, data, actionLeft, actionRight, refBottomSheet }}
     >
       {children}
     </Wrapper>

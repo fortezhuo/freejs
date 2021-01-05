@@ -44,7 +44,7 @@ const pagination = (c: number, m: number) => {
 export const TablePagination: React.FC = React.memo(() => {
   const view = useView()
   const { isUpdating, isLoading } = view.state
-  const { page, total, max, limit = "30" } = view.data
+  const { page, total, max, limit = "30", isMobile } = view.data
 
   const setPage = React.useCallback((i) => {
     view.setData({ page: i })
@@ -56,7 +56,7 @@ export const TablePagination: React.FC = React.memo(() => {
 
   return total ? (
     <View style={s.viewPage}>
-      <View style={s.viewPaging}>
+      <View style={[s.viewPaging, isMobile ? { width: 0, opacity: 0 } : {}]}>
         <Text>Show</Text>
         <Input.RawSelect
           disabled={isUpdating || isLoading}

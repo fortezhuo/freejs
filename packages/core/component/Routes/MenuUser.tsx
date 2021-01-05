@@ -5,34 +5,34 @@ import { tw } from "@free/tailwind"
 import { useApp } from "../../state"
 import _debounce from "lodash/debounce"
 
-export const MenuUser = () => {
+export const MenuUser: React.FC = () => {
   const app = useApp()
   const ref = React.useRef<any>(null)
-  return (
-    app.data?.auth?.username && (
-      <MenuDropdown
-        ref={ref}
-        testID="MenuUser"
-        anchor={
-          <TouchableOpacity onPress={() => ref.current?.open()}>
-            <View style={s.iconMenuUser}>
-              <Icon name={"user"} size={24} />
-            </View>
-          </TouchableOpacity>
-        }
-      >
-        <View style={s.viewMenu}>
-          <View style={s.viewUser}>
-            <Text style={s.textUser}>{app.data?.auth?.fullname}</Text>
+  return app.data?.auth?.username ? (
+    <MenuDropdown
+      ref={ref}
+      testID="MenuUser"
+      anchor={
+        <TouchableOpacity onPress={() => ref.current?.open()}>
+          <View style={s.iconMenuUser}>
+            <Icon name={"user"} size={24} />
           </View>
-          <View style={s.viewChildren}>
-            <MenuItem name="log-out" onPress={_debounce(app.logout, 300)}>
-              Logout
-            </MenuItem>
-          </View>
+        </TouchableOpacity>
+      }
+    >
+      <View style={s.viewMenu}>
+        <View style={s.viewUser}>
+          <Text style={s.textUser}>{app.data?.auth?.fullname}</Text>
         </View>
-      </MenuDropdown>
-    )
+        <View style={s.viewChildren}>
+          <MenuItem name="log-out" onPress={_debounce(app.logout, 300)}>
+            Logout
+          </MenuItem>
+        </View>
+      </View>
+    </MenuDropdown>
+  ) : (
+    <></>
   )
 }
 
