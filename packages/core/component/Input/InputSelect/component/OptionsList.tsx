@@ -19,3 +19,18 @@ export const OptionsList: React.FC<any> = React.memo(
     />
   )
 )
+
+/*
+<FlatList
+      data={options}
+      keyExtractor={(opt: JSONObject) => opt.value}
+      renderItem={({ item, index }: any) => (
+        <Option
+          selected={isSelected(item, snapshot.option)}
+          highlighted={snapshot.highlighted === index}
+          option={item}
+          onSelectOption={onSelectOption}
+        />
+      )}
+    />
+    */

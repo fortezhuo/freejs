@@ -1,17 +1,11 @@
 import React from "react"
 import { View } from "react-native"
+import { ScrollView } from "react-native-gesture-handler"
 import { MenuItem } from "../../../Menu"
 import { OptionsList } from "./OptionsList"
 
 export const Options: React.FC<any> = React.memo(
-  ({
-    options,
-    snapshot,
-    renderGroupHeader,
-    renderOption,
-    onSelectOption,
-    emptyMessage,
-  }) => {
+  ({ options, snapshot, onSelectOption, emptyMessage }) => {
     const selectRef = React.useRef(null)
     const { value, highlighted } = snapshot
     const renderEmptyMessage = React.useCallback(() => {
@@ -58,17 +52,17 @@ export const Options: React.FC<any> = React.memo(
 
     return (
       <View style={{ maxHeight: 200, backgroundColor: "white" }}>
-        {options.length ? (
-          <OptionsList
-            onSelectOption={onSelectOption}
-            snapshot={snapshot}
-            options={options}
-            renderOption={renderOption}
-            renderGroupHeader={renderGroupHeader}
-          />
-        ) : (
-          renderEmptyMessage()
-        )}
+        <ScrollView>
+          {options.length ? (
+            <OptionsList
+              onSelectOption={onSelectOption}
+              snapshot={snapshot}
+              options={options}
+            />
+          ) : (
+            renderEmptyMessage()
+          )}
+        </ScrollView>
       </View>
     )
   }

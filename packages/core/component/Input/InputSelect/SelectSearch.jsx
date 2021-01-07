@@ -85,8 +85,6 @@ const SelectSearch = forwardRef(
             onSelectOption={onSelectOption}
             snapshot={snapshot}
             emptyMessage={emptyMessage}
-            renderOption={renderOption}
-            renderGroupHeader={renderGroupHeader}
           />
         )}
       </View>
