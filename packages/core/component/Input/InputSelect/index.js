@@ -1,3 +1,3 @@
-export { default as useSelect } from './useSelect';
-export { default } from './SelectSearch';
-export { default as fuzzySearch } from './fuzzySearch';
+export { useSelect } from "./useSelect"
+export { default } from "./SelectSearch"
+export { fuzzySearch } from "./fuzzySearch"

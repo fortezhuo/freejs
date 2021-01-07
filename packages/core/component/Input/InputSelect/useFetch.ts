@@ -3,9 +3,9 @@ import { debounce } from "./lib/debounce"
 import { flattenOptions } from "./lib/flattenOptions"
 
 export function useFetch(
-  q,
-  defaultOptions,
-  { debounceTime, filterOptions, getOptions }
+  q: any,
+  defaultOptions: JSONObject[],
+  { debounceTime, filterOptions, getOptions }: any
 ) {
   const [fetching, setFetching] = useState(false)
   const [options, setOptions] = useState(() => flattenOptions(defaultOptions))
@@ -15,10 +15,10 @@ export function useFetch(
       : () => defaultOptions
 
     if (!getOptions) {
-      return (s) => setOptions(flattenOptions(filter(s)))
+      return (s: any) => setOptions(flattenOptions(filter(s)))
     }
 
-    return debounce((s) => {
+    return debounce((s: any) => {
       const optionsReq = getOptions(s, defaultOptions)
 
       setFetching(true)

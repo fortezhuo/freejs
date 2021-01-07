@@ -1,5 +1,5 @@
 import React, { forwardRef, memo } from "react"
-import useSelect from "./useSelect"
+import { useSelect } from "./useSelect"
 import { View } from "react-native"
 import { Options } from "./component/Options"
 

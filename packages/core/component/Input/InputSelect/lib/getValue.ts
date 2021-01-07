@@ -1,6 +1,6 @@
 import { isOption } from "./isOption"
 
-export function getValue(option?: JSONObject) {
+export function getValue(option?: JSONObject | null) {
   if (!option) {
     return null
   }

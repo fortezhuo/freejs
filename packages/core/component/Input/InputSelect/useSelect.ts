@@ -13,7 +13,7 @@ import { getDisplayValue } from "./lib/getDisplayValue"
 import { useFetch } from "./useFetch"
 import { getValues } from "./lib/getValues"
 
-export default function useSelect({
+export function useSelect({
   value: defaultValue = null,
   options: defaultOptions = [],
   search: canSearch = false,
@@ -22,14 +22,14 @@ export default function useSelect({
   closeOnSelect = true,
   getOptions: getOptionsFn = null,
   filterOptions = null,
-  onChange = () => {},
-  onFocus = () => {},
-  onBlur = () => {},
+  onChange = (...args: any) => {},
+  onFocus = (...args: any) => {},
+  onBlur = (...args: any) => {},
   debounce = 0,
 }) {
   const ref = useRef(null)
   const valueRef = useRef(undefined)
-  const [value, setValue] = useState(null)
+  const [value, setValue]: any = useState(null)
   const [search, setSearch] = useState("")
   const [focus, setFocus] = useState(false)
   const [highlighted, dispatchHighlighted] = useReducer(highlightReducer, -1)
@@ -66,7 +66,7 @@ export default function useSelect({
       onChange(getValues(newOption), newOption)
 
       if (closeOnSelect) {
-        ref.current.blur()
+        ;(ref.current as any).blur()
       }
     },
     [closeOnSelect, multiple, onChange, value, options]
@@ -103,7 +103,7 @@ export default function useSelect({
         }
 
         if (closeOnSelect) {
-          ref.current.blur()
+          ;(ref.current as any).blur()
         }
       }
     },
@@ -114,24 +114,24 @@ export default function useSelect({
     () => ({
       tabIndex: "0",
       readOnly: !canSearch,
-      onFocus: (e) => {
+      onFocus: (e: any) => {
         setFocus(true)
         onFocus(e)
       },
-      onBlur: (e) => {
+      onBlur: (e: any) => {
         setFocus(false)
         setSearch("")
         onBlur(e)
       },
       onKeyPress,
       onKeyDown,
-      onKeyUp: (e) => {
+      onKeyUp: (e: any) => {
         if (e.key === "Escape") {
           e.preventDefault()
-          ref.current.blur()
+          ;(ref.current as any).blur()
         }
       },
-      onChange: canSearch ? ({ target }) => setSearch(target.value) : null,
+      onChange: canSearch ? ({ target }: any) => setSearch(target.value) : null,
       disabled,
       ref,
     }),
@@ -143,7 +143,7 @@ export default function useSelect({
       return
     }
 
-    valueRef.current = defaultValue
+    ;(valueRef.current as any) = defaultValue
 
     setValue(getOptions(defaultValue, null, options, multiple))
   }, [defaultValue, multiple, options])

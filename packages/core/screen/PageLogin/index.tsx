@@ -6,7 +6,7 @@ import { tw } from "@free/tailwind"
 import { useHook } from "./hook"
 import logo from "../../img/logo.png"
 import InputSelect from "../../component/Input/InputSelect/SelectSearch"
-import fuzzySearch from "../../component/Input/InputSelect/fuzzySearch"
+import { fuzzySearch } from "../../component/Input/InputSelect/fuzzySearch"
 
 interface LoginButton {
   isUpdating?: boolean
