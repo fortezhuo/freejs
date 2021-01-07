@@ -35,6 +35,44 @@ export const ViewProfileWorkflow = {
   ],
 }
 
+// Setting ACL
+export const ViewSettingACL = {
+  name: "acl",
+  fields: ["-data"],
+  search: ["$text"],
+  actions: ["New", "Delete", "Search"],
+  columns: [
+    {
+      label: "",
+      name: "_id",
+      filter: false,
+      type: "link",
+      style: { width: 30 },
+    },
+    {
+      label: "Role",
+      name: "role",
+      filter: true,
+      search: ["role"],
+      style: { width: 200 },
+    },
+    {
+      label: "Inherit",
+      name: "inherit",
+      filter: true,
+      search: ["inherit"],
+      style: { width: 200 },
+    },
+    {
+      label: "Target",
+      name: "target",
+      filter: true,
+      search: ["target"],
+      style: { width: 300 },
+    },
+  ],
+}
+
 // Setting Trash
 export const ViewSettingTrash = {
   name: "trash",

@@ -149,6 +149,7 @@ export const useDocument = (name: string) => {
 
   return {
     ...form,
+    req,
     refFunction,
     handleError,
     close,

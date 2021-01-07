@@ -30,6 +30,14 @@ export const SettingUser = loadable(
   }
 )
 
+export const SettingACL = loadable(
+  () => import("@free/core/screen/SettingACL"),
+  {
+    ssr: true,
+    fallback: <Loader />,
+  }
+)
+
 export const ProfileWorkflow = loadable(
   () => import("@free/core/screen/ProfileWorkflow"),
   {
@@ -42,27 +50,3 @@ export const ViewGrid = loadable(() => import("@free/core/screen/ViewGrid"), {
   ssr: true,
   fallback: <Loader />,
 })
-
-/*
-export const PageNotFound = loadable(
-  () => import("@free/core/screen/PageNotFound"),
-  {
-    ssr: true,
-    fallback: <Loader />,
-  }
-)
-
-export const PageError = loadable(() => import("@free/core/screen/PageError"), {
-  ssr: true,
-  fallback: <Loader />,
-})
-
-
-
-
-
-export const ViewGrid = loadable(() => import("@free/core/screen/ViewGrid"), {
-  ssr: true,
-  fallback: <Loader />,
-})
-*/

@@ -89,19 +89,25 @@ export const getMenu: (app: any) => Menu[] = (app) => {
       visible: canSetting,
       children: [
         {
-          label: "Trash",
+          label: "Access Control Management",
+          icon: "key",
+          component: "ViewSettingACL",
+          visible: true,
+        },
+        {
+          label: "Trash Management",
           icon: "trash-2",
           component: "ViewSettingTrash",
           visible: true,
         },
         {
-          label: "Log",
+          label: "Log Management",
           icon: "archive",
           component: "ViewSettingLog",
           visible: true,
         },
         {
-          label: "User",
+          label: "User Management",
           icon: "user",
           component: "ViewSettingUser",
           visible: true,

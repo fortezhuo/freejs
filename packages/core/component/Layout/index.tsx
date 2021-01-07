@@ -112,14 +112,17 @@ export const Layout: React.FC<Layout> = ({
       <Wrapper scroll={scroll}>
         <View style={[s.viewChildren, style]} testID={testID}>
           {children}
+          {document && (
+            <>
+              <View style={{ height: 150 }} />
+              <View style={s.viewHidden}>
+                <HiddenInput name="_docAuthors" control={document.control} />
+                <HiddenInput name="_docReaders" control={document.control} />
+              </View>
+            </>
+          )}
         </View>
       </Wrapper>
-      {document && (
-        <View style={s.viewHidden}>
-          <HiddenInput name="_docAuthors" control={document.control} />
-          <HiddenInput name="_docReaders" control={document.control} />
-        </View>
-      )}
     </LayoutFull>
   )
 }
