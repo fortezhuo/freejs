@@ -1,8 +1,6 @@
 import React, { forwardRef, memo } from "react"
 import useSelect from "./useSelect"
-import { Options } from "./Components/Options"
-import useClassName from "./useClassName"
-import classes from "./lib/classes"
+import { Options } from "./component/Options"
 
 const SelectSearch = forwardRef(
   (
@@ -32,7 +30,6 @@ const SelectSearch = forwardRef(
     },
     ref
   ) => {
-    const cls = useClassName(className)
     const [snapshot, valueProps, onSelectOption] = useSelect({
       options: defaultOptions,
       value:
@@ -49,13 +46,6 @@ const SelectSearch = forwardRef(
       getOptions,
       filterOptions,
       debounce,
-    })
-
-    const wrapperClass = classes({
-      [cls("container")]: true,
-      [cls("is-disabled")]: disabled,
-      [cls("is-loading")]: snapshot.fetching,
-      [cls("has-focus")]: snapshot.focus,
     })
 
     let shouldRenderOptions
@@ -85,11 +75,10 @@ const SelectSearch = forwardRef(
     }
 
     return (
-      <div ref={ref} className={wrapperClass} id={id}>
+      <div ref={ref}>
         {shouldRenderValue && (
-          <div className={cls("value")}>
-            {renderValue && renderValue(props, snapshot, cls("input"))}
-            {!renderValue && <input {...props} className={cls("input")} />}
+          <div>
+            <input {...props} />
           </div>
         )}
         {shouldRenderOptions && (
@@ -97,7 +86,6 @@ const SelectSearch = forwardRef(
             options={snapshot.options}
             onSelectOption={onSelectOption}
             snapshot={snapshot}
-            cls={cls}
             emptyMessage={emptyMessage}
             renderOption={renderOption}
             renderGroupHeader={renderGroupHeader}

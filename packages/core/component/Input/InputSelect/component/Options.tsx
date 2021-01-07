@@ -7,7 +7,6 @@ export const Options: React.FC<any> = React.memo(
   ({
     options,
     snapshot,
-    cls,
     renderGroupHeader,
     renderOption,
     onSelectOption,
@@ -66,7 +65,6 @@ export const Options: React.FC<any> = React.memo(
             options={options}
             renderOption={renderOption}
             renderGroupHeader={renderGroupHeader}
-            cls={cls}
           />
         ) : (
           renderEmptyMessage()
