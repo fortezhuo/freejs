@@ -1,5 +1,6 @@
 import React, { forwardRef, memo } from "react"
 import useSelect from "./useSelect"
+import { View } from "react-native"
 import { Options } from "./component/Options"
 
 const SelectSearch = forwardRef(
@@ -13,14 +14,11 @@ const SelectSearch = forwardRef(
       autoFocus,
       autoComplete,
       options: defaultOptions,
-      id,
       onChange,
       onFocus,
       onBlur,
       printOptions,
       closeOnSelect,
-      className,
-      renderValue,
       renderOption,
       renderGroupHeader,
       getOptions,
@@ -75,11 +73,11 @@ const SelectSearch = forwardRef(
     }
 
     return (
-      <div ref={ref}>
+      <View ref={ref}>
         {shouldRenderValue && (
-          <div>
+          <View>
             <input {...props} />
-          </div>
+          </View>
         )}
         {shouldRenderOptions && (
           <Options
@@ -91,7 +89,7 @@ const SelectSearch = forwardRef(
             renderGroupHeader={renderGroupHeader}
           />
         )}
-      </div>
+      </View>
     )
   }
 )

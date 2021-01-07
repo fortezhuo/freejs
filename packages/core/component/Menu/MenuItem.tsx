@@ -8,14 +8,16 @@ const { color: iconColor } = tw("text-gray-700")
 const noop = () => {}
 
 export const MenuItem: React.FC<{
+  disabled?: boolean
   active?: boolean
-  name: string
+  name?: string
   color?: string
   onPress?: VoidFunction
   styleText?: any
   style?: JSONObject
   children: string
 }> = ({
+  disabled,
   active,
   name,
   color = iconColor,
@@ -25,9 +27,9 @@ export const MenuItem: React.FC<{
   style,
 }) => {
   return (
-    <TouchableOpacity onPress={onPress}>
+    <TouchableOpacity onPress={onPress} disabled={disabled}>
       <View style={[s.viewItem, active ? s.viewItemActive : {}, style]}>
-        <Icon name={name} color={color} size={18} />
+        {name && <Icon name={name} color={color} size={18} />}
         <Text style={[s.textItem, styleText]}>{children}</Text>
       </View>
     </TouchableOpacity>

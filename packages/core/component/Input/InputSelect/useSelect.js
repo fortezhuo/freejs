@@ -6,12 +6,12 @@ import {
   useRef,
   useCallback,
 } from "react"
-import groupOptions from "./lib/groupOptions"
-import highlightReducer from "./highlightReducer"
-import getOptions from "./lib/getOptions"
-import getDisplayValue from "./lib/getDisplayValue"
-import useFetch from "./useFetch"
-import getValues from "./lib/getValues"
+import { groupOptions } from "./lib/groupOptions"
+import { highlightReducer } from "./highlightReducer"
+import { getOptions } from "./lib/getOptions"
+import { getDisplayValue } from "./lib/getDisplayValue"
+import { useFetch } from "./useFetch"
+import { getValues } from "./lib/getValues"
 
 export default function useSelect({
   value: defaultValue = null,
