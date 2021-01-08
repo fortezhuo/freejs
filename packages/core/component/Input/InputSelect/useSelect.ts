@@ -6,7 +6,11 @@ import React, {
   useRef,
   useCallback,
 } from "react"
-import { Platform } from "react-native"
+import {
+  Platform,
+  NativeSyntheticEvent,
+  TextInputKeyPressEventData,
+} from "react-native"
 import { highlightReducer } from "./highlightReducer"
 import { getOptions } from "./lib/getOptions"
 import { getDisplayValue } from "./lib/getDisplayValue"
@@ -54,7 +58,7 @@ export function useSelect({
       options,
       option: value,
       displayValue: getDisplayValue(value, keyLabel),
-      value: getValues(value),
+      value: getValues(value, keyValue),
       keyValue,
       keyLabel,
       search,
@@ -77,7 +81,8 @@ export function useSelect({
       )
 
       setValue(newOption)
-      onChange(getValues(newOption), newOption)
+      onChange(getValues(newOption, keyValue), newOption)
+      dispatchHighlighted({ key: "Selected", index: newOption.index, options })
 
       if (closeOnSelect) {
         ;(ref.current as any).blur()
@@ -86,6 +91,12 @@ export function useSelect({
     [closeOnSelect, multiple, onChange, value, options]
   )
 
+  const onBlur = useCallback(() => {
+    const selected = getOptions(value, null, options, multiple, keyValue)
+    dispatchHighlighted({ key: "Selected", index: selected.index, options })
+    setFocus(false)
+  }, [dispatchHighlighted, setFocus, options, value, multiple])
+
   const onSelectOption = useCallback(
     (value) => {
       onSelect(value)
@@ -93,32 +104,25 @@ export function useSelect({
     [onSelect]
   )
 
-  const onKeyDown = useCallback(
-    (e) => {
-      const { key } = e
-
-      if (["ArrowDown", "ArrowUp"].includes(key)) {
-        e.preventDefault()
-        dispatchHighlighted({ key, options })
-      }
-    },
-    [options]
-  )
-
   const onKeyPress = useCallback(
     (e) => {
-      if (e.key === "Enter") {
-        e.preventDefault()
+      if (Platform.OS !== "web") return undefined
+      const { key } = e.nativeEvent
 
+      if (key === "Enter") {
         const selected = options[highlighted]
-
         if (selected) {
           onSelect(selected[keyValue])
         }
-
         if (closeOnSelect) {
           ;(ref.current as any).blur()
         }
+      }
+      if (key === "Escape") {
+        ;(ref.current as any).blur()
+      }
+      if (["ArrowDown", "ArrowUp"].includes(key)) {
+        dispatchHighlighted({ key, options })
       }
     },
     [options, highlighted, closeOnSelect, onSelect]
@@ -129,30 +133,21 @@ export function useSelect({
       Platform.OS === "web"
         ? {
             onKeyPress,
-            onKeyDown,
-            onKeyUp: (e: any) => {
-              if (e.key === "Escape") {
-                e.preventDefault()
-                ;(ref.current as any).blur()
-              }
-            },
           }
         : {}
 
     return {
       ...webProps,
       editable: canSearch,
-      onFocus: (e: any) => {
+      onFocus: () => {
         setFocus(true)
       },
-      onBlur: (e: any) => {
-        setFocus(false)
-      },
+      onBlur,
       onChangeText: canSearch ? (text: string) => setSearch(text) : undefined,
       disabled,
       ref,
     }
-  }, [canSearch, onKeyPress, onKeyDown, disabled, ref])
+  }, [canSearch, onKeyPress, disabled, ref])
 
   useEffect(() => {
     if (valueRef.current === defaultValue) {

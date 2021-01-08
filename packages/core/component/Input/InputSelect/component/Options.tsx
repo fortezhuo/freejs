@@ -1,12 +1,10 @@
 import React from "react"
-import { View } from "react-native"
-import { ScrollView } from "react-native-gesture-handler"
-import { MenuItem } from "../../../Menu"
+import { View, FlatList, Text } from "react-native"
 import { OptionsList } from "./OptionsList"
 
 export const Options: React.FC<any> = React.memo(
   ({ options, snapshot, onSelectOption, emptyMessage }) => {
-    const selectRef = React.useRef(null)
+    const refFlatList = React.useRef<FlatList>(null)
     const { value, highlighted } = snapshot
     const renderEmptyMessage = React.useCallback(() => {
       if (emptyMessage === null) {
@@ -14,15 +12,17 @@ export const Options: React.FC<any> = React.memo(
       }
 
       return (
-        <MenuItem disabled>
+        <Text>
           {typeof emptyMessage === "function" ? emptyMessage() : emptyMessage}
-        </MenuItem>
+        </Text>
       )
     }, [emptyMessage])
 
-    /*
-  useEffect(() => {
-    if (Platform.OS === "web") {
+    React.useEffect(() => {
+      if (refFlatList.current && !!highlighted && highlighted > 0) {
+        refFlatList.current.scrollToIndex({ index: highlighted })
+      }
+      /*
       const { current } = selectRef
 
       if (
@@ -47,13 +47,14 @@ export const Options: React.FC<any> = React.memo(
           selected.offsetTop - rect.height / 2 + selectedRect.height / 2
       }
     }
-  }, [value, highlighted, selectRef])
-  */
+    */
+    }, [value, highlighted, refFlatList])
 
     return (
       <View style={{ maxHeight: 200, backgroundColor: "white" }}>
         {options.length ? (
           <OptionsList
+            ref={refFlatList}
             keyLabel={snapshot.keyLabel}
             keyValue={snapshot.keyValue}
             onSelectOption={onSelectOption}

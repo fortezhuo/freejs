@@ -1,6 +1,14 @@
-export function highlightReducer(highlighted: any, { key, options }: any): any {
+export function highlightReducer(
+  highlighted: any,
+  { key, options, index }: any
+): any {
   const max = options.length - 1
-  let newHighlighted = key === "ArrowDown" ? highlighted + 1 : highlighted - 1
+  let newHighlighted =
+    key === "Selected" && !!index
+      ? index
+      : key === "ArrowDown"
+      ? highlighted + 1
+      : highlighted - 1
 
   if (newHighlighted < 0) {
     newHighlighted = max
@@ -11,7 +19,7 @@ export function highlightReducer(highlighted: any, { key, options }: any): any {
   const option = options[newHighlighted]
 
   if (option && option.disabled) {
-    return highlightReducer(newHighlighted, { key, options })
+    return highlightReducer(newHighlighted, { key, options, index })
   }
 
   return newHighlighted

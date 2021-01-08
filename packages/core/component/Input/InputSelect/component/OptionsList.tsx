@@ -3,10 +3,12 @@ import { FlatList } from "react-native"
 import { Option } from "./Option"
 import { isSelected } from "../lib/isSelected"
 
-export const OptionsList: React.FC<any> = React.memo(
-  ({ keyValue, keyLabel, options, onSelectOption, snapshot }) => {
+const ITEM_HEIGHT = 36
+export const OptionsList: React.FC<any> = React.forwardRef(
+  ({ keyValue, keyLabel, options, onSelectOption, snapshot }, ref: any) => {
     return (
       <FlatList
+        ref={ref}
         data={options}
         keyExtractor={(opt: JSONObject) => opt[keyValue]}
         renderItem={({ item, index }: any) => (
@@ -19,7 +21,16 @@ export const OptionsList: React.FC<any> = React.memo(
             onSelectOption={onSelectOption}
           />
         )}
+        getItemLayout={(data, index) => ({
+          length: ITEM_HEIGHT,
+          offset: ITEM_HEIGHT * index,
+          index,
+        })}
       />
     )
   }
 )
+
+/*
+
+      */
