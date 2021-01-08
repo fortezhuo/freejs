@@ -22,8 +22,6 @@ export function useSelect({
   closeOnSelect = true,
   getOptions: getOptionsFn = null,
   onChange = (...args: any) => {},
-  onFocus = (...args: any) => {},
-  onBlur = (...args: any) => {},
   debounce = 0,
 }) {
   const ref = useRef(null)
@@ -115,11 +113,9 @@ export function useSelect({
       readOnly: !canSearch,
       onFocus: (e: any) => {
         setFocus(true)
-        onFocus(e)
       },
       onBlur: (e: any) => {
         setFocus(false)
-        setSearch("")
       },
       onKeyPress,
       onKeyDown,
@@ -133,7 +129,7 @@ export function useSelect({
       disabled,
       ref,
     }),
-    [canSearch, onFocus, onBlur, onKeyPress, onKeyDown, disabled, ref]
+    [canSearch, onKeyPress, onKeyDown, disabled, ref]
   )
 
   useEffect(() => {

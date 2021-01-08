@@ -6,23 +6,20 @@ import { Options } from "./component/Options"
 const SelectSearch = forwardRef(
   (
     {
-      value: defaultValue,
-      disabled,
-      placeholder,
-      multiple,
-      search,
-      autoFocus,
-      autoComplete,
+      value: defaultValue = null,
+      disabled = false,
+      placeholder = null,
+      multiple = false,
+      search = true,
+      autoFocus = false,
+      autoComplete = "on",
       options: defaultOptions,
-      onChange,
-      onFocus,
-      onBlur,
+      onChange = (...args) => {},
       printOptions,
-      closeOnSelect,
-      getOptions,
-      filterOptions,
+      closeOnSelect = true,
+      getOptions = null,
       debounce,
-      emptyMessage,
+      emptyMessage = "No match found",
     },
     ref
   ) => {
@@ -34,13 +31,10 @@ const SelectSearch = forwardRef(
       disabled,
       search,
       onChange,
-      onFocus,
-      onBlur,
       closeOnSelect:
         closeOnSelect &&
         (!multiple || ["on-focus", "always"].includes(printOptions)),
       getOptions,
-      filterOptions,
       debounce,
     })
 
@@ -89,40 +83,5 @@ const SelectSearch = forwardRef(
     )
   }
 )
-
-SelectSearch.defaultProps = {
-  // Data
-  getOptions: null,
-  filterOptions: null,
-  value: null,
-
-  // Interaction
-  multiple: false,
-  search: true,
-  disabled: false,
-  printOptions: "auto",
-  closeOnSelect: true,
-  debounce: 0,
-
-  // Attributes
-  placeholder: null,
-  id: null,
-  autoFocus: false,
-  autoComplete: "on",
-
-  // Design
-  className: "select-search",
-
-  // Renderers
-  renderOption: undefined,
-  renderGroupHeader: undefined,
-  renderValue: undefined,
-  emptyMessage: null,
-
-  // Events
-  onChange: () => {},
-  onFocus: () => {},
-  onBlur: () => {},
-}
 
 export default memo(SelectSearch)

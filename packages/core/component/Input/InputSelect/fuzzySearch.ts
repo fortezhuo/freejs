@@ -11,6 +11,10 @@ export function fuzzySearch(options: JSONObject[]) {
       return options
     }
 
+    console.log(value)
+
+    console.log(fuse.search(value))
+
     return fuse.search(value)
   }
 }
