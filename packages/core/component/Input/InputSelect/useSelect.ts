@@ -1,4 +1,4 @@
-import {
+import React, {
   useEffect,
   useMemo,
   useState,
@@ -6,12 +6,12 @@ import {
   useRef,
   useCallback,
 } from "react"
+import { Platform } from "react-native"
 import { highlightReducer } from "./highlightReducer"
 import { getOptions } from "./lib/getOptions"
 import { getDisplayValue } from "./lib/getDisplayValue"
 import { useFetch } from "./useFetch"
 import { getValues } from "./lib/getValues"
-import { fuzzySearch } from "./fuzzySearch"
 
 export function useSelect({
   keyValue = "value",
@@ -26,6 +26,17 @@ export function useSelect({
   onChange = (...args: any) => {},
   debounce = 0,
 }) {
+  const filterOptions = React.useCallback((options: JSONObject[]) => {
+    return (value: any) => {
+      if (!value.length) {
+        return options
+      }
+
+      const regex = new RegExp(value, "i")
+      return options.filter((o) => regex.test(o[keyLabel]))
+    }
+  }, [])
+
   const ref = useRef(null)
   const valueRef = useRef(undefined)
   const [value, setValue]: any = useState(null)
@@ -33,8 +44,9 @@ export function useSelect({
   const [focus, setFocus] = useState(false)
   const [highlighted, dispatchHighlighted] = useReducer(highlightReducer, -1)
   const { options, fetching } = useFetch(search, defaultOptions, {
+    keyLabel,
     getOptions: getOptionsFn,
-    filterOptions: canSearch ? fuzzySearch : null,
+    filterOptions: canSearch ? filterOptions : null,
     debounceTime: debounce,
   })
   const snapshot = useMemo(
@@ -112,30 +124,35 @@ export function useSelect({
     [options, highlighted, closeOnSelect, onSelect]
   )
 
-  const valueProps = useMemo(
-    () => ({
-      tabIndex: "0",
-      readOnly: !canSearch,
+  const valueProps = useMemo(() => {
+    const webProps =
+      Platform.OS === "web"
+        ? {
+            onKeyPress,
+            onKeyDown,
+            onKeyUp: (e: any) => {
+              if (e.key === "Escape") {
+                e.preventDefault()
+                ;(ref.current as any).blur()
+              }
+            },
+          }
+        : {}
+
+    return {
+      ...webProps,
+      editable: canSearch,
       onFocus: (e: any) => {
         setFocus(true)
       },
       onBlur: (e: any) => {
         setFocus(false)
       },
-      onKeyPress,
-      onKeyDown,
-      onKeyUp: (e: any) => {
-        if (e.key === "Escape") {
-          e.preventDefault()
-          ;(ref.current as any).blur()
-        }
-      },
-      onChange: canSearch ? ({ target }: any) => setSearch(target.value) : null,
+      onChangeText: canSearch ? (text: string) => setSearch(text) : undefined,
       disabled,
       ref,
-    }),
-    [canSearch, onKeyPress, onKeyDown, disabled, ref]
-  )
+    }
+  }, [canSearch, onKeyPress, onKeyDown, disabled, ref])
 
   useEffect(() => {
     if (valueRef.current === defaultValue) {

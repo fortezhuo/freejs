@@ -54,6 +54,8 @@ export const Options: React.FC<any> = React.memo(
       <View style={{ maxHeight: 200, backgroundColor: "white" }}>
         {options.length ? (
           <OptionsList
+            keyLabel={snapshot.keyLabel}
+            keyValue={snapshot.keyValue}
             onSelectOption={onSelectOption}
             snapshot={snapshot}
             options={options}

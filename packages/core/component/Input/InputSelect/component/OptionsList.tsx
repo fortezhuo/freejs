@@ -4,20 +4,22 @@ import { Option } from "./Option"
 import { isSelected } from "../lib/isSelected"
 
 export const OptionsList: React.FC<any> = React.memo(
-  ({ options, onSelectOption, snapshot }) => (
-    <FlatList
-      data={options}
-      keyExtractor={(opt: JSONObject) => opt[snapshot.keyValue]}
-      renderItem={({ item, index }: any) => (
-        <Option
-          keyValue={snapshot.keyValue}
-          keyLabel={snapshot.keyLabel}
-          selected={isSelected(item, snapshot.option, snapshot.keyValue)}
-          highlighted={snapshot.highlighted === index}
-          option={item}
-          onSelectOption={onSelectOption}
-        />
-      )}
-    />
-  )
+  ({ keyValue, keyLabel, options, onSelectOption, snapshot }) => {
+    return (
+      <FlatList
+        data={options}
+        keyExtractor={(opt: JSONObject) => opt[keyValue]}
+        renderItem={({ item, index }: any) => (
+          <Option
+            keyValue={keyValue}
+            keyLabel={keyLabel}
+            selected={isSelected(item, snapshot.option, keyValue)}
+            highlighted={snapshot.highlighted === index}
+            option={item}
+            onSelectOption={onSelectOption}
+          />
+        )}
+      />
+    )
+  }
 )

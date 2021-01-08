@@ -5,17 +5,19 @@ import { flattenOptions } from "./lib/flattenOptions"
 export function useFetch(
   q: any,
   defaultOptions: JSONObject[],
-  { debounceTime, filterOptions, getOptions }: any
+  { debounceTime, filterOptions, getOptions, keyLabel }: any
 ) {
   const [fetching, setFetching] = useState(false)
-  const [options, setOptions] = useState(() => flattenOptions(defaultOptions))
+  const [options, setOptions] = useState(() =>
+    flattenOptions(defaultOptions, keyLabel)
+  )
   const fetch = useMemo(() => {
     const filter = filterOptions
       ? filterOptions(defaultOptions)
       : () => defaultOptions
 
     if (!getOptions) {
-      return (s: any) => setOptions(flattenOptions(filter(s)))
+      return (s: any) => setOptions(flattenOptions(filter(s), keyLabel))
     }
 
     return debounce((s: any) => {
@@ -26,9 +28,9 @@ export function useFetch(
       Promise.resolve(optionsReq)
         .then((newOptions) => {
           if (filterOptions) {
-            setOptions(flattenOptions(filterOptions(newOptions)(s)))
+            setOptions(flattenOptions(filterOptions(newOptions)(s), keyLabel))
           } else {
-            setOptions(flattenOptions(newOptions))
+            setOptions(flattenOptions(newOptions, keyLabel))
           }
         })
         .finally(() => setFetching(false))

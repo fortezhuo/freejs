@@ -1,6 +1,6 @@
 import React, { forwardRef, memo } from "react"
 import { useSelect } from "./useSelect"
-import { View } from "react-native"
+import { View, TextInput } from "react-native"
 import { Options } from "./component/Options"
 
 const SelectSearch = forwardRef(
@@ -72,11 +72,16 @@ const SelectSearch = forwardRef(
       <View ref={ref}>
         {shouldRenderValue && (
           <View>
-            <input {...props} />
+            <TextInput
+              {...props}
+              style={{ padding: 3, backgroundColor: "white" }}
+            />
           </View>
         )}
         {shouldRenderOptions && (
           <Options
+            keyValue={keyValue}
+            keyLabel={keyLabel}
             options={snapshot.options}
             onSelectOption={onSelectOption}
             snapshot={snapshot}
