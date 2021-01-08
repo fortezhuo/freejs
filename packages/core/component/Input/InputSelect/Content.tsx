@@ -4,8 +4,8 @@ import { OptionsList } from "./OptionsList"
 import { tw } from "@free/tailwind"
 import { theme } from "../../../config/theme"
 
-export const Options: React.FC<any> = React.memo(
-  ({ options, snapshot, onSelectOption, emptyMessage, inputProps }) => {
+export const Content: React.FC<any> = React.memo(
+  ({ options, snapshot, onSelectOption, emptyMessage, searchProps }) => {
     const refFlatList = React.useRef<FlatList>(null)
     const { value, highlighted } = snapshot
     const renderEmptyMessage = React.useCallback(() => {
@@ -29,7 +29,7 @@ export const Options: React.FC<any> = React.memo(
     return (
       <View style={{ maxHeight: 200, backgroundColor: "white" }}>
         <TextInput
-          {...inputProps}
+          {...searchProps}
           style={{ padding: 3, backgroundColor: "white" }}
         />
 

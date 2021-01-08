@@ -1,5 +1,5 @@
 import React from "react"
-import { Platform } from "react-native"
+import { Platform, TextInput } from "react-native"
 import { getOptions } from "../lib/getOptions"
 import { getDisplayValue } from "../lib/getDisplayValue"
 import { useFetch } from "./useFetch"
@@ -45,6 +45,16 @@ export function useSelect({
   onChange = (...args: any) => {},
   debounce = 0,
 }) {
+  const ref = React.useRef<TextInput>(null)
+  const valueRef = React.useRef(undefined)
+  const [value, setValue]: any = React.useState(null)
+  const [search, setSearch] = React.useState("")
+  const [focus, setFocus] = React.useState(false)
+  const [highlighted, dispatchHighlighted] = React.useReducer(
+    highlightReducer,
+    -1
+  )
+
   const filterOptions = React.useCallback((options: JSONObject[]) => {
     return (value: any) => {
       if (!value.length) {
@@ -56,15 +66,6 @@ export function useSelect({
     }
   }, [])
 
-  const ref = React.useRef(null)
-  const valueRef = React.useRef(undefined)
-  const [value, setValue]: any = React.useState(null)
-  const [search, setSearch] = React.useState("")
-  const [focus, setFocus] = React.useState(false)
-  const [highlighted, dispatchHighlighted] = React.useReducer(
-    highlightReducer,
-    -1
-  )
   const { options, fetching } = useFetch(search, defaultOptions, {
     keyLabel,
     getOptions: getOptionsFn,
@@ -140,9 +141,7 @@ export function useSelect({
           onHide()
         }
       }
-      if (key === "Escape") {
-        ;(ref.current as any).blur()
-      }
+
       if (["ArrowDown", "ArrowUp"].includes(key)) {
         dispatchHighlighted({ key, options })
       }
@@ -150,7 +149,7 @@ export function useSelect({
     [options, highlighted, closeOnSelect, onSelect]
   )
 
-  const inputProps = React.useMemo(() => {
+  const searchProps = React.useMemo(() => {
     const webProps =
       Platform.OS === "web"
         ? {
@@ -168,27 +167,22 @@ export function useSelect({
     }
   }, [canSearch, onKeyPress, disabled, ref])
 
-  const anchorProps = React.useMemo(() => ({ onShow, onHide }), [
-    onShow,
-    onHide,
-  ])
-  const optionsProps = React.useMemo(
-    () => ({
-      inputProps,
-      onSelectOption,
-    }),
-    [inputProps, onSelectOption]
-  )
-
   React.useEffect(() => {
     if (valueRef.current === defaultValue) {
       return
     }
-
     ;(valueRef.current as any) = defaultValue
 
     setValue(getOptions(defaultValue, null, options, multiple, keyValue))
   }, [defaultValue, multiple, options])
 
-  return [snapshot, anchorProps, optionsProps, setValue]
+  React.useEffect(() => {
+    if (focus) {
+      setTimeout(() => {
+        ref.current?.focus()
+      }, 100)
+    }
+  }, [focus])
+
+  return [snapshot, { onShow, onHide, onSelectOption, searchProps }, setValue]
 }

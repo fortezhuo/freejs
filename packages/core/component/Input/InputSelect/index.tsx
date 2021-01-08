@@ -1,10 +1,10 @@
 import React from "react"
 import { View, StyleSheet } from "react-native"
 import { useSelect } from "./hook/useSelect"
-import { Options } from "./Options"
+import { Content } from "./Content"
 import { Modal } from "../../Modal"
 import { useApp } from "../../../state"
-import { Anchor } from "./Anchor"
+import { Display } from "./Display"
 import { tw } from "@free/tailwind"
 
 const SCREEN_INDENT = 2
@@ -20,7 +20,6 @@ export const InputSelectRaw: React.FC<any> = React.memo(
     search = true,
     options: defaultOptions,
     onChange = (...args: any) => {},
-    printOptions,
     closeOnSelect = true,
     getOptions = null,
     debounce,
@@ -28,7 +27,10 @@ export const InputSelectRaw: React.FC<any> = React.memo(
   }) => {
     const app = useApp()
     const ref = React.useRef<View>(null)
-    const [snapshot, anchorProps, optionsProps] = useSelect({
+    const [
+      snapshot,
+      { onHide, onSelectOption, onShow, searchProps },
+    ] = useSelect({
       keyValue,
       keyLabel,
       options: defaultOptions,
@@ -38,9 +40,7 @@ export const InputSelectRaw: React.FC<any> = React.memo(
       disabled,
       search,
       onChange,
-      closeOnSelect:
-        closeOnSelect &&
-        (!multiple || ["on-focus", "always"].includes(printOptions)),
+      closeOnSelect,
       getOptions,
       debounce,
     })
@@ -108,28 +108,33 @@ export const InputSelectRaw: React.FC<any> = React.memo(
 
     return (
       <View testID={"InputSelect"} ref={ref} collapsable={false}>
-        <Anchor
-          displayValue={snapshot.displayValue}
-          onPress={anchorProps.onShow}
+        <Display
+          search={search}
+          value={snapshot.displayValue}
+          onPress={onShow}
+          multiple={multiple}
         />
         <Modal
           animationType="none"
           transparent
           isVisible={snapshot.focus}
-          onBackdropPress={anchorProps.onHide}
+          onBackdropPress={onHide}
         >
           <View
             collapsable={false}
             style={[s.viewChildren, menuStyle]}
             onLayout={onLayout}
           >
-            <Options
-              keyValue={keyValue}
-              keyLabel={keyLabel}
+            <Content
               options={snapshot.options}
-              snapshot={snapshot}
-              emptyMessage={emptyMessage}
-              {...optionsProps}
+              {...{
+                onSelectOption,
+                searchProps,
+                keyValue,
+                keyLabel,
+                snapshot,
+                emptyMessage,
+              }}
             />
           </View>
         </Modal>
