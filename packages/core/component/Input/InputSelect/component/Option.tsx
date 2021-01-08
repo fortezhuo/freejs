@@ -6,17 +6,14 @@ import { MenuItem } from "../../../Menu"
 
 export const Option: React.FC<any> = React.memo(
   ({ onSelectOption, highlighted, selected, option }) => {
-    return React.useMemo(
-      () => (
-        <MenuItem
-          active={selected}
-          disabled={option.disabled}
-          onPress={() => onSelectOption(option.value)}
-        >
-          {option.name}
-        </MenuItem>
-      ),
-      [selected]
+    return (
+      <MenuItem
+        active={selected}
+        disabled={option.disabled}
+        onPress={() => onSelectOption(option.value)}
+      >
+        {option.name}
+      </MenuItem>
     )
   }
 )

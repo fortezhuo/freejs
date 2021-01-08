@@ -6,12 +6,12 @@ import {
   useRef,
   useCallback,
 } from "react"
-import { groupOptions } from "./lib/groupOptions"
 import { highlightReducer } from "./highlightReducer"
 import { getOptions } from "./lib/getOptions"
 import { getDisplayValue } from "./lib/getDisplayValue"
 import { useFetch } from "./useFetch"
 import { getValues } from "./lib/getValues"
+import { fuzzySearch } from "./fuzzySearch"
 
 export function useSelect({
   value: defaultValue = null,
@@ -21,7 +21,6 @@ export function useSelect({
   disabled = false,
   closeOnSelect = true,
   getOptions: getOptionsFn = null,
-  filterOptions = null,
   onChange = (...args: any) => {},
   onFocus = (...args: any) => {},
   onBlur = (...args: any) => {},
@@ -35,12 +34,12 @@ export function useSelect({
   const [highlighted, dispatchHighlighted] = useReducer(highlightReducer, -1)
   const { options, fetching } = useFetch(search, defaultOptions, {
     getOptions: getOptionsFn,
-    filterOptions,
+    filterOptions: canSearch ? fuzzySearch : null,
     debounceTime: debounce,
   })
   const snapshot = useMemo(
     () => ({
-      options: groupOptions(options),
+      options,
       option: value,
       displayValue: getDisplayValue(value),
       value: getValues(value),
@@ -121,7 +120,6 @@ export function useSelect({
       onBlur: (e: any) => {
         setFocus(false)
         setSearch("")
-        onBlur(e)
       },
       onKeyPress,
       onKeyDown,

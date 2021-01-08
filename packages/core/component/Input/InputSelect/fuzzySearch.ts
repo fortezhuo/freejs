@@ -1,9 +1,8 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
 import Fuse from "fuse.js"
 
 export function fuzzySearch(options: JSONObject[]) {
   const fuse = new Fuse(options, {
-    keys: ["name", "groupName"],
+    keys: ["name"],
     threshold: 0.3,
   })
 

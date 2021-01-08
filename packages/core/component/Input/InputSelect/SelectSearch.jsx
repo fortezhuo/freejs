@@ -19,8 +19,6 @@ const SelectSearch = forwardRef(
       onBlur,
       printOptions,
       closeOnSelect,
-      renderOption,
-      renderGroupHeader,
       getOptions,
       filterOptions,
       debounce,
@@ -100,7 +98,7 @@ SelectSearch.defaultProps = {
 
   // Interaction
   multiple: false,
-  search: false,
+  search: true,
   disabled: false,
   printOptions: "auto",
   closeOnSelect: true,
