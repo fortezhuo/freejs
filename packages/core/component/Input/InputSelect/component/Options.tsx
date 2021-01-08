@@ -52,17 +52,15 @@ export const Options: React.FC<any> = React.memo(
 
     return (
       <View style={{ maxHeight: 200, backgroundColor: "white" }}>
-        <ScrollView>
-          {options.length ? (
-            <OptionsList
-              onSelectOption={onSelectOption}
-              snapshot={snapshot}
-              options={options}
-            />
-          ) : (
-            renderEmptyMessage()
-          )}
-        </ScrollView>
+        {options.length ? (
+          <OptionsList
+            onSelectOption={onSelectOption}
+            snapshot={snapshot}
+            options={options}
+          />
+        ) : (
+          renderEmptyMessage()
+        )}
       </View>
     )
   }

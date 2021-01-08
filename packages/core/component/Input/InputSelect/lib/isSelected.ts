@@ -1,11 +1,15 @@
-export function isSelected(itemValue: JSONObject, selectedValue: JSONObject) {
+export function isSelected(
+  itemValue: JSONObject,
+  selectedValue: JSONObject,
+  keyValue: string
+) {
   if (!selectedValue) {
     return false
   }
 
   return Array.isArray(selectedValue)
-    ? // eslint-disable-next-line eqeqeq
-      selectedValue.findIndex((item) => item.value == itemValue.value) >= 0
-    : // eslint-disable-next-line eqeqeq
-      selectedValue.value == itemValue.value
+    ? selectedValue.findIndex(
+        (item) => item[keyValue] == itemValue[keyValue]
+      ) >= 0
+    : selectedValue[keyValue] == itemValue[keyValue]
 }

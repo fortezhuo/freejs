@@ -5,16 +5,17 @@ export function getOptions(
   value: any,
   oldValue: any,
   options: any,
-  multiple: boolean
+  multiple: boolean,
+  keyValue: string
 ) {
-  const newOption = getOption(value, options)
+  const newOption = getOption(value, options, keyValue)
 
   if (!multiple) {
     return newOption || oldValue
   }
 
   const newOptions = valueToArray(oldValue)
-    .map((o) => getOption(o, options))
+    .map((o) => getOption(o, options, keyValue))
     .filter((o) => o !== null && o !== undefined)
 
   if (!newOption) {
@@ -22,7 +23,9 @@ export function getOptions(
   }
 
   // eslint-disable-next-line eqeqeq
-  const optionIndex = newOptions.findIndex((o) => o.value == newOption.value)
+  const optionIndex = newOptions.findIndex(
+    (o) => o[keyValue] == newOption[keyValue]
+  )
 
   if (optionIndex >= 0) {
     newOptions.splice(optionIndex, 1)

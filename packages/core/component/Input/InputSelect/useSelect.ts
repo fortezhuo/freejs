@@ -14,6 +14,8 @@ import { getValues } from "./lib/getValues"
 import { fuzzySearch } from "./fuzzySearch"
 
 export function useSelect({
+  keyValue = "value",
+  keyLabel = "label",
   value: defaultValue = null,
   options: defaultOptions = [],
   search: canSearch = false,
@@ -39,8 +41,10 @@ export function useSelect({
     () => ({
       options,
       option: value,
-      displayValue: getDisplayValue(value),
+      displayValue: getDisplayValue(value, keyLabel),
       value: getValues(value),
+      keyValue,
+      keyLabel,
       search,
       fetching,
       focus,
@@ -56,7 +60,8 @@ export function useSelect({
         newValue,
         value,
         Array.isArray(value) ? [...value, ...options] : options,
-        multiple
+        multiple,
+        keyValue
       )
 
       setValue(newOption)
@@ -96,7 +101,7 @@ export function useSelect({
         const selected = options[highlighted]
 
         if (selected) {
-          onSelect(selected.value)
+          onSelect(selected[keyValue])
         }
 
         if (closeOnSelect) {
@@ -139,7 +144,7 @@ export function useSelect({
 
     ;(valueRef.current as any) = defaultValue
 
-    setValue(getOptions(defaultValue, null, options, multiple))
+    setValue(getOptions(defaultValue, null, options, multiple, keyValue))
   }, [defaultValue, multiple, options])
 
   return [snapshot, valueProps, onSelectOption, setValue]

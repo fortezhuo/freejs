@@ -6,6 +6,8 @@ import { Options } from "./component/Options"
 const SelectSearch = forwardRef(
   (
     {
+      keyValue = "value",
+      keyLabel = "name",
       value: defaultValue = null,
       disabled = false,
       placeholder = null,
@@ -24,6 +26,8 @@ const SelectSearch = forwardRef(
     ref
   ) => {
     const [snapshot, valueProps, onSelectOption] = useSelect({
+      keyValue,
+      keyLabel,
       options: defaultOptions,
       value:
         defaultValue === null && (placeholder || multiple) ? "" : defaultValue,
