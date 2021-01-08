@@ -5,7 +5,7 @@ import { theme } from "../../config/theme"
 import { tw } from "@free/tailwind"
 import { useHook } from "./hook"
 import logo from "../../img/logo.png"
-import InputSelect from "../../component/Input/InputSelect/SelectSearch"
+import { InputSelectRaw } from "../../component/Input/InputSelect"
 
 interface LoginButton {
   isUpdating?: boolean
@@ -276,7 +276,7 @@ const LoginButton: React.FC<LoginButton> = ({ isUpdating, onPress }) => {
 const PageLogin: React.FC = () => {
   const { control, state, temp, onSubmit, error } = useHook()
   return (
-    <InputSelect
+    <InputSelectRaw
       options={countries}
       onChange={(...args: any) => console.log(args)}
       placeholder="Choose a size"

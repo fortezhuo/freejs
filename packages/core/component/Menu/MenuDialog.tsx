@@ -2,7 +2,6 @@ import React from "react"
 import { View, StyleSheet } from "react-native"
 import { Modal, Col } from "../"
 import { tw } from "@free/tailwind"
-import { useApp } from "../../state"
 
 const noop = () => {}
 

@@ -1,17 +1,17 @@
-import { useEffect, useMemo, useState } from "react"
-import { debounce } from "./lib/debounce"
-import { flattenOptions } from "./lib/flattenOptions"
+import React from "react"
+import { debounce } from "../lib/debounce"
+import { flattenOptions } from "../lib/flattenOptions"
 
 export function useFetch(
   q: any,
   defaultOptions: JSONObject[],
   { debounceTime, filterOptions, getOptions, keyLabel }: any
 ) {
-  const [fetching, setFetching] = useState(false)
-  const [options, setOptions] = useState(() =>
+  const [fetching, setFetching] = React.useState(false)
+  const [options, setOptions] = React.useState(() =>
     flattenOptions(defaultOptions, keyLabel)
   )
-  const fetch = useMemo(() => {
+  const fetch = React.useMemo(() => {
     const filter = filterOptions
       ? filterOptions(defaultOptions)
       : () => defaultOptions
@@ -37,8 +37,8 @@ export function useFetch(
     }, debounceTime)
   }, [filterOptions, defaultOptions, getOptions, debounceTime])
 
-  useEffect(() => setOptions(defaultOptions), [defaultOptions])
-  useEffect(() => fetch(q), [fetch, q])
+  React.useEffect(() => setOptions(defaultOptions), [defaultOptions])
+  React.useEffect(() => fetch(q), [fetch, q])
 
   return { options, setOptions, fetching }
 }

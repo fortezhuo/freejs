@@ -1,7 +1,7 @@
 import React from "react"
 import { TouchableOpacity, View, StyleSheet } from "react-native"
-import { theme } from "../../../../config/theme"
-import { Text } from "../../../Text"
+import { theme } from "../../../config/theme"
+import { Text } from "../../Text"
 import { tw } from "@free/tailwind"
 
 export const Option: React.FC<any> = React.memo(

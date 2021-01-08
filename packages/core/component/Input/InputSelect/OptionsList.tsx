@@ -1,7 +1,7 @@
 import React from "react"
 import { FlatList } from "react-native"
 import { Option } from "./Option"
-import { isSelected } from "../lib/isSelected"
+import { isSelected } from "./lib/isSelected"
 
 const ITEM_HEIGHT = 36
 export const OptionsList: React.FC<any> = React.forwardRef(
