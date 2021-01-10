@@ -65,9 +65,10 @@ const BoxTarget: React.FC<any> = React.memo(
             <Label>Actions</Label>
           </Col>
           <Col light md={10}>
-            <Input.Text
+            <Input.Select
               control={document.control}
               name={`list[${i}].actions`}
+              options={document.temp.action || []}
               {...props}
             />
           </Col>

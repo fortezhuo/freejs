@@ -39,32 +39,29 @@ const Clear: React.FC<any> = ({ onClear, multi, value, clearable }) => {
 }
 
 export const Display: React.FC<any> = React.memo((props) => {
-  const { value, onPress, multiple, search } = props
-
+  const { value, multiple, search, placeholder = "Select ..." } = props
   return (
-    <TouchableOpacity onPress={onPress}>
+    <View
+      style={[
+        s.viewDisplay,
+        search ? {} : s.viewCompact,
+        multiple ? s.viewMulti : {},
+      ]}
+    >
       {value !== "" ? (
-        <View
-          style={[
-            s.viewDisplay,
-            search ? {} : s.viewCompact,
-            multiple ? s.viewMulti : {},
-          ]}
-        >
-          <View style={s.viewValue} testID="ViewValue">
-            {multiple ? (
-              value.map((v: string, i: number) => (
-                <Chip key={"chip_" + i}>{v}</Chip>
-              ))
-            ) : (
-              <Text style={s.textSingle}>{value}</Text>
-            )}
-          </View>
+        <View style={s.viewValue} testID="ViewValue">
+          {multiple ? (
+            value.map((v: string, i: number) => (
+              <Chip key={"chip_" + i}>{v}</Chip>
+            ))
+          ) : (
+            <Text style={s.textSingle}>{value}</Text>
+          )}
         </View>
       ) : (
-        <Placeholder>Kosong</Placeholder>
+        <Placeholder>{placeholder}</Placeholder>
       )}
-    </TouchableOpacity>
+    </View>
   )
 })
 

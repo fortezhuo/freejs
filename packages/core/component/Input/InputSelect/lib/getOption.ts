@@ -1,7 +1,7 @@
 import { isOption } from "./isOption"
 
 export function getOption(value: any, options: JSONObject[], keyValue: string) {
-  if (isOption(value)) {
+  if (isOption(value, keyValue)) {
     return value
   }
 

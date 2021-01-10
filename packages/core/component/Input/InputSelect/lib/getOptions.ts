@@ -22,7 +22,6 @@ export function getOptions(
     return newOptions
   }
 
-  // eslint-disable-next-line eqeqeq
   const optionIndex = newOptions.findIndex(
     (o) => o[keyValue] == newOption[keyValue]
   )

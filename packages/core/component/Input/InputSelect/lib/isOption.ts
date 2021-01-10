@@ -1,8 +1,3 @@
-export function isOption(option?: JSONObject) {
-  return (
-    option !== null &&
-    typeof option === "object" &&
-    "value" in option &&
-    "name" in option
-  )
+export function isOption(option: JSONObject, key: string) {
+  return option !== null && typeof option === "object" && `${key}` in option
 }

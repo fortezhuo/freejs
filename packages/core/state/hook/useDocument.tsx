@@ -30,7 +30,7 @@ export const useDocument = (name: string) => {
   const form = useForm({ criteriaMode: "all" })
   const route = useRoute()
   const [temp, setTemp] = useState({})
-  const [state, setState] = useState({})
+  const [_state, setState] = useState({})
   const id = (route?.params as any).id
   const refMounted = React.useRef<boolean>(false)
   const refFunction = React.useRef<JSONObject>(initCallback)
@@ -143,9 +143,9 @@ export const useDocument = (name: string) => {
     }
   }, [])
 
-  const getStateProps = React.useCallback(() => {
-    return { isLoading: state.isLoading, isEditable: state.isEditable }
-  }, [state.isLoading, state.isEditable])
+  const state = React.useMemo(() => {
+    return { isLoading: _state.isLoading, isEditable: _state.isEditable }
+  }, [_state.isLoading, _state.isEditable])
 
   return {
     ...form,
@@ -157,7 +157,6 @@ export const useDocument = (name: string) => {
     temp,
     setTemp,
     state,
-    getStateProps,
     setState,
     setData,
     getId,

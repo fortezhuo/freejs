@@ -93,7 +93,7 @@ export function useSelect({
     const selected = getOptions(value, null, options, multiple, keyValue)
     dispatchHighlighted({ key: "Selected", index: selected.index, options })
     setFocus(false)
-  }, [dispatchHighlighted, setFocus, options, value, multiple])
+  }, [dispatchHighlighted, setFocus, options, value, multiple, keyValue])
 
   const onSelect = React.useCallback(
     (newValue) => {
@@ -113,7 +113,7 @@ export function useSelect({
         onHide()
       }
     },
-    [closeOnSelect, multiple, onChange, onHide, value, options]
+    [closeOnSelect, multiple, onChange, onHide, value, options, keyValue]
   )
 
   const onShow = React.useCallback(() => {

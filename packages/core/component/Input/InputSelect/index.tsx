@@ -4,15 +4,19 @@ import { useSelect } from "./hook/useSelect"
 import { Content } from "./Content"
 import { Modal } from "../../Modal"
 import { useApp } from "../../../state"
-import { Display } from "./Display"
+import { Anchor } from "./Anchor"
+import { DisplayError } from "../DisplayError"
+import { useController } from "react-hook-form"
+
 import { tw } from "@free/tailwind"
 
 const SCREEN_INDENT = 2
 const isCompact = false
+
 export const InputSelectRaw: React.FC<any> = React.memo(
   ({
     keyValue = "value",
-    keyLabel = "name",
+    keyLabel = "label",
     value: defaultValue = null,
     disabled = false,
     placeholder = null,
@@ -34,8 +38,7 @@ export const InputSelectRaw: React.FC<any> = React.memo(
       keyValue,
       keyLabel,
       options: defaultOptions,
-      value:
-        defaultValue === null && (placeholder || multiple) ? "" : defaultValue,
+      value: defaultValue,
       multiple,
       disabled,
       search,
@@ -108,7 +111,8 @@ export const InputSelectRaw: React.FC<any> = React.memo(
 
     return (
       <View testID={"InputSelect"} ref={ref} collapsable={false}>
-        <Display
+        <Anchor
+          placeholder={placeholder}
           search={search}
           value={snapshot.displayValue}
           onPress={onShow}
@@ -142,6 +146,33 @@ export const InputSelectRaw: React.FC<any> = React.memo(
     )
   }
 )
+
+export const InputSelect: React.FC<any> = ({
+  control,
+  name,
+  rules,
+  defaultValue,
+  multi,
+  ...props
+}) => {
+  defaultValue = defaultValue ? defaultValue : multi ? [] : ""
+
+  const {
+    field: { onChange, value },
+    meta: { invalid },
+  } = useController({
+    name,
+    control,
+    rules,
+    defaultValue,
+  })
+  return (
+    <>
+      <InputSelectRaw {...{ onChange, value, multi, ...props }} />
+      <DisplayError error={invalid} />
+    </>
+  )
+}
 
 const s = StyleSheet.create({
   viewChildren: tw("absolute bg-transparent"),

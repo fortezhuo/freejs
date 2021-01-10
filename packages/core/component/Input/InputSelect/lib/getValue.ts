@@ -5,5 +5,5 @@ export function getValue(option: JSONObject | null, keyValue: string) {
     return null
   }
 
-  return isOption(option) ? option[keyValue] : null
+  return isOption(option, keyValue) ? option[keyValue] : null
 }
