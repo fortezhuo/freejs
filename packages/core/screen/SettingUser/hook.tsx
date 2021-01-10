@@ -38,5 +38,5 @@ export const useHook = () => {
     ].filter((opt) => opt.visible)
   }, [state.isEditable])
 
-  return { ...document, actions }
+  return { ...document, state, actions }
 }

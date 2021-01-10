@@ -1,3 +1,3 @@
 export function valueToArray(value: any) {
-  return !Array.isArray(value) ? [value] : value
+  return !!value ? (!Array.isArray(value) ? [value] : value) : []
 }

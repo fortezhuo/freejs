@@ -72,11 +72,11 @@ export function useSelect({
     filterOptions: canSearch ? filterOptions : null,
     debounceTime: debounce,
   })
-  const snapshot = React.useMemo(
-    () => ({
+  const snapshot = React.useMemo(() => {
+    return {
       options,
       option: value,
-      displayValue: getDisplayValue(value, keyLabel),
+      displayValue: getDisplayValue(value, keyLabel, multiple),
       value: getValues(value, keyValue),
       keyValue,
       keyLabel,
@@ -85,9 +85,8 @@ export function useSelect({
       focus,
       highlighted,
       disabled,
-    }),
-    [disabled, fetching, focus, highlighted, search, value, options]
-  )
+    }
+  }, [disabled, fetching, focus, highlighted, search, value, options])
 
   const onHide = React.useCallback(() => {
     const selected = getOptions(value, null, options, multiple, keyValue)
@@ -173,7 +172,9 @@ export function useSelect({
     }
     ;(valueRef.current as any) = defaultValue
 
-    setValue(getOptions(defaultValue, null, options, multiple, keyValue))
+    const value = getOptions(defaultValue, null, options, multiple, keyValue)
+
+    setValue(value)
   }, [defaultValue, multiple, options])
 
   React.useEffect(() => {

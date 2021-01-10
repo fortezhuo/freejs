@@ -3,7 +3,7 @@ import { Icon, Text } from "../.."
 import { StyleSheet, View, TouchableOpacity } from "react-native"
 import { tw, color } from "@free/tailwind"
 import { theme } from "../../../config/theme"
-import { random } from "../../../util"
+import { isBlank } from "./lib/isBlank"
 
 const defaultColor = color(theme.default_text)
 
@@ -40,6 +40,7 @@ const Clear: React.FC<any> = ({ onClear, multi, value, clearable }) => {
 
 export const Display: React.FC<any> = React.memo((props) => {
   const { value, multiple, search, placeholder = "Select ..." } = props
+
   return (
     <View
       style={[
@@ -48,7 +49,9 @@ export const Display: React.FC<any> = React.memo((props) => {
         multiple ? s.viewMulti : {},
       ]}
     >
-      {value !== "" ? (
+      {isBlank(value) ? (
+        <Placeholder>{placeholder}</Placeholder>
+      ) : (
         <View style={s.viewValue} testID="ViewValue">
           {multiple ? (
             value.map((v: string, i: number) => (
@@ -58,8 +61,6 @@ export const Display: React.FC<any> = React.memo((props) => {
             <Text style={s.textSingle}>{value}</Text>
           )}
         </View>
-      ) : (
-        <Placeholder>{placeholder}</Placeholder>
       )}
     </View>
   )

@@ -27,11 +27,8 @@ export const Content: React.FC<any> = React.memo(
     }, [value, highlighted, refFlatList])
 
     return (
-      <View style={{ maxHeight: 200, backgroundColor: "white" }}>
-        <TextInput
-          {...searchProps}
-          style={{ padding: 3, backgroundColor: "white" }}
-        />
+      <View style={s.viewWrapper}>
+        <TextInput {...searchProps} style={s.inputText} />
 
         {options.length ? (
           <OptionsList
@@ -51,6 +48,9 @@ export const Content: React.FC<any> = React.memo(
 )
 
 const s = StyleSheet.create({
+  viewWrapper: tw(`${theme.default_bg} ${theme.input_border}`, {
+    paddingTop: 3,
+  }),
   inputText: tw(
     `w-full ${theme.default_bg} p-2 px-3 ${theme.default_border} border-b`
   ),

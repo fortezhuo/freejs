@@ -16,7 +16,7 @@ export function getOptions(
 
   const newOptions = valueToArray(oldValue)
     .map((o) => getOption(o, options, keyValue))
-    .filter((o) => o !== null && o !== undefined)
+    .filter((o) => o != null)
 
   if (!newOption) {
     return newOptions
