@@ -117,7 +117,7 @@ export const useDocument = (name: string) => {
     } finally {
       setState({ isLoading: false, isEditable: app.can("update", name) })
     }
-  }, [])
+  }, [id])
 
   const close = React.useCallback(() => {
     if (navigation.canGoBack()) {
@@ -125,23 +125,26 @@ export const useDocument = (name: string) => {
     } else {
       navigation.navigate("Drawer", { screen: `View${route.name}` })
     }
-  }, [])
+  }, [route.name])
 
-  const save = React.useCallback(async (data: any) => {
-    const isUpdate = id.length === 24
-    const method = isUpdate ? "PATCH" : "POST"
-    try {
-      setState({ isLoading: true })
-      await refFunction.current.onBeforeSave(data)
-      await req[method](`/api/${name}${isUpdate ? `/${id}` : ""}`, data)
-      await refFunction.current.onAfterSave(data)
-      return true
-    } catch (err) {
-      return handleError(err)
-    } finally {
-      setState({ isLoading: false })
-    }
-  }, [])
+  const save = React.useCallback(
+    async (data: any) => {
+      const isUpdate = id.length === 24
+      const method = isUpdate ? "PATCH" : "POST"
+      try {
+        setState({ isLoading: true })
+        await refFunction.current.onBeforeSave(data)
+        await req[method](`/api/${name}${isUpdate ? `/${id}` : ""}`, data)
+        await refFunction.current.onAfterSave(data)
+        return true
+      } catch (err) {
+        return handleError(err)
+      } finally {
+        setState({ isLoading: false })
+      }
+    },
+    [id, name]
+  )
 
   return {
     ...form,

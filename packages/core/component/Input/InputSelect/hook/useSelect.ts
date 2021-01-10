@@ -1,6 +1,6 @@
 import React from "react"
 import { Platform, TextInput } from "react-native"
-import { getOptions, getDefaultOptions } from "../lib/getOptions"
+import { getOptions } from "../lib/getOptions"
 import { getDisplayValue } from "../lib/getDisplayValue"
 import { useFetch } from "./useFetch"
 import { getValues } from "../lib/getValues"
@@ -79,7 +79,7 @@ export function useSelect({
     }
     ;(valueRef.current as any) = value
 
-    const selected = getDefaultOptions(value, options, multiple, keyValue)
+    const selected = getOptions(value, null, options, multiple, keyValue)
 
     setSelect(selected)
   }, [value, multiple, options, keyValue])
@@ -100,7 +100,7 @@ export function useSelect({
   }, [disabled, fetching, focus, highlighted, search, selected, options])
 
   const onHide = React.useCallback(() => {
-    const chosen = getDefaultOptions(selected, options, multiple, keyValue)
+    const chosen = getOptions(selected, null, options, multiple, keyValue)
     if (chosen) {
       dispatchHighlighted({ key: "Selected", index: chosen.index, options })
     }

@@ -35,6 +35,7 @@ export function getOptions(
   return newOptions
 }
 
+/*
 export function getDefaultOptions(
   value: any,
   options: any,
@@ -51,3 +52,4 @@ export function getDefaultOptions(
     (o: JSONObject) => aValue.indexOf(o[keyValue]) >= 0
   )
 }
+*/
