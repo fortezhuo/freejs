@@ -105,13 +105,13 @@ export const useDocument = (name: string) => {
   const handleLoad = React.useCallback(async () => {
     try {
       setState({ isLoading: true })
+      await refFunction.current.onLoad()
       if (id.length === 24) {
         const {
           data: { result },
         } = await req.POST(`/api/find/${name}/${id}`, {})
         await setData(result)
       }
-      await refFunction.current.onLoad()
     } catch (err) {
       handleError(err)
     } finally {

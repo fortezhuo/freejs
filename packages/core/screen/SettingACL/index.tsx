@@ -41,6 +41,7 @@ const SettingACL: React.FC = () => {
               />
             </Col>
           </Row>
+          {/*
           <Row dark>
             <Col md={2}>
               <Label>Inherit</Label>
@@ -56,17 +57,20 @@ const SettingACL: React.FC = () => {
               />
             </Col>
           </Row>
+          */}
           <Row dark>
             <Col md={2}>
               <Label>Target</Label>
             </Col>
             <Col light md={10}>
-              <Input.Text
+              <Input.Select
                 control={document.control}
                 name="target"
                 placeholder="Target"
                 rules={{ required: "Target is mandatory" }}
                 defaultValue={[]}
+                options={document.temp.target || []}
+                multiple
                 {...state}
               />
             </Col>

@@ -34,3 +34,20 @@ export function getOptions(
 
   return newOptions
 }
+
+export function getDefaultOptions(
+  value: any,
+  options: any,
+  multiple: boolean,
+  keyValue: string
+) {
+  if (!multiple) {
+    return getOption(value, options, keyValue)
+  }
+
+  const aValue = value == null ? [] : Array.isArray(value) ? value : [value]
+
+  return (options || []).filter(
+    (o: JSONObject) => aValue.indexOf(o[keyValue]) >= 0
+  )
+}

@@ -1,6 +1,6 @@
 import React from "react"
 import { Platform, TextInput } from "react-native"
-import { getOptions } from "../lib/getOptions"
+import { getOptions, getDefaultOptions } from "../lib/getOptions"
 import { getDisplayValue } from "../lib/getDisplayValue"
 import { useFetch } from "./useFetch"
 import { getValues } from "../lib/getValues"
@@ -35,19 +35,19 @@ const highlightReducer = function (
 export function useSelect({
   keyValue = "value",
   keyLabel = "label",
-  value: defaultValue = null,
+  value = null,
   options: defaultOptions = [],
   search: canSearch = false,
   multiple = false,
   disabled = false,
   closeOnSelect = true,
-  getOptions: getOptionsFn = null,
+  loadOptions = null,
   onChange = (...args: any) => {},
   debounce = 0,
 }) {
   const ref = React.useRef<TextInput>(null)
   const valueRef = React.useRef(undefined)
-  const [value, setValue]: any = React.useState(null)
+  const [selected, setSelect]: any = React.useState(null)
   const [search, setSearch] = React.useState("")
   const [focus, setFocus] = React.useState(false)
   const [highlighted, dispatchHighlighted] = React.useReducer(
@@ -56,28 +56,39 @@ export function useSelect({
   )
 
   const filterOptions = React.useCallback((options: JSONObject[]) => {
-    return (value: any) => {
-      if (!value.length) {
+    return (text: string) => {
+      if (!text.length) {
         return options
       }
 
-      const regex = new RegExp(value, "i")
+      const regex = new RegExp(text, "i")
       return options.filter((o) => regex.test(o[keyLabel]))
     }
   }, [])
 
   const { options, fetching } = useFetch(search, defaultOptions, {
     keyLabel,
-    getOptions: getOptionsFn,
+    loadOptions,
     filterOptions: canSearch ? filterOptions : null,
     debounceTime: debounce,
   })
+
+  React.useEffect(() => {
+    if (valueRef.current === value) {
+      return
+    }
+    ;(valueRef.current as any) = value
+
+    const selected = getDefaultOptions(value, options, multiple, keyValue)
+
+    setSelect(selected)
+  }, [value, multiple, options, keyValue])
+
   const snapshot = React.useMemo(() => {
     return {
       options,
-      option: value,
-      displayValue: getDisplayValue(value, keyLabel, multiple),
-      value: getValues(value, keyValue),
+      display: getDisplayValue(selected, keyLabel, multiple),
+      value: getValues(selected, keyValue, multiple),
       keyValue,
       keyLabel,
       search,
@@ -86,33 +97,36 @@ export function useSelect({
       highlighted,
       disabled,
     }
-  }, [disabled, fetching, focus, highlighted, search, value, options])
+  }, [disabled, fetching, focus, highlighted, search, selected, options])
 
   const onHide = React.useCallback(() => {
-    const selected = getOptions(value, null, options, multiple, keyValue)
-    dispatchHighlighted({ key: "Selected", index: selected.index, options })
+    const chosen = getDefaultOptions(selected, options, multiple, keyValue)
+    if (chosen) {
+      dispatchHighlighted({ key: "Selected", index: chosen.index, options })
+    }
+
     setFocus(false)
-  }, [dispatchHighlighted, setFocus, options, value, multiple, keyValue])
+  }, [dispatchHighlighted, setFocus, options, selected, multiple, keyValue])
 
   const onSelect = React.useCallback(
     (newValue) => {
       const newOption = getOptions(
         newValue,
-        value,
-        Array.isArray(value) ? [...value, ...options] : options,
+        selected,
+        Array.isArray(selected) ? [...selected, ...options] : options,
         multiple,
         keyValue
       )
 
-      setValue(newOption)
-      onChange(getValues(newOption, keyValue), newOption)
+      setSelect(newOption)
+      onChange(getValues(newOption, keyValue, multiple), newOption)
       dispatchHighlighted({ key: "Selected", index: newOption.index, options })
 
       if (closeOnSelect) {
         onHide()
       }
     },
-    [closeOnSelect, multiple, onChange, onHide, value, options, keyValue]
+    [closeOnSelect, multiple, onChange, onHide, selected, options, keyValue]
   )
 
   const onShow = React.useCallback(() => {
@@ -167,17 +181,6 @@ export function useSelect({
   }, [canSearch, onKeyPress, disabled, ref])
 
   React.useEffect(() => {
-    if (valueRef.current === defaultValue) {
-      return
-    }
-    ;(valueRef.current as any) = defaultValue
-
-    const value = getOptions(defaultValue, null, options, multiple, keyValue)
-
-    setValue(value)
-  }, [defaultValue, multiple, options])
-
-  React.useEffect(() => {
     if (focus) {
       setTimeout(() => {
         ref.current?.focus()
@@ -185,5 +188,5 @@ export function useSelect({
     }
   }, [focus])
 
-  return [snapshot, { onShow, onHide, onSelectOption, searchProps }, setValue]
+  return [snapshot, { onShow, onHide, onSelectOption, searchProps }, setSelect]
 }

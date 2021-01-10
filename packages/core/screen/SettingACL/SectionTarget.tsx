@@ -22,13 +22,17 @@ const Wrapper: React.FC<any> = ({ document, ...props }) => {
     defaultValue: [],
   })
 
+  return <></>
+
+  /*
   return (
     <>
-      {aTarget.map((target: string, i: number) => (
+      {(aTarget || []).map((target: string, i: number) => (
         <BoxTarget key={"list_" + i} {...{ document, target, ...props, i }} />
       ))}
     </>
   )
+  */
 }
 
 const Title: React.FC<any> = React.memo(({ control, name, defaultValue }) => {

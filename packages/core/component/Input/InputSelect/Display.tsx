@@ -39,7 +39,7 @@ const Clear: React.FC<any> = ({ onClear, multi, value, clearable }) => {
 }
 
 export const Display: React.FC<any> = React.memo((props) => {
-  const { value, multiple, search, placeholder = "Select ..." } = props
+  const { display, multiple, search, placeholder = "Select ..." } = props
 
   return (
     <View
@@ -49,16 +49,16 @@ export const Display: React.FC<any> = React.memo((props) => {
         multiple ? s.viewMulti : {},
       ]}
     >
-      {isBlank(value) ? (
+      {isBlank(display) ? (
         <Placeholder>{placeholder}</Placeholder>
       ) : (
         <View style={s.viewValue} testID="ViewValue">
           {multiple ? (
-            value.map((v: string, i: number) => (
+            display.map((v: string, i: number) => (
               <Chip key={"chip_" + i}>{v}</Chip>
             ))
           ) : (
-            <Text style={s.textSingle}>{value}</Text>
+            <Text style={s.textSingle}>{display}</Text>
           )}
         </View>
       )}
