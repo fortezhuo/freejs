@@ -1,11 +1,12 @@
 import React from "react"
 import { TextInput } from "react-native"
 import { useController } from "react-hook-form"
+import _startCase from "lodash/startCase"
 
 export const Title: React.FC<any> = React.memo(
   ({ control, name, defaultValue }) => {
     const {
-      field: { ref, onChange: onChangeText, value },
+      field: { ref, value },
     } = useController({
       name,
       control,
@@ -14,7 +15,7 @@ export const Title: React.FC<any> = React.memo(
 
     return (
       <TextInput
-        {...{ value, onChangeText }}
+        value={_startCase(value)}
         editable={false}
         style={{ fontSize: 18, marginVertical: 3 }}
       />

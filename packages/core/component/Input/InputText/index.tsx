@@ -16,6 +16,7 @@ interface FormInputTextProps extends InputTextProps {
   control?: any
   name: string
   rules?: any
+  separator?: string
   defaultValue?: any
 }
 
@@ -38,6 +39,7 @@ export const InputTextRaw: React.FC<InputTextProps> = ({
 }
 
 export const InputText: React.FC<FormInputTextProps> = ({
+  separator,
   control,
   name,
   rules,
@@ -45,7 +47,7 @@ export const InputText: React.FC<FormInputTextProps> = ({
   ...props
 }) => {
   const {
-    field: { ref, onChange, value, ...inputProps },
+    field: { onChange, value },
     meta: { invalid },
   } = useController({
     name,
@@ -54,13 +56,21 @@ export const InputText: React.FC<FormInputTextProps> = ({
     defaultValue,
   })
 
+  const inputProps = React.useMemo(
+    () => ({
+      value: separator ? (value || []).join(separator) : value,
+      onChangeText: (text: string) => {
+        onChange(separator ? text.split(separator) : text)
+      },
+    }),
+    [separator, value]
+  )
+
   return (
     <>
       <InputTextRaw
         editable={props.isEditable}
-        onChangeText={onChange}
-        value={value}
-        {...props}
+        {...{ ...inputProps, ...props }}
       />
       <DisplayError error={invalid} />
     </>

@@ -73,11 +73,29 @@ const Skeleton: React.FC<any> = ({ style }): JSX.Element => {
   )
 }
 
-export const Base: React.FC<any> = ({ isLoading, style, children }) => {
+interface Base {
+  isLoading?: boolean
+  style?: JSONObject
+  children?: any
+}
+
+export const Base: React.FC<Base> = ({ isLoading, style, children }) => {
   return (
     <View style={[style, isLoading ? [s.viewClear, s.viewBase] : {}]}>
       {isLoading ? <Skeleton style={style} /> : children}
     </View>
+  )
+}
+
+export const withBase = (Component: any) => ({
+  style,
+  isLoading,
+  ...props
+}: any) => {
+  return (
+    <Base {...{ style, isLoading }}>
+      <Component {...props} />
+    </Base>
   )
 }
 

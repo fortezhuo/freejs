@@ -57,6 +57,7 @@ export const ACL: React.FC<any> = React.memo(({ document, field, i }) => {
         </Col>
         <Col light md={10}>
           <Input.Text
+            separator=","
             control={document.control}
             name={`list[${i}].fields`}
             defaultValue={field.fields}
