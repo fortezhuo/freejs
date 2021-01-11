@@ -1,24 +1,14 @@
 import React from "react"
-import { View, FlatList, Text, TextInput, StyleSheet } from "react-native"
+import { View, FlatList, TextInput, StyleSheet } from "react-native"
 import { OptionsList } from "./OptionsList"
 import { tw } from "@free/tailwind"
 import { theme } from "../../../config/theme"
+import { Item } from "./Option"
 
 export const Content: React.FC<any> = React.memo(
   ({ options, snapshot, onSelect, emptyMessage, searchProps }) => {
     const refFlatList = React.useRef<FlatList>(null)
     const { value, highlighted } = snapshot
-    const renderEmptyMessage = React.useCallback(() => {
-      if (emptyMessage === null) {
-        return null
-      }
-
-      return (
-        <Text>
-          {typeof emptyMessage === "function" ? emptyMessage() : emptyMessage}
-        </Text>
-      )
-    }, [emptyMessage])
 
     React.useEffect(() => {
       if (refFlatList.current && !!highlighted) {
@@ -40,7 +30,7 @@ export const Content: React.FC<any> = React.memo(
             options={options}
           />
         ) : (
-          renderEmptyMessage()
+          <Item>{emptyMessage}</Item>
         )}
       </View>
     )

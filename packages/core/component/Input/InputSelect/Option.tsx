@@ -4,21 +4,22 @@ import { theme } from "../../../config/theme"
 import { Text } from "../../Text"
 import { tw } from "@free/tailwind"
 
+export const Item: React.FC<any> = React.memo(({ highlighted, children }) => {
+  return (
+    <View style={[s.viewItem, highlighted ? s.viewHiglighted : {}]}>
+      <Text style={s.textItem}>{children}</Text>
+    </View>
+  )
+})
+
 export const Option: React.FC<any> = React.memo(
-  ({ onSelect, highlighted, keyValue, keyLabel, selected, option }) => {
+  ({ onSelect, highlighted, keyValue, keyLabel, option }) => {
     return (
       <TouchableOpacity
         disabled={option.disabled}
         onPress={() => onSelect(option[keyValue])}
       >
-        <View
-          style={[
-            s.viewItem,
-            highlighted ? s.viewHiglighted : selected ? s.viewSelected : {},
-          ]}
-        >
-          <Text style={s.textItem}> {option[keyLabel]}</Text>
-        </View>
+        <Item highlighted={highlighted}>{option[keyLabel]}</Item>
       </TouchableOpacity>
     )
   }
@@ -26,7 +27,6 @@ export const Option: React.FC<any> = React.memo(
 
 const s = StyleSheet.create({
   viewItem: tw(`flex-1 flex-row p-2`),
-  viewHiglighted: tw("bg-black-200"),
-  viewSelected: tw("bg-black-100"),
+  viewHiglighted: tw("bg-black-100"),
   textItem: tw(`${theme.default_text} leading-5 mx-2`),
 })

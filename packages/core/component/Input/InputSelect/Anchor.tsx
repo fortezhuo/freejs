@@ -5,12 +5,42 @@ import { theme } from "../../../config/theme"
 import { Display } from "./Display"
 import { Base } from "../../Base"
 
-export const Anchor: React.FC<any> = React.memo(
-  ({ onPress, disabled, ...props }) => {
+interface Anchor {
+  display: string | string[]
+  disabled: boolean
+  placeholder: string
+  multiple: boolean
+  search: boolean
+  onShow: VoidFunction
+  onDeselect: VoidFunction
+  onClear: VoidFunction
+}
+
+export const Anchor: React.FC<Anchor> = React.memo(
+  ({
+    onShow,
+    display,
+    disabled,
+    placeholder,
+    multiple,
+    search,
+    onDeselect,
+    onClear,
+  }) => {
     return (
-      <TouchableOpacity onPress={onPress}>
+      <TouchableOpacity disabled={disabled} onPress={onShow}>
         <Base style={[s.viewInput, disabled ? s.viewDisabled : {}]}>
-          <Display {...props} />
+          <Display
+            {...{
+              display,
+              disabled,
+              placeholder,
+              multiple,
+              search,
+              onDeselect,
+              onClear,
+            }}
+          />
         </Base>
       </TouchableOpacity>
     )

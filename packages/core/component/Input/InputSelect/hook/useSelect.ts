@@ -10,12 +10,10 @@ const highlightReducer = function (
   highlighted: any,
   { key, options }: any
 ): any {
-  const max = options.length - 1
-
   if (key === "Reset") return 0
 
+  const max = options.length - 1
   let newHighlighted = key === "ArrowDown" ? highlighted + 1 : highlighted - 1
-
   if (newHighlighted < 0) {
     newHighlighted = max
   } else if (newHighlighted > max) {
@@ -109,8 +107,9 @@ export function useSelect({
 
   const onShow = React.useCallback(() => {
     dispatchHighlighted({ key: "Reset", options })
+    setSearch("")
     setFocus(true)
-  }, [setFocus, options])
+  }, [setFocus, setSearch, options])
 
   const onHide = React.useCallback(() => {
     setFocus(false)
@@ -135,6 +134,23 @@ export function useSelect({
     },
     [closeOnSelect, multiple, onChange, onHide, selected, options, keyValue]
   )
+
+  const onDeselect = React.useCallback(
+    (removeDisplay) => {
+      const newSelect = selected.filter(
+        (o: JSONObject) => o[keyLabel] !== removeDisplay
+      )
+      const newValues = getValues(newSelect, keyValue, multiple)
+      setSelect(newSelect)
+      onChange(newValues, newSelect)
+    },
+    [onChange, selected, keyValue]
+  )
+
+  const onClear = React.useCallback(() => {
+    setSelect(multiple ? [] : null)
+    onChange(multiple ? [] : null)
+  }, [multiple, onChange])
 
   const onKeyPress = React.useCallback(
     (e) => {
@@ -180,5 +196,9 @@ export function useSelect({
     }
   }, [canSearch, onKeyPress, disabled, ref])
 
-  return [snapshot, { onShow, onHide, onSelect, searchProps }, setSelect]
+  return [
+    snapshot,
+    { onShow, onHide, onSelect, onDeselect, onClear, searchProps },
+    setSelect,
+  ]
 }

@@ -1,20 +1,11 @@
 import React from "react"
-import { Col, Row, Input, Label, Button, Text, Section } from "../../component"
-import { View, StyleSheet, TextInput } from "react-native"
+import { Title } from "./Title"
+import { Col, Row, Input, Label } from "../../../component"
+import { View, StyleSheet } from "react-native"
 import { tw } from "@free/tailwind"
-import { useController, useFieldArray } from "react-hook-form"
+import { useFieldArray } from "react-hook-form"
 
-export const SectionTarget: React.FC<any> = React.memo(
-  ({ document, ...props }) => {
-    return (
-      <Section label="List Access">
-        <Wrapper {...{ document, ...props }} />
-      </Section>
-    )
-  }
-)
-
-const Wrapper: React.FC<any> = ({ document, ...props }) => {
+export const Content: React.FC<any> = ({ document, ...props }) => {
   const { fields } = useFieldArray({
     control: document.control,
     name: "list",
@@ -23,33 +14,13 @@ const Wrapper: React.FC<any> = ({ document, ...props }) => {
   return (
     <>
       {fields.map((field: JSONObject, i: number) => (
-        <BoxTarget key={field.id} {...{ document, field, i }} />
+        <ACL key={field.id} {...{ document, field, i }} />
       ))}
     </>
   )
 }
 
-const Title: React.FC<any> = React.memo(({ control, name, defaultValue }) => {
-  const {
-    field: { ref, onChange: onChangeText, value },
-  } = useController({
-    name,
-    control,
-    defaultValue,
-  })
-
-  return (
-    <TextInput
-      {...{ value, onChangeText }}
-      editable={false}
-      style={{ fontSize: 18, marginVertical: 3 }}
-    />
-  )
-})
-
-const BoxTarget: React.FC<any> = React.memo(({ document, field, i }) => {
-  console.log(field)
-
+export const ACL: React.FC<any> = React.memo(({ document, field, i }) => {
   return (
     <View style={s.viewWorkflow}>
       <View style={s.viewTitle}>
@@ -85,7 +56,11 @@ const BoxTarget: React.FC<any> = React.memo(({ document, field, i }) => {
           <Label>Fields</Label>
         </Col>
         <Col light md={10}>
-          <Input.Text control={document.control} name={`list[${i}].fields`} />
+          <Input.Text
+            control={document.control}
+            name={`list[${i}].fields`}
+            defaultValue={field.fields}
+          />
         </Col>
       </Row>
     </View>

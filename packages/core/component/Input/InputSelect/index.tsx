@@ -27,7 +27,10 @@ export const InputSelectRaw: React.FC<any> = React.memo(
     emptyMessage = "No match found",
   }) => {
     const ref = React.useRef<View>(null)
-    const [snapshot, { onHide, onSelect, onShow, searchProps }] = useSelect({
+    const [
+      snapshot,
+      { onHide, onSelect, onDeselect, onClear, onShow, searchProps },
+    ] = useSelect({
       keyValue,
       keyLabel,
       options: defaultOptions,
@@ -46,11 +49,16 @@ export const InputSelectRaw: React.FC<any> = React.memo(
     return (
       <View testID={"InputSelect"} ref={ref} collapsable={false}>
         <Anchor
-          placeholder={placeholder}
-          search={search}
-          display={snapshot.display}
-          onPress={onShow}
-          multiple={multiple}
+          {...{
+            display: snapshot.display,
+            disabled,
+            placeholder,
+            multiple,
+            search,
+            onShow,
+            onDeselect,
+            onClear,
+          }}
         />
         <Modal
           animationType="none"

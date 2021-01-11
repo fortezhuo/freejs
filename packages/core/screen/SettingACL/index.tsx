@@ -11,7 +11,7 @@ import {
 import { View, StyleSheet } from "react-native"
 import { useHook } from "./hook"
 import { tw } from "@free/tailwind"
-import { SectionTarget } from "./SectionTarget"
+import { SectionAccess } from "./SectionAccess"
 
 const SettingACL: React.FC = () => {
   const { state, actions, ...document } = useHook()
@@ -41,7 +41,6 @@ const SettingACL: React.FC = () => {
               />
             </Col>
           </Row>
-          {/*
           <Row dark>
             <Col md={2}>
               <Label>Inherit</Label>
@@ -57,7 +56,6 @@ const SettingACL: React.FC = () => {
               />
             </Col>
           </Row>
-          */}
           <Row dark>
             <Col md={2}>
               <Label>Target</Label>
@@ -76,7 +74,7 @@ const SettingACL: React.FC = () => {
             </Col>
           </Row>
         </Section>
-        <SectionTarget
+        <SectionAccess
           {...{
             document,
             ...state,
