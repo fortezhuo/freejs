@@ -127,6 +127,7 @@ export function useSelect({
       const newValues = getValues(newSelect, keyValue, multiple)
       setSelect(newSelect)
       onChange(newValues, newSelect)
+      dispatchHighlighted({ key: "Reset", options })
 
       if (closeOnSelect && !!newValue) {
         onHide()
@@ -143,6 +144,7 @@ export function useSelect({
       const newValues = getValues(newSelect, keyValue, multiple)
       setSelect(newSelect)
       onChange(newValues, newSelect)
+      dispatchHighlighted({ key: "Reset", options })
     },
     [onChange, selected, keyValue]
   )

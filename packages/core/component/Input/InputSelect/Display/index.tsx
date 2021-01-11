@@ -28,24 +28,22 @@ export const Display: React.FC<Display> = React.memo(
     onClear = (...args: any) => {},
   }) => {
     return (
-      <View
-        style={[
-          s.viewDisplay,
-          search ? {} : s.viewCompact,
-          multiple ? s.viewMulti : {},
-        ]}
-      >
+      <View style={[s.viewDisplay, search ? {} : s.viewCompact]}>
         {isBlank(display) ? (
           <Placeholder multiple>{placeholder}</Placeholder>
         ) : (
-          <View style={s.viewValue}>
-            {multiple ? (
-              <Chips {...{ disabled, onDeselect }}>{display}</Chips>
-            ) : (
-              <Text style={s.textSingle}>{display}</Text>
+          <>
+            <View style={[s.viewValue, multiple ? s.viewMulti : {}]}>
+              {multiple ? (
+                <Chips {...{ disabled, onDeselect }}>{display}</Chips>
+              ) : (
+                <Text style={s.textSingle}>{display}</Text>
+              )}
+            </View>
+            {!disabled && (
+              <Clear style={s.viewClear} {...{ onPress: onClear }} />
             )}
-            {!disabled && <Clear {...{ onPress: onClear }} />}
-          </View>
+          </>
         )}
       </View>
     )
@@ -53,9 +51,10 @@ export const Display: React.FC<Display> = React.memo(
 )
 
 const s = StyleSheet.create({
-  viewDisplay: tw("flex-1 flex-row items-center mx-4"),
+  viewDisplay: tw("flex-1 flex-row items-center"),
   viewCompact: tw("mx-3"),
   viewMulti: tw("mt-1 ml-1 mb-1"),
-  viewValue: tw("flex-1 flex-row flex-wrap"),
+  viewValue: tw("mx-3 flex-1 flex-row flex-wrap"),
+  viewClear: tw("mx-3"),
   textSingle: tw(`flex-grow ${theme.default_text}`),
 })

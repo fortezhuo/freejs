@@ -5,7 +5,7 @@ import { View, StyleSheet } from "react-native"
 import { tw } from "@free/tailwind"
 import { useFieldArray } from "react-hook-form"
 
-export const Content: React.FC<any> = ({ document, ...props }) => {
+export const Content: React.FC<any> = ({ document }) => {
   const { fields } = useFieldArray({
     control: document.control,
     name: "list",

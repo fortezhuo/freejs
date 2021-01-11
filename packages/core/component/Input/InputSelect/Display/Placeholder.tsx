@@ -7,11 +7,10 @@ import { theme } from "../../../../config/theme"
 export const Placeholder: React.FC<{
   children: React.ReactNode
   multiple?: boolean
-}> = React.memo(({ children, multiple }) => {
-  const style = multiple ? { paddingHorizontal: 8 } : {}
-  return <Text style={[s.textPlaceholder, style]}>{children}</Text>
+}> = React.memo(({ children }) => {
+  return <Text style={[s.textPlaceholder]}>{children}</Text>
 })
 
 const s = StyleSheet.create({
-  textPlaceholder: tw(`${theme.disabled_text}`),
+  textPlaceholder: tw(`mx-3 ${theme.disabled_text}`),
 })
