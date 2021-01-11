@@ -129,19 +129,11 @@ export function useSelect({
       setSelect(newSelect)
       onChange(newValues, newSelect)
 
-      if (closeOnSelect) {
+      if (closeOnSelect && !!newValue) {
         onHide()
       }
     },
-    [
-      closeOnSelect,
-      multiple,
-      onChange,
-      onHide,
-      selected,
-      snapshot.options,
-      keyValue,
-    ]
+    [closeOnSelect, multiple, onChange, onHide, selected, options, keyValue]
   )
 
   const onKeyPress = React.useCallback(
@@ -159,11 +151,15 @@ export function useSelect({
         }
       }
 
+      if (key === "Backspace" && multiple) {
+        onSelect(null)
+      }
+
       if (["ArrowDown", "ArrowUp"].includes(key)) {
         dispatchHighlighted({ key, options })
       }
     },
-    [options, highlighted, closeOnSelect, onSelect]
+    [options, highlighted, closeOnSelect, onSelect, multiple]
   )
 
   const searchProps = React.useMemo(() => {

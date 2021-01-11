@@ -7,11 +7,17 @@ export function getOptions(
   multiple: boolean,
   keyValue: string
 ) {
-  const selected = !Array.isArray(value)
-    ? getOption(value, options, keyValue)
-    : value.map((v) => getOption(v, options, keyValue))
-  if (!multiple) {
-    return selected || oldValue
+  if (value) {
+    const selected = !Array.isArray(value)
+      ? getOption(value, options, keyValue)
+      : value.map((v) => getOption(v, options, keyValue))
+    if (!multiple) {
+      return selected || oldValue
+    }
+    return (oldValue || []).concat(selected || [])
+  } else {
+    if (multiple && (oldValue || []).length) {
+      return oldValue.slice(0, -1)
+    }
   }
-  return (oldValue || []).concat(selected || [])
 }
