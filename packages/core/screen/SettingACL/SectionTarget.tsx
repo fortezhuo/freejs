@@ -1,9 +1,8 @@
 import React from "react"
 import { Col, Row, Input, Label, Button, Text, Section } from "../../component"
-import { useWatch } from "react-hook-form"
 import { View, StyleSheet, TextInput } from "react-native"
 import { tw } from "@free/tailwind"
-import { useController } from "react-hook-form"
+import { useController, useFieldArray } from "react-hook-form"
 
 export const SectionTarget: React.FC<any> = React.memo(
   ({ document, ...props }) => {
@@ -16,23 +15,18 @@ export const SectionTarget: React.FC<any> = React.memo(
 )
 
 const Wrapper: React.FC<any> = ({ document, ...props }) => {
-  const aTarget = useWatch({
+  const { fields } = useFieldArray({
     control: document.control,
-    name: "target",
-    defaultValue: [],
+    name: "list",
   })
 
-  return <></>
-
-  /*
   return (
     <>
-      {(aTarget || []).map((target: string, i: number) => (
-        <BoxTarget key={"list_" + i} {...{ document, target, ...props, i }} />
+      {fields.map((field: JSONObject, i: number) => (
+        <BoxTarget key={field.id} {...{ document, field, i }} />
       ))}
     </>
   )
-  */
 }
 
 const Title: React.FC<any> = React.memo(({ control, name, defaultValue }) => {
@@ -53,54 +47,50 @@ const Title: React.FC<any> = React.memo(({ control, name, defaultValue }) => {
   )
 })
 
-const BoxTarget: React.FC<any> = React.memo(
-  ({ document, target, i, ...props }) => {
-    return (
-      <View style={s.viewWorkflow}>
-        <View style={s.viewTitle}>
-          <Title
-            control={document.control}
-            name={`list[${i}].target`}
-            defaultValue={target}
-          />
-        </View>
-        <Row dark>
-          <Col md={2}>
-            <Label>Actions</Label>
-          </Col>
-          <Col light md={10}>
-            <Input.Select
-              multiple
-              placeholder="Action"
-              control={document.control}
-              name={`list[${i}].actions`}
-              options={[
-                { label: "create", value: "create" },
-                { label: "read", value: "read" },
-                { label: "update", value: "update" },
-                { label: "delete", value: "delete" },
-                { label: "all", value: "all" },
-              ]}
-              {...props}
-            />
-          </Col>
-        </Row>
-        <Row dark>
-          <Col md={2}>
-            <Label>Fields</Label>
-          </Col>
-          <Col light md={10}>
-            <Input.Text
-              control={document.control}
-              name={`list[${i}].fields`}
-              {...props}
-            />
-          </Col>
-        </Row>
+const BoxTarget: React.FC<any> = React.memo(({ document, field, i }) => {
+  console.log(field)
+
+  return (
+    <View style={s.viewWorkflow}>
+      <View style={s.viewTitle}>
+        <Title
+          control={document.control}
+          name={`list[${i}].target`}
+          defaultValue={field.target}
+        />
       </View>
-    )
-  }
-)
+      <Row dark>
+        <Col md={2}>
+          <Label>Actions</Label>
+        </Col>
+        <Col light md={10}>
+          <Input.Select
+            multiple
+            placeholder="Action"
+            control={document.control}
+            defaultValue={field.actions}
+            name={`list[${i}].actions`}
+            options={[
+              { label: "create", value: "create" },
+              { label: "read", value: "read" },
+              { label: "update", value: "update" },
+              { label: "delete", value: "delete" },
+              { label: "all", value: "all" },
+            ]}
+          />
+        </Col>
+      </Row>
+      <Row dark>
+        <Col md={2}>
+          <Label>Fields</Label>
+        </Col>
+        <Col light md={10}>
+          <Input.Text control={document.control} name={`list[${i}].fields`} />
+        </Col>
+      </Row>
+    </View>
+  )
+})
 
 const s = StyleSheet.create({
   viewContent: tw("flex-col p-6 pt-0"),

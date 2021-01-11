@@ -27,7 +27,7 @@ const initCallback = {
 export const useDocument = (name: string) => {
   const app = useApp()
   const navigation = useNavigation()
-  const form = useForm({ criteriaMode: "all" })
+  const form = useForm()
   const route = useRoute()
   const [temp, setTemp] = useState({})
   const [state, setState] = useState({})
@@ -65,7 +65,7 @@ export const useDocument = (name: string) => {
 
   const setData = React.useCallback(async (data: JSONObject) => {
     await asyncForEach(Object.keys(data), async (key: string) => {
-      form.setValue(key, data[key])
+      form.setValue(key, data[key], { shouldDirty: true })
     })
   }, [])
 
@@ -108,16 +108,14 @@ export const useDocument = (name: string) => {
         const {
           data: { result },
         } = await req.POST(`/api/find/${name}/${id}`, {})
-        setTimeout(async () => {
-          await setData(result)
-        }, 100)
+        await setData(result)
       }
     } catch (err) {
       handleError(err)
     } finally {
       setState({ isLoading: false, isEditable: app.can("update", name) })
     }
-  }, [id])
+  }, [id, name])
 
   const close = React.useCallback(() => {
     if (navigation.canGoBack()) {
