@@ -5,7 +5,7 @@ import { tw } from "@free/tailwind"
 import { theme } from "../../../config/theme"
 
 export const Content: React.FC<any> = React.memo(
-  ({ options, snapshot, onSelectOption, emptyMessage, searchProps }) => {
+  ({ options, snapshot, onSelect, emptyMessage, searchProps }) => {
     const refFlatList = React.useRef<FlatList>(null)
     const { value, highlighted } = snapshot
     const renderEmptyMessage = React.useCallback(() => {
@@ -21,7 +21,7 @@ export const Content: React.FC<any> = React.memo(
     }, [emptyMessage])
 
     React.useEffect(() => {
-      if (refFlatList.current && !!highlighted && highlighted > 0) {
+      if (refFlatList.current && !!highlighted) {
         refFlatList.current.scrollToIndex({ index: highlighted })
       }
     }, [value, highlighted, refFlatList])
@@ -35,7 +35,7 @@ export const Content: React.FC<any> = React.memo(
             ref={refFlatList}
             keyLabel={snapshot.keyLabel}
             keyValue={snapshot.keyValue}
-            onSelectOption={onSelectOption}
+            onSelect={onSelect}
             snapshot={snapshot}
             options={options}
           />

@@ -27,10 +27,7 @@ export const InputSelectRaw: React.FC<any> = React.memo(
     emptyMessage = "No match found",
   }) => {
     const ref = React.useRef<View>(null)
-    const [
-      snapshot,
-      { onHide, onSelectOption, onShow, searchProps },
-    ] = useSelect({
+    const [snapshot, { onHide, onSelect, onShow, searchProps }] = useSelect({
       keyValue,
       keyLabel,
       options: defaultOptions,
@@ -69,7 +66,7 @@ export const InputSelectRaw: React.FC<any> = React.memo(
             <Content
               options={snapshot.options}
               {...{
-                onSelectOption,
+                onSelect,
                 searchProps,
                 keyValue,
                 keyLabel,
@@ -103,6 +100,7 @@ export const InputSelect: React.FC<any> = ({
     rules,
     defaultValue,
   })
+
   return (
     <>
       <InputSelectRaw {...{ onChange, value, multi, ...props }} />

@@ -2,6 +2,7 @@ import React from "react"
 import { useForm } from "react-hook-form"
 import { useApp } from "../../state"
 import { POST } from "../../request"
+import { useFocusEffect } from "@react-navigation/native"
 
 import { configLDAP as ldap } from "@free/env"
 
@@ -9,15 +10,19 @@ export const useHook = () => {
   const document = useForm({ criteriaMode: "all" })
   const app = useApp()
 
-  React.useEffect(() => {
-    document.setValue("domain", ldap[0].domain)
-    app.setTemp({
-      domain: ldap.map((l: any) => ({
-        value: l.domain,
-        label: l.domain,
-      })),
-    })
-  }, [])
+  useFocusEffect(
+    React.useCallback(() => {
+      app.setTemp({
+        domain: ldap.map((l: any) => ({
+          value: l.domain,
+          label: l.domain,
+        })),
+      })
+      setTimeout(() => {
+        document.setValue("domain", ldap[0].domain)
+      }, 100)
+    }, [])
+  )
 
   const onSubmit = document.handleSubmit(
     React.useCallback(async (data: any) => {

@@ -1,4 +1,5 @@
 import { getValue } from "./getValue"
+import { valueToArray } from "./valueToArray"
 
 export function getValues(
   options: JSONObject[] | null,
@@ -6,9 +7,9 @@ export function getValues(
   multiple: boolean
 ) {
   if (multiple) {
-    return (options ? (Array.isArray(options) ? options : [options]) : [])
+    return valueToArray(options)
       .map((o) => getValue(o, keyValue))
-      .filter((v) => v !== null)
+      .filter((o) => o != null)
   } else {
     return getValue(options, keyValue)
   }

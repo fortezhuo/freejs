@@ -89,7 +89,7 @@ export const getMenu: (app: any) => Menu[] = (app) => {
       visible: canSetting,
       children: [
         {
-          label: "Access Control Management",
+          label: "Access Management",
           icon: "key",
           component: "ViewSettingACL",
           visible: true,

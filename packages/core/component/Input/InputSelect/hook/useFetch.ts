@@ -2,11 +2,11 @@ import React from "react"
 import { debounce } from "../lib/debounce"
 
 export function useFetch(
-  q: any,
+  q: string,
   defaultOptions: JSONObject[],
   { debounceTime, filterOptions, loadOptions }: any
 ) {
-  const [fetching, setFetching] = React.useState(false)
+  const [isFetching, setFetching] = React.useState(false)
   const [options, setOptions] = React.useState(() => defaultOptions)
   const fetch = React.useMemo(() => {
     const filter = filterOptions
@@ -37,5 +37,5 @@ export function useFetch(
   React.useEffect(() => setOptions(defaultOptions), [defaultOptions])
   React.useEffect(() => fetch(q), [fetch, q])
 
-  return { options, setOptions, fetching }
+  return { options, setOptions, isFetching }
 }

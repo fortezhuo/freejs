@@ -5,7 +5,7 @@ import { isSelected } from "./lib/isSelected"
 
 const ITEM_HEIGHT = 36
 export const OptionsList: React.FC<any> = React.forwardRef(
-  ({ keyValue, keyLabel, options, onSelectOption, snapshot }, ref: any) => {
+  ({ keyValue, keyLabel, options, onSelect, snapshot }, ref: any) => {
     return (
       <FlatList
         ref={ref}
@@ -18,7 +18,7 @@ export const OptionsList: React.FC<any> = React.forwardRef(
             selected={isSelected(item, snapshot.option, keyValue)}
             highlighted={snapshot.highlighted === index}
             option={item}
-            onSelectOption={onSelectOption}
+            onSelect={onSelect}
           />
         )}
         getItemLayout={(data, index) => ({
@@ -30,7 +30,3 @@ export const OptionsList: React.FC<any> = React.forwardRef(
     )
   }
 )
-
-/*
-
-      */

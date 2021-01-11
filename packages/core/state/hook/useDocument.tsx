@@ -63,8 +63,6 @@ export const useDocument = (name: string) => {
     }, [refMounted.current])
   )
 
-  const getId = React.useCallback(() => id, [])
-
   const setData = React.useCallback(async (data: JSONObject) => {
     await asyncForEach(Object.keys(data), async (key: string) => {
       form.setValue(key, data[key])
@@ -110,7 +108,9 @@ export const useDocument = (name: string) => {
         const {
           data: { result },
         } = await req.POST(`/api/find/${name}/${id}`, {})
-        await setData(result)
+        setTimeout(async () => {
+          await setData(result)
+        }, 100)
       }
     } catch (err) {
       handleError(err)
@@ -158,6 +158,6 @@ export const useDocument = (name: string) => {
     state,
     setState,
     setData,
-    getId,
+    id,
   }
 }

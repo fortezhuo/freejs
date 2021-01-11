@@ -5,11 +5,11 @@ import { Text } from "../../Text"
 import { tw } from "@free/tailwind"
 
 export const Option: React.FC<any> = React.memo(
-  ({ onSelectOption, highlighted, keyValue, keyLabel, selected, option }) => {
+  ({ onSelect, highlighted, keyValue, keyLabel, selected, option }) => {
     return (
       <TouchableOpacity
         disabled={option.disabled}
-        onPress={() => onSelectOption(option[keyValue])}
+        onPress={() => onSelect(option[keyValue])}
       >
         <View
           style={[

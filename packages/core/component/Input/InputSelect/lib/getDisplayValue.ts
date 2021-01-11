@@ -1,5 +1,5 @@
 import { isOption } from "./isOption"
-import { valueToArray } from "./valuteToArray"
+import { valueToArray } from "./valueToArray"
 
 export function getDisplayValue(
   value: any,

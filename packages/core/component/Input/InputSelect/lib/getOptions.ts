@@ -1,4 +1,3 @@
-import { valueToArray } from "./valuteToArray"
 import { getOption } from "./getOption"
 
 export function getOptions(
@@ -8,48 +7,11 @@ export function getOptions(
   multiple: boolean,
   keyValue: string
 ) {
-  const newOption = getOption(value, options, keyValue)
-
+  const selected = !Array.isArray(value)
+    ? getOption(value, options, keyValue)
+    : value.map((v) => getOption(v, options, keyValue))
   if (!multiple) {
-    return newOption || oldValue
+    return selected || oldValue
   }
-
-  const newOptions = valueToArray(oldValue)
-    .map((o) => getOption(o, options, keyValue))
-    .filter((o) => o != null)
-
-  if (!newOption) {
-    return newOptions
-  }
-
-  const optionIndex = newOptions.findIndex(
-    (o) => o[keyValue] == newOption[keyValue]
-  )
-
-  if (optionIndex >= 0) {
-    newOptions.splice(optionIndex, 1)
-  } else {
-    newOptions.push(newOption)
-  }
-
-  return newOptions
+  return (oldValue || []).concat(selected || [])
 }
-
-/*
-export function getDefaultOptions(
-  value: any,
-  options: any,
-  multiple: boolean,
-  keyValue: string
-) {
-  if (!multiple) {
-    return getOption(value, options, keyValue)
-  }
-
-  const aValue = value == null ? [] : Array.isArray(value) ? value : [value]
-
-  return (options || []).filter(
-    (o: JSONObject) => aValue.indexOf(o[keyValue]) >= 0
-  )
-}
-*/

@@ -10,7 +10,7 @@ const getSetting: (visible: boolean) => Route[] = (visible) => {
   return [
     {
       name: "SettingACL",
-      title: "Access Control Management",
+      title: "Access Management",
       view: "acl",
       child: "acl/:id",
       visible: visible,

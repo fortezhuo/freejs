@@ -4,29 +4,22 @@ import { getOptions } from "../lib/getOptions"
 import { getDisplayValue } from "../lib/getDisplayValue"
 import { useFetch } from "./useFetch"
 import { getValues } from "../lib/getValues"
+import { valueToArray } from "../lib/valueToArray"
 
 const highlightReducer = function (
   highlighted: any,
-  { key, options, index }: any
+  { key, options }: any
 ): any {
   const max = options.length - 1
-  let newHighlighted =
-    key === "Selected" && !!index
-      ? index
-      : key === "ArrowDown"
-      ? highlighted + 1
-      : highlighted - 1
+
+  if (key === "Reset") return 0
+
+  let newHighlighted = key === "ArrowDown" ? highlighted + 1 : highlighted - 1
 
   if (newHighlighted < 0) {
     newHighlighted = max
   } else if (newHighlighted > max) {
     newHighlighted = 0
-  }
-
-  const option = options[newHighlighted]
-
-  if (option && option.disabled) {
-    return highlightReducer(newHighlighted, { key, options, index })
   }
 
   return newHighlighted
@@ -46,27 +39,31 @@ export function useSelect({
   debounce = 0,
 }) {
   const ref = React.useRef<TextInput>(null)
-  const valueRef = React.useRef(undefined)
+  const refSelected = React.useRef<any>(null)
   const [selected, setSelect]: any = React.useState(null)
   const [search, setSearch] = React.useState("")
   const [focus, setFocus] = React.useState(false)
   const [highlighted, dispatchHighlighted] = React.useReducer(
     highlightReducer,
-    -1
+    0
   )
 
-  const filterOptions = React.useCallback((options: JSONObject[]) => {
-    return (text: string) => {
-      if (!text.length) {
-        return options
+  const filterOptions = React.useCallback(
+    (options: JSONObject[]) => {
+      return (text: string) => {
+        const regex = !text.length ? undefined : new RegExp(text, "i")
+        const aValue = !!value ? valueToArray(value) : []
+        return options.filter(
+          (o) =>
+            aValue.indexOf(o[keyValue]) < 0 &&
+            (regex ? regex.test(o[keyLabel]) : true)
+        )
       }
+    },
+    [value]
+  )
 
-      const regex = new RegExp(text, "i")
-      return options.filter((o) => regex.test(o[keyLabel]))
-    }
-  }, [])
-
-  const { options, fetching } = useFetch(search, defaultOptions, {
+  const { options, isFetching } = useFetch(search, defaultOptions, {
     keyLabel,
     loadOptions,
     filterOptions: canSearch ? filterOptions : null,
@@ -74,15 +71,26 @@ export function useSelect({
   })
 
   React.useEffect(() => {
-    if (valueRef.current === value) {
-      return
+    if (focus) {
+      setTimeout(() => {
+        ref.current?.focus()
+      }, 100)
     }
-    ;(valueRef.current as any) = value
+  }, [focus])
 
-    const selected = getOptions(value, null, options, multiple, keyValue)
+  React.useEffect(() => {
+    if (refSelected.current == value) return
+    refSelected.current = value
 
+    const selected = getOptions(
+      value,
+      [],
+      [...defaultOptions, ...options],
+      multiple,
+      keyValue
+    )
     setSelect(selected)
-  }, [value, multiple, options, keyValue])
+  }, [value])
 
   const snapshot = React.useMemo(() => {
     return {
@@ -92,52 +100,48 @@ export function useSelect({
       keyValue,
       keyLabel,
       search,
-      fetching,
+      isFetching,
       focus,
       highlighted,
       disabled,
     }
-  }, [disabled, fetching, focus, highlighted, search, selected, options])
+  }, [disabled, isFetching, focus, highlighted, search, selected, options])
+
+  const onShow = React.useCallback(() => {
+    dispatchHighlighted({ key: "Reset", options })
+    setFocus(true)
+  }, [setFocus, options])
 
   const onHide = React.useCallback(() => {
-    const chosen = getOptions(selected, null, options, multiple, keyValue)
-    if (chosen) {
-      dispatchHighlighted({ key: "Selected", index: chosen.index, options })
-    }
-
     setFocus(false)
-  }, [dispatchHighlighted, setFocus, options, selected, multiple, keyValue])
+  }, [setFocus])
 
   const onSelect = React.useCallback(
     (newValue) => {
-      const newOption = getOptions(
+      const newSelect = getOptions(
         newValue,
         selected,
-        Array.isArray(selected) ? [...selected, ...options] : options,
+        options,
         multiple,
         keyValue
       )
-
-      setSelect(newOption)
-      onChange(getValues(newOption, keyValue, multiple), newOption)
-      dispatchHighlighted({ key: "Selected", index: newOption.index, options })
+      const newValues = getValues(newSelect, keyValue, multiple)
+      setSelect(newSelect)
+      onChange(newValues, newSelect)
 
       if (closeOnSelect) {
         onHide()
       }
     },
-    [closeOnSelect, multiple, onChange, onHide, selected, options, keyValue]
-  )
-
-  const onShow = React.useCallback(() => {
-    setFocus(true)
-  }, [setFocus])
-
-  const onSelectOption = React.useCallback(
-    (value) => {
-      onSelect(value)
-    },
-    [onSelect]
+    [
+      closeOnSelect,
+      multiple,
+      onChange,
+      onHide,
+      selected,
+      snapshot.options,
+      keyValue,
+    ]
   )
 
   const onKeyPress = React.useCallback(
@@ -180,13 +184,5 @@ export function useSelect({
     }
   }, [canSearch, onKeyPress, disabled, ref])
 
-  React.useEffect(() => {
-    if (focus) {
-      setTimeout(() => {
-        ref.current?.focus()
-      }, 100)
-    }
-  }, [focus])
-
-  return [snapshot, { onShow, onHide, onSelectOption, searchProps }, setSelect]
+  return [snapshot, { onShow, onHide, onSelect, searchProps }, setSelect]
 }
