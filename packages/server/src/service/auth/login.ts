@@ -21,7 +21,7 @@ export const login = function (this: BaseService) {
       }
       reply.send({
         success: true,
-        result: data,
+        result: req.session.auth,
       })
     } catch (err) {
       this.onErrorHandler(req, reply, err)

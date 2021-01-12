@@ -6,20 +6,20 @@ import _isEmpty from "lodash/isEmpty"
 
 export { useState, useDefaultState, createContext } from "./hook"
 
-const acl = new RBAC()
-
 const useHook = () => {
   const refAlert = React.useRef(null)
+  const refACL = React.useRef<RBAC>(new RBAC())
   const app = useDefaultState({})
 
   const login = React.useCallback(async (data) => {
+    console.log("login")
     try {
       app.setError({})
       app.setState({ isUpdating: true })
       const res = await req.POST("/api/auth", { ...data })
       const { access, roles = [] } = res.data.result
-      acl.load(access)
-      acl.register(roles, {})
+      refACL.current.load(access)
+      refACL.current.register(roles, {})
       app.setData({ auth: res.data.result })
     } catch (err) {
       app.setError(err)
@@ -27,19 +27,6 @@ const useHook = () => {
       app.setState({ isUpdating: false })
     }
   }, [])
-
-  const logout = React.useCallback(async () => {
-    await req.GET("/api/auth/logout")
-    app.setData({ auth: undefined })
-  }, [app.data?.auth?.username])
-
-  const can = React.useCallback(
-    (action: string, target: string) => {
-      const { granted }: any = acl.can(action, target)
-      return granted
-    },
-    [app.data?.auth?.username]
-  )
 
   React.useEffect(() => {
     if (!app.data.auth?.username) {
@@ -50,8 +37,8 @@ const useHook = () => {
           })
           const res = await req.GET("/api/auth")
           const { access, roles = [] } = res.data.result
-          acl.load(access)
-          acl.register(roles, {})
+          refACL.current.load(access)
+          refACL.current.register(roles, {})
           app.setData({ auth: res.data.result })
         } catch (e) {
           console.log("AUTH FAILED", e)
@@ -61,6 +48,20 @@ const useHook = () => {
       })()
     }
   }, [app.data.auth?.username])
+
+  const logout = React.useCallback(async () => {
+    await req.GET("/api/auth/logout")
+    app.setData({ auth: undefined })
+  }, [app.data?.auth?.username])
+
+  const can = React.useCallback(
+    (action: string, target: string) => {
+      console.log("can")
+      const { granted }: any = refACL.current.can(action, target)
+      return granted
+    },
+    [app.data?.auth?.username]
+  )
 
   return { ...app, can, login, logout, refAlert }
 }
