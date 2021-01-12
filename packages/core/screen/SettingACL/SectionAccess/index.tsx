@@ -4,7 +4,7 @@ import { Content } from "./Content"
 import { useWatch } from "react-hook-form"
 
 export const SectionAccess: React.FC<any> = React.memo(
-  ({ document, ...props }) => {
+  ({ document, stateProps }) => {
     const target: string[] = useWatch({
       control: document.control,
       name: "target",
@@ -22,7 +22,7 @@ export const SectionAccess: React.FC<any> = React.memo(
 
     return (
       <Section label="List Access">
-        <Content {...{ document, ...props }} />
+        <Content {...{ document, stateProps }} />
       </Section>
     )
   }

@@ -62,8 +62,8 @@ export const TablePagination: React.FC = React.memo(() => {
           disabled={isUpdating || isLoading}
           style={s.boxPaging}
           value={limit}
-          clearable={false}
-          searchable={false}
+          clear={false}
+          search={false}
           placeholder="Limit"
           options={limitOptions}
           onChange={onChange}

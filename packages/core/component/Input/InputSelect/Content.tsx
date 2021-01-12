@@ -6,7 +6,7 @@ import { theme } from "../../../config/theme"
 import { Item } from "./Option"
 
 export const Content: React.FC<any> = React.memo(
-  ({ options, snapshot, onSelect, emptyMessage, searchProps }) => {
+  ({ options, snapshot, onSelect, emptyMessage, search, searchProps }) => {
     const refFlatList = React.useRef<FlatList>(null)
     const { value, highlighted } = snapshot
 
@@ -18,7 +18,7 @@ export const Content: React.FC<any> = React.memo(
 
     return (
       <View style={s.viewWrapper}>
-        <TextInput {...searchProps} style={s.inputText} />
+        {search && <TextInput {...searchProps} style={s.inputText} />}
 
         {options.length ? (
           <OptionsList

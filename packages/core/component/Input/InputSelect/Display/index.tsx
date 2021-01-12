@@ -21,14 +21,13 @@ export const Display: React.FC<Display> = React.memo(
   ({
     display,
     multiple,
-    search,
     placeholder,
     disabled,
     onDeselect = (...args: any) => {},
-    onClear = (...args: any) => {},
+    onClear,
   }) => {
     return (
-      <View style={[s.viewDisplay, search ? {} : s.viewCompact]}>
+      <View style={[s.viewDisplay]}>
         {isBlank(display) ? (
           <Placeholder multiple>{placeholder}</Placeholder>
         ) : (
@@ -40,7 +39,7 @@ export const Display: React.FC<Display> = React.memo(
                 <Text style={s.textSingle}>{display}</Text>
               )}
             </View>
-            {!disabled && (
+            {!disabled && onClear && (
               <Clear style={s.viewClear} {...{ onPress: onClear }} />
             )}
           </>
@@ -52,7 +51,6 @@ export const Display: React.FC<Display> = React.memo(
 
 const s = StyleSheet.create({
   viewDisplay: tw("flex-1 flex-row items-center"),
-  viewCompact: tw("mx-3"),
   viewMulti: tw("mt-1 ml-1 mb-1"),
   viewValue: tw("mx-3 flex-1 flex-row flex-wrap"),
   viewClear: tw("mx-3"),

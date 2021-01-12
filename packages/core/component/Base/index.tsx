@@ -87,18 +87,6 @@ export const Base: React.FC<Base> = ({ isLoading, style, children }) => {
   )
 }
 
-export const withBase = (Component: any) => ({
-  style,
-  isLoading,
-  ...props
-}: any) => {
-  return (
-    <Base {...{ style, isLoading }}>
-      <Component {...props} />
-    </Base>
-  )
-}
-
 const s = StyleSheet.create({
   viewBase: {
     minWidth: undefined,

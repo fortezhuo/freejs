@@ -12,6 +12,13 @@ import { registerForteApp } from "../../util"
 import { useApp } from "../../state"
 import * as req from "../../request"
 
+/*
+ * State Props
+ * isLoading : while onLoad triggered
+ * isUpdating : while async triggered
+ * isEditable
+ */
+
 const initCallback = {
   onLoad: async function () {},
   onEdit: async function () {},
@@ -30,7 +37,7 @@ export const useDocument = (name: string) => {
   const form = useForm()
   const route = useRoute()
   const [temp, setTemp] = useState({})
-  const [state, setState] = useState({})
+  const [stateProps, setState] = useState({})
   const id = (route?.params as any).id
   const refMounted = React.useRef<boolean>(false)
   const refFunction = React.useRef<JSONObject>(initCallback)
@@ -39,9 +46,7 @@ export const useDocument = (name: string) => {
     if (Platform.OS == "web") {
       registerForteApp({ [name]: form.getValues })
     }
-    form.reset()
     return () => {
-      form.reset()
       refFunction.current.onDestroy()
       refMounted.current = false
     }
@@ -58,6 +63,7 @@ export const useDocument = (name: string) => {
       if (refMounted.current) {
         handleLoad()
       } else {
+        form.reset()
         refMounted.current = true
       }
     }, [refMounted.current])
@@ -153,7 +159,7 @@ export const useDocument = (name: string) => {
     save,
     temp,
     setTemp,
-    state,
+    stateProps,
     setState,
     setData,
     id,

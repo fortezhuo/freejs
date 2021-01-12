@@ -14,7 +14,7 @@ import { tw } from "@free/tailwind"
 import { SectionAccess } from "./SectionAccess"
 
 const SettingACL: React.FC = () => {
-  const { state, actions, ...document } = useHook()
+  const { stateProps, actions, ...document } = useHook()
 
   return (
     <>
@@ -37,7 +37,7 @@ const SettingACL: React.FC = () => {
                 name="role"
                 placeholder="Role"
                 rules={{ required: "Role is mandatory" }}
-                {...state}
+                {...stateProps}
               />
             </Col>
           </Row>
@@ -52,7 +52,7 @@ const SettingACL: React.FC = () => {
                 name="inherit"
                 placeholder="Inherit"
                 options={document.temp.inherit || []}
-                {...state}
+                {...stateProps}
               />
             </Col>
           </Row>
@@ -69,7 +69,7 @@ const SettingACL: React.FC = () => {
                 defaultValue={[]}
                 options={document.temp.target || []}
                 multiple
-                {...state}
+                {...stateProps}
               />
             </Col>
           </Row>
@@ -77,7 +77,7 @@ const SettingACL: React.FC = () => {
         <SectionAccess
           {...{
             document,
-            ...state,
+            stateProps,
           }}
         />
       </Layout>

@@ -2,9 +2,8 @@ import React from "react"
 import { useApp } from "../../../../state"
 
 const SCREEN_INDENT = 2
-const isCompact = false
 
-export const useLayout = (refLayout: any, focus: boolean) => {
+export const useLayout = (refLayout: any, focus: boolean, search: boolean) => {
   const app = useApp()
   const [layout, setLayout] = React.useState<JSONObject>({
     width: 0,
@@ -61,7 +60,7 @@ export const useLayout = (refLayout: any, focus: boolean) => {
   top += anchorHeight
 
   const style = {
-    width: isCompact ? undefined : width,
+    width: search ? width : undefined,
     left,
     top,
     opacity: top == 0 ? 0 : 1,

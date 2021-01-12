@@ -6,43 +6,56 @@ import { theme } from "../../../config/theme"
 import { DisplayError } from "../DisplayError"
 import { useController } from "react-hook-form"
 
-interface InputTextProps extends TextInputProps {
+interface InputTextRaw extends TextInputProps {
   isLoading?: boolean
-  isEditable?: boolean
+  isUpdating?: boolean
   disabled?: boolean
+  styleContainer?: JSONObject
+  style?: JSONObject
 }
 
-interface FormInputTextProps extends InputTextProps {
-  control?: any
+interface InputText extends InputTextRaw {
+  control: any
   name: string
   rules?: any
   separator?: string
+  isEditable?: boolean
   defaultValue?: any
 }
 
-export const InputTextRaw: React.FC<InputTextProps> = ({
-  isLoading,
+export const InputTextRaw: React.FC<InputTextRaw> = ({
+  isLoading = false,
+  isUpdating = false,
+  disabled = false,
+  styleContainer,
+  style,
   ...props
 }) => {
   return (
     <Base
       isLoading={isLoading}
-      style={[s.viewInput, props.disabled ? s.viewDisabled : {}]}
+      style={[
+        s.viewInput,
+        disabled || isUpdating ? s.viewDisabled : {},
+        styleContainer,
+      ]}
     >
       <TextInput
         placeholderTextColor={tw("text-gray-600").color}
-        style={s.inputText}
+        style={[s.inputText, style]}
+        editable={!disabled || !isUpdating}
         {...props}
       />
     </Base>
   )
 }
 
-export const InputText: React.FC<FormInputTextProps> = ({
+export const InputText: React.FC<InputText> = ({
   separator,
   control,
   name,
   rules,
+  isEditable = true,
   defaultValue = "",
   ...props
 }) => {
@@ -69,8 +82,8 @@ export const InputText: React.FC<FormInputTextProps> = ({
   return (
     <>
       <InputTextRaw
-        editable={props.isEditable}
         {...{ ...inputProps, ...props }}
+        editable={!props.isUpdating || !props.disabled || isEditable}
       />
       <DisplayError error={invalid} />
     </>

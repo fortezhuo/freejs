@@ -7,6 +7,8 @@ import { Base } from "../../Base"
 
 interface Anchor {
   display: string | string[]
+  isLoading: boolean
+  editable: boolean
   disabled: boolean
   placeholder: string
   multiple: boolean
@@ -20,6 +22,8 @@ export const Anchor: React.FC<Anchor> = React.memo(
   ({
     onShow,
     display,
+    isLoading,
+    editable,
     disabled,
     placeholder,
     multiple,
@@ -28,8 +32,11 @@ export const Anchor: React.FC<Anchor> = React.memo(
     onClear,
   }) => {
     return (
-      <TouchableOpacity disabled={disabled} onPress={onShow}>
-        <Base style={[s.viewInput, disabled ? s.viewDisabled : {}]}>
+      <TouchableOpacity disabled={disabled || !editable} onPress={onShow}>
+        <Base
+          isLoading={isLoading}
+          style={[s.viewInput, disabled ? s.viewDisabled : {}]}
+        >
           <Display
             {...{
               display,

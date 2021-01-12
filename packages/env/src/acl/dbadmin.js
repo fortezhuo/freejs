@@ -1,10 +1,12 @@
-const user = require("./user")
-const role = user.concat([
-  { target: "profile", action: ["*"] },
-  {
-    target: "workflow",
-    action: ["*"],
-  },
-])
+const role = {
+  inherit: ["User"],
+  list: [
+    { target: "profile", action: ["*"] },
+    {
+      target: "workflow",
+      action: ["*"],
+    },
+  ],
+}
 
 module.exports = role

@@ -5,12 +5,13 @@ export function getOptions(
   oldValue: any,
   options: any,
   multiple: boolean,
-  keyValue: string
+  keyValue: string,
+  keyLabel?: string
 ) {
   if (value) {
     const selected = !Array.isArray(value)
       ? getOption(value, options, keyValue)
-      : value.map((v) => getOption(v, options, keyValue))
+      : value.map((v) => getOption(v, options, keyValue, keyLabel))
     if (!multiple) {
       return selected || oldValue
     }

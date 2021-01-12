@@ -1,10 +1,5 @@
 import React from "react"
-import {
-  TextInput,
-  StyleSheet,
-  TouchableOpacity,
-  TextInputProps,
-} from "react-native"
+import { TextInput, StyleSheet, TextInputProps } from "react-native"
 import { Base } from "../../Base"
 import { DisplayError } from "../DisplayError"
 import { tw } from "@free/tailwind"
@@ -12,57 +7,64 @@ import { theme } from "../../../config/theme"
 import { useController } from "react-hook-form"
 import { useEyeToggle } from "./hook"
 
-const { color } = tw("text-gray-700")
-
-interface InputTextProps extends TextInputProps {
+interface InputTextRaw extends TextInputProps {
   isLoading?: boolean
+  isUpdating?: boolean
   disabled?: boolean
+  styleContainer?: JSONObject
+  style?: JSONObject
 }
 
-interface FormInputTextProps extends InputTextProps {
-  control?: any
+interface InputText extends InputTextRaw {
+  control: any
   name: string
   rules?: any
+  isEditable?: boolean
   defaultValue?: any
 }
 
-const Input = React.memo((props) => {
-  const [secure, Eye]: any = useEyeToggle()
-  return (
-    <>
-      <TextInput
-        secureTextEntry={secure}
-        placeholderTextColor={tw("text-gray-600").color}
-        style={s.inputPassword}
-        {...props}
-      />
-      <Eye />
-    </>
-  )
-})
-
-export const InputPasswordRaw: React.FC<InputTextProps> = React.memo(
-  ({ isLoading, ...props }) => {
+export const InputPasswordRaw: React.FC<InputTextRaw> = React.memo(
+  ({
+    isLoading = false,
+    isUpdating = false,
+    disabled = false,
+    styleContainer,
+    style,
+    ...props
+  }) => {
+    const [secure, Eye]: any = useEyeToggle()
     return (
       <Base
         isLoading={isLoading}
-        style={[s.viewInput, props.disabled ? s.viewDisabled : {}]}
+        style={[
+          s.viewInput,
+          disabled || isUpdating ? s.viewDisabled : {},
+          styleContainer,
+        ]}
       >
-        <Input {...props} />
+        <TextInput
+          secureTextEntry={secure}
+          placeholderTextColor={tw("text-gray-600").color}
+          style={[s.inputPassword, style]}
+          editable={!disabled || !isUpdating}
+          {...props}
+        />
+        <Eye />
       </Base>
     )
   }
 )
 
-export const InputPassword: React.FC<FormInputTextProps> = ({
+export const InputPassword: React.FC<InputText> = ({
   control,
   name,
   rules,
+  isEditable = true,
   defaultValue = "",
   ...props
 }) => {
   const {
-    field: { ref, onChange, value, ...inputProps },
+    field: { onChange: onChangeText, value },
     meta: { invalid },
   } = useController({
     name,
@@ -73,7 +75,10 @@ export const InputPassword: React.FC<FormInputTextProps> = ({
 
   return (
     <>
-      <InputPasswordRaw onChangeText={onChange} value={value} {...props} />
+      <InputPasswordRaw
+        {...{ onChangeText, value, ...props }}
+        editable={!props.isUpdating || !props.disabled || isEditable}
+      />
       <DisplayError error={invalid} />
     </>
   )

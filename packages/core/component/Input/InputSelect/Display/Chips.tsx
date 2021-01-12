@@ -8,23 +8,20 @@ import { theme } from "../../../../config/theme"
 interface Chip {
   onDeselect: VoidFunction
   children: any
-  disabled?: boolean
 }
 
-const Chip: React.FC<Chip> = React.memo(
-  ({ onDeselect, children, disabled }) => {
-    return (
-      <View style={s.viewChip}>
-        {!disabled && <Clear onPress={() => onDeselect(children)} />}
-        <Text style={s.textChip}>{children}</Text>
-      </View>
-    )
-  }
-)
+const Chip: React.FC<Chip> = React.memo(({ onDeselect, children }) => {
+  return (
+    <View style={s.viewChip}>
+      {onDeselect && <Clear onPress={() => onDeselect(children)} />}
+      <Text style={s.textChip}>{children}</Text>
+    </View>
+  )
+})
 
-export const Chips = React.memo(({ children, disabled, onDeselect }: Chip) =>
+export const Chips = React.memo(({ children, onDeselect }: Chip) =>
   children.map((v: string, i: number) => (
-    <Chip {...{ onDeselect, disabled, key: `chip_${i}` }}>{v}</Chip>
+    <Chip {...{ onDeselect, key: `chip_${i}` }}>{v}</Chip>
   ))
 )
 

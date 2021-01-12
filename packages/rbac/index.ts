@@ -1,12 +1,30 @@
 import _flatten from "lodash/flattenDeep"
+import _uniq from "lodash/uniq"
 
+const mergeTarget = (array: JSONObject[], role: string) => {
+  const reducer = array.reduce((acc, obj) => {
+    if (acc[obj.target]) {
+      acc[obj.target].action = _uniq([
+        ...(acc[obj.target].action || []),
+        ...(obj.action || []),
+      ])
+    } else {
+      acc[obj.target] = { ...obj, role: role }
+    }
+
+    return acc
+  }, {})
+
+  return [...Object.keys(reducer).map((key: string) => reducer[key])]
+}
 export class RBAC {
-  protected rawOptions: JSONObject[] | undefined
+  protected rawOptions: JSONObject | undefined
   protected options: JSONObject[] | undefined
   protected context: JSONObject | undefined
 
   constructor(options?: JSONObject) {
     this.rawOptions = this.flatten(options)
+    console.log(this.rawOptions)
   }
 
   load = (options: JSONObject) => {
@@ -14,15 +32,23 @@ export class RBAC {
   }
 
   flatten = (options?: JSONObject) => {
-    return _flatten(
-      Object.keys(options || {}).map((key: string) => {
-        return (options || {})[key].map((opt: JSONObject) => ({
-          ...opt,
-          role: key,
-        }))
-      })
-    )
+    return options
+      ? _flatten(
+          Object.keys(options || {}).map((key: string) => {
+            const { inherit: aInherit = [], list = [] } = (options || {})[key]
+            return mergeTarget(
+              list.concat(
+                _flatten(
+                  aInherit.map((inherit: string) => options[inherit].list)
+                )
+              ),
+              key
+            )
+          })
+        )
+      : []
   }
+
   register = (roles: string[], context: JSONObject) => {
     this.options = this.rawOptions?.filter(
       (opt: JSONObject) => roles.indexOf(opt.role) >= 0

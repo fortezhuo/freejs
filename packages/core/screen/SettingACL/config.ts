@@ -1,6 +1,9 @@
-const def = ["setting", "user", "log", "trash"]
+// UPPERCASE : MENU
+// lowercase : collection
 
-const menu = ["create", "view", "profile"]
+const def = ["SETTING", "acl", "user", "log", "trash"]
+
+const menu = ["CREATE", "VIEW", "PROFILE"]
 const collection = ["workflow"]
 
 export const target = [...def, ...menu, ...collection]

@@ -35,7 +35,7 @@ export function useSelect({
   loadOptions = null,
   onChange = (...args: any) => {},
   debounce = 0,
-}) {
+}: JSONObject) {
   const ref = React.useRef<TextInput>(null)
   const refSelected = React.useRef<any>(null)
   const [selected, setSelect]: any = React.useState(null)
@@ -85,7 +85,8 @@ export function useSelect({
       [],
       [...defaultOptions, ...options],
       multiple,
-      keyValue
+      keyValue,
+      keyLabel
     )
     setSelect(selected)
   }, [value])

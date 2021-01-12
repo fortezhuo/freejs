@@ -3,7 +3,7 @@ import { useDocument } from "../../state/hook"
 import * as config from "./config"
 
 export const useHook = () => {
-  const { refFunction, req, ...document } = useDocument("acl")
+  const { refFunction, req, stateProps, ...document } = useDocument("acl")
 
   React.useEffect(() => {
     refFunction.current.onLoad = async function () {
@@ -45,5 +45,5 @@ export const useHook = () => {
     ]
   }, [])
 
-  return { ...document, actions }
+  return { ...document, stateProps, actions }
 }
