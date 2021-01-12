@@ -25,19 +25,7 @@ export const useHook = () => {
   )
 
   const onSubmit = document.handleSubmit(
-    React.useCallback(async (data: any) => {
-      try {
-        const { username, password, domain } = data
-        app.setError({})
-        app.setState({ isUpdating: true })
-        const res = await POST("/api/auth", { username, password, domain })
-        app.setData({ auth: res.data.result })
-      } catch (err) {
-        app.setError(err.data ? err.data : err)
-      } finally {
-        app.setState({ isUpdating: false })
-      }
-    }, [])
+    async (data: any) => await app.login(data)
   )
 
   return { ...document, ...app, onSubmit }
