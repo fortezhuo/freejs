@@ -80,7 +80,7 @@ export const useDocument = (name: string) => {
     const { errors, message, stack } = data || {}
 
     // Validation
-    if (message.indexOf("Validation Error") >= 0) {
+    if (message && message.indexOf("Validation Error") >= 0) {
       Object.keys(errors).forEach((key: string) => {
         form.setError(key, { type: "server", message: errors[key] })
       })

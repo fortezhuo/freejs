@@ -15,7 +15,7 @@ import { tw } from "@free/tailwind"
 import { SectionWorkflow } from "./SectionWorkflow"
 
 const ProfileWorkflow: React.FC = (props) => {
-  const { state, temp, actions, ...document } = useHook()
+  const { stateProps, temp, actions, ...document } = useHook()
 
   return (
     <>
@@ -37,8 +37,8 @@ const ProfileWorkflow: React.FC = (props) => {
                 control={document.control}
                 name="parameter"
                 placeholder="Parameter"
-                isLoading={state.isLoading}
                 rules={{ required: "Parameter is mandatory" }}
+                {...stateProps}
               />
             </Col>
           </Row>
@@ -51,9 +51,9 @@ const ProfileWorkflow: React.FC = (props) => {
                 control={document.control}
                 name="status"
                 placeholder="Status"
-                isLoading={state.isLoading}
                 rules={{ required: "Status is mandatory" }}
                 options={temp.status}
+                {...stateProps}
               />
             </Col>
           </Row>
@@ -66,8 +66,8 @@ const ProfileWorkflow: React.FC = (props) => {
                 control={document.control}
                 name="completedStatus"
                 placeholder="Completed Status"
-                isLoading={state.isLoading}
                 rules={{ required: "Completed Status is mandatory" }}
+                {...stateProps}
               />
             </Col>
           </Row>
@@ -80,9 +80,9 @@ const ProfileWorkflow: React.FC = (props) => {
                 control={document.control}
                 name="reviseResetChild"
                 placeholder="Reset Child"
-                isLoading={state.isLoading}
                 rules={{ required: "Reset Child is mandatory" }}
                 options={temp.reviseResetChild}
+                {...stateProps}
               />
             </Col>
           </Row>
@@ -95,8 +95,8 @@ const ProfileWorkflow: React.FC = (props) => {
                 control={document.control}
                 name="submitterField"
                 placeholder="Submitter Field"
-                isLoading={state.isLoading}
                 rules={{ required: "Submitter Field is mandatory" }}
+                {...stateProps}
               />
             </Col>
           </Row>
@@ -110,8 +110,8 @@ const ProfileWorkflow: React.FC = (props) => {
                 name="maxApprover"
                 placeholder="Max Approver"
                 keyboardType="number-pad"
-                isLoading={state.isLoading}
                 editable={false}
+                {...stateProps}
               />
             </Col>
           </Row>
@@ -119,7 +119,7 @@ const ProfileWorkflow: React.FC = (props) => {
         <SectionWorkflow
           {...{
             document,
-            isLoading: state.isLoading,
+            stateProps,
           }}
         />
       </Layout>

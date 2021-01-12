@@ -47,7 +47,7 @@ const SettingACL: React.FC = () => {
             </Col>
             <Col light md={10}>
               <Input.Select
-                multi
+                multiple
                 control={document.control}
                 name="inherit"
                 placeholder="Inherit"

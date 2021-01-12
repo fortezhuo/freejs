@@ -46,6 +46,5 @@ export const configApp: Config
 export const configSession: Config
 export const configDatabase: Config
 export const configProxy: string
-export const configACL: ConfigAny
 export const configMail: configMail
 export const configGDrive: configAny

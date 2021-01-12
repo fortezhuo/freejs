@@ -10,8 +10,8 @@ interface Menu extends SubMenu {
 }
 
 export const getMenu: (app: any) => Menu[] = (app) => {
-  const canProfile = app.can("read", "profile")
-  const canSetting = app.can("read", "setting")
+  const canProfile = app.can("read", "PROFILE")
+  const canSetting = app.can("read", "SETTING")
   return [
     {
       label: "Create",

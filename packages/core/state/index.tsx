@@ -1,10 +1,12 @@
 import React from "react"
 import * as req from "../request"
-import { acl } from "../util"
+import { RBAC } from "@free/rbac"
 import { useDefaultState, createContext } from "./hook"
 import _isEmpty from "lodash/isEmpty"
 
 export { useState, useDefaultState, createContext } from "./hook"
+
+const acl = new RBAC()
 
 const useHook = () => {
   const refAlert = React.useRef(null)
@@ -18,6 +20,9 @@ const useHook = () => {
             isLoading: true,
           })
           const res = await req.GET("/api/auth")
+          const { access, roles = [] } = res.data.result
+          acl.load(access)
+          acl.register(roles, {})
           app.setData({ auth: res.data.result })
         } catch (e) {
           console.log("AUTH FAILED", e)
@@ -30,9 +35,6 @@ const useHook = () => {
 
   const can = React.useCallback(
     (action: string, target: string) => {
-      const roles = app.data.auth?.roles
-      if (!roles) return false
-      acl.register(roles, {})
       const { granted }: any = acl.can(action, target)
       return granted
     },

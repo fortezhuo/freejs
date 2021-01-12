@@ -52,8 +52,8 @@ const getProfile: (visible: boolean) => Route[] = (visible) => {
 }
 
 export const getRoute: (app: any) => Route[] = (app) => {
-  const canSetting: boolean = app.can("read", "setting")
-  const canProfile: boolean = app.can("read", "profile")
+  const canSetting: boolean = app.can("read", "SETTING")
+  const canProfile: boolean = app.can("read", "PROFILE")
 
   const route: Route[] = []
   return route

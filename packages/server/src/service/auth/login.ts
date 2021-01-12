@@ -3,17 +3,21 @@ import { configLDAP } from "@free/env"
 import { Exception } from "../../util/exception"
 import { Request, Reply } from "@free/server"
 import { BaseService } from "../base"
-import { acl } from "../../util/acl"
+import { RBAC } from "@free/rbac"
+
+const acl = new RBAC()
 
 export const login = function (this: BaseService) {
   return async (req: Request, reply: Reply) => {
     try {
       reply.statusCode = 200
       const data = await authenticate(req)
+      const access = await loadACL(req)
       const list = (data?.roles || []).concat([data.username, "*"])
       req.session.auth = {
         ...data,
-        can: can(data?.roles, { list }),
+        access,
+        can: can(access, data?.roles, { list }),
       }
       reply.send({
         success: true,
@@ -25,12 +29,29 @@ export const login = function (this: BaseService) {
   }
 }
 
-const can = (roles: any, context: any) => {
+const can = (access: JSONObject, roles: any, context: any) => {
+  acl.load(access)
   acl.register(roles, context)
   return function (action: string, target: string) {
     return !roles ? { granted: false } : acl.can(action, target)
   }
 }
+
+const loadACL = async (req: Request) => {
+  const collection = req.database.get("acl")
+  const json: JSONObject = {}
+  const data = await collection.find(
+    {},
+    {
+      projection: { role: 1, inherit: 1, list: 1 },
+    }
+  )
+  data.forEach(({ role, inherit, list }: JSONObject) => {
+    json[role] = { inherit, list }
+  })
+  return json
+}
+
 const authenticate = async (req: Request) => {
   let data = null
   const collection = req.database.get("user")

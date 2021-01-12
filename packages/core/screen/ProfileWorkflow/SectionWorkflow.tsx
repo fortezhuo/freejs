@@ -14,7 +14,7 @@ const wf = [
 ]
 
 export const SectionWorkflow: React.FC<any> = React.memo(
-  ({ document, isLoading }) => {
+  ({ document, stateProps }) => {
     const handleAdd = React.useCallback(() => {
       const maxApprover = document.getValues("maxApprover") || 0
       document.setValue("maxApprover", maxApprover + 1)
@@ -29,13 +29,13 @@ export const SectionWorkflow: React.FC<any> = React.memo(
           </Button>
         }
       >
-        <Wrapper {...{ document, isLoading }} />
+        <Wrapper {...{ document, stateProps }} />
       </Section>
     )
   }
 )
 
-const Wrapper: React.FC<any> = ({ document, isLoading }) => {
+const Wrapper: React.FC<any> = ({ document, stateProps }) => {
   const n = useWatch({
     control: document.control,
     name: "maxApprover",
@@ -55,7 +55,7 @@ const Wrapper: React.FC<any> = ({ document, isLoading }) => {
       {[...Array(n)].map((_: any, i: number) => (
         <BoxWorkflow
           key={"workflow_" + i}
-          {...{ document, handleRemove, isLoading, i }}
+          {...{ document, handleRemove, stateProps, i }}
         />
       ))}
     </>
@@ -63,7 +63,7 @@ const Wrapper: React.FC<any> = ({ document, isLoading }) => {
 }
 
 const BoxWorkflow: React.FC<any> = React.memo(
-  ({ document, handleRemove, isLoading, i }) => {
+  ({ document, handleRemove, stateProps, i }) => {
     return (
       <View style={s.viewWorkflow}>
         <View style={s.viewTitle}>
@@ -81,8 +81,8 @@ const BoxWorkflow: React.FC<any> = React.memo(
               <Input.Text
                 control={document.control}
                 name={`workflow[${i}].${o.value}`}
-                isLoading={isLoading}
                 rules={{ required: `${o.label} is mandatory` }}
+                {...stateProps}
               />
             </Col>
           ))}

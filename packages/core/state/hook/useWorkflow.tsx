@@ -3,7 +3,7 @@ import { useDocument } from "./useDocument"
 import * as req from "../../request"
 
 export const useWorkflow = (name: string) => {
-  const { refFunction, setState, getId, ...document } = useDocument(name)
+  const { refFunction, setState, id, ...document } = useDocument(name)
 
   const beforeProcess = React.useCallback(async (data: any) => {
     await refFunction.current.onBeforeProcess(data)
@@ -15,13 +15,15 @@ export const useWorkflow = (name: string) => {
     await refFunction.current.onAfterCalculate(data)
   }, [])
 
-  const process = React.useCallback(async (data: any) => {
-    const id = getId()
-    const isUpdate = id === 24
-    const method = isUpdate ? "PATCH" : "POST"
-    await req[method](`/api/${name}${isUpdate ? `/${id}` : ""}`, data)
-    return true
-  }, [])
+  const process = React.useCallback(
+    async (data: any) => {
+      const isUpdate = id === 24
+      const method = isUpdate ? "PATCH" : "POST"
+      await req[method](`/api/${name}${isUpdate ? `/${id}` : ""}`, data)
+      return true
+    },
+    [id]
+  )
 
   const afterProcess = React.useCallback(async (data: any) => {
     await refFunction.current.onAfterProcess(data)

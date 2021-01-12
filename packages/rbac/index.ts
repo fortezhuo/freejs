@@ -1,52 +1,17 @@
 import _flatten from "lodash/flattenDeep"
 import _uniq from "lodash/uniq"
 
-const mergeTarget = (array: JSONObject[], role: string) => {
-  const reducer = array.reduce((acc, obj) => {
-    if (acc[obj.target]) {
-      acc[obj.target].action = _uniq([
-        ...(acc[obj.target].action || []),
-        ...(obj.action || []),
-      ])
-    } else {
-      acc[obj.target] = { ...obj, role: role }
-    }
-
-    return acc
-  }, {})
-
-  return [...Object.keys(reducer).map((key: string) => reducer[key])]
-}
 export class RBAC {
   protected rawOptions: JSONObject | undefined
   protected options: JSONObject[] | undefined
   protected context: JSONObject | undefined
 
   constructor(options?: JSONObject) {
-    this.rawOptions = this.flatten(options)
-    console.log(this.rawOptions)
+    this.rawOptions = flatten(options)
   }
 
   load = (options: JSONObject) => {
-    this.rawOptions = this.flatten(options)
-  }
-
-  flatten = (options?: JSONObject) => {
-    return options
-      ? _flatten(
-          Object.keys(options || {}).map((key: string) => {
-            const { inherit: aInherit = [], list = [] } = (options || {})[key]
-            return mergeTarget(
-              list.concat(
-                _flatten(
-                  aInherit.map((inherit: string) => options[inherit].list)
-                )
-              ),
-              key
-            )
-          })
-        )
-      : []
+    this.rawOptions = flatten(options)
   }
 
   register = (roles: string[], context: JSONObject) => {
@@ -57,14 +22,47 @@ export class RBAC {
   }
 
   can = (action: string, target: string) => {
-    const access = (this.options || []).filter(
+    const access = (this.options || []).find(
       (opt) =>
-        (opt.action.indexOf("*") >= 0 || opt.action.indexOf(action) >= 0) &&
+        (opt.actions.indexOf("all") >= 0 || opt.actions.indexOf(action) >= 0) &&
         opt.target === target
     )
 
-    return access.length == 0
-      ? { granted: false }
-      : { granted: true, access: access[0], context: this.context }
+    return access
+      ? { granted: true, access, context: this.context }
+      : { granted: false }
   }
+}
+
+const mergeTarget = (array: JSONObject[], role: string) => {
+  const reducer = array.reduce((acc, obj) => {
+    if (acc[obj.target]) {
+      acc[obj.target].actions = _uniq([
+        ...(acc[obj.target].actions || []),
+        ...(obj.actions || []),
+      ])
+    } else {
+      acc[obj.target] = { ...obj, role: role }
+    }
+
+    return acc
+  }, {})
+
+  return [...Object.keys(reducer).map((key: string) => reducer[key])]
+}
+
+const flatten = (options?: JSONObject) => {
+  return options
+    ? _flatten(
+        Object.keys(options).map((key: string) => {
+          const { inherit: aInherit = [], list = [] } = options[key]
+          return mergeTarget(
+            list.concat(
+              _flatten(aInherit.map((inherit: string) => options[inherit].list))
+            ),
+            key
+          )
+        })
+      )
+    : []
 }
