@@ -99,5 +99,5 @@ const s = StyleSheet.create({
   textPage: tw(
     "items-center px-4 py-2 bg-white text-sm text-gray-900 border-gray-300 border-r"
   ),
-  textPageActive: tw(`bg-gray-300`),
+  textPageActive: tw(`bg-gray-200`),
 })

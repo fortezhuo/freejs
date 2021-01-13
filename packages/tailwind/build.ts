@@ -8,9 +8,13 @@ console.log(`Build style.json from tailwind ${pkgJson.version}`)
 
 const pkgPath = require.resolve("tailwindcss").replace(pkgJson.main, "")
 const source = fs.readFileSync(path.join(pkgPath, pkgJson.style), "utf8")
+const shadowSource = fs.readFileSync(
+  path.join(__dirname, "shadow.css"),
+  "utf-8"
+)
+
 const { stylesheet } = css.parse(source)
 const remToPx = (value) => `${parseFloat(value) * 16}px`
-
 const translateValues = (value) => {
   let translatedValue = value
 
@@ -90,7 +94,6 @@ const convertShadow = (rule) => {
 const getStyles = (rule) => {
   const styles = rule.declarations
     .filter(({ property, value }) => {
-      // Skip line-height utilities without units
       if (property === "line-height" && !value.endsWith("rem")) {
         return false
       }
@@ -108,90 +111,131 @@ const getStyles = (rule) => {
   return cssToReactNative(styles)
 }
 
-const supportedUtilities = [
-  // Flexbox
-  /^flex/,
-  /^items-/,
-  /^content-/,
-  /^justify-/,
-  /^self-/,
-  // Display
-  "hidden",
-  "overflow-hidden",
-  "overflow-visible",
-  "overflow-scroll",
-  // Position
-  "absolute",
-  "relative",
-  // Top, right, bottom, left
-  /^(inset-0|inset-x-0|inset-y-0)/,
-  /^(top|bottom|left|right)-0$/,
-  // Z Index
-  /^z-\d+$/,
-  // Padding
-  /^(p.?-\d+|p.?-px)/,
-  // Margin
-  /^-?(m.?-\d+|m.?-px)/,
-  // Width
-  /^w-(\d|\/)+|^w-px|^w-full/,
-  // Height
-  /^(h-\d+|h-px|h-full)/,
-  // Min/Max width/height
-  /^(min-w-|max-w-|min-h-0|min-h-full|max-h-full)/,
-  // Font size
-  /^text-/,
-  // Font style
-  /^(not-)?italic$/,
-  // Font weight
-  /^font-(hairline|thin|light|normal|medium|semibold|bold|extrabold|black)/,
-  // Letter spacing
-  /^tracking-/,
-  // Line height
-  /^leading-\d+/,
-  // Text align, color, opacity
-  /^text-/,
-  // Text transform
-  "uppercase",
-  "lowercase",
-  "capitalize",
-  "normal-case",
-  // Background color
-  /^bg-(transparent|black|white|gray|red|orange|yellow|green|teal|blue|indigo|purple|pink)/,
-  // Background opacity
-  /^bg-opacity-/,
-  // Border color, style, width, radius, opacity
-  /^(border|rounded)/,
-  // Opacity
-  /^opacity-/,
-  // Pointer events
-  /^pointer-events-/,
-  /^shadow-/,
-]
+const unsupportedProperties = new Set([
+  "box-sizing",
+  "box-shadow",
+  "float",
+  "clear",
+  "object-fit",
+  "object-position",
+  "overflow-x",
+  "overflow-y",
+  "-webkit-overflow-scrolling",
+  "overscroll-behavior",
+  "overscroll-behavior-x",
+  "overscroll-behavior-y",
+  "visibility",
+  "order",
+  "grid-template-columns",
+  "grid-column",
+  "grid-column-start",
+  "grid-column-end",
+  "grid-template-rows",
+  "grid-row",
+  "grid-row-start",
+  "grid-row-end",
+  "grid-auto-flow",
+  "grid-auto-columns",
+  "grid-auto-rows",
+  "gap",
+  "column-gap",
+  "row-gap",
+  "justify-items",
+  "justify-self",
+  "place-content",
+  "place-items",
+  "place-self",
+  "font-family",
+  "list-style-type",
+  "list-style-position",
+  "text-decoration",
+  "vertical-align",
+  "white-space",
+  "word-break",
+  "background-attachment",
+  "background-clip",
+  "background-position",
+  "background-repeat",
+  "background-size",
+  "background-image",
+  "border-collapse",
+  "table-layout",
+  "transition-property",
+  "transition-duration",
+  "transition-timing-function",
+  "transition-delay",
+  "animation",
+  "transform",
+  "transform-origin",
+  "appearance",
+  "cursor",
+  "outline",
+  "resize",
+  "user-select",
+  "fill",
+  "stroke",
+  "stroke-width",
+])
 
-const isUtilitySupported = (utility) => {
-  // Skip utilities with `currentColor` values
+const isUtilitySupported = (utility, rule) => {
+  if (utility.includes(":")) {
+    return false
+  }
+
   if (
     [
-      "border-current",
-      "text-current",
-      "shadow-outline",
-      "shadow-inner",
-    ].includes(utility)
+      "clearfix",
+      "antialiased",
+      "subpixel-antialiased",
+      "sr-only",
+      "not-sr-only",
+    ].includes(utility) ||
+    /^(space|placeholder|from|via|to|divide)-/.test(utility) ||
+    /^-?(scale|rotate|translate|skew)-/.test(utility)
   ) {
     return false
   }
 
-  for (const supportedUtility of supportedUtilities) {
-    if (typeof supportedUtility === "string" && supportedUtility === utility) {
-      return true
+  // Skip utilities with unsupported properties
+  for (const { property, value } of rule.declarations) {
+    if (!property && !value) {
+      return false
     }
 
-    if (supportedUtility instanceof RegExp && supportedUtility.test(utility)) {
-      return true
+    if (unsupportedProperties.has(property)) {
+      return false
+    }
+
+    if (property === "display" && !["flex", "none"].includes(value)) {
+      return false
+    }
+
+    if (
+      property === "overflow" &&
+      !["visible", "hidden", "scroll"].includes(value)
+    ) {
+      return false
+    }
+
+    if (property === "position" && !["absolute", "relative"].includes(value)) {
+      return false
+    }
+
+    if (property === "line-height" && !value.endsWith("rem")) {
+      return false
+    }
+
+    if (
+      value === "auto" ||
+      value.endsWith("vw") ||
+      value.endsWith("vh") ||
+      value === "currentColor"
+    ) {
+      return false
     }
   }
 
-  return false
+  return true
 }
 
 // Mapping of Tailwind class names to React Native styles
@@ -201,13 +245,21 @@ for (const rule of stylesheet.rules) {
   if (rule.type === "rule") {
     for (const selector of rule.selectors) {
       const utility = selector.replace(/^\./, "").replace("\\/", "/")
+      if (isUtilitySupported(utility, rule)) {
+        styles[utility] = getStyles(rule)
+      }
+    }
+  }
+}
 
-      if (isUtilitySupported(utility)) {
-        if (/^shadow-/.test(utility)) {
-          styles[utility] = convertShadow(rule)
-        } else {
-          styles[utility] = getStyles(rule)
-        }
+const shadow = css.parse(shadowSource).stylesheet
+// Shadow Patch
+for (const rule of shadow.rules) {
+  if (rule.type === "rule") {
+    for (const selector of rule.selectors) {
+      const utility = selector.replace(/^\./, "").replace("\\/", "/")
+      if (/^shadow-/.test(utility)) {
+        styles[utility] = convertShadow(rule)
       }
     }
   }
