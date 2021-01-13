@@ -91,7 +91,7 @@ export const getMenu: (app: any) => Menu[] = (app) => {
         {
           label: "Access Management",
           icon: "key",
-          component: "ViewSettingACL",
+          component: "ViewSettingAccess",
           visible: true,
         },
         {

@@ -1,4 +1,4 @@
-export { aclController } from "./acl"
+export { accessController } from "./access"
 export { userController } from "./user"
 export { authController } from "./auth"
 export { logController } from "./log"

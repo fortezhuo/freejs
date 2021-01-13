@@ -16,7 +16,7 @@ export const login = function (this: BaseService) {
       const context = (data?.roles || []).concat([data.username, "*"])
 
       acl.loadRaw(list)
-      acl.register(data?.roles, { context })
+      acl.register(data?.roles, { list: context })
 
       const access = acl.getAccess()
       req.session.auth = {
@@ -35,7 +35,7 @@ export const login = function (this: BaseService) {
 }
 
 const fetchAccess = async (req: Request) => {
-  const collection = req.database.get("acl")
+  const collection = req.database.get("access")
   const access: JSONObject = {}
   const data = await collection.find(
     {},

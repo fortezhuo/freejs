@@ -9,10 +9,10 @@ interface Route {
 const getSetting: (visible: boolean) => Route[] = (visible) => {
   return [
     {
-      name: "SettingACL",
+      name: "SettingAccess",
       title: "Access Management",
-      view: "acl",
-      child: "acl/:id",
+      view: "access",
+      child: "access/:id",
       visible: visible,
     },
     {

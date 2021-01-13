@@ -14,8 +14,8 @@ export const SectionAccess: React.FC<any> = React.memo(
     React.useEffect(() => {
       const { list = [] } = document.getValues()
       const newList = target.map((v: string) => {
-        const stored = list.find((l: JSONObject) => l.target === v)
-        return stored ? stored : { target: v }
+        const stored = list.find((l: JSONObject) => l.on === v)
+        return stored ? stored : { on: v }
       })
       document.setValue("list", newList)
     }, [target])

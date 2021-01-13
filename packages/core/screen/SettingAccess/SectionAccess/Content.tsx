@@ -27,21 +27,20 @@ export const ACL: React.FC<any> = React.memo(
         <View style={s.viewTitle}>
           <Title
             control={document.control}
-            name={`list[${i}].target`}
-            defaultValue={field.target}
+            name={`list[${i}].on`}
+            defaultValue={field.on}
           />
         </View>
         <Row dark>
           <Col md={2}>
-            <Label>Actions</Label>
+            <Label>Can</Label>
           </Col>
           <Col light md={10}>
             <Input.Select
               multiple
-              placeholder="Action"
               control={document.control}
-              defaultValue={field.actions}
-              name={`list[${i}].actions`}
+              defaultValue={field.can}
+              name={`list[${i}].can`}
               options={[
                 { label: "create", value: "create" },
                 { label: "read", value: "read" },

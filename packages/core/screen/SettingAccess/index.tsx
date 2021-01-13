@@ -13,7 +13,7 @@ import { useHook } from "./hook"
 import { tw } from "@free/tailwind"
 import { SectionAccess } from "./SectionAccess"
 
-const SettingACL: React.FC = () => {
+const SettingAccess: React.FC = () => {
   const { stateProps, actions, ...document } = useHook()
 
   return (
@@ -52,6 +52,7 @@ const SettingACL: React.FC = () => {
                 name="inherit"
                 placeholder="Inherit"
                 options={document.temp.inherit || []}
+                defaultValue={[]}
                 {...stateProps}
               />
             </Col>
@@ -95,4 +96,4 @@ const s = StyleSheet.create({
   textStatus: tw("text-white"),
 })
 
-export default SettingACL
+export default SettingAccess

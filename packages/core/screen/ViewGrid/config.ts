@@ -36,8 +36,8 @@ export const ViewProfileWorkflow = {
 }
 
 // Setting ACL
-export const ViewSettingACL = {
-  name: "acl",
+export const ViewSettingAccess = {
+  name: "access",
   fields: ["-data"],
   search: ["$text"],
   actions: ["New", "Delete", "Search"],

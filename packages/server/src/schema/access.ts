@@ -1,6 +1,6 @@
 import { Joi, createSchema } from "./schema"
 
-export const acl = createSchema({
+export const access = createSchema({
   role: Joi.string().required(),
   inherit: Joi.array(),
   target: Joi.array().required(),

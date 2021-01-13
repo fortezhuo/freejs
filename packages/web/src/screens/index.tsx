@@ -30,8 +30,8 @@ export const SettingUser = loadable(
   }
 )
 
-export const SettingACL = loadable(
-  () => import("@free/core/screen/SettingACL"),
+export const SettingAccess = loadable(
+  () => import("@free/core/screen/SettingAccess"),
   {
     ssr: true,
     fallback: <Loader />,

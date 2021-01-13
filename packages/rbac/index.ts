@@ -29,8 +29,8 @@ export class RBAC {
   can = (action: string, target: string) => {
     const access = (this.options || []).find(
       (opt) =>
-        (opt.actions.indexOf("all") >= 0 || opt.actions.indexOf(action) >= 0) &&
-        opt.target === target
+        (opt.can.indexOf("all") >= 0 || opt.can.indexOf(action) >= 0) &&
+        opt.on === target
     )
 
     return access
@@ -39,15 +39,12 @@ export class RBAC {
   }
 }
 
-const mergeTarget = (array: JSONObject[], role: string) => {
+const merge = (array: JSONObject[], role: string) => {
   const reducer = array.reduce((acc, obj) => {
-    if (acc[obj.target]) {
-      acc[obj.target].actions = _uniq([
-        ...(acc[obj.target].actions || []),
-        ...(obj.actions || []),
-      ])
+    if (acc[obj.on]) {
+      acc[obj.on].can = _uniq([...(acc[obj.on].can || []), ...(obj.can || [])])
     } else {
-      acc[obj.target] = { ...obj, role: role }
+      acc[obj.on] = { ...obj, role: role }
     }
 
     return acc
@@ -61,7 +58,7 @@ const flatten = (options?: JSONObject) => {
     ? _flatten(
         Object.keys(options).map((key: string) => {
           const { inherit: aInherit = [], list = [] } = options[key]
-          return mergeTarget(
+          return merge(
             list.concat(
               _flatten(aInherit.map((inherit: string) => options[inherit].list))
             ),

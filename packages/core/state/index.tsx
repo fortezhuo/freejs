@@ -54,7 +54,6 @@ const useHook = () => {
 
   const can = React.useCallback(
     (action: string, target: string) => {
-      console.log("can")
       const { granted }: any = refACL.current.can(action, target)
       return granted
     },

@@ -3,7 +3,7 @@ import { useDocument } from "../../state/hook"
 import * as config from "./config"
 
 export const useHook = () => {
-  const { refFunction, req, stateProps, ...document } = useDocument("acl")
+  const { refFunction, req, stateProps, ...document } = useDocument("access")
 
   React.useEffect(() => {
     refFunction.current.onLoad = async function () {
@@ -14,7 +14,7 @@ export const useHook = () => {
         fields: ["role"],
       }
       try {
-        res = await req.POST(`/api/find/acl`, { _params })
+        res = await req.POST(`/api/find/access`, { _params })
       } catch (err) {
         document.handleError(err)
       } finally {
