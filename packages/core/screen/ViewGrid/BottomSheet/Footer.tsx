@@ -7,9 +7,9 @@ import { formatDate } from "../../../util"
 
 export const Footer: React.FC<{
   isSimple: boolean
-  handleSubmit: any
+  document: any
   refBottomSheet: any
-}> = React.memo(({ isSimple, handleSubmit, refBottomSheet }) => {
+}> = React.memo(({ isSimple, document, refBottomSheet }) => {
   const view = useView()
   const {
     data: { config },
@@ -86,8 +86,8 @@ export const Footer: React.FC<{
         icon="search"
         onPress={
           isSimple
-            ? handleSubmit(onFullTextSearch)
-            : handleSubmit(onAdvanceSearch)
+            ? document.handleSubmit(onFullTextSearch)
+            : document.handleSubmit(onAdvanceSearch)
         }
         type={"danger_bg"}
       >

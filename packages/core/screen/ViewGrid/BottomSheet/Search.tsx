@@ -5,27 +5,23 @@ import { Input, Label } from "../../../component"
 import { useView } from "../hook"
 import { Footer } from "./Footer"
 
-export const SimpleSearch: React.FC<any> = ({
-  control,
-  handleSubmit,
-  refBottomSheet,
-}) => {
+export const SimpleSearch: React.FC<any> = ({ document, refBottomSheet }) => {
   return (
     <>
       <View style={s.rowSearch}>
         <Label>Keyword</Label>
         <Input.Text
-          control={control}
+          document={document}
           name="fulltext"
           placeholder="Please type keyword ..."
         />
       </View>
-      <Footer {...{ handleSubmit, refBottomSheet, isSimple: true }} />
+      <Footer {...{ document, refBottomSheet, isSimple: true }} />
     </>
   )
 }
 
-export const AdvanceSearch: React.FC<any> = ({ control }) => {
+export const AdvanceSearch: React.FC<any> = ({ document }) => {
   const view = useView()
   const {
     data: { config },
@@ -41,7 +37,7 @@ export const AdvanceSearch: React.FC<any> = ({ control }) => {
             <Label>{column.label}</Label>
             {(type == "text" || type === "json") && (
               <Input.Text
-                control={control}
+                document={document}
                 name={column.name}
                 placeholder={"Fill " + column.label}
               />
@@ -49,13 +45,13 @@ export const AdvanceSearch: React.FC<any> = ({ control }) => {
             {type.indexOf("date") >= 0 && (
               <>
                 <Input.DateTime
-                  control={control}
+                  document={document}
                   placeholder={"Start " + column.label}
                   name={"start_" + column.name}
                 />
                 <View style={{ height: 3 }} />
                 <Input.DateTime
-                  control={control}
+                  document={document}
                   placeholder={"End " + column.label}
                   name={"end_" + column.name}
                 />
@@ -64,7 +60,7 @@ export const AdvanceSearch: React.FC<any> = ({ control }) => {
             {(type == "number" || type == "decimal") && (
               <View style={{ flexDirection: "row" }}>
                 <Input.Text
-                  control={control}
+                  document={document}
                   name={column.name}
                   placeholder={"Fill " + column.label}
                 />

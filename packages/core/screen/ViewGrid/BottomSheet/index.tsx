@@ -25,7 +25,7 @@ const format = (value: any) => {
 export const BottomSheet: React.FC<any> = React.memo(
   ({ content, setContent }) => {
     const [isSimple, setSimple] = React.useState(true)
-    const { control, handleSubmit } = useForm()
+    const document = useForm()
     const { refBottomSheet } = useView()
 
     const renderFlatList = React.useCallback((content) => {
@@ -69,9 +69,9 @@ export const BottomSheet: React.FC<any> = React.memo(
       [content ? "flatListProps" : "children"]: content ? (
         renderFlatList(content)
       ) : isSimple ? (
-        <SimpleSearch {...{ control, handleSubmit, refBottomSheet }} />
+        <SimpleSearch {...{ document, refBottomSheet }} />
       ) : (
-        <AdvanceSearch {...{ control }} />
+        <AdvanceSearch {...{ document }} />
       ),
     }
 
@@ -87,7 +87,7 @@ export const BottomSheet: React.FC<any> = React.memo(
         }
         FooterComponent={
           content || isSimple ? undefined : (
-            <Footer {...{ handleSubmit, refBottomSheet, isSimple: false }} />
+            <Footer {...{ document, refBottomSheet, isSimple: false }} />
           )
         }
         onClosed={onClosed}

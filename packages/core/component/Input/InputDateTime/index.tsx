@@ -13,7 +13,7 @@ interface InputRawDateTime {
 }
 
 interface FormInputRawDateTime {
-  control: any
+  document: any
   name: string
   rules?: any
   style?: JSONObject
@@ -43,7 +43,7 @@ export const InputRawDateTime: React.FC<InputRawDateTime> = ({
 }
 
 export const InputDateTime: React.FC<FormInputRawDateTime> = ({
-  control,
+  document,
   name,
   rules,
   ...props
@@ -53,7 +53,7 @@ export const InputDateTime: React.FC<FormInputRawDateTime> = ({
     meta: { invalid },
   } = useController({
     name,
-    control,
+    control: document.control,
     rules,
   })
 
