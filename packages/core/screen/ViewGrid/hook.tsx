@@ -1,5 +1,5 @@
 import React from "react"
-import { useDefaultState, createContext, useApp } from "../../state"
+import { useState, createContext, useApp } from "../../state"
 import * as listConfig from "./config"
 import { POST, DELETE } from "../../request"
 import { Table } from "../../component"
@@ -313,7 +313,10 @@ export const useColumns = ({ refBottomSheet, setContent }: any) => {
 }
 
 const useHook = () => {
-  const view = useDefaultState({})
+  const [data, setData] = useState({})
+  const [temp, setTemp] = useState({})
+  const [error, setError] = useState({})
+  const [stateProps, setState] = useState({})
   const navRoute = useRoute()
   const routeName = navRoute.name
   const { refAlert, handleError, ...app } = useAlert()
@@ -324,7 +327,7 @@ const useHook = () => {
     React.useCallback(() => {
       const selected = (listConfig as any)[routeName]
       let keys: any = {}
-      let { page = 1, search, limit = "30", last } = view.temp
+      let { page = 1, search, limit = "30", last } = temp
 
       if (last !== routeName) {
         page = 1
@@ -342,7 +345,7 @@ const useHook = () => {
         }
       })
 
-      view.setData({
+      setData({
         config: { ...selected, keys },
         page,
         search,
@@ -354,15 +357,15 @@ const useHook = () => {
       })
 
       return () => {
-        const { page, search, limit, route } = view.data
-        view.setTemp({ page, search, limit, last: route })
-        view.setData({ config: undefined })
+        const { page, search, limit, route } = data
+        setTemp({ page, search, limit, last: route })
+        setData({ config: undefined })
       }
     }, [])
   )
 
   const setCollection = React.useCallback(async () => {
-    const { config, page, limit, search } = view.data
+    const { config, page, limit, search } = data
     if (config?.name) {
       const _params = {
         query: search,
@@ -371,9 +374,9 @@ const useHook = () => {
         fields: config.fields,
       }
       try {
-        view.setState({ isLoading: true })
+        setState({ isLoading: true })
         const res = await POST(`/api/find/${config.name}`, { _params })
-        view.setData({
+        setData({
           collection: res.data.result,
           total: res.data.total,
           max: res.data.max,
@@ -382,81 +385,71 @@ const useHook = () => {
       } catch (err) {
         handleError(err)
       } finally {
-        view.setState({ isLoading: false })
+        setState({ isLoading: false })
       }
     }
-  }, [
-    view.data?.config?.name,
-    view.data?.limit,
-    view.data?.page,
-    view.data?.search,
-  ])
+  }, [data?.config?.name, data?.limit, data?.page, data?.search])
 
   React.useEffect(() => {
     ;(async () => {
       await setCollection()
     })()
-  }, [
-    view.data.page,
-    view.data.search,
-    view.data.limit,
-    view.data?.config?.name,
-  ])
+  }, [data.page, data.search, data.limit, data?.config?.name])
 
   React.useEffect(() => {
     ;(async () => {
-      if (!!view.data.isRefresh) {
+      if (!!data.isRefresh) {
         await setCollection()
       }
     })()
-  }, [view.data.isRefresh])
+  }, [data.isRefresh])
 
   const deleteDocument = React.useCallback(
     async (id: string) => {
-      const { name } = view.data?.config
+      const { name } = data?.config
       const selectedIds = id ? [id] : refSelected.current || []
 
       if (selectedIds.length != 0) {
         const _params = { query: { _id: { $in: selectedIds } } }
         try {
-          view.setState({ isLoading: true })
+          setState({ isLoading: true })
           await DELETE(`/api/${name}`, { _params })
           return true
         } catch (err) {
           handleError(err)
         } finally {
-          view.setState({ isLoading: false })
-          view.setData({ isRefresh: true, selected: undefined, page: 1 })
+          setState({ isLoading: false })
+          setData({ isRefresh: true, selected: undefined, page: 1 })
         }
       }
     },
-    [view.data?.config?.name]
+    [data?.config?.name]
   )
 
   const restoreDocument = React.useCallback(
     async (id: string) => {
-      const { name } = view.data?.config
+      const { name } = data?.config
       const selectedIds = id ? [id] : refSelected.current || []
 
       if (selectedIds.length != 0) {
         const _params = { query: { _id: { $in: selectedIds } } }
         try {
-          view.setState({ isLoading: true })
+          setState({ isLoading: true })
           await POST(`/api/${name}/restore`, { _params })
           return true
         } catch (err) {
           handleError(err)
         } finally {
-          view.setState({ isLoading: false })
-          view.setData({ isRefresh: true, selected: undefined, page: 1 })
+          setState({ isLoading: false })
+          setData({ isRefresh: true, selected: undefined, page: 1 })
         }
       }
     },
-    [view.data?.config?.name]
+    [data?.config?.name]
   )
 
   const configSearch = React.useMemo(() => {
-    const { search = [], keys = [] } = view.data?.config || {}
+    const { search = [], keys = [] } = data?.config || {}
 
     return {
       simple: search,
@@ -469,10 +462,17 @@ const useHook = () => {
         }
       }),
     }
-  }, [view.data?.config?.name])
+  }, [data?.config?.name])
 
   return {
-    ...view,
+    data,
+    error,
+    temp,
+    stateProps,
+    setData,
+    setTemp,
+    setError,
+    setState,
     restoreDocument,
     deleteDocument,
     refSelected,

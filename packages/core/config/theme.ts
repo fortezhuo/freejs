@@ -11,15 +11,15 @@ Black  : bg-gray-900
 
 let theme: JSONObject = {
   primary_1_bg: "bg-purple-900",
-  primary_2_bg: "bg-blue-400",
+  primary_2_bg: "bg-blue-300",
   danger_bg: "bg-pink-800",
   success_bg: "bg-green-400",
   warning_bg: "bg-yellow-500",
   secondary_bg: "bg-gray-600",
   default_bg: "bg-white",
-  default_border: "border-gray-400",
+  default_border: "border-gray-300",
   default_text: "text-gray-900",
-  disabled_bg: "bg-gray-100",
+  disabled_bg: "bg-gray-200",
   disabled_text: "text-gray-600",
   danger_text: "text-pink-800",
 }

@@ -38,8 +38,8 @@ export const MenuUser: React.FC = () => {
 
 const s = StyleSheet.create({
   viewMenu: tw("mt-1 rounded-md bg-black-100", { padding: 2 }),
-  viewUser: tw(`bg-gray-300 p-2 items-center`),
+  viewUser: tw(`bg-gray-200 p-2 items-center`),
   viewChildren: tw(`bg-white rounded-b-md`),
   iconMenuUser: tw(`rounded-full border-2 border-solid border-white p-1 mr-4`),
-  textUser: tw("text-gray-700 font-bold text-xs"),
+  textUser: tw("text-gray-500 font-bold text-xs"),
 })

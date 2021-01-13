@@ -45,7 +45,7 @@ const s = StyleSheet.create({
   rootSection: tw(
     `flex-col shadow-md border-t border-gray-100 bg-white rounded-t-md my-1`
   ),
-  groupSection: tw(`flex-row z-10 p-3 items-center border-b border-gray-400`),
+  groupSection: tw(`flex-row z-10 p-3 items-center border-b border-gray-300`),
   groupLabel: tw("flex-grow flex-row items-center"),
   groupItem: tw(`bg-white flex-col`),
   textSection: tw(`px-2 ${theme.disabled_text} flex-grow`),

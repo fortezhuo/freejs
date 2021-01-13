@@ -65,7 +65,9 @@ export const TableGrid: React.FC<any> = React.memo(({ setContent }) => {
   const _isMobile = app.temp.isMobile
   const isReady = !!view.data?.config?.name
   const isLoading =
-    view.state.isLoading || view.state.isUpdating || isMobile !== _isMobile
+    view.stateProps.isLoading ||
+    view.stateProps.isUpdating ||
+    isMobile !== _isMobile
   const columns = useColumns({ refBottomSheet, setContent })
   const { swipeActions } = useActions(refBottomSheet)
 

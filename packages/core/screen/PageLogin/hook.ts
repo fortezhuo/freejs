@@ -1,7 +1,6 @@
 import React from "react"
 import { useForm } from "react-hook-form"
 import { useApp } from "../../state"
-import { POST } from "../../request"
 import { useFocusEffect } from "@react-navigation/native"
 
 import { configLDAP as ldap } from "@free/env"

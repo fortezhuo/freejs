@@ -4,6 +4,7 @@ import { Col, Row, Input, Label } from "../../../component"
 import { View, StyleSheet } from "react-native"
 import { tw } from "@free/tailwind"
 import { useFieldArray } from "react-hook-form"
+import { theme } from "../../../config/theme"
 
 export const Content: React.FC<any> = React.memo(({ document, stateProps }) => {
   const { fields } = useFieldArray({
@@ -74,8 +75,8 @@ export const ACL: React.FC<any> = React.memo(
 const s = StyleSheet.create({
   viewContent: tw("flex-col p-6 pt-0"),
   viewButton: tw("flex-row"),
-  viewTitle: tw("px-3 py-1 flex-row items-center border-b border-gray-400"),
+  viewTitle: tw("px-3 py-1 flex-row items-center border-b border-gray-300"),
   textWorkflow: tw("font-bold flex-grow"),
-  viewWorkflow: tw("m-2 border rounded-lg border-gray-400"),
+  viewWorkflow: tw(`m-2 ${theme.input_border}`),
   textStatus: tw("text-white"),
 })

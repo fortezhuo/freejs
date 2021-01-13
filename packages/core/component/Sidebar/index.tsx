@@ -9,7 +9,7 @@ import { tw } from "@free/tailwind"
 import { configApp } from "@free/env"
 import logo from "../../img/logo.png"
 
-const colors = ["bg-gray-300", "bg-gray-300", "bg-gray-300", "bg-gray-400"]
+const colors = ["bg-gray-200", "bg-gray-200", "bg-gray-200", "bg-gray-300"]
 
 const Logo: React.FC = () => {
   return <Image source={logo} style={s.imgTitle} />

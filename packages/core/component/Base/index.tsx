@@ -94,13 +94,14 @@ const s = StyleSheet.create({
     backgroundColor: undefined,
   },
   viewClear: {
-    borderWidth: 0,
     paddingLeft: 0,
     paddingTop: 0,
     paddingBottom: 0,
     paddingRight: 0,
     flexDirection: undefined,
     alignItems: undefined,
+    borderWidth: undefined,
+    borderColor: undefined,
   },
   viewSkeleton: tw("relative"),
   gradient: {

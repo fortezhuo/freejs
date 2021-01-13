@@ -43,7 +43,7 @@ const pagination = (c: number, m: number) => {
 
 export const TablePagination: React.FC = React.memo(() => {
   const view = useView()
-  const { isUpdating, isLoading } = view.state
+  const { isUpdating, isLoading } = view.stateProps
   const { page, total, max, limit = "30", isMobile } = view.data
 
   const setPage = React.useCallback((i) => {

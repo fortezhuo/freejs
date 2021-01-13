@@ -10,28 +10,10 @@ const merge = (prev: JSONObject, _next: JSONObject) => {
 
 export const useState = (init: JSONObject) => React.useReducer(merge, init)
 
-export const useDefaultState = ({ initData, initTemp }: any) => {
-  const [state = {}, setState] = useState({})
-  const [data = {}, setData] = useState(initData)
-  const [temp = {}, setTemp] = useState(initTemp)
-  const [error = {}, setError] = useState({})
-
-  return {
-    state,
-    setState,
-    data,
-    setData,
-    temp,
-    setTemp,
-    error,
-    setError,
-  }
-}
-
 export const createContext = (
   name: string,
-  { initData, initTemp }: any,
-  useState = useDefaultState
+  init: JSONObject,
+  useState: any
 ) => {
   const [Provider, useHook] = constate(useState)
 
@@ -40,7 +22,7 @@ export const createContext = (
   const withProvider: any = (Component: any) => {
     const Wrapper = (props: any) => {
       return (
-        <Provider {...{ initData, initTemp }}>
+        <Provider {...init}>
           <Component {...props} />
         </Provider>
       )

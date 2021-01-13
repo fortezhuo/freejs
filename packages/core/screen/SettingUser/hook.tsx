@@ -1,25 +1,26 @@
 import React from "react"
-import { configACL as acl } from "@free/env"
 import { useDocument } from "../../state/hook"
 
 export const useHook = () => {
-  const { refFunction, state, ...document } = useDocument("user")
+  const { refFunction, stateProps, ...document } = useDocument("user")
 
   React.useEffect(() => {
     refFunction.current.onLoad = async function () {
-      if (document.getId() === "new") {
+      if (document.id === "new") {
         await document.setData({
           _docAuthors: ["Admin"],
         })
       }
     }
 
+    /*
     document.setTemp({
       roles: Object.keys(acl).map((role: any) => ({
         value: role,
         label: role,
       })),
     })
+    */
   }, [])
 
   const actions = React.useMemo(() => {
@@ -28,7 +29,7 @@ export const useHook = () => {
         icon: "save",
         type: "primary_1_bg",
         children: "Save",
-        visible: state.isEditable,
+        visible: stateProps.isEditable,
         onPress: document.handleSubmit(async (data) => {
           if (await document.save(data)) {
             document.close()
@@ -36,7 +37,7 @@ export const useHook = () => {
         }),
       },
     ].filter((opt) => opt.visible)
-  }, [state.isEditable])
+  }, [stateProps.isEditable])
 
-  return { ...document, state, actions }
+  return { ...document, stateProps, actions }
 }
