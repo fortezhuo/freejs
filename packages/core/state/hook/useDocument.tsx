@@ -50,7 +50,7 @@ export const useDocument = (name: string) => {
       refFunction.current.onDestroy()
       refMounted.current = false
     }
-  }, [])
+  }, [id, name])
 
   React.useEffect(() => {
     if (!!app.error.message) {
@@ -61,12 +61,14 @@ export const useDocument = (name: string) => {
   useFocusEffect(
     React.useCallback(() => {
       if (refMounted.current) {
-        handleLoad()
+        ;(async () => {
+          await handleLoad()
+        })()
       } else {
         form.reset()
         refMounted.current = true
       }
-    }, [refMounted.current])
+    }, [refMounted.current, id])
   )
 
   const setData = React.useCallback(async (data: JSONObject) => {

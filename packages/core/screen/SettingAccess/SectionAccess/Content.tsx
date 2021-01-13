@@ -27,7 +27,7 @@ export const ACL: React.FC<any> = React.memo(
       <View style={s.viewWorkflow}>
         <View style={s.viewTitle}>
           <Title
-            control={document.control}
+            document={document}
             name={`list[${i}].on`}
             defaultValue={field.on}
           />
@@ -39,7 +39,7 @@ export const ACL: React.FC<any> = React.memo(
           <Col light md={10}>
             <Input.Select
               multiple
-              control={document.control}
+              document={document}
               defaultValue={field.can}
               name={`list[${i}].can`}
               options={[
@@ -60,7 +60,7 @@ export const ACL: React.FC<any> = React.memo(
           <Col light md={10}>
             <Input.Text
               separator=","
-              control={document.control}
+              document={document}
               name={`list[${i}].fields`}
               defaultValue={field.fields || []}
               {...stateProps}

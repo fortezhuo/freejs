@@ -10,8 +10,7 @@ const HiddenInput: React.FC<{ name: string; control: any }> = ({
   control,
 }) => {
   const {
-    field: { ref, onChange, value, ...inputProps },
-    meta: { invalid },
+    field: { ref, onChange, value },
   } = useController({
     name,
     control,

@@ -80,7 +80,7 @@ const SettingUser: React.FC = () => {
             </Col>
             <Col light md={10}>
               <Input.Select
-                control={document.control}
+                document={document}
                 name="roles"
                 creatable
                 multiple

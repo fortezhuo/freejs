@@ -2,25 +2,29 @@ import React from "react"
 import { useDocument } from "../../state/hook"
 
 export const useHook = () => {
-  const { refFunction, stateProps, ...document } = useDocument("user")
+  const { refFunction, req, stateProps, ...document } = useDocument("user")
 
   React.useEffect(() => {
     refFunction.current.onLoad = async function () {
-      if (document.id === "new") {
-        await document.setData({
-          _docAuthors: ["Admin"],
+      let res = undefined
+      const _params = {
+        page: 1,
+        limit: 1000,
+        fields: ["role"],
+      }
+      try {
+        res = await req.POST(`/api/find/access`, { _params })
+      } catch (err) {
+        document.handleError(err)
+      } finally {
+        document.setTemp({
+          roles: res?.data.result.map(({ role }: any) => ({
+            value: role,
+            label: role,
+          })),
         })
       }
     }
-
-    /*
-    document.setTemp({
-      roles: Object.keys(acl).map((role: any) => ({
-        value: role,
-        label: role,
-      })),
-    })
-    */
   }, [])
 
   const actions = React.useMemo(() => {
@@ -29,7 +33,7 @@ export const useHook = () => {
         icon: "save",
         type: "primary_1_bg",
         children: "Save",
-        visible: stateProps.isEditable,
+        visible: true,
         onPress: document.handleSubmit(async (data) => {
           if (await document.save(data)) {
             document.close()
@@ -37,7 +41,7 @@ export const useHook = () => {
         }),
       },
     ].filter((opt) => opt.visible)
-  }, [stateProps.isEditable])
+  }, [])
 
   return { ...document, stateProps, actions }
 }

@@ -4,12 +4,12 @@ import { useController } from "react-hook-form"
 import _startCase from "lodash/startCase"
 
 export const Title: React.FC<any> = React.memo(
-  ({ control, name, defaultValue }) => {
+  ({ document, name, defaultValue }) => {
     const {
       field: { ref, value },
     } = useController({
       name,
-      control,
+      control: document.control,
       defaultValue,
     })
 

@@ -48,7 +48,7 @@ const SettingAccess: React.FC = () => {
             <Col light md={10}>
               <Input.Select
                 multiple
-                control={document.control}
+                document={document}
                 name="inherit"
                 placeholder="Inherit"
                 options={document.temp.inherit || []}
@@ -71,7 +71,7 @@ const SettingAccess: React.FC = () => {
             </Col>
             <Col light md={10}>
               <Input.Select
-                control={document.control}
+                document={document}
                 name="target"
                 placeholder="Target"
                 rules={{ required: "Target is mandatory" }}

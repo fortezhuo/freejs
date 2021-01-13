@@ -30,6 +30,16 @@ export const useHook = () => {
     }
   }, [])
 
+  React.useEffect(() => {
+    ;(async () => {
+      if (document.id === "new") {
+        await document.setData({
+          _docAuthors: ["Admin"],
+        })
+      }
+    })()
+  }, [])
+
   const actions = React.useMemo(() => {
     return [
       {

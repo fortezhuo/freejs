@@ -47,7 +47,7 @@ export const InputSelectRaw: React.FC<InputSelectRaw> = React.memo(
     keyValue = "value",
     keyLabel = "label",
     value = null,
-    options: defaultOptions,
+    options: defaultOptions = [],
     disabled = false,
     placeholder = "Select ...",
     multiple = false,
@@ -145,8 +145,6 @@ export const InputSelect: React.FC<any> = ({
     rules,
     defaultValue,
   })
-
-  console.log("invalid", invalid)
 
   return (
     <>
