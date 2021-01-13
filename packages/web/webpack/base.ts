@@ -19,11 +19,10 @@ const appDirectory = fs.realpathSync(process.cwd())
 const babelLoaderInclude = [
   resolvePath("src"),
   resolvePath("../core"),
-  resolvePath("../rbac"),
   resolvePath("../tailwind"),
 ]
 
-const babelLoaderExclude = /node_modules[/\\](?!react-native-vector-icons|react-native-safe-area-view|react-native-gesture-handler|react-native-animatable)/
+const babelLoaderExclude = /node_modules[/\\](?!react-native-vector-icons|react-native-safe-area-view|react-native-gesture-handler)/
 
 export const getWebpackRules = (): any => [
   {

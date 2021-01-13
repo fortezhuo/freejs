@@ -10,6 +10,7 @@
     "build:web": "yarn workspace @free/web build",
     "build:env": "yarn workspace @free/env build",
     "build:tw": "yarn workspace @free/tailwind build",
+    "build:rbac": "yarn workspace @free/rbac build",
     "dev": "run-p dev:mock dev:web dev:server",
     "dev:android": "run-p build:env dev:server:mobile dev:mock android",
     "dev:ios": "run-p build:env dev:server:mobile dev:mock ios",

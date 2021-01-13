@@ -1,6 +1,11 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "typeRoots": ["../../@types", "../../node_modules/@types"]
-  }
+    "typeRoots": ["../../@types", "../../node_modules/@types"],
+    "module": "commonjs",
+    "target": "es2015",
+    "declaration": true,
+    "outDir": "./dist"
+  },
+  "include": ["src/**/*"]
 }
