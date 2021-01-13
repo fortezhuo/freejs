@@ -7,12 +7,40 @@ import _isEmpty from "lodash/isEmpty"
 export { useState, createContext } from "./hook"
 
 const useHook = () => {
-  const refAlert = React.useRef(null)
+  const refAlert: any = React.useRef(null)
   const refACL = React.useRef<RBAC>(new RBAC())
   const [data, setData] = useState({})
   const [temp, setTemp] = useState({})
   const [stateProps, setState] = useState({})
   const [error, setError] = useState({})
+
+  const handleError = React.useCallback((err: any) => {
+    const { data, status } = err
+    const { message, stack } = data || {}
+
+    if (status === 401) {
+      setError({ message })
+    }
+
+    if (status === 403) {
+      refAlert.current.error({
+        title: "Attention",
+        message,
+        actions: [
+          {
+            label: "OK",
+            type: "danger",
+            onPress: () => refAlert.current.close(),
+          },
+        ],
+      })
+    }
+
+    // Error 500
+    if (status === 500) {
+      setError({ message, stack })
+    }
+  }, [])
 
   const login = React.useCallback(async (data) => {
     try {
@@ -23,7 +51,7 @@ const useHook = () => {
       refACL.current.loadAccess(access)
       setData({ auth: res.data.result })
     } catch (err) {
-      setError(err)
+      handleError(err)
     } finally {
       setState({ isUpdating: false })
     }

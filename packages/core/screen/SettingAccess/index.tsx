@@ -33,7 +33,7 @@ const SettingAccess: React.FC = () => {
             </Col>
             <Col light md={10}>
               <Input.Text
-                control={document.control}
+                document={document}
                 name="role"
                 placeholder="Role"
                 rules={{ required: "Role is mandatory" }}

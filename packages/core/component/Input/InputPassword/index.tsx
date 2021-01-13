@@ -16,7 +16,7 @@ interface InputTextRaw extends TextInputProps {
 }
 
 interface InputText extends InputTextRaw {
-  control: any
+  document: any
   name: string
   rules?: any
   isEditable?: boolean
@@ -56,7 +56,7 @@ export const InputPasswordRaw: React.FC<InputTextRaw> = React.memo(
 )
 
 export const InputPassword: React.FC<InputText> = ({
-  control,
+  document,
   name,
   rules,
   isEditable = true,
@@ -68,7 +68,7 @@ export const InputPassword: React.FC<InputText> = ({
     meta: { invalid },
   } = useController({
     name,
-    control,
+    control: document.control,
     rules,
     defaultValue,
   })
@@ -79,7 +79,7 @@ export const InputPassword: React.FC<InputText> = ({
         {...{ onChangeText, value, ...props }}
         editable={!props.isUpdating || !props.disabled || isEditable}
       />
-      <DisplayError error={invalid} />
+      {invalid && <DisplayError error={document.errors[name]} />}
     </>
   )
 }

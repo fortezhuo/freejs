@@ -23,6 +23,10 @@ export const useHook = () => {
     }, [])
   )
 
+  React.useEffect(() => {
+    console.log(document.errors)
+  }, [document.errors])
+
   const onSubmit = document.handleSubmit(
     async (data: any) => await app.login(data)
   )

@@ -32,7 +32,7 @@ const SettingUser: React.FC = () => {
             </Col>
             <Col light md={10}>
               <Input.Text
-                control={document.control}
+                document={document}
                 name="username"
                 placeholder="User Name"
                 rules={{ required: "User Name is mandatory" }}
@@ -46,7 +46,7 @@ const SettingUser: React.FC = () => {
             </Col>
             <Col light md={10}>
               <Input.Text
-                control={document.control}
+                document={document}
                 name="fullname"
                 placeholder="Full Name"
                 rules={{ required: "Full Name is mandatory" }}
@@ -60,7 +60,7 @@ const SettingUser: React.FC = () => {
             </Col>
             <Col light md={10}>
               <Input.Text
-                control={document.control}
+                document={document}
                 name="email"
                 placeholder="Email"
                 rules={{

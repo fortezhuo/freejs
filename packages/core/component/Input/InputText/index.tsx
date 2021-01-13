@@ -15,7 +15,7 @@ interface InputTextRaw extends TextInputProps {
 }
 
 interface InputText extends InputTextRaw {
-  control: any
+  document: any
   name: string
   rules?: any
   separator?: string
@@ -52,7 +52,7 @@ export const InputTextRaw: React.FC<InputTextRaw> = ({
 
 export const InputText: React.FC<InputText> = ({
   separator,
-  control,
+  document,
   name,
   rules,
   isEditable = true,
@@ -64,7 +64,7 @@ export const InputText: React.FC<InputText> = ({
     meta: { invalid },
   } = useController({
     name,
-    control,
+    control: document.control,
     rules,
     defaultValue,
   })
@@ -79,15 +79,13 @@ export const InputText: React.FC<InputText> = ({
     [separator, value]
   )
 
-  console.log("invalid", invalid)
-
   return (
     <>
       <InputTextRaw
         {...{ ...inputProps, ...props }}
         editable={!props.isUpdating || !props.disabled || isEditable}
       />
-      <DisplayError error={invalid} />
+      {invalid && <DisplayError error={document.errors[name]} />}
     </>
   )
 }

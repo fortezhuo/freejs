@@ -27,7 +27,7 @@ const LoginButton: React.FC<LoginButton> = ({ isUpdating, onPress }) => {
 }
 
 const PageLogin: React.FC = () => {
-  const { control, stateProps, temp, onSubmit, error } = useHook()
+  const { stateProps, temp, onSubmit, error, ...document } = useHook()
   return (
     <LayoutFull transparent>
       <View style={s.pageLogin} testID="PageLogin">
@@ -35,7 +35,7 @@ const PageLogin: React.FC = () => {
           <Avatar source={logo} style={s.iconLogo} />
           <View style={s.boxInput}>
             <Input.Text
-              control={control}
+              document={document}
               placeholder="Username"
               autoCapitalize="none"
               name="username"
@@ -45,7 +45,7 @@ const PageLogin: React.FC = () => {
               {...stateProps}
             />
             <Input.Password
-              control={control}
+              document={document}
               name="password"
               placeholder="Password"
               rules={{
@@ -55,12 +55,12 @@ const PageLogin: React.FC = () => {
             />
             <Input.Select
               clear={true}
-              control={control}
+              document={document}
               name="domain"
               placeholder="Domain"
               options={temp.domain}
               rules={{
-                required: "Please fill Password",
+                required: "Please fill Domain",
               }}
               {...stateProps}
             />

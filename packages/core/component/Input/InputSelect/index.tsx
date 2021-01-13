@@ -127,7 +127,7 @@ export const InputSelectRaw: React.FC<InputSelectRaw> = React.memo(
 )
 
 export const InputSelect: React.FC<any> = ({
-  control,
+  document,
   name,
   rules,
   defaultValue,
@@ -141,7 +141,7 @@ export const InputSelect: React.FC<any> = ({
     meta: { invalid },
   } = useController({
     name,
-    control,
+    control: document.control,
     rules,
     defaultValue,
   })
@@ -151,7 +151,7 @@ export const InputSelect: React.FC<any> = ({
   return (
     <>
       <InputSelectRaw {...{ onChange, value, multi, ...props }} />
-      <DisplayError error={invalid} />
+      {invalid && <DisplayError error={document.errors[name]} />}
     </>
   )
 }
