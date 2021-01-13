@@ -17,9 +17,8 @@ const useHook = () => {
       app.setError({})
       app.setState({ isUpdating: true })
       const res = await req.POST("/api/auth", { ...data })
-      const { access, roles = [] } = res.data.result
-      refACL.current.load(access)
-      refACL.current.register(roles, {})
+      const { access } = res.data.result
+      refACL.current.loadAccess(access)
       app.setData({ auth: res.data.result })
     } catch (err) {
       app.setError(err)
@@ -36,9 +35,8 @@ const useHook = () => {
             isLoading: true,
           })
           const res = await req.GET("/api/auth")
-          const { access, roles = [] } = res.data.result
-          refACL.current.load(access)
-          refACL.current.register(roles, {})
+          const { access } = res.data.result
+          refACL.current.loadAccess(access)
           app.setData({ auth: res.data.result })
         } catch (e) {
           console.log("AUTH FAILED", e)

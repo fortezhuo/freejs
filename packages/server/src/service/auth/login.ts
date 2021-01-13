@@ -12,16 +12,21 @@ export const login = function (this: BaseService) {
     try {
       reply.statusCode = 200
       const data = await authenticate(req)
-      const access = await loadACL(req)
-      const list = (data?.roles || []).concat([data.username, "*"])
+      const list = await fetchAccess(req)
+      const context = (data?.roles || []).concat([data.username, "*"])
+
+      acl.loadRaw(list)
+      acl.register(data?.roles, { context })
+
+      const access = acl.getAccess()
       req.session.auth = {
         ...data,
         access,
-        can: can(access, data?.roles, { list }),
+        can: acl.can,
       }
       reply.send({
         success: true,
-        result: req.session.auth,
+        result: { ...data, access },
       })
     } catch (err) {
       this.onErrorHandler(req, reply, err)
@@ -29,17 +34,9 @@ export const login = function (this: BaseService) {
   }
 }
 
-const can = (access: JSONObject, roles: any, context: any) => {
-  acl.load(access)
-  acl.register(roles, context)
-  return function (action: string, target: string) {
-    return !roles ? { granted: false } : acl.can(action, target)
-  }
-}
-
-const loadACL = async (req: Request) => {
+const fetchAccess = async (req: Request) => {
   const collection = req.database.get("acl")
-  const json: JSONObject = {}
+  const access: JSONObject = {}
   const data = await collection.find(
     {},
     {
@@ -47,9 +44,9 @@ const loadACL = async (req: Request) => {
     }
   )
   data.forEach(({ role, inherit, list }: JSONObject) => {
-    json[role] = { inherit, list }
+    access[role] = { inherit, list }
   })
-  return json
+  return access
 }
 
 const authenticate = async (req: Request) => {
@@ -96,7 +93,17 @@ const authenticate = async (req: Request) => {
     } = await collection.insert(values)
     data = fetch
   } else {
-    const fetch = await collection.findOne({ username }, {})
+    const fetch = await collection.findOne(
+      { username },
+      {
+        projection: {
+          username: 1,
+          fullname: 1,
+          email: 1,
+          roles: 1,
+        },
+      }
+    )
     if (!fetch)
       throw new Exception(
         403,

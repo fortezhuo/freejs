@@ -9,16 +9,21 @@ export class RBAC {
   constructor(options?: JSONObject) {
     this.rawOptions = flatten(options)
   }
-
-  load = (options: JSONObject) => {
+  loadRaw = (options: JSONObject) => {
     this.rawOptions = flatten(options)
   }
-
+  loadAccess = (access: JSONObject) => {
+    this.options = access.options
+    this.context = access.context
+  }
   register = (roles: string[], context: JSONObject) => {
     this.options = this.rawOptions?.filter(
       (opt: JSONObject) => roles.indexOf(opt.role) >= 0
     )
     this.context = context
+  }
+  getAccess = () => {
+    return { options: this.options, context: this.context }
   }
 
   can = (action: string, target: string) => {
