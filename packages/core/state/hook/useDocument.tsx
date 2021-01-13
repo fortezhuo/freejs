@@ -42,35 +42,6 @@ export const useDocument = (name: string) => {
   const refMounted = React.useRef<boolean>(false)
   const refFunction = React.useRef<JSONObject>(initCallback)
 
-  React.useEffect(() => {
-    if (Platform.OS == "web") {
-      registerForteApp({ [name]: form.getValues })
-    }
-    return () => {
-      refFunction.current.onDestroy()
-      refMounted.current = false
-    }
-  }, [id, name])
-
-  React.useEffect(() => {
-    if (!!app.error.message) {
-      navigation.navigate("Error")
-    }
-  }, [app.error.message])
-
-  useFocusEffect(
-    React.useCallback(() => {
-      if (refMounted.current) {
-        ;(async () => {
-          await handleLoad()
-        })()
-      } else {
-        form.reset()
-        refMounted.current = true
-      }
-    }, [refMounted.current, id])
-  )
-
   const setData = React.useCallback(async (data: JSONObject) => {
     await asyncForEach(Object.keys(data), async (key: string) => {
       form.setValue(key, data[key], { shouldDirty: true })
@@ -123,15 +94,7 @@ export const useDocument = (name: string) => {
     } finally {
       setState({ isLoading: false, isEditable: app.can("update", name) })
     }
-  }, [id, name])
-
-  const close = React.useCallback(() => {
-    if (navigation.canGoBack()) {
-      navigation.goBack()
-    } else {
-      navigation.navigate("Drawer", { screen: `View${route.name}` })
-    }
-  }, [route.name])
+  }, [id])
 
   const save = React.useCallback(
     async (data: any) => {
@@ -149,8 +112,37 @@ export const useDocument = (name: string) => {
         setState({ isLoading: false })
       }
     },
-    [id, name]
+    [id]
   )
+
+  React.useEffect(() => {
+    if (Platform.OS == "web") {
+      registerForteApp({ [name]: form.getValues })
+    }
+    return () => {
+      refFunction.current.onDestroy()
+      refMounted.current = false
+    }
+  }, [route.name])
+
+  useFocusEffect(
+    React.useCallback(() => {
+      if (refMounted.current) {
+        ;(async () => {
+          await handleLoad()
+        })()
+      } else {
+        form.reset()
+        refMounted.current = true
+      }
+    }, [refMounted.current, route.name])
+  )
+
+  React.useEffect(() => {
+    if (!!app.error.message) {
+      navigation.navigate("Error")
+    }
+  }, [app.error.message])
 
   return {
     ...form,
