@@ -44,7 +44,7 @@ const s = StyleSheet.create({
   viewTable: tw(`shadow-xl`),
   viewTableChildren: tw("flex-col flex-1"),
   viewHeader: tw(`h-12 shadow-md`),
-  viewRow: tw(`flex-row flex-no-wrap items-center`),
+  viewRow: tw(`flex-row items-center`),
   viewCell: tw(`p-2 w-40 flex-grow flex-row`),
   rowDark: { backgroundColor: "rgba(0,0,0,0.08)" },
   rowMobile: tw("flex-col p-2 items-start"),

@@ -15,7 +15,6 @@ const useHook = () => {
   const [error, setError] = useState({})
 
   const login = React.useCallback(async (data) => {
-    console.log("login")
     try {
       setError({})
       setState({ isUpdating: true })

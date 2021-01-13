@@ -53,6 +53,14 @@ const SettingAccess: React.FC = () => {
                 placeholder="Inherit"
                 options={document.temp.inherit || []}
                 defaultValue={[]}
+                rules={{
+                  validate: (value: any) => {
+                    const { role } = document.getValues()
+                    return value.indexOf(role) >= 0
+                      ? "Inherit contain own self"
+                      : undefined
+                  },
+                }}
                 {...stateProps}
               />
             </Col>

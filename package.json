@@ -73,7 +73,7 @@
     "fastify-session": "DRoet/fastify-session",
     "fastify-static": "^3.3.1",
     "filesize": "^6.1.0",
-    "googleapis": "66.0.0",
+    "googleapis": "67.0.0",
     "joi": "^17.3.0",
     "ldapjs": "^2.2.3",
     "lodash": "^4.17.20",

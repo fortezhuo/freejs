@@ -34,7 +34,7 @@ const initCallback = {
 export const useDocument = (name: string) => {
   const app = useApp()
   const navigation = useNavigation()
-  const form = useForm()
+  const form = useForm({ criteriaMode: "all" })
   const route = useRoute()
   const [temp, setTemp] = useState({})
   const [stateProps, setState] = useState({})

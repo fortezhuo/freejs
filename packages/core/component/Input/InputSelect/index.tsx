@@ -146,6 +146,8 @@ export const InputSelect: React.FC<any> = ({
     defaultValue,
   })
 
+  console.log("invalid", invalid)
+
   return (
     <>
       <InputSelectRaw {...{ onChange, value, multi, ...props }} />

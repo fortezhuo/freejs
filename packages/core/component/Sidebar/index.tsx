@@ -89,7 +89,7 @@ export const Sidebar: React.FC<any> = (props) => {
 const s = StyleSheet.create({
   layoutSidebar: tw(`flex-1`),
   imageSidebar: tw(`flex-1`),
-  rootContent: tw("flex-no-wrap p-1"),
+  rootContent: tw("p-1"),
   layoutTitle: tw(`${colors[0]} flex-row items-center pt-3 pb-4 pl-5`),
   imgTitle: tw("h-10 w-10 mr-3"),
   groupTitle: tw("flex-col"),

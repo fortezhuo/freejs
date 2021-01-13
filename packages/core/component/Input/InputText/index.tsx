@@ -79,6 +79,8 @@ export const InputText: React.FC<InputText> = ({
     [separator, value]
   )
 
+  console.log("invalid", invalid)
+
   return (
     <>
       <InputTextRaw

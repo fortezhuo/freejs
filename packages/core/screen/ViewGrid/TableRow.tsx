@@ -152,7 +152,7 @@ export const TableRow: React.FC<any> = ({
 
 const s = StyleSheet.create({
   viewHeader: tw(`h-12 shadow-md`),
-  viewRow: tw(`flex-row flex-no-wrap items-center`),
+  viewRow: tw(`flex-row items-center`),
   rowDark: { backgroundColor: "rgba(0,0,0,0.08)" },
   rowMobile: tw("flex-col p-2"),
   textCellSmall: tw(`${theme.default_text} text-sm`),

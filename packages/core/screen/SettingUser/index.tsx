@@ -13,7 +13,7 @@ import { useHook } from "./hook"
 import { tw } from "@free/tailwind"
 
 const SettingUser: React.FC = () => {
-  const { temp, state, actions, ...document } = useHook()
+  const { temp, stateProps, actions, ...document } = useHook()
 
   return (
     <>
@@ -36,7 +36,7 @@ const SettingUser: React.FC = () => {
                 name="username"
                 placeholder="User Name"
                 rules={{ required: "User Name is mandatory" }}
-                {...state}
+                {...stateProps}
               />
             </Col>
           </Row>
@@ -50,7 +50,7 @@ const SettingUser: React.FC = () => {
                 name="fullname"
                 placeholder="Full Name"
                 rules={{ required: "Full Name is mandatory" }}
-                {...state}
+                {...stateProps}
               />
             </Col>
           </Row>
@@ -70,7 +70,7 @@ const SettingUser: React.FC = () => {
                     message: "Invalid Email",
                   },
                 }}
-                {...state}
+                {...stateProps}
               />
             </Col>
           </Row>
@@ -90,7 +90,7 @@ const SettingUser: React.FC = () => {
                   validate: (value: any) =>
                     value.length == 0 ? "Roles is mandatory" : undefined,
                 }}
-                {...state}
+                {...stateProps}
               />
             </Col>
           </Row>
