@@ -13,7 +13,7 @@ import { useHook } from "./hook"
 import { tw } from "@free/tailwind"
 
 const SettingUser: React.FC = () => {
-  const { temp, stateProps, actions, ...document } = useHook()
+  const { stateProps, actions, ...document } = useHook()
 
   return (
     <>
@@ -85,7 +85,7 @@ const SettingUser: React.FC = () => {
                 creatable
                 multiple
                 placeholder="Roles"
-                options={temp.roles}
+                options={document.temp.roles}
                 rules={{
                   validate: (value: any) =>
                     value.length == 0 ? "Roles is mandatory" : undefined,

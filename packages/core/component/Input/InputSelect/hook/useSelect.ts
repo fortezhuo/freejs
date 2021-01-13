@@ -27,7 +27,7 @@ export function useSelect({
   keyValue = "value",
   keyLabel = "label",
   value = null,
-  options: defaultOptions = [],
+  options: defaultOptions,
   search: canSearch = false,
   multiple = false,
   disabled = false,
@@ -51,7 +51,7 @@ export function useSelect({
       return (text: string) => {
         const regex = !text.length ? undefined : new RegExp(text, "i")
         const aValue = !!value ? valueToArray(value) : []
-        return options.filter(
+        return (options || []).filter(
           (o) =>
             aValue.indexOf(o[keyValue]) < 0 &&
             (regex ? regex.test(o[keyLabel]) : true)
@@ -80,14 +80,16 @@ export function useSelect({
     if (refSelected.current == value) return
     refSelected.current = value
 
-    const selected = getOptions(
-      value,
-      [],
-      [...defaultOptions, ...options],
-      multiple,
-      keyValue,
-      keyLabel
-    )
+    const selected = defaultOptions
+      ? getOptions(
+          value,
+          [],
+          [...defaultOptions, ...options],
+          multiple,
+          keyValue,
+          keyLabel
+        )
+      : undefined
     setSelect(selected)
   }, [value])
 
