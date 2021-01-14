@@ -25,7 +25,7 @@ const defaultProps = {
   actions: [],
 }
 
-export const Alert: React.FC<any> = React.forwardRef((_props, ref) => {
+export const Alert = React.forwardRef((_props, ref) => {
   const refModalize = React.useRef<Modalize>(null)
   const refProps = React.useRef(defaultProps)
 

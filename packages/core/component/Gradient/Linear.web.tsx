@@ -1,7 +1,17 @@
 import React from "react"
 import { View, Dimensions } from "react-native"
 
-export const LinearGradient: React.FC<any> = ({
+interface LinearGradient {
+  start?: JSONObject
+  end?: JSONObject
+  locations?: number[]
+  colors?: string[]
+  angle?: number
+  style?: JSONObject
+  testID?: string
+}
+
+export const LinearGradient: React.FC<LinearGradient> = ({
   start = {
     x: 0.5,
     y: 0,
@@ -12,9 +22,7 @@ export const LinearGradient: React.FC<any> = ({
   },
   locations = [],
   colors = [],
-  useAngle = false,
-  angle = 0,
-  angleCenter,
+  angle,
   style,
   children,
   testID,
@@ -38,7 +46,7 @@ export const LinearGradient: React.FC<any> = ({
   )
 
   const getAngle = React.useCallback(() => {
-    if (useAngle) {
+    if (angle) {
       return angle + "deg"
     }
 

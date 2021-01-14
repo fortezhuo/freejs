@@ -42,6 +42,10 @@ export const ACL: React.FC<any> = React.memo(
               document={document}
               defaultValue={field.can}
               name={`list[${i}].can`}
+              rules={{
+                validate: (value: any) =>
+                  value.length == 0 ? "Can is mandatory" : undefined,
+              }}
               options={[
                 { label: "create", value: "create" },
                 { label: "read", value: "read" },

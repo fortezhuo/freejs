@@ -1,17 +1,17 @@
 import React from "react"
-import { Col, Row, Input, Label, Button, Text, Section } from "../../component"
+import {
+  Col,
+  Row,
+  Input,
+  Label,
+  Button,
+  Text,
+  Section,
+} from "../../../component"
 import { useWatch } from "react-hook-form"
 import { View, StyleSheet } from "react-native"
 import { tw } from "@free/tailwind"
-
-const wf = [
-  { value: "status", label: "Status", width: 12 },
-  { value: "field", label: "Field", width: 6 },
-  { value: "stamp", label: "Stamp", width: 2 },
-  { value: "title", label: "Title", width: 2 },
-  { value: "back", label: "Back Level", width: 1 },
-  { value: "to", label: "To Level", width: 1 },
-]
+import { fields } from "./config"
 
 export const SectionWorkflow: React.FC<any> = React.memo(
   ({ document, stateProps }) => {
@@ -75,11 +75,11 @@ const BoxWorkflow: React.FC<any> = React.memo(
           />
         </View>
         <Row>
-          {wf.map((o: JSONObject, j: number) => (
+          {fields.map((o: JSONObject, j: number) => (
             <Col light md={o.width} key={"wf_" + j}>
               <Label>{o.label}</Label>
               <Input.Text
-                control={document.control}
+                document={document}
                 name={`workflow[${i}].${o.value}`}
                 rules={{ required: `${o.label} is mandatory` }}
                 {...stateProps}
@@ -95,8 +95,8 @@ const BoxWorkflow: React.FC<any> = React.memo(
 const s = StyleSheet.create({
   viewContent: tw("flex-col p-6 pt-0"),
   viewButton: tw("flex-row"),
-  viewTitle: tw("px-3 py-1 flex-row items-center border-b border-gray-400"),
+  viewTitle: tw("px-3 py-1 flex-row items-center border-b border-gray-300"),
   textWorkflow: tw("font-bold flex-grow"),
-  viewWorkflow: tw("m-2 border rounded-lg border-gray-400"),
+  viewWorkflow: tw("m-2 border rounded-lg border-gray-300"),
   textStatus: tw("text-white"),
 })

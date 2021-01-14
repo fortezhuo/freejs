@@ -5,7 +5,16 @@ import { tw } from "@free/tailwind"
 import { theme } from "../../../config/theme"
 import { Item } from "./Option"
 
-export const Content: React.FC<any> = React.memo(
+interface Content {
+  options: JSONObject
+  snapshot: JSONObject
+  onSelect: VoidFunction
+  emptyMessage: string
+  search: boolean
+  searchProps: JSONObject
+}
+
+export const Content: React.FC<Content> = React.memo(
   ({ options, snapshot, onSelect, emptyMessage, search, searchProps }) => {
     const refFlatList = React.useRef<FlatList>(null)
     const { value, highlighted } = snapshot

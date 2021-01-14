@@ -28,6 +28,7 @@ export const InputPasswordRaw: React.FC<InputTextRaw> = React.memo(
     isLoading = false,
     isUpdating = false,
     disabled = false,
+    editable = true,
     styleContainer,
     style,
     ...props
@@ -46,7 +47,7 @@ export const InputPasswordRaw: React.FC<InputTextRaw> = React.memo(
           secureTextEntry={secure}
           placeholderTextColor={tw("text-gray-600").color}
           style={[s.inputPassword, style]}
-          editable={!disabled || !isUpdating}
+          editable={!disabled && !isUpdating && editable}
           {...props}
         />
         <Eye />
@@ -60,6 +61,7 @@ export const InputPassword: React.FC<InputText> = ({
   name,
   rules,
   isEditable = true,
+  editable = true,
   defaultValue = "",
   ...props
 }) => {
@@ -77,9 +79,11 @@ export const InputPassword: React.FC<InputText> = ({
     <>
       <InputPasswordRaw
         {...{ onChangeText, value, ...props }}
-        editable={!props.isUpdating || !props.disabled || isEditable}
+        editable={
+          !props.isUpdating && !props.disabled && isEditable && editable
+        }
       />
-      {invalid && <DisplayError error={document.errors[name]} />}
+      {invalid && <DisplayError name={name} error={document.errors} />}
     </>
   )
 }

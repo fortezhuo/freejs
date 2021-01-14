@@ -5,14 +5,25 @@ import { theme } from "../../../config/theme"
 
 interface DisplayError {
   error: any
+  name?: string
 }
 
-export const DisplayError: React.FC<DisplayError> = ({ error }) => {
-  return error && error.message ? (
-    <Text style={[s.textError]}>* {error.message}</Text>
-  ) : (
-    <></>
-  )
+const getErrorMessage = (error: JSONObject, name?: string) => {
+  if (!error) return undefined
+  if (!name) return error.message
+
+  const names = name.split(/[,[\].]+?/).filter(Boolean)
+  if (!names) return error[name].message
+
+  return names.reduce(
+    (result: any, key: string) => (!result ? result : result[key]),
+    error
+  ).message
+}
+
+export const DisplayError: React.FC<DisplayError> = ({ error, name }) => {
+  const message = getErrorMessage(error, name)
+  return message ? <Text style={[s.textError]}>* {message}</Text> : <></>
 }
 
 const s = StyleSheet.create({

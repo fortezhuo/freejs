@@ -3,7 +3,15 @@ import { View, Image, StyleSheet } from "react-native"
 import { Icon } from "../Icon"
 import { tw } from "@free/tailwind"
 
-export const Avatar: React.FC<any> = ({
+interface Avatar {
+  style?: JSONObject
+  styleContainer?: JSONObject
+  source: any
+  name?: string
+  size?: number
+}
+
+export const Avatar: React.FC<Avatar> = ({
   style,
   styleContainer,
   source,

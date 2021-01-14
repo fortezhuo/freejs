@@ -7,15 +7,14 @@ import {
   Input,
   Label,
   ActionGroup,
-  Button,
 } from "../../component"
 import { View, StyleSheet } from "react-native"
-import { useHook } from "./hook"
+import { useDocument } from "./hook"
 import { tw } from "@free/tailwind"
 import { SectionWorkflow } from "./SectionWorkflow"
 
 const ProfileWorkflow: React.FC = (props) => {
-  const { stateProps, temp, actions, ...document } = useHook()
+  const { stateProps, temp, actions, ...document } = useDocument()
 
   return (
     <>
@@ -34,7 +33,7 @@ const ProfileWorkflow: React.FC = (props) => {
             </Col>
             <Col light md={10}>
               <Input.Text
-                control={document.control}
+                document={document}
                 name="parameter"
                 placeholder="Parameter"
                 rules={{ required: "Parameter is mandatory" }}
@@ -48,7 +47,7 @@ const ProfileWorkflow: React.FC = (props) => {
             </Col>
             <Col light md={10}>
               <Input.Select
-                control={document.control}
+                document={document}
                 name="status"
                 placeholder="Status"
                 rules={{ required: "Status is mandatory" }}
@@ -63,7 +62,7 @@ const ProfileWorkflow: React.FC = (props) => {
             </Col>
             <Col light md={10}>
               <Input.Text
-                control={document.control}
+                document={document}
                 name="completedStatus"
                 placeholder="Completed Status"
                 rules={{ required: "Completed Status is mandatory" }}
@@ -77,7 +76,7 @@ const ProfileWorkflow: React.FC = (props) => {
             </Col>
             <Col light md={10}>
               <Input.Select
-                control={document.control}
+                document={document}
                 name="reviseResetChild"
                 placeholder="Reset Child"
                 rules={{ required: "Reset Child is mandatory" }}
@@ -92,7 +91,7 @@ const ProfileWorkflow: React.FC = (props) => {
             </Col>
             <Col light md={10}>
               <Input.Text
-                control={document.control}
+                document={document}
                 name="submitterField"
                 placeholder="Submitter Field"
                 rules={{ required: "Submitter Field is mandatory" }}
@@ -106,7 +105,7 @@ const ProfileWorkflow: React.FC = (props) => {
             </Col>
             <Col light md={10}>
               <Input.Text
-                control={document.control}
+                document={document}
                 name="maxApprover"
                 placeholder="Max Approver"
                 keyboardType="number-pad"

@@ -1,9 +1,9 @@
 import React from "react"
-import { useDocument } from "./useDocument"
+import { useForm } from "./useForm"
 import * as req from "../../request"
 
 export const useWorkflow = (name: string) => {
-  const { refFunction, setState, id, ...document } = useDocument(name)
+  const { refFunction, setState, id, ...document } = useForm(name)
 
   const beforeProcess = React.useCallback(async (data: any) => {
     await refFunction.current.onBeforeProcess(data)

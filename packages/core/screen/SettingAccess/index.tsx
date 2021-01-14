@@ -9,12 +9,12 @@ import {
   ActionGroup,
 } from "../../component"
 import { View, StyleSheet } from "react-native"
-import { useHook } from "./hook"
+import { useDocument } from "./hook"
 import { tw } from "@free/tailwind"
 import { SectionAccess } from "./SectionAccess"
 
 const SettingAccess: React.FC = () => {
-  const { stateProps, actions, ...document } = useHook()
+  const { stateProps, actions, ...document } = useDocument()
 
   return (
     <>
@@ -51,7 +51,7 @@ const SettingAccess: React.FC = () => {
                 document={document}
                 name="inherit"
                 placeholder="Inherit"
-                options={document.temp.inherit || []}
+                options={document.temp.inherit}
                 defaultValue={[]}
                 rules={{
                   validate: (value: any) => {
@@ -76,7 +76,7 @@ const SettingAccess: React.FC = () => {
                 placeholder="Target"
                 rules={{ required: "Target is mandatory" }}
                 defaultValue={[]}
-                options={document.temp.target || []}
+                options={document.temp.target}
                 multiple
                 {...stateProps}
               />

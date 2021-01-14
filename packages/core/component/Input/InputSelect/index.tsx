@@ -32,7 +32,7 @@ interface InputSelectRaw {
 }
 
 interface InputSelect extends InputSelectRaw {
-  control: any
+  document: any
   name: string
   rules?: any
   isEditable?: boolean
@@ -126,11 +126,13 @@ export const InputSelectRaw: React.FC<InputSelectRaw> = React.memo(
   }
 )
 
-export const InputSelect: React.FC<any> = ({
+export const InputSelect: React.FC<InputSelect> = ({
   document,
   name,
   rules,
   defaultValue,
+  isEditable,
+  editable,
   multiple,
   ...props
 }) => {
@@ -148,8 +150,16 @@ export const InputSelect: React.FC<any> = ({
 
   return (
     <>
-      <InputSelectRaw {...{ onChange, value, multiple, ...props }} />
-      {invalid && <DisplayError error={document.errors[name]} />}
+      <InputSelectRaw
+        {...{
+          onChange,
+          value,
+          multiple,
+          editable: isEditable && editable,
+          ...props,
+        }}
+      />
+      {invalid && <DisplayError name={name} error={document.errors} />}
     </>
   )
 }

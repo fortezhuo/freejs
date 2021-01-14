@@ -1,9 +1,9 @@
 import React from "react"
-import { useDocument } from "../../state/hook"
+import { useForm } from "../../state/hook"
 import * as config from "./config"
 
-export const useHook = () => {
-  const { refFunction, req, stateProps, ...document } = useDocument("access")
+export const useDocument = () => {
+  const { refFunction, req, stateProps, ...document } = useForm("access")
 
   React.useEffect(() => {
     refFunction.current.onLoad = async function () {

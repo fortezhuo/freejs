@@ -1,12 +1,12 @@
 import React from "react"
-import { useDocument } from "../../state/hook"
+import { useForm } from "../../state/hook"
 
-export const useHook = () => {
-  const { refFunction, ...document } = useDocument("workflow")
+export const useDocument = () => {
+  const { refFunction, ...document } = useForm("workflow")
 
   React.useEffect(() => {
     refFunction.current.onLoad = async function () {
-      if (document.getId() === "new") {
+      if (document.id === "new") {
         await document.setData({
           status: "Active",
           completedStatus: "Approved",

@@ -27,6 +27,7 @@ export const InputTextRaw: React.FC<InputTextRaw> = ({
   isLoading = false,
   isUpdating = false,
   disabled = false,
+  editable = true,
   styleContainer,
   style,
   ...props
@@ -43,7 +44,7 @@ export const InputTextRaw: React.FC<InputTextRaw> = ({
       <TextInput
         placeholderTextColor={tw("text-gray-600").color}
         style={[s.inputText, style]}
-        editable={!disabled || !isUpdating}
+        editable={!disabled && !isUpdating && editable}
         {...props}
       />
     </Base>
@@ -56,6 +57,7 @@ export const InputText: React.FC<InputText> = ({
   name,
   rules,
   isEditable = true,
+  editable = true,
   defaultValue = "",
   ...props
 }) => {
@@ -83,7 +85,9 @@ export const InputText: React.FC<InputText> = ({
     <>
       <InputTextRaw
         {...{ ...inputProps, ...props }}
-        editable={!props.isUpdating || !props.disabled || isEditable}
+        editable={
+          !props.isUpdating && !props.disabled && isEditable && editable
+        }
       />
       {invalid && <DisplayError error={document.errors[name]} />}
     </>

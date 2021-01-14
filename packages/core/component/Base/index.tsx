@@ -16,7 +16,7 @@ const backgroundColor = color("bg-gray-300")
 const highlightColor = color("bg-gray-100")
 const speed = 800
 
-const Skeleton: React.FC<any> = ({ style }): JSX.Element => {
+const Skeleton: React.FC<{ style?: JSONObject }> = ({ style }) => {
   const animatedValue = React.useMemo(() => new Animated.Value(0), [])
   const translateX = React.useMemo(
     () =>

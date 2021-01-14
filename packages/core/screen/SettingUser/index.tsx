@@ -9,11 +9,11 @@ import {
   ActionGroup,
 } from "../../component"
 import { View, StyleSheet } from "react-native"
-import { useHook } from "./hook"
+import { useDocument } from "./hook"
 import { tw } from "@free/tailwind"
 
 const SettingUser: React.FC = () => {
-  const { stateProps, actions, ...document } = useHook()
+  const { stateProps, actions, ...document } = useDocument()
 
   return (
     <>
@@ -82,7 +82,6 @@ const SettingUser: React.FC = () => {
               <Input.Select
                 document={document}
                 name="roles"
-                creatable
                 multiple
                 placeholder="Roles"
                 options={document.temp.roles}

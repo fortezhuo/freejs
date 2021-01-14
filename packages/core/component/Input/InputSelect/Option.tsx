@@ -4,7 +4,12 @@ import { theme } from "../../../config/theme"
 import { Text } from "../../Text"
 import { tw } from "@free/tailwind"
 
-export const Item: React.FC<any> = React.memo(({ highlighted, children }) => {
+interface ItemX {
+  highligted?: any
+  children: any
+}
+
+export const Item: React.FC<ItemX> = React.memo(({ highlighted, children }) => {
   return (
     <View style={[s.viewItem, highlighted ? s.viewHiglighted : {}]}>
       <Text style={s.textItem}>{children}</Text>

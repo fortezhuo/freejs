@@ -1,8 +1,8 @@
 import React from "react"
-import { useDocument } from "../../state/hook"
+import { useForm } from "../../state/hook"
 
-export const useHook = () => {
-  const { refFunction, req, stateProps, ...document } = useDocument("user")
+export const useDocument = () => {
+  const { refFunction, req, stateProps, ...document } = useForm("user")
 
   React.useEffect(() => {
     refFunction.current.onLoad = async function () {
@@ -33,7 +33,7 @@ export const useHook = () => {
         icon: "save",
         type: "primary_1_bg",
         children: "Save",
-        visible: true,
+        visible: stateProps.isEditable,
         onPress: document.handleSubmit(async (data) => {
           if (await document.save(data)) {
             document.close()
@@ -41,7 +41,7 @@ export const useHook = () => {
         }),
       },
     ].filter((opt) => opt.visible)
-  }, [])
+  }, [stateProps.isEditable])
 
   return { ...document, stateProps, actions }
 }

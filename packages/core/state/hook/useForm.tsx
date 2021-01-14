@@ -1,6 +1,6 @@
 import React from "react"
 import { useState } from "./common"
-import { useForm } from "react-hook-form"
+import { useForm as useHookForm } from "react-hook-form"
 import {
   useRoute,
   useFocusEffect,
@@ -31,10 +31,10 @@ const initCallback = {
   onDestroy: function () {},
 }
 
-export const useDocument = (name: string) => {
+export const useForm = (name: string) => {
   const app = useApp()
   const navigation = useNavigation()
-  const form = useForm({ criteriaMode: "all" })
+  const form = useHookForm({ criteriaMode: "all" })
   const route = useRoute()
   const [temp, setTemp] = useState({})
   const [stateProps, setState] = useState({})
@@ -95,6 +95,14 @@ export const useDocument = (name: string) => {
       setState({ isLoading: false, isEditable: app.can("update", name) })
     }
   }, [id])
+
+  const close = React.useCallback(() => {
+    if (navigation.canGoBack()) {
+      navigation.goBack()
+    } else {
+      navigation.navigate("Drawer", { screen: `View${route.name}` })
+    }
+  }, [route.name])
 
   const save = React.useCallback(
     async (data: any) => {
