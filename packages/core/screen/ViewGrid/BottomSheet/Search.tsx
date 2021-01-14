@@ -5,7 +5,10 @@ import { Input, Label } from "../../../component"
 import { useView } from "../hook"
 import { Footer } from "./Footer"
 
-export const SimpleSearch: React.FC<any> = ({ document, refBottomSheet }) => {
+export const SimpleSearch: React.FC<{
+  document: JSONObject
+  refBottomSheet: any
+}> = ({ document, refBottomSheet }) => {
   return (
     <>
       <View style={s.rowSearch}>
@@ -21,7 +24,9 @@ export const SimpleSearch: React.FC<any> = ({ document, refBottomSheet }) => {
   )
 }
 
-export const AdvanceSearch: React.FC<any> = ({ document }) => {
+export const AdvanceSearch: React.FC<{ document: JSONObject }> = ({
+  document,
+}) => {
   const view = useView()
   const {
     data: { config },

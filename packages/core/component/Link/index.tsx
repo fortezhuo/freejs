@@ -3,8 +3,9 @@ import { TouchableOpacity } from "react-native"
 import { useLink } from "./helper"
 
 interface Link {
+  target?: string
   name: string
-  params: JSONObject
+  params?: JSONObject
   disabled?: boolean
   navigation: any
   children: React.ReactNode

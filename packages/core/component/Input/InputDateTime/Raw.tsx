@@ -6,7 +6,7 @@ import { Text, StyleSheet, View, TouchableWithoutFeedback } from "react-native"
 import { tw } from "@free/tailwind"
 import { formatDate, formatTime } from "../../../util"
 
-export const DateTimePicker: React.FC<any> = ({
+export const DateTimePicker: React.FC<JSONObject> = ({
   value,
   disabled,
   type = "date",

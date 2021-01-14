@@ -3,6 +3,7 @@ import { Icon, Sidebar, Gradient } from ".."
 import { DrawerActions } from "@react-navigation/native"
 import { StyleSheet, TouchableOpacity, View } from "react-native"
 import { createDrawerNavigator } from "@react-navigation/drawer"
+
 import { tw } from "@free/tailwind"
 import { random } from "../../util"
 import { theme } from "../../config/theme"

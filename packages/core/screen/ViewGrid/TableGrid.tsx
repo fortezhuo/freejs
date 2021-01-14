@@ -26,7 +26,7 @@ const colMobileHidden = [
   "name_download_log",
 ]
 
-const TableHeaderCell: React.FC<any> = ({ column }) => {
+const TableHeaderCell: React.FC<{ column: JSONObject }> = ({ column }) => {
   const Title = () =>
     React.useMemo(
       () =>
@@ -58,7 +58,9 @@ const TableHeaderCell: React.FC<any> = ({ column }) => {
   )
 }
 
-export const TableGrid: React.FC<any> = React.memo(({ setContent }) => {
+export const TableGrid: React.FC<{
+  setContent: any
+}> = React.memo(({ setContent }) => {
   const app = useApp()
   const { refSelected, refBottomSheet, ...view } = useView()
   const { isMobile, collection = [], max } = view.data
@@ -95,7 +97,15 @@ export const TableGrid: React.FC<any> = React.memo(({ setContent }) => {
   )
 })
 
-const TableContent: React.FC<any> = ({
+interface TableContent {
+  isMobile: boolean
+  isLoading: boolean
+  data: JSONObject
+  setContent: any
+  refSelected: any
+}
+
+const TableContent: React.FC<TableContent> = ({
   isMobile,
   isLoading,
   data,

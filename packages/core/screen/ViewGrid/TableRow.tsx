@@ -9,7 +9,17 @@ import { POST } from "../../request"
 import { useNavigation } from "@react-navigation/native"
 import Swipeable from "react-native-gesture-handler/Swipeable"
 
-const RowMobile: React.FC<any> = ({
+interface RowMobile {
+  data: JSONObject
+  actionLeft?: any
+  actionRight?: any
+  setContent: any
+  children: React.ReactNode
+  dark?: boolean | number
+  style?: JSONObject
+}
+
+const RowMobile: React.FC<RowMobile> = ({
   data,
   actionLeft,
   actionRight,
@@ -20,7 +30,7 @@ const RowMobile: React.FC<any> = ({
 }) => {
   const width = 88
   const { refBottomSheet, ...view } = useView()
-  const ref = React.createRef<any>()
+  const ref = React.createRef<Swipeable>()
   const navigation = useNavigation()
   const params = {
     id: data._id_json || data._id_link,
@@ -53,8 +63,8 @@ const RowMobile: React.FC<any> = ({
         outputRange: [-width, 0],
       })
       const onPress = () => {
-        ref?.current.close()
-        actionLeft.onPress(params)
+        ref.current?.close()
+        actionLeft?.onPress(params)
       }
       return (
         <View
@@ -84,7 +94,7 @@ const RowMobile: React.FC<any> = ({
         outputRange: [width, 0],
       })
       const onPress = () => {
-        ref?.current.close()
+        ref.current?.close()
         actionRight.onPress(params)
       }
       return (
@@ -129,11 +139,14 @@ const RowMobile: React.FC<any> = ({
   )
 }
 
-export const TableRow: React.FC<any> = ({
+interface TableRow extends RowMobile {
+  isMobile: boolean
+}
+
+export const TableRow: React.FC<TableRow> = ({
   data,
   actionLeft,
   actionRight,
-  refBottomSheet,
   children,
   dark,
   isMobile,
@@ -142,9 +155,7 @@ export const TableRow: React.FC<any> = ({
   const Wrapper: any = isMobile ? RowMobile : Table.Row
 
   return (
-    <Wrapper
-      {...{ dark, style, data, actionLeft, actionRight, refBottomSheet }}
-    >
+    <Wrapper {...{ dark, style, data, actionLeft, actionRight }}>
       {children}
     </Wrapper>
   )

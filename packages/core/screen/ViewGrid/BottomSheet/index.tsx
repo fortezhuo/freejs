@@ -22,80 +22,81 @@ const format = (value: any) => {
   return _value
 }
 
-export const BottomSheet: React.FC<any> = React.memo(
-  ({ content, setContent }) => {
-    const [isSimple, setSimple] = React.useState(true)
-    const document = useForm()
-    const { refBottomSheet } = useView()
+export const BottomSheet: React.FC<{
+  content: any
+  setContent: any
+}> = React.memo(({ content, setContent }) => {
+  const [isSimple, setSimple] = React.useState(true)
+  const document = useForm()
+  const { refBottomSheet } = useView()
 
-    const renderFlatList = React.useCallback((content) => {
-      const data = Object.keys(content).map((key) => ({
-        key,
-        value: content[key],
-      }))
-      return {
-        data,
-        stickyHeaderIndices: [0],
-        renderItem: ({ item, index }: any) => {
-          return (
-            <Table.Row dark={index % 2 == 0}>
-              <View style={{ width: 200 }}>
-                <Table.CellText>{item.key}</Table.CellText>
-              </View>
-              <Table.CellText>{format(item.value)}</Table.CellText>
-            </Table.Row>
-          )
-        },
-        ListHeaderComponent: () => (
-          <View style={s.viewHeader}>
-            <Text style={s.textHeader}>Content</Text>
-          </View>
-        ),
-        ListFooterComponent: () => <View style={s.viewFooter} />,
-        keyExtractor: (item: any) => item.key,
-        showsVerticalScrollIndicator: false,
-      }
-    }, [])
-
-    const onClosed = React.useCallback(() => {
-      if (!!content) {
-        setContent(undefined)
-      } else {
-        setSimple(true)
-      }
-    }, [content])
-
-    const props: any = {
-      [content ? "flatListProps" : "children"]: content ? (
-        renderFlatList(content)
-      ) : isSimple ? (
-        <SimpleSearch {...{ document, refBottomSheet }} />
-      ) : (
-        <AdvanceSearch {...{ document }} />
+  const renderFlatList = React.useCallback((content) => {
+    const data = Object.keys(content).map((key) => ({
+      key,
+      value: content[key],
+    }))
+    return {
+      data,
+      stickyHeaderIndices: [0],
+      renderItem: ({ item, index }: any) => {
+        return (
+          <Table.Row dark={index % 2 == 0}>
+            <View style={{ width: 200 }}>
+              <Table.CellText>{item.key}</Table.CellText>
+            </View>
+            <Table.CellText>{format(item.value)}</Table.CellText>
+          </Table.Row>
+        )
+      },
+      ListHeaderComponent: () => (
+        <View style={s.viewHeader}>
+          <Text style={s.textHeader}>Content</Text>
+        </View>
       ),
+      ListFooterComponent: () => <View style={s.viewFooter} />,
+      keyExtractor: (item: any) => item.key,
+      showsVerticalScrollIndicator: false,
     }
+  }, [])
 
-    return (
-      <Modalize
-        modalTopOffset={80}
-        snapPoint={275}
-        ref={refBottomSheet}
-        HeaderComponent={
-          content ? undefined : (
-            <Header {...{ refBottomSheet, isSimple, setSimple }} />
-          )
-        }
-        FooterComponent={
-          content || isSimple ? undefined : (
-            <Footer {...{ document, refBottomSheet, isSimple: false }} />
-          )
-        }
-        onClosed={onClosed}
-        {...props}
-      />
-    )
+  const onClosed = React.useCallback(() => {
+    if (!!content) {
+      setContent(undefined)
+    } else {
+      setSimple(true)
+    }
+  }, [content])
+
+  const props: any = {
+    [content ? "flatListProps" : "children"]: content ? (
+      renderFlatList(content)
+    ) : isSimple ? (
+      <SimpleSearch {...{ document, refBottomSheet }} />
+    ) : (
+      <AdvanceSearch {...{ document }} />
+    ),
   }
-)
+
+  return (
+    <Modalize
+      modalTopOffset={80}
+      snapPoint={275}
+      ref={refBottomSheet}
+      HeaderComponent={
+        content ? undefined : (
+          <Header {...{ refBottomSheet, isSimple, setSimple }} />
+        )
+      }
+      FooterComponent={
+        content || isSimple ? undefined : (
+          <Footer {...{ document, refBottomSheet, isSimple: false }} />
+        )
+      }
+      onClosed={onClosed}
+      {...props}
+    />
+  )
+})
 
 const s = StyleSheet.create({
   viewHeader: tw(

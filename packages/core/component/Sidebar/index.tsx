@@ -8,6 +8,7 @@ import { useApp } from "../../state"
 import { tw } from "@free/tailwind"
 import { configApp } from "@free/env"
 import logo from "../../img/logo.png"
+import { DrawerContent } from "@react-navigation/drawer"
 
 const colors = ["bg-gray-200", "bg-gray-200", "bg-gray-200", "bg-gray-300"]
 
@@ -15,9 +16,9 @@ const Logo: React.FC = () => {
   return <Image source={logo} style={s.imgTitle} />
 }
 
-export const Title: React.FC<any> = ({ testID = "Title", navigation }) => {
+export const Title: React.FC<{ navigation: any }> = ({ navigation }) => {
   return (
-    <Link navigation={navigation} testID={testID} name={"Index"}>
+    <Link navigation={navigation} name={"Index"}>
       <View style={s.layoutTitle}>
         <Logo />
         <View style={s.groupTitle}>
@@ -28,7 +29,7 @@ export const Title: React.FC<any> = ({ testID = "Title", navigation }) => {
   )
 }
 
-const Content: React.FC<any> = (props) => {
+const Content: React.FC<JSONObject> = (props) => {
   const app = useApp()
   const activeName = props.state.routeNames[props.state.index]
 
@@ -76,7 +77,7 @@ const Content: React.FC<any> = (props) => {
   )
 }
 
-export const Sidebar: React.FC<any> = (props) => {
+export const Sidebar: React.FC<JSONObject> = (props) => {
   return (
     <Gradient type="vertical" colors={colors} style={{ flex: 1 }}>
       <SafeAreaView style={s.layoutSidebar} testID="Sidebar">

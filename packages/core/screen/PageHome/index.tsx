@@ -2,7 +2,7 @@ import React from "react"
 
 import { Text, Layout } from "../../component"
 
-const PageHome: React.FC<any> = ({ navigation }) => {
+const PageHome: React.FC = () => {
   return (
     <Layout transparent>
       <Text>INDEX</Text>

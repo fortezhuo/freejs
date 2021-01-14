@@ -6,8 +6,8 @@ import { withView } from "./hook"
 import { BottomSheet } from "./BottomSheet"
 import { TableAction } from "./TableAction"
 
-const ViewGrid: React.FC<any> = withView(() => {
-  const [content, setContent] = React.useState<Object | undefined>(undefined)
+const ViewGrid: React.FC = withView(() => {
+  const [content, setContent] = React.useState(undefined)
 
   return (
     <>
@@ -16,7 +16,7 @@ const ViewGrid: React.FC<any> = withView(() => {
         scroll={Platform.OS === "web"}
         stickyRight={<TableAction />}
       >
-        <TableGrid {...{ content, setContent }} />
+        <TableGrid {...{ setContent }} />
       </Layout>
       <BottomSheet {...{ content, setContent }} />
     </>

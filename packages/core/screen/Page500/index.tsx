@@ -3,10 +3,9 @@ import { Text, Layout, Button, H5 } from "../../component"
 import { View, StyleSheet } from "react-native"
 import { useApp } from "../../state"
 import { tw } from "@free/tailwind"
-import { theme } from "../../config/theme"
 import { useNavigation } from "@react-navigation/native"
 
-const Page500: React.FC<any> = () => {
+const Page500: React.FC = () => {
   const { error, setError } = useApp()
   const navigation = useNavigation()
 

@@ -2,7 +2,7 @@ type JSONObject = {
   [key: string]: any
 }
 interface VoidFunction {
-  (...args): void
+  (...args): void | React.Dispatch
 }
 declare var FREE_NODE_ENV: string
 declare var FREE_STAMP: string

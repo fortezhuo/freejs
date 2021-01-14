@@ -1,7 +1,16 @@
 import React from "react"
 import { buildLink, useLink } from "./helper"
 
-export const Link: React.FC<any> = ({
+interface Link {
+  target?: string
+  name: string
+  params?: JSONObject
+  disabled?: boolean
+  navigation: any
+  children: React.ReactNode
+}
+
+export const Link: React.FC<Link> = ({
   target = "_self",
   name,
   params,

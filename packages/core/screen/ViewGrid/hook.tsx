@@ -95,8 +95,8 @@ export const useActions = (refBottomSheet: any) => {
   } = view
 
   const { refAlert, ...app } = useApp()
-  const refActions = React.useRef<any>([])
-  const refSwipeActions = React.useRef<any>([])
+  const refActions = React.useRef<JSONObject[]>([])
+  const refSwipeActions = React.useRef<JSONObject[]>([])
   const navigation = useNavigation()
   const actions = React.useMemo(() => {
     if (!config?.name) return []
