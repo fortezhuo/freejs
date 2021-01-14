@@ -4,12 +4,19 @@ import { theme } from "../../../config/theme"
 import { Text } from "../../Text"
 import { tw } from "@free/tailwind"
 
-interface ItemX {
-  highligted?: any
-  children: any
+interface Item {
+  highlighted: boolean
+  children?: string
 }
 
-export const Item: React.FC<ItemX> = React.memo(({ highlighted, children }) => {
+interface Option extends Item {
+  onSelect: VoidFunction
+  keyValue: string
+  keyLabel: string
+  option: JSONObject
+}
+
+export const Item: React.FC<Item> = React.memo(({ highlighted, children }) => {
   return (
     <View style={[s.viewItem, highlighted ? s.viewHiglighted : {}]}>
       <Text style={s.textItem}>{children}</Text>
@@ -17,7 +24,7 @@ export const Item: React.FC<ItemX> = React.memo(({ highlighted, children }) => {
   )
 })
 
-export const Option: React.FC<any> = React.memo(
+export const Option: React.FC<Option> = React.memo(
   ({ onSelect, highlighted, keyValue, keyLabel, option }) => {
     return (
       <TouchableOpacity

@@ -7,7 +7,7 @@ import _debounce from "lodash/debounce"
 
 export const MenuUser: React.FC = () => {
   const app = useApp()
-  const ref = React.useRef<any>(null)
+  const ref: any = React.useRef(null)
   return app.data?.auth?.username ? (
     <MenuDropdown
       ref={ref}

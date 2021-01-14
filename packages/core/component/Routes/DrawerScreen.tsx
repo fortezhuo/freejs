@@ -11,7 +11,14 @@ const colors = [theme.primary_1_bg, theme.primary_2_bg]
 
 const Drawer = createDrawerNavigator()
 
-export const DrawerScreen: React.FC<any> = ({
+interface DrawerScreen {
+  isMobile: boolean
+  routes: JSONObject
+  screens: JSONObject
+  navigation: any
+}
+
+export const DrawerScreen: React.FC<DrawerScreen> = ({
   isMobile,
   routes,
   screens,

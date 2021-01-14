@@ -7,7 +7,18 @@ import { useApp } from "../../state"
 const SCREEN_INDENT = 2
 const noop = () => {}
 
-export const MenuDropdown: React.FC<any> = React.forwardRef(
+export interface MenuDropdown {
+  isCompact?: boolean
+  testID?: string
+  anchor: React.ReactNode
+  style?: JSONObject
+  children: React.ReactNode
+  onShow?: VoidFunction
+  allowBackDrop?: boolean
+  ref?: any
+}
+
+export const MenuDropdown: React.FC<MenuDropdown> = React.forwardRef(
   (
     {
       isCompact = false,
@@ -18,7 +29,7 @@ export const MenuDropdown: React.FC<any> = React.forwardRef(
       onShow = noop,
       allowBackDrop = true,
     },
-    ref
+    ref: any
   ) => {
     const app = useApp()
     const [isOpen, setOpen] = React.useState(false)

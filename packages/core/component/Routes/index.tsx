@@ -26,7 +26,7 @@ const colors = [theme.primary_1_bg, theme.primary_2_bg]
 const Stack = createStackNavigator()
 const NAVIGATION_PERSISTENCE_KEY = `${configApp.name.toUpperCase()}_STATE`
 
-const Routes: React.FC<any> = ({ screens }) => {
+const Routes: React.FC<{ screens: JSONObject }> = ({ screens }) => {
   const app = useApp()
   const [isReady, setIsReady] = React.useState(Platform.OS === "web")
   const [initialState, setInitialState] = React.useState()

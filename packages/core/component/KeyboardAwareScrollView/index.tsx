@@ -1,10 +1,7 @@
 import React from "react"
 import { Keyboard, ScrollView, Platform } from "react-native"
 
-export const KeyboardAwareScrollView: React.FC<any> = ({
-  children,
-  ...rest
-}) => {
+export const KeyboardAwareScrollView: React.FC = ({ children, ...rest }) => {
   const isMobile = Platform.OS !== "web"
   const refScroll = React.useRef<ScrollView>(null)
   const [keyboardHeight, setKeyboardHeight] = React.useState(0)

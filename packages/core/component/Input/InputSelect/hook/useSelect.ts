@@ -11,7 +11,6 @@ const highlightReducer = function (
   { key, options }: any
 ): any {
   if (key === "Reset") return 0
-
   const max = options.length - 1
   let newHighlighted = key === "ArrowDown" ? highlighted + 1 : highlighted - 1
   if (newHighlighted < 0) {
@@ -37,8 +36,12 @@ export function useSelect({
   debounce = 0,
 }: JSONObject) {
   const ref = React.useRef<TextInput>(null)
-  const refSelected = React.useRef<any>(null)
-  const [selected, setSelect]: any = React.useState(null)
+  const refSelected = React.useRef<JSONObject | JSONObject[] | undefined>(
+    undefined
+  )
+  const [selected, setSelect] = React.useState<
+    JSONObject | JSONObject[] | undefined
+  >()
   const [search, setSearch] = React.useState("")
   const [focus, setFocus] = React.useState(false)
   const [highlighted, dispatchHighlighted] = React.useReducer(
@@ -141,7 +144,7 @@ export function useSelect({
 
   const onDeselect = React.useCallback(
     (removeDisplay) => {
-      const newSelect = selected.filter(
+      const newSelect = (selected || []).filter(
         (o: JSONObject) => o[keyLabel] !== removeDisplay
       )
       const newValues = getValues(newSelect, keyValue, multiple)
@@ -153,8 +156,8 @@ export function useSelect({
   )
 
   const onClear = React.useCallback(() => {
-    setSelect(multiple ? [] : null)
-    onChange(multiple ? [] : null)
+    setSelect(multiple ? [] : undefined)
+    onChange(multiple ? [] : undefined)
   }, [multiple, onChange])
 
   const onKeyPress = React.useCallback(

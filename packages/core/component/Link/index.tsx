@@ -2,8 +2,14 @@ import React from "react"
 import { TouchableOpacity } from "react-native"
 import { useLink } from "./helper"
 
-export const Link: React.FC<any> = ({
-  target,
+interface Link {
+  name: string
+  params: JSONObject
+  disabled?: boolean
+  navigation: any
+  children: React.ReactNode
+}
+export const Link: React.FC<Link> = ({
   name,
   params,
   disabled,

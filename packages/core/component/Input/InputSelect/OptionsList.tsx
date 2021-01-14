@@ -3,8 +3,20 @@ import { FlatList } from "react-native"
 import { Option } from "./Option"
 
 const ITEM_HEIGHT = 36
-export const OptionsList: React.FC<any> = React.forwardRef(
-  ({ keyValue, keyLabel, options, onSelect, snapshot }, ref: any) => {
+
+interface OptionsList {
+  keyValue: string
+  keyLabel: string
+  options: JSONObject[]
+  onSelect: VoidFunction
+  snapshot: JSONObject
+}
+
+export const OptionsList: React.FC<OptionsList> = React.forwardRef(
+  (
+    { keyValue, keyLabel, options, onSelect, snapshot },
+    ref: React.Ref<FlatList>
+  ) => {
     return (
       <FlatList
         ref={ref}

@@ -5,7 +5,15 @@ import { tw } from "@free/tailwind"
 
 const noop = () => {}
 
-export const MenuDialog: React.FC<any> = React.forwardRef(
+export interface MenuDialog {
+  testID?: string
+  anchor: React.ReactNode
+  children: React.ReactNode
+  onShow: VoidFunction
+  allowBackDrop?: boolean
+}
+
+export const MenuDialog: React.FC<MenuDialog> = React.forwardRef(
   (
     { testID = "Menu", anchor, children, onShow = noop, allowBackDrop = true },
     ref
