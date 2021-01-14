@@ -1,8 +1,17 @@
 // Profile Workflow
+
+const excludeField = [
+  "_docAuthors",
+  "_docReaders",
+  "_createdAt",
+  "_createdBy",
+].reduce((acc, key) => ({ ...acc, [key]: 0 }), {})
+
 export const ViewProfileWorkflow = {
   name: "workflow",
   search: ["parameter", "fullname", "email"],
-  fields: [],
+  field: excludeField,
+  sort: {},
   actions: ["New", "Delete", "Search"],
   columns: [
     {
@@ -38,7 +47,8 @@ export const ViewProfileWorkflow = {
 // Setting ACL
 export const ViewSettingAccess = {
   name: "access",
-  fields: ["-data"],
+  sort: { role: 1 },
+  fields: { ...excludeField, data: 0 },
   search: ["$text"],
   actions: ["New", "Delete", "Search"],
   columns: [
@@ -76,7 +86,8 @@ export const ViewSettingAccess = {
 // Setting Trash
 export const ViewSettingTrash = {
   name: "trash",
-  fields: ["-data"],
+  sort: {},
+  field: excludeField,
   search: ["$text"],
   actions: ["Restore", "Delete", "Search"],
   columns: [
@@ -116,7 +127,8 @@ export const ViewSettingTrash = {
 // Setting Log
 export const ViewSettingLog = {
   name: "log",
-  fields: [],
+  field: {},
+  sort: {},
   search: [],
   actions: [],
   columns: [
@@ -152,7 +164,8 @@ export const ViewSettingLog = {
 export const ViewSettingUser = {
   name: "user",
   search: ["username", "fullname", "email"],
-  fields: [],
+  sort: { username: 1 },
+  field: excludeField,
   actions: ["New", "Delete", "Search"],
   columns: [
     {

@@ -36,13 +36,12 @@ export class DatabaseService extends BaseService {
       [key: string]: any
     }
     const { _id, _params, ...body } = rawBody || { _id: null }
-    let projection: { [key: string]: number } = {}
 
     let {
       option = {},
       query = {},
       sort = {},
-      fields = [],
+      field = {},
       limit = 30,
       page = 1,
     } = _params || {}
@@ -51,11 +50,13 @@ export class DatabaseService extends BaseService {
 
     const skip = (page - 1) * limit
 
-    ;(this.disableAuth ? [] : fields.concat(this.auth?.fields)).forEach(
-      (field: string) => {
-        projection[field.replace("-", "")] = field.indexOf("-") >= 0 ? 0 : 1
-      }
-    )
+    let projection: { [key: string]: number } = field
+
+    this.disableAuth
+      ? []
+      : this.auth?.fields.forEach((field: string) => {
+          projection[field.replace("-", "")] = field.indexOf("-") >= 0 ? 0 : 1
+        })
 
     if (query._helper) {
       const { _helper } = query

@@ -371,7 +371,8 @@ const useHook = () => {
         query: search,
         page,
         limit: +limit,
-        fields: config.fields,
+        field: config.field || {},
+        sort: config.sort || {},
       }
       try {
         setState({ isLoading: true })
