@@ -8497,59 +8497,5 @@
 	},
 	"no-underline": {
 		"textDecorationLine": "none"
-	},
-	"bg-white-100": {
-		"backgroundColor": "rgba(255,255,255,0.1)"
-	},
-	"bg-white-200": {
-		"backgroundColor": "rgba(255,255,255,0.2)"
-	},
-	"bg-white-300": {
-		"backgroundColor": "rgba(255,255,255,0.3)"
-	},
-	"bg-white-400": {
-		"backgroundColor": "rgba(255,255,255,0.4)"
-	},
-	"bg-white-500": {
-		"backgroundColor": "rgba(255,255,255,0.5)"
-	},
-	"bg-white-600": {
-		"backgroundColor": "rgba(255,255,255,0.6)"
-	},
-	"bg-white-700": {
-		"backgroundColor": "rgba(255,255,255,0.7)"
-	},
-	"bg-white-800": {
-		"backgroundColor": "rgba(255,255,255,0.8)"
-	},
-	"bg-white-900": {
-		"backgroundColor": "rgba(255,255,255,0.9)"
-	},
-	"bg-black-100": {
-		"backgroundColor": "rgba(0,0,0,0.1)"
-	},
-	"bg-black-200": {
-		"backgroundColor": "rgba(0,0,0,0.2)"
-	},
-	"bg-black-300": {
-		"backgroundColor": "rgba(0,0,0,0.3)"
-	},
-	"bg-black-400": {
-		"backgroundColor": "rgba(0,0,0,0.4)"
-	},
-	"bg-black-500": {
-		"backgroundColor": "rgba(0,0,0,0.5)"
-	},
-	"bg-black-600": {
-		"backgroundColor": "rgba(0,0,0,0.6)"
-	},
-	"bg-black-700": {
-		"backgroundColor": "rgba(0,0,0,0.7)"
-	},
-	"bg-black-800": {
-		"backgroundColor": "rgba(0,0,0,0.8)"
-	},
-	"bg-black-900": {
-		"backgroundColor": "rgba(0,0,0,0.9)"
 	}
 }

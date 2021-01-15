@@ -103,7 +103,7 @@ export const Label: React.FC = ({ children }) => {
 
 const s = StyleSheet.create({
   viewRow: tw(`flex-row shadow-sm`, { margin: 1 }),
-  viewRowDark: { backgroundColor: "rgba(0,0,0,0.05)" },
+  viewRowDark: tw("bg-gray-100"),
   viewColumn: tw("p-2 flex-col justify-center"),
   viewColumnLight: tw("bg-white"),
   textLabel: tw(`${theme.default_text} p-1`),

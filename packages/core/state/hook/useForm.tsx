@@ -92,7 +92,7 @@ export const useForm = (name: string) => {
     } catch (err) {
       handleError(err)
     } finally {
-      setState({ isLoading: false, isEditable: app.can("update", name) })
+      setState({ isLoading: true, isEditable: app.can("update", name) })
     }
   }, [id])
 

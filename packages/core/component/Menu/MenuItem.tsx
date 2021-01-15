@@ -38,6 +38,6 @@ export const MenuItem: React.FC<{
 
 const s = StyleSheet.create({
   viewItem: tw(`flex-1 flex-row p-2`),
-  viewItemActive: tw("bg-black-100"),
+  viewItemActive: tw("bg-gray-50"),
   textItem: tw(`${theme.default_text} leading-5 mx-2`),
 })

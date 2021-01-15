@@ -12,8 +12,8 @@ import { tw, color } from "@free/tailwind"
 
 const GRADIENT_START = { x: 0, y: 0 }
 const GRADIENT_END = { x: 1, y: 0 }
-const backgroundColor = color("bg-gray-300")
-const highlightColor = color("bg-gray-100")
+const backgroundColor = color("bg-gray-100")
+const highlightColor = color("bg-gray-50")
 const speed = 800
 
 const Skeleton: React.FC<{ style?: JSONObject }> = ({ style }) => {
@@ -100,8 +100,10 @@ const s = StyleSheet.create({
     paddingRight: 0,
     flexDirection: undefined,
     alignItems: undefined,
-    borderWidth: undefined,
-    borderColor: undefined,
+    borderTopColor: "transparent",
+    borderRightColor: "transparent",
+    borderBottomColor: "transparent",
+    borderLeftColor: "transparent",
   },
   viewSkeleton: tw("relative"),
   gradient: {

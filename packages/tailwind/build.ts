@@ -275,27 +275,6 @@ styles.underline = { textDecorationLine: "underline" }
 styles["line-through"] = { textDecorationLine: "line-through" }
 styles["no-underline"] = { textDecorationLine: "none" }
 
-// Background Transparent
-styles["bg-white-100"] = { backgroundColor: "rgba(255,255,255,0.1)" }
-styles["bg-white-200"] = { backgroundColor: "rgba(255,255,255,0.2)" }
-styles["bg-white-300"] = { backgroundColor: "rgba(255,255,255,0.3)" }
-styles["bg-white-400"] = { backgroundColor: "rgba(255,255,255,0.4)" }
-styles["bg-white-500"] = { backgroundColor: "rgba(255,255,255,0.5)" }
-styles["bg-white-600"] = { backgroundColor: "rgba(255,255,255,0.6)" }
-styles["bg-white-700"] = { backgroundColor: "rgba(255,255,255,0.7)" }
-styles["bg-white-800"] = { backgroundColor: "rgba(255,255,255,0.8)" }
-styles["bg-white-900"] = { backgroundColor: "rgba(255,255,255,0.9)" }
-
-styles["bg-black-100"] = { backgroundColor: "rgba(0,0,0,0.1)" }
-styles["bg-black-200"] = { backgroundColor: "rgba(0,0,0,0.2)" }
-styles["bg-black-300"] = { backgroundColor: "rgba(0,0,0,0.3)" }
-styles["bg-black-400"] = { backgroundColor: "rgba(0,0,0,0.4)" }
-styles["bg-black-500"] = { backgroundColor: "rgba(0,0,0,0.5)" }
-styles["bg-black-600"] = { backgroundColor: "rgba(0,0,0,0.6)" }
-styles["bg-black-700"] = { backgroundColor: "rgba(0,0,0,0.7)" }
-styles["bg-black-800"] = { backgroundColor: "rgba(0,0,0,0.8)" }
-styles["bg-black-900"] = { backgroundColor: "rgba(0,0,0,0.9)" }
-
 fs.writeFileSync(
   path.join(__dirname, "styles.json"),
   JSON.stringify(styles, null, "\t")

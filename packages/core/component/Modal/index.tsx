@@ -61,5 +61,5 @@ export const Modal: React.FC<Modal> = ({
 const s = StyleSheet.create({
   viewKeyboardAvoid: tw("flex-1 justify-center"),
   rootOverlay: tw("absolute top-0 left-0 right-0 bottom-0 flex-1"),
-  overlayDark: tw("bg-black-500"),
+  overlayDark: { backgroundColor: "rgba(0.0.0.0.5)" },
 })
