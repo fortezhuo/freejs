@@ -55,8 +55,8 @@ export const Anchor: React.FC<Anchor> = React.memo(
 )
 
 const s = StyleSheet.create({
-  viewInput: tw(
-    `${theme.default_bg} ${theme.input_border} w-full h-10 flex-row`
-  ),
+  viewInput: tw(`${theme.default_bg} ${theme.input_border} w-full flex-row`, {
+    minHeight: 40,
+  }),
   viewDisabled: tw(theme.disabled_bg),
 })

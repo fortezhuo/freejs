@@ -2,7 +2,7 @@ import React from "react"
 import { useForm } from "../../state/hook"
 
 export const useDocument = () => {
-  const { refFunction, stateProps, ...document } = useForm("workflow")
+  const { refFunction, stateProps, random, ...document } = useForm("workflow")
 
   React.useEffect(() => {
     refFunction.current.onLoad = async function () {
@@ -28,6 +28,7 @@ export const useDocument = () => {
     return [
       {
         icon: "save",
+        key: `action_${random()}`,
         type: "primary_1_bg",
         children: "Save",
         visible: stateProps.isEditable,

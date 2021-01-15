@@ -143,13 +143,13 @@ const TableContent: React.FC<TableContent> = ({
     <>
       <TablePagination />
       <TableWrapper style={s.viewTable}>
-        {headerGroups.map((headerGroup: any) => {
+        {headerGroups.map((headerGroup: any, i: number) => {
           const style = isMobile ? { height: 0, opacity: 0 } : {}
           return (
-            <Table.Header key={"header_" + random()} style={style}>
-              {headerGroup.headers.map((column: any) => {
+            <Table.Header key={`header_${i}`} style={style}>
+              {headerGroup.headers.map((column: any, j: number) => {
                 return (
-                  <TableHeaderCell key={"header_" + random()} column={column} />
+                  <TableHeaderCell key={`header_${i}_${j}`} column={column} />
                 )
               })}
             </Table.Header>
@@ -179,7 +179,7 @@ const TableContent: React.FC<TableContent> = ({
                     const isHide =
                       isMobile && colMobileHidden.indexOf(cell.column.id) >= 0
                     return (
-                      <View key={"cell_" + random()}>
+                      <View key={`cell_${i}`}>
                         {isHide ? <></> : cell.render("Cell")}
                       </View>
                     )

@@ -2,7 +2,6 @@ import React from "react"
 import { View, StyleSheet } from "react-native"
 import { tw } from "@free/tailwind"
 import { Button } from "../../../component/Button"
-import { random } from "../../../util"
 
 export const Header: React.FC<{
   isSimple: boolean
@@ -20,7 +19,7 @@ export const Header: React.FC<{
   }, [])
 
   return (
-    <View style={s.viewHeader} key={"scroll_" + random()}>
+    <View style={s.viewHeader}>
       <View style={{ flex: 1 }}>
         <Button
           type={isSimple ? "danger_bg" : "disabled_bg"}

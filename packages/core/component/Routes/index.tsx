@@ -41,6 +41,7 @@ const Routes: React.FC<{ screens: JSONObject }> = ({ screens }) => {
       if (!!route.view) {
         view.push({
           path: route.view,
+          key: `route_${random()}`,
           name: `View${route.alias ? route.alias : route.name}`,
           title: route.title,
           component: "ViewGrid",
@@ -49,6 +50,7 @@ const Routes: React.FC<{ screens: JSONObject }> = ({ screens }) => {
       if (!!route.child) {
         child.push({
           path: route.child,
+          key: `route_${random()}`,
           name: `${route.alias ? route.alias : route.name}`,
           title: route.title,
           component: route.name,
@@ -196,7 +198,7 @@ const Routes: React.FC<{ screens: JSONObject }> = ({ screens }) => {
                       : undefined,
                   }}
                   name={route.name}
-                  key={"stack_" + random()}
+                  key={route.key}
                   component={screens[route.component]}
                 />
               )

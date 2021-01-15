@@ -2,7 +2,6 @@ import React from "react"
 import { StyleSheet, View } from "react-native"
 import { Modalize } from "react-native-modalize"
 import { Button } from ".."
-import { random } from "../../util"
 import { useApp } from "../../state"
 import { tw } from "@free/tailwind"
 
@@ -39,12 +38,10 @@ export const Small: React.FC<{
             flexDirection: "column",
           }}
         >
-          {actions.map(({ icon, type, ...prop }: JSONObject) => (
+          {actions.map(({ icon, type, key, ...prop }: JSONObject) => (
             <Button
-              type={type}
+              {...{ type, key: `m_${key}`, ...prop }}
               style={{ borderRadius: 10 }}
-              {...prop}
-              key={"act_" + random()}
             />
           ))}
           <Button

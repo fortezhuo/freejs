@@ -26,10 +26,12 @@ export const Chips = React.memo(({ children, onDeselect }: Chip) =>
 )
 
 const s = StyleSheet.create({
-  viewChip: tw("rounded-lg flex-row flex-grow-0 h-8 items-center px-1", {
-    margin: 1,
-    marginHorizontal: 2,
-    backgroundColor: "rgba(0,0,0,0.1)",
-  }),
+  viewChip: tw(
+    "rounded-lg flex-row flex-grow-0 h-8 items-center px-1 bg-gray-200",
+    {
+      margin: 1,
+      marginHorizontal: 2,
+    }
+  ),
   textChip: tw(`${theme.default_text} mx-1`),
 })

@@ -5,6 +5,7 @@ import { Option } from "./Option"
 const ITEM_HEIGHT = 36
 
 interface OptionsList {
+  ref: React.Ref<FlatList>
   keyValue: string
   keyLabel: string
   options: JSONObject[]

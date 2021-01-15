@@ -89,20 +89,18 @@ export const Alert = React.forwardRef((_props, ref) => {
   const footer = React.useCallback(
     () => (
       <View testID="Footer" style={s.viewFooter}>
-        {refProps.current.actions.map((action: any, i: number) => {
-          return (
-            <TouchableOpacity
-              style={[
-                s.buttonAction,
-                tw(theme[`${action.type || "secondary"}_bg`]),
-              ]}
-              key={"action_" + random()}
-              onPress={action.onPress}
-            >
-              <Text style={s.textAction}>{action.label}</Text>
-            </TouchableOpacity>
-          )
-        })}
+        {refProps.current.actions.map(
+          ({ key, type, label, onPress }: any, i: number) => {
+            return (
+              <TouchableOpacity
+                style={[s.buttonAction, tw(theme[`${type || "secondary"}_bg`])]}
+                {...{ key, onPress }}
+              >
+                <Text style={s.textAction}>{label}</Text>
+              </TouchableOpacity>
+            )
+          }
+        )}
       </View>
     ),
     []

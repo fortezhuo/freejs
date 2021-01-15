@@ -39,6 +39,6 @@ export const Option: React.FC<Option> = React.memo(
 
 const s = StyleSheet.create({
   viewItem: tw(`flex-1 flex-row p-2`),
-  viewHiglighted: tw("bg-gray-50"),
+  viewHiglighted: tw("bg-gray-200"),
   textItem: tw(`${theme.default_text} leading-5 mx-2`),
 })

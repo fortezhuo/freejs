@@ -6,7 +6,7 @@ import { theme } from "../../../config/theme"
 import { Item } from "./Option"
 
 interface Content {
-  options: JSONObject
+  options: JSONObject[]
   snapshot: JSONObject
   onSelect: VoidFunction
   emptyMessage: string
@@ -39,7 +39,7 @@ export const Content: React.FC<Content> = React.memo(
             options={options}
           />
         ) : (
-          <Item>{emptyMessage}</Item>
+          <Item highlighted={false}>{emptyMessage}</Item>
         )}
       </View>
     )
@@ -49,6 +49,7 @@ export const Content: React.FC<Content> = React.memo(
 const s = StyleSheet.create({
   viewWrapper: tw(`${theme.default_bg} ${theme.input_border}`, {
     paddingTop: 3,
+    maxHeight: 185,
   }),
   inputText: tw(
     `w-full ${theme.default_bg} p-2 px-3 ${theme.default_border} border-b`

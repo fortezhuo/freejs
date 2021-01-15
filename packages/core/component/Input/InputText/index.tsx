@@ -95,7 +95,9 @@ export const InputText: React.FC<InputText> = ({
 }
 
 const s: any = StyleSheet.create({
-  viewInput: tw(`${theme.default_bg} ${theme.input_border} w-full h-10`),
+  viewInput: tw(`${theme.default_bg} ${theme.input_border} w-full`, {
+    minHeight: 38,
+  }),
   inputText: tw(`${theme.default_text} flex-1 mx-3`),
   viewDisabled: tw(theme.disabled_bg),
 })

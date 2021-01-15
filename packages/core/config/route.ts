@@ -1,5 +1,8 @@
+import { random } from "../util"
+
 interface Route {
   name: string
+  key?: string
   title: string
   view: string | boolean
   child: string | boolean
@@ -10,6 +13,7 @@ const getSetting: (visible: boolean) => Route[] = (visible) => {
   return [
     {
       name: "SettingAccess",
+      key: `route_${random()}`,
       title: "Access Management",
       view: "access",
       child: "access/:id",

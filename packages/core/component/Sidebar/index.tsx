@@ -3,12 +3,10 @@ import { StyleSheet, View, Text, Image, ScrollView } from "react-native"
 import { SafeAreaView } from "react-native-safe-area-context"
 import { Accordion, AccordionItem, Link, Gradient } from "../"
 import { getMenu } from "../../config/menu"
-import { random } from "../../util"
 import { useApp } from "../../state"
 import { tw } from "@free/tailwind"
 import { configApp } from "@free/env"
 import logo from "../../img/logo.png"
-import { DrawerContent } from "@react-navigation/drawer"
 
 const colors = ["bg-gray-200", "bg-gray-200", "bg-gray-200", "bg-gray-300"]
 
@@ -41,34 +39,29 @@ const Content: React.FC<JSONObject> = (props) => {
   return (
     <ScrollView {...props} scrollEnabled={true} stickyHeaderIndices={[0]}>
       <Title navigation={props.navigation} />
-      {allowedMenu.map((menu) => {
-        const active = menu.children
-          ? menu.children.filter((sub: any) => sub.component === activeName)
+      {allowedMenu.map(({ key, label, icon, children }, i: number) => {
+        const active = children
+          ? children.filter((sub: any) => sub.component === activeName)
               .length !== 0
           : false
         return (
-          <Accordion
-            active={active}
-            key={`menu_${random()}`}
-            label={menu.label}
-            icon={menu.icon}
-          >
-            {menu.children &&
-              menu.children
-                .filter((sub: any) => sub.visible)
-                .map((sub: any) => {
-                  return (
-                    <AccordionItem
-                      key={"sidebar_" + random()}
-                      active={sub.component === activeName}
-                      navigation={props.navigation}
-                      component={sub.component}
-                      icon={sub.icon}
-                    >
-                      {sub.label}
-                    </AccordionItem>
-                  )
-                })}
+          <Accordion {...{ key, label, icon }} active={active}>
+            {children &&
+              children
+                .filter(({ visible }: JSONObject) => visible)
+                .map(
+                  ({ key, component, icon, label }: JSONObject, j: number) => {
+                    return (
+                      <AccordionItem
+                        {...{ key, component, icon }}
+                        active={component === activeName}
+                        navigation={props.navigation}
+                      >
+                        {label}
+                      </AccordionItem>
+                    )
+                  }
+                )}
           </Accordion>
         )
       })}

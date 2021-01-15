@@ -10,6 +10,7 @@ import { Platform } from "react-native"
 import { asyncForEach } from "../../util"
 import { registerForteApp } from "../../util"
 import { useApp } from "../../state"
+import { random } from "../../util"
 import * as req from "../../request"
 
 /*
@@ -92,7 +93,7 @@ export const useForm = (name: string) => {
     } catch (err) {
       handleError(err)
     } finally {
-      setState({ isLoading: true, isEditable: app.can("update", name) })
+      setState({ isLoading: false, isEditable: app.can("update", name) })
     }
   }, [id])
 
@@ -165,5 +166,6 @@ export const useForm = (name: string) => {
     setState,
     setData,
     id,
+    random,
   }
 }

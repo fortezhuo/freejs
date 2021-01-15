@@ -51,7 +51,7 @@ export const Display: React.FC<Display> = React.memo(
 
 const s = StyleSheet.create({
   viewDisplay: tw("flex-1 flex-row items-center"),
-  viewMulti: tw("mt-1 ml-1 mb-1"),
+  viewMulti: { marginLeft: 1, marginVertical: 2 },
   viewValue: tw("mx-3 flex-1 flex-row flex-wrap"),
   viewClear: tw("mx-3"),
   textSingle: tw(`flex-grow ${theme.default_text}`),

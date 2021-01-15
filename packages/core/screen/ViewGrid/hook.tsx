@@ -7,6 +7,7 @@ import { CellText, CellLink, CellPressable } from "../../component/Table/Cell"
 import { download } from "./helper"
 import { formatDate, formatDateTime, formatString } from "../../util"
 import { Modalize } from "react-native-modalize"
+import { random } from "../../util"
 
 import { TableCheckbox } from "./TableCheckbox"
 import {
@@ -102,6 +103,7 @@ export const useActions = (refBottomSheet: any) => {
     if (!config?.name) return []
 
     const NEW = {
+      key: `action_${random()}`,
       icon: "file",
       type: "primary_2_bg",
       children: "New",
@@ -112,6 +114,7 @@ export const useActions = (refBottomSheet: any) => {
     }
 
     const DELETE = {
+      key: `action_${random()}`,
       icon: "trash-2",
       type: "danger_bg",
       children: "Delete",
@@ -142,6 +145,7 @@ export const useActions = (refBottomSheet: any) => {
     }
 
     const RESTORE = {
+      key: `action_${random()}`,
       icon: "rotate-ccw",
       type: "primary_2_bg",
       children: "Restore",
@@ -172,6 +176,7 @@ export const useActions = (refBottomSheet: any) => {
       },
     }
     const SEARCH = {
+      key: `action_${random()}`,
       icon: "search",
       type: "primary_2_bg",
       children: "Search",

@@ -3,7 +3,9 @@ import { useForm } from "../../state/hook"
 import * as config from "./config"
 
 export const useDocument = () => {
-  const { refFunction, req, stateProps, ...document } = useForm("access")
+  const { refFunction, req, stateProps, random, ...document } = useForm(
+    "access"
+  )
 
   React.useEffect(() => {
     refFunction.current.onLoad = async function () {
@@ -44,6 +46,7 @@ export const useDocument = () => {
     return [
       {
         icon: "save",
+        key: `action_${random()}`,
         type: "primary_1_bg",
         children: "Save",
         onPress: document.handleSubmit(async (data) => {

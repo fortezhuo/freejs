@@ -63,10 +63,10 @@ export const DrawerScreen: React.FC<DrawerScreen> = ({
         }}
       >
         <Drawer.Screen name="Index" component={screens.PageHome} />
-        {routes.view.map((route: any) => {
+        {routes.view.map((route: JSONObject) => {
           return (
             <Drawer.Screen
-              key={"drawer_" + random()}
+              key={route.key}
               options={{ title: route.title }}
               name={route.name}
               component={screens[route.component]}

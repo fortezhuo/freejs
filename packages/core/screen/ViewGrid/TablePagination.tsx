@@ -73,7 +73,7 @@ export const TablePagination: React.FC = React.memo(() => {
       <View style={s.viewPageNumbers}>
         {pagination(page, max).map((i: any) => (
           <TouchableOpacity
-            key={"page_" + random()}
+            key={`page_${i}`}
             disabled={i === "..." || i == page}
             onPress={() => setPage(i)}
           >
