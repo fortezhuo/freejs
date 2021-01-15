@@ -197,7 +197,6 @@ export function useSelect({
     return {
       ...webProps,
       editable: canSearch,
-      onBlur: onHide,
       onChangeText: canSearch ? (text: string) => setSearch(text) : undefined,
       disabled,
       ref,
@@ -206,7 +205,14 @@ export function useSelect({
 
   return [
     snapshot,
-    { onShow, onHide, onSelect, onDeselect, onClear, searchProps },
+    {
+      onShow,
+      onHide,
+      onSelect,
+      onDeselect,
+      onClear,
+      searchProps,
+    } as JSONObject,
     setSelect,
   ]
 }

@@ -2,6 +2,14 @@ import React from "react"
 import loadable from "@loadable/component"
 import Loader from "../component/Loader"
 
+export const FormRequest = loadable(
+  () => import("@free/core/screen/FormRequest"),
+  {
+    ssr: true,
+    fallback: <Loader />,
+  }
+)
+
 export const PageHome = loadable(() => import("@free/core/screen/PageHome"), {
   ssr: true,
   fallback: <Loader />,

@@ -1,8 +1,8 @@
-import { Joi, createSchema } from "./schema"
+import { createSchema } from "./schema"
 
 export const user = createSchema({
-  username: Joi.string().required(),
-  fullname: Joi.string().required(),
-  email: Joi.string().email().required(),
-  roles: Joi.array().required(),
+  username: { type: "string", empty: false },
+  fullname: { type: "string", empty: false },
+  email: { type: "email", empty: false },
+  roles: { type: "array", empty: false },
 })

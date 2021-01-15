@@ -1,8 +1,8 @@
-import { Joi, createSchema } from "./schema"
+import { createSchema } from "./schema"
 
 export const access = createSchema({
-  role: Joi.string().required(),
-  inherit: Joi.array(),
-  target: Joi.array().required(),
-  list: Joi.array(),
+  role: { type: "string", empty: false },
+  inherit: { type: "array", empty: true },
+  target: { type: "array", empty: false },
+  list: { type: "array", empty: false },
 })

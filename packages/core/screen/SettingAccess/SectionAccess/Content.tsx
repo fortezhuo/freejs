@@ -18,13 +18,13 @@ export const Content: React.FC<{
   return (
     <>
       {fields.map((field: JSONObject, i: number) => (
-        <ACL key={field.id} {...{ document, field, stateProps, i }} />
+        <Access key={field.id} {...{ document, field, stateProps, i }} />
       ))}
     </>
   )
 })
 
-export const ACL: React.FC<{
+export const Access: React.FC<{
   document: JSONObject
   field: JSONObject
   stateProps: JSONObject

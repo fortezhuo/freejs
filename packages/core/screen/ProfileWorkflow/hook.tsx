@@ -2,7 +2,7 @@ import React from "react"
 import { useForm } from "../../state/hook"
 
 export const useDocument = () => {
-  const { refFunction, ...document } = useForm("workflow")
+  const { refFunction, stateProps, ...document } = useForm("workflow")
 
   React.useEffect(() => {
     refFunction.current.onLoad = async function () {
@@ -30,14 +30,15 @@ export const useDocument = () => {
         icon: "save",
         type: "primary_1_bg",
         children: "Save",
+        visible: stateProps.isEditable,
         onPress: document.handleSubmit(async (data) => {
           if (await document.save(data)) {
             document.close()
           }
         }),
       },
-    ]
-  }, [])
+    ].filter((opt) => opt.visible)
+  }, [stateProps.isEditable])
 
-  return { ...document, actions }
+  return { ...document, stateProps, actions }
 }

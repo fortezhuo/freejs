@@ -69,14 +69,14 @@ export const Footer: React.FC<{
         }
       })
 
-      view.setData({ search: build })
+      view.setData({ search: build, page: 1 })
       refBottomSheet.current.close()
     },
     [config?.name]
   )
 
   const onClearSearch = React.useCallback(() => {
-    view.setData({ search: undefined })
+    view.setData({ search: undefined, page: 1 })
     refBottomSheet.current.close()
   }, [])
 

@@ -1,11 +1,11 @@
-import { Joi, createSchema } from "./schema"
+import { createSchema } from "./schema"
 
 export const workflow = createSchema({
-  parameter: Joi.string().required(),
-  status: Joi.string().required(),
-  completedStatus: Joi.string().required(),
-  reviseResetChild: Joi.string().required(),
-  submitterField: Joi.string().required(),
-  maxApprover: Joi.number().required(),
-  workflow: Joi.array(),
+  parameter: { type: "string", empty: false },
+  status: { type: "string", empty: false },
+  completedStatus: { type: "string", empty: false },
+  reviseResetChild: { type: "string", empty: false },
+  submitterField: { type: "string", empty: false },
+  maxApprover: { type: "number" },
+  workflow: { type: "array", empty: false },
 })

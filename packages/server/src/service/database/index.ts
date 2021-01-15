@@ -8,7 +8,7 @@ import { restore } from "./restore"
 import { save } from "./save"
 import { Exception } from "../../util/exception"
 import * as schema from "../../schema"
-import { normalize } from "../../schema/schema"
+import { normalize, validate } from "../../schema/schema"
 
 export class DatabaseService extends BaseService {
   public schema: any
@@ -86,15 +86,15 @@ export class DatabaseService extends BaseService {
     }
   }
   onValidation(body: any) {
-    const { error } = this.schema.validate(body, {
-      abortEarly: false,
-    })
-    if (error)
+    const error = validate(body, this.schema)
+
+    if (typeof error !== "boolean") {
       throw new Exception(
         400,
         `Validation Error for ${this.name.toUpperCase()}`,
         normalize(error)
       )
+    }
 
     return true
   }

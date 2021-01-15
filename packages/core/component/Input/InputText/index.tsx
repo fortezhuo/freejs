@@ -89,7 +89,7 @@ export const InputText: React.FC<InputText> = ({
           !props.isUpdating && !props.disabled && isEditable && editable
         }
       />
-      {invalid && <DisplayError error={document.errors[name]} />}
+      {invalid && <DisplayError name={name} error={document.errors} />}
     </>
   )
 }
