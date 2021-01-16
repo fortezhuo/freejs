@@ -46,7 +46,7 @@ const s = StyleSheet.create({
   viewHeader: tw(`h-12 shadow-md`),
   viewRow: tw(`flex-row items-center`),
   viewCell: tw(`p-2 w-40 flex-grow flex-row`),
-  rowDark: { backgroundColor: "rgba(0,0,0,0.08)" },
+  rowDark: tw("bg-gray-100"),
   rowMobile: tw("flex-col p-2 items-start"),
   cellFilter: tw("p-0 pr-1"),
   cellDelete: tw("flex-1"),

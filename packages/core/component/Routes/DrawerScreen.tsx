@@ -8,6 +8,7 @@ import { tw } from "@free/tailwind"
 import { random } from "../../util"
 import { theme } from "../../config/theme"
 import { MenuUser } from "./MenuUser"
+import { ScrollView } from "react-native-gesture-handler"
 const colors = [theme.primary_1_bg, theme.primary_2_bg]
 
 const Drawer = createDrawerNavigator()

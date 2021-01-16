@@ -26,17 +26,9 @@ interface Wrapper {
   children: React.ReactNode
 }
 
-const Wrapper: React.FC<Wrapper> = ({
-  scroll = true,
-  testID = undefined,
-  children,
-}) => {
+const Wrapper: React.FC<Wrapper> = ({ scroll = true, children }) => {
   if (!scroll) return <>{children}</>
-  return (
-    <KeyboardAwareScrollView testID={testID}>
-      {children}
-    </KeyboardAwareScrollView>
-  )
+  return <KeyboardAwareScrollView>{children}</KeyboardAwareScrollView>
 }
 
 interface GradientWrapper {

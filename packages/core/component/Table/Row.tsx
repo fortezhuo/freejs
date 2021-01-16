@@ -30,7 +30,7 @@ export const Header: React.FC<Row> = ({ children, style }) => {
 const s = StyleSheet.create({
   viewHeader: tw(`h-12 shadow-md`),
   viewRow: tw(`flex-row items-center`),
-  rowDark: { backgroundColor: "rgba(0,0,0,0.08)" },
+  rowDark: tw("bg-gray-100"),
   textCellSmall: tw(`${theme.default_text} text-sm`),
   cellDelete: tw("flex-1"),
 })

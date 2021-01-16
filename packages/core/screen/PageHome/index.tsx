@@ -1,11 +1,85 @@
 import React from "react"
+import { ScrollView, View } from "react-native"
+import { Text, Layout, Section, KeyboardAwareScrollView } from "../../component"
 
-import { Text, Layout } from "../../component"
-
-const PageHome: React.FC = () => {
+const PageHome: React.FC<{ navigation: any }> = ({ navigation }) => {
   return (
-    <Layout transparent>
-      <Text>INDEX</Text>
+    <Layout transparent scroll={false}>
+      <Section label="Information">
+        <Text>Index</Text>
+        <Text>Index</Text>
+        <Text>Index</Text>
+        <Text>Index</Text>
+        <Text>Index</Text>
+        <Text>Index</Text>
+        <Text>Index</Text>
+      </Section>
+      <Section label="Information">
+        <Text>Index</Text>
+        <Text>Index</Text>
+        <Text>Index</Text>
+        <Text>Index</Text>
+        <Text>Index</Text>
+        <Text>Index</Text>
+        <Text>Index</Text>
+        <Text>Index</Text>
+        <Text>Index</Text>
+        <Text>Index</Text>
+        <Text>Index</Text>
+        <Text>Index</Text>
+        <Text>Index</Text>
+        <Text>Index</Text>
+        <Text>Index</Text>
+        <Text>Index</Text>
+        <Text>Index</Text>
+        <Text>Index</Text>
+        <Text>Index</Text>
+        <Text>Index</Text>
+      </Section>
+      <Section label="Information">
+        <Text>Index</Text>
+        <Text>Index</Text>
+        <Text>Index</Text>
+        <Text>Index</Text>
+        <Text>Index</Text>
+        <Text>Index</Text>
+        <Text>Index</Text>
+        <Text>Index</Text>
+        <Text>Index</Text>
+        <Text>Index</Text>
+        <Text>Index</Text>
+        <Text>Index</Text>
+        <Text>Index</Text>
+        <Text>Index</Text>
+        <Text>Index</Text>
+        <Text>Index</Text>
+        <Text>Index</Text>
+        <Text>Index</Text>
+        <Text>Index</Text>
+        <Text>Index</Text>
+        <Text>Index</Text>
+        <Text>Index</Text>
+        <Text>Index</Text>
+        <Text>Index</Text>
+      </Section>
+      <Section label="Information">
+        <Text>Index</Text>
+        <Text>Index</Text>
+        <Text>Index</Text>
+        <Text>Index</Text>
+        <Text>Index</Text>
+        <Text>Index</Text>
+        <Text>Index</Text>
+        <Text>Index</Text>
+        <Text>Index</Text>
+        <Text>Index</Text>
+        <Text>Index</Text>
+        <Text>Index</Text>
+        <Text>Index</Text>
+        <Text>Index</Text>
+        <Text>Index</Text>
+        <Text>Index</Text>
+      </Section>
     </Layout>
   )
 }
