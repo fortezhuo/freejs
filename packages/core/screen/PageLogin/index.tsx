@@ -29,7 +29,7 @@ const LoginButton: React.FC<LoginButton> = ({ isUpdating, onPress }) => {
 const PageLogin: React.FC = () => {
   const { stateProps, temp, onSubmit, error, ...document } = useHook()
   return (
-    <LayoutFull transparent>
+    <LayoutFull transparent scroll>
       <View style={s.pageLogin} testID="PageLogin">
         <Col sm={11} md={9} lg={4} xl={4} style={s.boxLogin}>
           <Avatar source={logo} style={s.iconLogo} />

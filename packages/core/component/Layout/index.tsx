@@ -1,23 +1,22 @@
 import React from "react"
-import { View, StyleSheet, TextInput } from "react-native"
+import { View, StyleSheet, Text } from "react-native"
 import { theme } from "../../config/theme"
 import { Gradient, KeyboardAwareScrollView } from "../"
 import { tw } from "@free/tailwind"
 import { useController } from "react-hook-form"
 
-const HiddenInput: React.FC<{ name: string; control: any }> = ({
+const HiddenField: React.FC<{ name: string; control: any }> = ({
   name,
   control,
 }) => {
   const {
-    field: { ref, onChange, value },
+    field: { value },
   } = useController({
     name,
     control,
     defaultValue: ["*"],
   })
-
-  return <TextInput onChangeText={onChange} value={value} />
+  return <Text>{JSON.stringify(value)}</Text>
 }
 
 interface Wrapper {
@@ -107,8 +106,8 @@ export const Layout: React.FC<Layout> = ({
             <>
               <View style={{ height: 150 }} />
               <View style={s.viewHidden}>
-                <HiddenInput name="_docAuthors" control={document.control} />
-                <HiddenInput name="_docReaders" control={document.control} />
+                <HiddenField name="_docAuthors" control={document.control} />
+                <HiddenField name="_docReaders" control={document.control} />
               </View>
             </>
           )}

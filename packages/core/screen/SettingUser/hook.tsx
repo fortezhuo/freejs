@@ -24,6 +24,11 @@ export const useDocument = () => {
           })),
         })
       }
+      if (document.id === "new") {
+        await document.setData({
+          _docAuthors: ["Admin"],
+        })
+      }
     }
   }, [])
 

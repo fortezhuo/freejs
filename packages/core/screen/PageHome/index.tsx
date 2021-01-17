@@ -1,6 +1,5 @@
 import React from "react"
-import { ScrollView, View } from "react-native"
-import { Text, Layout, Section, KeyboardAwareScrollView } from "../../component"
+import { Text, Layout, Section } from "../../component"
 
 const PageHome: React.FC<{ navigation: any }> = ({ navigation }) => {
   return (

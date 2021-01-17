@@ -17,7 +17,7 @@ export const KeyboardAwareScrollView: React.FC = ({ children, ...rest }) => {
 
   if (isMobile) {
     const keyboardWillShow = React.useCallback((event) => {
-      const height = event.endCoordinates.height
+      const height = event.endCoordinates.height + 250
       if (keyboardHeight === height) return
       setKeyboardHeight(height)
     }, [])

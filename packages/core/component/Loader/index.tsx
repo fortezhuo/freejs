@@ -1,6 +1,5 @@
 import React from "react"
 import { ActivityIndicator, View, StyleSheet } from "react-native"
-import { theme } from "../../config/theme"
 import { tw, color } from "@free/tailwind"
 
 export const Loader: React.FC<{ dark?: boolean }> = ({ dark = false }) => {
@@ -8,7 +7,7 @@ export const Loader: React.FC<{ dark?: boolean }> = ({ dark = false }) => {
     <View style={s.viewLoader}>
       <ActivityIndicator
         size="large"
-        color={dark ? color(theme.disabled_bg) : "white"}
+        color={dark ? color("bg-gray-500") : "white"}
       />
     </View>
   )
