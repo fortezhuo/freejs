@@ -14,6 +14,7 @@ export const useAppLayout = () => {
       isMobile: screen !== "xl" && screen !== "lg",
       width: width - insets.left - insets.right,
       height: height - insets.top - insets.bottom,
+      keyboardHeight: 0,
       screen,
       insets,
     })

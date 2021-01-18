@@ -3,12 +3,14 @@ import {
   useSafeAreaFrame,
   useSafeAreaInsets,
 } from "react-native-safe-area-context"
+import { Keyboard } from "react-native"
 import { getScreenSize } from "../../util"
 import { useApp } from "../../state"
 
 export const useAppLayout = () => {
   const insets = useSafeAreaInsets()
   const app = useApp()
+  const refKeyboard = React.useRef(0)
   const { width, height } = useSafeAreaFrame()
 
   React.useEffect(() => {
@@ -21,6 +23,20 @@ export const useAppLayout = () => {
       screen,
     })
   }, [width, height])
+
+  const keyboardWillShow = React.useCallback((event) => {
+    const keyboardHeight = event.endCoordinates.height
+    if (keyboardHeight === refKeyboard.current) return
+    refKeyboard.current = keyboardHeight
+    app.setTemp({ keyboardHeight: keyboardHeight + 12 })
+  }, [])
+
+  React.useEffect(() => {
+    Keyboard.addListener("keyboardWillShow", keyboardWillShow)
+    return () => {
+      Keyboard.removeListener("keyboardWillShow", keyboardWillShow)
+    }
+  }, [])
 
   return app
 }

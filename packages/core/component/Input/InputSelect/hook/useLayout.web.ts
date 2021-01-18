@@ -37,19 +37,36 @@ export const useLayout = (refLayout: any, focus: boolean, search: boolean) => {
           anchorWidth: number,
           anchorHeight: number
         ) => {
-          const { keyboardHeight } = app.temp
           const { y = 0 } = refOffset?.current || {}
+          const overflowTop = top - 120
+          const overflowBottom = app.temp.height - top - anchorHeight - 185
+
+          if (overflowTop < 0) {
+            refScroll.current.scrollTo({
+              x: 0,
+              y: y + overflowTop,
+            })
+          }
+
+          if (overflowBottom < 0) {
+            refScroll.current.scrollTo({
+              x: 0,
+              y: y + Math.abs(overflowBottom),
+            })
+          }
+
+          top =
+            overflowTop < 0
+              ? 120
+              : overflowBottom < 0
+              ? top + overflowBottom
+              : top
 
           setMeasure({
             left,
-            top: keyboardHeight - anchorHeight,
+            top,
             anchorHeight,
             anchorWidth,
-          })
-          refScroll.current.scrollTo({
-            x: 0,
-            y: top - keyboardHeight + anchorHeight + y,
-            animated: 1,
           })
         }
       )
