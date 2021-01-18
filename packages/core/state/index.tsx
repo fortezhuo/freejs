@@ -7,7 +7,9 @@ import _isEmpty from "lodash/isEmpty"
 export { useState, createContext } from "./hook"
 
 const useHook = () => {
+  const refScroll: any = React.useRef(null)
   const refAlert: any = React.useRef(null)
+  const refOffset: any = React.useRef(null)
   const refACL = React.useRef<RBAC>(new RBAC())
   const [data, setData] = useState({})
   const [temp, setTemp] = useState({})
@@ -103,6 +105,8 @@ const useHook = () => {
     login,
     logout,
     refAlert,
+    refScroll,
+    refOffset,
   }
 }
 

@@ -4,7 +4,7 @@ import { useApp } from "../../../../state"
 const SCREEN_INDENT = 2
 
 export const useLayout = (refLayout: any, focus: boolean, search: boolean) => {
-  const app = useApp()
+  const { refScroll, refOffset, ...app } = useApp()
   const [layout, setLayout] = React.useState<JSONObject>({
     width: 0,
     height: 0,
@@ -37,6 +37,31 @@ export const useLayout = (refLayout: any, focus: boolean, search: boolean) => {
           anchorWidth: number,
           anchorHeight: number
         ) => {
+          const { y = 0 } = refOffset.current
+          const overflowTop = top - 120
+          const overflowBottom = app.temp.height - top - anchorHeight - 185
+
+          if (overflowTop < 0) {
+            refScroll.current.scrollTo({
+              x: 0,
+              y: y + overflowTop,
+            })
+          }
+
+          if (overflowBottom < 0) {
+            refScroll.current.scrollTo({
+              x: 0,
+              y: y + Math.abs(overflowBottom),
+            })
+          }
+
+          top =
+            overflowTop < 0
+              ? 120
+              : overflowBottom < 0
+              ? top + overflowBottom
+              : top
+
           setMeasure({
             left,
             top,
