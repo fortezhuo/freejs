@@ -62,7 +62,7 @@
   "dependencies": {
     "@free/logger": "1.0.0",
     "@free/rbac": "1.0.0",
-    "@types/lodash": "^4.14.165",
+    "@types/lodash": "^4.14.168",
     "axios": "^0.21.0",
     "dayjs": "^1.10.2",
     "fastest-validator": "^1.9.0",

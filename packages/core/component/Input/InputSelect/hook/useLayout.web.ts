@@ -45,6 +45,7 @@ export const useLayout = (refLayout: any, focus: boolean, search: boolean) => {
             refScroll.current.scrollTo({
               x: 0,
               y: y + overflowTop,
+              animated: 1,
             })
           }
 
@@ -52,6 +53,7 @@ export const useLayout = (refLayout: any, focus: boolean, search: boolean) => {
             refScroll.current.scrollTo({
               x: 0,
               y: y + Math.abs(overflowBottom),
+              animated: 1,
             })
           }
 
