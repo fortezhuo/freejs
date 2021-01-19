@@ -1,6 +1,6 @@
 const freeEnv = process.env.FREE_ENV || "default"
 
-const cookieAge = 1 * 3600000
+const cookieAge = 8 * 3600000
 
 const session = {
   local: {

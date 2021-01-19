@@ -1,9 +1,9 @@
 import React from "react"
 import { View, StyleSheet } from "react-native"
-import { useSelect } from "./hook/useSelect"
+import { useSelect } from "../hook/useSelect"
 import { Content } from "./Content"
 import { Modal } from "../../Modal"
-import { useLayout } from "./hook/useLayout"
+import { useSelectLayout } from "../hook/useSelectLayout"
 import { Anchor } from "./Anchor"
 import { DisplayError } from "../DisplayError"
 import { useController } from "react-hook-form"
@@ -77,7 +77,7 @@ export const InputSelectRaw: React.FC<InputSelectRaw> = React.memo(
       debounce,
     })
 
-    const [style, onLayout]: any = useLayout(ref, snapshot.focus, search)
+    const [style, onLayout]: any = useSelectLayout(ref, snapshot.focus, search)
 
     return (
       <View testID={"InputSelect"} ref={ref} collapsable={false}>

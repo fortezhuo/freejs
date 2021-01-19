@@ -1,10 +1,10 @@
 import React from "react"
 import { Platform, TextInput } from "react-native"
-import { getOptions } from "../lib/getOptions"
-import { getDisplayValue } from "../lib/getDisplayValue"
-import { useFetch } from "./useFetch"
-import { getValues } from "../lib/getValues"
-import { valueToArray } from "../lib/valueToArray"
+import { getOptions } from "../InputSelect/lib/getOptions"
+import { getDisplayValue } from "../InputSelect/lib/getDisplayValue"
+import { useSelectFetch } from "./useSelectFetch"
+import { getValues } from "../InputSelect/lib/getValues"
+import { valueToArray } from "../InputSelect/lib/valueToArray"
 
 const highlightReducer = function (
   highlighted: any,
@@ -64,7 +64,7 @@ export function useSelect({
     [value]
   )
 
-  const { options, isFetching } = useFetch(search, defaultOptions, {
+  const { options, isFetching } = useSelectFetch(search, defaultOptions, {
     keyLabel,
     loadOptions,
     filterOptions: canSearch ? filterOptions : null,

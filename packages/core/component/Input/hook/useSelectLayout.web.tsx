@@ -1,9 +1,13 @@
 import React from "react"
-import { useApp } from "../../../../state"
+import { useApp } from "../../../state"
 
 const SCREEN_INDENT = 2
 
-export const useLayout = (refLayout: any, focus: boolean, search: boolean) => {
+export const useSelectLayout = (
+  refLayout: any,
+  focus: boolean,
+  search: boolean
+) => {
   const { refScroll, refOffset, ...app } = useApp()
   const [layout, setLayout] = React.useState<JSONObject>({
     width: 0,

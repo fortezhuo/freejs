@@ -1,7 +1,7 @@
 import React from "react"
-import { debounce } from "../lib/debounce"
+import { debounce } from "../InputSelect/lib/debounce"
 
-export function useFetch(
+export function useSelectFetch(
   q: string,
   defaultOptions: JSONObject[],
   { debounceTime, filterOptions, loadOptions }: any
