@@ -1,6 +1,7 @@
 import React from "react"
 import WebDateTimePicker from "react-flatpickr"
 
+const Picker: any = WebDateTimePicker
 export const DateTimePicker: React.FC<JSONObject> = ({
   value,
   type = "date",
@@ -8,7 +9,7 @@ export const DateTimePicker: React.FC<JSONObject> = ({
   ...rest
 }) => {
   return (
-    <WebDateTimePicker
+    <Picker
       options={{
         time_24hr: true,
         enableTime: type == "time",

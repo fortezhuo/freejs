@@ -1,58 +1,68 @@
 import React from "react"
 import RNDateTimePicker from "@react-native-community/datetimepicker"
-import { theme } from "../../../config/theme"
-import { useMenuDropdown } from "../../Menu"
-import { Text, StyleSheet, View, TouchableWithoutFeedback } from "react-native"
+import { Modal } from "../../Modal"
+import { Anchor } from "./Anchor"
+import { StyleSheet, View } from "react-native"
+import { useDateTime } from "./hook/useDateTime"
+import { useLayout } from "../shared/useLayout"
 import { tw } from "@free/tailwind"
-import { formatDate, formatTime } from "../../../util"
 
 export const DateTimePicker: React.FC<JSONObject> = ({
-  value,
-  disabled,
+  isLoading = false,
+  isUpdating = false,
+  editable = true,
+  value = null,
   type = "date",
-  onChange,
+  disabled = false,
+  placeholder = "Select ...",
+  onChange = (...args: any) => {},
 }) => {
-  const [date, setDate] = React.useState(new Date())
-  const { MenuDropdown, show, hide } = useMenuDropdown()
-  const onChangeDate = (e: any, selectedDate: any) => {
-    const currentDate = selectedDate || date
-    setDate(currentDate)
-    onChange(currentDate)
-    hide()
-  }
-  const format = (value: any) => {
-    return type ? formatDate(value) : formatTime(type)
-  }
+  const ref = React.useRef<View>(null)
+  const [snapshot, { onHide, onShow }] = useDateTime({
+    value,
+    disabled,
+    onChange,
+  })
+
+  const [style, onLayout]: any = useLayout(ref, snapshot.focus, true)
 
   return (
-    <MenuDropdown
-      anchor={
-        <TouchableWithoutFeedback disabled={disabled} onPress={show}>
-          <View style={[s.viewAnchor, disabled ? s.inputDisabled : {}]}>
-            <Text style={s.textAnchor}>{value ? format(value) : ""}</Text>
-          </View>
-        </TouchableWithoutFeedback>
-      }
-    >
-      <View style={s.viewDatePicker}>
-        <RNDateTimePicker
-          testID="dateTimePicker"
-          value={date}
-          mode={type}
-          is24Hour={true}
-          display="default"
-          onChange={onChangeDate}
-        />
-      </View>
-    </MenuDropdown>
+    <View testID={"InputDateTime"} ref={ref} collapsable={false}>
+      <Anchor
+        {...{
+          display: snapshot.display,
+          disabled: disabled || isUpdating,
+          isLoading,
+          editable,
+          placeholder,
+          onShow,
+        }}
+      />
+      <Modal
+        animationType="none"
+        transparent
+        isVisible={snapshot.focus}
+        onBackdropPress={onHide}
+      >
+        <View
+          collapsable={false}
+          style={[s.viewChildren, style]}
+          onLayout={onLayout}
+        >
+          <RNDateTimePicker
+            testID="dateTimePicker"
+            value={value}
+            mode={type}
+            is24Hour={true}
+            display="default"
+            onChange={onChange}
+          />
+        </View>
+      </Modal>
+    </View>
   )
 }
 
 const s = StyleSheet.create({
-  viewDatePicker: tw(theme.default_bg),
-  viewAnchor: tw(
-    `${theme.input_border} ${theme.default_bg} p-2 w-full flex-row`
-  ),
-  textAnchor: tw(theme.default_text),
-  inputDisabled: tw(theme.disabled_bg),
+  viewChildren: tw("absolute bg-transparent"),
 })

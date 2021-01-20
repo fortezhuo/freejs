@@ -5,8 +5,8 @@ import { DisplayError } from "../DisplayError"
 import { tw } from "@free/tailwind"
 import { theme } from "../../../config/theme"
 import { useController } from "react-hook-form"
-import { useEyeToggle } from "../hook/useEyeToggle"
-import { useFocus } from "../hook/useFocus"
+import { useEyeToggle } from "./hook/useEyeToggle"
+import { useFocus } from "../shared/useFocus"
 
 interface InputTextRaw extends TextInputProps {
   isLoading?: boolean

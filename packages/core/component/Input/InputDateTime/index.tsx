@@ -49,7 +49,7 @@ export const InputDateTime: React.FC<FormInputRawDateTime> = ({
   ...props
 }) => {
   const {
-    field: { ref, onChange, value },
+    field: { onChange, value },
     meta: { invalid },
   } = useController({
     name,

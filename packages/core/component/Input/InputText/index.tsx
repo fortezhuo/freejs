@@ -5,7 +5,7 @@ import { tw } from "@free/tailwind"
 import { theme } from "../../../config/theme"
 import { DisplayError } from "../DisplayError"
 import { useController } from "react-hook-form"
-import { useFocus } from "../hook/useFocus"
+import { useFocus } from "../shared/useFocus"
 
 interface InputTextRaw extends TextInputProps {
   isLoading?: boolean

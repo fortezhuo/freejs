@@ -1,7 +1,7 @@
 import React from "react"
 import { TouchableOpacity, StyleSheet } from "react-native"
 import { tw } from "@free/tailwind"
-import { Icon } from "../../Icon"
+import { Icon } from "../../../Icon"
 
 const { color } = tw("text-gray-700")
 

@@ -5,7 +5,7 @@ import { theme } from "../../../../config/theme"
 import { isBlank } from "../lib/isBlank"
 import { Chips } from "./Chips"
 import { Clear } from "./Clear"
-import { Placeholder } from "./Placeholder"
+import { Placeholder } from "../../shared/Placeholder"
 
 interface Display {
   display: string[] | string | undefined
@@ -29,7 +29,7 @@ export const Display: React.FC<Display> = React.memo(
     return (
       <View style={[s.viewDisplay]}>
         {isBlank(display) ? (
-          <Placeholder multiple>{placeholder}</Placeholder>
+          <Placeholder>{placeholder}</Placeholder>
         ) : (
           <>
             <View style={[s.viewValue, multiple ? s.viewMulti : {}]}>
