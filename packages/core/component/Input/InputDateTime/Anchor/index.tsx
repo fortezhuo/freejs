@@ -5,6 +5,7 @@ import { tw } from "@free/tailwind"
 import { theme } from "../../../config/theme"
 import { Base } from "../../Base"
 import { Text } from "../../Text"
+import { Clear } from "./Clear"
 
 interface Anchor {
   display: string
@@ -13,14 +14,23 @@ interface Anchor {
   disabled: boolean
   placeholder: string
   onShow: VoidFunction
+  onClear?: VoidFunction
 }
 
 const Display: React.FC<any> = React.memo(({ children }) => {
-  return <Text>{children}</Text>
+  return <Text style={s.textDisplay}>{children}</Text>
 })
 
 export const Anchor: React.FC<Anchor> = React.memo(
-  ({ onShow, display, isLoading, editable, disabled, placeholder }) => {
+  ({
+    onShow,
+    onClear,
+    display,
+    isLoading,
+    editable,
+    disabled,
+    placeholder,
+  }) => {
     return (
       <TouchableOpacity disabled={disabled || !editable} onPress={onShow}>
         <Base
@@ -28,7 +38,12 @@ export const Anchor: React.FC<Anchor> = React.memo(
           style={[s.viewInput, disabled ? s.viewDisabled : {}]}
         >
           {display ? (
-            <Display>{display}</Display>
+            <>
+              <Display>{display}</Display>
+              {!disabled && onClear && (
+                <Clear style={s.viewClear} {...{ onPress: onClear }} />
+              )}
+            </>
           ) : (
             <Placeholder>{placeholder}</Placeholder>
           )}
@@ -39,8 +54,13 @@ export const Anchor: React.FC<Anchor> = React.memo(
 )
 
 const s = StyleSheet.create({
-  viewInput: tw(`${theme.default_bg} ${theme.input_border} w-full flex-row`, {
-    minHeight: 40,
-  }),
+  viewInput: tw(
+    `${theme.default_bg} ${theme.input_border} w-full flex-row items-center`,
+    {
+      minHeight: 40,
+    }
+  ),
+  textDisplay: tw("mx-3"),
+  viewClear: tw("mx-3"),
   viewDisabled: tw(theme.disabled_bg),
 })

@@ -3,7 +3,7 @@ import { View, StyleSheet } from "react-native"
 import { tw } from "@free/tailwind"
 import { Modalize } from "react-native-modalize"
 import { Table, Text } from "../../../component"
-import { formatDateTime, isDateString, isArray } from "../../../util"
+import { formatDateTime, isDateString } from "../../../util"
 import { useForm } from "react-hook-form"
 import { SimpleSearch, AdvanceSearch } from "./Search"
 import { useView } from "../hook"
@@ -12,7 +12,7 @@ import { Footer } from "./Footer"
 
 const format = (value: any) => {
   let _value = value
-  if (isArray(value))
+  if (Array.isArray(value))
     _value =
       typeof value[0] === "string" || typeof value[0] === "undefined"
         ? JSON.stringify(value)

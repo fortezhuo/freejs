@@ -1,8 +1,14 @@
 import { configApp } from "@free/env"
+import AsyncStorage from "@react-native-async-storage/async-storage"
 import dayjs from "dayjs"
-import _isArray from "lodash/isArray"
 
 const regexDate = /^\d{4}-\d{2}-\d{2}/
+const STATE_KEY = `${configApp.name.toUpperCase()}_STATE`
+
+export const asyncStorage = {
+  get: async () => await AsyncStorage.getItem(STATE_KEY),
+  set: (value: any) => AsyncStorage.setItem(STATE_KEY, value),
+}
 
 export const asyncForEach = async (array: any[], callback: any) => {
   for (let i = 0; i < array.length; i++) {
@@ -37,7 +43,6 @@ export const random = (n: number = 8) =>
   Math.random().toString(36).substring(2, n)
 
 // IS
-export const isArray = _isArray
 
 export const isDateString = (value: any) => regexDate.test(`${value}`)
 
@@ -55,7 +60,7 @@ export const formatTime = (value: any) => dayjs(value).format("HH:mm")
 export const formatDateTime = (value: any) =>
   dayjs(value).format("DD MMM YYYY HH:mm:ss")
 export const formatString = (value: any) => {
-  return isArray(value)
+  return Array.isArray(value)
     ? typeof value[0] === "string" || typeof value[0] === "undefined"
       ? JSON.stringify(value)
       : JSON.stringify(value, null, 2)

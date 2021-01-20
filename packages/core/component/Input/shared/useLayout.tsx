@@ -1,5 +1,6 @@
 import React from "react"
 import { useApp } from "../../../state"
+import { asyncStorage } from "../../../util"
 
 const SCREEN_INDENT = 2
 
@@ -37,20 +38,29 @@ export const useLayout = (refLayout: any, focus: boolean, search: boolean) => {
           anchorWidth: number,
           anchorHeight: number
         ) => {
-          const { keyboardHeight } = app.temp
-          const { y = 0 } = refOffset?.current || {}
+          ;(async () => {
+            let { keyboardHeight } = app.temp
+            if (!keyboardHeight) {
+              const state: any = await asyncStorage.get()
+              keyboardHeight = state?.keyboardHeight || 0
+            }
 
-          setMeasure({
-            left,
-            top: keyboardHeight - anchorHeight,
-            anchorHeight,
-            anchorWidth,
-          })
-          refScroll.current.scrollTo({
-            x: 0,
-            y: top - keyboardHeight + anchorHeight + y,
-            animated: 1,
-          })
+            const { y = 0 } = refOffset?.current || {}
+
+            setMeasure({
+              left,
+              top: refScroll.current ? keyboardHeight - anchorHeight : top,
+              anchorHeight,
+              anchorWidth,
+            })
+            if (refScroll.current) {
+              refScroll.current.scrollTo({
+                x: 0,
+                y: top - keyboardHeight + anchorHeight + y,
+                animated: 1,
+              })
+            }
+          })()
         }
       )
     }

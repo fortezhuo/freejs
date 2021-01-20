@@ -4,7 +4,7 @@ import {
   useSafeAreaInsets,
 } from "react-native-safe-area-context"
 import { Keyboard } from "react-native"
-import { getScreenSize } from "../../util"
+import { getScreenSize, asyncStorage } from "../../util"
 import { useApp } from "../../state"
 
 export const useAppLayout = () => {
@@ -24,11 +24,15 @@ export const useAppLayout = () => {
     })
   }, [width, height])
 
-  const keyboardWillShow = React.useCallback((event) => {
+  const keyboardWillShow = React.useCallback(async (event) => {
     const keyboardHeight = event.endCoordinates.height
     if (keyboardHeight === refKeyboard.current) return
+    const state = JSON.parse((await asyncStorage.get()) || "{}")
     refKeyboard.current = keyboardHeight
     app.setTemp({ keyboardHeight: keyboardHeight + 12 })
+    asyncStorage.set(
+      JSON.stringify({ ...state, keyboardHeight: keyboardHeight + 12 })
+    )
   }, [])
 
   React.useEffect(() => {

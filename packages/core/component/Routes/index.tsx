@@ -1,5 +1,4 @@
 import React from "react"
-import AsyncStorage from "@react-native-async-storage/async-storage"
 import { configApp } from "@free/env"
 import { Loader, Gradient, Icon } from ".."
 import {
@@ -18,20 +17,20 @@ import { createStackNavigator } from "@react-navigation/stack"
 import { DrawerScreen } from "./DrawerScreen"
 import { tw } from "@free/tailwind"
 import { useApp } from "../../state"
-import { random } from "../../util"
+import { random, asyncStorage } from "../../util"
 import { theme } from "../../config/theme"
 
 const colors = [theme.primary_1_bg, theme.primary_2_bg]
 
 const Stack = createStackNavigator()
-const NAVIGATION_PERSISTENCE_KEY = `${configApp.name.toUpperCase()}_STATE`
 
 const Routes: React.FC<{ screens: JSONObject }> = ({ screens }) => {
   const app = useApp()
-  const [isReady, setIsReady] = React.useState(Platform.OS === "web")
+  const [isReady, setIsReady] = React.useState(() => Platform.OS === "web")
   const [initialState, setInitialState] = React.useState()
   const isMobile = app.temp.isMobile
   const refNavigation = React.useRef<NavigationContainerRef>(null)
+  const refStorage = React.useRef<JSONObject | undefined>()
 
   const routes = React.useMemo(() => {
     let view: any = []
@@ -97,13 +96,11 @@ const Routes: React.FC<{ screens: JSONObject }> = ({ screens }) => {
       try {
         const initialUrl = await Linking.getInitialURL()
         if (Platform.OS !== "web" || initialUrl === null) {
-          const savedState = await AsyncStorage.getItem(
-            NAVIGATION_PERSISTENCE_KEY
-          )
-          const state = savedState ? JSON.parse(savedState) : undefined
+          const savedState = await asyncStorage.get()
+          refStorage.current = savedState ? JSON.parse(savedState) : undefined
 
-          if (state !== undefined) {
-            setInitialState(state)
+          if (refStorage.current) {
+            setInitialState(refStorage.current.navigation)
           }
         }
       } finally {
@@ -122,7 +119,9 @@ const Routes: React.FC<{ screens: JSONObject }> = ({ screens }) => {
       linking={linking}
       initialState={initialState}
       onStateChange={(state) =>
-        AsyncStorage.setItem(NAVIGATION_PERSISTENCE_KEY, JSON.stringify(state))
+        asyncStorage.set(
+          JSON.stringify({ ...(refStorage.current || {}), navigation: state })
+        )
       }
       documentTitle={{
         formatter: (options, route: any) => {
