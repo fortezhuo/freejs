@@ -69,12 +69,6 @@ export const useLayout = (refLayout: any, focus: boolean, search: boolean) => {
   const { width } = layout
   let { left, top, anchorHeight } = measure
 
-  if (left > app.temp.width - width - SCREEN_INDENT) {
-    left = app.temp.width - SCREEN_INDENT - width
-  } else if (left < SCREEN_INDENT) {
-    left = SCREEN_INDENT
-  }
-
   top += anchorHeight
 
   const style = {

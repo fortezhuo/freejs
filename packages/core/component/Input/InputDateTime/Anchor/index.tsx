@@ -1,10 +1,10 @@
 import React from "react"
 import { TouchableOpacity, StyleSheet } from "react-native"
-import { Placeholder } from "../shared/Placeholder"
+import { Placeholder } from "../../shared/Placeholder"
 import { tw } from "@free/tailwind"
-import { theme } from "../../../config/theme"
-import { Base } from "../../Base"
-import { Text } from "../../Text"
+import { theme } from "../../../../config/theme"
+import { Base } from "../../../Base"
+import { Text } from "../../../Text"
 import { Clear } from "./Clear"
 
 interface Anchor {
@@ -60,7 +60,7 @@ const s = StyleSheet.create({
       minHeight: 40,
     }
   ),
-  textDisplay: tw("mx-3"),
+  textDisplay: tw("mx-3 flex-grow"),
   viewClear: tw("mx-3"),
   viewDisabled: tw(theme.disabled_bg),
 })
