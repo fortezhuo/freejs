@@ -1,6 +1,6 @@
 import React from "react"
 import { TouchableOpacity } from "react-native"
-import { Link } from ".."
+import { Link } from "../Link"
 import { Wrapper } from "./Wrapper"
 import { SubTitle, Title } from "./Title"
 
@@ -50,7 +50,7 @@ export const AccordionItem: React.FC<AccordionItem> = ({
   component,
 }) => {
   return (
-    <Link navigation={navigation} testID={testID} name={component}>
+    <Link navigation={navigation} name={component}>
       <SubTitle {...{ icon, active }}>{children}</SubTitle>
     </Link>
   )

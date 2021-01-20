@@ -1,5 +1,5 @@
 import React from "react"
-import { Button } from ".."
+import { Button } from "../Button"
 import { View, StyleSheet } from "react-native"
 import { tw } from "@free/tailwind"
 

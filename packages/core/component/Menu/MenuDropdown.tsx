@@ -1,6 +1,6 @@
 import React from "react"
 import { View, StyleSheet } from "react-native"
-import { Modal } from "../"
+import { Modal } from "../Modal"
 import { tw } from "@free/tailwind"
 import { useApp } from "../../state"
 

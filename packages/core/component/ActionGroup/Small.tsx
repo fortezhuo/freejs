@@ -1,7 +1,7 @@
 import React from "react"
 import { StyleSheet, View } from "react-native"
 import { Modalize } from "react-native-modalize"
-import { Button } from ".."
+import { Button } from "../Button"
 import { useApp } from "../../state"
 import { tw } from "@free/tailwind"
 

@@ -1,5 +1,6 @@
 import React from "react"
-import { Icon, Link } from ".."
+import { Icon } from "../Icon"
+import { Link } from "../Link"
 import { View, StyleSheet, Text, TouchableOpacity } from "react-native"
 import { theme } from "../../config/theme"
 import { tw, color } from "@free/tailwind"
@@ -15,7 +16,7 @@ interface Cell {
 }
 
 interface CellLink extends Cell {
-  name?: string
+  name: string
   params?: any
 }
 

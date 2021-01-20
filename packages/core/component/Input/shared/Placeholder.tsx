@@ -1,5 +1,5 @@
 import React from "react"
-import { Text } from "../.."
+import { Text } from "../../Text"
 import { StyleSheet } from "react-native"
 import { tw } from "@free/tailwind"
 import { theme } from "../../../config/theme"

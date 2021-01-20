@@ -7,19 +7,18 @@ interface InputRawDateTime {
   disabled?: boolean
   type?: string
   placeholder?: string
-  value: any
-  onChange: any
+  editable?: boolean
+  value?: any
+  onChange?: any
   style?: JSONObject
 }
 
-interface FormInputRawDateTime {
+interface InputDateTime extends InputRawDateTime {
   document: any
   name: string
   rules?: any
-  style?: JSONObject
-  type?: string
-  disabled?: boolean
-  placeholder?: string
+  isEditable?: boolean
+  defaultValue?: any
 }
 
 export const InputRawDateTime: React.FC<InputRawDateTime> = ({
@@ -42,10 +41,13 @@ export const InputRawDateTime: React.FC<InputRawDateTime> = ({
   )
 }
 
-export const InputDateTime: React.FC<FormInputRawDateTime> = ({
+export const InputDateTime: React.FC<InputDateTime> = ({
   document,
   name,
   rules,
+  isEditable = true,
+  editable = true,
+  defaultValue = null,
   ...props
 }) => {
   const {
@@ -55,11 +57,12 @@ export const InputDateTime: React.FC<FormInputRawDateTime> = ({
     name,
     control: document.control,
     rules,
+    defaultValue,
   })
 
   return (
     <>
-      <InputRawDateTime onChange={onChange} value={value} {...props} />
+      <InputRawDateTime {...props} onChange={onChange} value={value} />
       {invalid && <DisplayError name={name} error={document.errors} />}
     </>
   )

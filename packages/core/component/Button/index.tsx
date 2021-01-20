@@ -1,5 +1,7 @@
 import React from "react"
-import { Icon, Text, Base } from "../"
+import { Icon } from "../Icon"
+import { Text } from "../Text"
+import { Base } from "../Base"
 import { StyleSheet, TouchableOpacity, View } from "react-native"
 import { theme } from "../../config/theme"
 import { tw, border, text, color } from "@free/tailwind"
@@ -57,11 +59,7 @@ export const Button: React.FC<Button> = (props) => {
 
   return (
     <TouchableOpacity disabled={disabled || isLoading} onPress={onPress}>
-      <Base
-        isLoading={isLoading}
-        style={[s.viewButton, bgColor, style]}
-        testID={testID}
-      >
+      <Base isLoading={isLoading} style={[s.viewButton, bgColor, style]}>
         {icon && (
           <View style={s.iconButton}>
             <Icon

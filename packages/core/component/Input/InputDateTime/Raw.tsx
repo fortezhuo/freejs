@@ -20,11 +20,14 @@ export const DateTimePicker: React.FC<JSONObject> = ({
   const ref = React.useRef<View>(null)
   const [snapshot, { onHide, onShow }] = useDateTime({
     value,
+    type,
     disabled,
     onChange,
   })
 
   const [style, onLayout]: any = useLayout(ref, snapshot.focus, true)
+
+  console.log(style)
 
   return (
     <View testID={"InputDateTime"} ref={ref} collapsable={false}>
@@ -48,16 +51,7 @@ export const DateTimePicker: React.FC<JSONObject> = ({
           collapsable={false}
           style={[s.viewChildren, style]}
           onLayout={onLayout}
-        >
-          <RNDateTimePicker
-            testID="dateTimePicker"
-            value={value}
-            mode={type}
-            is24Hour={true}
-            display="default"
-            onChange={onChange}
-          />
-        </View>
+        ></View>
       </Modal>
     </View>
   )
@@ -66,3 +60,14 @@ export const DateTimePicker: React.FC<JSONObject> = ({
 const s = StyleSheet.create({
   viewChildren: tw("absolute bg-transparent"),
 })
+
+/*
+<RNDateTimePicker
+            testID="dateTimePicker"
+            value={value || new Date()}
+            mode={type}
+            is24Hour={true}
+            display="default"
+            onChange={onChange}
+          />
+          */

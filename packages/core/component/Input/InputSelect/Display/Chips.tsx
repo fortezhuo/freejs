@@ -1,5 +1,5 @@
 import React from "react"
-import { Text } from "../../.."
+import { Text } from "../../../Text"
 import { StyleSheet, View } from "react-native"
 import { tw } from "@free/tailwind"
 import { Clear } from "./Clear"

@@ -1,5 +1,5 @@
 import React from "react"
-import { Icon } from "../../.."
+import { Icon } from "../../../Icon"
 import { TouchableOpacity } from "react-native"
 import { color } from "@free/tailwind"
 import { theme } from "../../../../config/theme"

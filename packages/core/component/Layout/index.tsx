@@ -1,7 +1,8 @@
 import React from "react"
 import { View, StyleSheet, Text } from "react-native"
 import { theme } from "../../config/theme"
-import { Gradient, KeyboardAwareScrollView } from "../"
+import { Gradient } from "../Gradient"
+import { KeyboardAwareScrollView } from "../KeyboardAwareScrollView"
 import { tw } from "@free/tailwind"
 import { useController } from "react-hook-form"
 

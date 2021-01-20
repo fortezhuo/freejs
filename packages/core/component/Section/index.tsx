@@ -1,7 +1,8 @@
 import React from "react"
 import { View, TouchableOpacity, StyleSheet } from "react-native"
 import { theme } from "../../config/theme"
-import { Icon, H5 } from ".."
+import { Icon } from "../Icon"
+import { H5 } from "../Text"
 import { tw, color } from "@free/tailwind"
 
 const defaultColor = color(theme.disabled_text)

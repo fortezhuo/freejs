@@ -7,8 +7,8 @@ import {
   TouchableOpacity,
 } from "react-native"
 import { Modalize } from "react-native-modalize"
-import { Text } from ".."
-import { getScreenSize, random } from "../../util"
+import { Text } from "../Text"
+import { getScreenSize } from "../../util"
 import { tw } from "@free/tailwind"
 import { theme } from "../../config/theme"
 

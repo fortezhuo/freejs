@@ -1,6 +1,7 @@
 import React from "react"
 import { View, StyleSheet } from "react-native"
-import { Modal, Col } from "../"
+import { Modal } from "../Modal"
+import { Col } from "../Grid"
 import { tw } from "@free/tailwind"
 
 const noop = () => {}

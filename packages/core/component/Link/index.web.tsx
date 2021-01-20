@@ -6,7 +6,7 @@ interface Link {
   name: string
   params?: JSONObject
   disabled?: boolean
-  navigation: any
+  navigation?: any
   children: React.ReactNode
 }
 

@@ -1,6 +1,6 @@
 import React from "react"
 import { StyleSheet, View, TouchableOpacity, Text } from "react-native"
-import { Icon } from "../"
+import { Icon } from "../Icon"
 import { tw } from "@free/tailwind"
 import { theme } from "../../config/theme"
 

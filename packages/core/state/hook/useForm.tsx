@@ -9,7 +9,7 @@ import {
 import { Platform } from "react-native"
 import { asyncForEach } from "../../util"
 import { registerForteApp } from "../../util"
-import { useApp } from "../../state"
+import { useApp } from "./useApp"
 import { random } from "../../util"
 import * as req from "../../request"
 
