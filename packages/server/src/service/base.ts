@@ -29,10 +29,8 @@ export class BaseService {
         context: {},
       }
     } else {
-      let { session, method } = req as {
-        [key: string]: any
-      }
-      method = method.toUpperCase()
+      const method = req.method.toUpperCase()
+      const auth = req.session.get("auth")
       const action =
         (method === "GET" || method === "POST") &&
         (req.raw.url || "").indexOf("find") >= 0
@@ -44,9 +42,9 @@ export class BaseService {
           : method === "DELETE"
           ? "delete"
           : "undefined"
-      const username = session?.auth?.username || "Anonymous"
-      const roles = session?.auth?.roles || []
-      const permission = session?.auth?.can(action, resource) || {
+      const username = auth?.username || "Anonymous"
+      const roles = auth?.roles || []
+      const permission = req.rbac.can(action, resource, auth?.access || {}) || {
         granted: false,
       }
 
@@ -82,7 +80,8 @@ export class BaseService {
     }
     if (this.instance) {
       const code = reply.statusCode
-      const fullname = req?.session?.auth?.fullname || "Anonymous"
+      const auth = req.session.get("auth")
+      const fullname = auth?.fullname || "Anonymous"
       const method = req?.method
       const url = req.raw.url
       const message = `${fullname} ${method} ${url} ${err.message}`

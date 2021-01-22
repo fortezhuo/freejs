@@ -21,5 +21,6 @@ declare module "@free/server" {
   interface Request extends FastifyRequest {
     database?: any
     mail?: any
+    rbac?: any
   }
 }

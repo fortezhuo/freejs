@@ -5,7 +5,7 @@ export const logout = function (this: BaseService) {
   return async (req: Request, reply: Reply) => {
     try {
       reply.statusCode = 200
-      req.session.auth = undefined
+      req.session.delete()
       reply.send({
         success: true,
       })

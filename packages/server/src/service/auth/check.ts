@@ -5,7 +5,7 @@ export const check = function (this: BaseService) {
   return async (req: Request, reply: Reply) => {
     try {
       reply.statusCode = 200
-      const data = req?.session?.auth
+      const data = req.session.get("auth")
       if (!data) throw new Exception(401, "Authentication Failed")
       reply.send({
         success: true,

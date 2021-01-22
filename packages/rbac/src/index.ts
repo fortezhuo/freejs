@@ -12,30 +12,29 @@ export class RBAC {
   loadRaw = (options: JSONObject) => {
     this.rawOptions = flatten(options)
   }
-  loadAccess = (access: JSONObject) => {
-    this.options = access.options
-    this.context = access.context
+  loadAccess = (listOption: JSONObject) => {
+    this.options = listOption.options
+    this.context = listOption.context
   }
-  register = (roles: string[], context: JSONObject) => {
-    this.options = this.rawOptions?.filter(
+  getAccess = (roles: string[], context: JSONObject) => {
+    const options = this.rawOptions?.filter(
       (opt: JSONObject) => roles.indexOf(opt.role) >= 0
     )
-    this.context = context
-  }
-  getAccess = () => {
-    return { options: this.options, context: this.context }
+
+    return { options, context }
   }
 
-  can = (action: string, target: string) => {
-    const access = (this.options || []).find(
-      (opt) =>
+  can = (action: string, target: string, listOption?: JSONObject) => {
+    const options = listOption?.options || this.options
+    const context = listOption?.context || this.context
+
+    const access = (options || []).find(
+      (opt: JSONObject) =>
         (opt.can.indexOf("all") >= 0 || opt.can.indexOf(action) >= 0) &&
         opt.on === target
     )
 
-    return access
-      ? { granted: true, access, context: this.context }
-      : { granted: false }
+    return access ? { granted: true, access, context } : { granted: false }
   }
 }
 

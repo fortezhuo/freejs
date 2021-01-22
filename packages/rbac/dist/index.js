@@ -11,24 +11,21 @@ class RBAC {
         this.loadRaw = (options) => {
             this.rawOptions = flatten(options);
         };
-        this.loadAccess = (access) => {
-            this.options = access.options;
-            this.context = access.context;
+        this.loadAccess = (listOption) => {
+            this.options = listOption.options;
+            this.context = listOption.context;
         };
-        this.register = (roles, context) => {
+        this.getAccess = (roles, context) => {
             var _a;
-            this.options = (_a = this.rawOptions) === null || _a === void 0 ? void 0 : _a.filter((opt) => roles.indexOf(opt.role) >= 0);
-            this.context = context;
+            const options = (_a = this.rawOptions) === null || _a === void 0 ? void 0 : _a.filter((opt) => roles.indexOf(opt.role) >= 0);
+            return { options, context };
         };
-        this.getAccess = () => {
-            return { options: this.options, context: this.context };
-        };
-        this.can = (action, target) => {
-            const access = (this.options || []).find((opt) => (opt.can.indexOf("all") >= 0 || opt.can.indexOf(action) >= 0) &&
+        this.can = (action, target, listOption) => {
+            const options = (listOption === null || listOption === void 0 ? void 0 : listOption.options) || this.options;
+            const context = (listOption === null || listOption === void 0 ? void 0 : listOption.context) || this.context;
+            const access = (options || []).find((opt) => (opt.can.indexOf("all") >= 0 || opt.can.indexOf(action) >= 0) &&
                 opt.on === target);
-            return access
-                ? { granted: true, access, context: this.context }
-                : { granted: false };
+            return access ? { granted: true, access, context } : { granted: false };
         };
         this.rawOptions = flatten(options);
     }

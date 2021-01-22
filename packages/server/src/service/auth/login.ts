@@ -3,9 +3,6 @@ import { configLDAP } from "@free/env"
 import { Exception } from "../../util/exception"
 import { Request, Reply } from "@free/server"
 import { BaseService } from "../base"
-import { RBAC } from "@free/rbac"
-
-const acl = new RBAC()
 
 export const login = function (this: BaseService) {
   return async (req: Request, reply: Reply) => {
@@ -13,17 +10,15 @@ export const login = function (this: BaseService) {
       reply.statusCode = 200
       const data = await authenticate(req)
       const list = await fetchAccess(req)
+
+      req.rbac.loadRaw(list)
+
       const context = (data?.roles || []).concat([data.username, "*"])
-
-      acl.loadRaw(list)
-      acl.register(data?.roles, { list: context })
-
-      const access = acl.getAccess()
-      req.session.auth = {
+      const access = req.rbac.getAccess(data?.roles, { list: context })
+      req.session.set("auth", {
         ...data,
         access,
-        can: acl.can,
-      }
+      })
       reply.send({
         success: true,
         result: { ...data, access },

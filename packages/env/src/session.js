@@ -6,17 +6,17 @@ const session = {
   local: {
     cookieDomain: "",
     cookieAge,
-    secret: "1I9gNIGjRjjeEFlvfBfX92ouON99ZTaOowUuBA32bhPOLAz4h1",
+    secret: "a8b4308001c95e96e4e919d8ac2eecdd0680dce1bf236d154b1c0959d9f3714e",
   },
   huahua: {
     cookieDomain: "",
     cookieAge,
-    secret: "1I9gNIGjRjjeEFlvfBfX92ouON99ZTaOowUuBA32bhPOLAz4h1",
+    secret: "a8b4308001c95e96e4e919d8ac2eecdd0680dce1bf236d154b1c0959d9f3714e",
   },
   default: {
     cookieDomain: "",
     cookieAge,
-    secret: "1I9gNIGjRjjeEFlvfBfX92ouON99ZTaOowUuBA32bhPOLAz4h1",
+    secret: "a8b4308001c95e96e4e919d8ac2eecdd0680dce1bf236d154b1c0959d9f3714e",
   },
 }
 

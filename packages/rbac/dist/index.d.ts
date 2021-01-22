@@ -5,16 +5,15 @@ export declare class RBAC {
     protected context: JSONObject | undefined;
     constructor(options?: JSONObject);
     loadRaw: (options: JSONObject) => void;
-    loadAccess: (access: JSONObject) => void;
-    register: (roles: string[], context: JSONObject) => void;
-    getAccess: () => {
-        options: JSONObject[] | undefined;
-        context: JSONObject | undefined;
+    loadAccess: (listOption: JSONObject) => void;
+    getAccess: (roles: string[], context: JSONObject) => {
+        options: any;
+        context: JSONObject;
     };
-    can: (action: string, target: string) => {
+    can: (action: string, target: string, listOption?: JSONObject | undefined) => {
         granted: boolean;
-        access: JSONObject;
-        context: JSONObject | undefined;
+        access: any;
+        context: any;
     } | {
         granted: boolean;
         access?: undefined;

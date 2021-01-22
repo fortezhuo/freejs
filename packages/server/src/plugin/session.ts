@@ -1,16 +1,14 @@
 import fp from "fastify-plugin"
-import fastifyCookie from "fastify-cookie"
-import fastifySession from "fastify-session"
+import fastifySession from "fastify-secure-session"
 import { configSession, configApp } from "@free/env"
-import { FastifyInstance, FastifyPlugin } from "fastify"
+import { FastifyInstance } from "fastify"
 
 export const session = fp(async (instance: FastifyInstance) => {
-  instance.register(fastifyCookie)
-  instance.register(fastifySession as FastifyPlugin<any>, {
+  instance.register(fastifySession as any, {
     cookieName: `${configApp.name.toLowerCase()}Id`,
-    saveUninitialized: false,
-    secret: configSession.secret,
+    key: Buffer.from(configSession.secret, "hex"),
     cookie: {
+      path: "/",
       secure: false,
       sameSite: true,
       maxAge: configSession.cookieAge,
