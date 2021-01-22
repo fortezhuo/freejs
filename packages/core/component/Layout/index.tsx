@@ -5,6 +5,7 @@ import { Gradient } from "../Gradient"
 import { KeyboardAwareScrollView } from "../KeyboardAwareScrollView"
 import { tw } from "@free/tailwind"
 import { useController } from "react-hook-form"
+import { useApp } from "../../state"
 
 const HiddenField: React.FC<{ name: string; control: any }> = ({
   name,
@@ -27,6 +28,14 @@ interface Wrapper {
 }
 
 const Wrapper: React.FC<Wrapper> = ({ scroll = true, children }) => {
+  const { refScroll } = useApp()
+
+  React.useEffect(() => {
+    if (scroll) {
+      refScroll.current.scrollTo({ x: 0, y: 1, animated: false })
+    }
+  }, [])
+
   if (!scroll) return <>{children}</>
   return <KeyboardAwareScrollView>{children}</KeyboardAwareScrollView>
 }
