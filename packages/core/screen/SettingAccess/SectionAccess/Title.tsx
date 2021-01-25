@@ -1,5 +1,5 @@
 import React from "react"
-import { TextInput } from "react-native"
+import { Text } from "react-native"
 import { useController } from "react-hook-form"
 import _startCase from "lodash/startCase"
 
@@ -17,10 +17,6 @@ export const Title: React.FC<{
   })
 
   return (
-    <TextInput
-      value={_startCase(value)}
-      editable={false}
-      style={{ fontSize: 18, marginVertical: 3 }}
-    />
+    <Text style={{ fontSize: 18, marginVertical: 3 }}>{_startCase(value)}</Text>
   )
 })

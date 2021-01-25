@@ -20,6 +20,16 @@ const mail = {
       pass: "password",
     },
   },
+  nyanyaw: {
+    host: "0.0.0.0",
+    port: 8587,
+    secure: false,
+    pool: false,
+    auth: {
+      user: "admin@localhost",
+      pass: "password",
+    },
+  },
   default: {
     host: "0.0.0.0",
     port: 8587,

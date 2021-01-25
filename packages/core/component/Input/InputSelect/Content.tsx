@@ -52,6 +52,7 @@ const s = StyleSheet.create({
     maxHeight: 185,
   }),
   inputText: tw(
-    `w-full ${theme.default_bg} p-2 px-3 ${theme.default_border} border-b`
+    `w-full ${theme.default_bg} p-2 px-3 ${theme.default_border} border-b`,
+    { height: 36 }
   ),
 })

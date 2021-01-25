@@ -8,6 +8,10 @@ const database = {
     url: "mongodb://0.0.0.0:27017",
     name: "FreeJS",
   },
+  nyanyaw: {
+    url: "mongodb://0.0.0.0:27017",
+    name: "FreeJS",
+  },
   default: {
     url: "mongodb://0.0.0.0:27017",
     name: "FreeJS",

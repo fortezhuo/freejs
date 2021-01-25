@@ -9,6 +9,10 @@ const server = {
     host: "0.0.0.0",
     port: 80,
   },
+  nyanyaw: {
+    host: "0.0.0.0",
+    port: 80,
+  },
   default: {
     host: "0.0.0.0",
     port: 80,

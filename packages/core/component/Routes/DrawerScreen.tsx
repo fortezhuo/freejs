@@ -1,14 +1,13 @@
 import React from "react"
 import { Icon, Sidebar, Gradient } from ".."
 import { DrawerActions } from "@react-navigation/native"
-import { StyleSheet, TouchableOpacity, View } from "react-native"
+import { StyleSheet, TouchableOpacity, View, Platform } from "react-native"
 import { createDrawerNavigator } from "@react-navigation/drawer"
 
 import { tw } from "@free/tailwind"
-import { random } from "../../util"
 import { theme } from "../../config/theme"
 import { MenuUser } from "./MenuUser"
-import { ScrollView } from "react-native-gesture-handler"
+
 const colors = [theme.primary_1_bg, theme.primary_2_bg]
 
 const Drawer = createDrawerNavigator()
@@ -36,6 +35,7 @@ export const DrawerScreen: React.FC<DrawerScreen> = ({
           headerStyle: {
             backgroundColor: "transparent",
             borderBottomColor: "transparent",
+            elevation: 0,
           },
           headerLeft: () => {
             return isMobile ? (
@@ -54,6 +54,8 @@ export const DrawerScreen: React.FC<DrawerScreen> = ({
           headerTintColor: "white",
           headerTitleStyle: {
             fontSize: 24,
+            marginTop: Platform.OS === "android" ? -8 : 0,
+            marginLeft: Platform.OS === "android" ? -20 : 0,
             fontWeight: "normal",
           },
           headerShown: true,

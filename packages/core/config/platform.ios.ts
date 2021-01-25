@@ -1,3 +1,3 @@
 export const platform = {
-  baseURL:"http://0.0.0.0"
+  baseURL:"http://192.168.43.6"
 }

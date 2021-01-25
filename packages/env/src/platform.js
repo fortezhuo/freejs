@@ -17,6 +17,14 @@ const platform = {
       baseURL: "http://192.168.8.102",
     },
   },
+  nyanyaw: {
+    ios: {
+      baseURL: "http://192.168.43.6",
+    },
+    android: {
+      baseURL: "http://192.168.43.6",
+    },
+  },
   default: {
     ios: {
       baseURL: "http://0.0.0.0",

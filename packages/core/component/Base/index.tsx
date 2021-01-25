@@ -91,7 +91,7 @@ const s = StyleSheet.create({
   viewBase: {
     minWidth: undefined,
     width: undefined,
-    backgroundColor: undefined,
+    backgroundColor,
   },
   viewClear: {
     paddingLeft: 0,

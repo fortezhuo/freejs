@@ -13,6 +13,11 @@ const session = {
     cookieAge,
     secret: "a8b4308001c95e96e4e919d8ac2eecdd0680dce1bf236d154b1c0959d9f3714e",
   },
+  nyanyaw: {
+    cookieDomain: "",
+    cookieAge,
+    secret: "a8b4308001c95e96e4e919d8ac2eecdd0680dce1bf236d154b1c0959d9f3714e",
+  },
   default: {
     cookieDomain: "",
     cookieAge,

@@ -92,7 +92,7 @@ export const InputPassword: React.FC<InputText> = ({
 const s: any = StyleSheet.create({
   viewInput: tw(
     `${theme.default_bg} ${theme.input_border} w-full flex-row items-center`,
-    { minHeight: 38 }
+    { minHeight: 38, height: 38 }
   ),
   viewDisabled: tw(theme.disabled_bg),
   inputPassword: tw(`${theme.default_text} flex-1 mx-3`),

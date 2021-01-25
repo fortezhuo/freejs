@@ -1,5 +1,5 @@
 import React from "react"
-import { View, StyleSheet, Text } from "react-native"
+import { View, StyleSheet, Text, Platform } from "react-native"
 import { theme } from "../../config/theme"
 import { Gradient } from "../Gradient"
 import { KeyboardAwareScrollView } from "../KeyboardAwareScrollView"
@@ -98,6 +98,9 @@ export const Layout: React.FC<Layout> = ({
   document,
   style,
 }) => {
+  const { temp } = useApp()
+  const isMobile = ["md", "sm"].indexOf(temp.screen) >= 0
+
   return (
     <LayoutFull transparent={transparent} scroll={false}>
       <View style={s.viewWrapper1}></View>
@@ -110,7 +113,10 @@ export const Layout: React.FC<Layout> = ({
         {stickyRight}
       </View>
       <Wrapper scroll={scroll}>
-        <View style={[s.viewChildren, style]} testID={testID}>
+        <View
+          style={[isMobile ? s.viewMobile : s.viewDesktop, style]}
+          testID={testID}
+        >
           {children}
           {document && (
             <>
@@ -136,6 +142,7 @@ const s = StyleSheet.create({
   viewWrapper21: tw("h-20 bg-transparent"),
   viewWrapper22: tw("flex-1 bg-gray-200"),
   viewHeader: tw("px-6 pb-3"),
-  viewChildren: tw("p-5 pt-0"),
+  viewDesktop: tw("p-5 pt-0"),
+  viewMobile: tw("p-2 pt-0"),
   viewHidden: tw("opacity-0 h-0"),
 })
