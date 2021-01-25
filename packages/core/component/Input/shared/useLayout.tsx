@@ -49,7 +49,10 @@ export const useLayout = (refLayout: any, focus: boolean, search: boolean) => {
 
             setMeasure({
               left,
-              top: refScroll.current ? keyboardHeight - anchorHeight : top,
+              top:
+                refScroll.current && keyboardHeight !== 0
+                  ? keyboardHeight - anchorHeight
+                  : top,
               anchorHeight,
               anchorWidth,
             })
