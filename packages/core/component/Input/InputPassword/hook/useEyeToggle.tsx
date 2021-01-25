@@ -11,7 +11,7 @@ export const useEyeToggle = () => {
 
   const Eye: React.FC = React.memo(() => (
     <TouchableOpacity style={s.eye} onPress={toggle}>
-      <Icon color={color} size={16} name={secure ? "eye" : "eye-off"} />
+      <Icon color={color} size={16} name={secure ? "eye" : "eye-slash"} />
     </TouchableOpacity>
   ))
 

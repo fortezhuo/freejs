@@ -45,7 +45,7 @@ export const DrawerScreen: React.FC<DrawerScreen> = ({
                 }
               >
                 <View style={s.headerLeft}>
-                  <Icon name="menu" />
+                  <Icon name="list" />
                 </View>
               </TouchableOpacity>
             ) : undefined
