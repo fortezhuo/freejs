@@ -25,7 +25,7 @@ export const getMenu: (app: any) => Menu[] = (app) => {
         {
           label: "Request",
           key: `sub_${random()}`,
-          icon: "feather",
+          icon: "pen",
           path: "/request/new",
           visible: true,
         },
@@ -34,7 +34,7 @@ export const getMenu: (app: any) => Menu[] = (app) => {
     {
       label: "View",
       key: `menu_${random()}`,
-      icon: "grid",
+      icon: "grid-3x3-gap",
       visible: true,
       children: [
         {
@@ -83,7 +83,7 @@ export const getMenu: (app: any) => Menu[] = (app) => {
     },
     {
       label: "Profile",
-      icon: "grid",
+      icon: "grid-3x3-gap",
       key: `menu_${random()}`,
       visible: canProfile,
       children: [
@@ -99,7 +99,7 @@ export const getMenu: (app: any) => Menu[] = (app) => {
   ].concat([
     {
       label: "Setting",
-      icon: "settings",
+      icon: "gear",
       key: `menu_${random()}`,
       visible: canSetting,
       children: [
@@ -113,7 +113,7 @@ export const getMenu: (app: any) => Menu[] = (app) => {
         {
           label: "Trash Management",
           key: `sub_${random()}`,
-          icon: "trash-2",
+          icon: "trash",
           component: "ViewSettingTrash",
           visible: true,
         },
@@ -127,7 +127,7 @@ export const getMenu: (app: any) => Menu[] = (app) => {
         {
           label: "User Management",
           key: `sub_${random()}`,
-          icon: "user",
+          icon: "person",
           component: "ViewSettingUser",
           visible: true,
         },

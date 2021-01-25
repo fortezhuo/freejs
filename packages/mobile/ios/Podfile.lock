@@ -68,6 +68,8 @@ PODS:
     - boost-for-react-native
     - DoubleConversion
     - glog
+  - FreeIcon (1.0.0):
+    - React
   - glog (0.3.5)
   - OpenSSL-Universal (1.0.2.19):
     - OpenSSL-Universal/Static (= 1.0.2.19)
@@ -310,8 +312,6 @@ PODS:
     - React-Core
   - RNScreens (2.16.1):
     - React-Core
-  - RNVectorIcons (8.0.0):
-    - React-Core
   - Yoga (1.14.0)
   - YogaKit (1.18.1):
     - Yoga (~> 1.14)
@@ -341,6 +341,7 @@ DEPENDENCIES:
   - FlipperKit/FlipperKitUserDefaultsPlugin (~> 0.54.0)
   - FlipperKit/SKIOSNetworkPlugin (~> 0.54.0)
   - Folly (from `../../../node_modules/react-native/third-party-podspecs/Folly.podspec`)
+  - "FreeIcon (from `../../../node_modules/@free/icon/FreeIcon.podspec`)"
   - glog (from `../../../node_modules/react-native/third-party-podspecs/glog.podspec`)
   - RCTRequired (from `../../../node_modules/react-native/Libraries/RCTRequired`)
   - RCTTypeSafety (from `../../../node_modules/react-native/Libraries/TypeSafety`)
@@ -370,7 +371,6 @@ DEPENDENCIES:
   - RNGestureHandler (from `../../../node_modules/react-native-gesture-handler/RNGestureHandler.podspec`)
   - RNReanimated (from `../../../node_modules/react-native-reanimated/RNReanimated.podspec`)
   - RNScreens (from `../../../node_modules/react-native-screens/RNScreens.podspec`)
-  - RNVectorIcons (from `../../../node_modules/react-native-vector-icons`)
   - Yoga (from `../../../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
@@ -399,6 +399,8 @@ EXTERNAL SOURCES:
     :path: "../../../node_modules/react-native/Libraries/FBReactNativeSpec"
   Folly:
     :podspec: "../../../node_modules/react-native/third-party-podspecs/Folly.podspec"
+  FreeIcon:
+    :path: "../../../node_modules/@free/icon/FreeIcon.podspec"
   glog:
     :podspec: "../../../node_modules/react-native/third-party-podspecs/glog.podspec"
   RCTRequired:
@@ -453,8 +455,6 @@ EXTERNAL SOURCES:
     :path: "../../../node_modules/react-native-reanimated/RNReanimated.podspec"
   RNScreens:
     :path: "../../../node_modules/react-native-screens/RNScreens.podspec"
-  RNVectorIcons:
-    :path: "../../../node_modules/react-native-vector-icons"
   Yoga:
     :path: "../../../node_modules/react-native/ReactCommon/yoga"
 
@@ -474,6 +474,7 @@ SPEC CHECKSUMS:
   Flipper-RSocket: 64e7431a55835eb953b0bf984ef3b90ae9fdddd7
   FlipperKit: ab353d41aea8aae2ea6daaf813e67496642f3d7d
   Folly: b73c3869541e86821df3c387eb0af5f65addfab4
+  FreeIcon: 82170016ca4e5297ad0dde0f5f42002c683075e0
   glog: 40a13f7840415b9a77023fbcae0f1e6f43192af3
   OpenSSL-Universal: 8b48cc0d10c1b2923617dfe5c178aa9ed2689355
   RCTRequired: 48884c74035a0b5b76dbb7a998bd93bcfc5f2047
@@ -502,10 +503,9 @@ SPEC CHECKSUMS:
   RNGestureHandler: 9b7e605a741412e20e13c512738a31bd1611759b
   RNReanimated: e03f7425cb7a38dcf1b644d680d1bfc91c3337ad
   RNScreens: 45c457af3d2ee9e08fc01e70da87e653d46b1198
-  RNVectorIcons: f67a1abce2ec73e62fe4606e8110e95a832bc859
   Yoga: 7d13633d129fd179e01b8953d38d47be90db185a
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: df3ccec7d36f39930b6a1b761e76ff65e4ac5667
+PODFILE CHECKSUM: 1c2a313b86a9b63781fd0b61c1e37b626367fc2c
 
 COCOAPODS: 1.10.1

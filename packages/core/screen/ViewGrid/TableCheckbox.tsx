@@ -18,7 +18,7 @@ export const TableCheckbox = React.forwardRef(
       <TouchableOpacity ref={resolvedRef} onPress={onChange}>
         <Icon
           name={
-            indeterminate ? "minus-square" : checked ? "check-square" : "square"
+            indeterminate ? "dash-square" : checked ? "check-square" : "square"
           }
           color={defaultColor}
           size={18}

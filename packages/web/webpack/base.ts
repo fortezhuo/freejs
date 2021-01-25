@@ -20,9 +20,10 @@ const babelLoaderInclude = [
   resolvePath("src"),
   resolvePath("../core"),
   resolvePath("../tailwind"),
+  resolvePath("../icon"),
 ]
 
-const babelLoaderExclude = /node_modules[/\\](?!react-native-vector-icons|react-native-safe-area-view|react-native-gesture-handler)/
+const babelLoaderExclude = /node_modules[/\\](?!react-native-safe-area-view|react-native-gesture-handler)/
 
 export const getWebpackRules = (): any => [
   {

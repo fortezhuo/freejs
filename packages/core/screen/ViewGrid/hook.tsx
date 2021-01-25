@@ -104,7 +104,7 @@ export const useActions = (refBottomSheet: any) => {
 
     const NEW = {
       key: `action_${random()}`,
-      icon: "file",
+      icon: "plus-circle-dotted",
       type: "primary_2_bg",
       children: "New",
       visible: app.can("create", config.name),
@@ -115,7 +115,7 @@ export const useActions = (refBottomSheet: any) => {
 
     const DELETE = {
       key: `action_${random()}`,
-      icon: "trash-2",
+      icon: "trash2",
       type: "danger_bg",
       children: "Delete",
       visible: app.can("delete", config.name),

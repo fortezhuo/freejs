@@ -14,9 +14,7 @@ export const MenuUser: React.FC = () => {
       testID="MenuUser"
       anchor={
         <TouchableOpacity onPress={() => ref.current?.open()}>
-          <View style={s.iconMenuUser}>
-            <Icon name={"user"} size={24} />
-          </View>
+          <Icon name={"person-circle"} size={36} style={s.iconMenuUser} />
         </TouchableOpacity>
       }
     >
@@ -25,7 +23,7 @@ export const MenuUser: React.FC = () => {
           <Text style={s.textUser}>{app.data?.auth?.fullname}</Text>
         </View>
         <View style={s.viewChildren}>
-          <MenuItem name="log-out" onPress={_debounce(app.logout, 300)}>
+          <MenuItem name="door-open" onPress={_debounce(app.logout, 300)}>
             Logout
           </MenuItem>
         </View>
@@ -40,6 +38,6 @@ const s = StyleSheet.create({
   viewMenu: tw("mt-1 rounded-md bg-gray-200", { padding: 2 }),
   viewUser: tw(`bg-gray-200 p-2 items-center`),
   viewChildren: tw(`bg-white rounded-b-md`),
-  iconMenuUser: tw(`rounded-full border-2 border-solid border-white p-1 mr-4`),
+  iconMenuUser: tw(`mr-4`),
   textUser: tw("text-gray-500 font-bold text-xs"),
 })

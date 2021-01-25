@@ -7,9 +7,10 @@ html {
 }
 
 @font-face {
-  src: url(Feather.ttf);
-  font-family: Feather;
+  font-family: bootstrap-icons;
+  src: url(bootstrap-icons.ttf);
 }
+
 button,
 input,
 select,

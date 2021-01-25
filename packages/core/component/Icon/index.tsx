@@ -1,5 +1,5 @@
 import React from "react"
-import FeatherIcon from "react-native-vector-icons/Feather"
+import { Icon as FreeIcon } from "@free/icon"
 import { View, StyleSheet } from "react-native"
 import { theme } from "../../config/theme"
 import { tw } from "@free/tailwind"
@@ -8,8 +8,13 @@ export const Icon: React.FC<{
   name: string
   size?: number
   color?: string
-}> = ({ name, size = 24, color = "white" }) => {
-  return name ? <FeatherIcon name={name} size={size} color={color} /> : <View />
+  style?: JSONObject
+}> = ({ name, size = 24, color = "white", style }) => {
+  return name ? (
+    <FreeIcon name={name} style={[style, { fontSize: size, color: color }]} />
+  ) : (
+    <View />
+  )
 }
 
 const s = StyleSheet.create({
