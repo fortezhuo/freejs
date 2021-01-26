@@ -17,7 +17,7 @@ export const useAppLayout = () => {
     const loadKeyboard = async () => {
       const state: any = await asyncStorage.get()
       const { keyboardHeight = 0 } = state
-      if (keyboardHeight !== 0) app.setTemp({ keyboardHeight })
+      app.setTemp({ keyboardHeight })
     }
     loadKeyboard()
   }, [])

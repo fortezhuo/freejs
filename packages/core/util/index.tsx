@@ -9,8 +9,7 @@ export const asyncStorage = {
   get: async () => {
     try {
       const state = await AsyncStorage.getItem(STATE_KEY)
-
-      return state ? JSON.parse(state) : {}
+      return !!state ? JSON.parse(state) : {}
     } catch (err) {
       return {}
     }
