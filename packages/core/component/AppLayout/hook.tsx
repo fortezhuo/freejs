@@ -14,6 +14,15 @@ export const useAppLayout = () => {
   const { width, height } = useSafeAreaFrame()
 
   React.useEffect(() => {
+    const loadKeyboard = async () => {
+      const state: any = await asyncStorage.get()
+      const { keyboardHeight = 0 } = state
+      if (keyboardHeight !== 0) app.setTemp({ keyboardHeight })
+    }
+    loadKeyboard()
+  }, [])
+
+  React.useEffect(() => {
     const screen = getScreenSize(width)
     app.setTemp({
       isMobile: screen !== "xl" && screen !== "lg",
@@ -24,9 +33,10 @@ export const useAppLayout = () => {
     })
   }, [width, height])
 
-  const keyboardWillShow = React.useCallback(async (event) => {
+  const keyboardDidShow = React.useCallback(async (event) => {
     const keyboardHeight = event.endCoordinates.height
     if (keyboardHeight === refKeyboard.current) return
+
     const state = JSON.parse((await asyncStorage.get()) || "{}")
     refKeyboard.current = keyboardHeight
     app.setTemp({ keyboardHeight: keyboardHeight + 12 })
@@ -36,9 +46,9 @@ export const useAppLayout = () => {
   }, [])
 
   React.useEffect(() => {
-    Keyboard.addListener("keyboardWillShow", keyboardWillShow)
+    Keyboard.addListener("keyboardDidShow", keyboardDidShow)
     return () => {
-      Keyboard.removeListener("keyboardWillShow", keyboardWillShow)
+      Keyboard.removeListener("keyboardDidShow", keyboardDidShow)
     }
   }, [])
 

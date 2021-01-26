@@ -97,10 +97,10 @@ const Routes: React.FC<{ screens: JSONObject }> = ({ screens }) => {
         const initialUrl = await Linking.getInitialURL()
         if (Platform.OS !== "web" || initialUrl === null) {
           const savedState = await asyncStorage.get()
-          refStorage.current = savedState ? JSON.parse(savedState) : undefined
+          refStorage.current = savedState
 
-          if (refStorage.current) {
-            setInitialState(refStorage.current.navigation)
+          if (savedState.hasOwnProperty("navigation")) {
+            setInitialState(savedState.navigation)
           }
         }
       } finally {

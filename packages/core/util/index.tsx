@@ -6,7 +6,14 @@ const regexDate = /^\d{4}-\d{2}-\d{2}/
 const STATE_KEY = `${configApp.name.toUpperCase()}_STATE`
 
 export const asyncStorage = {
-  get: async () => await AsyncStorage.getItem(STATE_KEY),
+  get: async () => {
+    try {
+      const state = await AsyncStorage.getItem(STATE_KEY)
+      return state ? JSON.parse(state) : {}
+    } catch (err) {
+      return {}
+    }
+  },
   set: (value: any) => AsyncStorage.setItem(STATE_KEY, value),
 }
 
