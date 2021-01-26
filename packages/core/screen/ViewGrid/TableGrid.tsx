@@ -16,7 +16,6 @@ import { TablePagination } from "./TablePagination"
 import { TableRow } from "./TableRow"
 import { useView, useColumns, useActions } from "./hook"
 import { useApp } from "../../state"
-import { random } from "../../util"
 
 const defaultColor = color(theme.default_text)
 const colMobileHidden = [

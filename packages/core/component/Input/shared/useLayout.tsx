@@ -1,8 +1,5 @@
 import React from "react"
 import { useApp } from "../../../state"
-import { asyncStorage } from "../../../util"
-
-const SCREEN_INDENT = 2
 
 export const useLayout = (refLayout: any, focus: boolean, search: boolean) => {
   const { refScroll, refOffset, ...app } = useApp()
@@ -55,7 +52,7 @@ export const useLayout = (refLayout: any, focus: boolean, search: boolean) => {
             if (refScroll.current) {
               refScroll.current.scrollTo({
                 x: 0,
-                y: top - keyboardHeight + anchorHeight + y,
+                y: 200,
                 animated: 1,
               })
             }

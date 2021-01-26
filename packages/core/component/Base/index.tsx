@@ -89,8 +89,6 @@ export const Base: React.FC<Base> = ({ isLoading, style, children }) => {
 
 const s = StyleSheet.create({
   viewBase: {
-    minWidth: undefined,
-    width: undefined,
     backgroundColor,
   },
   viewClear: {
@@ -98,8 +96,6 @@ const s = StyleSheet.create({
     paddingTop: 0,
     paddingBottom: 0,
     paddingRight: 0,
-    flexDirection: undefined,
-    alignItems: undefined,
     borderTopColor: "transparent",
     borderRightColor: "transparent",
     borderBottomColor: "transparent",

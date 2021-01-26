@@ -1,7 +1,7 @@
 import React from "react"
 import { View, StyleSheet, TouchableOpacity } from "react-native"
 import { Text, Input } from "../../component"
-import { random } from "../../util"
+
 import { tw } from "@free/tailwind"
 import { useView } from "./hook"
 
@@ -54,7 +54,7 @@ export const TablePagination: React.FC = React.memo(() => {
     view.setData({ page: 1, limit: value })
   }, [])
 
-  return total ? (
+  return total && !isUpdating && !isLoading ? (
     <View style={s.viewPage}>
       <View style={[s.viewPaging, isMobile ? { width: 0, opacity: 0 } : {}]}>
         <Text>Show</Text>

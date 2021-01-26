@@ -1,5 +1,5 @@
 import React from "react"
-import { StyleSheet, StatusBar } from "react-native"
+import { StyleSheet, StatusBar, Platform } from "react-native"
 import { SafeAreaProvider } from "react-native-safe-area-context"
 import { tw } from "@free/tailwind"
 import { theme } from "../../config/theme"
@@ -17,7 +17,10 @@ const MainLayout: React.FC = withApp(({ children }: any) => {
 
   return (
     <Gradient colors={colors} style={s.viewFlexTransparent}>
-      <StatusBar barStyle="light-content" backgroundColor="transparent" />
+      <StatusBar
+        barStyle={Platform.OS === "android" ? "dark-content" : "light-content"}
+        backgroundColor="transparent"
+      />
       {children}
       <Alert ref={app.refAlert} />
     </Gradient>

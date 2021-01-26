@@ -21,7 +21,7 @@ const SettingUser: React.FC = () => {
         document={document}
         stickyLeft={
           <View style={s.viewButton}>
-            <ActionGroup.Large actions={actions} />
+            <ActionGroup.Large actions={actions} {...stateProps} />
           </View>
         }
       >

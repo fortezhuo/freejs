@@ -10,11 +10,21 @@ export const Small: React.FC<{
   actions: JSONObject[]
   isLoading?: boolean
 }> = ({ actions, isLoading }) => {
+  const [isOpen, setOpen] = React.useState(false)
   const app = useApp()
   const isKeyboardShow = useKeyboard()
   const modalizeRef = React.useRef<Modalize>(null)
   actions = actions.filter((act) => act.children !== "Delete")
-  const isShow = actions.length != 0 && app.temp.isMobile && !isKeyboardShow
+  const isShow =
+    actions.length != 0 && app.temp.isMobile && !isKeyboardShow && !isOpen
+
+  const onOpen = React.useCallback(() => {
+    setOpen(true)
+  }, [])
+
+  const onClosed = React.useCallback(() => {
+    setOpen(false)
+  }, [])
 
   return (
     <>
@@ -30,10 +40,12 @@ export const Small: React.FC<{
         ref={modalizeRef}
         adjustToContentHeight
         modalStyle={s.container}
+        {...{ onClosed, onOpen }}
       >
         <View
           style={{
             height: actions.length * 44 + 44,
+            zIndex: 10,
             margin: 10,
             marginBottom: 20,
             justifyContent: "space-evenly",

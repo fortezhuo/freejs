@@ -2,7 +2,7 @@ import React from "react"
 import { Icon } from "../Icon"
 import { Text } from "../Text"
 import { Base } from "../Base"
-import { StyleSheet, TouchableOpacity, View } from "react-native"
+import { StyleSheet, View, TouchableOpacity } from "react-native"
 import { theme } from "../../config/theme"
 import { tw, border, text, color } from "@free/tailwind"
 import { isRGBLight } from "../../util"
@@ -24,7 +24,6 @@ interface Button {
 
 export const Button: React.FC<Button> = (props) => {
   let {
-    testID = "Button",
     type = "transparent_bg",
     isLoading,
     outline,
@@ -58,8 +57,12 @@ export const Button: React.FC<Button> = (props) => {
   )
 
   return (
-    <TouchableOpacity disabled={disabled || isLoading} onPress={onPress}>
-      <Base isLoading={isLoading} style={[s.viewButton, bgColor, style]}>
+    <Base isLoading={isLoading} style={[s.viewButton, bgColor, style]}>
+      <TouchableOpacity
+        style={{ flexDirection: "row" }}
+        disabled={disabled || isLoading}
+        onPressIn={onPress}
+      >
         {icon && (
           <View style={s.iconButton}>
             <Icon
@@ -79,8 +82,8 @@ export const Button: React.FC<Button> = (props) => {
             <Icon name="x" size={18} color={textColor.color} />
           </TouchableOpacity>
         )}
-      </Base>
-    </TouchableOpacity>
+      </TouchableOpacity>
+    </Base>
   )
 }
 

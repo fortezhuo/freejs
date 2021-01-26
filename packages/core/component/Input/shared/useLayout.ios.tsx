@@ -1,8 +1,5 @@
 import React from "react"
 import { useApp } from "../../../state"
-import { asyncStorage } from "../../../util"
-
-const SCREEN_INDENT = 2
 
 export const useLayout = (refLayout: any, focus: boolean, search: boolean) => {
   const { refScroll, refOffset, ...app } = useApp()
