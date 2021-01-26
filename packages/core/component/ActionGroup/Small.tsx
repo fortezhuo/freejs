@@ -3,6 +3,7 @@ import { StyleSheet, View } from "react-native"
 import { Modalize } from "react-native-modalize"
 import { Button } from "../Button"
 import { useApp } from "../../state"
+import { useKeyboard } from "../../state/hook"
 import { tw } from "@free/tailwind"
 
 export const Small: React.FC<{
@@ -10,15 +11,16 @@ export const Small: React.FC<{
   isLoading?: boolean
 }> = ({ actions, isLoading }) => {
   const app = useApp()
+  const isKeyboardShow = useKeyboard()
   const modalizeRef = React.useRef<Modalize>(null)
   actions = actions.filter((act) => act.children !== "Delete")
-  const isShow = actions.length != 0 && app.temp.isMobile
+  const isShow = actions.length != 0 && app.temp.isMobile && !isKeyboardShow
 
   return (
     <>
       {isShow && (
         <Button
-          icon="zap"
+          icon="lightning"
           onPress={() => modalizeRef.current?.open()}
           style={s.single}
           type={"danger_bg"}

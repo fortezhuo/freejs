@@ -37,7 +37,7 @@ export const useAppLayout = () => {
     const keyboardHeight = event.endCoordinates.height
     if (keyboardHeight === refKeyboard.current) return
 
-    const state = JSON.parse((await asyncStorage.get()) || "{}")
+    const state = await asyncStorage.get()
     refKeyboard.current = keyboardHeight
     app.setTemp({ keyboardHeight: keyboardHeight + 12 })
     asyncStorage.set(
