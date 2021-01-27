@@ -3,9 +3,8 @@ import { View, StyleSheet } from "react-native"
 import { useSelect } from "./hook/useSelect"
 import { Content } from "./Content"
 import { Modal } from "../../Modal"
-import { Col } from "../../Grid"
+import { useLayout } from "../shared/useLayout"
 import { Anchor } from "./Anchor"
-import { theme } from "../../../config/theme"
 import { DisplayError } from "../DisplayError"
 import { useController } from "react-hook-form"
 import { tw } from "@free/tailwind"
@@ -54,7 +53,7 @@ export const InputSelectRaw: React.FC<InputSelectRaw> = React.memo(
     multiple = false,
     search = true,
     onChange = (...args: any) => {},
-    closeOnSelect = false,
+    closeOnSelect = true,
     clear = true,
     loadOptions = null,
     debounce,
@@ -78,6 +77,8 @@ export const InputSelectRaw: React.FC<InputSelectRaw> = React.memo(
       debounce,
     })
 
+    const [style, onLayout]: any = useLayout(ref, snapshot.focus, search)
+
     return (
       <View testID={"InputSelect"} ref={ref} collapsable={false}>
         <Anchor
@@ -95,19 +96,21 @@ export const InputSelectRaw: React.FC<InputSelectRaw> = React.memo(
             onClear: clear ? onClear : undefined,
           }}
         />
-
         <Modal
-          animationType="fade"
+          animationType="none"
+          transparent
           isVisible={snapshot.focus}
           onBackdropPress={onHide}
         >
-          <Col sm={11} md={9} lg={4} xl={4} style={s.viewChildren}>
+          <View
+            collapsable={false}
+            style={[s.viewChildren, style]}
+            onLayout={onLayout}
+          >
             <Content
               options={snapshot.options}
               {...{
-                placeholder,
                 onSelect,
-                onHide,
                 search,
                 searchProps,
                 keyValue,
@@ -116,7 +119,7 @@ export const InputSelectRaw: React.FC<InputSelectRaw> = React.memo(
                 emptyMessage,
               }}
             />
-          </Col>
+          </View>
         </Modal>
       </View>
     )
@@ -162,7 +165,5 @@ export const InputSelect: React.FC<InputSelect> = ({
 }
 
 const s = StyleSheet.create({
-  viewChildren: tw(
-    `absolute bg-white m-2 p-2 w-full ${theme.input_border} self-center`
-  ),
+  viewChildren: tw("absolute bg-transparent"),
 })

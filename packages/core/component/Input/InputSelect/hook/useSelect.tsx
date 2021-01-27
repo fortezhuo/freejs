@@ -109,7 +109,16 @@ export const useSelect = ({
       highlighted,
       disabled,
     }
-  }, [disabled, isFetching, focus, highlighted, search, selected, options])
+  }, [
+    disabled,
+    isFetching,
+    focus,
+    highlighted,
+    search,
+    selected,
+    options,
+    multiple,
+  ])
 
   const onShow = React.useCallback(() => {
     dispatchHighlighted({ key: "Reset", options })

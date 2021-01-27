@@ -53,6 +53,6 @@ const s = StyleSheet.create({
   viewDisplay: tw("flex-1 flex-row items-center"),
   viewMulti: { marginLeft: 1, marginVertical: 2 },
   viewValue: tw("mx-3 flex-1 flex-row flex-wrap"),
-  viewClear: tw("mx-3"),
+  viewClear: tw(`px-3 border-l border-gray-300`),
   textSingle: tw(`flex-grow ${theme.default_text}`),
 })

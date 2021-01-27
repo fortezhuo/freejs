@@ -20,6 +20,8 @@ export const OptionsList: React.FC<OptionsList> = React.forwardRef(
   ) => {
     return (
       <FlatList
+        keyboardDismissMode={"interactive"}
+        keyboardShouldPersistTaps={"handled"}
         ref={ref}
         data={options}
         keyExtractor={(opt: JSONObject) => opt[keyValue]}

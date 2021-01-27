@@ -1,5 +1,5 @@
 import fs from "fs"
-import { configPlatform as platform } from "./"
+import { configLDAP, configPlatform as platform } from "./"
 
 const freeEnv = process.env.FREE_ENV || "default"
 const createPlatform = (os: string) => {
@@ -8,6 +8,12 @@ const createPlatform = (os: string) => {
 }`
   return template
 }
+
+const createLDAP = () => {
+  const template = `export const ldap = ${JSON.stringify(configLDAP)}`
+  return template
+}
+
 const writePlatformFile = (os: string) => {
   fs.writeFile(
     `../core/config/platform${os === "web" ? "" : `.${os}`}.ts`,
@@ -25,6 +31,17 @@ const writePlatformFile = (os: string) => {
   )
 }
 
+const writeLDAPFile = () => {
+  fs.writeFile(`../core/config/ldap.ts`, createLDAP(), (err) => {
+    if (err) {
+      console.log(`Failed to create file ldap for : ${freeEnv}`, err)
+    } else {
+      console.log(`File ldap for : ${freeEnv} created`)
+    }
+  })
+}
+
 writePlatformFile("web")
 writePlatformFile("ios")
 writePlatformFile("android")
+writeLDAPFile()

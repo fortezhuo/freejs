@@ -1,7 +1,8 @@
 import React from "react"
 import { Text } from "../../../Text"
-import { StyleSheet, View } from "react-native"
-import { tw } from "@free/tailwind"
+import { Icon } from "../../../Icon"
+import { StyleSheet, View, Platform, TouchableOpacity } from "react-native"
+import { tw, color } from "@free/tailwind"
 import { Clear } from "./Clear"
 import { theme } from "../../../../config/theme"
 
@@ -10,12 +11,21 @@ interface Chip {
   children: any
 }
 
+const defaultColor = color(theme.default_text)
+
 const Chip: React.FC<Chip> = React.memo(({ onDeselect, children }) => {
-  return (
+  return Platform.OS === "web" ? (
     <View style={s.viewChip}>
       {onDeselect && <Clear onPress={() => onDeselect(children)} />}
       <Text style={s.textChip}>{children}</Text>
     </View>
+  ) : (
+    <TouchableOpacity onPress={() => onDeselect(children)}>
+      <View style={s.viewChip}>
+        <Icon color={defaultColor} name="x" size={16} />
+        <Text style={s.textChip}>{children}</Text>
+      </View>
+    </TouchableOpacity>
   )
 })
 

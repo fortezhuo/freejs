@@ -1,6 +1,8 @@
 import React from "react"
 import { useApp } from "../../../state"
 
+const SCREEN_INDENT = 2
+
 export const useLayout = (refLayout: any, focus: boolean, search: boolean) => {
   const { refScroll, refOffset, ...app } = useApp()
   const [layout, setLayout] = React.useState<JSONObject>({
@@ -35,27 +37,39 @@ export const useLayout = (refLayout: any, focus: boolean, search: boolean) => {
           anchorWidth: number,
           anchorHeight: number
         ) => {
-          ;(async () => {
-            let { keyboardHeight } = app.temp
-            const { y = 0 } = refOffset?.current || {}
+          const { y = 0 } = refOffset?.current || {}
+          const overflowTop = top - 120
+          const overflowBottom = app.temp.height - top - anchorHeight - 185
 
-            setMeasure({
-              left,
-              top:
-                refScroll.current && keyboardHeight !== 0
-                  ? keyboardHeight - anchorHeight - 150
-                  : top,
-              anchorHeight,
-              anchorWidth,
+          if (overflowTop < 0) {
+            refScroll.current.scrollTo({
+              x: 0,
+              y: y + overflowTop,
+              animated: 1,
             })
+          }
 
-            if (refScroll.current) {
-              refScroll.current.scrollTo({
-                x: 0,
-                y: top - keyboardHeight + 150 + anchorHeight + y,
-              })
-            }
-          })()
+          if (overflowBottom < 0) {
+            refScroll.current.scrollTo({
+              x: 0,
+              y: y + Math.abs(overflowBottom),
+              animated: 1,
+            })
+          }
+
+          top =
+            overflowTop < 0
+              ? 120
+              : overflowBottom < 0
+              ? top + overflowBottom
+              : top
+
+          setMeasure({
+            left,
+            top,
+            anchorHeight,
+            anchorWidth,
+          })
         }
       )
     }
@@ -63,6 +77,12 @@ export const useLayout = (refLayout: any, focus: boolean, search: boolean) => {
 
   const { width } = layout
   let { left, top, anchorHeight } = measure
+
+  if (left > app.temp.width - width - SCREEN_INDENT) {
+    left = app.temp.width - SCREEN_INDENT - width
+  } else if (left < SCREEN_INDENT) {
+    left = SCREEN_INDENT
+  }
 
   top += anchorHeight
 

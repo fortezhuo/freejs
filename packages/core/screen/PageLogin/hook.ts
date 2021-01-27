@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form"
 import { useApp } from "../../state"
 import { useFocusEffect } from "@react-navigation/native"
 
-import { configLDAP as ldap } from "@free/env"
+import { ldap } from "../../config/ldap"
 
 export const useHook = () => {
   const document = useForm({ criteriaMode: "all" })
