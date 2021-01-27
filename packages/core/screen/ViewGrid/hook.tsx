@@ -104,7 +104,7 @@ export const useActions = (refBottomSheet: any) => {
 
     const NEW = {
       key: `action_${random()}`,
-      icon: "plus-circle-dotted",
+      icon: "plus-circle",
       type: "primary_2_bg",
       children: "New",
       visible: app.can("create", config.name),

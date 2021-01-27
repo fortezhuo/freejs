@@ -13,16 +13,18 @@ import { useDocument } from "./hook"
 import { tw } from "@free/tailwind"
 
 const SettingUser: React.FC = () => {
-  const { stateProps, actions, ...document } = useDocument()
+  const { stateProps, actions, isMobile, ...document } = useDocument()
 
   return (
     <>
       <Layout
         document={document}
         stickyLeft={
-          <View style={s.viewButton}>
-            <ActionGroup.Large actions={actions} {...stateProps} />
-          </View>
+          !isMobile && (
+            <View style={s.viewButton}>
+              <ActionGroup.Large actions={actions} {...stateProps} />
+            </View>
+          )
         }
       >
         <Section label="User Information">
@@ -95,7 +97,7 @@ const SettingUser: React.FC = () => {
           </Row>
         </Section>
       </Layout>
-      <ActionGroup.Small actions={actions} />
+      {isMobile && <ActionGroup.Small actions={actions} />}
     </>
   )
 }

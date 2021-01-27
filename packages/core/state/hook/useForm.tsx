@@ -42,6 +42,7 @@ export const useForm = (name: string) => {
   const id = (route?.params as any).id
   const refMounted = React.useRef<boolean>(false)
   const refFunction = React.useRef<JSONObject>(initCallback)
+  const isMobile = app.temp.isMobile
 
   const setData = React.useCallback(async (data: JSONObject) => {
     await asyncForEach(Object.keys(data), async (key: string) => {
@@ -166,6 +167,7 @@ export const useForm = (name: string) => {
     setState,
     setData,
     id,
+    isMobile,
     random,
   }
 }

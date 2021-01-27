@@ -59,39 +59,42 @@ export const Button: React.FC<Button> = (props) => {
   return (
     <Base isLoading={isLoading} style={[s.viewButton, bgColor, style]}>
       <TouchableOpacity
-        style={{ flexDirection: "row" }}
+        style={s.touch}
         disabled={disabled || isLoading}
         onPressIn={onPress}
       >
-        {icon && (
-          <View style={s.iconButton}>
-            <Icon
-              name={isLoading ? "loader" : icon}
-              size={18}
-              color={textColor.color}
-            />
-          </View>
-        )}
-        <Text style={textColor}>{children}</Text>
-        {onClear && (
-          <TouchableOpacity
-            disabled={disabled || isLoading}
-            style={s.iconButton}
-            onPress={onClear}
-          >
-            <Icon name="x" size={18} color={textColor.color} />
-          </TouchableOpacity>
-        )}
+        <View style={s.viewGroup}>
+          {icon && (
+            <View style={s.iconButton}>
+              <Icon
+                name={isLoading ? "loader" : icon}
+                size={18}
+                color={textColor.color}
+              />
+            </View>
+          )}
+          <Text style={textColor}>{children}</Text>
+        </View>
       </TouchableOpacity>
+      {onClear && (
+        <TouchableOpacity
+          disabled={disabled || isLoading}
+          style={s.iconButton}
+          onPress={onClear}
+        >
+          <Icon name="x" size={18} color={textColor.color} />
+        </TouchableOpacity>
+      )}
     </Base>
   )
 }
 
 const s: any = StyleSheet.create({
+  touch: tw("flex-grow"),
   viewButton: tw("p-2 flex-row justify-center items-center rounded-full", {
     minWidth: 36,
     height: 36,
   }),
-  viewGroup: tw("pl-1 mr-1 flex-row items-center"),
+  viewGroup: tw("flex-row self-center"),
   iconButton: tw("px-1"),
 })

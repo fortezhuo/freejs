@@ -14,16 +14,18 @@ import { tw } from "@free/tailwind"
 import { SectionAccess } from "./SectionAccess"
 
 const SettingAccess: React.FC = () => {
-  const { stateProps, actions, ...document } = useDocument()
+  const { stateProps, actions, isMobile, ...document } = useDocument()
 
   return (
     <>
       <Layout
         document={document}
         stickyLeft={
-          <View style={s.viewButton}>
-            <ActionGroup.Large actions={actions} {...stateProps} />
-          </View>
+          !isMobile && (
+            <View style={s.viewButton}>
+              <ActionGroup.Large actions={actions} {...stateProps} />
+            </View>
+          )
         }
       >
         <Section label="Information">
@@ -90,7 +92,7 @@ const SettingAccess: React.FC = () => {
           }}
         />
       </Layout>
-      <ActionGroup.Small actions={actions} />
+      {isMobile && <ActionGroup.Small actions={actions} />}
     </>
   )
 }

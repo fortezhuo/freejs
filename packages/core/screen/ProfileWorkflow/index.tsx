@@ -14,16 +14,18 @@ import { tw } from "@free/tailwind"
 import { SectionWorkflow } from "./SectionWorkflow"
 
 const ProfileWorkflow: React.FC = (props) => {
-  const { stateProps, temp, actions, ...document } = useDocument()
+  const { stateProps, temp, actions, isMobile, ...document } = useDocument()
 
   return (
     <>
       <Layout
         document={document}
         stickyLeft={
-          <View style={s.viewButton}>
-            <ActionGroup.Large actions={actions} />
-          </View>
+          !isMobile && (
+            <View style={s.viewButton}>
+              <ActionGroup.Large actions={actions} />
+            </View>
+          )
         }
       >
         <Section label="Information">
@@ -122,7 +124,7 @@ const ProfileWorkflow: React.FC = (props) => {
           }}
         />
       </Layout>
-      <ActionGroup.Small actions={actions} />
+      {isMobile && <ActionGroup.Small actions={actions} />}
     </>
   )
 }
