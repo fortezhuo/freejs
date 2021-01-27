@@ -1,6 +1,7 @@
 import React from "react"
 import { FlatList } from "react-native"
 import { Option } from "./Option"
+import { random } from "../../../util"
 
 const ITEM_HEIGHT = 36
 
@@ -24,7 +25,7 @@ export const OptionsList: React.FC<OptionsList> = React.forwardRef(
         keyboardShouldPersistTaps={"handled"}
         ref={ref}
         data={options}
-        keyExtractor={(opt: JSONObject) => opt[keyValue]}
+        keyExtractor={() => random()}
         renderItem={({ item, index }: any) => (
           <Option
             keyValue={keyValue}

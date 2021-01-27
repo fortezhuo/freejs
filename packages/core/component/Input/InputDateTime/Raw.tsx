@@ -2,9 +2,9 @@ import React from "react"
 import RNDateTimePicker from "@react-native-community/datetimepicker"
 import { Modal } from "../../Modal"
 import { Anchor } from "./Anchor"
-import { StyleSheet, View } from "react-native"
+import { StyleSheet, View, Platform } from "react-native"
 import { useDateTime } from "./hook/useDateTime"
-import { useLayout } from "../shared/useLayout"
+import { Col } from "../../Grid"
 import { tw } from "@free/tailwind"
 
 export const DateTimePicker: React.FC<JSONObject> = ({
@@ -23,12 +23,18 @@ export const DateTimePicker: React.FC<JSONObject> = ({
     type: mode,
     disabled,
   })
+  const isAndroid = Platform.OS === "android"
 
-  const onChange = React.useCallback((_, v) => _onChange(v), [_onChange])
-
-  const onClear = React.useCallback(() => _onChange(undefined), [onChange])
-
-  const [style, onLayout]: any = useLayout(ref, snapshot.focus, true)
+  const onChange = React.useCallback(
+    ({ type }, v) => {
+      if (type === "dismissed") {
+        return onHide()
+      }
+      _onChange(v)
+      if (isAndroid) return onHide()
+    },
+    [_onChange]
+  )
 
   return (
     <View testID={"InputDateTime"} ref={ref} collapsable={false}>
@@ -40,19 +46,19 @@ export const DateTimePicker: React.FC<JSONObject> = ({
           editable,
           placeholder,
           onShow,
-          onClear,
         }}
       />
       <Modal
-        animationType="none"
-        transparent
+        animationType="fade"
         isVisible={snapshot.focus}
         onBackdropPress={onHide}
       >
-        <View
-          collapsable={false}
-          style={[s.viewChildren, style]}
-          onLayout={onLayout}
+        <Col
+          sm={11}
+          md={9}
+          lg={4}
+          xl={4}
+          style={isAndroid ? {} : s.viewChildren}
         >
           <RNDateTimePicker
             {...{
@@ -63,12 +69,12 @@ export const DateTimePicker: React.FC<JSONObject> = ({
               onChange,
             }}
           />
-        </View>
+        </Col>
       </Modal>
     </View>
   )
 }
 
 const s = StyleSheet.create({
-  viewChildren: tw("absolute bg-white border border-gray-300"),
+  viewChildren: tw("absolute bg-white border border-gray-300 self-center"),
 })

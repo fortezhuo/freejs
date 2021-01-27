@@ -5,7 +5,6 @@ import { tw } from "@free/tailwind"
 import { theme } from "../../../../config/theme"
 import { Base } from "../../../Base"
 import { Text } from "../../../Text"
-import { Clear } from "./Clear"
 
 interface Anchor {
   display: string
@@ -14,7 +13,6 @@ interface Anchor {
   disabled: boolean
   placeholder: string
   onShow: VoidFunction
-  onClear?: VoidFunction
 }
 
 const Display: React.FC<any> = React.memo(({ children }) => {
@@ -22,15 +20,7 @@ const Display: React.FC<any> = React.memo(({ children }) => {
 })
 
 export const Anchor: React.FC<Anchor> = React.memo(
-  ({
-    onShow,
-    onClear,
-    display,
-    isLoading,
-    editable,
-    disabled,
-    placeholder,
-  }) => {
+  ({ onShow, display, isLoading, editable, disabled, placeholder }) => {
     return (
       <TouchableOpacity disabled={disabled || !editable} onPress={onShow}>
         <Base
@@ -38,12 +28,7 @@ export const Anchor: React.FC<Anchor> = React.memo(
           style={[s.viewInput, disabled ? s.viewDisabled : {}]}
         >
           {display ? (
-            <>
-              <Display>{display}</Display>
-              {!disabled && onClear && (
-                <Clear style={s.viewClear} {...{ onPress: onClear }} />
-              )}
-            </>
+            <Display>{display}</Display>
           ) : (
             <Placeholder>{placeholder}</Placeholder>
           )}
