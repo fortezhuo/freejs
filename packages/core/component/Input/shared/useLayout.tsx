@@ -43,7 +43,7 @@ export const useLayout = (refLayout: any, focus: boolean, search: boolean) => {
               left,
               top:
                 refScroll.current && keyboardHeight !== 0
-                  ? keyboardHeight - anchorHeight
+                  ? keyboardHeight - anchorHeight - 150
                   : top,
               anchorHeight,
               anchorWidth,
@@ -52,8 +52,7 @@ export const useLayout = (refLayout: any, focus: boolean, search: boolean) => {
             if (refScroll.current) {
               refScroll.current.scrollTo({
                 x: 0,
-                y: 200,
-                animated: 1,
+                y: top - keyboardHeight + 150 + anchorHeight + y,
               })
             }
           })()

@@ -310,7 +310,7 @@ PODS:
     - React-Core
   - RNReanimated (1.13.2):
     - React-Core
-  - RNScreens (2.17.0):
+  - RNScreens (2.17.1):
     - React-Core
   - Yoga (1.14.0)
   - YogaKit (1.18.1):
@@ -502,7 +502,7 @@ SPEC CHECKSUMS:
   RNDateTimePicker: 8a51a2216c307769e69ef827293d59549ab1ca23
   RNGestureHandler: 9b7e605a741412e20e13c512738a31bd1611759b
   RNReanimated: e03f7425cb7a38dcf1b644d680d1bfc91c3337ad
-  RNScreens: 23c1fbf7797261321f6db93fdcbd9913573535e4
+  RNScreens: b6c9607e6fe47c1b6e2f1910d2acd46dd7ecea3a
   Yoga: 4bd86afe9883422a7c4028c00e34790f560923d6
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
