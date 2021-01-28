@@ -1,10 +1,22 @@
 import React from "react"
-import { StyleSheet, View } from "react-native"
+import { StyleSheet, View, TouchableOpacity } from "react-native"
 import { Modalize } from "react-native-modalize"
 import { Button } from "../Button"
+import { Icon } from "../Icon"
 import { useApp } from "../../state"
 import { useKeyboard } from "../../state/hook"
 import { tw } from "@free/tailwind"
+import { theme } from "../../config/theme"
+
+const ActionButton: React.FC<any> = React.memo(({ onPress }) => {
+  return (
+    <View style={s.single}>
+      <TouchableOpacity onPress={onPress} style={s.touch}>
+        <Icon name="lightning" size={30} />
+      </TouchableOpacity>
+    </View>
+  )
+})
 
 export const Small: React.FC<{
   actions: JSONObject[]
@@ -29,12 +41,12 @@ export const Small: React.FC<{
   return (
     <>
       {isShow && (
-        <Button
+        <ActionButton
           icon="lightning"
           onPress={() => modalizeRef.current?.open()}
           style={s.single}
           type={"danger_bg"}
-        ></Button>
+        />
       )}
       <Modalize
         ref={modalizeRef}
@@ -75,7 +87,12 @@ export const Small: React.FC<{
 const s = StyleSheet.create({
   container: tw("bg-white"),
   header: tw("items-center"),
-  single: tw("absolute bottom-0 right-0 mb-3 mr-3 shadow-md h-12", {
-    minWidth: 50,
-  }),
+  single: tw(
+    `absolute bottom-0 right-0 mb-8 mr-8 shadow-md rounded-full ${theme.danger_bg}`,
+    {
+      width: 60,
+      height: 60,
+    }
+  ),
+  touch: tw("flex-col items-center justify-center flex-grow w-full"),
 })

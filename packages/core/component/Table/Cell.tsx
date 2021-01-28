@@ -55,9 +55,12 @@ export const CellText: React.FC<Cell> = ({
 
 export const CellLink: React.FC<CellLink> = ({ style, name, params = {} }) => {
   return (
-    <Cell style={style} testID="CellLink">
+    <Cell
+      style={[style, { paddingBottom: 0, paddingLeft: 0 }]}
+      testID="CellLink"
+    >
       <Link name={name} params={params}>
-        <Icon name={"link"} size={18} color={defaultColor} />
+        <Icon name={"link-45deg"} size={24} color={defaultColor} />
       </Link>
     </Cell>
   )

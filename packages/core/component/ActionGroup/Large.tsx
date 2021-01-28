@@ -13,7 +13,7 @@ export const Large: React.FC<{
         {actions.map(({ key, ...prop }) => (
           <Button
             {...{ isLoading, key, ...prop }}
-            style={{ marginRight: 4, minWidth: 100 }}
+            style={{ marginRight: 4, minWidth: 90 }}
           />
         ))}
       </View>

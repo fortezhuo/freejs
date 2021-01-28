@@ -59,22 +59,20 @@ export const Button: React.FC<Button> = (props) => {
   return (
     <Base isLoading={isLoading} style={[s.viewButton, bgColor, style]}>
       <TouchableOpacity
-        style={s.touch}
+        style={s.viewGroup}
         disabled={disabled || isLoading}
         onPressIn={onPress}
       >
-        <View style={s.viewGroup}>
-          {icon && (
-            <View style={s.iconButton}>
-              <Icon
-                name={isLoading ? "loader" : icon}
-                size={18}
-                color={textColor.color}
-              />
-            </View>
-          )}
-          <Text style={textColor}>{children}</Text>
-        </View>
+        {icon && (
+          <View style={s.iconButton}>
+            <Icon
+              name={isLoading ? "loader" : icon}
+              size={18}
+              color={textColor.color}
+            />
+          </View>
+        )}
+        <Text style={[textColor, { alignSelf: "center" }]}>{children}</Text>
       </TouchableOpacity>
       {onClear && (
         <TouchableOpacity
@@ -90,11 +88,13 @@ export const Button: React.FC<Button> = (props) => {
 }
 
 const s: any = StyleSheet.create({
-  touch: tw("flex-grow"),
-  viewButton: tw("p-2 flex-row justify-center items-center rounded-full", {
-    minWidth: 36,
-    height: 36,
-  }),
-  viewGroup: tw("flex-row self-center"),
+  viewButton: tw(
+    "flex-row items-center justify-center flex-grow rounded-full px-2",
+    {
+      minWidth: 36,
+      height: 36,
+    }
+  ),
+  viewGroup: tw("flex-row"),
   iconButton: tw("px-1"),
 })

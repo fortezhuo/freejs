@@ -2215,11 +2215,6 @@ babel-plugin-syntax-trailing-function-commas@^7.0.0-beta.0:
   resolved "https://registry.yarnpkg.com/babel-plugin-syntax-trailing-function-commas/-/babel-plugin-syntax-trailing-function-commas-7.0.0-beta.0.tgz#aa213c1435e2bffeb6fca842287ef534ad05d5cf"
   integrity sha512-Xj9XuRuz3nTSbaTXWv3itLOcxyF4oPD8douBBmj7U9BBC6nEBYfyOJYQMf/8PJAFotC62UY5dFfIGEPr7WswzQ==
 
-babel-plugin-transform-inline-environment-variables@^0.4.3:
-  version "0.4.3"
-  resolved "https://registry.yarnpkg.com/babel-plugin-transform-inline-environment-variables/-/babel-plugin-transform-inline-environment-variables-0.4.3.tgz#a3b09883353be8b5e2336e3ff1ef8a5d93f9c489"
-  integrity sha1-o7CYgzU76LXiM24/8e+KXZP5xIk=
-
 babel-preset-fbjs@^3.2.0, babel-preset-fbjs@^3.3.0:
   version "3.3.0"
   resolved "https://registry.yarnpkg.com/babel-preset-fbjs/-/babel-preset-fbjs-3.3.0.tgz#a6024764ea86c8e06a22d794ca8b69534d263541"
@@ -6888,10 +6883,10 @@ monk-middleware-wait-for-connection@^0.2.0:
   resolved "https://registry.yarnpkg.com/monk-middleware-wait-for-connection/-/monk-middleware-wait-for-connection-0.2.0.tgz#312958d30e588b57d09754dd7c97b4843316835a"
   integrity sha1-MSlY0w5Yi1fQl1TdfJe0hDMWg1o=
 
-monk@^7.3.1:
-  version "7.3.2"
-  resolved "https://registry.yarnpkg.com/monk/-/monk-7.3.2.tgz#cacf9875a270a29abd04494086e0f4cd1132c000"
-  integrity sha512-rf44p/l4HRDnrQXWci9SOz5uFAEQsHERVmE0tgya8OjOwqzeztE1sIcZ7JdxqpVk0Y1QyzApZWyBFWfvFB6sfQ==
+monk@^7.3.3:
+  version "7.3.3"
+  resolved "https://registry.yarnpkg.com/monk/-/monk-7.3.3.tgz#edd3acdeb354a7bbedb41026dd8f2650504d5944"
+  integrity sha512-S5M5N3PRMqXParscBFgKpGpzjzZqd3Lsv3GDAvRxbQq5WC9mx2gqU5aXCoI9Ny/AKgoW0J79bhLQ8fihxEvgeQ==
   dependencies:
     "@types/mongodb" "^3.5.25"
     debug "*"
