@@ -1,6 +1,6 @@
 import React from "react"
 import { useNavigation } from "@react-navigation/native"
-const words = /Setting|View/gi
+const words = /Setting|View|Profile|Form/gi
 
 export const buildLink = (name: string, params: any) => {
   const path = name ? name.replace(words, "").toLowerCase() : ""

@@ -7,6 +7,22 @@ const excludeField = [
   "_createdBy",
 ].reduce((acc, key) => ({ ...acc, [key]: 0 }), {})
 
+export const ViewFormRequest = {
+  name: "request",
+  search: ["parameter", "fullname", "email"],
+  field: excludeField,
+  sort: {},
+  actions: ["Delete", "Search"],
+  columns: [
+    {
+      label: "",
+      name: "_id",
+      type: "link",
+      style: { width: 36 },
+    },
+  ],
+}
+
 export const ViewProfileWorkflow = {
   name: "workflow",
   search: ["parameter", "fullname", "email"],

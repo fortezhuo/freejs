@@ -8,7 +8,7 @@ import {
   Label,
   ActionGroup,
 } from "../../component"
-import { View, StyleSheet } from "react-native"
+import { StyleSheet } from "react-native"
 import { useDocument } from "./hook"
 import { tw } from "@free/tailwind"
 
@@ -20,11 +20,7 @@ const SettingUser: React.FC = () => {
       <Layout
         document={document}
         stickyLeft={
-          !isMobile && (
-            <View style={s.viewButton}>
-              <ActionGroup.Large actions={actions} {...stateProps} />
-            </View>
-          )
+          !isMobile && <ActionGroup.Large actions={actions} {...stateProps} />
         }
       >
         <Section label="User Information">

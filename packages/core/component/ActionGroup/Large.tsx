@@ -8,20 +8,17 @@ export const Large: React.FC<{
   isLoading?: boolean
 }> = ({ actions, isLoading }) => {
   return (
-    <View style={s.viewAction}>
-      <View style={s.groupAction}>
-        {actions.map(({ key, ...prop }) => (
-          <Button
-            {...{ isLoading, key, ...prop }}
-            style={{ marginRight: 4, minWidth: 90 }}
-          />
-        ))}
-      </View>
+    <View style={s.groupAction}>
+      {actions.map(({ key, ...prop }) => (
+        <Button
+          {...{ isLoading, key, ...prop }}
+          style={{ marginRight: 4, minWidth: 90 }}
+        />
+      ))}
     </View>
   )
 }
 
 const s = StyleSheet.create({
-  viewAction: tw("flex-row"),
   groupAction: tw("flex-row p-1"),
 })

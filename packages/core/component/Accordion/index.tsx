@@ -39,18 +39,19 @@ interface AccordionItem {
   children?: string
   navigation: any
   component: string
+  params?: JSONObject
 }
 
 export const AccordionItem: React.FC<AccordionItem> = ({
-  testID = "AccordionItem",
   active,
   icon,
   children,
   navigation,
   component,
+  params,
 }) => {
   return (
-    <Link navigation={navigation} name={component}>
+    <Link navigation={navigation} name={component} params={params}>
       <SubTitle {...{ icon, active }}>{children}</SubTitle>
     </Link>
   )

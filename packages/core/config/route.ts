@@ -9,6 +9,19 @@ interface Route {
   visible: boolean
 }
 
+const getAll: () => Route[] = () => {
+  return [
+    {
+      name: "FormRequest",
+      key: `route_${random()}`,
+      title: "Request",
+      view: "request",
+      child: "request/:id",
+      visible: true,
+    },
+  ]
+}
+
 const getSetting: (visible: boolean) => Route[] = (visible) => {
   return [
     {
@@ -59,7 +72,7 @@ export const getRoute: (app: any) => Route[] = (app) => {
   const canSetting: boolean = app.can("read", "SETTING")
   const canProfile: boolean = app.can("read", "PROFILE")
 
-  const route: Route[] = []
+  const route: Route[] = getAll()
   return route
     .concat(getSetting(canSetting))
     .concat(getProfile(canProfile))

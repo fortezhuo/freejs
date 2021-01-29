@@ -21,11 +21,7 @@ const SettingAccess: React.FC = () => {
       <Layout
         document={document}
         stickyLeft={
-          !isMobile && (
-            <View style={s.viewButton}>
-              <ActionGroup.Large actions={actions} {...stateProps} />
-            </View>
-          )
+          !isMobile && <ActionGroup.Large actions={actions} {...stateProps} />
         }
       >
         <Section label="Information">

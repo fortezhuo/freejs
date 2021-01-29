@@ -52,10 +52,13 @@ const Content: React.FC<JSONObject> = (props) => {
               children
                 .filter(({ visible }: JSONObject) => visible)
                 .map(
-                  ({ key, component, icon, label }: JSONObject, j: number) => {
+                  (
+                    { key, component, icon, label, params }: JSONObject,
+                    j: number
+                  ) => {
                     return (
                       <AccordionItem
-                        {...{ key, component, icon }}
+                        {...{ key, component, icon, params }}
                         active={component === activeName}
                         navigation={props.navigation}
                       >

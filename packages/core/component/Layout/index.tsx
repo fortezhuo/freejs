@@ -86,6 +86,7 @@ interface Layout extends LayoutFull {
   stickyRight?: React.ReactNode
   style?: JSONObject
   document?: any
+  workflow?: boolean
 }
 
 export const Layout: React.FC<Layout> = ({
@@ -96,6 +97,7 @@ export const Layout: React.FC<Layout> = ({
   transparent = false,
   scroll = true,
   document,
+  workflow = false,
   style,
 }) => {
   const { temp } = useApp()
@@ -124,6 +126,7 @@ export const Layout: React.FC<Layout> = ({
               <View style={s.viewHidden}>
                 <HiddenField name="_docAuthors" control={document.control} />
                 <HiddenField name="_docReaders" control={document.control} />
+                <HiddenField name="parameter" control={document.control} />
               </View>
             </>
           )}

@@ -20,13 +20,7 @@ const ProfileWorkflow: React.FC = (props) => {
     <>
       <Layout
         document={document}
-        stickyLeft={
-          !isMobile && (
-            <View style={s.viewButton}>
-              <ActionGroup.Large actions={actions} />
-            </View>
-          )
-        }
+        stickyLeft={!isMobile && <ActionGroup.Large actions={actions} />}
       >
         <Section label="Information">
           <Row dark>
