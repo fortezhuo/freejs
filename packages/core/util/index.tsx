@@ -1,6 +1,7 @@
 import { configApp } from "@free/env"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import dayjs from "dayjs"
+import numeral from "numeral"
 
 const regexDate = /^\d{4}-\d{2}-\d{2}/
 const STATE_KEY = `${configApp.name.toUpperCase()}_STATE`
@@ -66,6 +67,12 @@ export const formatDate = (value: any) => dayjs(value).format("DD MMM YYYY")
 export const formatTime = (value: any) => dayjs(value).format("HH:mm")
 export const formatDateTime = (value: any) =>
   dayjs(value).format("DD MMM YYYY HH:mm:ss")
+
+// NUMBER
+export const formatDecimal = (value: any) => numeral(value).format("0,0.00")
+export const formatNumber = (value: any) => numeral(value).format("0,0")
+
+// STRING
 export const formatString = (value: any) => {
   return Array.isArray(value)
     ? typeof value[0] === "string" || typeof value[0] === "undefined"

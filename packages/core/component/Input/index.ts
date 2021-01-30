@@ -1,3 +1,7 @@
+export {
+  InputNumber as Number,
+  InputNumberRaw as NumberPassword,
+} from "./InputNumber"
 export { InputText as Text, InputTextRaw as RawText } from "./InputText"
 export {
   InputPassword as Password,

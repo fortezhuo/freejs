@@ -2,7 +2,7 @@ import React from "react"
 import { useApp } from "../../../state"
 import { Platform } from "react-native"
 
-export const useFocus = (ref: any) => {
+export const useFocus = (ref: any, callback?: any) => {
   const { refScroll, refOffset, ...app } = useApp()
 
   const onFocus = React.useCallback(() => {
@@ -37,6 +37,9 @@ export const useFocus = (ref: any) => {
       )
     }
 
+    if (callback) {
+      callback()
+    }
     ref.current?.focus()
   }, [])
   return onFocus

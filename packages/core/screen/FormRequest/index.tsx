@@ -70,12 +70,10 @@ const FormRequest: React.FC = () => {
             <Label>Amount</Label>
           </Col>
           <Col light md={4}>
-            <Input.Select
+            <Input.Number
               document={document}
               name="roles"
-              multiple
               placeholder="Roles"
-              options={document.temp.roles}
               rules={{
                 validate: (value: any) =>
                   value.length == 0 ? "Roles is mandatory" : undefined,
