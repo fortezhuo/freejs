@@ -16,6 +16,7 @@ import { TablePagination } from "./TablePagination"
 import { TableRow } from "./TableRow"
 import { useView, useColumns, useActions } from "./hook"
 import { useApp } from "../../state"
+import { random } from "../../util"
 
 const defaultColor = color(theme.default_text)
 const colMobileHidden = [
@@ -146,11 +147,9 @@ const TableContent: React.FC<TableContent> = ({
         {headerGroups.map((headerGroup: any, i: number) => {
           const style = isMobile ? { height: 0, opacity: 0 } : {}
           return (
-            <Table.Header key={`header_${i}`} style={style}>
+            <Table.Header key={random()} style={style}>
               {headerGroup.headers.map((column: any, j: number) => {
-                return (
-                  <TableHeaderCell key={`header_${i}_${j}`} column={column} />
-                )
+                return <TableHeaderCell key={random()} column={column} />
               })}
             </Table.Header>
           )
@@ -161,7 +160,7 @@ const TableContent: React.FC<TableContent> = ({
         ) : (
           <FlatList
             data={rows}
-            keyExtractor={(row: any) => row.id}
+            keyExtractor={() => random()}
             renderItem={({ item, index }: any) => {
               prepareRow(item)
               return (

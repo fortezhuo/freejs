@@ -10,22 +10,19 @@ interface Row {
   testID?: string
 }
 
-export const Row: React.FC<Row> = ({
-  children,
-  dark,
-  style,
-  testID = "Row",
-}) => {
-  return (
-    <View testID={testID} style={[s.viewRow, dark ? s.rowDark : {}, style]}>
-      {children}
-    </View>
-  )
-}
+export const Row: React.FC<Row> = React.memo(
+  ({ children, dark, style, testID = "Row" }) => {
+    return (
+      <View testID={testID} style={[s.viewRow, dark ? s.rowDark : {}, style]}>
+        {children}
+      </View>
+    )
+  }
+)
 
-export const Header: React.FC<Row> = ({ children, style }) => {
+export const Header: React.FC<Row> = React.memo(({ children, style }) => {
   return <Row style={[s.viewHeader, style]}>{children}</Row>
-}
+})
 
 const s = StyleSheet.create({
   viewHeader: tw(`h-12 shadow-md`),

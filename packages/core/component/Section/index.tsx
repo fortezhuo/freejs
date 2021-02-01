@@ -27,7 +27,7 @@ export const Section: React.FC<{
             name={`chevron-${isExpand ? "up" : "down"}`}
           />
           <Title />
-          {right}
+          {right && <View style={{ flexDirection: "row" }}>{right}</View>}
         </View>
       </TouchableOpacity>
       <View

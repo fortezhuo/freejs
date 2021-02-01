@@ -40,45 +40,42 @@ export const Cell: React.FC<Cell> = ({
   )
 }
 
-export const CellText: React.FC<Cell> = ({
-  isMobile,
-  children,
-  style,
-  testID = "CellText",
-}) => {
-  return (
-    <Cell isMobile={isMobile} style={style} testID={testID}>
-      <Text style={isMobile ? s.textCellSmall : s.textCell}>{children}</Text>
-    </Cell>
-  )
-}
+export const CellText: React.FC<Cell> = React.memo(
+  ({ isMobile, children, style, testID = "CellText" }) => {
+    return (
+      <Cell isMobile={isMobile} style={style} testID={testID}>
+        <Text style={isMobile ? s.textCellSmall : s.textCell}>{children}</Text>
+      </Cell>
+    )
+  }
+)
 
-export const CellLink: React.FC<CellLink> = ({ style, name, params = {} }) => {
-  return (
-    <Cell
-      style={[style, { paddingBottom: 0, paddingLeft: 0 }]}
-      testID="CellLink"
-    >
-      <Link name={name} params={params}>
-        <Icon name={"link-45deg"} size={24} color={defaultColor} />
-      </Link>
-    </Cell>
-  )
-}
+export const CellLink: React.FC<CellLink> = React.memo(
+  ({ style, name, params = {} }) => {
+    return (
+      <Cell
+        style={[style, { paddingBottom: 0, paddingLeft: 0 }]}
+        testID="CellLink"
+      >
+        <Link name={name} params={params}>
+          <Icon name={"link-45deg"} size={24} color={defaultColor} />
+        </Link>
+      </Cell>
+    )
+  }
+)
 
-export const CellPressable: React.FC<CellPressable> = ({
-  style,
-  icon,
-  onPress,
-}) => {
-  return (
-    <Cell style={style} testID="CellLink">
-      <TouchableOpacity onPress={onPress}>
-        <Icon name={icon} size={16} color={defaultColor} />
-      </TouchableOpacity>
-    </Cell>
-  )
-}
+export const CellPressable: React.FC<CellPressable> = React.memo(
+  ({ style, icon, onPress }) => {
+    return (
+      <Cell style={style} testID="CellLink">
+        <TouchableOpacity onPress={onPress}>
+          <Icon name={icon} size={16} color={defaultColor} />
+        </TouchableOpacity>
+      </Cell>
+    )
+  }
+)
 
 const s = StyleSheet.create({
   viewCellSmall: tw("p-0 w-full"),

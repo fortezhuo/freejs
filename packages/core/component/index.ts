@@ -6,9 +6,10 @@ export { ActionGroup, Input, Table }
 
 export { Accordion, AccordionItem } from "./Accordion"
 export { Alert } from "./Alert"
+export { Approver } from "./Approver"
 export { Avatar } from "./Avatar"
 export { Base } from "./Base"
-export { Button } from "./Button"
+export { Button, ButtonIcon } from "./Button"
 export { Col, Row, Label } from "./Grid"
 export { Gradient } from "./Gradient"
 export { KeyboardAwareScrollView } from "./KeyboardAwareScrollView"

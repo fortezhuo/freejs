@@ -8,6 +8,7 @@ import {
   Col,
   Input,
   Label,
+  Approver,
 } from "../../component"
 
 const FormRequest: React.FC = () => {
@@ -42,7 +43,6 @@ const FormRequest: React.FC = () => {
               document={document}
               name="department"
               placeholder="Department"
-              rules={{ required: "Department is mandatory" }}
               {...stateProps}
             />
           </Col>
@@ -54,15 +54,8 @@ const FormRequest: React.FC = () => {
           <Col light md={4}>
             <Input.Text
               document={document}
-              name="email"
-              placeholder="Email"
-              rules={{
-                required: "Email is mandatory",
-                pattern: {
-                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                  message: "Invalid Email",
-                },
-              }}
+              name="position"
+              placeholder="Position"
               {...stateProps}
             />
           </Col>
@@ -76,11 +69,43 @@ const FormRequest: React.FC = () => {
               placeholder="Amount"
               rules={{
                 validate: (value: any) =>
-                  value.length == 0 ? "Roles is mandatory" : undefined,
+                  value == 0 ? "Amount is mandatory" : undefined,
               }}
               {...stateProps}
             />
           </Col>
+        </Row>
+      </Section>
+      <Section label={"Approval"}>
+        <Row style={{ padding: 2 }}>
+          <Approver
+            title="Submitter"
+            stampDate={"1 Feb 2021"}
+            stampPerson={"Forte"}
+            stamp={"Submitted"}
+            sla={"0 days"}
+          ></Approver>
+          <Approver
+            title="Submitter"
+            stampDate={"1 Feb 2021"}
+            stampPerson={"Forte"}
+            stamp={"Submitted"}
+            sla={"0 days"}
+          ></Approver>
+          <Approver
+            title="Submitter"
+            stampDate={"1 Feb 2021"}
+            stampPerson={"Forte"}
+            stamp={"Submitted"}
+            sla={"0 days"}
+          ></Approver>
+          <Approver
+            title="Submitter"
+            stampDate={"1 Feb 2021"}
+            stampPerson={"Forte"}
+            stamp={"Submitted"}
+            sla={"0 days"}
+          ></Approver>
         </Row>
       </Section>
     </Layout>

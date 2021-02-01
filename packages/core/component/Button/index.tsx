@@ -87,6 +87,26 @@ export const Button: React.FC<Button> = (props) => {
   )
 }
 
+interface ButtonIcon {
+  icon: string
+  size?: number
+  onPress?: VoidFunction
+  type: string
+  style?: JSONObject
+}
+
+export const ButtonIcon: React.FC<ButtonIcon> = React.memo(
+  ({ icon, size, onPress, type, style }) => {
+    return (
+      <View style={[s.viewIconButton, tw(theme[type]), style]}>
+        <TouchableOpacity onPress={onPress} style={s.touch}>
+          <Icon name={icon} size={size || 24} />
+        </TouchableOpacity>
+      </View>
+    )
+  }
+)
+
 const s: any = StyleSheet.create({
   viewButton: tw(
     "flex-row items-center justify-center flex-grow rounded-full px-2",
@@ -95,6 +115,8 @@ const s: any = StyleSheet.create({
       height: 36,
     }
   ),
+  viewIconButton: tw(`rounded-full h-8 w-8`),
+  touch: tw("flex-col items-center justify-center flex-grow w-full"),
   viewGroup: tw("flex-row"),
   iconButton: tw("px-1"),
 })

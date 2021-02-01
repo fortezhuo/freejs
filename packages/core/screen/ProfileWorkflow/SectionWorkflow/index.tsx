@@ -1,5 +1,6 @@
 import React from "react"
 import { Button, Section } from "../../../component"
+import { View } from "react-native"
 import { useWatch } from "react-hook-form"
 import { Content } from "./Content"
 
@@ -29,7 +30,7 @@ export const SectionWorkflow: React.FC<{
     <Section
       label="List Workflow"
       right={
-        <Button type="primary_1_bg" style={{ width: 80 }} onPress={handleAdd}>
+        <Button style={{ width: 80 }} type="primary_1_bg" onPress={handleAdd}>
           Add
         </Button>
       }

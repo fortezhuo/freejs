@@ -1,5 +1,5 @@
 import React from "react"
-import { Col, Row, Input, Label, Button, Text } from "../../../component"
+import { Col, Row, Input, Label, ButtonIcon, Text } from "../../../component"
 import { useFieldArray } from "react-hook-form"
 import { View, StyleSheet } from "react-native"
 import { tw } from "@free/tailwind"
@@ -45,7 +45,12 @@ const Workflow: React.FC<{
     <View style={s.viewWorkflow}>
       <View style={s.viewTitle}>
         <Text style={s.textWorkflow}>{`Workflow #${i + 1}`}</Text>
-        <Button type="danger_bg" icon="trash" onPress={() => handleRemove(i)} />
+        <ButtonIcon
+          type="danger_bg"
+          icon="trash"
+          size={18}
+          onPress={() => handleRemove(i)}
+        />
       </View>
       <Row>
         {fields.map((o: JSONObject, j: number) => (
