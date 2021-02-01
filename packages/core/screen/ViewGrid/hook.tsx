@@ -233,21 +233,24 @@ export const useColumns = ({ refBottomSheet, setContent }: any) => {
   const { handleError } = useAlert()
   const { isMobile, config = {}, route } = view.data
 
-  const onOpenJSON = React.useCallback((id) => {
-    ;(async () => {
-      try {
-        if (id.length !== 24) {
-          throw new Error("Invalid ID")
+  const onOpenJSON = React.useCallback(
+    (id) => {
+      ;(async () => {
+        try {
+          if (id.length !== 24) {
+            throw new Error("Invalid ID")
+          }
+          const res = await POST(`/api/find/trash/${id}`, {})
+          setContent(res.data.result)
+        } catch (err) {
+          handleError(err)
+        } finally {
+          refBottomSheet.current.open()
         }
-        const res = await POST(`/api/find/trash/${id}`, {})
-        setContent(res.data.result.data)
-      } catch (err) {
-        handleError(err)
-      } finally {
-        refBottomSheet.current.open()
-      }
-    })()
-  }, [])
+      })()
+    },
+    [setContent]
+  )
 
   return React.useMemo(
     () =>
@@ -301,7 +304,9 @@ export const useColumns = ({ refBottomSheet, setContent }: any) => {
                 <CellPressable
                   icon="search"
                   style={cell.column.style}
-                  onPress={() => onOpenJSON(cell.value)}
+                  onPress={() => {
+                    onOpenJSON(cell.value)
+                  }}
                 />
               )
             default:
@@ -313,7 +318,7 @@ export const useColumns = ({ refBottomSheet, setContent }: any) => {
           }
         },
       })),
-    [config?.name, isMobile]
+    [config?.name, isMobile, onOpenJSON]
   )
 }
 

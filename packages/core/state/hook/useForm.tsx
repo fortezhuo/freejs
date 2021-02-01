@@ -20,17 +20,17 @@ import * as req from "../../request"
  * isEditable
  */
 
-const initCallback = {
-  onLoad: async function () {},
-  onEdit: async function () {},
-  onBeforeSave: async function (data: any) {},
-  onAfterSave: async function (data: any) {},
-  onBeforeCalculate: async function (data: any) {},
-  onAfterCalculate: async function (data: any) {},
-  onBeforeProcess: async function (data: any) {},
-  onAfterProcess: async function (data: any) {},
-  onDestroy: function () {},
-}
+const aFunction = [
+  "onLoad",
+  "onEdit",
+  "onBeforeSave",
+  "onAfterSave",
+  "onBeforeCalculate",
+  "onAfterCalculate",
+  "onBeforeProcess",
+  "onAfterProcess",
+  "onDestroy",
+]
 
 export const useForm = (name: string) => {
   const app = useApp()
@@ -41,7 +41,7 @@ export const useForm = (name: string) => {
   const [stateProps, setState] = useState({})
   const id = (route?.params as any).id
   const refMounted = React.useRef<boolean>(false)
-  const refFunction = React.useRef<JSONObject>(initCallback)
+  const refFunction = React.useRef<JSONObject>({})
   const isMobile = app.temp.isMobile
 
   const setData = React.useCallback(async (data: JSONObject) => {
@@ -84,7 +84,7 @@ export const useForm = (name: string) => {
   const handleLoad = React.useCallback(async () => {
     try {
       setState({ isLoading: true })
-      await refFunction.current.onLoad()
+      refFunction.current.onLoad && (await refFunction.current.onLoad())
       if (id.length === 24) {
         const {
           data: { result },
@@ -112,9 +112,11 @@ export const useForm = (name: string) => {
       const method = isUpdate ? "PATCH" : "POST"
       try {
         setState({ isLoading: true })
-        await refFunction.current.onBeforeSave(data)
+        refFunction.current.onBeforeSave &&
+          (await refFunction.current.onBeforeSave(data))
         await req[method](`/api/${name}${isUpdate ? `/${id}` : ""}`, data)
-        await refFunction.current.onAfterSave(data)
+        refFunction.current.onAfterSave &&
+          (await refFunction.current.onAfterSave(data))
         return true
       } catch (err) {
         return handleError(err)
@@ -130,7 +132,13 @@ export const useForm = (name: string) => {
       registerForteApp({ [name]: form.getValues })
     }
     return () => {
-      refFunction.current.onDestroy()
+      refFunction.current.onDestroy && refFunction.current.onDestroy()
+      aFunction.forEach((f: string) => {
+        if (refFunction.current[f]) {
+          refFunction.current[f] = async function () {}
+        }
+      })
+
       refMounted.current = false
     }
   }, [route.name])

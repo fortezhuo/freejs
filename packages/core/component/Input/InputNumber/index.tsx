@@ -6,6 +6,7 @@ import { theme } from "../../../config/theme"
 import { DisplayError } from "../DisplayError"
 import { useController } from "react-hook-form"
 import { useFocus } from "../shared/useFocus"
+import { useNumber } from "./hook/useNumber"
 import NumberFormat from "react-number-format"
 
 enum NumberType {
@@ -21,7 +22,6 @@ interface InputNumberRaw extends TextInputProps {
   allowZero?: boolean
   styleContainer?: JSONObject
   onChange?: VoidFunction
-  onChangedFormettedValue?: VoidFunction
   style?: JSONObject
 }
 
@@ -44,7 +44,7 @@ export const InputNumberRaw: React.FC<InputNumberRaw> = ({
   onChange,
   styleContainer,
   style,
-  value: amount = "",
+  value,
   ...props
 }) => {
   const ref = React.useRef<TextInput>(null)
@@ -55,6 +55,7 @@ export const InputNumberRaw: React.FC<InputNumberRaw> = ({
       ? "numeric"
       : "number-pad"
   const onFocus = useFocus(ref)
+  const [formattedValue, onChangeText] = useNumber({ value, onChange, type })
 
   return (
     <Base
@@ -66,26 +67,30 @@ export const InputNumberRaw: React.FC<InputNumberRaw> = ({
       ]}
     >
       <NumberFormat
-        value={amount}
+        value={formattedValue}
         displayType={"text"}
         thousandSeparator={true}
         decimalSeparator={"."}
         decimalScale={type === "decimal" ? 2 : 0}
         prefix={""}
-        renderText={(value) => {
-          if (amount.endsWith(".") && !value.includes(".")) {
+        renderText={(value: string) => {
+          if (formattedValue.endsWith(".") && !value.includes(".")) {
             value = value + "."
           }
-          if (!amount.endsWith(".") && value.endsWith(".")) {
+          if (!formattedValue.endsWith(".") && value.endsWith(".")) {
             value = value.slice(0, -1)
           }
+
           return (
             <TextInput
               underlineColorAndroid="transparent"
               value={value}
               style={s.inputText}
-              onChangeText={onChange}
-              keyboardType={keyboardType}
+              placeholderTextColor={tw("text-gray-600").color}
+              editable={
+                editable ? editable : !disabled && !isUpdating && editable
+              }
+              {...{ onFocus, onChangeText, keyboardType, ...props }}
             />
           )
         }}

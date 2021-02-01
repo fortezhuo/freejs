@@ -30,34 +30,37 @@ export const BottomSheet: React.FC<{
   const document = useForm()
   const { refBottomSheet } = useView()
 
-  const renderFlatList = React.useCallback((content) => {
-    const data = Object.keys(content).map((key) => ({
-      key,
-      value: content[key],
-    }))
-    return {
-      data,
-      stickyHeaderIndices: [0],
-      renderItem: ({ item, index }: any) => {
-        return (
-          <Table.Row dark={index % 2 == 0}>
-            <View style={{ width: 200 }}>
-              <Table.CellText>{item.key}</Table.CellText>
-            </View>
-            <Table.CellText>{format(item.value)}</Table.CellText>
-          </Table.Row>
-        )
-      },
-      ListHeaderComponent: () => (
-        <View style={s.viewHeader}>
-          <Text style={s.textHeader}>Content</Text>
-        </View>
-      ),
-      ListFooterComponent: () => <View style={s.viewFooter} />,
-      keyExtractor: (item: any) => item.key,
-      showsVerticalScrollIndicator: false,
-    }
-  }, [])
+  const renderFlatList = React.useCallback(
+    (content) => {
+      const data = Object.keys(content).map((key) => ({
+        key,
+        value: content[key],
+      }))
+      return {
+        data,
+        stickyHeaderIndices: [0],
+        renderItem: ({ item, index }: any) => {
+          return (
+            <Table.Row dark={index % 2 == 0}>
+              <View style={{ width: 200 }}>
+                <Table.CellText>{item.key}</Table.CellText>
+              </View>
+              <Table.CellText>{format(item.value)}</Table.CellText>
+            </Table.Row>
+          )
+        },
+        ListHeaderComponent: () => (
+          <View style={s.viewHeader}>
+            <Text style={s.textHeader}>Content</Text>
+          </View>
+        ),
+        ListFooterComponent: () => <View style={s.viewFooter} />,
+        keyExtractor: (item: any) => item.key,
+        showsVerticalScrollIndicator: false,
+      }
+    },
+    [content]
+  )
 
   const onClosed = React.useCallback(() => {
     if (!!content) {
