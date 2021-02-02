@@ -8,11 +8,11 @@ import {
   Col,
   Input,
   Label,
-  Approver,
 } from "../../component"
 
 const FormRequest: React.FC = () => {
   const { stateProps, actions, isMobile, ...document } = useDocument()
+
   return (
     <Layout
       workflow
@@ -78,34 +78,10 @@ const FormRequest: React.FC = () => {
       </Section>
       <Section label={"Approval"}>
         <Row style={{ padding: 2 }}>
-          <Approver
-            title="Submitter"
-            stampDate={"1 Feb 2021"}
-            stampPerson={"Forte"}
-            stamp={"Submitted"}
-            sla={"0 days"}
-          ></Approver>
-          <Approver
-            title="Submitter"
-            stampDate={"1 Feb 2021"}
-            stampPerson={"Forte"}
-            stamp={"Submitted"}
-            sla={"0 days"}
-          ></Approver>
-          <Approver
-            title="Submitter"
-            stampDate={"1 Feb 2021"}
-            stampPerson={"Forte"}
-            stamp={"Submitted"}
-            sla={"0 days"}
-          ></Approver>
-          <Approver
-            title="Submitter"
-            stampDate={"1 Feb 2021"}
-            stampPerson={"Forte"}
-            stamp={"Submitted"}
-            sla={"0 days"}
-          ></Approver>
+          <Input.Approver i={0} document={document} title="Submitter" />
+          <Input.Approver i={1} document={document} title="Approver 1" />
+          <Input.Approver i={2} document={document} title="Approver 2" />
+          <Input.Approver i={3} document={document} title="Approver 3" />
         </Row>
       </Section>
     </Layout>

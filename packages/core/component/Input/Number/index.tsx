@@ -3,7 +3,7 @@ import { TextInput, StyleSheet, TextInputProps, Platform } from "react-native"
 import { Base } from "../../Base"
 import { tw } from "@free/tailwind"
 import { theme } from "../../../config/theme"
-import { DisplayError } from "../DisplayError"
+import { InputError } from "../Error"
 import { useController } from "react-hook-form"
 import { useFocus } from "../shared/useFocus"
 import { useNumber } from "./hook/useNumber"
@@ -126,7 +126,7 @@ export const InputNumber: React.FC<InputNumber> = ({
           !props.isUpdating && !props.disabled && isEditable && editable
         }
       />
-      {invalid && <DisplayError name={name} error={document.errors} />}
+      {invalid && <InputError name={name} error={document.errors} />}
     </>
   )
 }

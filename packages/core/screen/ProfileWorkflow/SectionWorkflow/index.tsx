@@ -1,6 +1,6 @@
 import React from "react"
 import { Button, Section } from "../../../component"
-import { View } from "react-native"
+
 import { useWatch } from "react-hook-form"
 import { Content } from "./Content"
 

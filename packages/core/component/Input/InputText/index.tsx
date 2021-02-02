@@ -3,7 +3,7 @@ import { TextInput, StyleSheet, TextInputProps } from "react-native"
 import { Base } from "../../Base"
 import { tw } from "@free/tailwind"
 import { theme } from "../../../config/theme"
-import { DisplayError } from "../DisplayError"
+import { InputError } from "../Error"
 import { useController } from "react-hook-form"
 import { useFocus } from "../shared/useFocus"
 
@@ -93,7 +93,7 @@ export const InputText: React.FC<InputText> = ({
           !props.isUpdating && !props.disabled && isEditable && editable
         }
       />
-      {invalid && <DisplayError name={name} error={document.errors} />}
+      {invalid && <InputError name={name} error={document.errors} />}
     </>
   )
 }

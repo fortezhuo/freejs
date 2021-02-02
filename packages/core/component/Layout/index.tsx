@@ -1,25 +1,11 @@
 import React from "react"
-import { View, StyleSheet, Text, Platform } from "react-native"
+import { View, StyleSheet } from "react-native"
+import { InputDisplay } from "../Input/Display"
 import { theme } from "../../config/theme"
 import { Gradient } from "../Gradient"
 import { KeyboardAwareScrollView } from "../KeyboardAwareScrollView"
 import { tw } from "@free/tailwind"
-import { useController } from "react-hook-form"
 import { useApp } from "../../state"
-
-const HiddenField: React.FC<{ name: string; control: any }> = ({
-  name,
-  control,
-}) => {
-  const {
-    field: { value },
-  } = useController({
-    name,
-    control,
-    defaultValue: ["*"],
-  })
-  return <Text>{JSON.stringify(value)}</Text>
-}
 
 interface Wrapper {
   scroll?: boolean
@@ -124,9 +110,17 @@ export const Layout: React.FC<Layout> = ({
             <>
               <View style={{ height: 150 }} />
               <View style={s.viewHidden}>
-                <HiddenField name="_docAuthors" control={document.control} />
-                <HiddenField name="_docReaders" control={document.control} />
-                <HiddenField name="parameter" control={document.control} />
+                <InputDisplay
+                  name="_docAuthors"
+                  control={document.control}
+                  defaultValue={["*"]}
+                />
+                <InputDisplay
+                  name="_docReaders"
+                  control={document.control}
+                  defaultValue={["*"]}
+                />
+                <InputDisplay name="parameter" control={document.control} />
               </View>
             </>
           )}

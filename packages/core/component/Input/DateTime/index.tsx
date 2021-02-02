@@ -1,6 +1,6 @@
 import React from "react"
 import { DateTimePicker } from "./Raw"
-import { DisplayError } from "../DisplayError"
+import { InputError } from "../Error"
 import { useController } from "react-hook-form"
 
 interface InputRawDateTime {
@@ -63,7 +63,7 @@ export const InputDateTime: React.FC<InputDateTime> = ({
   return (
     <>
       <InputRawDateTime {...props} onChange={onChange} value={value} />
-      {invalid && <DisplayError name={name} error={document.errors} />}
+      {invalid && <InputError name={name} error={document.errors} />}
     </>
   )
 }

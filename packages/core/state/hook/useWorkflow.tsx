@@ -2,20 +2,10 @@ import React from "react"
 import { useForm } from "./useForm"
 import * as req from "../../request"
 
-export const useWorkflow = (name: string) => {
-  const { refFunction, setState, id, ...document } = useForm(name)
+export const useWorkflow = ({ req, refFunction, document }: JSONObject) => {
+  const { id } = document
 
-  const beforeProcess = React.useCallback(async (data: any) => {
-    await refFunction.current.onBeforeProcess(data)
-  }, [])
-
-  const calculate = React.useCallback(async (data: any) => {
-    await refFunction.current.onBeforeCalculate(data)
-    //
-    await refFunction.current.onAfterCalculate(data)
-  }, [])
-
-  const process = React.useCallback(
+  const reqProcess = React.useCallback(
     async (data: any) => {
       const isUpdate = id === 24
       const method = isUpdate ? "PATCH" : "POST"
@@ -25,21 +15,41 @@ export const useWorkflow = (name: string) => {
     [id]
   )
 
+  const reqCalculate = React.useCallback(async () => {
+    const data = document.getValues()
+    const res = await req.POST(`/api/workflow`)
+  }, [])
+
+  const beforeProcess = React.useCallback(async (data: any) => {
+    await refFunction.current.onBeforeProcess(data)
+  }, [])
+
+  const calculate = React.useCallback(async () => {
+    const data = document.getValues()
+    refFunction.current.onBeforeCalculate &&
+      (await refFunction.current.onBeforeCalculate(data))
+
+    refFunction.current.onAfterCalculate &&
+      (await refFunction.current.onAfterCalculate(data))
+  }, [])
+
   const afterProcess = React.useCallback(async (data: any) => {
     await refFunction.current.onAfterProcess(data)
   }, [])
 
-  const processDocument = React.useCallback(async (data: any) => {
+  const process = React.useCallback(async (data: any) => {
     try {
-      setState({ isLoading: true })
+      document.setState({ isLoading: true })
       await beforeProcess(data)
-      if (await process(data)) {
+      if (await reqProcess(data)) {
         await afterProcess(data)
       }
     } catch (err) {
       return document.handleError(err)
     } finally {
-      setState({ isLoading: false })
+      document.setState({ isLoading: false })
     }
   }, [])
+
+  return { calculate, process, afterProcess }
 }

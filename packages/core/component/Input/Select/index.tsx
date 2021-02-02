@@ -6,7 +6,7 @@ import { Modal } from "../../Modal"
 import { Col } from "../../Grid"
 import { Anchor } from "./Anchor"
 import { theme } from "../../../config/theme"
-import { DisplayError } from "../DisplayError"
+import { InputError } from "../Error"
 import { useController } from "react-hook-form"
 import { tw } from "@free/tailwind"
 
@@ -156,7 +156,7 @@ export const InputSelect: React.FC<InputSelect> = ({
           ...props,
         }}
       />
-      {invalid && <DisplayError name={name} error={document.errors} />}
+      {invalid && <InputError name={name} error={document.errors} />}
     </>
   )
 }

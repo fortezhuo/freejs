@@ -1,10 +1,22 @@
 import React from "react"
-import { useForm } from "../../state/hook"
+import { useForm, useWorkflow } from "../../state/hook"
 
 export const useDocument = () => {
   const { refFunction, req, stateProps, random, ...document } = useForm(
     "request"
   )
+  const workflow = useWorkflow({
+    req,
+    refFunction,
+    stateProps,
+    document,
+  })
+
+  React.useEffect(() => {
+    setTimeout(() => {
+      workflow.calculate()
+    }, [5000])
+  }, [])
 
   const actions = React.useMemo(() => {
     return [

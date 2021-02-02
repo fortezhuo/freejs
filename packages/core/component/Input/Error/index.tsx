@@ -21,7 +21,7 @@ const getErrorMessage = (error: JSONObject, name?: string) => {
   ).message
 }
 
-export const DisplayError: React.FC<DisplayError> = ({ error, name }) => {
+export const InputError: React.FC<DisplayError> = ({ error, name }) => {
   const message = getErrorMessage(error, name)
   return message ? <Text style={[s.textError]}>* {message}</Text> : <></>
 }
