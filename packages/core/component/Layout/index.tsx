@@ -1,6 +1,6 @@
 import React from "react"
 import { View, StyleSheet } from "react-native"
-import { InputDisplay } from "../Input/Display"
+import { SectionAdmin } from "../SectionAdmin"
 import { theme } from "../../config/theme"
 import { Gradient } from "../Gradient"
 import { KeyboardAwareScrollView } from "../KeyboardAwareScrollView"
@@ -72,7 +72,7 @@ interface Layout extends LayoutFull {
   stickyRight?: React.ReactNode
   style?: JSONObject
   document?: any
-  workflow?: boolean
+  adminPanel?: any
 }
 
 export const Layout: React.FC<Layout> = ({
@@ -83,7 +83,7 @@ export const Layout: React.FC<Layout> = ({
   transparent = false,
   scroll = true,
   document,
-  workflow = false,
+  adminPanel,
   style,
 }) => {
   const { temp } = useApp()
@@ -108,20 +108,11 @@ export const Layout: React.FC<Layout> = ({
           {children}
           {document && (
             <>
-              <View style={{ height: 150 }} />
-              <View style={s.viewHidden}>
-                <InputDisplay
-                  name="_docAuthors"
-                  control={document.control}
-                  defaultValue={["*"]}
-                />
-                <InputDisplay
-                  name="_docReaders"
-                  control={document.control}
-                  defaultValue={["*"]}
-                />
-                <InputDisplay name="parameter" control={document.control} />
+              <View style={isMobile ? s.viewHidden : {}}>
+                <SectionAdmin document={document}>{adminPanel}</SectionAdmin>
               </View>
+
+              <View style={{ height: 150 }} />
             </>
           )}
         </View>

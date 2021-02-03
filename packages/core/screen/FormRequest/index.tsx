@@ -9,14 +9,15 @@ import {
   Input,
   Label,
 } from "../../component"
+import { AdminPanel } from "./AdminPanel"
 
 const FormRequest: React.FC = () => {
   const { stateProps, actions, isMobile, ...document } = useDocument()
 
   return (
     <Layout
-      workflow
       document={document}
+      adminPanel={<AdminPanel document={document} />}
       stickyLeft={
         !isMobile && <ActionGroup.Large actions={actions} {...stateProps} />
       }

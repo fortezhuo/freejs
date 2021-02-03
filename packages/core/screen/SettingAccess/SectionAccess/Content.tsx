@@ -70,7 +70,7 @@ export const Access: React.FC<{
         </Col>
         <Col light md={10}>
           <Input.Text
-            separator=","
+            multi
             document={document}
             name={`list[${i}].fields`}
             defaultValue={field.fields || []}

@@ -4,11 +4,11 @@ const validator = new Validator()
 
 export const createSchema = (schema: JSONObject) => ({
   ...schema,
-  _createdAt: { type: "date", optional: true },
+  _createdAt: { type: "date", optional: true, convert: true },
   _createdBy: { type: "string", optional: true },
   _docAuthors: { type: "array", optional: true },
   _docReaders: { type: "array", optional: true },
-  _updatedAt: { type: "date", optional: true },
+  _updatedAt: { type: "date", optional: true, convert: true },
   _updatedBy: { type: "string", optional: true },
 })
 

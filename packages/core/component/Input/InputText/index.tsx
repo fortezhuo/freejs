@@ -19,7 +19,7 @@ interface InputText extends InputTextRaw {
   document: any
   name: string
   rules?: any
-  separator?: string
+  multi?: boolean
   isEditable?: boolean
   defaultValue?: any
 }
@@ -56,7 +56,7 @@ export const InputTextRaw: React.FC<InputTextRaw> = ({
 }
 
 export const InputText: React.FC<InputText> = ({
-  separator,
+  multi,
   document,
   name,
   rules,
@@ -77,12 +77,14 @@ export const InputText: React.FC<InputText> = ({
 
   const inputProps = React.useMemo(
     () => ({
-      value: separator ? (value || []).join(separator) : value,
+      value: multi
+        ? ((Array.isArray(value) ? value : [value]) || []).join(",")
+        : value,
       onChangeText: (text: string) => {
-        onChange(separator ? text.split(separator) : text)
+        onChange(multi ? text.split(",") : text)
       },
     }),
-    [separator, value]
+    [multi, value]
   )
 
   return (

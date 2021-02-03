@@ -10,7 +10,8 @@ import { Platform } from "react-native"
 import { asyncForEach } from "../../util"
 import { registerForteApp } from "../../util"
 import { useApp } from "./useApp"
-import { random } from "../../util"
+import { random, isDateString } from "../../util"
+import dayjs from "dayjs"
 import * as req from "../../request"
 
 /*
@@ -46,7 +47,13 @@ export const useForm = (name: string) => {
 
   const setData = React.useCallback(async (data: JSONObject) => {
     await asyncForEach(Object.keys(data), async (key: string) => {
-      form.setValue(key, data[key], { shouldDirty: true })
+      form.setValue(
+        key,
+        isDateString(data[key]) ? new Date(data[key]) : data[key],
+        {
+          shouldDirty: true,
+        }
+      )
     })
   }, [])
 
@@ -82,8 +89,9 @@ export const useForm = (name: string) => {
   }, [])
 
   const handleLoad = React.useCallback(async () => {
+    const isEditable = app.can("update", name)
     try {
-      setState({ isLoading: true })
+      setState({ isLoading: true, isEditable })
       refFunction.current.onLoad && (await refFunction.current.onLoad())
       if (id.length === 24) {
         const {
@@ -91,10 +99,11 @@ export const useForm = (name: string) => {
         } = await req.POST(`/api/find/${name}/${id}`, {})
         await setData(result)
       }
+      refFunction.current.onEdit && (await refFunction.current.onEdit())
     } catch (err) {
       handleError(err)
     } finally {
-      setState({ isLoading: false, isEditable: app.can("update", name) })
+      setState({ isLoading: false })
     }
   }, [id])
 
@@ -164,6 +173,7 @@ export const useForm = (name: string) => {
 
   return {
     ...form,
+    app,
     req,
     refFunction,
     handleError,

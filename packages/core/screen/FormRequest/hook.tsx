@@ -2,7 +2,7 @@ import React from "react"
 import { useForm, useWorkflow } from "../../state/hook"
 
 export const useDocument = () => {
-  const { refFunction, req, stateProps, random, ...document } = useForm(
+  const { refFunction, req, stateProps, random, app, ...document } = useForm(
     "request"
   )
   const workflow = useWorkflow({
@@ -13,9 +13,9 @@ export const useDocument = () => {
   })
 
   React.useEffect(() => {
-    setTimeout(() => {
-      workflow.calculate()
-    }, [5000])
+    refFunction.current.onEdit = async function () {
+      document.setValue("name", app.data.auth.username)
+    }
   }, [])
 
   const actions = React.useMemo(() => {
