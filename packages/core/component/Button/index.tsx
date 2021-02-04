@@ -59,7 +59,7 @@ export const Button: React.FC<Button> = (props) => {
   return (
     <Base isLoading={isLoading} style={[s.viewButton, bgColor, style]}>
       <TouchableOpacity
-        style={s.viewGroup}
+        style={s.touchLarge}
         disabled={disabled || isLoading}
         onPressIn={onPress}
       >
@@ -99,7 +99,7 @@ export const ButtonIcon: React.FC<ButtonIcon> = React.memo(
   ({ icon, size, onPress, type, style }) => {
     return (
       <View style={[s.viewIconButton, tw(theme[type]), style]}>
-        <TouchableOpacity onPress={onPress} style={s.touch}>
+        <TouchableOpacity onPress={onPress} style={s.touchSmall}>
           <Icon name={icon} size={size || 24} />
         </TouchableOpacity>
       </View>
@@ -108,15 +108,14 @@ export const ButtonIcon: React.FC<ButtonIcon> = React.memo(
 )
 
 const s: any = StyleSheet.create({
-  viewButton: tw(
-    "flex-row items-center justify-center flex-grow rounded-full px-2",
-    {
-      minWidth: 36,
-      height: 36,
-    }
-  ),
+  viewButton: tw("flex-row flex-grow rounded-full", {
+    minWidth: 36,
+    height: 36,
+  }),
   viewIconButton: tw(`rounded-full h-8 w-8`),
-  touch: tw("flex-col items-center justify-center flex-grow w-full"),
-  viewGroup: tw("flex-row"),
+  touchSmall: tw("flex-col items-center justify-center flex-grow w-full"),
+  touchLarge: tw(
+    "rounded-full px-2 items-center justify-center flex-row flex-grow w-full"
+  ),
   iconButton: tw("px-1"),
 })

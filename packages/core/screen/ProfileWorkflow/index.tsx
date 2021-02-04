@@ -8,7 +8,7 @@ import {
   Label,
   ActionGroup,
 } from "../../component"
-import { View, StyleSheet } from "react-native"
+import { StyleSheet } from "react-native"
 import { useDocument } from "./hook"
 import { tw } from "@free/tailwind"
 import { SectionWorkflow } from "./SectionWorkflow"
@@ -77,20 +77,6 @@ const ProfileWorkflow: React.FC = (props) => {
                 placeholder="Reset Child"
                 rules={{ required: "Reset Child is mandatory" }}
                 options={temp.reviseResetChild}
-                {...stateProps}
-              />
-            </Col>
-          </Row>
-          <Row dark>
-            <Col md={2}>
-              <Label>Submitter Field</Label>
-            </Col>
-            <Col light md={10}>
-              <Input.Text
-                document={document}
-                name="submitterField"
-                placeholder="Submitter Field"
-                rules={{ required: "Submitter Field is mandatory" }}
                 {...stateProps}
               />
             </Col>

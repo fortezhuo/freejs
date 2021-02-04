@@ -8,20 +8,20 @@ export const SectionWorkflow: React.FC<{
   document: any
   stateProps: JSONObject
 }> = React.memo(({ document, stateProps }) => {
-  const handleAdd = React.useCallback(() => {
-    const maxApprover = document.getValues("maxApprover") || 0
-    document.setValue("maxApprover", maxApprover + 1)
-  }, [])
-
   const maxApprover: number = useWatch({
     control: document.control,
     name: "maxApprover",
     defaultValue: 0,
   })
 
+  const handleAdd = React.useCallback(() => {
+    const { maxApprover = 0 } = document.getValues()
+    document.setValue("maxApprover", maxApprover + 1)
+  }, [])
+
   React.useEffect(() => {
-    const { workflow = [] } = document.getValues()
-    if (workflow.length < maxApprover) {
+    const { workflow = [], maxApprover = 0 } = document.getValues()
+    if (workflow.length <= maxApprover) {
       document.setValue("workflow", workflow.concat({}))
     }
   }, [maxApprover])

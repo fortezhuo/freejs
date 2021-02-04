@@ -86,8 +86,9 @@ export const Layout: React.FC<Layout> = ({
   adminPanel,
   style,
 }) => {
-  const { temp } = useApp()
+  const { temp, can } = useApp()
   const isMobile = ["md", "sm"].indexOf(temp.screen) >= 0
+  const isNotAdmin = !can("read", "SETTING")
 
   return (
     <LayoutFull transparent={transparent} scroll={false}>
@@ -108,7 +109,7 @@ export const Layout: React.FC<Layout> = ({
           {children}
           {document && (
             <>
-              <View style={isMobile ? s.viewHidden : {}}>
+              <View style={isMobile || isNotAdmin ? s.viewHidden : {}}>
                 <SectionAdmin document={document}>{adminPanel}</SectionAdmin>
               </View>
 

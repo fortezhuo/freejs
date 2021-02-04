@@ -9,47 +9,70 @@ import { useWatch } from "react-hook-form"
 interface Approver {
   document: any
   i: number
-  title: string
 }
 
 export const InputApprover: React.FC<Approver> = React.memo(
-  ({ document, i, title }) => {
-    const stamp: string = useWatch({
+  ({ document, i }) => {
+    const wfStamp: string = useWatch({
       control: document.control,
-      name: `stamp_${i}`,
+      name: `wfStamp_${i}`,
       defaultValue: "",
     })
+    const isStamp = wfStamp !== ""
 
     const style: string =
-      ["Rejected", "Sent Back"].indexOf(stamp || "") >= 0
+      ["Rejected", "Sent Back"].indexOf(wfStamp || "") >= 0
         ? s.textRed
         : s.textGreen
 
     return (
       <Col sm={12} md={6} lg={4} xl={3} style={{ padding: 2 }}>
         <View style={s.viewApprover}>
-          <Text style={s.textTitle}>{title}</Text>
+          {i !== 0 ? (
+            <InputDisplay
+              control={document.control}
+              style={s.textTitle}
+              name={"wfTitle" + i}
+            />
+          ) : (
+            <Text style={s.textTitle}>Submitter</Text>
+          )}
           <View style={s.viewStatus}>
             <InputDisplay
               control={document.control}
-              name={"stamp_" + i}
+              name={"wfStamp_" + i}
               style={[s.textStatus, style]}
             />
           </View>
+          <InputDisplay control={document.control} name={"wfApprover_" + i} />
           <InputDisplay
             control={document.control}
-            name={"stampPerson_" + i}
-            style={s.textPerson}
+            name={"wfPerson_" + i}
+            style={[
+              s.textApprover,
+              s.textPerson,
+              isStamp ? { height: 0, opacity: 0 } : {},
+            ]}
             numberOfLines={3}
           />
           <InputDisplay
             control={document.control}
-            name={"stampDate_" + i}
+            name={"wfBy_" + i}
+            style={[
+              s.textApprover,
+              s.textBy,
+              isStamp ? {} : { height: 0, opacity: 0 },
+            ]}
+            numberOfLines={3}
+          />
+          <InputDisplay
+            control={document.control}
+            name={"wfDate_" + i}
             style={[s.textDate, style]}
           />
           <InputDisplay
             control={document.control}
-            name={"sla_" + i}
+            name={"wfSLA_" + i}
             style={[s.textSla, style]}
           />
         </View>
@@ -60,12 +83,14 @@ export const InputApprover: React.FC<Approver> = React.memo(
 
 const s = StyleSheet.create({
   viewApprover: tw("border border-gray-200 text-center rounded-lg"),
-  textTitle: tw("bg-gray-100 p-2 font-bold"),
+  textTitle: tw("bg-gray-100 p-2 font-bold h-8"),
   viewStatus: tw("h-32 justify-center"),
   textStatus: tw("font-bold text-xl"),
   textGreen: tw("text-green-700"),
   textRed: tw("text-red-700"),
-  textPerson: tw("bg-gray-100 py-1 h-12"),
-  textDate: tw("py-1"),
-  textSla: tw("bg-gray-100 py-1"),
+  textApprover: tw("bg-gray-100 py-1"),
+  textPerson: tw("h-12"),
+  textBy: tw("h-8"),
+  textDate: tw("py-1 h-6"),
+  textSla: tw("bg-gray-100 py-1 h-6"),
 })

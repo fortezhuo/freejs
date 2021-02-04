@@ -1,6 +1,15 @@
 import React from "react"
 import { useForm } from "../../state/hook"
 
+const submitter = {
+  status: "Draft",
+  stamp: "Submitted",
+  title: "Submitter",
+  field: "_createdBy",
+  back: "-",
+  to: "-",
+}
+
 export const useDocument = () => {
   const { refFunction, stateProps, random, ...document } = useForm("workflow")
 
@@ -11,8 +20,8 @@ export const useDocument = () => {
           status: "Active",
           completedStatus: "Approved",
           reviseResetChild: "No",
-          submitterField: "creator",
           maxApprover: 0,
+          workflow: [submitter],
           _docAuthors: ["Admin", "DBAdmin"],
         })
       }

@@ -44,13 +44,15 @@ const Workflow: React.FC<{
   return (
     <View style={s.viewWorkflow}>
       <View style={s.viewTitle}>
-        <Text style={s.textWorkflow}>{`Workflow #${i + 1}`}</Text>
-        <ButtonIcon
-          type="danger_bg"
-          icon="trash"
-          size={18}
-          onPress={() => handleRemove(i)}
-        />
+        <Text style={s.textWorkflow}>{`Workflow #${i}`}</Text>
+        {i !== 0 && (
+          <ButtonIcon
+            type="danger_bg"
+            icon="trash"
+            size={18}
+            onPress={() => handleRemove(i)}
+          />
+        )}
       </View>
       <Row>
         {fields.map((o: JSONObject, j: number) => (
@@ -73,7 +75,9 @@ const Workflow: React.FC<{
 const s = StyleSheet.create({
   viewContent: tw("flex-col p-6 pt-0"),
   viewButton: tw("flex-row"),
-  viewTitle: tw("px-3 py-1 flex-row items-center border-b border-gray-300"),
+  viewTitle: tw(
+    "px-3 py-1 flex-row items-center border-b border-gray-300 h-10"
+  ),
   textWorkflow: tw("font-bold flex-grow"),
   viewWorkflow: tw("m-2 border rounded-lg border-gray-300"),
   textStatus: tw("text-white"),

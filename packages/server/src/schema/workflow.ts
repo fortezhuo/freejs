@@ -5,7 +5,6 @@ export const workflow = createSchema({
   status: { type: "string", empty: false },
   completedStatus: { type: "string", empty: false },
   reviseResetChild: { type: "string", empty: false },
-  submitterField: { type: "string", empty: false },
   maxApprover: { type: "number" },
   workflow: { type: "array", empty: false },
 })

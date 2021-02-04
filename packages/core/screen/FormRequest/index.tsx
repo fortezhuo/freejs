@@ -10,6 +10,7 @@ import {
   Label,
 } from "../../component"
 import { AdminPanel } from "./AdminPanel"
+import { Effect } from "./Effect"
 
 const FormRequest: React.FC = () => {
   const { stateProps, actions, isMobile, ...document } = useDocument()
@@ -22,6 +23,7 @@ const FormRequest: React.FC = () => {
         !isMobile && <ActionGroup.Large actions={actions} {...stateProps} />
       }
     >
+      <Effect document={document} />
       <Section label="Request Information">
         <Row dark>
           <Col md={2}>
@@ -33,6 +35,33 @@ const FormRequest: React.FC = () => {
               name="name"
               placeholder="Name"
               rules={{ required: "Name is mandatory" }}
+              disabled
+              {...stateProps}
+            />
+          </Col>
+          <Col md={2}>
+            <Label>Division</Label>
+          </Col>
+          <Col light md={4}>
+            <Input.Text
+              document={document}
+              name="company"
+              placeholder="Company"
+              disabled
+              {...stateProps}
+            />
+          </Col>
+        </Row>
+        <Row dark>
+          <Col md={2}>
+            <Label>Division</Label>
+          </Col>
+          <Col light md={4}>
+            <Input.Text
+              document={document}
+              name="division"
+              placeholder="Division"
+              disabled
               {...stateProps}
             />
           </Col>
@@ -44,6 +73,7 @@ const FormRequest: React.FC = () => {
               document={document}
               name="department"
               placeholder="Department"
+              disabled
               {...stateProps}
             />
           </Col>
@@ -57,6 +87,7 @@ const FormRequest: React.FC = () => {
               document={document}
               name="position"
               placeholder="Position"
+              disabled
               {...stateProps}
             />
           </Col>
@@ -77,12 +108,40 @@ const FormRequest: React.FC = () => {
           </Col>
         </Row>
       </Section>
+      <Section label="List Superior">
+        <Row dark>
+          <Col md={2}>
+            <Label>Name</Label>
+          </Col>
+          <Col light md={4}>
+            <Input.Text
+              document={document}
+              name="superior_1"
+              placeholder="Superior 1"
+              disabled
+              {...stateProps}
+            />
+          </Col>
+          <Col md={2}>
+            <Label>Superior 2</Label>
+          </Col>
+          <Col light md={4}>
+            <Input.Text
+              document={document}
+              name="superior_2"
+              placeholder="Superior 2"
+              disabled
+              {...stateProps}
+            />
+          </Col>
+        </Row>
+      </Section>
       <Section label={"Approval"}>
         <Row style={{ padding: 2 }}>
-          <Input.Approver i={0} document={document} title="Submitter" />
-          <Input.Approver i={1} document={document} title="Approver 1" />
-          <Input.Approver i={2} document={document} title="Approver 2" />
-          <Input.Approver i={3} document={document} title="Approver 3" />
+          <Input.Approver i={0} document={document} />
+          <Input.Approver i={1} document={document} />
+          <Input.Approver i={2} document={document} />
+          <Input.Approver i={3} document={document} />
         </Row>
       </Section>
     </Layout>

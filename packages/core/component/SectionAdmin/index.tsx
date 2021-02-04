@@ -11,20 +11,6 @@ export const SectionAdmin: React.FC<{
     <Section label="Admin Section">
       <Row dark>
         <Col md={2}>
-          <Label>Created By</Label>
-        </Col>
-        <Col md={4} light>
-          <Input.Text multi name="_createdBy" document={document} />
-        </Col>
-        <Col md={2}>
-          <Label>Updated By</Label>
-        </Col>
-        <Col md={4} light>
-          <Input.Text multi name="_updatedBy" document={document} />
-        </Col>
-      </Row>
-      <Row dark>
-        <Col md={2}>
           <Label>Doc Authors</Label>
         </Col>
         <Col md={4} light>
@@ -47,7 +33,6 @@ export const SectionAdmin: React.FC<{
           />
         </Col>
       </Row>
-
       {children}
     </Section>
   )

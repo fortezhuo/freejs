@@ -66,7 +66,7 @@ const PageLogin: React.FC = () => {
             />
             <LoginButton {...stateProps} onPress={onSubmit} />
             <View style={tw("items-end mr-4")}>
-              <Input.DisplayError error={error} />
+              <Input.Error error={error} />
             </View>
           </View>
         </Col>

@@ -108,6 +108,8 @@ export const useForm = (name: string) => {
   }, [id])
 
   const close = React.useCallback(() => {
+    form.reset()
+    refMounted.current = true
     if (navigation.canGoBack()) {
       navigation.goBack()
     } else {

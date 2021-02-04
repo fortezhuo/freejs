@@ -62,7 +62,7 @@ export const InputText: React.FC<InputText> = ({
   rules,
   isEditable = true,
   editable = true,
-  defaultValue = "",
+  defaultValue = multi ? [] : "",
   ...props
 }) => {
   const {

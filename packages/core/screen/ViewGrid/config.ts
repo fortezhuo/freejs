@@ -27,7 +27,7 @@ export const ViewProfileWorkflow = {
   name: "workflow",
   search: ["parameter", "fullname", "email"],
   field: excludeField,
-  sort: {},
+  sort: { parameter: 1 },
   actions: ["New", "Delete", "Search"],
   columns: [
     {
