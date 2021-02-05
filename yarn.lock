@@ -4780,10 +4780,10 @@ fast-text-encoding@^1.0.0:
   resolved "https://registry.yarnpkg.com/fast-text-encoding/-/fast-text-encoding-1.0.3.tgz#ec02ac8e01ab8a319af182dae2681213cfe9ce53"
   integrity sha512-dtm4QZH9nZtcDt8qJiOH9fcQd1NAgi+K1O2DbE6GG1PPCK/BWfOH3idCTRQ4ImXRUOyopDEgDEnVEE7Y/2Wrig==
 
-fastest-validator@^1.9.0:
-  version "1.9.0"
-  resolved "https://registry.yarnpkg.com/fastest-validator/-/fastest-validator-1.9.0.tgz#bdb92c1ef50be2cdb021455c19d065f55b9bf91e"
-  integrity sha512-PI0Lq3HOcaTVXoRBsoRN1HoDpFB0XWVtXvi+PIU2EVMoi20oogShIdc7Pu1kuBAEHV8P83/L1lSkZsaXmYBcYg==
+fastest-validator@^1.10.0:
+  version "1.10.0"
+  resolved "https://registry.yarnpkg.com/fastest-validator/-/fastest-validator-1.10.0.tgz#8455306fdd573cf50c12e18fdf240ab8306ffb76"
+  integrity sha512-qNspEkJiwD2OHRrZukvAIxBQkOJjFTdlQ2NYNn2Gv4hudhYL37MTqe5hsdM3hrYonZGzbZADSddcMhYN1slBuA==
 
 fastify-compress@^3.2.2:
   version "3.4.1"
@@ -8645,10 +8645,10 @@ react-flatpickr@^3.10.6:
     flatpickr "^4.6.2"
     prop-types "^15.5.10"
 
-react-hook-form@^6.14.2:
-  version "6.14.2"
-  resolved "https://registry.yarnpkg.com/react-hook-form/-/react-hook-form-6.14.2.tgz#60ab0b5367b220a3d96aa0b17bd0f13f9d8c326a"
-  integrity sha512-GgDUuT3Yfhl1BOcMl862uAFbCixSomtm3CVlQQ1qVu9Tq5BN2uUIRUIXP8l2Gy99eLUrBqU9x4E7N+si9cnvaw==
+react-hook-form@^6.15.1:
+  version "6.15.1"
+  resolved "https://registry.yarnpkg.com/react-hook-form/-/react-hook-form-6.15.1.tgz#57d887ec4dac5a6c0099902171aa39cc893f7bca"
+  integrity sha512-bL0LQuQ3OlM3JYfbacKtBPLOHhmgYz8Lj6ivMrvu2M6e1wnt4sbGRtPEPYCc/8z3WDbjrMwfAfLX92OsB65pFA==
 
 react-is@^16.12.0, react-is@^16.13.0, react-is@^16.7.0, react-is@^16.8.1, react-is@^16.8.4, react-is@^16.8.6:
   version "16.13.1"
