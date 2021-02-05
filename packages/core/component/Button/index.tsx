@@ -57,12 +57,8 @@ export const Button: React.FC<Button> = (props) => {
   )
 
   return (
-    <Base isLoading={isLoading} style={[s.viewButton, bgColor, style]}>
-      <TouchableOpacity
-        style={s.touchLarge}
-        disabled={disabled || isLoading}
-        onPressIn={onPress}
-      >
+    <TouchableOpacity disabled={disabled || isLoading} onPressIn={onPress}>
+      <Base isLoading={isLoading} style={[s.viewButton, bgColor, style]}>
         {icon && (
           <View style={s.iconButton}>
             <Icon
@@ -73,17 +69,17 @@ export const Button: React.FC<Button> = (props) => {
           </View>
         )}
         <Text style={[textColor, { alignSelf: "center" }]}>{children}</Text>
-      </TouchableOpacity>
-      {onClear && (
-        <TouchableOpacity
-          disabled={disabled || isLoading}
-          style={s.iconButton}
-          onPress={onClear}
-        >
-          <Icon name="x" size={18} color={textColor.color} />
-        </TouchableOpacity>
-      )}
-    </Base>
+        {onClear && (
+          <TouchableOpacity
+            disabled={disabled || isLoading}
+            style={s.iconButton}
+            onPress={onClear}
+          >
+            <Icon name="x" size={18} color={textColor.color} />
+          </TouchableOpacity>
+        )}
+      </Base>
+    </TouchableOpacity>
   )
 }
 
@@ -108,14 +104,14 @@ export const ButtonIcon: React.FC<ButtonIcon> = React.memo(
 )
 
 const s: any = StyleSheet.create({
-  viewButton: tw("flex-row flex-grow rounded-full", {
-    minWidth: 36,
-    height: 36,
-  }),
+  viewButton: tw(
+    "flex-row flex-grow px-2 items-center justify-center rounded-full",
+    {
+      minWidth: 36,
+      height: 36,
+    }
+  ),
   viewIconButton: tw(`rounded-full h-8 w-8`),
   touchSmall: tw("flex-col items-center justify-center flex-grow w-full"),
-  touchLarge: tw(
-    "rounded-full px-2 items-center justify-center flex-row flex-grow w-full"
-  ),
   iconButton: tw("px-1"),
 })

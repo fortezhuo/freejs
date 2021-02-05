@@ -41,7 +41,7 @@ const RowMobile: React.FC<RowMobile> = ({
       ;(async () => {
         try {
           const res = await POST(`/api/find/trash/${data._id_json}`, {})
-          setContent(res.data.result.data)
+          setContent(res.data.result)
         } catch (err) {
           view.setError(err)
         } finally {
@@ -54,7 +54,7 @@ const RowMobile: React.FC<RowMobile> = ({
         navigation.navigate(route, { id: data._id_link })
       }
     }
-  }, [data._id_json, data._id_link])
+  }, [data._id_json, data._id_link, setContent])
 
   const renderLeftAction = React.useCallback(
     (progress: any) => {
@@ -147,6 +147,7 @@ export const TableRow: React.FC<TableRow> = ({
   data,
   actionLeft,
   actionRight,
+  setContent,
   children,
   dark,
   isMobile,
@@ -155,7 +156,7 @@ export const TableRow: React.FC<TableRow> = ({
   const Wrapper: any = isMobile ? RowMobile : Table.Row
 
   return (
-    <Wrapper {...{ dark, style, data, actionLeft, actionRight }}>
+    <Wrapper {...{ dark, style, data, actionLeft, actionRight, setContent }}>
       {children}
     </Wrapper>
   )
