@@ -14,7 +14,7 @@
   "dependencies": {
     "@free/core": "*",
     "@loadable/component": "^5.14.1",
-    "@loadable/server": "^5.14.0",
+    "@loadable/server": "^5.14.2",
     "react-dom": "^16.14.0",
     "react-native-web": "fortezhuo/react-native-web"
   },
