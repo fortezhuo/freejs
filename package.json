@@ -81,6 +81,7 @@
     "nodemailer": "^6.4.17",
     "npm-run-all": "^4.1.5",
     "rimraf": "^3.0.2",
+    "setimmediate": "^1.0.5",
     "simple-ldap-search": "^2.0.11"
   },
   "workspaces": {
@@ -96,6 +97,7 @@
     "@types/ldapjs": "^1.0.8",
     "@types/node": "^14.14.25",
     "@types/nodemailer": "^6.4.0",
+    "process": "^0.11.10",
     "ts-node": "^9.1.1",
     "typescript": "4.1.3"
   }

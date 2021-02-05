@@ -10,7 +10,6 @@ const webpackDevConfig: any = {
   ...getDefaultConfig(true),
   mode: "development",
   devtool: "source-map",
-  watch: true,
   entry: resolvePath("src"),
   output: {
     publicPath: `/`,

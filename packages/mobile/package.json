@@ -13,7 +13,7 @@
     "@babel/core": "^7.12.13",
     "@babel/runtime": "^7.12.13",
     "@bam.tech/react-native-make": "^3.0.0",
-    "@types/react-test-renderer": "^16.9.2",
+    "@types/react-test-renderer": "^17.0.0",
     "metro-react-native-babel-preset": "^0.64.0",
     "react-test-renderer": "16.13.1"
   },

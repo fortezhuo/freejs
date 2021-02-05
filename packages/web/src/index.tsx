@@ -1,3 +1,5 @@
+require("setimmediate")
+
 import React from "react"
 import { loadableReady } from "@loadable/component"
 import { AppRegistry } from "react-native"

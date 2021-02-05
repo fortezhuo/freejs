@@ -106,6 +106,9 @@ export const getWebpackRules = (): any => [
 
 export const getWebpackPlugins = (isWeb: boolean): any =>
   [
+    new webpack.ProvidePlugin({
+      process: "process/browser",
+    }),
     new LoadablePlugin(),
     new MiniCssExtractPlugin(),
     new webpack.DefinePlugin({
