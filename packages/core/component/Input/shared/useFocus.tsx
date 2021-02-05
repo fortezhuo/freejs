@@ -18,20 +18,22 @@ export const useFocus = (ref: any, callback?: any) => {
           const overflowTop = top - 120
           const overflowBottom = app.temp.height - top - anchorHeight - 20
 
-          if (overflowTop < 0) {
-            refScroll.current.scrollTo({
-              x: 0,
-              y: y + overflowTop,
-              animated: 1,
-            })
-          }
+          if (refScroll.current) {
+            if (overflowTop < 0) {
+              refScroll.current.scrollTo({
+                x: 0,
+                y: y + overflowTop,
+                animated: 1,
+              })
+            }
 
-          if (overflowBottom < 0) {
-            refScroll.current.scrollTo({
-              x: 0,
-              y: y + Math.abs(overflowBottom),
-              animated: 1,
-            })
+            if (overflowBottom < 0) {
+              refScroll.current.scrollTo({
+                x: 0,
+                y: y + Math.abs(overflowBottom),
+                animated: 1,
+              })
+            }
           }
         }
       )

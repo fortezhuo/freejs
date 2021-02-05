@@ -9,7 +9,8 @@ import {
   Input,
   Label,
 } from "../../component"
-import { AdminPanel } from "./AdminPanel"
+import { PanelAdmin } from "./PanelAdmin"
+import { SectionApproval } from "./SectionApproval"
 import { Effect } from "./Effect"
 
 const FormRequest: React.FC = () => {
@@ -18,7 +19,7 @@ const FormRequest: React.FC = () => {
   return (
     <Layout
       document={document}
-      adminPanel={<AdminPanel document={document} />}
+      admin={<PanelAdmin document={document} />}
       stickyLeft={
         !isMobile && <ActionGroup.Large actions={actions} {...stateProps} />
       }
@@ -136,14 +137,7 @@ const FormRequest: React.FC = () => {
           </Col>
         </Row>
       </Section>
-      <Section label={"Approval"}>
-        <Row style={{ padding: 2 }}>
-          <Input.Approver i={0} document={document} />
-          <Input.Approver i={1} document={document} />
-          <Input.Approver i={2} document={document} />
-          <Input.Approver i={3} document={document} />
-        </Row>
-      </Section>
+      <SectionApproval document={document} />
     </Layout>
   )
 }

@@ -47,8 +47,17 @@ export const useDocument = () => {
 
   React.useEffect(() => {
     refFunction.current.onEdit = async function () {
-      const userInfo = await getUserInformation(app.data.auth.username)
-      document.setData(userInfo)
+      if (document.id === "new") {
+        const userInfo = await getUserInformation(app.data.auth.username)
+        document.setData({
+          ...userInfo,
+          docStatus: "0",
+          currLevel: "0",
+          status: "Draft",
+          currAuthor: [app.data.auth.username],
+          _docAuthors: [app.data.auth.username, "Admin", "DBAdmin"],
+        })
+      }
     }
     refFunction.current.onBeforeCalculate = async function () {
       const data = document.getValues()

@@ -72,7 +72,7 @@ interface Layout extends LayoutFull {
   stickyRight?: React.ReactNode
   style?: JSONObject
   document?: any
-  adminPanel?: any
+  admin?: any
 }
 
 export const Layout: React.FC<Layout> = ({
@@ -83,7 +83,7 @@ export const Layout: React.FC<Layout> = ({
   transparent = false,
   scroll = true,
   document,
-  adminPanel,
+  admin,
   style,
 }) => {
   const { temp, can } = useApp()
@@ -110,7 +110,7 @@ export const Layout: React.FC<Layout> = ({
           {document && (
             <>
               <View style={isMobile || isNotAdmin ? s.viewHidden : {}}>
-                <SectionAdmin document={document}>{adminPanel}</SectionAdmin>
+                <SectionAdmin document={document}>{admin}</SectionAdmin>
               </View>
 
               <View style={{ height: 150 }} />

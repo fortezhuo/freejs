@@ -8,7 +8,7 @@ export const SectionAdmin: React.FC<{
   document: any
 }> = React.memo(({ children, document }) => {
   return (
-    <Section label="Admin Section">
+    <Section label="Admin Section" show={false}>
       <Row dark>
         <Col md={2}>
           <Label>Doc Authors</Label>

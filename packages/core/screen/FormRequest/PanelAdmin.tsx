@@ -2,7 +2,7 @@ import React from "react"
 
 import { Row, Col, Input, Label } from "../../component"
 
-export const AdminPanel: React.FC<any> = ({ document }) => {
+export const PanelAdmin: React.FC<any> = ({ document }) => {
   return (
     <>
       <Row dark>

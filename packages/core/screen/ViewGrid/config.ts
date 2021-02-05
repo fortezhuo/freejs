@@ -20,6 +20,35 @@ export const ViewFormRequest = {
       type: "link",
       style: { width: 36 },
     },
+    {
+      label: "Name",
+      name: "name",
+      filter: true,
+      search: ["name"],
+      style: { width: 150 },
+    },
+    {
+      label: "Company",
+      name: "company",
+      filter: true,
+      search: ["company"],
+      style: { width: 150 },
+    },
+    {
+      label: "Division",
+      name: "division",
+      filter: true,
+      search: ["division"],
+      style: { width: 150 },
+    },
+    {
+      label: "Amount",
+      name: "amount",
+      type: "decimal",
+      filter: true,
+      search: ["amount"],
+      style: { width: 150 },
+    },
   ],
 }
 

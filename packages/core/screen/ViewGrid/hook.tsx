@@ -5,7 +5,13 @@ import { POST, DELETE } from "../../request"
 import { Table } from "../../component"
 import { CellText, CellLink, CellPressable } from "../../component/Table/Cell"
 import { download } from "./helper"
-import { formatDate, formatDateTime, formatString } from "../../util"
+import {
+  formatDate,
+  formatDateTime,
+  formatString,
+  formatNumber,
+  formatDecimal,
+} from "../../util"
 import { Modalize } from "react-native-modalize"
 import { random } from "../../util"
 
@@ -297,6 +303,18 @@ export const useColumns = ({ refBottomSheet, setContent }: any) => {
               return (
                 <CellText isMobile={isMobile} style={cell.column.style}>
                   {prefix + formatDateTime(cell.value)}
+                </CellText>
+              )
+            case "number":
+              return (
+                <CellText isMobile={isMobile} style={cell.column.style}>
+                  {prefix + formatNumber(cell.value)}
+                </CellText>
+              )
+            case "decimal":
+              return (
+                <CellText isMobile={isMobile} style={cell.column.style}>
+                  {prefix + formatDecimal(cell.value)}
                 </CellText>
               )
             case "json":

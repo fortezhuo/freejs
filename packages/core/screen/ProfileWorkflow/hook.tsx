@@ -5,7 +5,7 @@ const submitter = {
   status: "Draft",
   stamp: "Submitted",
   title: "Submitter",
-  field: "_createdBy",
+  field: "",
   back: "-",
   to: "-",
 }

@@ -2,7 +2,6 @@ import React from "react"
 import { StyleSheet, View } from "react-native"
 import { InputDisplay } from "../Display"
 import { Col } from "../../Grid"
-import { Text } from "../../Text"
 import { tw } from "@free/tailwind"
 import { useWatch } from "react-hook-form"
 
@@ -28,15 +27,11 @@ export const InputApprover: React.FC<Approver> = React.memo(
     return (
       <Col sm={12} md={6} lg={4} xl={3} style={{ padding: 2 }}>
         <View style={s.viewApprover}>
-          {i !== 0 ? (
-            <InputDisplay
-              control={document.control}
-              style={s.textTitle}
-              name={"wfTitle" + i}
-            />
-          ) : (
-            <Text style={s.textTitle}>Submitter</Text>
-          )}
+          <InputDisplay
+            control={document.control}
+            style={s.textTitle}
+            name={"wfTitle_" + i}
+          />
           <View style={s.viewStatus}>
             <InputDisplay
               control={document.control}

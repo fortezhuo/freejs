@@ -5,7 +5,6 @@ export const useWorkflow = ({ req, refFunction, document }: JSONObject) => {
 
   const reqProcess = React.useCallback(async () => {
     const data = document.getValues()
-
     const isUpdate = id === 24
     const method = isUpdate ? "PATCH" : "POST"
     await req[method](`/api/${name}${isUpdate ? `/${id}` : ""}`, data)
@@ -13,22 +12,43 @@ export const useWorkflow = ({ req, refFunction, document }: JSONObject) => {
   }, [id])
 
   const reqCalculate = React.useCallback(async () => {
-    const data = document.getValues()
-    if (data.parameter || "" !== "") {
-      const res = await req.POST(`/api/find/workflow/`, {
+    const {
+      parameter = "",
+      currLevel = "",
+      backLevel = "",
+      docStatus = "",
+      ...data
+    } = document.getValues()
+
+    const level =
+      docStatus === "0" ? currLevel : docStatus === "-1" ? backLevel : "1"
+
+    if (parameter !== "" && level === "0") {
+      const {
+        data: { result },
+      } = await req.POST(`/api/find/workflow/`, {
         _params: {
           query: {
-            parameter: data.parameter,
-            field: {
-              _createdAt: -1,
-              _createdBy: -1,
-              _updatedBy: -1,
-              _updatedAt: -1,
-              _docAuthors: -1,
-              _docReaders: -1,
-            },
+            parameter,
+          },
+          field: {
+            _id: 0,
+            _createdAt: 0,
+            _createdBy: 0,
+            _updatedBy: 0,
+            _updatedAt: 0,
+            _docAuthors: 0,
+            _docReaders: 0,
           },
         },
+      })
+
+      document.setValue("maxApprover", result.maxApprover)
+      result.workflow.forEach(({ title, field }: JSONObject, i: number) => {
+        document.setData({
+          [`wfTitle_${i}`]: title,
+          [`wfPerson_${i}`]: data[field],
+        })
       })
     } else {
     }
