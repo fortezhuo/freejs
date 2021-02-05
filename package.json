@@ -34,7 +34,7 @@
     "run-android": "yarn workspace @free/mobile android",
     "run-ios": "yarn workspace @free/mobile ios",
     "run-ipad": "yarn workspace @free/mobile ipad",
-    "start": "NODE_ENV=production node --trace-warnings ./build | NODE_ENV=production logger",
+    "start": "NODE_ENV=production node ./build | NODE_ENV=production logger",
     "start:mock": "run-p dev:mock start"
   },
   "repository": {

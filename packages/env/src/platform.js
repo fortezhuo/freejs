@@ -11,10 +11,10 @@ const platform = {
   },
   huahua: {
     ios: {
-      baseURL: "http://192.168.8.101",
+      baseURL: "http://192.168.8.103",
     },
     android: {
-      baseURL: "http://192.168.8.101",
+      baseURL: "http://192.168.8.103",
     },
   },
   nyanyaw: {

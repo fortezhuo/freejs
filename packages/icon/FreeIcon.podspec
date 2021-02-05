@@ -12,7 +12,7 @@ Pod::Spec.new do |s|
   s.homepage       = "https://github.com/fortezhuo"
   s.platforms      = { :ios => "9.0", :tvos => "9.0" }
   s.source         = { :git => "https://github.com/fortezhuo/freejs.git", :tag => "v#{s.version}" }
-  s.resources      = "fonts/*.ttf"
+  s.resources      = "fonts/*.woff"
   s.preserve_paths = "**/*.{js,json}"
   s.dependency 'React'
 

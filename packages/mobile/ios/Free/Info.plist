@@ -41,7 +41,7 @@
 	<string></string>
 	<key>UIAppFonts</key>
 	<array>
-		<string>bootstrap-icons.ttf</string>
+		<string>bootstrap-icons.woff</string>
 	</array>	
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>

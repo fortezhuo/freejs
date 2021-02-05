@@ -8,7 +8,7 @@ html {
 
 @font-face {
   font-family: bootstrap-icons;
-  src: url(bootstrap-icons.ttf);
+  src: url(bootstrap-icons.woff);
 }
 
 button,
