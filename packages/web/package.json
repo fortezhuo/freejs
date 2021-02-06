@@ -13,11 +13,11 @@
   },
   "dependencies": {
     "@free/core": "*",
+    "@free/env": "*",
     "@loadable/component": "^5.14.1",
     "@loadable/server": "^5.14.2",
     "react-dom": "^16.14.0",
-    "react-native-web": "fortezhuo/react-native-web",
-    "webpack": "^5.20.2"
+    "react-native-web": "fortezhuo/react-native-web"
   },
   "devDependencies": {
     "@babel/core": "^7.12.13",
@@ -53,9 +53,10 @@
     "terser-webpack-plugin": "^5.1.1",
     "type-fest": "^0.20.2",
     "url-loader": "^4.1.1",
-    "webpack": "^5.20.2",
+    "webpack": "^5.21.1",
     "webpack-bundle-analyzer": "^4.4.0",
     "webpack-cli": "^4.5.0",
+    "webpack-dev-server": "^3.11.2",
     "webpack-node-externals": "^2.5.0"
   }
 }

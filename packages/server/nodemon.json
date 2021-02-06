@@ -6,6 +6,6 @@
   "watch": ["src/**/*"],
   "ext": "ts,tsx,json",
   "execMap": {
-    "ts": "ts-node"
+    "ts": "node --trace-warnings -r ts-node/register"
   }
 }

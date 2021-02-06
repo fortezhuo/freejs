@@ -1,4 +1,4 @@
-require("setimmediate")
+import "setimmediate"
 
 import React from "react"
 import { loadableReady } from "@loadable/component"
