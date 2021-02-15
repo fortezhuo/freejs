@@ -3,13 +3,25 @@ import React from "react"
 export const useWorkflow = ({ req, refFunction, document }: JSONObject) => {
   const { id } = document
 
-  const reqProcess = React.useCallback(async () => {
-    const data = document.getValues()
-    const isUpdate = id === 24
-    const method = isUpdate ? "PATCH" : "POST"
-    await req[method](`/api/${name}${isUpdate ? `/${id}` : ""}`, data)
-    return true
-  }, [id])
+  const reqProcess = React.useCallback(
+    async (key: string[]) => {
+      const data = document.getValues()
+
+      if (key.indexOf("play") >= 0) {
+        
+      }
+      /*
+
+
+
+      const isUpdate = id === 24
+      const method = isUpdate ? "PATCH" : "POST"
+      await req[method](`/api/${name}${isUpdate ? `/${id}` : ""}`, data)
+      return true
+      */
+    },
+    [id]
+  )
 
   const reqCalculate = React.useCallback(async () => {
     const {
@@ -79,11 +91,11 @@ export const useWorkflow = ({ req, refFunction, document }: JSONObject) => {
     await refFunction.current.onAfterProcess(data)
   }, [])
 
-  const process = React.useCallback(async (data: any) => {
+  const process = React.useCallback(async (key: string[]) => {
     try {
       document.setState({ isLoading: true })
       await beforeProcess()
-      if (await reqProcess()) {
+      if (await reqProcess(key)) {
         await afterProcess()
       }
     } catch (err) {

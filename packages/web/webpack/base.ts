@@ -52,7 +52,7 @@ export const getWebpackRules = (): any => [
     },
   },
   {
-    test: /\.(jsx|js)$/,
+    test: /\.(jsx|js|tsx|ts)$/,
     exclude: babelLoaderExclude,
     use: {
       loader: "babel-loader",
