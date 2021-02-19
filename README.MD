@@ -48,8 +48,7 @@ FreeJS is considered unstable. The API could change or be removed in future
 
 - React Hooks
 - React Native/Web
-- React Router Native/DOM
-- State Management MobX
+- React Navigation
 - Tailwind Style
 
 ## Todos
@@ -71,8 +70,8 @@ FreeJS is considered unstable. The API could change or be removed in future
 - [x] Roles
 - [x] ACL Integration with MongoDB service
 - [x] ACL Readers Field Lotus Notes Style
-- [ ] ACL Authors Field Lotus Notes Style (Editable)
-- [ ] Safe Delete / Trash Management
+- [x] ACL Authors Field Lotus Notes Style (Editable)
+- [x] Safe Delete / Trash Management
 - [ ] Mail Service
 - [ ] Workflow Engine
 - [ ] Mail Engine
@@ -97,7 +96,7 @@ FreeJS is considered unstable. The API could change or be removed in future
 - [ ] Input Textarea
 - [x] Input Password
 - [x] Input Select
-- [ ] Input Select Async
+- [x] Input Select Async
 - [x] Input Select Creatable
 - [ ] Input Select Async Creatable
 - [x] Input Checkbox
@@ -120,7 +119,6 @@ FreeJS is considered unstable. The API could change or be removed in future
 - [x] Table Checkbox
 - [ ] Table Delete
 - [x] Table Sortable
-- [ ] Table Filterable
 - [x] Table Paging
 - [x] Table for Mobile, Swipe for Show Delete Button
 - [x] Text
