@@ -25,7 +25,7 @@
     "@react-navigation/stack": "^5.14.2",
     "constate": "^3.1.0",
     "numeral": "^2.0.6",
-    "react": "^16.14.0",
+    "react": "^17.0.1",
     "react-flatpickr": "^3.10.6",
     "react-hook-form": "^6.15.2",
     "react-native-gesture-handler": "^1.10.1",
