@@ -199,12 +199,22 @@ export const useActions = (refBottomSheet: any) => {
   }, [config?.name])
 
   React.useEffect(() => {
-    const isMobile = app.temp.isMobile
-
     if (config?.name) {
+      const isMobile = app.temp.isMobile
+      const _isMobile = view.data.isMobile
+      if (_isMobile !== isMobile) {
+        view.setState({ isUpdating: true })
+        view.setData({ isMobile })
+        setTimeout(() => {
+          view.setState({ isUpdating: false })
+        }, 100)
+      }
+
+      view.setData({ isMobile })
+
       refActions.current = []
       refSwipeActions.current = []
-      view.setData({ isMobile })
+
       actions.forEach((action: JSONObject) => {
         if (config?.actions.indexOf(action.children) >= 0 && action.visible) {
           if (isMobile) {
