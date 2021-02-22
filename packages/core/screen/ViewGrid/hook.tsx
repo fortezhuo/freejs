@@ -13,7 +13,7 @@ import {
   formatDecimal,
 } from "../../util"
 import { Modalize } from "react-native-modalize"
-import { useQuery } from "react-query"
+import { useQuery, useQueryClient } from "react-query"
 import { random } from "../../util"
 
 import { TableCheckbox } from "./TableCheckbox"
@@ -333,13 +333,7 @@ export const useColumns = ({ refBottomSheet, setContent }: any) => {
 
 export const useCollection = (data: JSONObject) => {
   return useQuery(
-    [
-      "useCollection",
-      data?.config?.name,
-      data?.limit,
-      data?.page,
-      data?.search,
-    ],
+    ["collection", data?.config?.name, data?.limit, data?.page, data?.search],
     async () => {
       const { config = {}, page, limit, search } = data
       if (config?.name) {
@@ -367,6 +361,7 @@ const useHook = () => {
   const { refAlert, handleError, ...app } = useAlert()
   const refSelected = React.useRef([])
   const refBottomSheet = React.useRef<Modalize>(null)
+  const queryClient = useQueryClient()
 
   useFocusEffect(
     React.useCallback(() => {
@@ -409,62 +404,6 @@ const useHook = () => {
     }, [])
   )
 
-  const setCollection = React.useCallback(async () => {
-    const { config, page, limit, search } = data
-    if (config?.name) {
-      const _params = {
-        query: search,
-        page,
-        limit: +limit,
-        field: config.field || {},
-        sort: config.sort || {},
-      }
-      try {
-        setState({ isLoading: true })
-
-        const res = await POST(`/api/find/${config.name}`, { _params })
-        setData({
-          collection: res.data.result,
-          total: res.data.total,
-          max: res.data.max,
-          isRefresh: undefined,
-        })
-      } catch (err) {
-        handleError(err)
-      } finally {
-        setState({ isLoading: false })
-      }
-    }
-  }, [data?.config?.name, data?.limit, data?.page, data?.search])
-
-  /*
-  React.useEffect(() => {
-    ;(async () => {
-      await setCollection()
-    })()
-  }, [data.page, data.search, data.limit, data?.config?.name])
-
-  React.useEffect(() => {
-    ;(async () => {
-      if (!!data.isRefresh) {
-        await setCollection()
-      }
-    })()
-  }, [data.isRefresh])
-
-  React.useEffect(() => {
-    useCollection()
-  }, [data.page, data.search, data.limit, data?.config?.name])
-
-  React.useEffect(() => {
-    ;(async () => {
-      if (!!data.isRefresh) {
-        await setCollection()
-      }
-    })()
-  }, [data.isRefresh])
-    */
-
   const deleteDocument = React.useCallback(
     async (id: string) => {
       const { name } = data?.config
@@ -473,14 +412,15 @@ const useHook = () => {
       if (selectedIds.length != 0) {
         const _params = { query: { _id: { $in: selectedIds } } }
         try {
-          setState({ isLoading: true })
+          //          setState({ isLoading: true })
           await DELETE(`/api/${name}`, { _params })
           return true
         } catch (err) {
           handleError(err)
         } finally {
-          setState({ isLoading: false })
-          setData({ isRefresh: true, selected: undefined, page: 1 })
+          //          setState({ isLoading: false })
+          setData({ selected: undefined, page: 1 })
+          queryClient.invalidateQueries("collection")
         }
       }
     },

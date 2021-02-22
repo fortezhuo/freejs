@@ -7,6 +7,8 @@ import { Keyboard } from "react-native"
 import { getScreenSize, asyncStorage } from "../../util"
 import { useApp } from "../../state"
 
+export const QueryDevtools: React.FC<any> = () => <></>
+
 export const useAppLayout = () => {
   const insets = useSafeAreaInsets()
   const app = useApp()
