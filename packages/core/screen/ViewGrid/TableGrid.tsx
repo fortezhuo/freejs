@@ -14,7 +14,7 @@ import { theme } from "../../config/theme"
 import { tw, color } from "@free/tailwind"
 import { TablePagination } from "./TablePagination"
 import { TableRow } from "./TableRow"
-import { useView, useColumns, useActions } from "./hook"
+import { useView, useColumns, useActions, useCollection } from "./hook"
 import { random } from "../../util"
 
 const defaultColor = color(theme.default_text)
@@ -63,7 +63,8 @@ export const TableGrid: React.FC<{
   setContent: any
 }> = React.memo(({ setContent, isMobile, height }) => {
   const { refSelected, refBottomSheet, ...view } = useView()
-  const { collection = [], max } = view.data
+  const { data, isFetching } = useCollection(view.data)
+  const { result: collection, max } = data || { result: [], max: 0 }
   const columns = useColumns({ refBottomSheet, setContent })
   const { swipeActions } = useActions(refBottomSheet)
 
@@ -72,9 +73,9 @@ export const TableGrid: React.FC<{
       <TableContent
         {...{
           isMobile,
-          isLoading: view.stateProps.isLoading || view.stateProps.isUpdating,
+          isLoading: isFetching,
           refSelected,
-          setContent,
+          setContent: undefined,
           data: {
             columns,
             actions: swipeActions,
@@ -98,7 +99,7 @@ interface TableContent {
 const TableContent: React.FC<TableContent> = React.memo(
   ({ isMobile, isLoading, data, setContent, refSelected }) => {
     const { columns, columnsFormat, collection, actions } = data
-    const TableWrapper = isMobile || isLoading ? Table.Default : Table.Scroll
+    const TableWrapper = isMobile ? Table.Default : Table.Scroll
     const {
       headerGroups,
       prepareRow,
@@ -143,6 +144,7 @@ const TableContent: React.FC<TableContent> = React.memo(
           <FlatList
             data={rows}
             keyExtractor={() => random()}
+            refreshing={isLoading}
             renderItem={({ item, index }: any) => {
               prepareRow(item)
               return (

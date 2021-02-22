@@ -13,6 +13,7 @@ import {
   formatDecimal,
 } from "../../util"
 import { Modalize } from "react-native-modalize"
+import { useQuery } from "react-query"
 import { random } from "../../util"
 
 import { TableCheckbox } from "./TableCheckbox"
@@ -330,6 +331,32 @@ export const useColumns = ({ refBottomSheet, setContent }: any) => {
   )
 }
 
+export const useCollection = (data: JSONObject) => {
+  return useQuery(
+    [
+      "useCollection",
+      data?.config?.name,
+      data?.limit,
+      data?.page,
+      data?.search,
+    ],
+    async () => {
+      const { config = {}, page, limit, search } = data
+      if (config?.name) {
+        const _params = {
+          query: search,
+          page,
+          limit: +limit,
+          field: config.field || {},
+          sort: config.sort || {},
+        }
+        const res = await POST(`/api/find/${config.name}`, { _params })
+        return res.data
+      }
+    }
+  )
+}
+
 const useHook = () => {
   const [data, setData] = useState({})
   const [temp, setTemp] = useState({})
@@ -394,6 +421,7 @@ const useHook = () => {
       }
       try {
         setState({ isLoading: true })
+
         const res = await POST(`/api/find/${config.name}`, { _params })
         setData({
           collection: res.data.result,
@@ -409,6 +437,7 @@ const useHook = () => {
     }
   }, [data?.config?.name, data?.limit, data?.page, data?.search])
 
+  /*
   React.useEffect(() => {
     ;(async () => {
       await setCollection()
@@ -422,6 +451,19 @@ const useHook = () => {
       }
     })()
   }, [data.isRefresh])
+
+  React.useEffect(() => {
+    useCollection()
+  }, [data.page, data.search, data.limit, data?.config?.name])
+
+  React.useEffect(() => {
+    ;(async () => {
+      if (!!data.isRefresh) {
+        await setCollection()
+      }
+    })()
+  }, [data.isRefresh])
+    */
 
   const deleteDocument = React.useCallback(
     async (id: string) => {

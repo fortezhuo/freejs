@@ -7,12 +7,15 @@ import { Gradient } from "../Gradient"
 import { Alert } from "../Alert"
 import { enableScreens } from "react-native-screens"
 import { withApp } from "../../state"
-import { useAppLayout } from "./hook"
+import { useAppLayout, QueryDevtools } from "./hook"
+import { QueryClient, QueryClientProvider } from "react-query"
 
+const queryClient = new QueryClient()
 enableScreens()
 
 const MainLayout: React.FC = withApp(({ children }: any) => {
   const app = useAppLayout()
+  const isAdmin = app.can("read", "SETTING")
   const colors = [theme.primary_1_bg, theme.primary_2_bg]
 
   return (
@@ -23,6 +26,7 @@ const MainLayout: React.FC = withApp(({ children }: any) => {
       />
       {children}
       <Alert ref={app.refAlert} />
+      {isAdmin && <QueryDevtools />}
     </Gradient>
   )
 })
@@ -30,7 +34,9 @@ const MainLayout: React.FC = withApp(({ children }: any) => {
 export const AppLayout: React.FC = ({ children }) => {
   return (
     <SafeAreaProvider>
-      <MainLayout>{children}</MainLayout>
+      <QueryClientProvider client={queryClient}>
+        <MainLayout>{children}</MainLayout>
+      </QueryClientProvider>
     </SafeAreaProvider>
   )
 }

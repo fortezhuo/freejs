@@ -1,8 +1,11 @@
 import React from "react"
 import { useSafeAreaInsets } from "react-native-safe-area-context"
+import { ReactQueryDevtools } from "react-query/devtools"
 import { Dimensions } from "react-native"
 import { getScreenSize } from "../../util"
 import { useApp } from "../../state"
+
+export const QueryDevtools = ReactQueryDevtools
 
 export const useAppLayout = () => {
   const app = useApp()
