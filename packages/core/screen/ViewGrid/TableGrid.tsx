@@ -119,6 +119,7 @@ const TableContent: React.FC<TableContent> = React.memo(
       useRowSelect,
       useSelection
     )
+    const isHidden = headerGroups[0].headers.length === 1
 
     useMountedLayoutEffect(() => {
       if (!isLoading)
@@ -130,7 +131,23 @@ const TableContent: React.FC<TableContent> = React.memo(
     return (
       <>
         <TablePagination />
-        <TableWrapper style={s.viewTable}>
+        {isLoading ||
+          (isHidden && (
+            <View
+              style={{
+                flex: 1,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Loader dark />
+            </View>
+          ))}
+        <TableWrapper
+          style={
+            isLoading || isHidden ? { height: 0, opacity: 0 } : s.viewTable
+          }
+        >
           {headerGroups.map((headerGroup: any, i: number) => {
             const style = isMobile ? { height: 0, opacity: 0 } : {}
             return (
@@ -144,7 +161,6 @@ const TableContent: React.FC<TableContent> = React.memo(
           <FlatList
             data={rows}
             keyExtractor={() => random()}
-            refreshing={isLoading}
             renderItem={({ item, index }: any) => {
               prepareRow(item)
               return (
