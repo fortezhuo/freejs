@@ -13,7 +13,7 @@ import {
   formatDecimal,
 } from "../../util"
 import { Modalize } from "react-native-modalize"
-import { useQuery, useQueryClient, useMutation } from "react-query"
+import { useQuery, useQueryClient } from "react-query"
 import { random } from "../../util"
 
 import { TableCheckbox } from "./TableCheckbox"
@@ -137,7 +137,7 @@ export const useActions = (refBottomSheet: any) => {
                 label: "OK",
                 type: "primary_1",
                 onPress: async () => {
-                  await view.deleteDocument.mutate(id)
+                  if (await view.deleteDocument(id)) refAlert.current.close()
                 },
               },
               {
@@ -351,6 +351,36 @@ export const useCollection = (data: JSONObject) => {
   )
 }
 
+export const useDelete = (data: JSONObject) => {
+  const [select, setSelect] = React.useState([])
+  const { isLoading, isFetching, refetch } = useQuery(
+    ["delete", data?.config?.name, select],
+    async () => {
+      const { name } = data?.config
+      const _params = { query: { _id: { $in: select } } }
+
+      await DELETE(`/api/${name}`, { _params })
+    }
+  )
+
+  const deleteDocument = React.useCallback(
+    (id) => {
+      const ids = Array.isArray(id) ? [id] : id
+      setSelect(ids)
+    },
+    [setSelect]
+  )
+
+  React.useEffect(() => {
+    if (select.length != 0) {
+      refetch()
+      setSelect([])
+    }
+  }, [refetch, select, setSelect])
+
+  return { deleteDocument, isLoading, isFetching }
+}
+
 const useHook = () => {
   const [data, setData] = useState({})
   const [temp, setTemp] = useState({})
@@ -404,23 +434,27 @@ const useHook = () => {
     }, [])
   )
 
-  const deleteDocument = useMutation(
-    (id: string) => {
+  const deleteDocument = React.useCallback(
+    async (id: string) => {
       const { name } = data?.config
       const selectedIds = id ? [id] : refSelected.current || []
-      const _params = { query: { _id: { $in: selectedIds } } }
-      return DELETE(`/api/${name}`, { _params })
+
+      if (selectedIds.length != 0) {
+        const _params = { query: { _id: { $in: selectedIds } } }
+        try {
+          //          setState({ isLoading: true })
+          await DELETE(`/api/${name}`, { _params })
+          return true
+        } catch (err) {
+          handleError(err)
+        } finally {
+          //          setState({ isLoading: false })
+          setData({ selected: undefined, page: 1 })
+          queryClient.invalidateQueries("collection")
+        }
+      }
     },
-    {
-      onError: (err, variables, context) => {
-        handleError(err)
-      },
-      onSettled: () => {
-        refAlert.current.close()
-        setData({ selected: undefined, page: 1 })
-        queryClient.invalidateQueries("collection")
-      },
-    }
+    [data?.config?.name]
   )
 
   const restoreDocument = React.useCallback(
