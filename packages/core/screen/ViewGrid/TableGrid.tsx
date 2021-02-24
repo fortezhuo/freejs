@@ -63,7 +63,7 @@ export const TableGrid: React.FC<{
   setContent: any
 }> = React.memo(({ setContent, isMobile, height }) => {
   const { refSelected, refBottomSheet, ...view } = useView()
-  const { data, isFetching } = useCollection(view.data)
+  const { data, isFetching, isLoading } = useCollection(view.data)
   const { result: collection, max } = data || { result: [], max: 0 }
   const columns = useColumns({ refBottomSheet, setContent })
   const { swipeActions } = useActions(refBottomSheet)
@@ -73,7 +73,7 @@ export const TableGrid: React.FC<{
       <TableContent
         {...{
           isMobile,
-          isLoading: isFetching,
+          isLoading: isFetching || isLoading,
           refSelected,
           setContent: undefined,
           data: {
@@ -97,7 +97,7 @@ interface TableContent {
 }
 
 const TableContent: React.FC<TableContent> = React.memo(
-  ({ isMobile, isLoading, data, setContent, refSelected }) => {
+  ({ isMobile, data, setContent, refSelected }) => {
     const { columns, columnsFormat, collection, actions } = data
     const TableWrapper = isMobile ? Table.Default : Table.Scroll
     const {
@@ -119,7 +119,7 @@ const TableContent: React.FC<TableContent> = React.memo(
       useRowSelect,
       useSelection
     )
-    const isHidden = headerGroups[0].headers.length === 1
+    const isLoading = headerGroups[0].headers.length === 1
 
     useMountedLayoutEffect(() => {
       if (!isLoading)
@@ -130,26 +130,19 @@ const TableContent: React.FC<TableContent> = React.memo(
 
     return (
       <>
+        {isLoading && (
+          <View
+            style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
+          >
+            <Loader dark />
+          </View>
+        )}
         <TablePagination />
-        {isLoading ||
-          (isHidden && (
-            <View
-              style={{
-                flex: 1,
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <Loader dark />
-            </View>
-          ))}
         <TableWrapper
-          style={
-            isLoading || isHidden ? { height: 0, opacity: 0 } : s.viewTable
-          }
+          style={isLoading ? { opacity: 0, height: 0 } : s.viewTable}
         >
           {headerGroups.map((headerGroup: any, i: number) => {
-            const style = isMobile ? { height: 0, opacity: 0 } : {}
+            const style = isMobile || isLoading ? { height: 0, opacity: 0 } : {}
             return (
               <Table.Header key={random()} style={style}>
                 {headerGroup.headers.map((column: any, j: number) => {
