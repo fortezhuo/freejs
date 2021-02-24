@@ -169,7 +169,7 @@ export const useActions = (refBottomSheet: any) => {
                 label: "OK",
                 type: "primary_1",
                 onPress: async () => {
-                  if (await view.restoreDocument(id)) refAlert.current.close()
+                  await view.restoreDocument.mutate(id)
                 },
               },
               {
@@ -423,26 +423,23 @@ const useHook = () => {
     }
   )
 
-  const restoreDocument = React.useCallback(
-    async (id: string) => {
+  const restoreDocument = useMutation(
+    (id: string) => {
       const { name } = data?.config
       const selectedIds = id ? [id] : refSelected.current || []
-
-      if (selectedIds.length != 0) {
-        const _params = { query: { _id: { $in: selectedIds } } }
-        try {
-          setState({ isLoading: true })
-          await POST(`/api/${name}/restore`, { _params })
-          return true
-        } catch (err) {
-          handleError(err)
-        } finally {
-          setState({ isLoading: false })
-          setData({ isRefresh: true, selected: undefined, page: 1 })
-        }
-      }
+      const _params = { query: { _id: { $in: selectedIds } } }
+      return POST(`/api/${name}/restore`, { _params })
     },
-    [data?.config?.name]
+    {
+      onError: (err, variables, context) => {
+        handleError(err)
+      },
+      onSettled: () => {
+        refAlert.current.close()
+        setData({ selected: undefined, page: 1 })
+        queryClient.invalidateQueries("collection")
+      },
+    }
   )
 
   const configSearch = React.useMemo(() => {

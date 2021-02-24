@@ -168,7 +168,7 @@ export const useActions = (refBottomSheet: any) => {
                 label: "OK",
                 type: "primary_1",
                 onPress: async () => {
-                  if (await view.restoreDocument(id)) refAlert.current.close()
+                  await view.restoreDocument.mutate(id)
                 },
               },
               {
