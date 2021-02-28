@@ -244,7 +244,8 @@ const styles: any = {}
 for (const rule of stylesheet.rules) {
   if (rule.type === "rule") {
     for (const selector of rule.selectors) {
-      const utility = selector.replace(/^\./, "").replace("\\/", "/")
+      const utility = selector.replace(/^\./, "").replace("\\", "")
+
       if (isUtilitySupported(utility, rule)) {
         styles[utility] = getStyles(rule)
       }
@@ -257,7 +258,7 @@ const shadow = css.parse(shadowSource).stylesheet
 for (const rule of shadow.rules) {
   if (rule.type === "rule") {
     for (const selector of rule.selectors) {
-      const utility = selector.replace(/^\./, "").replace("\\/", "/")
+      const utility = selector.replace(/^\./, "").replace("\\", "")
       if (/^shadow-/.test(utility)) {
         styles[utility] = convertShadow(rule)
       }
