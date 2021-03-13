@@ -80,7 +80,9 @@ import com.android.build.OutputFile
 
 project.ext.react = [
     entryFile: "packages/mobile/index.js",
-    root: "../../../../",    
+    root: "../../../../",
+    cliPath: "./packages/mobile/cli.js",
+    hermesCommand: "../../../../node_modules/hermes-engine/%OS-BIN%/hermesc",    
     enableHermes: true,  // clean and rebuild if changing
 ]
 
@@ -125,6 +127,8 @@ def jscFlavor = 'org.webkit:android-jsc:+'
 def enableHermes = project.ext.react.get("enableHermes", false);
 
 android {
+    ndkVersion rootProject.ext.ndkVersion
+
     compileSdkVersion rootProject.ext.compileSdkVersion
 
     compileOptions {
@@ -177,7 +181,7 @@ android {
             def abi = output.getFilter(OutputFile.ABI)
             if (abi != null) {  // null for the universal-debug, universal-release variants
                 output.versionCodeOverride =
-                        versionCodes.get(abi) * 1048576 + defaultConfig.versionCode
+                        defaultConfig.versionCode * 1000 + versionCodes.get(abi)
             }
 
         }
