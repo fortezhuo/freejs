@@ -10,7 +10,7 @@ declare var window: any
 
 declare module "*.jpg"
 declare module "*.png"
-declare module "simple-ldap-search" {}
+declare module "ldap-search" {}
 
 declare module "@free/server" {
   import { FastifyRequest, FastifyReply, FastifyInstance } from "fastify"
