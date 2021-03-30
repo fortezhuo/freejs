@@ -1,15 +1,17 @@
 import React from "react"
-import { StyleSheet, View, Animated } from "react-native"
+import { StyleSheet, View, Animated, Text } from "react-native"
 import { RectButton } from "react-native-gesture-handler"
-import { Icon, Table } from "../../component"
+import { Icon } from "../../component"
 import { theme } from "../../config/theme"
 import { tw } from "@free/tailwind"
 import { useView } from "./hook"
 import { POST } from "../../request"
 import { useNavigation } from "@react-navigation/native"
-import Swipeable from "react-native-gesture-handler/Swipeable"
+import Swipeable from "react-native-gesture-handler/src/components/Swipeable"
 
-interface RowMobile {
+interface TableRow {
+  isLoading: boolean
+  isMobile: boolean
   data: JSONObject
   actionLeft?: any
   actionRight?: any
@@ -19,7 +21,9 @@ interface RowMobile {
   style?: JSONObject
 }
 
-const RowMobile: React.FC<RowMobile> = ({
+export const TableRow: React.FC<TableRow> = ({
+  isLoading,
+  isMobile,
   data,
   actionLeft,
   actionRight,
@@ -37,24 +41,26 @@ const RowMobile: React.FC<RowMobile> = ({
   }
 
   const onTap = React.useCallback(() => {
-    if (!!data._id_json) {
-      ;(async () => {
-        try {
-          const res = await POST(`/api/find/trash/${data._id_json}`, {})
-          setContent(res.data.result)
-        } catch (err) {
-          view.setError(err)
-        } finally {
-          refBottomSheet.current.open()
+    if (isMobile) {
+      if (!!data._id_json) {
+        ;(async () => {
+          try {
+            const res = await POST(`/api/find/trash/${data._id_json}`, {})
+            setContent(res.data.result)
+          } catch (err) {
+            view.setError(err)
+          } finally {
+            refBottomSheet.current.open()
+          }
+        })()
+      } else {
+        const route = view.data.route.replace("View", "")
+        if (route !== "SettingLog") {
+          navigation.navigate(route, { id: data._id_link })
         }
-      })()
-    } else {
-      const route = view.data.route.replace("View", "")
-      if (route !== "SettingLog") {
-        navigation.navigate(route, { id: data._id_link })
       }
     }
-  }, [data._id_json, data._id_link, setContent])
+  }, [data._id_json, data._id_link, setContent, isMobile])
 
   const renderLeftAction = React.useCallback(
     (progress: any) => {
@@ -128,10 +134,16 @@ const RowMobile: React.FC<RowMobile> = ({
       renderLeftActions={actionLeft && renderLeftAction}
       renderRightActions={actionRight && renderRightAction}
     >
-      <RectButton onPress={onTap}>
-        <View style={[s.rowMobile, dark ? s.rowDark : {}, style]}>
+      <RectButton enabled={isMobile} onPress={onTap}>
+        <View
+          style={[
+            isMobile ? s.rowMobile : s.viewRow,
+            dark ? s.rowDark : {},
+            style,
+          ]}
+        >
           {React.Children.map(children, (child: any) => {
-            return React.cloneElement(child, { isMobile: true })
+            return React.cloneElement(child, { isMobile })
           })}
         </View>
       </RectButton>
@@ -139,32 +151,9 @@ const RowMobile: React.FC<RowMobile> = ({
   )
 }
 
-interface TableRow extends RowMobile {
-  isMobile: boolean
-}
-
-export const TableRow: React.FC<TableRow> = ({
-  data,
-  actionLeft,
-  actionRight,
-  setContent,
-  children,
-  dark,
-  isMobile,
-  style,
-}) => {
-  const Wrapper: any = isMobile ? RowMobile : Table.Row
-
-  return (
-    <Wrapper {...{ dark, style, data, actionLeft, actionRight, setContent }}>
-      {children}
-    </Wrapper>
-  )
-}
-
 const s = StyleSheet.create({
   viewHeader: tw(`h-12 shadow-md`),
-  viewRow: tw(`flex-row items-center`),
+  viewRow: tw(`flex-row items-center flex-1`),
   rowDark: tw("bg-gray-100"),
   rowMobile: tw("flex-col p-2"),
   textCellSmall: tw(`${theme.default_text} text-sm`),

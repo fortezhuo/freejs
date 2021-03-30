@@ -9,7 +9,7 @@ import {
   useSortBy,
   useMountedLayoutEffect,
 } from "react-table"
-import { FlatList } from "react-native-gesture-handler"
+import { FlatList } from "react-native-gesture-handler/src/components/GestureComponents"
 import { theme } from "../../config/theme"
 import { tw, color } from "@free/tailwind"
 import { TablePagination } from "./TablePagination"
@@ -160,6 +160,7 @@ const TableContent: React.FC<TableContent> = React.memo(
                 <TableRow
                   {...{
                     isMobile,
+                    isLoading,
                     setContent,
                     dark: index % 2,
                     data: item.values,

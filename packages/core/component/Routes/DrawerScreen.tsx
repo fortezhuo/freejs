@@ -7,6 +7,7 @@ import { createDrawerNavigator } from "@react-navigation/drawer"
 import { tw } from "@free/tailwind"
 import { theme } from "../../config/theme"
 import { MenuUser } from "./MenuUser"
+import { Wrapper } from "./Wrapper"
 
 const colors = [theme.primary_1_bg, theme.primary_2_bg]
 
@@ -62,7 +63,11 @@ export const DrawerScreen: React.FC<DrawerScreen> = ({
         }}
         drawerType={isMobile ? "slide" : "permanent"}
         drawerContent={(props) => {
-          return <Sidebar {...props} />
+          return (
+            <Wrapper isMobile={isMobile}>
+              <Sidebar {...props} />
+            </Wrapper>
+          )
         }}
       >
         <Drawer.Screen name="Index" component={screens.PageHome} />
