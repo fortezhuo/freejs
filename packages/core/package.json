@@ -28,7 +28,7 @@
     "react": "^17.0.2",
     "react-flatpickr": "^3.10.7",
     "react-hook-form": "^6.15.5",
-    "react-native-gesture-handler": "^1.10.3",
+    "react-native-gesture-handler": "fortezhuo/react-native-gesture-handler",
     "react-native-linear-gradient": "^2.5.6",
     "react-native-modalize": "2.0.8",
     "react-native-reanimated": "^1.13.2",

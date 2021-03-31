@@ -9,7 +9,7 @@ import {
   useSortBy,
   useMountedLayoutEffect,
 } from "react-table"
-import { FlatList } from "react-native-gesture-handler/src/components/GestureComponents"
+import { FlatList } from "react-native-gesture-handler"
 import { theme } from "../../config/theme"
 import { tw, color } from "@free/tailwind"
 import { TablePagination } from "./TablePagination"

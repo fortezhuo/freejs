@@ -7,7 +7,7 @@ import { tw } from "@free/tailwind"
 import { useView } from "./hook"
 import { POST } from "../../request"
 import { useNavigation } from "@react-navigation/native"
-import Swipeable from "react-native-gesture-handler/src/components/Swipeable"
+import Swipeable from "react-native-gesture-handler/Swipeable"
 
 interface TableRow {
   isLoading: boolean

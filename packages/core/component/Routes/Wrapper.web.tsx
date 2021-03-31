@@ -1,23 +1,43 @@
 import React from "react"
 import { View } from "react-native"
 export const Wrapper: React.FC<any> = ({ isMobile, children }) => {
-  const ref = React.useRef<any>(null)
+  const interval = React.useRef<any>(null)
+  const timeout = React.useRef<any>(null)
+
+  const cleanInterval = React.useCallback(() => {
+    if (interval.current) {
+      clearInterval(interval.current)
+    }
+  }, [])
+
+  const cleanTimeout = React.useCallback(() => {
+    if (timeout.current) {
+      clearTimeout(timeout.current)
+    }
+  }, [])
 
   React.useEffect(() => {
-    ref.current = setTimeout(() => {
-      const parent = document.querySelector('[data-testid="DrawerWrapper"]')
-        ?.parentElement
-
-      if (parent) {
-        const isHideleft = parent.style.left.indexOf("-") >= 0
-        if (!isMobile && isHideleft) {
+    if (!isMobile) {
+      interval.current = setInterval(() => {
+        const parent = document.querySelector('[data-testid="DrawerWrapper"]')
+          ?.parentElement
+        if (parent) {
           parent.style.left = "0px"
+          if (parent.style.left === "0px") {
+            timeout.current = setTimeout(() => {
+              cleanInterval()
+            }, 500)
+          }
         }
-      }
-    }, 100)
+      }, 100)
+    } else {
+      cleanTimeout()
+      cleanInterval()
+    }
 
     return () => {
-      clearTimeout(ref.current)
+      cleanTimeout()
+      cleanInterval()
     }
   }, [isMobile])
 
